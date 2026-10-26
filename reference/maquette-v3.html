@@ -1,0 +1,768 @@
+<title>Pièce Rêvée</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : plateforme éditoriale mobile d'abord, barre haute + barre d'onglets mobile, vues en grilles, Camille en tiroir */
+:root{
+  --bg:#F4F4EF; --surface:#FFFFFF; --soft:#EAEBE4; --ink:#121412; --muted:#5F645C; --line:#DDDFD6;
+  --accent:#2747D0; --accent-ink:#FFFFFF; --accent-soft:#E3E8FB; --good:#2B6B3A; --warn:#94600F; --scrim:rgba(10,12,10,.5);
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Onest","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --r:14px; --r-s:8px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F110F;--surface:#171A17;--soft:#1E211D;--ink:#ECEEE8;--muted:#9BA096;--line:#2B2F2A;
+  --accent:#93A6FF;--accent-ink:#0B0E1E;--accent-soft:#1D2442;--good:#7DC48C;--warn:#E2B566;--scrim:rgba(0,0,0,.6);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F110F;--surface:#171A17;--soft:#1E211D;--ink:#ECEEE8;--muted:#9BA096;--line:#2B2F2A;
+  --accent:#93A6FF;--accent-ink:#0B0E1E;--accent-soft:#1D2442;--good:#7DC48C;--warn:#E2B566;--scrim:rgba(0,0,0,.6);color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.55;padding-block:0 96px}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;letter-spacing:-.02em;text-wrap:balance;margin:0;line-height:1.08}
+p{margin:0}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-size:12px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1320px;margin:0 auto}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.demo{background:var(--accent-soft);color:var(--ink);font-size:12.5px}
+.demo .wrap{display:flex;gap:8px;align-items:center;padding-block:7px;flex-wrap:wrap}
+.demo b{color:var(--accent)}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:14px;height:62px}
+.logo{font-family:var(--f-display);font-weight:800;font-size:21px;letter-spacing:-.03em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo i{width:22px;height:22px;border-radius:6px;background:conic-gradient(from 210deg,#C9B08A,#3E5B4C,#2747D0,#D8C9B6,#C9B08A);display:inline-block}
+nav.main{display:flex;gap:2px;margin-left:8px;overflow-x:auto}
+nav.main a{text-decoration:none;color:var(--muted);font-weight:500;padding:8px 11px;border-radius:999px;white-space:nowrap;font-size:14.5px}
+nav.main a[aria-current="page"]{color:var(--ink);background:var(--soft)}
+.sp{flex:1}
+@media (max-width:980px){nav.main{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:9px 16px;cursor:pointer;font-weight:600;font-size:14px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.small{padding:6px 12px;font-size:13px}
+.btn.ghost{background:transparent}
+.btn.big{padding:13px 22px;font-size:15px}
+
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);display:none;
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+.tabbar .in{display:grid;grid-template-columns:repeat(5,1fr)}
+.tabbar a,.tabbar button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--muted);text-decoration:none;background:none;border:0;padding:4px 0;cursor:pointer;font-weight:500}
+.tabbar svg{width:22px;height:22px}
+.tabbar [aria-current="page"]{color:var(--accent)}
+@media (max-width:980px){.tabbar{display:block}}
+
+.view{padding-top:28px}
+.vhead{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.vhead h2{font-size:clamp(30px,4.4vw,52px)}
+.vhead p{margin-top:8px;color:var(--muted);max-width:62ch}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;font-size:13.5px;cursor:pointer;color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.seg2{display:inline-flex;background:var(--soft);border-radius:999px;padding:3px}
+.seg2 button{border:0;background:none;padding:7px 16px;border-radius:999px;cursor:pointer;font-weight:600;font-size:14px;color:var(--muted)}
+.seg2 button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+select,input[type=text],textarea{background:var(--soft);border:1px solid transparent;border-radius:var(--r-s);padding:9px 12px;width:100%}
+textarea{min-height:84px;resize:vertical}
+select:focus,input[type=text]:focus,textarea:focus{border-color:var(--accent);outline:none}
+
+/* Accueil */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:32px;align-items:center;padding-top:8px}
+@media (max-width:900px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero h1{font-size:clamp(40px,6.4vw,86px);font-weight:800;letter-spacing:-.045em;line-height:.95}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lead{font-size:18px;color:var(--muted);max-width:46ch;margin:18px 0 24px}
+.ctas{display:flex;gap:10px;flex-wrap:wrap}
+.trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;font-size:13px;color:var(--muted)}
+.trust span::before{content:"✓ ";color:var(--good);font-weight:700}
+.heroart{position:relative;border-radius:var(--r);overflow:hidden;background:var(--soft);aspect-ratio:4/3;max-width:100%}
+.heroart canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.heroart .lbl{position:absolute;top:12px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.9);color:#121412;padding:3px 10px;border-radius:999px}
+.steps3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:44px}
+@media (max-width:800px){.steps3{grid-template-columns:minmax(0,1fr)}}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:6px}
+.step .n{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.step h3{font-size:20px}
+.step p{color:var(--muted);font-size:14px}
+.section{margin-top:56px}
+.section>h2{font-size:clamp(24px,3vw,34px)}
+.section>p.sub{color:var(--muted);margin:6px 0 18px;max-width:62ch}
+.spaces{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.spaces{grid-template-columns:minmax(0,1fr)}}
+.spaceblock{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.spaceblock .vis{aspect-ratio:16/9;position:relative;max-width:100%}
+.spaceblock canvas{width:100%;height:100%;display:block}
+.spaceblock .b{padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.spaceblock .b h3{font-size:22px}
+
+/* Cartes galerie */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;text-align:left;padding:0;color:var(--ink);position:relative}
+.card .vis{aspect-ratio:4/3;position:relative;max-width:100%;background:var(--soft)}
+.card .vis canvas,.card .vis img{width:100%;height:100%;display:block;object-fit:cover}
+.card .open{position:absolute;inset:0;border:0;background:transparent;cursor:pointer;z-index:1}
+.card .open:focus-visible{outline-offset:-3px}
+.card .body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:3px}
+.card h3{font-size:17px}
+.card p{font-size:13px;color:var(--muted)}
+.card:hover{border-color:var(--muted)}
+.heart{position:absolute;top:10px;right:10px;z-index:2;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:grid;place-items:center;cursor:pointer;color:#121412}
+.heart svg{width:17px;height:17px}
+.heart[aria-pressed="true"]{background:#2747D0;color:#fff}
+.pal{display:flex;gap:4px}
+.pal span{width:16px;height:16px;border-radius:50%;border:1px solid var(--line)}
+.credit{font-size:11px;color:var(--muted)}
+.tag{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--soft);border-radius:999px;padding:2px 9px;color:var(--muted);white-space:nowrap}
+.tag.fict{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.filters select{width:auto;min-width:160px}
+
+/* Dialogue */
+dialog{border:0;padding:0;border-radius:var(--r);background:var(--surface);color:var(--ink);width:min(980px,calc(100% - 24px));max-height:calc(100% - 32px)}
+dialog::backdrop{background:var(--scrim)}
+.dlg{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+@media (max-width:760px){.dlg{grid-template-columns:minmax(0,1fr)}}
+.dlg .vis{background:var(--soft);min-height:260px;position:relative}
+.dlg .vis canvas{width:100%;height:100%;display:block;object-fit:cover;min-height:260px}
+.dlg .txt{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
+.dlg h2{font-size:30px}
+.close{position:absolute;top:10px;right:10px;z-index:3}
+.links{display:flex;gap:6px;flex-wrap:wrap}
+.notice{font-size:12.5px;color:var(--muted);background:var(--soft);border-radius:var(--r-s);padding:8px 11px}
+ul.dots{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+ul.dots li{padding-left:16px;position:relative}
+ul.dots li::before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* Quiz */
+.quiz{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.quiz{grid-template-columns:minmax(0,1fr)}}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.qcard .vis{aspect-ratio:4/3;max-width:100%}
+.qcard canvas{width:100%;height:100%;display:block}
+.qcard .b{padding:16px;display:flex;flex-direction:column;gap:12px}
+.qbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bar{height:8px;border-radius:999px;background:var(--soft);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .3s}
+.prof{display:flex;flex-direction:column;gap:10px}
+.prof .row{display:grid;grid-template-columns:130px minmax(0,1fr) 44px;gap:10px;align-items:center;font-size:14px}
+.prof .row span:last-child{font-family:var(--f-mono);font-size:12px;text-align:right}
+
+/* Projet */
+.proj{display:grid;grid-template-columns:minmax(0,350px) minmax(0,1fr);gap:22px}
+@media (max-width:980px){.proj{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-width:0}
+.brief{display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.thumbph{border-radius:var(--r-s);overflow:hidden;aspect-ratio:4/3;max-width:100%;position:relative}
+.thumbph canvas{width:100%;height:100%;display:block}
+.thumbph span{position:absolute;left:8px;bottom:8px;font-size:11px;background:rgba(255,255,255,.9);color:#121412;padding:2px 8px;border-radius:999px;font-weight:600}
+.progress{display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.progress div{display:flex;gap:8px;align-items:center}
+.progress .ok{color:var(--good);font-weight:700}
+.ptabs{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line);margin:16px -20px 0;padding:0 14px}
+.ptabs button{border:0;background:none;padding:11px 10px 9px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.ptabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.ppane{padding-top:18px}
+.compare{position:relative;border-radius:var(--r-s);overflow:hidden;aspect-ratio:4/3;max-width:100%;background:var(--soft);touch-action:pan-y}
+.compare canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.compare .after{clip-path:inset(0 0 0 var(--cut,50%))}
+.compare .handle{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:2px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.2);pointer-events:none}
+.compare .handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:#fff;color:#121412;display:grid;place-items:center;font-size:16px;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.compare .tl,.compare .tr{position:absolute;top:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(18,20,18,.72);color:#fff;padding:3px 9px;border-radius:999px}
+.compare .tl{left:10px}.compare .tr{right:10px}
+.compare input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.variants{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.pin{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-ink);border:2px solid #fff;font-family:var(--f-mono);font-size:12px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.35);padding:0;z-index:2}
+.pin[aria-pressed="true"]{background:#fff;color:#121412}
+.zones{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}
+.zone{border:1px solid var(--line);border-radius:var(--r-s);padding:11px 13px;background:var(--surface);cursor:pointer;text-align:left}
+.zone.on{border-color:var(--accent)}
+.zone b{font-family:var(--f-mono);color:var(--accent);margin-right:6px}
+.zone p{margin-top:4px;font-size:13.5px;color:var(--muted)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.sw{border:1px solid var(--line);border-radius:var(--r-s);overflow:hidden}
+.sw .c{height:70px}
+.sw .t{padding:8px 10px;font-size:13px}
+.need{border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.need .hd{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline;margin-bottom:10px}
+.need .crit{font-size:13px;color:var(--muted)}
+.prods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.prods{grid-template-columns:minmax(0,1fr)}}
+.prod{border:1px solid var(--line);border-radius:var(--r-s);padding:12px;display:flex;flex-direction:column;gap:6px;background:var(--surface)}
+.prod.main{border-color:var(--accent)}
+.prod .top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.prod .rank{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.prod h4{font-size:15.5px}
+.prod .price{font-family:var(--f-mono);font-size:13px}
+.prod .meta{font-size:12px;color:var(--muted)}
+.tuto{border:1px solid var(--line);border-radius:var(--r-s);margin-bottom:10px}
+.tuto summary{cursor:pointer;padding:13px 15px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline;list-style:none}
+.tuto summary::-webkit-details-marker{display:none}
+.tuto .tb{padding:0 15px 15px;display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:20px}
+@media (max-width:700px){.tuto .tb{grid-template-columns:minmax(0,1fr)}}
+.tuto ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:7px}
+.pro{margin-top:12px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--soft);font-size:13.5px;border-radius:0 6px 6px 0}
+.guide{display:flex;flex-direction:column;gap:10px}
+.gstep{border:1px solid var(--line);border-radius:var(--r-s);overflow:hidden}
+.gstep>button{width:100%;display:flex;gap:12px;align-items:center;padding:12px 14px;background:var(--surface);border:0;cursor:pointer;text-align:left}
+.gstep .num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;border:1.5px solid var(--line);flex:none}
+.gstep.done .num{background:var(--good);border-color:var(--good);color:#fff}
+.gstep.cur .num{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.gstep .gt{flex:1;min-width:0}
+.gstep .gt b{display:block;font-family:var(--f-display);font-size:17px;font-weight:600}
+.gstep .gt small{color:var(--muted)}
+.gbody{padding:4px 14px 14px 54px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media (max-width:700px){.gbody{grid-template-columns:minmax(0,1fr);padding-left:14px}}
+.check{display:flex;gap:8px;align-items:flex-start;font-size:14px;padding:3px 0}
+.check input{margin-top:4px;accent-color:var(--accent)}
+.avoid li::before{background:var(--warn)!important}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:12.5px;white-space:nowrap}
+.tw{overflow-x:auto}
+.big{font-family:var(--f-display);font-weight:600;font-size:30px;font-variant-numeric:tabular-nums}
+.cal{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:3px;min-width:520px}
+.cal div{font-size:10.5px;text-align:center;padding:4px 0;border-radius:4px;background:var(--soft);color:var(--muted)}
+.cal div.on{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.cal div.fl{background:color-mix(in srgb,#B16BA8 70%,transparent);color:#fff;font-weight:600}
+
+/* Maison */
+.house{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:22px}
+@media (max-width:980px){.house{grid-template-columns:minmax(0,1fr)}}
+.rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.room{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.room .vis{aspect-ratio:16/10;max-width:100%}
+.room canvas{width:100%;height:100%;display:block}
+.room .b{padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.room .b h3{font-size:18px}
+.stat{font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;align-self:flex-start}
+.stat.s1{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.stat.s2{background:var(--accent-soft);color:var(--accent)}
+.stat.s3{background:var(--soft);color:var(--muted)}
+.addroom{border:1.5px dashed var(--line);border-radius:var(--r);display:grid;place-items:center;min-height:200px;color:var(--muted);background:transparent;cursor:pointer;font-weight:600}
+
+/* Tarifs */
+.plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:12px}
+.plan.hl{border:2px solid var(--accent)}
+.plan .price{font-family:var(--f-display);font-size:36px;font-weight:800;letter-spacing:-.03em}
+.plan .price small{font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0;font-family:var(--f-body)}
+.plan ul{margin:0}
+.plan .btn{margin-top:auto}
+.ribbon{align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--accent-ink);padding:3px 10px;border-radius:999px}
+
+/* Camille */
+.fab{position:fixed;right:max(20px,calc(env(safe-area-inset-right,0px) + 20px));bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:26;padding:13px 20px 13px 14px;box-shadow:0 10px 30px rgba(20,30,80,.28)}
+@media (max-width:980px){.fab{display:none}}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);z-index:40;background:var(--surface);border-left:1px solid var(--line);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s ease,visibility .28s;visibility:hidden;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
+.drawer.open{transform:none;visibility:visible;box-shadow:-20px 0 60px rgba(0,0,0,.18)}
+.dhead{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.avatar{width:38px;height:38px;border-radius:50%;background:conic-gradient(from 30deg,#2747D0,#9DB1FF,#C9B08A,#3E5B4C,#2747D0);flex:none}
+.dhead b{display:block;font-family:var(--f-display);font-size:17px}
+.dhead small{color:var(--muted);font-size:12.5px}
+.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:92%;padding:10px 14px;border-radius:16px;font-size:14.5px;line-height:1.55}
+.msg.u{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
+.msg.a{align-self:flex-start;background:var(--soft);border-bottom-left-radius:4px;display:flex;flex-direction:column;gap:8px}
+.msg.a ul{margin:0;padding-left:20px}
+.msg .src{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:6px}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 10px}
+.sugg button{font-size:12.5px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 11px;cursor:pointer;text-align:left}
+.composer{border-top:1px solid var(--line);padding:10px 12px;display:flex;gap:8px;align-items:flex-end}
+.composer textarea{min-height:44px;max-height:140px;border-radius:22px;padding:11px 14px}
+.composer .send{width:44px;height:44px;padding:0;flex:none;border-radius:50%}
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:35;opacity:0;pointer-events:none;transition:opacity .28s}
+.scrim.on{opacity:1;pointer-events:auto}
+.typing{display:inline-flex;gap:4px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:b 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,100%{opacity:.3}50%{opacity:1}}
+footer{margin-top:70px;border-top:1px solid var(--line);padding-block:24px;font-size:13px;color:var(--muted)}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="demo"><div class="wrap gut"><b>Maquette v3</b><span>Illustrations dessinées pour la démo (photos libres de droits dans la version finale) · produits et prix fictifs · réponses de Camille préenregistrées.</span></div></div>
+
+<header class="topbar">
+  <div class="wrap gut">
+    <a class="logo" href="#accueil"><i aria-hidden="true"></i>Pièce Rêvée</a>
+    <nav class="main" aria-label="Navigation principale">
+      <a href="#galerie" data-nav="galerie">Galerie</a>
+      <a href="#quiz" data-nav="quiz">Mon style</a>
+      <a href="#projet" data-nav="projet">Mon projet</a>
+      <a href="#maison" data-nav="maison">Ma maison</a>
+      <a href="#matieres" data-nav="matieres">Matières</a>
+      <a href="#tarifs" data-nav="tarifs">Tarifs</a>
+    </nav>
+    <span class="sp"></span>
+    <button class="btn small ghost" type="button" id="themeBtn" aria-label="Changer de thème">◐</button>
+    <a class="btn small" href="#tarifs">Se connecter</a>
+  </div>
+</header>
+
+<main class="wrap gut" id="app"></main>
+
+<footer><div class="wrap gut"><span>Pièce Rêvée · maquette du 26 octobre 2026</span><span>Liens affiliés signalés · images IA signalées · prix indicatifs datés</span></div></footer>
+
+<button class="btn primary fab" type="button" id="fab"><span class="avatar" style="width:26px;height:26px" aria-hidden="true"></span>Demander à Camille</button>
+
+<nav class="tabbar" aria-label="Navigation mobile"><div class="in">
+  <a href="#accueil" data-nav="accueil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Accueil</a>
+  <a href="#galerie" data-nav="galerie"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>Galerie</a>
+  <a href="#projet" data-nav="projet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-8 8"/></svg>Projet</a>
+  <a href="#maison" data-nav="maison"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-6h6v6"/></svg>Maison</a>
+  <button type="button" id="tabAdv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/></svg>Camille</button>
+</div></nav>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Camille, assistante IA">
+  <div class="dhead">
+    <span class="avatar" aria-hidden="true"></span>
+    <div style="flex:1;min-width:0"><b>Camille</b><small>Assistante IA · architecture d'intérieur et paysage</small></div>
+    <button class="btn small ghost" type="button" id="closeDrawer" aria-label="Fermer">✕</button>
+  </div>
+  <div class="msgs" id="msgs" aria-live="polite"></div>
+  <div class="sugg" id="sugg"></div>
+  <form class="composer" id="composer">
+    <textarea id="chatIn" rows="1" placeholder="Une question sur votre intérieur ou votre jardin…" aria-label="Votre message"></textarea>
+    <button class="btn primary send" type="submit" aria-label="Envoyer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </form>
+</aside>
+
+<dialog id="dlg" aria-labelledby="dlgTitle"></dialog>
+
+<script>
+/* ============ OUTILS ============ */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const eur=n=>Math.round(n).toLocaleString("fr-FR")+" €";
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+function rng(seed){let s=(seed>>>0)||1;return()=>{s^=s<<13;s>>>=0;s^=s>>>17;s^=s<<5;s>>>=0;return s/4294967296}}
+function hashStr(t){let h=2166136261;for(const ch of t){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function hx(hex){const n=parseInt(hex.slice(1),16);return[n>>16&255,n>>8&255,n&255]}
+function rgba(hex,a){const[r,g,b]=hx(hex);return`rgba(${r},${g},${b},${a})`}
+function shade(hex,amt){const[r,g,b]=hx(hex).map(v=>Math.max(0,Math.min(255,v+amt)));return`rgb(${r|0},${g|0},${b|0})`}
+function grain(x,R,W,H,a){const img=x.getImageData(0,0,W,H),d=img.data;for(let i=0;i<d.length;i+=4){const v=(R()-.5)*255*a;d[i]+=v;d[i+1]+=v;d[i+2]+=v}x.putImageData(img,0,0)}
+function rr(x,X,Y,w,h,r){x.beginPath();x.roundRect?x.roundRect(X,Y,w,h,r):x.rect(X,Y,w,h);x.fill()}
+const HEART=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>`;
+
+/* ============ STYLES ET PALETTES ============ */
+const STYLES={
+ "Japandi":["#E9E3D7","#C9A97E","#7D7A6C","#3C3A35","#A8B19A"],
+ "Méditerranéen":["#F3EDE2","#C9784B","#2E5E8C","#E2C79A","#7A8B5A"],
+ "Art déco":["#2F4A3D","#C49A52","#EFE6D6","#6E3B33","#1E1E1E"],
+ "Scandinave":["#F2F2EE","#D9C7A8","#9FB3C2","#4A4F55","#E6D3C1"],
+ "Industriel":["#9A968E","#4A4643","#A0522D","#C9C2B5","#1F2326"],
+ "Bohème":["#E9D8C4","#B5603E","#7A8B5A","#D9A441","#5C3B2B"],
+ "Mid-century":["#EDE4D3","#6A4A35","#D9822B","#2F5D62","#C9B08A"],
+ "Riad":["#E7D9C2","#2F6F62","#B5603E","#2A4EC1","#D9BC8A"],
+ "Minimaliste":["#F4F4EF","#DDD6C8","#BDB8AE","#2B2B2B","#8A8A80"],
+ "Campagne chic":["#EFE9DF","#B99B74","#8FA08A","#5E5246","#D7CFC2"],
+ "Maximaliste":["#7A1E2A","#C49A52","#2F4A3D","#E5B9A8","#1D2442"],
+ "Bord de mer":["#F2F0EA","#D9C3A0","#2B4D7A","#9DB7C9","#E8DCC5"]
+};
+const XSTYLES={
+ "Méditerranéen sec":["#E9DCC6","#C9A57A","#8A9A6E","#A98BB8","#7E8F9C"],
+ "Jardin japonais":["#D9D3C3","#6B5A43","#5E7A4E","#C24A3A","#8A8F86"],
+ "Jardin anglais":["#E6E2D3","#9B7E5F","#5F7F45","#C98AA8","#E8D27A"],
+ "Terrasse contemporaine":["#E4E2DC","#8C7A66","#6D8360","#2B2B2B","#C9C2B5"],
+ "Potager chic":["#E8E1D2","#A4724E","#6A8C4A","#D9822B","#C24A3A"],
+ "Balcon urbain":["#E1DED6","#B08E6A","#6F8F5A","#2F5D62","#E2B04A"],
+ "Prairie naturelle":["#EAE4CF","#B49B6B","#8FA35F","#D8C25A","#9C7BB0"],
+ "Tropical":["#E8E3D4","#9A7652","#2F6B45","#E07B3C","#C9B08A"]
+};
+const IN_SPACES=["Salon","Chambre","Cuisine","Salle de bain","Bureau","Entrée"];
+const OUT_SPACES=["Jardin","Terrasse","Balcon","Cour","Abords de piscine"];
+
+/* ============ ILLUSTRATIONS (canvas) ============ */
+function drawRoom(cv,pal,kind,seed,opt={}){
+  const W=cv.width,H=cv.height,x=cv.getContext("2d",{willReadFrequently:true}),R=rng(seed);
+  const [wall,wood,main,dark,acc]=pal, hz=H*.64;
+  const g=x.createLinearGradient(0,0,W,0);g.addColorStop(0,shade(wall,14));g.addColorStop(1,shade(wall,-16));x.fillStyle=g;x.fillRect(0,0,W,hz);
+  x.fillStyle=shade(wall,-24);x.fillRect(0,hz-6,W,6);
+  // sol
+  const fg=x.createLinearGradient(0,hz,0,H);fg.addColorStop(0,shade(wood,-8));fg.addColorStop(1,shade(wood,12));x.fillStyle=fg;x.fillRect(0,hz,W,H-hz);
+  if(kind==="Salle de bain"||kind==="Cuisine"){x.strokeStyle=rgba(dark,.12);x.lineWidth=1;for(let i=0;i<=12;i++){x.beginPath();x.moveTo(W/2+(i-6)*W*.03,hz);x.lineTo(W/2+(i-6)*W*.2,H);x.stroke()}for(let k=1;k<5;k++){const y=hz+(H-hz)*Math.pow(k/5,1.6);x.beginPath();x.moveTo(0,y);x.lineTo(W,y);x.stroke()}}
+  else{x.strokeStyle=rgba(dark,.10);x.lineWidth=1;for(let i=-14;i<=14;i++){x.beginPath();x.moveTo(W/2+i*W*.025,hz);x.lineTo(W/2+i*W*.16,H);x.stroke()}}
+  // fenêtre
+  const wx=W*.07,wy=H*.1,ww=W*.2,wh=hz*.72;
+  const sk=x.createLinearGradient(0,wy,0,wy+wh);sk.addColorStop(0,"#CFE0EA");sk.addColorStop(1,"#F4EBDD");x.fillStyle=sk;x.fillRect(wx,wy,ww,wh);
+  x.fillStyle="#9DB08A";x.beginPath();x.ellipse(wx+ww*.4,wy+wh*.95,ww*.5,wh*.22,0,Math.PI,0);x.fill();
+  x.strokeStyle=shade(wall,30);x.lineWidth=Math.max(3,W*.008);x.strokeRect(wx,wy,ww,wh);x.beginPath();x.moveTo(wx+ww/2,wy);x.lineTo(wx+ww/2,wy+wh);x.stroke();
+  // faisceau de lumière
+  const lb=x.createLinearGradient(wx,hz,W*.6,H);lb.addColorStop(0,"rgba(255,244,220,.35)");lb.addColorStop(1,"rgba(255,244,220,0)");x.fillStyle=lb;x.beginPath();x.moveTo(wx,wy+wh);x.lineTo(wx+ww,wy+wh);x.lineTo(W*.62,H);x.lineTo(W*.12,H);x.closePath();x.fill();
+  if(opt.bare){ // pièce « avant »
+    x.fillStyle=rgba(dark,.25);rr(x,W*.5,hz-H*.16,W*.3,H*.2,6);x.fillStyle=rgba(dark,.18);x.fillRect(W*.82,hz-H*.3,W*.08,H*.34);
+    x.fillStyle=rgba("#000000",.08);x.fillRect(0,0,W,H);grain(x,R,W,H,.05);return;
+  }
+  // tableau
+  x.fillStyle=dark;x.fillRect(W*.47,H*.12,W*.2,H*.22);x.fillStyle=acc;x.fillRect(W*.48,H*.135,W*.18,H*.19);x.fillStyle=rgba(main,.8);x.beginPath();x.arc(W*.57,H*.22,H*.06,0,7);x.fill();
+  // luminaire
+  x.strokeStyle=dark;x.lineWidth=2;x.beginPath();x.moveTo(W*.36,0);x.lineTo(W*.36,H*.16);x.stroke();x.fillStyle=shade(acc,20);x.beginPath();x.ellipse(W*.36,H*.18,W*.05,H*.04,0,Math.PI,0);x.fill();
+  const gl=x.createRadialGradient(W*.36,H*.2,2,W*.36,H*.2,W*.2);gl.addColorStop(0,"rgba(255,230,180,.35)");gl.addColorStop(1,"rgba(255,230,180,0)");x.fillStyle=gl;x.fillRect(0,0,W,H);
+  // tapis
+  x.fillStyle=rgba(acc,.85);x.beginPath();x.ellipse(W*.6,H*.86,W*.28,H*.07,0,0,7);x.fill();
+  x.fillStyle="rgba(0,0,0,.12)";
+  if(kind==="Chambre"){x.fillStyle=shade(wood,-30);rr(x,W*.38,hz-H*.2,W*.44,H*.26,8);x.fillStyle=main;rr(x,W*.36,hz-H*.02,W*.48,H*.2,10);x.fillStyle=shade(main,30);rr(x,W*.41,hz-H*.08,W*.14,H*.1,8);rr(x,W*.63,hz-H*.08,W*.14,H*.1,8);x.fillStyle=acc;rr(x,W*.36,hz+H*.08,W*.48,H*.06,6);}
+  else if(kind==="Cuisine"){x.fillStyle=main;x.fillRect(W*.32,hz-H*.24,W*.66,H*.24);x.fillStyle=shade(main,-25);for(let i=0;i<5;i++)x.fillRect(W*.33+i*W*.13,hz-H*.22,W*.12,H*.2);x.fillStyle=shade(acc,10);x.fillRect(W*.32,hz-H*.26,W*.66,H*.025);x.fillStyle=shade(wood,-20);x.fillRect(W*.4,hz+H*.02,W*.36,H*.17);x.fillStyle=shade(wall,-6);x.fillRect(W*.38,hz,W*.4,H*.03);}
+  else if(kind==="Salle de bain"){x.fillStyle=shade(acc,0);for(let i=0;i<10;i++)for(let j=0;j<6;j++){x.fillStyle=shade(acc,(R()-.5)*24);x.fillRect(W*.42+i*W*.055,H*.16+j*H*.07,W*.052,H*.066)}x.fillStyle="#F4F2EE";rr(x,W*.42,hz-H*.12,W*.5,H*.22,30);x.fillStyle=shade(wood,-10);x.fillRect(W*.3,hz-H*.16,W*.1,H*.2);x.fillStyle=dark;x.fillRect(W*.34,hz-H*.3,W*.02,H*.1);}
+  else if(kind==="Bureau"){x.fillStyle=shade(wood,-30);x.fillRect(W*.4,hz-H*.06,W*.4,H*.03);x.fillRect(W*.42,hz-H*.03,W*.02,H*.2);x.fillRect(W*.76,hz-H*.03,W*.02,H*.2);x.fillStyle=main;rr(x,W*.52,hz,W*.12,H*.16,8);x.fillStyle=dark;x.fillRect(W*.82,H*.14,W*.14,hz-H*.14);x.fillStyle=acc;for(let k=0;k<4;k++)x.fillRect(W*.83,H*.18+k*H*.11,W*.12,H*.02);}
+  else if(kind==="Entrée"){x.fillStyle=shade(wood,-25);x.fillRect(W*.45,hz-H*.12,W*.34,H*.12);x.fillStyle=main;x.beginPath();x.ellipse(W*.62,H*.3,W*.08,H*.13,0,0,7);x.fill();x.fillStyle=shade(wall,30);x.beginPath();x.ellipse(W*.62,H*.3,W*.065,H*.11,0,0,7);x.fill();}
+  else{ // salon
+    x.fillStyle=shade(main,-30);rr(x,W*.4,hz-H*.12,W*.44,H*.18,14);x.fillStyle=main;rr(x,W*.4,hz-H*.02,W*.44,H*.14,12);x.fillStyle=shade(main,18);rr(x,W*.44,hz-H*.09,W*.12,H*.1,10);rr(x,W*.68,hz-H*.09,W*.12,H*.1,10);
+    x.fillStyle=shade(wood,-28);x.beginPath();x.ellipse(W*.62,hz+H*.2,W*.1,H*.03,0,0,7);x.fill();x.fillRect(W*.615,hz+H*.2,W*.01,H*.06);}
+  // plante
+  const px=W*.9,py=hz+H*.04;x.fillStyle=shade(wood,-35);rr(x,px-W*.035,py,W*.07,H*.1,4);
+  for(let i=0;i<9;i++){x.fillStyle=R()<.5?"#5E7A4E":"#7C9563";x.beginPath();x.ellipse(px+(R()-.5)*W*.07,py-H*.05-R()*H*.18,W*.02,H*.06,(R()-.5)*1.5,0,7);x.fill()}
+  // vignette
+  const vg=x.createRadialGradient(W/2,H/2,W*.3,W/2,H/2,W*.75);vg.addColorStop(0,"rgba(0,0,0,0)");vg.addColorStop(1,"rgba(0,0,0,.18)");x.fillStyle=vg;x.fillRect(0,0,W,H);
+  grain(x,R,W,H,.035);
+}
+function drawGarden(cv,pal,kind,seed,opt={}){
+  const W=cv.width,H=cv.height,x=cv.getContext("2d",{willReadFrequently:true}),R=rng(seed);
+  const [sky,deck,green,flower,accent]=pal, hz=H*.46;
+  const sg=x.createLinearGradient(0,0,0,hz);sg.addColorStop(0,"#BFD6E6");sg.addColorStop(1,shade(sky,8));x.fillStyle=sg;x.fillRect(0,0,W,hz);
+  // fond : arbres / mur
+  if(kind==="Balcon"){x.fillStyle="#B8B3AA";x.fillRect(0,hz*.3,W,hz*.7);for(let i=0;i<7;i++){x.fillStyle=shade("#B8B3AA",-10);x.fillRect(W*.04+i*W*.14,hz*.42,W*.07,hz*.3)}}
+  else{for(let i=0;i<14;i++){x.fillStyle=shade(green,-30+R()*30);x.beginPath();x.ellipse(R()*W,hz-R()*H*.08,W*(.06+R()*.08),H*(.08+R()*.1),0,0,7);x.fill()}}
+  // sol
+  const gg=x.createLinearGradient(0,hz,0,H);
+  if(opt.bare){gg.addColorStop(0,"#9C9A7E");gg.addColorStop(1,"#B5AE92")}else{gg.addColorStop(0,shade(green,-10));gg.addColorStop(1,shade(green,16))}
+  x.fillStyle=gg;x.fillRect(0,hz,W,H-hz);
+  if(opt.bare){x.fillStyle=rgba("#6B6656",.35);for(let i=0;i<40;i++)x.fillRect(R()*W,hz+R()*(H-hz),W*.04,2);x.fillStyle="#8E8A80";x.fillRect(W*.3,hz+H*.12,W*.5,H*.24);x.fillStyle=rgba("#000000",.08);x.fillRect(0,0,W,H);grain(x,R,W,H,.05);return}
+  // terrasse / gravier
+  const tx=W*.28,ty=hz+H*.1;
+  if(kind==="Jardin"||kind==="Cour"){x.fillStyle=shade(deck,20);x.beginPath();x.moveTo(W*.45,hz);x.lineTo(W*.55,hz);x.lineTo(W*.75,H);x.lineTo(W*.25,H);x.closePath();x.fill();for(let i=0;i<200;i++){x.fillStyle=rgba("#000000",.08);x.fillRect(W*.3+R()*W*.4,hz+R()*(H-hz),2,2)}}
+  else{x.fillStyle=deck;x.fillRect(tx-W*.2,ty,W*.92,H-ty);x.strokeStyle=rgba("#000000",.15);x.lineWidth=1;for(let y=ty;y<H;y+=H*.035){x.beginPath();x.moveTo(tx-W*.2,y);x.lineTo(W,y);x.stroke()}}
+  if(kind==="Abords de piscine"){x.fillStyle="#5FA8C7";rr(x,W*.3,H*.62,W*.55,H*.22,6);x.fillStyle="rgba(255,255,255,.35)";for(let i=0;i<8;i++)x.fillRect(W*.33+R()*W*.48,H*.65+R()*H*.17,W*.06,2)}
+  // pergola
+  if(kind==="Terrasse"){x.strokeStyle=shade(deck,-40);x.lineWidth=Math.max(4,W*.012);x.beginPath();x.moveTo(W*.3,hz-H*.22);x.lineTo(W*.3,ty+H*.08);x.moveTo(W*.9,hz-H*.22);x.lineTo(W*.9,ty+H*.08);x.moveTo(W*.26,hz-H*.22);x.lineTo(W*.95,hz-H*.22);x.stroke();x.lineWidth=2;for(let i=0;i<9;i++){x.beginPath();x.moveTo(W*.3+i*W*.075,hz-H*.25);x.lineTo(W*.3+i*W*.075,hz-H*.19);x.stroke()}}
+  // mobilier
+  if(kind!=="Jardin"){x.fillStyle=shade(accent,0);rr(x,W*.5,ty+H*.06,W*.16,H*.03,4);x.fillRect(W*.57,ty+H*.09,W*.02,H*.1);x.fillStyle=shade(accent,-20);rr(x,W*.43,ty+H*.1,W*.06,H*.1,4);rr(x,W*.68,ty+H*.1,W*.06,H*.1,4)}
+  // massifs
+  const beds=kind==="Balcon"?[[.1,.86],[.9,.86],[.18,.72]]:[[.08,.7],[.18,.84],[.86,.68],[.94,.84],[.4,.6]];
+  for(const[bx,by]of beds){
+    if(kind==="Balcon"||kind==="Terrasse"){x.fillStyle=shade(deck,-30);rr(x,W*bx-W*.05,H*by,W*.1,H*.1,4)}
+    for(let i=0;i<14;i++){x.fillStyle=R()<.6?shade(green,-15+R()*25):flower;x.beginPath();x.ellipse(W*bx+(R()-.5)*W*.12,H*by-R()*H*.12,W*(.012+R()*.02),H*(.02+R()*.03),0,0,7);x.fill()}
+    for(let i=0;i<10;i++){x.strokeStyle=shade(green,10);x.lineWidth=1.5;x.beginPath();const sx=W*bx+(R()-.5)*W*.1;x.moveTo(sx,H*by);x.quadraticCurveTo(sx+(R()-.5)*20,H*by-H*.08,sx+(R()-.5)*30,H*by-H*.14);x.stroke()}
+  }
+  // arbre isolé (olivier / érable)
+  x.fillStyle=shade(deck,-50);x.fillRect(W*.2,hz-H*.12,W*.012,H*.2);for(let i=0;i<10;i++){x.fillStyle=shade(green,-5+R()*20);x.beginPath();x.ellipse(W*.205+(R()-.5)*W*.12,hz-H*.16-R()*H*.1,W*.04,H*.04,0,0,7);x.fill()}
+  const sun=x.createRadialGradient(W*.85,H*.05,5,W*.85,H*.05,W*.5);sun.addColorStop(0,"rgba(255,236,190,.4)");sun.addColorStop(1,"rgba(255,236,190,0)");x.fillStyle=sun;x.fillRect(0,0,W,H);
+  grain(x,R,W,H,.035);
+}
+function paint(cv,it,opt){if(it.out)drawGarden(cv,it.pal,it.space,it.seed,opt);else drawRoom(cv,it.pal,it.space,it.seed,opt)}
+const pending=[];function canvasFor(it,w=640,h=480,opt={}){const id="c"+Math.random().toString(36).slice(2);pending.push([id,it,w,h,opt]);return `<canvas id="${id}" width="${w}" height="${h}" role="img" aria-label="${esc(it.title||it.space)}"></canvas>`}
+function flush(){while(pending.length){const[id,it,w,h,opt]=pending.shift();const c=document.getElementById(id);if(c)paint(c,it,opt)}}
+
+/* ============ GALERIE (données de démo) ============ */
+const PHOTOGRAPHERS=["A. Martin","L. Bernard","S. Petit","C. Moreau","J. Laurent","M. Garcia","E. Roux","N. Fontaine"];
+const GALLERY=[];
+{let k=0;
+ for(const[st,pal]of Object.entries(STYLES))for(const sp of IN_SPACES){if((k++)%2)continue;GALLERY.push({id:"g"+k,out:false,style:st,space:sp,pal,seed:hashStr(st+sp),title:`${sp} ${st.toLowerCase()}`,budget:["Malin","Confort","Premium"][k%3],credit:PHOTOGRAPHERS[k%8],src:k%3?"Unsplash":"Pexels"})}
+ for(const[st,pal]of Object.entries(XSTYLES))for(const sp of OUT_SPACES){if((k++)%2)continue;GALLERY.push({id:"g"+k,out:true,style:st,space:sp,pal,seed:hashStr(st+sp),title:`${sp} · ${st.toLowerCase()}`,budget:["Malin","Confort","Premium"][k%3],credit:PHOTOGRAPHERS[k%8],src:k%3?"Unsplash":"Pexels"})}
+}
+let gal={out:false,style:"Tous",space:"Tous"};
+const fav=new Set(store.get("pr3_fav",[]));
+
+/* ============ ÉTUDES D'EXEMPLE ============ */
+const STUDY_IN={
+ it:{out:false,style:"Japandi",space:"Salon",pal:STYLES["Japandi"],seed:hashStr("étude-salon")},
+ titre:"Salon japandi lumineux",ambiance:"Bois clair, lin lavé, lumière filtrée. Calme, chaleureux, sans encombrement.",
+ resume:"La pièce reçoit une belle lumière latérale venant de la gauche : on la garde comme point fort. On réchauffe les murs avec un blanc cassé, on ancre le canapé sur un grand tapis en laine et on regroupe les rangements sur un seul mur pour libérer la vue.",
+ analyse:["Salon d'environ 24 m², hauteur sous plafond estimée à 2,60 m","Fenêtre à gauche, lumière d'après-midi","Parquet chêne conservé","Canapé gris conservé, à réchauffer avec des textiles"],
+ palette:[["Blanc cassé chaud","Murs","#ECE6DA"],["Lin naturel","Textiles","#D8CDB8"],["Chêne clair","Bois","#C9A97E"],["Vert sauge","Accent","#A8B19A"],["Encre douce","Contrastes","#3C3A35"]],
+ zones:[[1,62,52,"Canapé","Garder le canapé gris, ajouter une housse et des coussins en lin."],[2,57,22,"Mur du fond","Peinture blanc cassé chaud, cadre en bois clair."],[3,36,18,"Éclairage","Suspension en papier au-dessus de la table basse."],[4,62,88,"Sol","Grand tapis en laine, 200 × 300 cm minimum."],[5,90,58,"Angle","Grande plante en pot, près de la lumière."]],
+ besoins:[
+  {zone:2,t:"Peinture murale",crit:"Mat, blanc cassé chaud, lessivable, 10 m² × 2 couches",n:1248,p:[["Peinture mate blanc chaud, 2,5 L","Enseigne A",39.9,"Confort"],["Peinture velours, 2,5 L","Enseigne B",24.9,"Malin"],["Peinture minérale mate, 2,5 L","Enseigne C",79,"Premium"]]},
+  {zone:3,t:"Suspension",crit:"Papier ou textile, Ø 50 à 70 cm, lumière diffuse",n:356,p:[["Suspension papier Ø 60 cm","Enseigne D",59,"Confort"],["Abat-jour papier Ø 55 cm","Enseigne A",19.99,"Malin"],["Suspension washi Ø 70 cm","Enseigne E",420,"Premium"]]},
+  {zone:4,t:"Tapis",crit:"Laine ou jute, 200 × 300 cm, tons sable",n:2104,p:[["Tapis laine tissée 200 × 300","Enseigne B",349,"Confort"],["Tapis jute 200 × 290","Enseigne A",149,"Malin"],["Tapis laine nouée main 200 × 300","Enseigne F",1290,"Premium"]]},
+  {zone:1,t:"Coussins et plaid",crit:"Lin lavé, sauge et sable, 45 × 45 cm",n:3870,p:[["Lot de 2 housses lin 45 × 45","Enseigne C",45,"Confort"],["Housse coton-lin 45 × 45","Enseigne A",12.99,"Malin"],["Plaid lin lavé 130 × 170","Enseigne G",129,"Premium"]]}
+ ],
+ sur:[["Bibliothèque basse sur-mesure, chêne","Menuisier","Meuble bas de 3 m sous la fenêtre, portes cannées",1800,3200]],
+ tutos:[{t:"Peindre un mur comme un pro",d:"Facile",du:"1 jour + séchage",o:["Rouleau à poils moyens 180 mm","Pinceau à rechampir","Bâche et ruban de masquage","Lessive et éponge","Enduit de rebouchage et cale à poncer"],e:["Couper le courant, démonter les caches des prises, protéger le sol et les plinthes.","Lessiver le mur, rincer, laisser sécher.","Reboucher les trous, poncer, dépoussiérer.","Appliquer une sous-couche si le support est neuf, poreux ou d'une couleur très différente.","Peindre d'abord les angles et le tour des menuiseries au pinceau.","Au rouleau, déposer la peinture en W puis lisser du haut vers le bas, sans attendre que le bord sèche.","Respecter le temps de séchage indiqué sur le pot avant la seconde couche."],a:"Travaillez par bandes d'un mètre en gardant toujours un bord humide : c'est ce qui évite les traces de reprise."},
+  {t:"Choisir et poser un grand tapis",d:"Facile",du:"30 min",o:["Mètre ruban","Sous-tapis antidérapant"],e:["Mesurer l'espace : le tapis doit passer sous au moins les pieds avant du canapé.","Laisser 30 à 60 cm de sol visible entre le tapis et les murs.","Poser un sous-tapis antidérapant, surtout sur parquet.","Dérouler le tapis à l'envers pendant 24 h pour l'aplatir."],a:"Dans le doute, prenez la taille au-dessus : un tapis trop petit rétrécit visuellement la pièce."}],
+ plan:[["Préparer et peindre les murs","2 jours"],["Installer la suspension (électricien si nouveau point)","½ jour"],["Poser le tapis, réorganiser le mobilier","½ jour"],["Textiles, plante, cadres","½ jour"]]
+};
+const STUDY_OUT={
+ it:{out:true,style:"Méditerranéen sec",space:"Terrasse",pal:XSTYLES["Méditerranéen sec"],seed:hashStr("étude-terrasse")},
+ titre:"Terrasse méditerranéenne sèche",ambiance:"Tons sable et lavande, ombre légère, plantes sobres en eau.",
+ resume:"Terrasse plein sud d'environ 30 m², très exposée l'après-midi. On crée de l'ombre avec une pergola légère, on encadre l'espace de massifs de plantes méditerranéennes peu gourmandes en eau, et on garde un coin repas.",
+ analyse:["Exposition sud, ensoleillement fort l'après-midi","Commune en zone de rusticité d'environ −10 °C (à confirmer)","Dalles béton existantes conservées","Vis-à-vis côté est"],
+ palette:[["Sable","Sol, pots","#E2D3B8"],["Terre cuite","Accents","#C27B4E"],["Olivier","Feuillage","#8A9A6E"],["Lavande","Floraison","#A98BB8"],["Bleu ardoise","Mobilier","#5E6E7C"]],
+ zones:[[1,60,26,"Pergola","Pergola légère avec toile ou canisse pour l'ombre de l'après-midi."],[2,12,68,"Massif ouest","Lavandes, cistes et graminées, sur sol drainé."],[3,58,72,"Coin repas","Table pour 4, chaises en métal."],[4,90,70,"Écran est","Pots hauts avec olivier pour masquer le vis-à-vis."]],
+ plantes:[["Olivier","Olea europaea","Soleil","Faible une fois installé","Persistant","4–8 m (moins en pot)",[],[]],
+  ["Lavande vraie","Lavandula angustifolia","Soleil, sol drainé","Faible","Persistant","40–60 cm",[5,6,7],[8]],
+  ["Ciste pourpre","Cistus × purpureus","Soleil","Faible","Persistant","≈ 1 m",[4,5],[]],
+  ["Cheveux d'ange","Stipa tenuissima","Soleil","Faible","Graminée","40–60 cm",[5,6],[1]],
+  ["Gaura","Gaura lindheimeri","Soleil","Faible à moyen","Caduc","60–90 cm",[5,6,7,8,9],[10]],
+  ["Romarin","Salvia rosmarinus","Soleil","Faible","Persistant","≈ 1 m",[1,2,3],[4]]],
+ plantation:[8,9,10],
+ regles:["Distances de plantation (Code civil, art. 671) : arbres et arbustes de plus de 2 m à au moins 2 m de la limite de propriété, les autres à au moins 0,5 m, sauf règlement local ou usage différent.","Pergola : selon sa surface et le règlement d'urbanisme (PLU), une déclaration préalable peut être nécessaire. À vérifier en mairie avant d'acheter."],
+ besoins:[
+  {zone:1,t:"Pergola",crit:"Aluminium ou bois, environ 3 × 4 m, toile ou ventelles",n:412,p:[["Pergola alu 3 × 4 m, toile","Enseigne H",899,"Confort"],["Pergola bois 3 × 3 m","Enseigne I",549,"Malin"],["Pergola bioclimatique 3 × 4 m","Enseigne J",4900,"Premium"]]},
+  {zone:4,t:"Grands pots",crit:"Terre cuite ou fibre, Ø 50 cm et plus, résistants au gel",n:980,p:[["Pot terre cuite Ø 55 cm","Enseigne K",79,"Confort"],["Pot fibre effet terre Ø 50 cm","Enseigne H",39.9,"Malin"],["Jarre émaillée Ø 60 cm","Enseigne L",290,"Premium"]]},
+  {zone:3,t:"Ensemble repas extérieur",crit:"Table 4 places, chaises empilables, métal traité",n:1530,p:[["Table métal 4 pers. + 4 chaises","Enseigne I",399,"Confort"],["Ensemble acier 4 pers.","Enseigne H",219,"Malin"],["Table et chaises métal design","Enseigne M",1350,"Premium"]]}
+ ],
+ sur:[["Banquette maçonnée enduite","Maçon","Banquette de 2,5 m le long du mur ouest, enduit à la chaux",1500,2800]],
+ tutos:[{t:"Planter un massif méditerranéen",d:"Facile",du:"½ journée",o:["Bêche et grelinette","Gravier 6/10 mm","Sable","Arrosoir"],e:["Planter de préférence à l'automne, quand le sol est encore chaud.","Décompacter la terre et y mélanger gravier et sable si elle retient l'eau.","Tremper les mottes dans un seau d'eau avant de planter.","Planter en quinconce, en respectant la taille adulte des plantes.","Pailler avec du gravier minéral pour garder le sol au chaud et limiter les herbes.","Arroser copieusement la première année, puis espacer fortement."],a:"Ces plantes meurent plus souvent d'un excès d'eau en hiver que de sécheresse : le drainage compte plus que l'arrosage."}],
+ plan:[["Vérifier la règle d'urbanisme pour la pergola","1 semaine"],["Installer la pergola","1 à 2 jours"],["Préparer le sol et planter les massifs","1 jour, à l'automne"],["Mobilier et pots","½ jour"]]
+};
+const GUIDE=[
+ {t:"Préparer",s:"Mesures, photos, budget, autorisations",c:["Mesurer longueur, largeur, hauteur sous plafond, fenêtres et prises","Photographier depuis un angle, à hauteur de poitrine, en lumière du jour","Fixer le budget en gardant 10 à 15 % pour les imprévus","Locataire : vérifier ce que le bail autorise ; copropriété : relire le règlement"],x:["Acheter avant d'avoir mesuré les passages de porte et l'escalier","Oublier les prises et radiateurs dans le plan"]},
+ {t:"Concevoir",s:"Étude, rendus, affinages",c:["Lancer l'étude sur votre photo","Comparer les 3 rendus et garder votre préféré","Affiner : « plus lumineux », « budget réduit »…","Valider la palette avec un échantillon A4 au mur, matin et soir"],x:["Choisir une couleur sur écran sans échantillon","Multiplier les styles dans une même pièce"]},
+ {t:"Acheter",s:"Liste d'achats, délais, alternatives",c:["Commander d'abord les articles à long délai (canapé, sur-mesure)","Vérifier les dimensions de chaque meuble sur le plan","Activer les alertes de prix si vous pouvez attendre"],x:["Tout commander en même temps sans regarder les délais","Oublier les frais de livraison et de montage"]},
+ {t:"Réaliser",s:"Ordre des travaux, tutos, artisans",c:["Faire les travaux poussiéreux en premier","Peindre plafond, puis murs, puis boiseries","Poser les sols avant le mobilier","Demander 2 à 3 devis détaillés pour le sur-mesure"],x:["Peindre après avoir posé le tapis et les meubles","Toucher à l'électricité sans couper le courant ou sans professionnel"]},
+ {t:"Profiter et entretenir",s:"Entretien, photo après",c:["Noter les gestes d'entretien de chaque matière","Prendre une photo « après » sous le même angle","Planifier l'entretien saisonnier du jardin"],x:["Utiliser un produit acide sur la pierre naturelle"]}
+];
+let study=STUDY_IN, ptab="rendus", activeZone=null, cut=50, variant=0, guideOpen=1;
+const guideDone=new Set(store.get("pr3_guide",["0-0","0-1","0-2","0-3","1-0"]));
+
+/* ============ QUIZ ============ */
+const QUIZ=[["Japandi","Salon"],["Art déco","Chambre"],["Méditerranéen","Cuisine"],["Industriel","Bureau"],["Bohème","Salon"],["Scandinave","Chambre"],["Mid-century","Salon"],["Riad","Salle de bain"],["Minimaliste","Cuisine"],["Campagne chic","Entrée"],["Maximaliste","Salon"],["Bord de mer","Chambre"]].map(([s,sp],i)=>({style:s,space:sp,pal:STYLES[s],seed:hashStr("q"+i+s),out:false,title:`${sp} ${s.toLowerCase()}`}));
+let quizI=0, quizLikes=store.get("pr3_quiz",{});
+
+/* ============ VUES ============ */
+const VIEWS={
+ accueil(){
+  return `<section class="hero">
+   <div><span class="eyebrow">Architecture d'intérieur et paysage pour tous</span>
+    <h1>Votre intérieur rêvé, <em>réellement</em> faisable.</h1>
+    <p class="lead">Une photo de votre pièce ou de votre jardin. Recevez des rendus de <b>votre</b> espace transformé, de vrais produits à acheter, et un guide pour tout réaliser, étape par étape.</p>
+    <div class="ctas"><a class="btn primary big" href="#projet">Transformer mon espace</a><a class="btn big" href="#quiz">Trouver mon style</a></div>
+    <div class="trust"><span>1 étude offerte</span><span>Sans abonnement possible</span><span>Intérieur et extérieur</span></div>
+   </div>
+   <div class="heroart compare" id="heroCmp" style="--cut:50%">
+     ${canvasFor(STUDY_IN.it,800,600,{bare:true})}
+     <div class="after" style="position:absolute;inset:0">${canvasFor(STUDY_IN.it,800,600)}</div>
+     <span class="tl">Avant</span><span class="tr">Après</span><div class="handle"></div>
+     <input type="range" min="0" max="100" value="50" aria-label="Comparer avant et après" data-cmp="heroCmp">
+   </div>
+  </section>
+  <div class="steps3">
+   <div class="step"><span class="n">1</span><h3>Une photo, une envie</h3><p>Votre pièce ou votre extérieur, votre style, votre budget, ce que vous gardez.</p></div>
+   <div class="step"><span class="n">2</span><h3>Votre espace, transformé</h3><p>3 rendus fidèles à vos murs et à vos fenêtres, une palette de vraies teintes, un plan annoté.</p></div>
+   <div class="step"><span class="n">3</span><h3>Réalisé, pas seulement rêvé</h3><p>Produits réels à acheter, tutos, artisans, et un guide de conseils à chaque étape.</p></div>
+  </div>
+  <section class="section"><h2>Dedans comme dehors</h2><p class="sub">Du salon au balcon, de la salle de bain au potager : tout votre logement, avec un fil conducteur d'une pièce à l'autre.</p>
+   <div class="spaces">
+    <div class="spaceblock"><div class="vis">${canvasFor({out:false,style:"Mid-century",space:"Salon",pal:STYLES["Mid-century"],seed:7},800,450)}</div><div class="b"><h3>Intérieur</h3><div class="chips">${["Salon","Chambre","Cuisine","Salle de bain","Bureau","Entrée","Chambre d'enfant","Dressing","Combles"].map(s=>`<span class="tag">${s}</span>`).join("")}</div></div></div>
+    <div class="spaceblock"><div class="vis">${canvasFor(STUDY_OUT.it,800,450)}</div><div class="b"><h3>Extérieur</h3><div class="chips">${["Jardin","Terrasse","Balcon","Cour","Allée","Façade","Piscine","Potager","Toit-terrasse"].map(s=>`<span class="tag">${s}</span>`).join("")}</div></div></div>
+   </div></section>
+  <section class="section"><div class="vhead" style="margin-bottom:14px"><div><h2 style="font-size:clamp(24px,3vw,34px)">Inspirations du moment</h2><p>Reconnaissez-vous dans un style, puis appliquez-le à votre propre pièce.</p></div><a class="btn small" href="#galerie">Toute la galerie</a></div>
+   <div class="grid">${GALLERY.filter((_,i)=>i%5===0).slice(0,8).map(galCard).join("")}</div></section>`;
+ },
+ galerie(){
+  const styles=Object.keys(gal.out?XSTYLES:STYLES), spaces=gal.out?OUT_SPACES:IN_SPACES;
+  const list=GALLERY.filter(g=>g.out===gal.out&&(gal.style==="Tous"||g.style===gal.style)&&(gal.space==="Tous"||g.space===gal.space));
+  return `<div class="vhead"><div><h2>Galerie d'inspiration</h2><p>Trouvez l'ambiance qui vous ressemble. Chaque image peut devenir votre projet : « Je veux ça chez moi » l'applique à la photo de votre espace.</p></div>
+   <div class="seg2" role="group" aria-label="Intérieur ou extérieur"><button type="button" data-gout="0" aria-pressed="${!gal.out}">Intérieur</button><button type="button" data-gout="1" aria-pressed="${gal.out}">Extérieur</button></div></div>
+   <div class="filters"><label class="eyebrow" for="gSpace">Espace</label><select id="gSpace"><option>Tous</option>${spaces.map(s=>`<option ${s===gal.space?"selected":""}>${s}</option>`).join("")}</select><span class="muted" style="font-size:13px">${list.length} inspirations dans la maquette · 1 500 et plus au lancement</span></div>
+   <div class="chips" style="margin-bottom:20px">${["Tous",...styles].map(s=>`<button class="chip" type="button" data-gstyle="${esc(s)}" aria-pressed="${s===gal.style}">${esc(s)}</button>`).join("")}</div>
+   <div class="grid">${list.map(galCard).join("")||'<p class="muted">Aucune inspiration pour ce filtre.</p>'}</div>`;
+ },
+ quiz(){
+  const done=quizI>=QUIZ.length, q=QUIZ[Math.min(quizI,QUIZ.length-1)];
+  const prof=profile();
+  return `<div class="vhead"><div><h2>Trouver mon style</h2><p>Gardez ou écartez 12 ambiances. Votre profil de goûts guide ensuite l'étude et les conseils de Camille, et vous pouvez le modifier à tout moment.</p></div></div>
+  <div class="quiz">
+   <div class="qcard">${done?`<div class="b" style="padding:26px"><h3 style="font-size:24px">Profil prêt</h3><p class="muted">Votre style dominant : <b style="color:var(--ink)">${esc(prof[0]?.[0]||"—")}</b>${prof[1]?`, avec une touche ${esc(prof[1][0].toLowerCase())}`:""}.</p><div class="ctas"><a class="btn primary" href="#projet">Lancer mon étude</a><button class="btn" type="button" id="quizReset">Recommencer</button></div></div>`
+    :`<div class="vis">${canvasFor(q,640,480)}</div><div class="b"><div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline"><b>${quizI+1} / ${QUIZ.length}</b><span class="muted" style="font-size:13px">${esc(q.space)}</span></div><div class="bar"><i style="width:${quizI/QUIZ.length*100}%"></i></div>
+      <div class="qbtns"><button class="btn big" type="button" data-q="0">Pas pour moi</button><button class="btn primary big" type="button" data-q="1">J'aime</button></div></div>`}</div>
+   <div class="panel"><span class="eyebrow">Votre profil de goûts</span>
+    <div class="prof" style="margin-top:14px">${prof.length?prof.slice(0,6).map(([s,v])=>`<div class="row"><span>${esc(s)}</span><div class="bar"><i style="width:${v}%"></i></div><span>${v} %</span></div>`).join(""):'<p class="muted">Répondez à quelques images pour voir apparaître votre profil.</p>'}</div>
+    ${prof.length?`<div style="margin-top:18px"><span class="eyebrow">Palette qui vous ressemble</span><div class="pal" style="margin-top:8px">${STYLES[prof[0][0]].map(c=>`<span style="background:${c};width:30px;height:30px"></span>`).join("")}</div></div>`:""}
+   </div></div>`;
+ },
+ projet(){
+  const s=study;
+  return `<div class="vhead"><div><h2>Mon projet</h2><p>Exemple d'étude terminée. En vrai, l'étude arrive en une à deux minutes après l'envoi de votre photo.</p></div>
+   <div class="seg2" role="group" aria-label="Exemple"><button type="button" data-ex="in" aria-pressed="${study===STUDY_IN}">Salon</button><button type="button" data-ex="out" aria-pressed="${study===STUDY_OUT}">Terrasse</button></div></div>
+  <div class="proj">
+   <form class="panel brief" onsubmit="return false">
+    <div class="field"><span class="eyebrow">1 · Photo de votre espace</span><div class="thumbph">${canvasFor(s.it,480,360,{bare:true})}<span>Votre photo</span></div></div>
+    <div class="field"><label class="eyebrow" for="wish">2 · Votre envie</label><textarea id="wish">${s===STUDY_IN?"Un salon plus chaleureux et apaisant, je garde mon canapé gris et le parquet.":"Une terrasse ombragée pour dîner dehors, avec des plantes qui demandent peu d'eau."}</textarea></div>
+    <div class="field"><span class="eyebrow">Style</span><div class="chips"><span class="chip" aria-pressed="true">${esc(s.it.style)}</span><span class="tag" style="align-self:center">issu de votre profil</span></div></div>
+    <div class="field"><span class="eyebrow">Budget · situation</span><div class="chips"><span class="chip" aria-pressed="true">1,5 – 6 k€</span><span class="chip" aria-pressed="true">Propriétaire</span></div></div>
+    <div class="progress" aria-label="Étapes de l'étude">${["Lecture de la photo et des volumes",s.it.out?"Exposition et climat":"Lumière et proportions","Palette dans les nuanciers","Sélection dans le catalogue","Rendus de votre espace"].map(t=>`<div><span class="ok">✓</span>${t}</div>`).join("")}</div>
+    <button class="btn primary big" type="button" data-advice="Comment j'améliore encore mon projet « ${esc(s.titre)} » ?">Demander l'avis de Camille</button>
+   </form>
+   <section class="panel" id="board">${boardHTML()}</section>
+  </div>`;
+ },
+ maison(){
+  const rooms=[[STUDY_IN.it,"Salon","Étude prête · 3 rendus","s1",2850],[{out:false,style:"Japandi",space:"Chambre",pal:STYLES["Japandi"],seed:44},"Chambre parentale","Travaux en cours","s2",1900],[{out:false,style:"Japandi",space:"Cuisine",pal:STYLES["Japandi"],seed:45},"Cuisine","À lancer","s3",0],[STUDY_OUT.it,"Terrasse","Étude prête · 3 rendus","s1",2400]];
+  return `<div class="vhead"><div><h2>Ma maison</h2><p>Toutes vos pièces au même endroit, avec un fil conducteur qui garde l'ensemble cohérent, et un budget global.</p></div><button class="btn primary" type="button">Ajouter un espace</button></div>
+   <div class="house"><div class="rooms">${rooms.map(([it,n,st,c,b])=>`<article class="room"><div class="vis">${canvasFor(it,480,300)}</div><div class="b"><h3>${n}</h3><span class="stat ${c}">${st}</span><span class="muted" style="font-size:13px">${b?"Budget prévu "+eur(b):"Budget à définir"}</span></div></article>`).join("")}
+    <button class="addroom" type="button">+ Ajouter une pièce ou un extérieur</button></div>
+    <aside class="panel" style="display:flex;flex-direction:column;gap:16px"><div><span class="eyebrow">Fil conducteur</span><h3 style="font-size:22px;margin-top:6px">Japandi chaleureux</h3><p class="muted" style="font-size:14px;margin-top:4px">Bois clair, lin, touches sauge. Chaque nouvelle étude respecte ce fil, sauf si vous demandez autre chose.</p></div>
+     <div class="pal">${STYLES["Japandi"].map(c=>`<span style="background:${c};width:30px;height:30px"></span>`).join("")}</div>
+     <div><span class="eyebrow">Budget global</span><div class="big">${eur(7150)}</div><p class="muted" style="font-size:13px">dont ${eur(1900)} engagés</p></div>
+     <div><span class="eyebrow">Avancement</span><div class="bar" style="margin-top:8px"><i style="width:38%"></i></div><p class="muted" style="font-size:13px;margin-top:6px">2 espaces sur 4 conçus, 1 en travaux</p></div>
+     <button class="btn" type="button" data-advice="Dans quel ordre faire les travaux de toute ma maison ?">Ordre des travaux pour toute la maison</button></aside></div>`;
+ },
+ matieres(){
+  const M=[["Travertin","Pierre","60 – 200 €/m²","#E6D7BD"],["Zellige","Terre","80 – 180 €/m²","#2F6F62"],["Chêne huilé","Bois","50 – 130 €/m²","#C9A97E"],["Lin lavé","Textile","30 – 90 €/m","#D8D1C3"],["Laiton brossé","Métal","10 – 80 € la poignée","#C49A52"],["Terrazzo","Composite","80 – 250 €/m²","#ECE7DE"],["Tadelakt","Terre","120 – 260 €/m² posé","#C98E6B"],["Liège","Bois","25 – 70 €/m²","#B98B5B"],["Béton ciré","Composite","80 – 160 €/m² posé","#A7A49D"],["Cannage","Fibre","25 – 70 €/m","#D9BC8A"],["Pierre de Bourgogne","Extérieur","50 – 120 €/m²","#D8CDB4"],["Bois de pin traité","Extérieur","30 – 70 €/m²","#B08E6A"]];
+  return `<div class="vhead"><div><h2>Matériauthèque</h2><p>60 matières au lancement : où les poser, comment les entretenir, leur version petit budget, et les produits réels qui les utilisent.</p></div></div>
+   <div class="grid">${M.map(([n,f,p,c])=>`<article class="card"><div class="vis"><canvas width="360" height="270" data-mat="${c}" role="img" aria-label="Échantillon ${esc(n)}"></canvas></div><div class="body"><span class="eyebrow">${f}</span><h3>${n}</h3><p>${p}</p></div></article>`).join("")}</div>`;
+ },
+ tarifs(){
+  const P=[["Découverte","0 €","",["1 étude complète offerte","3 rendus d'essai par mois","Galerie, quiz et matériauthèque illimités","Camille : 10 messages par jour"],"Créer mon compte",""],
+   ["Pass Projet","14,90 €","une fois · 30 jours",["3 études complètes","30 rendus HD","Retouche par zone, export PDF","Camille illimitée, guide d'étapes"],"Choisir le Pass","Sans abonnement"],
+   ["Plus","9,90 €","/ mois · ou 69 €/an",["10 études et 60 rendus HD par mois","Ma maison : toutes vos pièces","Alertes de prix","Essai gratuit de 7 jours"],"Essayer 7 jours","Le plus choisi"],
+   ["Crédits","4,90 €","les 15 rendus",["Sans abonnement","Valables 12 mois","Cumulables avec toutes les offres"],"Acheter des crédits",""],
+   ["Pro","29 €","/ mois HT possible",["100 rendus par mois","Home staging en lot","Export HD sans filigrane","Facture entreprise"],"Passer Pro",""],
+   ["Pro Agence","79 €","/ mois",["400 rendus par mois","3 utilisateurs","Marque blanche (votre logo)"],"Nous contacter",""]];
+  return `<div class="vhead"><div><h2>Tarifs</h2><p>Une étude complète offerte pour essayer. Ensuite, un Pass sans abonnement si vous avez une seule pièce à faire, ou l'abonnement pour tout le logement.</p></div></div>
+   <div class="plans">${P.map(([n,pr,u,f,cta,rib])=>`<article class="plan ${rib==="Le plus choisi"?"hl":""}">${rib?`<span class="ribbon">${rib}</span>`:""}<h3 style="font-size:22px">${n}</h3><div class="price">${pr} <small>${u}</small></div><ul class="dots">${f.map(x=>`<li>${x}</li>`).join("")}</ul><button class="btn ${rib==="Le plus choisi"?"primary":""}" type="button">${cta}</button></article>`).join("")}</div>
+   <p class="notice" style="margin-top:18px">Prix TTC. Les liens vers les produits sont des liens affiliés : nous touchons une commission, sans surcoût pour vous. Les images générées par IA sont signalées.</p>`;
+ }
+};
+
+function galCard(g){
+  return `<article class="card"><div class="vis">${canvasFor(g,480,360)}<button class="heart" type="button" data-fav="${g.id}" aria-pressed="${fav.has(g.id)}" aria-label="Ajouter au moodboard">${HEART}</button></div>
+   <div class="body"><span class="eyebrow">${esc(g.style)}</span><h3>${esc(g.title)}</h3><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:4px"><div class="pal">${g.pal.map(c=>`<span style="background:${c}"></span>`).join("")}</div><span class="tag">${g.budget}</span></div></div>
+   <button class="open" type="button" data-gal="${g.id}" aria-label="Voir ${esc(g.title)}"></button></article>`;
+}
+function profile(){const sc={};for(const[i,v]of Object.entries(quizLikes)){if(v){const s=QUIZ[i].style;sc[s]=(sc[s]||0)+1}}const tot=Object.values(sc).reduce((a,b)=>a+b,0);return Object.entries(sc).sort((a,b)=>b[1]-a[1]).map(([s,v])=>[s,Math.round(v/tot*100)])}
+
+/* ============ PLANCHE D'ÉTUDE ============ */
+function totals(){let t=0;study.besoins.forEach(b=>t+=b.p[0][2]);study.sur.forEach(x=>t+=(x[3]+x[4])/2);return t}
+function boardHTML(){
+  const s=study, out=s.it.out;
+  const tabs=[["rendus","Rendus"],["plan","Plan sur photo"],["concept","Concept et palette"],["shop","Shopping"],...(out?[["plantes","Plantes"]]:[]),["tutos","Tutos"],["guide","Guide d'étapes"],["budget","Budget"]];
+  return `<span class="eyebrow">${esc(s.it.space)} · ${s.besoins.length} besoins · ${eur(totals())} environ</span>
+   <h2 style="font-size:clamp(24px,3vw,34px);margin-top:6px">${esc(s.titre)}</h2><p class="muted" style="margin-top:6px">${esc(s.ambiance)}</p>
+   <div class="ptabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" type="button" data-pt="${k}" aria-selected="${ptab===k}">${l}</button>`).join("")}</div>
+   <div class="ppane" role="tabpanel">${({rendus:pRendus,plan:pPlan,concept:pConcept,shop:pShop,plantes:pPlantes,tutos:pTutos,guide:pGuide,budget:pBudget})[ptab]()}</div>
+   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;border-top:1px solid var(--line);padding-top:16px">
+    <input type="text" id="refineIn" style="flex:1 1 240px" placeholder="Affiner : « plus lumineux », « budget divisé par deux »…" aria-label="Demander une modification">
+    <button class="btn" type="button" id="refineBtn">Affiner</button><button class="btn" type="button">Exporter en PDF</button><button class="btn" type="button">Partager</button></div>`;
+}
+function pRendus(){const it={...study.it,seed:study.it.seed+variant*977,pal:variant===2?study.it.pal.map(c=>shade(c,-8)):study.it.pal};
+  return `<div class="compare" id="cmp" style="--cut:${cut}%">${canvasFor(study.it,960,720,{bare:true})}<div class="after" style="position:absolute;inset:0">${canvasFor(it,960,720)}</div><span class="tl">Avant</span><span class="tr">Après · variante ${variant+1}</span><div class="handle"></div><input type="range" min="0" max="100" value="${cut}" aria-label="Comparer avant et après" data-cmp="cmp"></div>
+   <div class="variants">${[0,1,2].map(v=>`<button class="chip" type="button" data-var="${v}" aria-pressed="${v===variant}">Variante ${v+1}</button>`).join("")}<span class="muted" style="font-size:12.5px;align-self:center">Glissez pour comparer. Touchez un élément du rendu pour le remplacer (retouche par zone).</span></div>
+   <p class="notice" style="margin-top:12px">Ici, une illustration de maquette. En production : rendu photoréaliste de votre photo, même géométrie et même point de vue, 2048 px ou 4K, avec la mention « Image générée par IA ».</p>`}
+function pPlan(){const z=study.zones;
+  return `<div class="stage" style="position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/3;max-width:100%">${canvasFor(study.it,960,720,{bare:true})}${z.map(([id,x,y])=>`<button class="pin" type="button" data-z="${id}" style="left:${x}%;top:${y}%" aria-pressed="${activeZone==id}" aria-label="Zone ${id}">${id}</button>`).join("")}</div>
+   <div class="zones">${z.map(([id,,,t,a])=>`<button type="button" class="zone ${activeZone==id?"on":""}" data-z="${id}"><b>${id}</b><strong>${esc(t)}</strong><p>${esc(a)}</p></button>`).join("")}</div>
+   ${activeZone?`<h3 style="margin:22px 0 12px;font-size:20px">Zone ${activeZone}</h3>${study.besoins.filter(b=>b.zone==activeZone).map(needHTML).join("")||'<p class="muted">Pas d\'achat pour cette zone.</p>'}`:""}`}
+function pConcept(){return `<p style="max-width:66ch">${esc(study.resume)}</p>
+  <div style="margin:18px 0"><span class="eyebrow">Ce que dit votre photo</span><ul class="dots" style="margin-top:8px">${study.analyse.map(a=>`<li>${esc(a)}</li>`).join("")}</ul></div>
+  <span class="eyebrow">Palette</span><div class="swatches" style="margin-top:8px">${study.palette.map(([n,u,h])=>`<div class="sw"><div class="c" style="background:${h}"></div><div class="t"><b>${esc(n)}</b><br><span class="mono">${h}</span><br><span class="muted">${esc(u)}</span></div></div>`).join("")}</div>
+  <p class="notice" style="margin-top:12px">En production, chaque teinte de mur est une vraie référence de nuancier (marque, nom, numéro), choisie dans notre base de couleurs.</p>`}
+function needHTML(b){const ranks=["Notre choix","Plus accessible","Plus haut de gamme"];
+  return `<div class="need"><div class="hd"><div><h4 style="font-size:18px">${esc(b.t)}</h4><span class="crit">${esc(b.crit)}</span></div><button class="btn small" type="button">Voir les ${b.n.toLocaleString("fr-FR")} alternatives</button></div>
+   <div class="prods">${b.p.map(([n,e,p,g],i)=>`<article class="prod ${i===0?"main":""}"><div class="top"><span class="rank">${ranks[i]}</span><span class="tag fict">Exemple fictif</span></div><h4>${esc(n)}</h4><div class="top"><span class="meta">${esc(e)} · ${g}</span><span class="price">${p.toLocaleString("fr-FR",{minimumFractionDigits:p%1?2:0})} €</span></div><span class="meta">Prix du flux, mis à jour aujourd'hui</span><a class="btn small" href="#projet" aria-label="Voir le produit ${esc(n)}">Voir le produit · lien affilié</a></article>`).join("")}</div></div>`}
+function pShop(){return `<div class="notice" style="margin-bottom:14px">Produits et prix fictifs dans la maquette. En production : uniquement des produits réels issus des catalogues des enseignes partenaires, avec la date de mise à jour du prix.</div>${study.besoins.map(needHTML).join("")}`}
+function pPlantes(){const M=["J","F","M","A","M","J","J","A","S","O","N","D"];
+  return `<div class="tw"><table><thead><tr><th>Plante</th><th>Exposition</th><th>Arrosage</th><th>Feuillage</th><th>Taille adulte</th></tr></thead><tbody>${study.plantes.map(p=>`<tr><td><b>${p[0]}</b><br><i class="muted">${p[1]}</i></td><td>${p[2]}</td><td>${p[3]}</td><td>${p[4]}</td><td>${p[5]}</td></tr>`).join("")}</tbody></table></div>
+   <h3 style="font-size:19px;margin:22px 0 10px">Calendrier</h3>
+   <div class="tw"><div style="display:flex;flex-direction:column;gap:6px;min-width:520px">${study.plantes.filter(p=>p[6].length).map(p=>`<div style="display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;align-items:center;font-size:13px"><span>${p[0]}</span><div class="cal">${M.map((m,i)=>`<div class="${p[6].includes(i)?"fl":p[7].includes(i)?"on":""}">${m}</div>`).join("")}</div></div>`).join("")}
+    <div style="display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;align-items:center;font-size:13px"><span><b>Plantation</b></span><div class="cal">${M.map((m,i)=>`<div class="${study.plantation.includes(i)?"on":""}">${m}</div>`).join("")}</div></div></div></div>
+   <p class="muted" style="font-size:12.5px;margin-top:8px">Violet : floraison · bleu : taille ou plantation conseillée.</p>
+   <h3 style="font-size:19px;margin:22px 0 10px">À vérifier avant de commencer</h3><ul class="dots">${study.regles.map(r=>`<li>${esc(r)}</li>`).join("")}</ul>
+   <p class="notice" style="margin-top:12px">Fiches plantes indicatives, issues de sources ouvertes citées (Tela Botanica…). La réglementation se vérifie en mairie.</p>`}
+function pTutos(){return study.tutos.map((t,i)=>`<details class="tuto" ${i===0?"open":""}><summary><h4 style="font-size:18px">${esc(t.t)}</h4><span class="muted" style="font-size:12.5px">${t.d} · ${t.du}</span></summary>
+  <div class="tb"><div><span class="eyebrow">Outils</span><ul class="dots" style="margin-top:8px">${t.o.map(o=>`<li>${esc(o)}</li>`).join("")}</ul></div>
+  <div><span class="eyebrow">Étapes</span><ol style="margin-top:8px">${t.e.map(s=>`<li>${esc(s)}</li>`).join("")}</ol><div class="pro"><b>Astuce d'atelier.</b> ${esc(t.a)}</div></div></div></details>`).join("")}
+function pGuide(){return `<div class="guide">${GUIDE.map((g,i)=>{const n=g.c.length,d=g.c.filter((_,j)=>guideDone.has(i+"-"+j)).length,st=d===n?"done":(i===guideOpen?"cur":"");
+  return `<div class="gstep ${st}"><button type="button" data-gs="${i}" aria-expanded="${guideOpen===i}"><span class="num">${d===n?"✓":i+1}</span><span class="gt"><b>${g.t}</b><small>${g.s} · ${d}/${n}</small></span><span aria-hidden="true">${guideOpen===i?"−":"+"}</span></button>
+   ${guideOpen===i?`<div class="gbody"><div><span class="eyebrow">À faire</span>${g.c.map((c,j)=>`<label class="check"><input type="checkbox" id="gc${i}-${j}" data-gc="${i}-${j}" ${guideDone.has(i+"-"+j)?"checked":""}><span>${esc(c)}</span></label>`).join("")}</div>
+   <div><span class="eyebrow">Erreurs à éviter</span><ul class="dots avoid" style="margin-top:8px">${g.x.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><button class="btn small" type="button" style="margin-top:14px" data-advice="Je suis à l'étape « ${g.t} » de mon projet. Quels conseils pour bien la réussir ?">Conseils de Camille pour cette étape</button></div></div>`:""}</div>`}).join("")}</div>`}
+function pBudget(){return `<div style="display:flex;gap:32px;flex-wrap:wrap;margin-bottom:18px"><div><span class="eyebrow">Projet complet, choix principaux</span><div class="big">${eur(totals())}</div></div></div>
+  <span class="eyebrow">Ordre des travaux</span><div class="tw"><table style="margin:8px 0 20px"><tbody>${study.plan.map((p,i)=>`<tr><td class="mono">${i+1}</td><td>${esc(p[0])}</td><td>${esc(p[1])}</td></tr>`).join("")}</tbody></table></div>
+  <div class="tw"><table><thead><tr><th>Poste</th><th>Choix</th><th class="num">Prix</th></tr></thead><tbody>${study.besoins.map(b=>`<tr><td>${esc(b.t)}</td><td>${esc(b.p[0][0])}</td><td class="num">${eur(b.p[0][2])}</td></tr>`).join("")}${study.sur.map(x=>`<tr><td>${esc(x[0])} <span class="tag">sur-mesure</span></td><td>${esc(x[1])}</td><td class="num">${eur(x[3])} – ${eur(x[4])}</td></tr>`).join("")}</tbody></table></div>
+  <p class="muted" style="font-size:12.5px;margin-top:8px">Le total ne compte que le choix principal de chaque besoin, pas les alternatives.</p>`}
+
+/* ============ FICHE GALERIE ============ */
+function openGal(id){const g=GALLERY.find(x=>x.id===id);if(!g)return;const d=$("#dlg");
+  d.innerHTML=`<div style="position:relative"><button class="btn small close" type="button" data-close aria-label="Fermer">✕</button><div class="dlg"><div class="vis">${canvasFor(g,800,600)}</div>
+   <div class="txt"><span class="eyebrow">${esc(g.style)} · ${esc(g.space)}</span><h2 id="dlgTitle">${esc(g.title)}</h2>
+    <div><span class="eyebrow">Palette</span><div class="pal" style="margin-top:8px">${g.pal.map(c=>`<span style="background:${c};width:30px;height:30px" title="${c}"></span>`).join("")}</div></div>
+    <ul class="dots"><li>Budget : ${g.budget}</li><li>${g.out?"Plantes et matériaux adaptés à votre climat":"Adaptable aux locataires, sans travaux"}</li></ul>
+    <div class="links"><a class="btn primary" href="#projet" data-close>Je veux ça chez moi</a><button class="btn" type="button" data-look="${g.id}">Acheter le look</button><button class="btn" type="button" data-fav="${g.id}" aria-pressed="${fav.has(g.id)}">${fav.has(g.id)?"Dans le moodboard":"Ajouter au moodboard"}</button><button class="btn" type="button" data-advice="Comment recréer l'ambiance « ${esc(g.title)} » chez moi ?">Demander à Camille</button></div>
+    <div id="look"></div>
+    <p class="credit">Photo : ${esc(g.credit)} sur ${g.src} (exemple de crédit). Illustration de maquette.</p></div></div></div>`;
+  if(!d.open)d.showModal();flush();}
+
+/* ============ CAMILLE (démo préenregistrée) ============ */
+const SUGG=["Quelle couleur de mur avec un parquet en chêne ?","Comment agrandir une petite chambre ?","À quelle distance du voisin puis-je planter une haie ?","Comment bien éclairer un salon le soir ?","Aménager un balcon venté de 4 m²"];
+const ANS=[
+ [/parquet|chêne|couleur/i,`<p>Un chêne clair est chaud et légèrement jaune : il aime les couleurs qui ont, elles aussi, une base chaude.</p><ul><li><b>Blanc cassé chaud</b> ou greige pour une pièce lumineuse et calme.</li><li><b>Vert sauge</b> ou vert de gris pour une ambiance japandi.</li><li><b>Terracotta douce</b> sur un seul mur pour réchauffer un salon orienté nord.</li></ul><p>À éviter : les jaunes et orangés trop proches du bois, qui se confondent avec lui. Testez toujours un échantillon A4 sur deux murs, le matin et le soir.</p><p>Vous préférez une ambiance claire ou plus enveloppante ?</p>`,""],
+ [/petite|agrandir|chambre/i,`<ul><li><b>Même couleur claire</b> sur les murs et le plafond : les limites s'effacent.</li><li><b>Rideaux posés au ras du plafond</b>, plus larges que la fenêtre : la pièce paraît plus haute.</li><li><b>Lit avec rangements</b> et tables de chevet suspendues pour libérer le sol.</li><li><b>Mobilier sur pieds</b> : voir le sol sous les meubles agrandit l'espace.</li><li>Un <b>miroir</b> perpendiculaire à la fenêtre renvoie la lumière.</li></ul><p>Locataire ? Tout cela reste réversible, à part la peinture : vérifiez votre bail.</p>`,""],
+ [/haie|voisin|planter|distance/i,`<p>Le Code civil fixe des distances minimales, sauf règlement local ou usage contraire :</p><ul><li>Plantations de <b>plus de 2 m de haut</b> : au moins <b>2 m</b> de la limite de propriété.</li><li>Plantations de <b>2 m ou moins</b> : au moins <b>0,5 m</b>.</li></ul><p>La distance se mesure depuis le centre du tronc. Le plan local d'urbanisme ou un lotissement peuvent prévoir d'autres règles : renseignez-vous en mairie avant de planter.</p>`,"Code civil, art. 671 · service-public.fr"],
+ [/éclair|lumi|lampe/i,`<p>Un salon bien éclairé combine <b>trois couches</b> :</p><ul><li><b>Générale</b> : une suspension ou des appliques, idéalement sur variateur.</li><li><b>D'ambiance</b> : 2 ou 3 lampes basses, réparties dans la pièce.</li><li><b>D'appoint</b> : une liseuse près du fauteuil.</li></ul><p>Le soir, choisissez des ampoules en <b>blanc chaud (2 700 K)</b> et multipliez les points bas plutôt qu'un seul plafonnier puissant.</p><p>Pour un nouveau point lumineux au plafond, faites appel à un électricien.</p>`,""],
+ [/balcon|vent/i,`<ul><li>Vérifiez d'abord la <b>charge admissible</b> du balcon et le règlement de copropriété avant d'installer de grands bacs.</li><li>Choisissez des <b>pots légers</b> (fibre, résine) et lestez-les au fond avec des billes d'argile.</li><li>Plantes qui tiennent le vent : <b>romarin, lavande, graminées</b> (Stipa), pittosporum nain.</li><li>Un <b>brise-vue</b> ajouré freine le vent mieux qu'un panneau plein, qui crée des tourbillons.</li><li>Un goutte-à-goutte sur programmateur évite les oublis en été.</li></ul>`,""]
+];
+let turns=[];
+function renderMsgs(){const M=$("#msgs");
+  M.innerHTML=`<div class="msg a"><p>Bonjour, je suis <b>Camille</b>, assistante IA en architecture d'intérieur et en paysage. Je vous aide à choisir couleurs, matières, meubles, plantes et éclairage, à chaque étape de votre projet.</p><p>Je cite mes sources, et je vous oriente vers un professionnel pour tout ce qui touche à la structure, à l'électricité ou à l'urbanisme.</p></div>`+
+  turns.map(t=>t.u?`<div class="msg u">${esc(t.u)}</div>`:`<div class="msg a">${t.a}${t.s?`<div class="src">Sources : ${esc(t.s)}</div>`:""}<div class="src">Démo : réponse préenregistrée</div></div>`).join("");
+  $("#sugg").hidden=turns.length>0;M.scrollTop=M.scrollHeight}
+$("#sugg").innerHTML=SUGG.map(s=>`<button type="button">${esc(s)}</button>`).join("");
+$("#sugg").onclick=e=>{const b=e.target.closest("button");if(b)ask(b.textContent)};
+function ask(q){q=(q||"").trim();if(!q)return;openDrawer();turns.push({u:q});renderMsgs();
+  const M=$("#msgs"),tmp=document.createElement("div");tmp.className="msg a";tmp.innerHTML='<span class="typing" aria-label="Camille écrit"><i></i><i></i><i></i></span>';M.append(tmp);M.scrollTop=M.scrollHeight;
+  const hit=ANS.find(([re])=>re.test(q));
+  setTimeout(()=>{turns.push(hit?{a:hit[1],s:hit[2]}:{a:`<p>Dans la version finale, je réponds ici à votre question en m'appuyant sur votre projet, votre profil de goûts et nos fiches (matières, plantes, produits réels), avec mes sources.</p><p>Dans cette maquette, essayez une des questions proposées.</p>`,s:""});renderMsgs()},900)}
+function openDrawer(){$("#drawer").classList.add("open");$("#scrim").classList.add("on");renderMsgs();setTimeout(()=>$("#chatIn").focus(),250)}
+function closeDrawer(){$("#drawer").classList.remove("open");$("#scrim").classList.remove("on")}
+$("#fab").onclick=openDrawer;$("#tabAdv").onclick=openDrawer;$("#closeDrawer").onclick=closeDrawer;$("#scrim").onclick=closeDrawer;
+$("#composer").onsubmit=e=>{e.preventDefault();const v=$("#chatIn").value;$("#chatIn").value="";ask(v)};
+$("#chatIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("#composer").requestSubmit()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#drawer").classList.contains("open"))closeDrawer()});
+
+/* ============ ROUTAGE ET ÉVÉNEMENTS ============ */
+let view="accueil";
+function go(){const h=(location.hash||"#accueil").slice(1);view=VIEWS[h]?h:"accueil";render();window.scrollTo({top:0})}
+function render(){$("#app").innerHTML=`<div class="view">${VIEWS[view]()}</div>`;
+  document.querySelectorAll("[data-nav]").forEach(a=>a.setAttribute("aria-current",a.dataset.nav===view?"page":"false"));
+  flush();paintMats()}
+function rerenderBoard(){$("#board").innerHTML=boardHTML();flush()}
+function paintMats(){document.querySelectorAll("canvas[data-mat]").forEach(cv=>{const c=cv.dataset.mat,x=cv.getContext("2d",{willReadFrequently:true}),R=rng(hashStr(c)),W=cv.width,H=cv.height;
+  x.fillStyle=c;x.fillRect(0,0,W,H);for(let i=0;i<40;i++){const g=x.createRadialGradient(R()*W,R()*H,0,R()*W,R()*H,40+R()*80);g.addColorStop(0,rgba(c,0));g.addColorStop(1,rgba("#000000",0));x.fillStyle=rgba(R()<.5?"#ffffff":"#000000",.04);x.beginPath();x.arc(R()*W,R()*H,20+R()*60,0,7);x.fill()}
+  for(let k=0;k<60;k++){x.strokeStyle=rgba(R()<.5?"#000000":"#ffffff",.06);x.lineWidth=.5+R()*1.5;x.beginPath();let px=R()*W,py=0;x.moveTo(px,py);for(let y=0;y<=H;y+=10){px+=(R()-.5)*6;x.lineTo(px,y)}x.stroke()}grain(x,R,W,H,.05)})}
+window.addEventListener("hashchange",go);
+document.addEventListener("input",e=>{const c=e.target.closest("[data-cmp]");if(c){const box=document.getElementById(c.dataset.cmp);box.style.setProperty("--cut",c.value+"%");if(c.dataset.cmp==="cmp")cut=+c.value}});
+document.addEventListener("change",e=>{
+  if(e.target.id==="gSpace"){gal.space=e.target.value;render();return}
+  const gc=e.target.closest("[data-gc]");if(gc){gc.checked?guideDone.add(gc.dataset.gc):guideDone.delete(gc.dataset.gc);store.set("pr3_guide",[...guideDone]);rerenderBoard()}
+});
+document.addEventListener("click",e=>{
+  const t=e.target;
+  const f=t.closest("[data-fav]");if(f){e.stopPropagation();const id=f.dataset.fav;fav.has(id)?fav.delete(id):fav.add(id);store.set("pr3_fav",[...fav]);document.querySelectorAll(`[data-fav="${id}"]`).forEach(b=>{b.setAttribute("aria-pressed",fav.has(id));if(b.classList.contains("btn"))b.textContent=fav.has(id)?"Dans le moodboard":"Ajouter au moodboard"});return}
+  if(t.closest("[data-close]")||t.id==="dlg"){$("#dlg").close();if(!t.closest("a"))return}
+  const gl=t.closest("[data-gal]");if(gl){openGal(gl.dataset.gal);return}
+  const lk=t.closest("[data-look]");if(lk){$("#look").innerHTML=`<div class="notice"><b>Acheter le look.</b> En production : des dizaines de produits réels visuellement proches (canapé, luminaire, tapis, plantes…), présentés comme « similaires », avec prix et lien. Pas de produits dans la maquette.</div>`;return}
+  const adv=t.closest("[data-advice]");if(adv){if($("#dlg").open)$("#dlg").close();ask(adv.dataset.advice);return}
+  const go_=t.closest("[data-gout]");if(go_){gal.out=go_.dataset.gout==="1";gal.style="Tous";gal.space="Tous";render();return}
+  const gs=t.closest("[data-gstyle]");if(gs){gal.style=gs.dataset.gstyle;render();return}
+  const q=t.closest("[data-q]");if(q){quizLikes[quizI]=q.dataset.q==="1";store.set("pr3_quiz",quizLikes);quizI++;render();return}
+  if(t.id==="quizReset"){quizI=0;quizLikes={};store.set("pr3_quiz",{});render();return}
+  const ex=t.closest("[data-ex]");if(ex){study=ex.dataset.ex==="out"?STUDY_OUT:STUDY_IN;ptab="rendus";activeZone=null;variant=0;cut=50;render();return}
+  const pt=t.closest("[data-pt]");if(pt){ptab=pt.dataset.pt;rerenderBoard();return}
+  const z=t.closest("[data-z]");if(z){activeZone=activeZone==z.dataset.z?null:z.dataset.z;rerenderBoard();return}
+  const v=t.closest("[data-var]");if(v){variant=+v.dataset.var;rerenderBoard();return}
+  const g=t.closest("[data-gs]");if(g){const i=+g.dataset.gs;guideOpen=guideOpen===i?-1:i;rerenderBoard();return}
+  if(t.id==="refineBtn"){const v=$("#refineIn").value.trim();if(v)ask(`Affiner mon étude : ${v}`);return}
+});
+$("#themeBtn").onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;r.dataset.theme=dark?"light":"dark";store.set("pr3_theme",r.dataset.theme)};
+{const t=store.get("pr3_theme",null);if(t)document.documentElement.dataset.theme=t}
+quizI=Math.min(Object.keys(quizLikes).length,QUIZ.length);
+go();
+</script>
