@@ -1,307 +1,295 @@
 # Pièce Rêvée : plan technique
 
-> Version 1 du 26 octobre 2026. Statut : **en attente de validation**. Aucune ligne de code applicatif n'est écrite tant que ce plan n'est pas validé.
+> Version 2 du 26 octobre 2026. Statut : **en attente de validation**.
 >
-> Les tarifs cités viennent de la documentation Anthropic (modèles Claude) et d'agrégateurs de prix (fournisseurs d'images), consultés le 26/10/2026. Ceux des fournisseurs d'images restent **à confirmer sur les pages officielles** au moment de l'intégration ; ils seront alors consignés dans `docs/DECISIONS.md`. Hypothèse de change : 1 $ = 0,90 €.
+> **Changements de la v2** :
+> - prix calés sur la concurrence ;
+> - galerie d'inspiration par thème et quiz de style ;
+> - Camille devient une experte en architecture d'intérieur **et** en paysagisme, avec ses sources ;
+> - extérieurs et logement entier (« Ma maison ») ;
+> - objectif de dizaines de milliers de références réelles ;
+> - guide de conseils à chaque étape ;
+> - exigence de réalisme relevée ;
+> - plan qualité « zéro erreur connue ».
+>
+> Les tarifs Claude viennent de la documentation Anthropic. Les prix des fournisseurs d'images et des concurrents viennent d'agrégateurs consultés le 26/10/2026 : ils seront confirmés sur les sites officiels avant tout choix définitif. Hypothèse de change : 1 $ = 0,90 €.
 
 ---
 
-## 1. Ce que m'apprend le prototype
+## 1. Positionnement face à la concurrence
 
-`reference/piece-revee.html` est une page unique de 1 000 lignes : HTML, CSS et JS sans framework.
+| Concurrent | Prix constaté (à confirmer) | Ce qu'il fait bien | Ce qui lui manque |
+|---|---|---|---|
+| Interior AI | 49 à 199 $/mois (une source indique environ 19 $) | Restyle rapide d'une photo | Anglais, pas de produits achetables, pas de plan d'action |
+| ReimagineHome | 14 à 99 $/mois, à crédits | Bonne gamme de prix | Rendus seulement |
+| RoomGPT | 9 à 29 $ | Simple | Qualité inégale, rien après l'image |
+| Collov AI | 16 $ (60 images), 39 $ (150 images), environ 0,27 $ l'image | Home staging pour les pros | Pas de conseil, pas de shopping réel |
+| Homestyler / Planner 5D | Gratuit à 4,99 $/mois | 3D, plus de 300 000 modèles 3D | Modèles 3D, pas d'objets achetables ; pas d'édition de sa propre photo |
+| GenRoom et applis « jardin IA » | Crédits gratuits, puis 9 à 18 $/mois | 18 styles de jardin | Visuels conceptuels, pas de plantes adaptées au climat |
+| PRO Landscape+ | 90 $/mois | Outil de paysagiste pro | Réservé aux professionnels |
 
-**À conserver (identité et périmètre)**
-- Les jetons de design : fond minéral `#F4F4EF`, accent cobalt `#2747D0` (`#93A6FF` en sombre), Bricolage Grotesque, Onest, JetBrains Mono, rayons de 14 et 8 px, mode sombre complet.
-- La structure : barre supérieure et barre d'onglets mobile à 5 entrées (Accueil, Projet, Explorer, Moodboard, Camille), le bouton flottant « Demander à Camille » et le tiroir latéral, qui passe en plein écran sur mobile.
-- Le parcours du projet : brief à gauche, planche à droite, avec 6 onglets (Plan sur photo, Concept et palette, Shopping, Tutos, Sur-mesure, Budget), un champ « Affiner » et la liste d'achats.
-- Le ton éditorial : fiches matière (origine, usages, entretien, prix, version petit budget), accords (proportions, raisons), mobilier (éditeur officiel, alerte contrefaçon), lieux (leçons à emprunter, palette).
-- Les visuels de matières générés par canvas. Ce ne sont ni des photos ni des images d'IA, et ils sont très légers : je les garde en **repli** et comme vignettes de nuancier, en attendant les vraies photos sous licence.
-- Le contenu : 25 matières, 10 accords, 22 meubles et 14 lieux. C'est la base du seed, qui reste à compléter jusqu'aux volumes de la section 3.4.
+**Notre promesse unique** : aucun concurrent repéré ne combine dans une même appli, en français :
+- le rendu photoréaliste de **sa** pièce ou de **son** jardin ;
+- de vrais produits achetables, avec un prix daté ;
+- des tutos et des conseils à chaque étape ;
+- une experte conversationnelle ;
+- l'intérieur **et** l'extérieur, pour tout le logement.
 
-**À dépasser (écarts avec le cahier des charges)**
+**Principe tarifaire** : un essai gratuit généreux qui montre la valeur dès la première étude, un **Pass Projet sans abonnement** (la plupart des gens rénovent une pièce, pas douze), et un abonnement sous le prix des leaders.
 
-| Prototype | Problème | Cible |
+### Offres proposées (TTC)
+
+| Offre | Prix | Contenu | Repère concurrent |
+|---|---|---|---|
+| **Découverte** | Gratuit | 1 étude complète offerte à l'inscription (1 rendu filigrané), puis 3 rendus d'essai par mois. Galerie, bibliothèque et quiz illimités. Camille : 10 messages par jour | Collov : 5 rendus gratuits ; GenRoom : 4 crédits |
+| **Pass Projet** | **14,90 €**, une fois, valable 30 jours | 3 études, 30 rendus HD, retouches, PDF, Camille illimitée, guide d'étapes | Aucun équivalent repéré |
+| **Plus** | **9,90 €/mois** ou **69 €/an** (−42 %), essai de 7 jours | Usage raisonnable : 10 études et 60 rendus HD par mois, « Ma maison » multi-pièces, tout le reste illimité | Interior AI 19 à 49 $ ; ReimagineHome 14 $ |
+| **Crédits** | 4,90 € les 15 rendus | Sans abonnement, valables 12 mois | Collov ≈ 0,27 $ l'image |
+| **Pro** | **29 €/mois** | 100 rendus, home staging en lot, export HD sans filigrane, facturation entreprise | Collov 39 $ / 150 images |
+| **Pro Agence** | **79 €/mois** | 400 rendus, 3 utilisateurs, marque blanche | Collov Enterprise 225 $ |
+
+---
+
+## 2. Ce que m'apprend le prototype
+
+Les éléments à garder et à dépasser restent ceux de la v1.
+
+**À conserver** :
+- l'identité visuelle : fond minéral, cobalt `#2747D0`, Bricolage Grotesque, Onest, JetBrains Mono, mode sombre ;
+- la navigation : barre d'onglets mobile, bouton flottant de Camille, tiroir latéral ;
+- le parcours brief → planche à 6 onglets ;
+- le ton éditorial ;
+- les visuels de matières générés par canvas, en repli ;
+- les contenus de départ : 25 matières, 10 accords, 22 meubles, 14 lieux.
+
+**À dépasser** :
+- les produits inventés par le modèle : remplacés par le catalogue réel ;
+- les liens Google : remplacés par le redirecteur affilié ;
+- le calque CSS : remplacé par de vrais rendus ;
+- le `localStorage` : remplacé par Supabase ;
+- la validation JSON minimale : remplacée par Zod ;
+- l'appel IA côté client : remplacé par des routes serveur ;
+- le budget qui additionne les alternatives : corrigé ;
+- les défauts d'accessibilité (boutons imbriqués, onglets, tiroir focalisable) : corrigés.
+
+---
+
+## 3. Nouvelles exigences
+
+### 3.1 Tout le logement, dedans et dehors
+
+- **Espaces couverts.**
+  - Intérieur : séjour, chambre, chambre d'enfant, cuisine, salle de bain, WC, entrée, couloir, escalier, bureau, dressing, buanderie, combles, sous-sol, studio entier.
+  - Extérieur : jardin, terrasse, balcon, loggia, cour, allée, entrée et portail, clôture, façade, abords de piscine, potager, toit-terrasse, véranda.
+- **« Ma maison »** : un logement regroupe plusieurs pièces.
+  - Un **fil conducteur** (palette, matières, style) assure la cohérence de pièce en pièce.
+  - L'étude de chaque nouvelle pièce le respecte, sauf demande contraire.
+  - Un budget global et un calendrier des travaux couvrent tout le logement.
+- **Étude extérieure** (même parcours, schéma JSON dédié) :
+  - analyse : exposition (orientation estimée et confirmée par l'utilisateur), pente, sol visible, ombres, vis-à-vis ;
+  - commune ou code postal → **zone de rusticité** et climat ;
+  - plan de plantation annoté sur la photo : plantes avec nom latin et nom commun, taille adulte, exposition, arrosage, floraison, toxicité pour les animaux ;
+  - calendrier de plantation et d'entretien sur 12 mois ;
+  - matériaux extérieurs, éclairage extérieur, arrosage ;
+  - **rappels réglementaires** : distances de plantation (Code civil, art. 671), déclaration préalable pour une terrasse surélevée, un abri, une pergola ou une clôture selon le PLU. Ils sont toujours présentés comme « à vérifier en mairie ».
+- **Rendu extérieur** : variante saisonnière (été ou hiver) et vue « dans 3 ans », quand les plantes ont poussé.
+
+### 3.2 Galerie d'inspiration par thème
+
+- **Objectif** : que chacun se reconnaisse. Environ 20 styles × 20 espaces (intérieur et extérieur), soit **au moins 1 500 images** au lancement.
+- **Filtres** : style, espace, budget, situation (locataire ou propriétaire), surface (petit espace), couleur dominante, ambiance.
+- **Origine des images** :
+  - images générées par IA à partir de prompts d'architecte, contrôlées par Claude Vision et validées à la main, avec la mention visible « Image générée par IA » et C2PA ;
+  - photos sous licence (Unsplash, Pexels, avec attribution) ;
+  - plus tard, projets d'utilisateurs partagés **avec consentement explicite** et modération.
+- **Chaque image** est cliquable :
+  - « **Je veux ça chez moi** » lance une étude avec ce style et cette palette sur la photo de l'utilisateur ;
+  - « **Acheter le look** » propose des produits **réels et similaires** du catalogue, par recherche visuelle. Ils sont présentés comme « similaires », jamais comme « identiques » ;
+  - « Ajouter au moodboard » ;
+  - « Demander à Camille ».
+- **Quiz de style** (onboarding et galerie) : 12 à 20 images à garder ou écarter, d'un glissement de doigt. Il en ressort un profil de goûts (styles pondérés, palette, matières) affiché à l'utilisateur, modifiable, et réutilisé par l'étude et par Camille.
+- Chaque thème a sa page SEO (« Salon japandi », « Jardin méditerranéen sec »…) avec un texte réellement rédigé et vérifié.
+
+### 3.3 Camille, experte en architecture d'intérieur et en paysagisme
+
+- **Modèle** : Sonnet 5.5 pour la conversation. Les questions complexes (plan, structure, réglementation, projet global) passent à Opus 5.5 grâce à un routage automatique.
+- **Base de connaissances vérifiée (RAG)**, chaque passage étant cité :
+  - fondamentaux d'architecture d'intérieur : circulations, ergonomie et cotes (hauteurs de plan, dégagements), éclairage par couches, couleur et lumière, acoustique, proportions ;
+  - paysagisme : plantes adaptées au climat, sol, exposition, strates, entretien, eau, biodiversité ;
+  - réglementation de vulgarisation tirée de sources officielles (service-public.fr, Légifrance, ADEME), avec date de vérification ;
+  - toutes les fiches de l'appli (matières, accords, mobilier, lieux, plantes, tutos).
+- **Recherche web restreinte** (outil de recherche Anthropic limité à une liste de domaines officiels), pour les questions réglementaires récentes.
+- **Outils** : la v1 complétée par `rechercher_plantes`, `lire_maison` (toutes les pièces) et `rechercher_galerie`.
+- **Garde-fous** : la v1, plus le renvoi systématique vers un professionnel pour la structure, l'électricité, le gaz, les murs porteurs et les autorisations d'urbanisme. Camille donne alors l'information générale et ne valide jamais elle-même.
+- **Qualité mesurée** :
+  - un jeu de **100 questions** (60 intérieur, 30 extérieur, 10 injections) ;
+  - réponses notées sur l'exactitude, l'utilité, les sources et l'absence de référence inventée ;
+  - **relecture par un architecte d'intérieur et un paysagiste diplômés** (question 5) ;
+  - 95 % de réponses jugées exactes requis avant la mise en production.
+
+### 3.4 Des dizaines de milliers de références réelles
+
+- **Objectif au lancement** : **au moins 50 000 produits réels**, chez au moins 8 enseignes, dont des jardineries et des pépinières. Au moins 1 000 références dans chacune des 15 catégories principales (assises, rangements, luminaires, textiles, tapis, peinture, sols, carrelage, robinetterie, déco, mobilier de jardin, plantes, pots, éclairage extérieur, matériaux extérieurs).
+- **Ce volume dépend de l'approbation des programmes d'affiliation.** Je ne complèterai **jamais** avec des produits inventés. En attendant les flux, c'est le mode « suggestion » signalé.
+- **Pour chaque besoin de l'étude** : 1 choix principal et 2 alternatives, puis « **Voir toutes les alternatives** » (jusqu'à plusieurs centaines), avec filtres prix, couleur, matière, dimensions, délai, enseigne et seconde main.
+- **Recherche visuelle** : photographier un objet ou cliquer sur un élément d'un rendu fait apparaître les produits similaires (embeddings d'image).
+- **Base végétale** : plantes avec leurs caractéristiques horticoles, issues de sources ouvertes à licence compatible (Tela Botanica par exemple, licence à vérifier) et des flux des pépiniéristes.
+- **Peintures** : nuanciers des marques, avec la règle de licence de la v1.
+
+### 3.5 Des conseils à chaque étape
+
+Chaque projet devient un **parcours guidé** en 5 étapes. Chaque étape a sa liste de contrôle, ses conseils d'expert, ses « erreurs à éviter » et un bouton « Demander à Camille » qui transmet l'étape en cours.
+
+1. **Préparer** : prendre les mesures (guide illustré), photographier, fixer le budget avec une marge de 10 à 15 %, vérifier les autorisations (copropriété, mairie, bail).
+2. **Concevoir** : étude, rendus, affinages, moodboard.
+3. **Acheter** : liste d'achats ordonnée par délai de livraison, alertes de prix et de rupture (envoyées seulement avec un consentement email), alternatives.
+4. **Réaliser** : ordre des travaux, tutos pas à pas (outils, temps, difficulté, sécurité), demandes de devis aux artisans.
+5. **Profiter et entretenir** : entretien des matières et des plantes, calendrier du jardin, photo « après » à comparer au rendu.
+
+Les étapes avancent au fil des actions de l'utilisateur. Des rappels par email optionnels sont prévus (par exemple « c'est le moment de planter vos vivaces »).
+
+### 3.6 Des rendus ultra-réalistes
+
+- **Seuil relevé** : au moins **90 %** des rendus jugés fidèles et sans artefact majeur sur les 30 photos d'évaluation (contre 85 % dans le brief), avec une notation humaine en plus des scores automatiques.
+- **Résolutions** : 2048 px par défaut pour les offres payantes, **4K** pour Pro, Pass et Plus quand le fournisseur retenu le permet. L'offre gratuite garde 1024 px avec filigrane.
+- **Régénération gratuite** quand l'utilisateur signale un défaut. Les signalements alimentent le banc d'essai.
+- Le pipeline de la v1 reste (prétraitement, prompt par zone, conditionnement structurel, super-résolution, correction de couleur, contrôle par Claude Vision). S'y ajoutent les **prompts de lumière par heure de la journée** et la cohérence des ombres extérieures avec l'orientation.
+
+### 3.7 Un site abouti et sans erreur connue
+
+Aucun logiciel ne peut garantir « zéro bug ». Je m'engage en revanche sur **zéro erreur connue au lancement**, et sur une détection et une correction rapides de celles qui apparaissent ensuite.
+
+- **Tests unitaires** : TypeScript strict, Zod sur toutes les frontières, couverture ≥ 90 % sur la logique métier (quotas, facturation, appariement, parsing des sorties IA).
+- **Tests de bout en bout** : Playwright sur tous les parcours (inscription, quiz, étude intérieure et extérieure, rendus, retouche, Ma maison, achat de Pass, abonnement, crédits, partage, suppression de compte), sur mobile et sur desktop.
+- **Régression visuelle** : captures Playwright comparées à chaque PR.
+- **Accessibilité** : `axe` automatisé et test manuel au lecteur d'écran (VoiceOver, NVDA).
+- **Performance** : Lighthouse ≥ 90 dans toutes les catégories, budgets de poids par page.
+- **Contrôle des liens** : un robot vérifie chaque nuit les liens produits, les liens éditoriaux et les pages.
+- **Déploiement** : environnement de recette, feature flags, Sentry avec alertes, tableau des erreurs.
+- **Avant le lancement** : une session de chasse aux bugs, à mener avec vous.
+
+---
+
+## 4. Architecture
+
+Inchangée par rapport à la v1, avec ces ajouts :
+- un index RAG (pgvector) pour la base de connaissances ;
+- des embeddings d'image pour la recherche visuelle ;
+- une tâche nocturne qui contrôle les liens ;
+- une table `plants`.
+
+```
+Navigateur / PWA ─► Next.js sur Vercel (cdg1) : pages ISR SEO, app connectée, /api/camille (SSE), /go/[id], webhooks Stripe
+                    │
+                    ├─► Supabase UE : Postgres + pgvector (produits, galerie, connaissances), Auth, Storage privé, RLS
+                    ├─► Trigger.dev : étude, rendus, retouches, PDF, lots Pro, ingestion catalogue, génération galerie, purge RGPD, contrôle des liens
+                    ├─► Anthropic API : Opus 5.5 (étude, questions complexes), Sonnet 5.5 (Camille, prompts, contrôles), Haiku 5.5 (classement, tags)
+                    ├─► ImageProvider : au moins 2 fournisseurs interchangeables (édition guidée + ControlNet), super-résolution, SAM 2
+                    ├─► Voyage AI : embeddings texte et image
+                    └─► Stripe · Resend · Sentry · PostHog UE · Upstash
+```
+
+**Choix techniques** (détaillés dans DECISIONS.md au moment de l'intégration) :
+- Trigger.dev pour les tâches longues (alternative : Inngest) ;
+- Voyage AI pour les embeddings ;
+- @react-pdf pour le PDF ;
+- heic-convert puis sharp pour les photos ;
+- next-intl pour les langues ;
+- Tailwind, shadcn/ui et Radix pour l'interface ;
+- le client Supabase typé, sans ORM.
+
+---
+
+## 5. Schéma de données
+
+Le schéma de la v1 reste (comptes, facturation, projets, études versionnées, besoins et correspondances, rendus, catalogue, affiliation, éditorial, moodboard, Camille, artisans, journal des coûts IA). Il est complété par :
+
+- `homes` (propriétaire, nom, code postal, zone de rusticité, `common_thread jsonb` pour le fil conducteur) ; `projects.home_id` rattache chaque pièce à son logement ;
+- `project_steps` (projet, étape 1 à 5, éléments de la liste de contrôle cochés, dates) ;
+- `gallery_images` (style, espace, budget, situation, couleurs, `media_asset_id`, embedding d'image, statut de validation, `ai_generated`) ;
+- `style_quiz_answers` (utilisateur, image, choix) et `profiles.taste_profile` ;
+- `plants` (nom latin, noms communs, rusticité, exposition, sol, arrosage, taille adulte, floraison, persistance, toxicité, source et licence), et `products.plant_id` pour les produits de pépinière ;
+- `knowledge_chunks` (source, URL, date de vérification, domaine intérieur ou extérieur, texte, embedding, statut de relecture) ;
+- `price_alerts` (utilisateur, produit, seuil, consentement) ;
+- `link_checks` (URL, statut, date).
+
+RLS sur toutes les tables, avec les mêmes principes que la v1 : propriétaire, organisation, lecture publique de l'éditorial et de la galerie validée, partage par fonction dédiée.
+
+---
+
+## 6. Phases
+
+| Phase | Contenu | Fin de phase |
 |---|---|---|
-| Produits « réels » inventés par le modèle (`nom`, `marque`, `prix_min/max`) | Enfreint la règle 3 : risque d'hallucination | Besoins décrits par attributs, appariés au catalogue réel ; sinon « à chercher » |
-| Liens Google Shopping et recherche générique | Pas de lien produit précis ni d'affiliation | Redirecteur `/go/[id]` vers un lien affilié tiré du flux |
-| « Aperçu des couleurs » = calque teinté en CSS | Aucun rendu réel | Pipeline de rendu photoréaliste (section 5) |
-| État dans `localStorage` (étude, chat, moodboard) | Perdu en changeant d'appareil, pas de compte | Supabase + RLS |
-| Photo non conservée | Plan inutilisable au retour | Stockage privé UE, purge configurable |
-| JSON IA vérifié par 2 tests (`concept`, `produits`) | Sorties partielles possibles | Sorties structurées + Zod strict + réparation et nouvel essai |
-| Camille via `window.claude.sample` côté client | Ne marche que dans Claude, prompt exposé | Route serveur, SDK Anthropic, outils validés |
-| Budget = somme des min/max de tous les produits | Additionne les alternatives | Total = choix principaux + liste d'achats |
-
-**Dette d'accessibilité repérée (à corriger dès la phase 1)**
-- Cartes en `role="button"` qui contiennent un autre bouton (le cœur) : éléments interactifs imbriqués.
-- Onglets sans `aria-controls` ni navigation aux flèches.
-- Tiroir masqué par `aria-hidden` mais encore focalisable.
-- `dialog` sans `aria-labelledby`.
-- La recherche re-rend toute la vue à chaque frappe, ce qui fait perdre le focus.
+| 1. Fondations | Dépôt, CI, design system, auth, migrations et RLS, accueil, squelette du quiz de style, preview | Accueil fidèle en preview, CI verte. **Candidatures d'affiliation déposées** |
+| 2. Étude | Upload, contrôle qualité, études intérieure **et extérieure**, Ma maison, guide en 5 étapes, écran résultat, PDF, partage | 10/10 études valides en moins de 90 s, dont 3 en extérieur |
+| 3. Rendus | ImageProvider, pipeline, rendus saisonniers en extérieur, banc d'essai, retouche | Au moins 90 % de rendus jugés fidèles sur 30 photos, rapport livré |
+| 4. Catalogue | Au moins 8 flux, dont jardinerie ; base végétale ; appariement ; recherche visuelle ; `/go/[id]` ; contrôle des liens | Au moins 50 000 produits réels (selon les approbations), 100 % avec lien et prix réels |
+| 5. Camille experte | RAG, outils, recherche web restreinte, mémoire, garde-fous, routage Opus | 100 questions, ≥ 95 % exactes, injections bloquées, relecture par les pros |
+| 6. Éditorial et galerie | 60 matières, 30 accords, 80 meubles, 40 lieux, fiches plantes, **galerie de 1 500 images ou plus**, quiz complet, pages SEO par thème, admin | Volumes atteints et relus, Lighthouse ≥ 90 |
+| 7. Monétisation | Découverte, Pass, Plus, Crédits, Pro et Agence ; Stripe en mode test ; quotas ; tableau de bord | Achat, abonnement, résiliation et remboursement testés |
+| 8. Qualité et lancement | Légal, cookies, sécurité, régression visuelle complète, chasse aux bugs, runbook, checklist | Zéro bug connu bloquant ou majeur, checklist validée avec vous |
 
 ---
 
-## 2. Architecture
+## 7. Coûts et marges
 
-```
-                         ┌────────────────────────────── Vercel (région cdg1, Paris) ─────────────────────────────┐
- Navigateur / PWA  ───►  │ Next.js App Router (RSC, Server Actions, Route Handlers)                                │
- (mobile d'abord)        │  • pages publiques ISR (SEO : matières, accords, mobilier, lieux, blog)                 │
-                         │  • app connectée (projet, moodboard, compte)                                           │
-                         │  • /api/camille (streaming SSE)   • /go/[id] (redirecteur)   • /api/stripe/webhook     │
-                         │  • middleware : CSP à nonce, Upstash rate-limit, session Supabase                     │
-                         └──────────────┬──────────────────────────┬──────────────────────────┬──────────────────┘
-                                        │                          │                          │
-                     ┌──────────────────▼───────┐   ┌──────────────▼──────────┐   ┌───────────▼──────────┐
-                     │ Supabase (UE, Francfort  │   │ Trigger.dev (tâches     │   │ Stripe (Checkout,    │
-                     │ ou Paris)                │◄──┤ longues, reprise)       │   │ Portal, Billing, Tax)│
-                     │ Postgres + pgvector, RLS │   │  • étude (analyse→JSON) │   └──────────────────────┘
-                     │ Auth (lien magique,      │   │  • rendus (3 variantes) │
-                     │   Google, Apple)         │   │  • retouche par zone    │   ┌──────────────────────┐
-                     │ Storage (privé, UE)      │   │  • PDF, OG, lots Pro    │──►│ Anthropic API        │
-                     └──────────────────────────┘   │  • ingestion catalogue  │   │ Opus/Sonnet/Haiku 5.5│
-                                                    │    (cron nocturne)      │   └──────────────────────┘
-                                                    │  • purge RGPD (cron)    │   ┌──────────────────────┐
-                                                    └─────────┬───────────────┘──►│ ImageProvider        │
-                                                              │                   │ (fal / Replicate /   │
-                                                              ▼                   │  Google / OpenAI …)  │
-                                         Resend (emails) · Sentry · PostHog UE    └──────────────────────┘
-```
+### Coût unitaire
 
-**Choix structurants (à reporter dans DECISIONS.md, avec la version vérifiée au moment de l'installation)**
-
-| Sujet | Choix | Raison | Alternative documentée |
-|---|---|---|---|
-| Tâches longues | **Trigger.dev** (v4) | Pas de limite de durée, dépendances lourdes possibles (sharp, libheif, PDF), lots de 50 photos, reprise par étape | Inngest : plus léger sur Vercel, mais chaque étape reste soumise aux limites de durée des fonctions |
-| Embeddings | **Voyage AI** (`voyage-3.5` ou successeur, multimodal si besoin), recommandé par Anthropic, qui n'a pas d'API d'embeddings | Texte et image, qualité de recherche, données hébergeables via DPA | OpenAI `text-embedding-3-small`, ou un modèle open source sur Replicate |
-| PDF | **@react-pdf/renderer** côté tâche | Sans Chromium, typographies intégrées, QR via `qrcode` | Puppeteer dans Trigger.dev si la mise en page l'exige |
-| HEIC | `heic-convert` (libheif en WASM), puis `sharp` | Le binaire précompilé de sharp ne décode pas le HEIC | Conversion par le fournisseur d'images |
-| i18n | `next-intl`, français par défaut, clés prêtes pour l'anglais | Compatible App Router et RSC | — |
-| UI | Tailwind 4 + shadcn/ui restylé + Radix (accessibilité) | Base accessible, peu de dépendances | — |
-| ORM | **Aucun** : client Supabase typé (`supabase gen types`) + SQL dans les migrations | RLS naturelle, une seule source de vérité | Drizzle si la logique SQL grossit |
-| Tests | Vitest, Playwright, Lighthouse CI, `pnpm audit` + Dependabot | Imposé | — |
-
-**Organisation du dépôt (un seul projet Next.js, pnpm)**
-
-```
-app/              routes (fr) : (public)/, (app)/, api/, go/[id]/
-components/       design system + composants métier
-lib/
-  ai/             client Anthropic, schémas Zod, journalisation des coûts, garde-fous
-  images/         ImageProvider + adaptateurs, prétraitement, post-traitement, vérification
-  catalog/        ingestion, normalisation, appariement hybride
-  billing/        Stripe, quotas, crédits
-  security/       rate-limit, validation des uploads, CSP
-prompts/          prompts versionnés (study.v1.md, camille.v1.md, render.v1.md…)
-trigger/          tâches Trigger.dev
-supabase/         migrations/, seed/, policies testées
-emails/           React Email
-eval/             banc d'essai des rendus (photos sous licence + manifest)
-tests/            unit/, e2e/
-docs/             PLAN, DECISIONS, DATA_SOURCES, RUNBOOK, CHANGELOG, COSTS, LEGAL/
-```
-
----
-
-## 3. Schéma de données (Postgres, RLS sur toutes les tables)
-
-Conventions : `uuid` en clé primaire, `created_at` et `updated_at`, suppression logique (`deleted_at`) pour les données utilisateur, purge physique par tâche cron.
-
-**Comptes et facturation**
-- `profiles` (id = `auth.users.id`, nom, langue, `taste_profile jsonb`, `budget_band`, `tenure` propriétaire ou locataire, `onboarding_done`, `consent_training bool default false`, `photo_retention_months`)
-- `user_roles` (user_id, rôle : `admin` ou `moderator`)
-- `subscriptions` (user_id, stripe_customer_id, stripe_subscription_id, plan, statut, fin de période, fin d'essai, `cancel_at`)
-- `stripe_events` (id de l'événement Stripe en clé primaire, type, `processed_at`) : **idempotence des webhooks**
-- `credit_ledger` (user_id, delta, motif, référence) : solde = somme, jamais modifiée côté client
-- `usage_events` (user_id, type : étude, rendu, message, retouche…, `period`) et une vue agrégée par période pour les quotas
-- `organizations`, `org_members` (offre Pro : logo, raison sociale, n° de TVA)
-
-**Projets et études**
-- `projects` (propriétaire, org_id optionnel, titre, type d'espace, statut, `is_public`, `share_slug`, `moderation_status`)
-- `project_photos` (projet, type pièce ou inspiration, chemin de stockage, dimensions, `quality jsonb`, `exif_stripped`, `expires_at`)
-- `project_briefs` (envie, styles[], budget, situation, éléments gardés, surface)
-- `photo_analyses` (photo, modèle, `prompt_version`, `input_hash` pour le cache, `result jsonb` validé)
-- `study_versions` (projet, numéro, parent, instruction d'affinage, `result jsonb`, `schema_version`, `prompt_version`) : **historique des affinages**
-- `product_needs` (version d'étude, zone, attributs : catégorie, style, matière, couleur, dimensions max, fourchette de prix, gamme ; `embedding vector`)
-- `need_matches` (besoin, produit, rang : principal, alternative 1 ou 2, score) ; un besoin sans correspondance porte `status = 'a_chercher'` et ses critères
-- `renders` (version d'étude, variante 1 à 3, fournisseur, modèle, prompt, prompt négatif, graine, tentatives, `scores jsonb`, chemin, dimensions, filigrane, C2PA, `cost_usd`)
-- `render_edits` (rendu, masque, consigne, résultat, coût)
-- `job_runs` (projet, type, statut, étape, erreur) : alimente l'écran de progression
-
-**Catalogue et affiliation**
-- `merchants` (enseigne, réseau, identifiant de programme, commission, actif)
-- `feeds` (enseigne, format CSV, XML ou API, référence de secret, dernière synchro, statut, nombre de lignes)
-- `products` (enseigne, `external_id`, GTIN, titre, marque, catégorie, styles[], matières[], couleurs[], `dims jsonb`, `price_cents`, devise, stock, livraison, `image_url`, `product_url`, `affiliate_url`, `feed_seen_at`, `removed_at`, `embedding vector`, `dedup_group`)
-- `affiliate_clicks` (produit, user_id optionnel, projet optionnel, `ip_hash` salé, date) : aucune IP en clair
-- `sponsored_placements` (marque, produit, période, emplacement) : toujours affichés avec la mention « sponsorisé »
-- `paint_colors` (marque, collection, nom, code, `hex_approx`, source, note de licence)
-
-**Éditorial, moodboard, Camille, artisans**
-- `materials`, `pairings`, `furniture_icons`, `places`, et des tables de liaison entre eux et avec les produits
-- `media_assets` (chemin, source : banque, kit presse ou IA ; licence, attribution, `authorization_doc`, `ai_generated`, `c2pa`)
-- `moodboards`, `moodboard_items` (élément de la bibliothèque, produit ou image importée, position), palette extraite
-- `chat_threads`, `chat_messages` (rôle, contenu jsonb, appels d'outils), `user_memory` (résumé consultable et effaçable par l'utilisateur)
-- `artisans` (SIRET, date de vérification, décennale déclarée, assureur, départements[], métiers[], spécialités[]), `artisan_photos`
-- `quote_requests`, `quote_request_recipients` (3 au maximum, imposé par une contrainte)
-- `reports` (signalements), `ai_calls` (fonction, modèle, jetons, coût, latence, résultat de validation, **sans contenu ni donnée personnelle**)
-
-**Principes RLS**
-- Données utilisateur : `owner_id = auth.uid()` ; membres d'une organisation via `org_members`.
-- Éditorial et produits actifs : lecture publique, écriture réservée aux admins.
-- Projet partagé : lecture publique uniquement via une fonction `get_shared_project(slug)` en `security definer`, qui ne renvoie que les champs publics.
-- Les tâches tournent avec la clé service, uniquement côté serveur.
-- Chaque politique est couverte par un test pgTAP ou Vitest (« l'utilisateur B ne lit pas le projet de A »).
-
----
-
-## 4. Le cœur : étude de projet
-
-```
-upload ─► contrôle (MIME réel, taille, HEIC→JPEG, EXIF retirés, redimensionnement 2048 px)
-       ─► qualité (luminance, netteté par variance du laplacien, Haiku 5.5 : « est-ce une pièce ? »)
-       ─► analyse vision (Opus 5.5) ─► JSON validé + mis en cache par hash
-       ─► étude (Opus 5.5, sorties structurées) ─► JSON validé (sinon réparation, 1 nouvel essai)
-       ─► appariement : besoins → embedding → pgvector + filtres SQL → principal + 2 alternatives | « à chercher »
-       ─► rendus (section 5), en parallèle de l'affichage de l'étude
-```
-
-- **Objectif : moins de 90 s** pour l'étude (critère de la phase 2). L'étude s'affiche dès qu'elle est prête et les rendus arrivent ensuite, sans bloquer l'écran.
-- Progression en étapes lisibles (lecture, palette, sélection, tutos, rendus), alimentée par `job_runs` (Realtime Supabase).
-- Sorties structurées de l'API (`output_config.format`) **et** validation Zod. Les schémas Zod sont la source unique ; le JSON Schema en est dérivé.
-- Palette : le modèle choisit **dans `paint_colors`**, qui lui est fourni filtré par teinte. Il ne cite donc jamais un numéro de nuancier inventé ; une teinte absente de la base est marquée « à vérifier ».
-- Affiner : nouvelle `study_version` à partir de la précédente et de la consigne, avec un diff visible.
-- Export PDF et partage public avec image Open Graph générée (`next/og`).
-
----
-
-## 5. Rendus photoréalistes
-
-**Interface `ImageProvider`** (TypeScript) : `edit(input)`, `generateControlled(input)`, `inpaint(input)`, `upscale(input)`, avec un retour normalisé (url, dimensions, coût, latence, C2PA). Le fournisseur est choisi par configuration, avec bascule automatique en cas de panne.
-
-**Candidats à évaluer au banc d'essai** (prix indicatifs à confirmer)
-
-| Famille | Exemple actuel | Prix indicatif | Atout |
-|---|---|---|---|
-| Édition guidée par instruction | FLUX.1 Kontext [pro] (BFL ou fal) | ≈ 0,04 $ / image | Bonne conservation de la scène |
-| Édition guidée par instruction | Gemini « Nano Banana 2.1 » / 2 | ≈ 0,03 à 0,10 $ selon la résolution | Bon rapport qualité-prix, sortie jusqu'en 4K |
-| Édition guidée par instruction | GPT Image 2 | ≈ 0,05 $ (moyen) à 0,21 $ (haut) | Respect des consignes |
-| Édition guidée par instruction | Seedream 5.0 Pro Edit | ≈ 0,07 $ (1,5K) à 0,135 $ (2K) | Sortie 2K native |
-| Diffusion + ControlNet | FLUX ou SDXL + profondeur et MLSD/Canny (fal ou Replicate) | ≈ 0,02 à 0,05 $ | Géométrie contrainte explicitement |
-
-**Pipeline** : prétraitement (redressement des verticales, Depth Anything, MLSD, segmentation SAM 2) → prompt par zone rédigé par Sonnet 5.5 (hex, matières, objectif 24 mm, lumière cohérente avec les fenêtres détectées) → génération avec conditionnement structurel → super-résolution → correction colorimétrique des murs vers les hex de la palette (masque « mur » de la segmentation) → contrôle par Claude Vision (géométrie, artefacts, cohérence) → au plus 2 nouvelles tentatives, puis affichage de la meilleure version.
-
-**Retouche par zone** : clic → masque SAM 2 → inpainting sur le masque → recomposition **au pixel près** (la zone hors masque est recopiée depuis l'original, et non régénérée).
-
-**Banc d'essai** : `pnpm eval:renders` produit un rapport HTML côte à côte avec les scores automatiques (SSIM des contours, cohérence de profondeur, score de Claude Vision), le temps et le coût par image. Le fournisseur par défaut sera choisi à partir de ce rapport.
-
----
-
-## 6. Catalogue réel
-
-- Adaptateurs d'ingestion par réseau (Awin, Effiliation, Kwanko, Rakuten, Amazon), avec un format commun validé par Zod.
-- Normalisation : catégories mappées, styles, matières et couleurs extraits par Haiku 5.5 **à partir du texte du flux uniquement**, dimensions parsées, embeddings, déduplication (GTIN, puis titre, marque et dimensions).
-- Cron nocturne : tout produit absent du flux reçoit `removed_at` et disparaît de l'affichage. Le prix affiché porte la date de mise à jour.
-- **Tant qu'aucun flux n'est branché** : mode « suggestion » clairement signalé, avec un lien vers la recherche du site officiel de la marque, sans prix ni image.
-
----
-
-## 7. Camille
-
-- Route serveur en streaming, Sonnet 5.5, prompt versionné dans `prompts/camille.vN.md`, mise en cache du préfixe (système, outils, index de la bibliothèque).
-- Outils typés par Zod et revalidés côté serveur : `rechercher_catalogue`, `rechercher_bibliotheque`, `lire_projet`, `ajouter_moodboard`, `lancer_rendu` (confirmation explicite dans l'interface et débit de crédits), `trouver_artisan`.
-- Garde-fous :
-  - les résultats d'outils et les fiches produits sont encadrés comme **données**, jamais comme instructions ;
-  - un produit n'est cité que s'il vient d'un outil (identifiant vérifié avant affichage en carte) ;
-  - renvoi vers un professionnel pour l'électricité, le gaz et la structure ;
-  - refus poli des demandes hors sujet ;
-  - quotas par offre.
-- Jeu de 40 questions de test, dont des injections, exécuté en CI de manière non bloquante, puis bloquante en phase 5.
-
----
-
-## 8. Découpage en phases
-
-Les 8 phases du brief, dans l'ordre. Un ajustement est proposé : **démarrer les candidatures d'affiliation dès la fin de la phase 1**. Les réseaux exigent un site public avec du contenu et l'approbation prend plusieurs semaines ; sans cela, la phase 4 serait bloquée.
-
-| Phase | Contenu | Fin de phase | Dépendances externes |
-|---|---|---|---|
-| 1. Fondations | Dépôt, CI, design system (jetons du prototype), auth, migrations + RLS, accueil, preview Vercel | Accueil fidèle en preview, CI verte | GitHub, Vercel, Supabase |
-| 2. Étude | Upload, contrôle qualité, analyse, étude JSON, écran résultat complet, PDF, partage | 10/10 études valides en moins de 90 s sur `eval/` | Clé Anthropic, 10 photos d'`eval/` |
-| 3. Rendus | `ImageProvider` (2 fournisseurs ou plus), pipeline, banc d'essai, retouche | Rapport livré, au moins 85 % de rendus jugés fidèles sur 30 photos | Comptes fal, Replicate ou autres ; budget d'essai |
-| 4. Catalogue | 2 flux réels ou plus, appariement hybride, `/go/[id]` | 100 % des produits affichés avec lien et prix réels, clics tracés | Programmes d'affiliation approuvés, clé Voyage |
-| 5. Camille | Agent, outils, streaming, mémoire, garde-fous | 40 questions réussies, injections bloquées | — |
-| 6. Éditorial | 60 matières, 30 accords, 80 meubles, 40 lieux, moodboard, SEO, admin | Volumes atteints et vérifiés, Lighthouse ≥ 90 | Relecture humaine, images sous licence |
-| 7. Monétisation | Offres, Stripe test, quotas, crédits, tableau de bord | Abonnement, résiliation et remboursement testés | Compte Stripe (mode test) |
-| 8. Conformité et lancement | Légal (brouillons), cookies, sécurité, runbook, checklist | Checklist validée avec vous | Juriste, domaine, Stripe live |
-
-Chaque phase se termine par : tests verts, preview déployée, `CHANGELOG.md` mis à jour, récapitulatif de ce qui reste.
-
----
-
-## 9. Coûts estimés par utilisateur
-
-Estimations à recalibrer avec les mesures réelles de `ai_calls` dès la phase 2. Modèles imposés : Opus 5.5 (4 $ / 20 $ par million de jetons en entrée et en sortie), Sonnet 5.5 (2 $ / 10 $), Haiku 5.5 (0,10 $ / 0,50 $).
-
-**Coût unitaire**
-
-| Opération | Détail | Coût |
+| Opération | Coût v1 | Objectif après optimisation |
 |---|---|---|
-| Contrôle qualité photo | Haiku 5.5 | < 0,001 € |
-| Analyse vision | Opus 5.5, environ 10 k jetons en entrée (4 images), 5 k en sortie avec réflexion | ≈ 0,14 € |
-| Étude complète | Opus 5.5, environ 15 k en entrée, environ 16 k en sortie avec réflexion | ≈ 0,34 € |
-| Prompts de rendu (×3) | Sonnet 5.5, un seul appel | ≈ 0,04 € |
-| Prétraitement (profondeur, lignes, segmentation) | — | ≈ 0,01 € |
-| 3 rendus HD (1,5 tentative en moyenne) + super-résolution + 4 à 5 contrôles Sonnet | — | ≈ 0,37 € |
-| **Étude Plus (3 rendus HD)** | | **≈ 0,90 €** |
-| **Étude gratuite (1 rendu 1024 px)** | | **≈ 0,60 €** |
-| Affinage (nouvelle version, sans rendu) | — | ≈ 0,30 € |
-| Retouche par zone | — | ≈ 0,07 € |
-| Message à Camille (cache actif, outils compris) | — | ≈ 0,013 € |
-| Rendu Pro (lot, 2K, contrôle inclus) | — | ≈ 0,11 € |
+| Étude (analyse et étude Opus 5.5) | ≈ 0,48 € | ≈ 0,35 € : un seul appel vision et étude, effort ajusté, cache |
+| 3 rendus HD avec contrôles | ≈ 0,37 € | ≈ 0,28 € : premier contrôle par Haiku, Sonnet seulement en cas de doute |
+| **Étude Plus complète** | **≈ 0,90 €** | **≈ 0,65 €** |
+| Étude gratuite (1 rendu) | ≈ 0,60 € | ≈ 0,45 € |
+| Rendu seul (2K, contrôlé) | ≈ 0,11 € | ≈ 0,08 € |
+| Message à Camille | ≈ 0,013 € | ≈ 0,013 € (environ 0,05 € si la question passe à Opus) |
+| Image de galerie (génération et contrôle) | ≈ 0,06 € | — |
 
-**Marge par offre** (prix TTC → HT avec une TVA à 20 %, frais Stripe et Stripe Tax d'environ 2 % + 0,25 € déduits)
+### Marges par offre (coûts v1, donc prudents ; prix TTC ramenés en HT, frais Stripe déduits)
 
 | Offre | Revenu net | Usage type | Coût IA | Marge |
 |---|---|---|---|---|
-| Gratuit, usage complet | 0 € | 2 études + 30 messages | ≈ 1,60 € / mois | **−1,60 €** |
+| Découverte | 0 € | 1 étude de bienvenue (une seule fois), puis 3 rendus et 20 messages par mois | 0,60 € une fois, puis ≈ 0,60 €/mois | Coût d'acquisition maîtrisé |
+| Pass Projet (14,90 €) | ≈ 11,90 € | 3 études, 2 affinages, 5 retouches, 80 messages | ≈ 4,70 € | ≈ +7,20 € (60 %) |
 | Plus mensuel (9,90 €) | ≈ 7,80 € | 2 études, 2 affinages, 3 retouches, 60 messages | ≈ 3,50 € | ≈ +4,30 € (55 %) |
-| Plus, gros utilisateur | ≈ 7,80 € | 8 études, 8 affinages, 150 messages | ≈ 12 € | **≈ −4 €** |
-| Pro (39 €) au quota plein | ≈ 31,70 € | 300 rendus | ≈ 33 € | **≈ −1 €** |
-| Pro à 50 % du quota | ≈ 31,70 € | 150 rendus | ≈ 16,50 € | ≈ +15 € |
-| Crédits (4,90 € les 10) | ≈ 3,75 € | 10 rendus | ≈ 1,10 € | ≈ +2,65 € (70 %) |
+| Plus annuel (69 €) | ≈ 4,70 €/mois | Usage plus faible en moyenne | ≈ 2,50 € | ≈ +2,20 € par mois |
+| Crédits (4,90 € les 15) | ≈ 3,75 € | 15 rendus | ≈ 1,65 € | ≈ +2,10 € (55 %) |
+| Pro (29 €) au quota plein | ≈ 23,50 € | 100 rendus | ≈ 11 € | ≈ +12,50 € |
+| Pro Agence (79 €) au quota plein | ≈ 64 € | 400 rendus | ≈ 44 € | ≈ +20 € |
 
-Trois points à corriger avant de fixer les prix (question 1 ci-dessous) :
-1. Le gratuit tel qu'écrit coûte cher : à 5 % de conversion, chaque abonné finance environ 19 gratuits.
-2. Il faut un « usage raisonnable » chiffré pour Plus.
-3. Le Pro à 300 rendus est déficitaire au quota plein.
+**Garde-fous** : usage raisonnable chiffré, plafond de dépense IA de 1,50 € par jour et par utilisateur (configurable), alerte de coût moyen, cache des analyses, API Batch pour le catalogue et la galerie.
 
-Les commissions d'affiliation (environ 3 à 8 % sur des paniers de mobilier) compensent une partie de ces coûts, mais ne doivent pas servir de base au modèle tant qu'elles ne sont pas mesurées.
-
-**Garde-fous** : plafond de dépense IA par utilisateur et par jour, alerte email si le coût moyen d'une étude dépasse un seuil, cache des analyses par hash de photo, API Batch (−50 %) pour l'enrichissement du catalogue.
-
----
-
-## 10. Risques principaux
-
-| Risque | Impact | Parade |
-|---|---|---|
-| Approbation des programmes d'affiliation lente ou refusée (Amazon exige des ventes rapides, IKEA n'a peut-être pas de programme en France) | Phase 4 bloquée | Candidater dès la phase 1, mode « suggestion » en attendant |
-| Fidélité géométrique des rendus inférieure à 85 % | Promesse produit | Banc d'essai, conditionnement structurel, comparaison des contours, plusieurs fournisseurs |
-| Licences des modèles d'images (certains poids FLUX sont non commerciaux hors API sous licence) | Juridique | N'utiliser que des API à licence commerciale, vérification consignée dans DECISIONS.md |
-| Données de nuanciers (droits sur les noms et les hex) | Juridique | Données publiques uniquement, hex marqués « approchant », accord des marques si nécessaire, sources dans DATA_SOURCES.md |
-| Coûts IA du gratuit et des gros utilisateurs | Marge | Quotas serveur, plafonds quotidiens, prix à valider (question 1) |
-| AI Act (article 50, transparence) et éventuels reports en cours | Conformité | Mention « Image générée par IA » + C2PA partout dès le départ, vérification du texte en vigueur en phase 8 |
-| Hébergement des données hors UE (Anthropic, fournisseurs d'images) | RGPD | DPA et clauses contractuelles types, registre des sous-traitants, photos jamais utilisées pour l'entraînement, options de traitement en UE vérifiées |
-| Volume éditorial (environ 210 fiches vérifiées) | Délai de la phase 6 | Brouillons assistés par IA, **vérification humaine obligatoire**, statut « relu » en admin |
-| Disponibilité du nom « Pièce Rêvée » (INPI, domaine) | Marque | Recherche en phase 1, options présentées, aucun achat sans votre accord |
+**Coûts ponctuels de mise en route (payants, à valider)** :
+- banc d'essai des rendus : 30 à 60 € ;
+- génération de la galerie (environ 1 500 images retenues sur environ 2 000 générées) : environ 100 à 150 € ;
+- appels Claude pendant le développement : environ 50 € ;
+- enrichissement du catalogue (Batch) : environ 20 € par tranche de 50 000 produits.
 
 ---
 
-## 11. Questions bloquantes
+## 8. Risques principaux
 
-1. **Prix et quotas.** Je propose : gratuit = 1 étude par mois (1 rendu filigrané) et 10 messages à Camille par jour ; Plus = usage raisonnable fixé à 10 études et 60 rendus HD par mois ; Pro = 150 rendus par mois à 39 €, ou 300 rendus à 59 €. Validez-vous, ou préférez-vous d'autres valeurs ?
-2. **Structure juridique et comptes.** Existe-t-il déjà une société (SIRET, n° de TVA) ? Stripe, les réseaux d'affiliation et les mentions légales en ont besoin. Quels comptes existent déjà (GitHub, Vercel, Supabase, Anthropic, Stripe, Resend, Sentry, PostHog, Upstash, Trigger.dev) et lesquels dois-je vous lister à créer ?
-3. **Dépôt GitHub.** Cette session n'est rattachée à aucun dépôt. Où dois-je créer et pousser le code (compte ou organisation, nom du dépôt) ?
-4. **Photos d'évaluation.** Fournissez-vous les 30 photos d'`eval/` (et dans quel délai), ou m'autorisez-vous à en sélectionner sur Unsplash ou Pexels sous licence, avec attribution et licence archivées ? Les 10 premières sont nécessaires dès la phase 2.
-5. **Budget d'essai payant.** Le banc d'essai de la phase 3 représente environ 30 photos × 4 à 5 fournisseurs × 3 variantes, soit environ 400 images et **30 à 60 € de crédits API**, auxquels s'ajoutent environ 20 € d'appels Claude en phases 2 et 3. Validez-vous ce budget et la création des comptes fournisseurs concernés ?
+| Risque | Parade |
+|---|---|
+| Le volume de références dépend des approbations d'affiliation | Candidater dès la phase 1, viser 15 enseignes pour en obtenir 8, mode « suggestion » en attendant |
+| Une experte IA peut se tromper | RAG sourcé, citations, routage vers Opus, 100 questions de test, **relecture par des professionnels**, renvoi aux pros sur les sujets à risque |
+| Réalisme : artefacts résiduels | Banc d'essai, plusieurs fournisseurs, contrôle automatique, régénération gratuite sur signalement |
+| Galerie d'images générées : uniformité ou erreurs | Prompts variés par architecte, validation humaine, mélange avec des photos sous licence |
+| Droits (images, nuanciers, données de plantes, licences des modèles) | Sources et licences consignées dans DATA_SOURCES.md, aucune image sans droits |
+| Réglementation (urbanisme, Code civil) mal résumée | Uniquement des sources officielles, datées, et la mention « à vérifier en mairie » |
+| Coûts IA | Quotas serveur, plafonds, optimisations ci-dessus |
+| AI Act et RGPD | Mention IA et C2PA partout, DPA, photos jamais utilisées pour l'entraînement sans consentement séparé |
+| Ampleur du projet | Livraison par phases, chaque phase utilisable et démontrable |
 
-Après validation de ce plan et de ces réponses, je démarre la phase 1.
+---
+
+## 9. Questions bloquantes
+
+1. **Société et comptes.** Existe-t-il une société (SIRET, n° de TVA) ? Stripe, l'affiliation et les mentions légales en ont besoin. Quels comptes existent déjà (GitHub, Vercel, Supabase, Anthropic, Stripe, Resend, Sentry, PostHog, Upstash, Trigger.dev, Voyage AI) ?
+2. **Dépôt GitHub.** Sur quel compte ou organisation, et sous quel nom dois-je créer le dépôt ? Sans dépôt, le travail de cette session n'est pas sauvegardé.
+3. **Photos d'évaluation.** Fournissez-vous les 30 photos (dont au moins 8 extérieures), ou puis-je les choisir sur Unsplash ou Pexels avec la licence archivée ?
+4. **Budget de démarrage.** Validez-vous environ **250 € de crédits API** au total (banc d'essai, galerie, développement, catalogue) et la création des comptes fournisseurs d'images ?
+5. **Relecture experte.** Avez-vous accès à un architecte d'intérieur et à un paysagiste pour relire les contenus et les réponses test de Camille (quelques jours, rémunérés) ? Sans eux, je ne peux pas présenter Camille comme « experte » sans réserve.
+
+Les prix de la section 1 sont ma proposition d'après la concurrence : dites-moi seulement si vous voulez les changer.
