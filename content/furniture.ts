@@ -1,0 +1,118 @@
+import type { BudgetTier, FurnitureCategory, FurnitureIcon } from "./types.ts";
+
+const U = {
+  ligneRoset: "https://www.ligne-roset.com", vitra: "https://www.vitra.com", carlHansen: "https://www.carlhansen.com", bebitalia: "https://www.bebitalia.com",
+  rocheBobois: "https://www.roche-bobois.com", gubi: "https://www.gubi.com", cassina: "https://www.cassina.com", classicon: "https://www.classicon.com",
+  ikea: "https://www.ikea.com/fr/fr/", fermob: "https://www.fermob.com", knoll: "https://www.knoll.com", fritzHansen: "https://www.fritzhansen.com",
+  thonet: "https://www.thonet.de", kartell: "https://www.kartell.com", ppMobler: "https://www.pp.dk", zanotta: "https://www.zanotta.com",
+  tamtam: "https://www.tamtamstool.com", string: "https://stringfurniture.com", usm: "https://www.usm.com", vitsoe: "https://www.vitsoe.com",
+  bline: "https://www.b-line.it", dcw: "https://www.dcw-editions.fr", louisPoulsen: "https://www.louispoulsen.com", flos: "https://flos.com",
+  mouille: "https://www.sergemouille.com", andTradition: "https://www.andtradition.com", artemide: "https://www.artemide.com", anglepoise: "https://www.anglepoise.com",
+  oluce: "https://www.oluce.com", martinelli: "https://www.martinelliluce.it", nemo: "https://www.nemolighting.com", hay: "https://www.hay.com",
+  muuto: "https://www.muuto.com", tolix: "https://www.tolix.fr", magis: "https://www.magisdesign.com", emeco: "https://www.emeco.net", moroso: "https://www.moroso.it",
+  santaCole: "https://www.santacole.com", marset: "https://www.marset.com", kettal: "https://www.kettal.com", sikaDesign: "https://www.sika-design.com", ethimo: "https://www.ethimo.com",
+} as const;
+
+const slugify = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function f(name: string, designer: string, year: number, editor: string, editorUrl: string, category: FurnitureCategory, budgetTier: BudgetTier,
+  materials: string[], story: string, howTo: string, counterfeitRisk: FurnitureIcon["counterfeitRisk"] = "moyen"): FurnitureIcon {
+  const slug = slugify(name);
+  return { id: `f-${slug}`, slug, name, designer, year, editor, editorUrl, category, budgetTier, materials, story, howTo, counterfeitRisk, reviewed: false };
+}
+
+/**
+ * 80 pièces de mobilier culte. Années de création ; éditeur officiel actuel.
+ * Les ordres de prix sont indicatifs et doivent être vérifiés chez l'éditeur.
+ */
+export const FURNITURE: FurnitureIcon[] = [
+  // ——— Assises ———
+  f("Togo", "Michel Ducaroy", 1973, "Ligne Roset", U.ligneRoset, "Assise", "500 à 2 000 €", ["m-velours", "m-bouclette"], "Un canapé sans structure, entièrement en mousse plissée. Best-seller depuis plus de cinquante ans.", "Au ras du sol dans un salon décontracté. En velours côtelé pour un esprit seventies.", "élevé"),
+  f("Pumpkin", "Pierre Paulin", 1971, "Ligne Roset", U.ligneRoset, "Assise", "2 000 à 5 000 €", ["m-bouclette"], "Dessiné pour l'appartement privé du président Pompidou à l'Élysée. Formes rondes et enveloppantes.", "Un seul suffit à signer une pièce. Superbe en bouclette claire."),
+  f("Lounge Chair & Ottoman", "Charles & Ray Eames", 1956, "Vitra", U.vitra, "Assise", "Plus de 5 000 €", ["m-cuir", "m-noyer"], "Pensé comme « un gant de baseball bien usé ». Le fauteuil de lecture le plus célèbre du monde.", "Vaut l'investissement si c'est votre place de lecture quotidienne.", "élevé"),
+  f("Standard Chair", "Jean Prouvé", 1934, "Vitra", U.vitra, "Assise", "500 à 2 000 €", ["m-chene", "m-acier"], "Pieds arrière massifs là où le poids s'exerce : la logique de l'ingénieur appliquée à la chaise.", "Autour d'une table en bois massif, mélangée à d'autres chaises."),
+  f("CH24 Wishbone", "Hans J. Wegner", 1949, "Carl Hansen & Søn", U.carlHansen, "Assise", "500 à 2 000 €", ["m-chene", "m-cannage"], "Dossier en Y et assise tressée à la main en corde de papier : plus de cent étapes de fabrication.", "La chaise de salle à manger la plus polyvalente qui soit.", "élevé"),
+  f("Camaleonda", "Mario Bellini", 1970, "B&B Italia", U.bebitalia, "Assise", "Plus de 5 000 €", ["m-bouclette", "m-velours"], "Canapé modulaire en capitons, réédité en 2020 et devenu culte sur les réseaux.", "Pour un grand séjour, en configuration îlot."),
+  f("Mah Jong", "Hans Hopf", 1971, "Roche Bobois", U.rocheBobois, "Assise", "Plus de 5 000 €", ["m-velours", "m-lin"], "Coussins empilables à composer à l'infini, habillés de tissus de créateurs.", "Pour une pièce conviviale et basse, façon lounge."),
+  f("Beetle Chair", "GamFratesi", 2013, "Gubi", U.gubi, "Assise", "500 à 2 000 €", ["m-velours", "m-laiton"], "Coque inspirée de la carapace du scarabée, par un duo italo-danois.", "Chaise de salle à manger élégante et confortable.", "faible"),
+  f("Utrecht", "Gerrit Rietveld", 1935, "Cassina", U.cassina, "Assise", "2 000 à 5 000 €", ["m-velours"], "Fauteuil géométrique du mouvement De Stijl, plié comme un origami.", "Pièce sculpturale, à poser seule près d'une fenêtre."),
+  f("Bibendum", "Eileen Gray", 1926, "ClassiCon", U.classicon, "Assise", "Plus de 5 000 €", ["m-cuir", "m-inox"], "Trois boudins superposés en hommage au bonhomme Michelin, par la créatrice de la villa E-1027.", "Statement dans un intérieur moderniste ou Art déco."),
+  f("Poäng", "Noboru Nakamura", 1976, "IKEA", U.ikea, "Assise", "Moins de 500 €", ["m-bouleau", "m-lin"], "Bois lamellé-courbé en porte-à-faux, dessiné par un designer japonais. Un vrai fauteuil de design accessible.", "Avec une housse en lin ou en cuir, il gagne en caractère.", "faible"),
+  f("Panton Chair", "Verner Panton", 1960, "Vitra", U.vitra, "Assise", "Moins de 500 €", ["m-laque"], "Première chaise en porte-à-faux moulée d'une seule pièce en plastique.", "En couleur vive autour d'une table blanche, ou en noir pour plus de sobriété.", "élevé"),
+  f("Eames Plastic Side Chair DSW", "Charles & Ray Eames", 1950, "Vitra", U.vitra, "Assise", "Moins de 500 €", ["m-chene"], "Coque moulée sur piètement « tour Eiffel » ou bois : la chaise de série par excellence.", "Mélangez les couleurs autour d'une table ronde.", "élevé"),
+  f("Tulip Chair", "Eero Saarinen", 1956, "Knoll", U.knoll, "Assise", "2 000 à 5 000 €", ["m-laque"], "Un pied unique pour en finir avec le « fouillis de pieds » sous les tables.", "Avec la table Tulip, pour une salle à manger compacte et fluide.", "élevé"),
+  f("Egg", "Arne Jacobsen", 1958, "Fritz Hansen", U.fritzHansen, "Assise", "Plus de 5 000 €", ["m-cuir", "m-laine"], "Dessiné pour le hall de l'hôtel SAS Royal de Copenhague.", "Un coin lecture enveloppant, dos à la pièce.", "élevé"),
+  f("Swan", "Arne Jacobsen", 1958, "Fritz Hansen", U.fritzHansen, "Assise", "Plus de 5 000 €", ["m-laine"], "Créé pour le même hôtel que l'Egg, sans aucune ligne droite.", "Par paire face à un canapé.", "élevé"),
+  f("Série 7", "Arne Jacobsen", 1955, "Fritz Hansen", U.fritzHansen, "Assise", "500 à 2 000 €", ["m-bouleau"], "Contreplaqué moulé d'une seule pièce : l'une des chaises les plus vendues au monde.", "Autour d'une table de cuisine, en placage bois ou en couleur.", "élevé"),
+  f("Fourmi", "Arne Jacobsen", 1952, "Fritz Hansen", U.fritzHansen, "Assise", "500 à 2 000 €", ["m-bouleau"], "Taille fine comme une fourmi ; à l'origine, seulement trois pieds.", "Légère et empilable, idéale dans une petite cuisine."),
+  f("Barcelona", "Ludwig Mies van der Rohe & Lilly Reich", 1929, "Knoll", U.knoll, "Assise", "Plus de 5 000 €", ["m-cuir", "m-inox"], "Dessiné pour le pavillon allemand de l'Exposition internationale de Barcelone.", "Dans un salon minimaliste aux volumes généreux.", "élevé"),
+  f("LC2", "Le Corbusier, Pierre Jeanneret, Charlotte Perriand", 1928, "Cassina", U.cassina, "Assise", "2 000 à 5 000 €", ["m-cuir", "m-inox"], "Coussins posés dans une cage d'acier : le confort exposé comme une structure.", "En duo face à une table basse en verre ou en pierre.", "élevé"),
+  f("LC4", "Le Corbusier, Pierre Jeanneret, Charlotte Perriand", 1928, "Cassina", U.cassina, "Assise", "2 000 à 5 000 €", ["m-cuir", "m-acier"], "Une « machine à repos » qui suit le corps et bascule sur son socle.", "Près d'une fenêtre, dans un séjour ou un bureau.", "élevé"),
+  f("Wassily", "Marcel Breuer", 1925, "Knoll", U.knoll, "Assise", "2 000 à 5 000 €", ["m-cuir", "m-inox"], "Inspiré du cadre d'un vélo, premier fauteuil en tube d'acier cintré, né au Bauhaus.", "Seul, en contrepoint d'un canapé moelleux.", "élevé"),
+  f("Cesca", "Marcel Breuer", 1928, "Knoll", U.knoll, "Assise", "500 à 2 000 €", ["m-cannage", "m-inox"], "Porte-à-faux en acier et assise cannée : légèreté et confort.", "Autour d'une table en bois, pour une touche Bauhaus chaleureuse.", "élevé"),
+  f("N° 14", "Michael Thonet", 1859, "Thonet", U.thonet, "Assise", "Moins de 500 €", ["m-noyer", "m-cannage"], "La chaise de bistrot en hêtre courbé à la vapeur, vendue à des dizaines de millions d'exemplaires.", "Dans une cuisine, mélangée à une table de ferme.", "faible"),
+  f("Wiggle Side Chair", "Frank Gehry", 1972, "Vitra", U.vitra, "Assise", "500 à 2 000 €", ["m-bouleau"], "Une chaise en carton ondulé, étonnamment solide.", "Pièce de conversation dans une entrée ou un bureau."),
+  f("Louis Ghost", "Philippe Starck", 2002, "Kartell", U.kartell, "Assise", "Moins de 500 €", ["m-miroir"], "Un fauteuil Louis XVI en polycarbonate transparent.", "Transparent, il ne prend pas de place visuelle dans un petit espace.", "élevé"),
+  f("Fauteuil Cité", "Jean Prouvé", 1930, "Vitra", U.vitra, "Assise", "2 000 à 5 000 €", ["m-cuir", "m-acier"], "Créé pour la Cité universitaire de Nancy, avec ses accoudoirs en sangles de cuir.", "Dans un salon d'esprit industriel."),
+  f("Womb", "Eero Saarinen", 1948, "Knoll", U.knoll, "Assise", "Plus de 5 000 €", ["m-laine"], "Un fauteuil dans lequel se lover, demandé par Florence Knoll.", "Coin lecture dans une chambre spacieuse."),
+  f("Diamond", "Harry Bertoia", 1952, "Knoll", U.knoll, "Assise", "2 000 à 5 000 €", ["m-inox"], "Fil d'acier soudé : « fait surtout d'air », disait son créateur.", "Dedans ou sous une véranda : transparent et graphique."),
+  f("Coconut", "George Nelson", 1955, "Vitra", U.vitra, "Assise", "Plus de 5 000 €", ["m-cuir", "m-laine"], "Une coque qui évoque un quartier de noix de coco.", "Dans un salon mid-century, avec un tapis graphique."),
+  f("CH07 Shell Chair", "Hans J. Wegner", 1963, "Carl Hansen & Søn", U.carlHansen, "Assise", "2 000 à 5 000 €", ["m-chene", "m-laine"], "Fauteuil sur trois pieds au sourire de bois courbé.", "Bas et large, parfait devant une cheminée."),
+  f("Papa Bear", "Hans J. Wegner", 1951, "PP Møbler", U.ppMobler, "Assise", "Plus de 5 000 €", ["m-laine", "m-chene"], "Ses accoudoirs évoquent les pattes d'un ours prêt à vous serrer dans ses bras.", "Le fauteuil-cocon d'une bibliothèque."),
+  f("Capitol Complex Office Chair", "Pierre Jeanneret", 1955, "Cassina", U.cassina, "Assise", "2 000 à 5 000 €", ["m-teck", "m-cannage"], "Dessinée pour la ville de Chandigarh, en Inde. Très copiée.", "À un bureau en bois, dans une pièce lumineuse.", "élevé"),
+  f("Elephant Stool", "Sori Yanagi", 1954, "Vitra", U.vitra, "Assise", "Moins de 500 €", ["m-laque"], "Tabouret empilable aux trois pieds évasés, utilisable dedans et dehors.", "Tabouret d'appoint, table de chevet ou marchepied."),
+  f("Butterfly Stool", "Sori Yanagi", 1954, "Vitra", U.vitra, "Assise", "500 à 2 000 €", ["m-noyer"], "Deux contreplaqués moulés identiques réunis par une tige : une aile de papillon.", "Objet de collection dans une entrée."),
+  f("Tam Tam", "Henry Massonnet", 1968, "Tam Tam", U.tamtam, "Assise", "Moins de 500 €", ["m-laque"], "Tabouret en plastique en forme de diabolo, icône pop française.", "Chambre d'enfant, salle de bain ou balcon.", "faible"),
+  f("Mezzadro", "Achille & Pier Giacomo Castiglioni", 1957, "Zanotta", U.zanotta, "Assise", "500 à 2 000 €", ["m-acier", "m-chene"], "Une selle de tracteur montée sur une lame d'acier : le ready-made appliqué au mobilier.", "Au bar de la cuisine, pour l'humour."),
+  f("Sacco", "Piero Gatti, Cesare Paolini, Franco Teodoro", 1968, "Zanotta", U.zanotta, "Assise", "500 à 2 000 €", ["m-cuir"], "Le premier pouf poire, rempli de billes de polystyrène.", "Chambre d'ado ou coin télévision.", "élevé"),
+  f("Ploum", "Ronan & Erwan Bouroullec", 2011, "Ligne Roset", U.ligneRoset, "Assise", "2 000 à 5 000 €", ["m-velours"], "Un canapé très bas et moelleux pour se vautrer.", "Salon décontracté, famille nombreuse.", "faible"),
+  f("Soriana", "Afra & Tobia Scarpa", 1969, "Cassina", U.cassina, "Assise", "Plus de 5 000 €", ["m-velours", "m-inox"], "Un coussin pincé par une pince en acier chromé. Compas d'Or 1970.", "Pièce maîtresse d'un salon des années 70."),
+  f("Up 5_6", "Gaetano Pesce", 1969, "B&B Italia", U.bebitalia, "Assise", "Plus de 5 000 €", ["m-velours"], "Un fauteuil en forme de corps féminin relié à une balle, à message politique.", "Sculpture habitable dans un grand espace."),
+  f("Tolix A", "Xavier Pauchard", 1934, "Tolix", U.tolix, "Assise", "Moins de 500 €", ["m-acier"], "La chaise en tôle d'acier empilable, née en Bourgogne.", "Cuisine, terrasse couverte ou bureau d'atelier.", "élevé"),
+  f("Navy Chair", "Emeco", 1944, "Emeco", U.emeco, "Assise", "500 à 2 000 €", ["m-aluminium"], "Chaise en aluminium conçue pour la marine américaine, garantie pour des décennies.", "Autour d'une table en bois brut, effet loft.", "élevé"),
+  f("Air-Chair", "Jasper Morrison", 1999, "Magis", U.magis, "Assise", "Moins de 500 €", ["m-aluminium"], "Chaise moulée d'une seule pièce par injection de gaz : légère, empilable, extérieure.", "Sur une terrasse ou un balcon, en couleur.", "faible"),
+  f("Smoke Chair", "Maarten Baas", 2004, "Moooi", "https://www.moooi.com", "Assise", "Plus de 5 000 €", ["m-chenefume"], "Des meubles classiques brûlés puis vernis : une provocation devenue classique.", "Pièce d'art dans une entrée ou une salle à manger."),
+  // ——— Tables ———
+  f("Tulip Table", "Eero Saarinen", 1957, "Knoll", U.knoll, "Table", "2 000 à 5 000 €", ["m-carrare", "m-laque"], "Le pied unique en fonte d'aluminium libère l'espace sous le plateau.", "Ronde, dans une petite salle à manger : la circulation est fluide.", "élevé"),
+  f("Eames Elliptical Table", "Charles & Ray Eames", 1951, "Vitra", U.vitra, "Table", "500 à 2 000 €", ["m-laque"], "Surnommée « planche de surf », très basse et allongée.", "Table basse devant un long canapé."),
+  f("Noguchi Coffee Table", "Isamu Noguchi", 1944, "Vitra", U.vitra, "Table", "2 000 à 5 000 €", ["m-noyer", "m-miroir"], "Un plateau de verre posé sur deux pièces de bois qui s'emboîtent.", "Dans un salon lumineux, sur un tapis uni.", "élevé"),
+  f("Table Trapèze", "Jean Prouvé", 1950, "Vitra", U.vitra, "Table", "Plus de 5 000 €", ["m-chene", "m-acier"], "Conçue pour la Cité universitaire d'Antony, sur des pieds en tôle pliée.", "Grande table de salle à manger ou de bureau partagé."),
+  f("Guéridon", "Jean Prouvé", 1949, "Vitra", U.vitra, "Table", "2 000 à 5 000 €", ["m-chene", "m-acier"], "Table ronde sur trois pieds en bois massif, d'abord en métal.", "Petite table à manger pour deux à quatre."),
+  f("Superellipse", "Piet Hein & Bruno Mathsson", 1968, "Fritz Hansen", U.fritzHansen, "Table", "2 000 à 5 000 €", ["m-chene"], "Une forme mathématique entre l'ellipse et le rectangle : plus de convives, moins d'encombrement.", "Salle à manger où la circulation est étroite."),
+  f("Table réglable E1027", "Eileen Gray", 1927, "ClassiCon", U.classicon, "Table", "500 à 2 000 €", ["m-inox", "m-miroir"], "Conçue pour que sa sœur prenne son petit-déjeuner au lit : la hauteur se règle.", "Bout de canapé ou de lit."),
+  f("Platner Coffee Table", "Warren Platner", 1966, "Knoll", U.knoll, "Table", "Plus de 5 000 €", ["m-laiton", "m-miroir"], "Une base de centaines de tiges d'acier soudées, comme un tissage.", "Salon glamour, avec du velours."),
+  f("Componibili", "Anna Castelli Ferrieri", 1967, "Kartell", U.kartell, "Rangement", "Moins de 500 €", ["m-laque"], "Éléments ronds empilables en plastique : table de chevet, rangement de salle de bain.", "En chevet ou dans une salle de bain sans placard.", "élevé"),
+  f("Arabesco", "Carlo Mollino", 1950, "Zanotta", U.zanotta, "Table", "Plus de 5 000 €", ["m-bouleau", "m-miroir"], "Table basse en contreplaqué courbé et verre, inspirée d'un dessin de Léonor Fini.", "Pièce d'exception dans un salon éclectique."),
+  // ——— Rangements ———
+  f("String System", "Nils & Kajsa Strinning", 1949, "String", U.string, "Rangement", "500 à 2 000 €", ["m-noyer", "m-acier"], "Étagères murales modulaires suédoises, à agrandir au fil des années.", "Bureau suspendu ou bibliothèque évolutive dans un petit espace."),
+  f("USM Haller", "Fritz Haller & Paul Schärer", 1963, "USM", U.usm, "Rangement", "Plus de 5 000 €", ["m-acier", "m-laque"], "Système de boules et de tubes, reconfigurable à l'infini. Entré au MoMA.", "En buffet bas coloré dans un séjour minimaliste.", "élevé"),
+  f("Système 606", "Dieter Rams", 1960, "Vitsœ", U.vitsoe, "Rangement", "2 000 à 5 000 €", ["m-aluminium"], "Étagères sur rails muraux, pensées pour durer toute une vie.", "Bibliothèque d'un bureau sobre."),
+  f("Uten.Silo", "Dorothee Becker", 1969, "Vitra", U.vitra, "Rangement", "Moins de 500 €", ["m-laque"], "Un vide-poche mural moulé avec crochets et pochettes.", "Entrée ou atelier, pour ne plus rien perdre.", "élevé"),
+  f("Étagère Nuage", "Charlotte Perriand", 1958, "Cassina", U.cassina, "Rangement", "Plus de 5 000 €", ["m-chene", "m-laque"], "Bibliothèque modulaire aux plaques de séparation colorées, inspirée du Japon.", "Sous une fenêtre ou en séparation légère."),
+  f("Hang It All", "Charles & Ray Eames", 1953, "Vitra", U.vitra, "Rangement", "Moins de 500 €", ["m-noyer"], "Porte-manteau à boules de bois colorées, d'abord pensé pour les enfants.", "Entrée ou chambre d'enfant.", "élevé"),
+  f("Eames Storage Unit", "Charles & Ray Eames", 1950, "Vitra", U.vitra, "Rangement", "2 000 à 5 000 €", ["m-bouleau", "m-laque"], "Meuble de rangement en kit, panneaux colorés sur structure d'acier.", "Buffet de salon, couleurs franches."),
+  f("Boby", "Joe Colombo", 1970, "B-Line", U.bline, "Rangement", "Moins de 500 €", ["m-laque"], "Desserte à roulettes à tiroirs pivotants, compagne des architectes.", "À côté d'un bureau ou dans une salle de bain.", "élevé"),
+  f("Stool 60", "Alvar Aalto", 1933, "Artek", "https://www.artek.fi", "Assise", "Moins de 500 €", ["m-bouleau"], "Tabouret empilable à pieds en L cintrés, pour la bibliothèque de Viipuri.", "Tabouret, chevet ou petite table d'appoint.", "élevé"),
+  // ——— Luminaires ———
+  f("Lampe Gras", "Bernard-Albin Gras", 1921, "DCW éditions", U.dcw, "Luminaire", "Moins de 500 €", ["m-acier", "m-laiton"], "Lampe d'atelier sans vis ni soudure, adoptée par Le Corbusier.", "Applique au-dessus d'un lit ou d'un bureau : orientable, éternelle.", "élevé"),
+  f("PH 5", "Poul Henningsen", 1958, "Louis Poulsen", U.louisPoulsen, "Luminaire", "500 à 2 000 €", ["m-aluminium"], "Abat-jour calculés pour ne jamais éblouir.", "Au-dessus d'une table à manger, à 60 à 75 cm du plateau.", "élevé"),
+  f("PH Artichoke", "Poul Henningsen", 1958, "Louis Poulsen", U.louisPoulsen, "Luminaire", "Plus de 5 000 €", ["m-cuivre"], "Soixante-douze lamelles qui cachent l'ampoule, pour un restaurant de Copenhague.", "Dans une cage d'escalier ou au-dessus d'une grande table.", "élevé"),
+  f("Panthella", "Verner Panton", 1971, "Louis Poulsen", U.louisPoulsen, "Luminaire", "500 à 2 000 €", ["m-laque"], "Lampe champignon à l'abat-jour translucide.", "Lampe à poser sur un buffet ou une console."),
+  f("Arco", "Achille & Pier Giacomo Castiglioni", 1962, "Flos", U.flos, "Luminaire", "2 000 à 5 000 €", ["m-carrare", "m-inox"], "Une base en marbre de Carrare pour éclairer une table sans percer le plafond.", "La solution quand le point lumineux n'est pas au bon endroit.", "élevé"),
+  f("Snoopy", "Achille & Pier Giacomo Castiglioni", 1967, "Flos", U.flos, "Luminaire", "500 à 2 000 €", ["m-carrare", "m-laque"], "Le profil du chien de Charles Schulz, posé sur du marbre.", "Lampe de bureau ou de console, avec humour."),
+  f("Parentesi", "Achille Castiglioni & Pio Manzù", 1971, "Flos", U.flos, "Luminaire", "Moins de 500 €", ["m-inox"], "Un spot qui coulisse sur un câble tendu du sol au plafond.", "Lumière d'appoint réglable dans un coin."),
+  f("Akari", "Isamu Noguchi", 1951, "Vitra", U.vitra, "Luminaire", "500 à 2 000 €", ["m-washi", "m-bambou"], "Sculptures lumineuses en papier washi et bambou, fabriquées à Gifu, au Japon.", "Plusieurs tailles groupées pour une lumière de lanterne.", "élevé"),
+  f("Lampadaire trois lumières", "Serge Mouille", 1953, "Éditions Serge Mouille", U.mouille, "Luminaire", "Plus de 5 000 €", ["m-acier"], "Bras articulés et réflecteurs : la quintessence du design français des années 50.", "Dans un angle, il dessine la pièce comme une sculpture.", "élevé"),
+  f("Flowerpot", "Verner Panton", 1968, "&Tradition", U.andTradition, "Luminaire", "Moins de 500 €", ["m-laque"], "Deux demi-sphères face à face, icône pop de l'ère Flower Power.", "Une touche de couleur franche en lampe à poser.", "élevé"),
+  f("Tolomeo", "Michele De Lucchi & Giancarlo Fassina", 1987, "Artemide", U.artemide, "Luminaire", "500 à 2 000 €", ["m-aluminium"], "Lampe de bureau à bras articulés et ressorts tendus par câbles. Compas d'Or 1989.", "Lampe de travail par excellence.", "élevé"),
+  f("Tizio", "Richard Sapper", 1972, "Artemide", U.artemide, "Luminaire", "500 à 2 000 €", ["m-acier"], "Lampe à contrepoids, dont les bras conduisent le courant.", "Bureau minimaliste."),
+  f("Nesso", "Giancarlo Mattioli", 1967, "Artemide", U.artemide, "Luminaire", "Moins de 500 €", ["m-laque"], "Lampe champignon en plastique, icône pop italienne.", "Sur une console ou une table de chevet."),
+  f("Anglepoise 1227", "George Carwardine", 1935, "Anglepoise", U.anglepoise, "Luminaire", "Moins de 500 €", ["m-acier"], "Conçue par un ingénieur en suspension automobile, avec ses ressorts équilibrés.", "Liseuse au-dessus d'un fauteuil."),
+  f("Atollo", "Vico Magistretti", 1977, "Oluce", U.oluce, "Luminaire", "500 à 2 000 €", ["m-laque", "m-laiton"], "Cylindre, cône et demi-sphère : une lampe faite de trois formes géométriques. Compas d'Or 1979.", "Sur un buffet, en lumière d'ambiance."),
+  f("Pipistrello", "Gae Aulenti", 1965, "Martinelli Luce", U.martinelli, "Luminaire", "500 à 2 000 €", ["m-laque", "m-inox"], "Un abat-jour en forme d'ailes de chauve-souris sur un pied télescopique.", "Console d'entrée ou bureau."),
+  f("Lampe de Marseille", "Le Corbusier", 1954, "Nemo", U.nemo, "Luminaire", "500 à 2 000 €", ["m-aluminium"], "Applique à bras pivotant, dessinée pour la Cité radieuse.", "Au-dessus d'un bureau ou d'un canapé."),
+  f("Bestlite BL1", "Robert Dudley Best", 1930, "Gubi", U.gubi, "Luminaire", "500 à 2 000 €", ["m-laiton"], "Lampe de bureau Bauhaus britannique, appréciée de Winston Churchill.", "Bureau ou table de chevet."),
+  // ——— Extérieur ———
+  f("Chaise Bistro", "Fermob", 1889, "Fermob", U.fermob, "Extérieur", "Moins de 500 €", ["m-acier"], "La chaise pliante des jardins et cafés français, fabriquée dans l'Ain.", "Pour un balcon : pliante, colorée, increvable.", "faible"),
+  f("Luxembourg", "Frédéric Sofia", 2003, "Fermob", U.fermob, "Extérieur", "Moins de 500 €", ["m-aluminium"], "Réinterprétation des chaises du jardin du Luxembourg à Paris.", "Terrasse ou jardin, en couleur.", "faible"),
+  f("Palissade", "Ronan & Erwan Bouroullec", 2015, "HAY", U.hay, "Extérieur", "500 à 2 000 €", ["m-acier"], "Collection d'extérieur en acier traité, légère et graphique comme une clôture.", "Terrasse moderne, en vert olive ou en anthracite.", "faible"),
+];
