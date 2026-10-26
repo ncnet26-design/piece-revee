@@ -1,6 +1,70 @@
 # Pièce Rêvée : plan technique
 
-> Version 2 du 26 octobre 2026. Statut : **en attente de validation**.
+> Version 3 du 26 octobre 2026. Statut : **en attente de validation**.
+>
+> **Changements de la v3, d'après vos réponses** :
+> - **0 € de votre poche** : services gratuits uniquement ; l'IA est payée par les ventes ;
+> - **pas de société** pour l'instant ;
+> - **images libres de droits uniquement** ;
+> - **pas de relecteurs professionnels** : connaissances tirées de sources publiques, citées.
+>
+> La section 0 prime sur le reste du document en cas de contradiction.
+
+---
+
+## 0. Lancement à 0 € : ce qui est possible et ce qui ne l'est pas
+
+### 0.1 Le principe : ne jamais avancer d'argent
+
+Développer, héberger et faire tourner la partie non-IA du site ne coûte rien grâce aux offres gratuites. **La génération par IA (études, rendus, Camille) n'est en revanche gratuite nulle part avec la qualité visée.** Tant qu'elle n'est pas financée par les ventes, elle ne tourne que sur des quotas gratuits.
+
+Fonctionnement retenu :
+
+1. **Avant toute vente** : le site public est 100 % gratuit à faire tourner.
+   - Contenu : galerie d'inspiration, matériauthèque, accords, mobilier, lieux, plantes, quiz de style, moodboard, guides par étapes, catalogue de produits affiliés.
+   - Revenus possibles dès ce stade : les commissions d'affiliation.
+2. **Les fonctions IA sont développées et testées sur les crédits gratuits.**
+   - Crédit de bienvenue d'Anthropic (environ 5 $ selon certaines sources, pas disponible partout, à vérifier sur votre compte).
+   - Quota gratuit quotidien de Cloudflare Workers AI (10 000 « neurons » par jour) pour les rendus de test.
+3. **Les fonctions IA payantes ouvrent avec les paiements** (Pass, Plus, Pro, Crédits).
+   - Chaque vente alimente une **enveloppe IA** : un compte de crédits rechargé uniquement avec l'argent encaissé.
+   - Un pourcentage fixe des ventes (par exemple 15 %) finance l'offre gratuite (étude de bienvenue, Camille limitée).
+   - **Enveloppe vide = fonction IA gratuite suspendue automatiquement**, jamais de dépassement.
+
+### 0.2 Services retenus (offres gratuites)
+
+| Besoin | Prévu en v2 | Retenu en v3 (gratuit) | Pourquoi |
+|---|---|---|---|
+| Hébergement | Vercel | **Cloudflare Pages** (site statique) + Pages Functions | L'offre gratuite de Vercel **interdit l'usage commercial** (paiements, affiliation). Cloudflare ne l'interdit pas d'après mes recherches, à confirmer dans ses conditions |
+| Rendu des pages | Next.js en serveur (SSR, Server Actions) | **Next.js en export statique** (pages générées à la publication) ; parties connectées côté client | Évite les limites de CPU et de taille des Workers gratuits ; le SEO reste excellent |
+| Base, auth, fichiers | Supabase | **Supabase (offre gratuite)** | 500 Mo de base, environ 1 Go de fichiers, 50 000 utilisateurs actifs par mois, pause après 7 jours sans activité |
+| Logique serveur et tâches | Trigger.dev | **Supabase Edge Functions + files d'attente Postgres (pgmq) + pg_cron** | Inclus dans l'offre gratuite (500 000 appels par mois) |
+| Limitation de débit | Upstash | **Table Postgres + règles Cloudflare** | Un service de moins |
+| Embeddings | Voyage AI | **Modèles open source** (multilingual-e5 pour le texte, CLIP pour l'image) exécutés lors de l'ingestion (GitHub Actions, gratuit) | Aucun coût par appel |
+| Images éditoriales et galerie | Images d'IA + banques | **Unsplash, Pexels, Wikimedia Commons, Openverse** (licences libres, attribution) | Votre demande ; aucun coût |
+| Emails | Resend | **Resend gratuit** (3 000 emails par mois) | — |
+| Erreurs, analytics | Sentry, PostHog | **Offres gratuites** de Sentry et PostHog UE | — |
+| Paiement | Stripe | **Stripe**, sans abonnement : seulement une commission par vente, prélevée sur l'encaissement | Nécessite un statut légal (0.3) |
+| Nom de domaine | Domaine acheté | **Sous-domaine gratuit** (`piece-revee.pages.dev`) | Un vrai domaine (environ 10 €/an) pourra être pris plus tard, sur les revenus |
+| IA texte | Claude | **Claude** (inchangé), payé par l'enveloppe | Pas d'offre gratuite durable |
+| Rendus | Fournisseurs payants | **Démo : Cloudflare Workers AI (quota gratuit)** ; **offres payantes : fournisseur payant financé par l'enveloppe** | La qualité « ultra-réaliste » exige les modèles payants |
+
+### 0.3 Sans société : ce que cela bloque
+
+- **Développer, publier le site et le contenu : possible tout de suite.**
+- **Encaisser des paiements (Stripe) et percevoir des commissions d'affiliation : il faut un statut.** Vendre régulièrement en tant que particulier n'est pas permis.
+- La **micro-entreprise** se crée **gratuitement** en ligne sur le guichet unique de l'INPI (formalites.entreprises.gouv.fr). Le SIRET arrive en environ 1 à 3 semaines.
+- C'est votre décision. Je fournirai la liste des démarches, mais **je ne crée rien à votre place**. Les mentions légales exigeront aussi l'identité de l'éditeur du site.
+
+### 0.4 Ce que le budget à 0 € change pour vous
+
+- **Rendus « ultra-réalistes »** : seulement dans les offres payantes, une fois les premières ventes encaissées. La démo gratuite (FLUX schnell ou FLUX.2 sur Cloudflare) sera nettement moins fidèle à la pièce réelle et limitée à quelques images par jour.
+- **Tests IA du développement** : limités par le crédit gratuit d'Anthropic. Si votre compte n'y a pas droit, **les phases IA ne pourront pas être validées en conditions réelles** avant la première recette.
+- **Galerie** : uniquement des photos libres. On ne pourra pas avoir 20 styles × 20 espaces parfaitement couverts ; je vise 1 500 images ou plus en couvrant au mieux les combinaisons.
+- **Expertise de Camille** : bâtie sur des sources publiques citées (section 3.3), sans relecture par un professionnel. Elle sera donc présentée comme « **assistante IA en architecture d'intérieur et paysage** », et non comme une professionnelle diplômée.
+- **Supabase gratuit** : environ 1 Go de fichiers, soit environ 3 000 photos utilisateurs compressées. Purge automatique, passage à l'offre payante à financer sur les revenus le moment venu.
+
+---
 >
 > **Changements de la v2** :
 > - prix calés sur la concurrence ;
@@ -98,9 +162,10 @@ Les éléments à garder et à dépasser restent ceux de la v1.
 
 - **Objectif** : que chacun se reconnaisse. Environ 20 styles × 20 espaces (intérieur et extérieur), soit **au moins 1 500 images** au lancement.
 - **Filtres** : style, espace, budget, situation (locataire ou propriétaire), surface (petit espace), couleur dominante, ambiance.
-- **Origine des images** :
-  - images générées par IA à partir de prompts d'architecte, contrôlées par Claude Vision et validées à la main, avec la mention visible « Image générée par IA » et C2PA ;
-  - photos sous licence (Unsplash, Pexels, avec attribution) ;
+- **Origine des images (v3 : libres uniquement)** :
+  - **Unsplash** et **Pexels** via leurs API gratuites. Règles respectées : affichage par les URL fournies par l'API (pas de copie), crédit du photographe avec lien, signalement des téléchargements. Interdit : revendre les photos ou reproduire l'expérience d'Unsplash ; la galerie reste un outil d'inspiration au service des études, pas une banque d'images ;
+  - **Wikimedia Commons** et **Openverse** pour les lieux d'exception et l'architecture : licence vérifiée image par image (CC0, CC BY, CC BY-SA), attribution et licence affichées ;
+  - classement automatique (style, espace, couleurs) par un modèle open source (CLIP), puis vérification manuelle par échantillonnage ;
   - plus tard, projets d'utilisateurs partagés **avec consentement explicite** et modération.
 - **Chaque image** est cliquable :
   - « **Je veux ça chez moi** » lance une étude avec ce style et cette palette sur la photo de l'utilisateur ;
@@ -121,11 +186,19 @@ Les éléments à garder et à dépasser restent ceux de la v1.
 - **Recherche web restreinte** (outil de recherche Anthropic limité à une liste de domaines officiels), pour les questions réglementaires récentes.
 - **Outils** : la v1 complétée par `rechercher_plantes`, `lire_maison` (toutes les pièces) et `rechercher_galerie`.
 - **Garde-fous** : la v1, plus le renvoi systématique vers un professionnel pour la structure, l'électricité, le gaz, les murs porteurs et les autorisations d'urbanisme. Camille donne alors l'information générale et ne valide jamais elle-même.
+- **Sources en ligne** (v3, sans relecteur professionnel). Le contenu est **reformulé, jamais copié**, sauf licence libre avec attribution :
+  - service-public.fr, Légifrance, ADEME : réglementation et rénovation ;
+  - guides gratuits des **CAUE** (Conseils d'architecture, d'urbanisme et de l'environnement) : conseils d'architecture et de jardin ;
+  - Tela Botanica (CC BY-SA), INRAE et Office français de la biodiversité : plantes ;
+  - Wikipédia (CC BY-SA) : histoire du design et des lieux.
+
+  Chaque passage garde son URL et sa date de consultation.
 - **Qualité mesurée** :
   - un jeu de **100 questions** (60 intérieur, 30 extérieur, 10 injections) ;
+  - la réponse attendue de chaque question est rédigée à partir d'une source officielle citée ;
   - réponses notées sur l'exactitude, l'utilité, les sources et l'absence de référence inventée ;
-  - **relecture par un architecte d'intérieur et un paysagiste diplômés** (question 5) ;
-  - 95 % de réponses jugées exactes requis avant la mise en production.
+  - 95 % de réponses jugées exactes requis.
+- **Transparence** : Camille est présentée comme une assistante IA, cite ses sources et renvoie vers un professionnel (architecte, paysagiste, CAUE, souvent gratuit) pour tout ce qui engage la sécurité ou l'urbanisme.
 
 ### 3.4 Des dizaines de milliers de références réelles
 
@@ -170,33 +243,35 @@ Aucun logiciel ne peut garantir « zéro bug ». Je m'engage en revanche sur **z
 
 ---
 
-## 4. Architecture
-
-Inchangée par rapport à la v1, avec ces ajouts :
-- un index RAG (pgvector) pour la base de connaissances ;
-- des embeddings d'image pour la recherche visuelle ;
-- une tâche nocturne qui contrôle les liens ;
-- une table `plants`.
+## 4. Architecture (v3, à 0 €)
 
 ```
-Navigateur / PWA ─► Next.js sur Vercel (cdg1) : pages ISR SEO, app connectée, /api/camille (SSE), /go/[id], webhooks Stripe
+Navigateur / PWA ─► Cloudflare Pages (gratuit) : Next.js exporté en statique
+                    │   • pages SEO générées à la publication (galerie, matières, plantes, guides…)
+                    │   • app connectée côté client (projet, moodboard, compte)
+                    │   • Pages Functions : /go/[id] (redirecteur affilié), en-têtes de sécurité
                     │
-                    ├─► Supabase UE : Postgres + pgvector (produits, galerie, connaissances), Auth, Storage privé, RLS
-                    ├─► Trigger.dev : étude, rendus, retouches, PDF, lots Pro, ingestion catalogue, génération galerie, purge RGPD, contrôle des liens
-                    ├─► Anthropic API : Opus 5.5 (étude, questions complexes), Sonnet 5.5 (Camille, prompts, contrôles), Haiku 5.5 (classement, tags)
-                    ├─► ImageProvider : au moins 2 fournisseurs interchangeables (édition guidée + ControlNet), super-résolution, SAM 2
-                    ├─► Voyage AI : embeddings texte et image
-                    └─► Stripe · Resend · Sentry · PostHog UE · Upstash
+                    ├─► Supabase UE (gratuit) : Postgres + pgvector, Auth, Storage privé, RLS
+                    │      • Edge Functions : étude, Camille (streaming), rendus, webhooks Stripe, quotas, enveloppe IA
+                    │      • pgmq + pg_cron : file des tâches, purge RGPD, contrôle des liens, synchro catalogue
+                    │
+                    ├─► GitHub Actions (gratuit) : CI, ingestion des flux, embeddings open source, import des images libres
+                    ├─► Anthropic API : Claude (financé par l'enveloppe IA)
+                    ├─► ImageProvider : Cloudflare Workers AI (démo gratuite) | fournisseur payant (offres payantes)
+                    └─► Stripe (commission par vente) · Resend · Sentry · PostHog UE (offres gratuites)
 ```
 
 **Choix techniques** (détaillés dans DECISIONS.md au moment de l'intégration) :
-- Trigger.dev pour les tâches longues (alternative : Inngest) ;
-- Voyage AI pour les embeddings ;
+- export statique de Next.js plutôt que le rendu serveur, pour rester dans les quotas gratuits ;
+- Supabase Edge Functions plutôt que Trigger.dev ;
+- embeddings open source plutôt que Voyage AI ;
 - @react-pdf pour le PDF ;
 - heic-convert puis sharp pour les photos ;
 - next-intl pour les langues ;
 - Tailwind, shadcn/ui et Radix pour l'interface ;
 - le client Supabase typé, sans ORM.
+
+Ces écarts avec la stack imposée par le brief viennent de la contrainte « 0 € ». Chacun est réversible : le jour où le budget le permet, on repasse à Vercel ou à Trigger.dev sans réécrire l'application.
 
 ---
 
@@ -219,16 +294,18 @@ RLS sur toutes les tables, avec les mêmes principes que la v1 : propriétaire, 
 
 ## 6. Phases
 
-| Phase | Contenu | Fin de phase |
-|---|---|---|
-| 1. Fondations | Dépôt, CI, design system, auth, migrations et RLS, accueil, squelette du quiz de style, preview | Accueil fidèle en preview, CI verte. **Candidatures d'affiliation déposées** |
-| 2. Étude | Upload, contrôle qualité, études intérieure **et extérieure**, Ma maison, guide en 5 étapes, écran résultat, PDF, partage | 10/10 études valides en moins de 90 s, dont 3 en extérieur |
-| 3. Rendus | ImageProvider, pipeline, rendus saisonniers en extérieur, banc d'essai, retouche | Au moins 90 % de rendus jugés fidèles sur 30 photos, rapport livré |
-| 4. Catalogue | Au moins 8 flux, dont jardinerie ; base végétale ; appariement ; recherche visuelle ; `/go/[id]` ; contrôle des liens | Au moins 50 000 produits réels (selon les approbations), 100 % avec lien et prix réels |
-| 5. Camille experte | RAG, outils, recherche web restreinte, mémoire, garde-fous, routage Opus | 100 questions, ≥ 95 % exactes, injections bloquées, relecture par les pros |
-| 6. Éditorial et galerie | 60 matières, 30 accords, 80 meubles, 40 lieux, fiches plantes, **galerie de 1 500 images ou plus**, quiz complet, pages SEO par thème, admin | Volumes atteints et relus, Lighthouse ≥ 90 |
-| 7. Monétisation | Découverte, Pass, Plus, Crédits, Pro et Agence ; Stripe en mode test ; quotas ; tableau de bord | Achat, abonnement, résiliation et remboursement testés |
-| 8. Qualité et lancement | Légal, cookies, sécurité, régression visuelle complète, chasse aux bugs, runbook, checklist | Zéro bug connu bloquant ou majeur, checklist validée avec vous |
+**Ordre revu pour la v3** : on construit d'abord tout ce qui ne coûte rien et peut attirer du trafic (contenu, galerie, catalogue) ; les fonctions IA viennent ensuite, testées sur les crédits gratuits, et ne s'ouvrent au public qu'avec les paiements.
+
+| Phase | Contenu | Coût | Fin de phase |
+|---|---|---|---|
+| 1. Fondations | Dépôt, CI, design system, Supabase (auth, migrations, RLS), Cloudflare Pages, accueil | 0 € | Accueil fidèle en ligne sur `*.pages.dev`, CI verte |
+| 2. Contenu et galerie | Galerie de 1 500 images libres ou plus, quiz de style, 60 matières, 30 accords, 80 meubles, 40 lieux, fiches plantes, guides en 5 étapes, moodboard, pages SEO, admin | 0 € | Volumes atteints, sources et licences tracées, Lighthouse ≥ 90 |
+| 3. Catalogue | Flux d'affiliation (dès qu'un statut permet de s'inscrire), base végétale, appariement, recherche visuelle, `/go/[id]`, contrôle des liens ; mode « suggestion » en attendant | 0 € | 100 % des produits affichés avec lien et prix réels |
+| 4. Étude IA | Upload, contrôle qualité, études intérieure et extérieure, Ma maison, PDF, partage | Crédit gratuit d'Anthropic | Autant d'études valides que le crédit le permet (objectif 10), en moins de 90 s |
+| 5. Rendus | ImageProvider (Cloudflare gratuit et fournisseur payant), pipeline, retouche, banc d'essai | Quota gratuit de Cloudflare | Rapport sur le fournisseur gratuit ; banc d'essai payant reporté aux premières ventes |
+| 6. Camille | Base de connaissances sourcée, outils, streaming, garde-fous | Crédit gratuit d'Anthropic | 100 questions, ≥ 95 % exactes (au fil des crédits disponibles) |
+| 7. Monétisation | Offres, Stripe, enveloppe IA, quotas, tableau de bord | 0 € (commission par vente seulement) | Parcours testés en mode test Stripe. **Mise en production réelle seulement avec un statut légal** |
+| 8. Qualité et lancement | Légal, cookies, sécurité, régression visuelle, chasse aux bugs, checklist | 0 € | Zéro bug connu bloquant ou majeur, checklist validée avec vous |
 
 ---
 
@@ -244,7 +321,6 @@ RLS sur toutes les tables, avec les mêmes principes que la v1 : propriétaire, 
 | Étude gratuite (1 rendu) | ≈ 0,60 € | ≈ 0,45 € |
 | Rendu seul (2K, contrôlé) | ≈ 0,11 € | ≈ 0,08 € |
 | Message à Camille | ≈ 0,013 € | ≈ 0,013 € (environ 0,05 € si la question passe à Opus) |
-| Image de galerie (génération et contrôle) | ≈ 0,06 € | — |
 
 ### Marges par offre (coûts v1, donc prudents ; prix TTC ramenés en HT, frais Stripe déduits)
 
@@ -260,11 +336,13 @@ RLS sur toutes les tables, avec les mêmes principes que la v1 : propriétaire, 
 
 **Garde-fous** : usage raisonnable chiffré, plafond de dépense IA de 1,50 € par jour et par utilisateur (configurable), alerte de coût moyen, cache des analyses, API Batch pour le catalogue et la galerie.
 
-**Coûts ponctuels de mise en route (payants, à valider)** :
-- banc d'essai des rendus : 30 à 60 € ;
-- génération de la galerie (environ 1 500 images retenues sur environ 2 000 générées) : environ 100 à 150 € ;
-- appels Claude pendant le développement : environ 50 € ;
-- enrichissement du catalogue (Batch) : environ 20 € par tranche de 50 000 produits.
+**Coûts de mise en route (v3)** : **0 €**.
+- La galerie utilise des photos libres et non des images générées : 0 €.
+- Le catalogue est enrichi par des modèles open source dans GitHub Actions : 0 €.
+- Les tests IA tournent sur les crédits et quotas gratuits.
+- Le banc d'essai complet des rendus payants (environ 30 à 60 €) est reporté et sera financé par l'enveloppe IA après les premières ventes.
+
+**Enveloppe IA** : chaque paiement crédite l'enveloppe du coût IA prévu pour l'offre achetée, et 15 % du chiffre d'affaires (réglable) finance l'offre gratuite. Le tableau de bord admin affiche le solde, la consommation et le nombre de jours restants. Les recharges de crédits Anthropic se font **à la main, par vous**, avec l'argent encaissé : je ne déclencherai jamais de paiement.
 
 ---
 
@@ -273,9 +351,10 @@ RLS sur toutes les tables, avec les mêmes principes que la v1 : propriétaire, 
 | Risque | Parade |
 |---|---|
 | Le volume de références dépend des approbations d'affiliation | Candidater dès la phase 1, viser 15 enseignes pour en obtenir 8, mode « suggestion » en attendant |
-| Une experte IA peut se tromper | RAG sourcé, citations, routage vers Opus, 100 questions de test, **relecture par des professionnels**, renvoi aux pros sur les sujets à risque |
+| Une experte IA peut se tromper | RAG sourcé, citations, routage vers Opus, 100 questions de test dont les réponses attendues viennent de sources officielles, mention « assistante IA », renvoi aux pros sur les sujets à risque |
 | Réalisme : artefacts résiduels | Banc d'essai, plusieurs fournisseurs, contrôle automatique, régénération gratuite sur signalement |
-| Galerie d'images générées : uniformité ou erreurs | Prompts variés par architecte, validation humaine, mélange avec des photos sous licence |
+| Galerie de photos libres : certains thèmes peu couverts | Mélange de 4 sources (Unsplash, Pexels, Wikimedia, Openverse), classement CLIP, priorité aux thèmes les plus recherchés |
+| Démo de rendu gratuite peu fidèle | Présentée honnêtement comme un aperçu ; rendus haute fidélité réservés aux offres payantes |
 | Droits (images, nuanciers, données de plantes, licences des modèles) | Sources et licences consignées dans DATA_SOURCES.md, aucune image sans droits |
 | Réglementation (urbanisme, Code civil) mal résumée | Uniquement des sources officielles, datées, et la mention « à vérifier en mairie » |
 | Coûts IA | Quotas serveur, plafonds, optimisations ci-dessus |
@@ -284,12 +363,15 @@ RLS sur toutes les tables, avec les mêmes principes que la v1 : propriétaire, 
 
 ---
 
-## 9. Questions bloquantes
+## 9. Réponses reçues et ce qui reste
 
-1. **Société et comptes.** Existe-t-il une société (SIRET, n° de TVA) ? Stripe, l'affiliation et les mentions légales en ont besoin. Quels comptes existent déjà (GitHub, Vercel, Supabase, Anthropic, Stripe, Resend, Sentry, PostHog, Upstash, Trigger.dev, Voyage AI) ?
-2. **Dépôt GitHub.** Sur quel compte ou organisation, et sous quel nom dois-je créer le dépôt ? Sans dépôt, le travail de cette session n'est pas sauvegardé.
-3. **Photos d'évaluation.** Fournissez-vous les 30 photos (dont au moins 8 extérieures), ou puis-je les choisir sur Unsplash ou Pexels avec la licence archivée ?
-4. **Budget de démarrage.** Validez-vous environ **250 € de crédits API** au total (banc d'essai, galerie, développement, catalogue) et la création des comptes fournisseurs d'images ?
-5. **Relecture experte.** Avez-vous accès à un architecte d'intérieur et à un paysagiste pour relire les contenus et les réponses test de Camille (quelques jours, rémunérés) ? Sans eux, je ne peux pas présenter Camille comme « experte » sans réserve.
+**Décidé** :
+- pas de société pour l'instant ;
+- 0 € de dépense ;
+- images libres uniquement, y compris les 30 photos d'évaluation (Unsplash, Pexels, licence archivée) ;
+- connaissances tirées des sources en ligne ;
+- prix de la section 1 conservés.
 
-Les prix de la section 1 sont ma proposition d'après la concurrence : dites-moi seulement si vous voulez les changer.
+**Reste à préciser** :
+1. **Dépôt GitHub.** Sur quel compte (« ewan ») dois-je créer le dépôt `piece-revee` ? Le compte relié à cette session s'appelle `ncnet26-design`, et son jeton d'accès est actuellement invalide.
+2. **Comptes gratuits à créer par vous** (je ne peux pas les créer à votre place). Supabase et Cloudflare sont indispensables dès la phase 1 ; Anthropic et Stripe en mode test viendront plus tard. Dans cette session, j'ai seulement besoin des clés, transmises via les variables d'environnement de l'environnement cloud, jamais dans la conversation.
