@@ -1,0 +1,1032 @@
+<title>Pièce Rêvée</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: plateforme éditoriale — barre de navigation, vues en grilles de « planches » matière, conseiller en tiroir latéral (plein écran sur mobile) */
+:root{
+  --bg:#F4F4EF; --surface:#FFFFFF; --soft:#EAEBE4; --ink:#121412; --muted:#5F645C; --line:#DDDFD6;
+  --accent:#2747D0; --accent-ink:#FFFFFF; --accent-soft:#E3E8FB; --good:#2B6B3A; --warn:#94600F;
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Onest","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --r:14px; --r-s:8px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F110F;--surface:#171A17;--soft:#1E211D;--ink:#ECEEE8;--muted:#9BA096;--line:#2B2F2A;
+  --accent:#93A6FF;--accent-ink:#0B0E1E;--accent-soft:#1D2442;--good:#7DC48C;--warn:#E2B566;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F110F;--surface:#171A17;--soft:#1E211D;--ink:#ECEEE8;--muted:#9BA096;--line:#2B2F2A;
+  --accent:#93A6FF;--accent-ink:#0B0E1E;--accent-soft:#1D2442;--good:#7DC48C;--warn:#E2B566;color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.55;padding-block:0 96px}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;letter-spacing:-.02em;text-wrap:balance;margin:0;line-height:1.08}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-size:12px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1320px;margin:0 auto}
+
+/* Barre */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:18px;height:62px}
+.logo{font-family:var(--f-display);font-weight:800;font-size:21px;letter-spacing:-.03em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo i{width:22px;height:22px;border-radius:6px;background:conic-gradient(from 210deg,#C9B08A,#3E5B4C,#2747D0,#D8C9B6,#C9B08A);display:inline-block}
+nav.main{display:flex;gap:4px;margin-left:12px;overflow-x:auto}
+nav.main a{text-decoration:none;color:var(--muted);font-weight:500;padding:8px 12px;border-radius:999px;white-space:nowrap;font-size:14.5px}
+nav.main a[aria-current="page"]{color:var(--ink);background:var(--soft)}
+.topbar .sp{flex:1}
+.mbcount{font-family:var(--f-mono);font-size:11px;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:1px 7px;margin-left:4px}
+@media (max-width:860px){nav.main{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:9px 16px;cursor:pointer;font-weight:600;font-size:14px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.small{padding:6px 12px;font-size:13px}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn svg{width:16px;height:16px}
+
+/* Barre mobile */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);display:none;
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+.tabbar .in{display:grid;grid-template-columns:repeat(5,1fr)}
+.tabbar a,.tabbar button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--muted);text-decoration:none;background:none;border:0;padding:4px 0;cursor:pointer;font-weight:500}
+.tabbar svg{width:22px;height:22px}
+.tabbar [aria-current="page"]{color:var(--accent)}
+@media (max-width:860px){.tabbar{display:block}}
+
+/* Vues */
+.view{padding-top:28px}
+.vhead{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.vhead h2{font-size:clamp(30px,4.4vw,52px)}
+.vhead p{margin:8px 0 0;color:var(--muted);max-width:60ch}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;font-size:13.5px;cursor:pointer;color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.search{flex:1 1 240px;max-width:340px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 16px}
+
+/* Accueil */
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:stretch;padding-top:8px}
+@media (max-width:900px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero h1{font-size:clamp(40px,6.6vw,88px);font-weight:800;letter-spacing:-.045em;line-height:.95}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{font-size:18px;color:var(--muted);max-width:46ch;margin:18px 0 24px}
+.hero .ctas{display:flex;gap:10px;flex-wrap:wrap}
+.collage{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,104px);gap:8px}
+@media (max-width:600px){.collage{grid-template-rows:repeat(4,72px)}}
+.collage .c{border-radius:var(--r-s);overflow:hidden;position:relative;background:var(--soft)}
+.collage .c img{width:100%;height:100%;object-fit:cover;display:block}
+.collage .c span{position:absolute;left:8px;bottom:8px;font-size:11px;background:rgba(255,255,255,.88);color:#121412;padding:2px 8px;border-radius:999px;font-weight:600}
+.pillars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:40px}
+@media (max-width:1000px){.pillars{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.pillars{grid-template-columns:minmax(0,1fr)}}
+.pillar{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:6px}
+.pillar:hover{border-color:var(--ink)}
+.pillar h3{font-size:20px}
+.pillar p{margin:0;color:var(--muted);font-size:14px}
+.pillar .n{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.section{margin-top:52px}
+.section h2{font-size:clamp(24px,3vw,34px);margin-bottom:6px}
+
+/* Cartes */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.cards.wide{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-align:left;padding:0;color:var(--ink);transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-2px);border-color:var(--muted)}
+.card .vis{aspect-ratio:4/3;background:var(--soft);position:relative;max-width:100%}
+.card .vis img{width:100%;height:100%;object-fit:cover;display:block}
+.card .body{padding:13px 15px 15px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card h3{font-size:18px}
+.card p{margin:0;font-size:13.5px;color:var(--muted)}
+.card .meta{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--muted);margin-top:auto;padding-top:6px}
+.tag{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--soft);border-radius:999px;padding:2px 9px;color:var(--muted)}
+.heart{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:grid;place-items:center;cursor:pointer;color:#121412}
+.heart svg{width:17px;height:17px}
+.heart[aria-pressed="true"]{background:#2747D0;color:#fff}
+.split{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;height:100%;gap:2px}
+.split img{width:100%;height:100%;object-fit:cover;display:block}
+.split img:first-child{grid-row:1/3}
+
+/* Modal */
+dialog{border:0;padding:0;border-radius:var(--r);background:var(--surface);color:var(--ink);width:min(980px,calc(100% - 24px));max-height:calc(100% - 32px)}
+dialog::backdrop{background:rgba(10,12,10,.55)}
+.dlg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}
+@media (max-width:760px){.dlg{grid-template-columns:minmax(0,1fr)}}
+.dlg .vis{background:var(--soft);min-height:280px}
+.dlg .vis img{width:100%;height:100%;object-fit:cover;display:block;min-height:280px}
+.dlg .txt{padding:24px 26px;display:flex;flex-direction:column;gap:14px;overflow:auto}
+.dlg h2{font-size:32px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:14px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
+.dlg .close{position:absolute;top:10px;right:10px;z-index:2}
+.swrow{display:flex;gap:6px}
+.swrow span{width:30px;height:30px;border-radius:50%;border:1px solid var(--line)}
+.links{display:flex;gap:6px;flex-wrap:wrap}
+ul.dots{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+ul.dots li{padding-left:16px;position:relative}
+ul.dots li::before{content:"";position:absolute;left:2px;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.notice{font-size:12.5px;color:var(--muted);background:var(--soft);border-radius:var(--r-s);padding:8px 11px}
+
+/* Projet */
+.proj{display:grid;grid-template-columns:minmax(0,370px) minmax(0,1fr);gap:24px}
+@media (max-width:960px){.proj{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-width:0}
+.brief{display:flex;flex-direction:column;gap:16px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field>.eyebrow{display:block}
+.drop{border:1.5px dashed var(--muted);border-radius:var(--r-s);background:var(--soft);padding:22px 16px;text-align:center;cursor:pointer;position:relative}
+.drop.over{border-color:var(--accent)}
+.drop img{display:block;width:100%;max-height:220px;object-fit:cover;border-radius:6px}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumbs figure{margin:0;position:relative;width:60px;height:60px}
+.thumbs img{width:60px;height:60px;object-fit:cover;border-radius:6px}
+.thumbs button{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);font-size:12px;padding:0;cursor:pointer}
+.add{width:60px;height:60px;border:1.5px dashed var(--muted);border-radius:6px;display:grid;place-items:center;color:var(--muted);position:relative;font-size:22px}
+.add input{position:absolute;inset:0;opacity:0;cursor:pointer}
+textarea,select,input[type=text]{width:100%;background:var(--soft);border:1px solid transparent;border-radius:var(--r-s);padding:10px 12px}
+textarea:focus,select:focus,input[type=text]:focus{border-color:var(--accent);outline:none}
+textarea{min-height:92px;resize:vertical}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer;user-select:none}
+.seg input:checked+label{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.seg input:focus-visible+label{outline:2.5px solid var(--accent);outline-offset:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.status{font-size:13.5px;padding:10px 12px;border-radius:var(--r-s);background:var(--soft)}
+.status.err{color:var(--warn)}
+.spinner{width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:-2px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ptabs{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line);margin:16px -20px 0;padding:0 14px}
+.ptabs button{border:0;background:none;padding:11px 10px 9px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.ptabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.ppane{padding-top:20px}
+.stage{position:relative;border-radius:var(--r-s);overflow:hidden;background:var(--soft);max-width:100%}
+.stage img{display:block;width:100%;height:auto}
+.tint{position:absolute;inset:0;pointer-events:none;transition:opacity .4s}
+.pin{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-ink);border:2px solid #fff;font-family:var(--f-mono);font-size:12px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.35);padding:0}
+.pin[aria-pressed="true"]{background:#fff;color:#121412}
+.zones{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:14px}
+.zone{border:1px solid var(--line);border-radius:var(--r-s);padding:11px 13px;background:var(--surface);cursor:pointer;text-align:left}
+.zone.on{border-color:var(--accent)}
+.zone b{font-family:var(--f-mono);color:var(--accent);margin-right:6px}
+.zone p{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.prods{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.prod{border:1px solid var(--line);border-radius:var(--r-s);padding:14px;display:flex;flex-direction:column;gap:7px;background:var(--surface)}
+.prod .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.prod .bn{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.prod h4{font-size:17px}
+.prod .price{font-family:var(--f-mono);font-size:12.5px;white-space:nowrap}
+.prod p{margin:0;font-size:13.5px;color:var(--muted)}
+.prod .links{margin-top:auto}
+.conf{font-size:11.5px;color:var(--warn)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.sw{border:1px solid var(--line);border-radius:var(--r-s);overflow:hidden}
+.sw .c{height:76px}
+.sw .t{padding:8px 10px;font-size:13px}
+.tuto{border:1px solid var(--line);border-radius:var(--r-s);margin-bottom:10px}
+.tuto summary{cursor:pointer;padding:13px 15px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline;list-style:none}
+.tuto summary::-webkit-details-marker{display:none}
+.tuto .tb{padding:0 15px 15px;display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:20px}
+@media (max-width:700px){.tuto .tb{grid-template-columns:minmax(0,1fr)}}
+.tuto ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:7px}
+.pro{margin-top:12px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--soft);font-size:13.5px;border-radius:0 6px 6px 0}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:12.5px;white-space:nowrap}
+.tw{overflow-x:auto}
+.big{font-family:var(--f-display);font-weight:600;font-size:30px;font-variant-numeric:tabular-nums}
+
+/* Moodboard */
+.mb{columns:4 220px;column-gap:12px}
+.mb .card{break-inside:avoid;margin-bottom:12px;width:100%}
+.empty{background:var(--surface);border:1.5px dashed var(--line);border-radius:var(--r);padding:36px 24px;text-align:center;color:var(--muted)}
+.empty h3{color:var(--ink);font-size:22px;margin-bottom:6px}
+
+/* Conseiller */
+.fab{position:fixed;right:max(20px,calc(env(safe-area-inset-right,0px) + 20px));bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:26;border-radius:999px;padding:13px 20px 13px 16px;box-shadow:0 10px 30px rgba(20,30,80,.28)}
+@media (max-width:860px){.fab{display:none}}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);z-index:40;background:var(--surface);border-left:1px solid var(--line);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s ease;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
+.drawer.open{transform:none;box-shadow:-20px 0 60px rgba(0,0,0,.18)}
+.dhead{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.avatar{width:38px;height:38px;border-radius:50%;background:conic-gradient(from 30deg,#2747D0,#9DB1FF,#C9B08A,#3E5B4C,#2747D0);flex:none}
+.dhead b{display:block;font-family:var(--f-display);font-size:17px}
+.dhead small{color:var(--muted);font-size:12.5px}
+.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:92%;padding:10px 14px;border-radius:16px;font-size:14.5px;line-height:1.55}
+.msg.u{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
+.msg.a{align-self:flex-start;background:var(--soft);border-bottom-left-radius:4px}
+.msg.a p{margin:0 0 8px}.msg.a p:last-child{margin:0}
+.msg.a ul,.msg.a ol{margin:4px 0 8px;padding-left:20px}
+.msg.a strong{font-weight:600}
+.msg img{max-width:160px;border-radius:8px;display:block;margin-bottom:6px}
+.ref{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--accent);color:var(--accent);background:var(--surface);border-radius:999px;padding:0 9px;font-size:12.5px;cursor:pointer;font-weight:600;margin:1px 0}
+.toolnote{align-self:flex-start;font-size:12px;color:var(--muted);font-family:var(--f-mono)}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 10px}
+.sugg button{font-size:12.5px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 11px;cursor:pointer;text-align:left}
+.composer{border-top:1px solid var(--line);padding:10px 12px;display:flex;gap:8px;align-items:flex-end}
+.composer textarea{min-height:44px;max-height:140px;border-radius:22px;padding:11px 14px}
+.composer .att{position:relative;width:44px;height:44px;flex:none;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--muted)}
+.composer .att input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.composer .send{width:44px;height:44px;padding:0;flex:none;border-radius:50%}
+.attprev{padding:0 16px 8px;font-size:12.5px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.attprev img{width:40px;height:40px;object-fit:cover;border-radius:6px}
+.scrim{position:fixed;inset:0;background:rgba(10,12,10,.4);z-index:35;opacity:0;pointer-events:none;transition:opacity .28s}
+.scrim.on{opacity:1;pointer-events:auto}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="topbar">
+  <div class="wrap gut">
+    <a class="logo" href="#accueil"><i aria-hidden="true"></i>Pièce Rêvée</a>
+    <nav class="main" aria-label="Navigation principale">
+      <a href="#projet" data-nav="projet">Mon projet</a>
+      <a href="#matieres" data-nav="matieres">Matières</a>
+      <a href="#accords" data-nav="accords">Accords</a>
+      <a href="#mobilier" data-nav="mobilier">Mobilier culte</a>
+      <a href="#lieux" data-nav="lieux">Lieux d'exception</a>
+      <a href="#moodboard" data-nav="moodboard">Moodboard<span class="mbcount" id="mbc1">0</span></a>
+    </nav>
+    <span class="sp"></span>
+    <button class="btn small ghost" type="button" id="themeBtn" aria-label="Changer de thème">◐</button>
+  </div>
+</header>
+
+<main class="wrap gut" id="app"></main>
+
+<button class="btn primary fab" type="button" id="fab"><span class="avatar" style="width:24px;height:24px" aria-hidden="true"></span>Demander à Camille</button>
+
+<nav class="tabbar" aria-label="Navigation mobile"><div class="in">
+  <a href="#accueil" data-nav="accueil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Accueil</a>
+  <a href="#projet" data-nav="projet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-8 8"/></svg>Projet</a>
+  <a href="#matieres" data-nav="explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>Explorer</a>
+  <a href="#moodboard" data-nav="moodboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Moodboard</a>
+  <button type="button" id="tabAdv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/></svg>Camille</button>
+</div></nav>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Conseillère déco IA" aria-hidden="true">
+  <div class="dhead">
+    <span class="avatar" aria-hidden="true"></span>
+    <div style="flex:1;min-width:0"><b>Camille</b><small>Conseillère en architecture d'intérieur · IA</small></div>
+    <button class="btn small ghost" type="button" id="newChat">Nouvelle discussion</button>
+    <button class="btn small ghost" type="button" id="closeDrawer" aria-label="Fermer">✕</button>
+  </div>
+  <div class="msgs" id="msgs"></div>
+  <div class="sugg" id="sugg"></div>
+  <div class="attprev" id="attprev" hidden></div>
+  <form class="composer" id="composer">
+    <label class="att" title="Joindre une photo" id="attWrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg><input type="file" id="chatImg" accept="image/jpeg,image/png,image/webp" aria-label="Joindre une photo"></label>
+    <textarea id="chatIn" rows="1" placeholder="Posez votre question déco…" aria-label="Votre message"></textarea>
+    <button class="btn primary send" type="submit" id="sendBtn" aria-label="Envoyer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </form>
+</aside>
+
+<dialog id="dlg"></dialog>
+<script>
+/* ================= DONNÉES ================= */
+const BRANDS = {
+ "Farrow & Ball":"https://www.farrow-ball.com","Little Greene":"https://www.littlegreene.com","Ressource":"https://www.ressource-peintures.com",
+ "Mylands":"https://www.mylands.com","Tollens":"https://www.tollens.fr","Zolpan":"https://www.zolpan.fr","Emery & Cie":"https://www.emeryetcie.com",
+ "Bauwerk Colour":"https://www.bauwerkcolour.com","Pierre Frey":"https://www.pierrefrey.com","Élitis":"https://www.elitis.fr","Elitis":"https://www.elitis.fr",
+ "Cole & Son":"https://www.cole-and-son.com","Arte":"https://www.arte-international.com","de Gournay":"https://www.degournay.com","Isidore Leroy":"https://www.isidoreleroy.com",
+ "Ligne Roset":"https://www.ligne-roset.com","Roche Bobois":"https://www.roche-bobois.com","Cassina":"https://www.cassina.com","B&B Italia":"https://www.bebitalia.com",
+ "Vitra":"https://www.vitra.com","Knoll":"https://www.knoll.com","Gubi":"https://www.gubi.com","HAY":"https://www.hay.com","Muuto":"https://www.muuto.com",
+ "&Tradition":"https://www.andtradition.com","Ferm Living":"https://fermliving.com","Audo Copenhagen":"https://audocph.com","Sika Design":"https://www.sika-design.com",
+ "Kann Design":"https://www.kanndesign.com","Pierre Augustin Rose":"https://www.pierre-augustin-rose.com","Maison Sarah Lavoine":"https://www.maisonsarahlavoine.com",
+ "India Mahdavi":"https://india-mahdavi.com","The Socialite Family":"https://www.thesocialitefamily.com","Caravane":"https://www.caravane.fr",
+ "AM.PM":"https://www.laredoute.fr","La Redoute":"https://www.laredoute.fr","Maisons du Monde":"https://www.maisonsdumonde.com","IKEA":"https://www.ikea.com/fr/fr/",
+ "Habitat":"https://www.habitat.fr","Made in Design":"https://www.madeindesign.com","Fermob":"https://www.fermob.com","Tectona":"https://www.tectona.fr",
+ "Ethimo":"https://www.ethimo.com","Kettal":"https://www.kettal.com","Dedon":"https://www.dedon.de","Petite Friture":"https://www.petitefriture.com",
+ "Moustache":"https://www.moustache.fr","CC-Tapis":"https://www.cc-tapis.com","Nanimarquina":"https://nanimarquina.com","Flos":"https://flos.com",
+ "Louis Poulsen":"https://www.louispoulsen.com","Artemide":"https://www.artemide.com","DCW éditions":"https://www.dcw-editions.fr","Atelier Areti":"https://www.atelierareti.com",
+ "Bocci":"https://bocci.com","Tikamoon":"https://www.tikamoon.com","Zara Home":"https://www.zarahome.com","Merci":"https://merci-merci.com",
+ "Mosaic del Sur":"https://www.mosaicdelsur.com","Bisazza":"https://www.bisazza.com","Mutina":"https://www.mutina.it","Marazzi":"https://www.marazzi.it",
+ "Dedar":"https://dedar.com","Kvadrat":"https://www.kvadrat.dk","Le Monde Sauvage":"https://www.lemondesauvage.com","Libeco":"https://www.libeco.com",
+ "Plum Living":"https://www.plumliving.com","Reform":"https://www.reformcph.com","Leroy Merlin":"https://www.leroymerlin.fr","Castorama":"https://www.castorama.fr",
+ "Lapeyre":"https://www.lapeyre.fr","Selency":"https://www.selency.fr","Pamono":"https://www.pamono.fr","1stDibs":"https://www.1stdibs.com","Kartell":"https://www.kartell.com",
+ "Fritz Hansen":"https://www.fritzhansen.com","Carl Hansen & Søn":"https://www.carlhansen.com","String":"https://stringfurniture.com","USM":"https://www.usm.com",
+ "Santa & Cole":"https://www.santacole.com","Marset":"https://www.marset.com","Bolia":"https://www.bolia.com","Sklum":"https://www.sklum.com","Westwing":"https://www.westwing.fr",
+ "Designers Guild":"https://www.designersguild.com","Astier de Villatte":"https://www.astierdevillatte.com","ClassiCon":"https://www.classicon.com",
+ "Dulux Valentine":"https://www.duluxvalentine.com","V33":"https://www.v33.fr","Liberon":"https://www.liberon.fr","Seigneurie":"https://www.seigneurie.com",
+ "Quick-Step":"https://www.quick-step.fr","Truffaut":"https://www.truffaut.com","Jardiland":"https://www.jardiland.com","Serge Mouille":"https://www.sergemouille.com"
+};
+
+/* Matières : type = algorithme de rendu, c = couleurs */
+const MATERIALS = [
+ {id:"m-travertin",nom:"Travertin",fam:"Pierre",type:"travertine",c:["#E6D7BD","#CDB894","#A88D66"],
+  origine:"Italie (Tivoli), Turquie, Iran",resume:"Pierre calcaire alvéolée, tons miel et sable. La vedette des intérieurs 70 et de la Riviera.",
+  usages:["Sol de séjour et salle de bain","Table basse, console, plan vasque","Habillage de cheminée"],entretien:"Bouché et adouci pour un usage facile. Hydrofuge tous les 2–3 ans, pas de produits acides.",
+  prix:"60 – 200 €/m²",malin:"Grès cérame effet travertin (Marazzi, Leroy Merlin) : 30 – 60 €/m², zéro entretien.",sources:["Marazzi","Mutina","Leroy Merlin"]},
+ {id:"m-viola",nom:"Marbre Calacatta Viola",fam:"Pierre",type:"marble",c:["#F1ECE8","#8A4B5A","#B98692"],
+  origine:"Carrare, Toscane",resume:"Fond blanc parcouru de veines lie-de-vin. Une pièce de caractère, à réserver à une surface vedette.",
+  usages:["Plan de cuisine ou crédence","Plan vasque, tablette","Plateau de table"],entretien:"Poreux : traitement oléofuge, éviter citron et vinaigre.",
+  prix:"300 – 900 €/m²",malin:"Grès grand format effet Viola : 50 – 100 €/m²",sources:["Marazzi","1stDibs"]},
+ {id:"m-verde",nom:"Marbre vert « Verde »",fam:"Pierre",type:"marble",c:["#1F3B30","#E6EDE6","#37594A"],
+  origine:"Inde, Italie (Verde Alpi)",resume:"Vert profond veiné de blanc, très Art déco. Spectaculaire en petites touches.",
+  usages:["Dessus de commode, guéridon","Carrelage de salle d'eau","Encadrement de cheminée"],entretien:"Comme tout marbre : imperméabilisant et nettoyant pH neutre.",
+  prix:"150 – 450 €/m²",malin:"Grès effet marbre vert ou papier peint effet pierre pour une niche.",sources:["Marazzi","Pamono"]},
+ {id:"m-terrazzo",nom:"Terrazzo",fam:"Composite",type:"terrazzo",c:["#ECE7DE","#B6553A","#3E5B4C","#C9B08A","#2C2C2C"],
+  origine:"Venise, XVIᵉ siècle",resume:"Éclats de marbre pris dans un liant. Joyeux, graphique, quasi inusable.",
+  usages:["Sol continu ou carreaux","Plan vasque, tables d'appoint","Marches d'escalier"],entretien:"Très résistant. Cristallisation ou vernis selon finition.",
+  prix:"80 – 250 €/m²",malin:"Carreaux grès effet terrazzo : 30 – 60 €/m²",sources:["Mutina","Leroy Merlin"]},
+ {id:"m-zellige",nom:"Zellige",fam:"Terre",type:"tile",c:["#2F6F62","#3C8273","#24574C"],tile:{w:10,h:10,gloss:true,vary:.18},
+  origine:"Fès, Maroc",resume:"Petits carreaux de terre émaillés et taillés à la main. Chaque pièce est unique, la lumière y danse.",
+  usages:["Crédence, douche à l'italienne","Bar, tête de lit","Bassin, contremarches"],entretien:"Joints hydrofugés, nettoyage doux.",
+  prix:"80 – 180 €/m²",malin:"Faïence effet zellige 7,5×15 : 25 – 60 €/m²",sources:["Mosaic del Sur","Leroy Merlin"]},
+ {id:"m-ciment",nom:"Carreau ciment",fam:"Terre",type:"cement",c:["#EDE6D8","#2E4A6B","#C27B4E"],
+  origine:"Europe, fin XIXᵉ siècle",resume:"Carreaux à motifs teintés dans la masse. Parfait pour une entrée ou une cuisine qui raconte une histoire.",
+  usages:["Entrée, cuisine","Sol de salle de bain","Tapis de carreaux sous une table"],entretien:"Bouche-pores à la pose puis cire ou savon noir.",
+  prix:"70 – 150 €/m²",malin:"Sticker vinyle effet ciment (locataires) : 15 – 30 €/m²",sources:["Mosaic del Sur","Leroy Merlin","Castorama"]},
+ {id:"m-tomette",nom:"Tomette en terre cuite",fam:"Terre",type:"hex",c:["#B5603E","#9C4E32","#C97A54"],
+  origine:"Provence, Bourgogne",resume:"Hexagones de terre cuite à la patine chaude. Le charme d'une maison du Sud.",
+  usages:["Sol de cuisine, salon","Terrasse couverte","Mur d'accent en rénovation"],entretien:"Huile de lin puis cire, ou vernis mat pour les zones humides.",
+  prix:"40 – 120 €/m²",malin:"Tomettes de récupération (Leboncoin, dépôts) souvent moins chères et plus belles.",sources:["Leroy Merlin","Selency"]},
+ {id:"m-chene",nom:"Chêne huilé clair",fam:"Bois",type:"wood",c:["#D8B98E","#C19E72","#A9845A"],
+  origine:"France, Europe centrale",resume:"Bois clair, doux au toucher, qui vieillit bien. La base de tous les intérieurs nordiques et japandi.",
+  usages:["Parquet point de Hongrie ou lames larges","Plan de travail, étagères","Mobilier, menuiseries"],entretien:"Huile d'entretien une à deux fois par an.",
+  prix:"50 – 130 €/m² (parquet)",malin:"Stratifié haut de gamme (Quick-Step) : 20 – 40 €/m²",sources:["Quick-Step","Tikamoon","Leroy Merlin"]},
+ {id:"m-noyer",nom:"Noyer",fam:"Bois",type:"wood",c:["#6A4A35","#56392A","#7F5B42"],
+  origine:"France (Dauphiné), Amérique du Nord",resume:"Brun chocolat à veinage marqué. Le bois chic des années 60, chaud et profond.",
+  usages:["Bibliothèque, bureau","Façades de cuisine","Têtes de lit, panneaux muraux"],entretien:"Huile ou vernis mat, fuit le soleil direct.",
+  prix:"90 – 220 €/m²",malin:"Placage noyer sur panneau (Plum Living sur caissons IKEA).",sources:["Plum Living","Pamono"]},
+ {id:"m-chenefume",nom:"Chêne fumé",fam:"Bois",type:"wood",c:["#4A3A2E","#3A2C22","#5C4A3B"],
+  origine:"Europe",resume:"Chêne passé à l'ammoniaque : brun profond homogène, très élégant avec du laiton.",
+  usages:["Parquet","Dressing, cuisine","Mobilier sur-mesure"],entretien:"Comme un chêne huilé.",
+  prix:"80 – 160 €/m²",malin:"Teinte noyer-fumé sur chêne brut (Liberon, V33).",sources:["Liberon","V33"]},
+ {id:"m-liege",nom:"Liège",fam:"Bois",type:"cork",c:["#B98B5B","#8E6339","#D2A979"],
+  origine:"Portugal",resume:"Écorce récoltée sans abattre l'arbre. Chaud, silencieux, isolant : l'allié acoustique méconnu.",
+  usages:["Mur acoustique de bureau ou chambre d'enfant","Sol chaud","Tabourets, luminaires"],entretien:"Vernis mat sur sol, rien au mur.",
+  prix:"25 – 70 €/m²",malin:"Dalles de liège murales : moins de 30 €/m²",sources:["Leroy Merlin","Castorama"]},
+ {id:"m-cannage",nom:"Cannage & rotin",fam:"Fibre",type:"cane",c:["#D9BC8A","#B39566","#F2E7D2"],
+  origine:"Asie du Sud-Est",resume:"Tressage octogonal en rotin. Il allège n'importe quel meuble et laisse passer la lumière.",
+  usages:["Portes de buffet, têtes de lit","Assises","Paravent, cloison légère"],entretien:"Dépoussiérer, humidifier légèrement si la toile se détend.",
+  prix:"25 – 70 €/m de toile",malin:"Toile de cannage au mètre à poser soi-même sur un meuble chiné.",sources:["Leroy Merlin","Selency"]},
+ {id:"m-lin",nom:"Lin lavé",fam:"Textile",type:"weave",c:["#D8D1C3","#C7BEAE","#E4DED2"],
+  origine:"France, Belgique (1ʳᵉ production mondiale)",resume:"Fibre européenne, froissé naturel, respirant. Le textile du raffinement décontracté.",
+  usages:["Rideaux et voilages","Housses de canapé","Linge de lit"],entretien:"Lavage 40 °C, pas de repassage nécessaire.",
+  prix:"30 – 90 €/m",malin:"Linge de lit en lin chez La Redoute, Zara Home, H&M Home.",sources:["Libeco","La Redoute","Zara Home"]},
+ {id:"m-bouclette",nom:"Bouclette",fam:"Textile",type:"boucle",c:["#EEE8DD","#D9D1C2","#FFFFFF"],
+  origine:"Inspirée des tissages de Knoll (années 40)",resume:"Laine bouclée, texture nuage. Rend un fauteuil irrésistible et adoucit l'acoustique.",
+  usages:["Fauteuils, poufs","Têtes de lit","Coussins"],entretien:"Aspiration douce, détachant spécifique laine.",
+  prix:"60 – 200 €/m",malin:"Fauteuils bouclette dès 200 € (Maisons du Monde, Sklum).",sources:["Kvadrat","Dedar","Maisons du Monde"]},
+ {id:"m-velours",nom:"Velours côtelé",fam:"Textile",type:"cord",c:["#8C3B2E","#6F2E24","#A44A3A"],
+  origine:"Manchester, XVIIIᵉ siècle",resume:"Côtes profondes qui captent la lumière. Nostalgique, très 70.",
+  usages:["Canapé, banquette","Rideaux épais","Coussins"],entretien:"Brosser dans le sens du poil.",
+  prix:"40 – 120 €/m",malin:"Housse de canapé en velours côtelé, environ 150 €.",sources:["Pierre Frey","Maisons du Monde"]},
+ {id:"m-laiton",nom:"Laiton brossé",fam:"Métal",type:"metal",c:["#C49A52","#9E7735","#E3C487"],
+  origine:"Alliage cuivre-zinc",resume:"Or chaud et mat qui se patine avec le temps. La touche bijou d'un intérieur.",
+  usages:["Robinetterie, poignées","Luminaires","Plinthes, nez de marche, piètements"],entretien:"Vernis ou patine libre, chiffon doux.",
+  prix:"Poignées 10 – 80 € pièce",malin:"Bombe effet laiton ou poignées laiton chez Leroy Merlin.",sources:["Atelier Areti","Leroy Merlin"]},
+ {id:"m-inox",nom:"Inox brossé",fam:"Métal",type:"metal",c:["#B9BCBC","#9A9E9F","#D5D8D8"],
+  origine:"Cuisines professionnelles",resume:"Froid, net, quasi indestructible. Superbe face au bois chaud.",
+  usages:["Plan de travail, crédence","Façades de cuisine","Étagères"],entretien:"Nettoyer dans le sens du brossage.",
+  prix:"200 – 600 €/ml (plan)",malin:"Tables inox de restauration d'occasion.",sources:["Reform","Leroy Merlin"]},
+ {id:"m-beton",nom:"Béton ciré",fam:"Composite",type:"plaster",c:["#A7A49D","#8F8C85","#BDBAB2"],pores:true,
+  origine:"Mortier à base de ciment",resume:"Surface continue sans joints, minérale et apaisante.",
+  usages:["Sol continu","Douche, vasque","Plan de travail"],entretien:"Vernis de protection, savon neutre.",
+  prix:"80 – 160 €/m² posé",malin:"Peinture effet béton (V33) : moins de 20 €/m²",sources:["V33","Leroy Merlin"]},
+ {id:"m-tadelakt",nom:"Tadelakt",fam:"Terre",type:"plaster",c:["#C98E6B","#B57A58","#D9A585"],gloss:true,
+  origine:"Marrakech",resume:"Enduit de chaux lissé à la pierre et au savon noir : étanche, satiné, sensuel.",
+  usages:["Douche, hammam","Vasque","Niche, banquette maçonnée"],entretien:"Savon noir régulier.",
+  prix:"120 – 260 €/m² posé",malin:"Enduit décoratif effet tadelakt en kit.",sources:["Leroy Merlin"]},
+ {id:"m-chaux",nom:"Peinture à la chaux",fam:"Terre",type:"plaster",c:["#D9D2C3","#C9C0AE","#E6E0D3"],
+  origine:"Tradition méditerranéenne",resume:"Effet nuageux et velouté, chaque mur a sa profondeur. Respire et assainit.",
+  usages:["Murs de séjour et chambre","Plafonds voûtés","Façades"],entretien:"Retouches faciles, pas lessivable intensément.",
+  prix:"60 – 120 € les 2,5 L",malin:"Effet chaux en peinture acrylique (Ressource, Tollens).",sources:["Bauwerk Colour","Ressource"]},
+ {id:"m-cannele",nom:"Verre cannelé",fam:"Verre",type:"fluted",c:["#CFDCD8","#A9BDB8","#EEF4F2"],
+  origine:"Vitrerie Art déco",resume:"Verre strié qui floute sans couper la lumière. Idéal pour séparer sans fermer.",
+  usages:["Verrière, cloison","Portes de buffet ou douche","Luminaires"],entretien:"Lave-vitres et brosse douce.",
+  prix:"90 – 220 €/m²",malin:"Film adhésif effet cannelé : 15 – 30 €/m²",sources:["Leroy Merlin","Lapeyre"]},
+ {id:"m-laque",nom:"Laque brillante",fam:"Composite",type:"lacquer",c:["#7A1E2A","#4D0F18","#B33A48"],
+  origine:"Chine, Japon, puis Art déco",resume:"Brillant profond comme un miroir coloré. Ose une couleur forte sur une petite surface.",
+  usages:["Porte, plafond","Bibliothèque intérieure","Petit meuble"],entretien:"Microfibre, pas d'abrasif.",
+  prix:"Peinture laque 60 – 120 € le litre",malin:"Laque glycéro brillante sur un meuble chiné.",sources:["Little Greene","Farrow & Ball"]},
+ {id:"m-cuir",nom:"Cuir pleine fleur",fam:"Textile",type:"leather",c:["#8A5434","#6F4127","#A2694A"],
+  origine:"Tanneries françaises et italiennes",resume:"Se patine et se bonifie. L'assise qui dure 30 ans.",
+  usages:["Fauteuils, chaises","Poignées, sangles","Têtes de lit"],entretien:"Lait nourrissant deux fois par an.",
+  prix:"Fauteuil 800 – 6 000 €",malin:"Fauteuils cuir vintage sur Selency, Pamono.",sources:["Selency","Pamono"]},
+ {id:"m-raphia",nom:"Raphia tissé",fam:"Fibre",type:"raffia",c:["#D4BE93","#BFA677","#E3D2AE"],
+  origine:"Madagascar",resume:"Fibre de palmier au tissage irrégulier. Chaleur artisanale immédiate.",
+  usages:["Papier peint textile","Abat-jour","Paniers, tapis"],entretien:"Dépoussiérage.",
+  prix:"Revêtement mural 60 – 150 €/m²",malin:"Abat-jour et paniers en raphia dès 20 €.",sources:["Élitis","Arte"]},
+ {id:"m-washi",nom:"Papier japonais (washi)",fam:"Fibre",type:"washi",c:["#F3EEE2","#E4DCCB","#FFFFFF"],
+  origine:"Japon",resume:"Papier de fibres de mûrier, translucide. Diffuse une lumière d'une douceur unique.",
+  usages:["Suspensions et lampes","Panneaux coulissants (shoji)","Paravent"],entretien:"Plumeau sec.",
+  prix:"Lampes 150 – 1 000 €",malin:"Suspensions papier de riz IKEA et Habitat.",sources:["Vitra","IKEA"]}
+];
+
+const PAIRINGS = [
+ {id:"a-riviera",nom:"Riviera 70",mats:["m-travertin","m-noyer","m-laiton"],ambiance:"Villa de bord de mer des années 70, soleil couchant.",
+  pourquoi:"Trois tons chauds de valeurs différentes : clair (pierre), foncé (bois), brillant (métal). Le mat de la pierre fait briller le laiton.",
+  ratio:"60 % travertin · 30 % noyer · 10 % laiton",pieces:["Salon","Salle de bain"],ref:"l-eileen"},
+ {id:"a-japandi",nom:"Japandi lumineux",mats:["m-chene","m-lin","m-washi"],ambiance:"Calme absolu, matières naturelles, lumière filtrée.",
+  pourquoi:"Une seule famille de tons sable déclinée en trois textures : veinée, tissée, translucide. Le relief remplace la couleur.",
+  ratio:"Chêne au sol et au mobilier · lin en textile · washi pour la lumière",pieces:["Chambre","Salon"],ref:"l-tawaraya"},
+ {id:"a-riad",nom:"Riad contemporain",mats:["m-zellige","m-tomette","m-cannage"],ambiance:"Fraîcheur d'un patio, chaleur de la terre.",
+  pourquoi:"Couleurs complémentaires (vert / rouge-orangé) adoucies par la terre et la fibre. L'émail brillant du zellige répond à la tomette mate.",
+  ratio:"Zellige en crédence ou douche · tomette au sol · rotin en mobilier",pieces:["Cuisine","Salle de bain","Terrasse"],ref:"l-majorelle"},
+ {id:"a-deco",nom:"Néo Art déco",mats:["m-verde","m-velours","m-laiton"],ambiance:"Bar d'hôtel feutré, soirée chic.",
+  pourquoi:"Vert profond et rouge brique sont complémentaires : ils se réveillent mutuellement. Le laiton fait le lien en douceur.",
+  ratio:"Marbre en touches · velours en assise · laiton en luminaire",pieces:["Salon","Salle à manger"],ref:"l-necchi"},
+ {id:"a-brutal",nom:"Brutalisme doux",mats:["m-beton","m-liege","m-inox"],ambiance:"Loft minéral mais chaleureux.",
+  pourquoi:"Le liège réchauffe la froideur du béton et de l'inox, et absorbe le bruit que ces surfaces dures renvoient.",
+  ratio:"Béton ciré au sol · liège au mur · inox en cuisine",pieces:["Cuisine","Bureau","Loft"],ref:"l-radieuse"},
+ {id:"a-nuit",nom:"Club nocturne",mats:["m-chenefume","m-bouclette","m-cannele"],ambiance:"Appartement parisien, ambiance tamisée.",
+  pourquoi:"Contraste sombre / très clair (bois fumé contre bouclette blanche) et le verre cannelé qui adoucit la lumière.",
+  ratio:"Chêne fumé en mobilier · bouclette en assise · verre cannelé en cloison",pieces:["Salon","Chambre"],ref:"l-verre"},
+ {id:"a-medit",nom:"Méditerranée brute",mats:["m-tadelakt","m-raphia","m-tomette"],ambiance:"Maison blanchie à la chaux sur une île grecque, version terre.",
+  pourquoi:"Trois matières faites main, toutes issues de la terre ou du végétal : l'imperfection devient le luxe.",
+  ratio:"Tadelakt en salle d'eau · raphia en lumière · tomette au sol",pieces:["Salle de bain","Terrasse"],ref:"l-canlis"},
+ {id:"a-galerie",nom:"Galerie arty",mats:["m-terrazzo","m-laque","m-inox"],ambiance:"Appartement de collectionneur, couleur et graphisme.",
+  pourquoi:"Le terrazzo apporte la gaieté, la laque une couleur franche, l'inox remet de la rigueur.",
+  ratio:"Terrazzo au sol · laque sur une porte ou un plafond · inox en détails",pieces:["Cuisine","Entrée"],ref:"l-muralla"},
+ {id:"a-chalet",nom:"Refuge moderne",mats:["m-noyer","m-cuir","m-lin"],ambiance:"Chalet d'architecte, feu de cheminée.",
+  pourquoi:"Brun sur brun en trois intensités, allégé par le lin clair. Toutes ces matières se patinent : la pièce s'embellit avec le temps.",
+  ratio:"Noyer en boiserie · cuir en fauteuil · lin en textile",pieces:["Salon","Bureau"],ref:"l-falling"},
+ {id:"a-mediterraneo",nom:"Palais vénitien",mats:["m-viola","m-chaux","m-laiton"],ambiance:"Palazzo italien, élégance patinée.",
+  pourquoi:"Les veines violines du marbre se répètent dans un mur à la chaux légèrement rosé ; le laiton fait le bijou.",
+  ratio:"Marbre en plan · chaux sur les murs · laiton en robinetterie",pieces:["Salle de bain","Cuisine"],ref:"l-necchi"}
+];
+
+const FURNITURE = [
+ {id:"f-togo",nom:"Togo",designer:"Michel Ducaroy",annee:1973,editeur:"Ligne Roset",cat:"Assise",prix:"≈ 1 300 – 3 500 €",mats:["m-velours","m-bouclette"],
+  histoire:"Un canapé sans structure, entièrement en mousse plissée, inspiré d'un tube de dentifrice replié. Best-seller depuis 50 ans.",conseil:"Parfait dans un salon décontracté, au ras du sol. En velours côtelé pour un esprit 70."},
+ {id:"f-pumpkin",nom:"Pumpkin",designer:"Pierre Paulin",annee:1971,editeur:"Ligne Roset",cat:"Assise",prix:"≈ 3 500 – 6 000 €",mats:["m-bouclette","m-laque"],
+  histoire:"Dessiné pour l'appartement privé du président Pompidou à l'Élysée. Formes rondes et enveloppantes.",conseil:"Un seul suffit à signer une pièce. Superbe en bouclette claire."},
+ {id:"f-lounge",nom:"Lounge Chair & Ottoman",designer:"Charles & Ray Eames",annee:1956,editeur:"Vitra",cat:"Assise",prix:"≈ 8 000 – 11 000 €",mats:["m-cuir","m-noyer"],
+  histoire:"Pensé comme « un gant de baseball bien usé ». Le fauteuil de lecture le plus célèbre du monde.",conseil:"Vaut l'investissement si c'est votre place de lecture quotidienne."},
+ {id:"f-standard",nom:"Standard Chair",designer:"Jean Prouvé",annee:1934,editeur:"Vitra",cat:"Assise",prix:"≈ 600 – 900 €",mats:["m-chene","m-inox"],
+  histoire:"Pieds arrière massifs là où le poids s'exerce : la logique de l'ingénieur appliquée à la chaise.",conseil:"Autour d'une table en bois massif, mélangée à d'autres chaises."},
+ {id:"f-wishbone",nom:"CH24 Wishbone",designer:"Hans J. Wegner",annee:1949,editeur:"Carl Hansen & Søn",cat:"Assise",prix:"≈ 800 – 1 200 €",mats:["m-chene","m-cannage"],
+  histoire:"Dossier en Y et assise tressée à la main en corde de papier : plus de 100 étapes de fabrication.",conseil:"La chaise de salle à manger la plus polyvalente qui soit."},
+ {id:"f-camaleonda",nom:"Camaleonda",designer:"Mario Bellini",annee:1970,editeur:"B&B Italia",cat:"Assise",prix:"≈ 7 000 – 25 000 €",mats:["m-bouclette","m-velours"],
+  histoire:"Canapé modulaire en capitons, réédité en 2020 et devenu culte sur les réseaux.",conseil:"Pour un grand séjour, en configuration îlot."},
+ {id:"f-mahjong",nom:"Mah Jong",designer:"Hans Hopf",annee:1971,editeur:"Roche Bobois",cat:"Assise",prix:"≈ 6 000 – 18 000 €",mats:["m-velours","m-lin"],
+  histoire:"Coussins empilables à composer à l'infini, habillés de tissus de créateurs (Kenzo, Missoni).",conseil:"Idéal pour une pièce conviviale et basse, façon lounge."},
+ {id:"f-beetle",nom:"Beetle Chair",designer:"GamFratesi",annee:2013,editeur:"Gubi",cat:"Assise",prix:"≈ 500 – 1 000 €",mats:["m-velours","m-laiton"],
+  histoire:"Coque inspirée de la carapace du scarabée, par un duo italo-danois.",conseil:"Chaise de salle à manger élégante et confortable."},
+ {id:"f-utrecht",nom:"Utrecht",designer:"Gerrit Rietveld",annee:1935,editeur:"Cassina",cat:"Assise",prix:"≈ 3 000 – 4 500 €",mats:["m-velours","m-laiton"],
+  histoire:"Fauteuil géométrique du mouvement De Stijl, plié comme un origami.",conseil:"Pièce sculpturale, à poser en solo près d'une fenêtre."},
+ {id:"f-bibendum",nom:"Bibendum",designer:"Eileen Gray",annee:1926,editeur:"ClassiCon",cat:"Assise",prix:"≈ 5 000 – 7 000 €",mats:["m-cuir","m-inox"],
+  histoire:"Trois boudins superposés en hommage au bonhomme Michelin, par la créatrice de la villa E-1027.",conseil:"Statement dans un intérieur moderniste ou Art déco."},
+ {id:"f-poang",nom:"Poäng",designer:"Noboru Nakamura",annee:1976,editeur:"IKEA",cat:"Assise",prix:"≈ 100 – 250 €",mats:["m-chene","m-lin"],
+  histoire:"Bois lamellé-courbé en porte-à-faux, dessiné par un designer japonais. Un vrai fauteuil de design accessible.",conseil:"Avec une housse lin ou cuir, il gagne en caractère."},
+ {id:"f-bistro",nom:"Chaise Bistro",designer:"Fermob",annee:1889,editeur:"Fermob",cat:"Extérieur",prix:"≈ 80 – 130 €",mats:["m-inox","m-chene"],
+  histoire:"La chaise pliante des jardins et cafés français, fabriquée dans l'Ain depuis le XIXᵉ siècle.",conseil:"Pour un balcon : pliante, colorée, increvable."},
+ {id:"f-palissade",nom:"Palissade",designer:"Ronan & Erwan Bouroullec",annee:2015,editeur:"HAY",cat:"Extérieur",prix:"≈ 300 – 1 200 €",mats:["m-inox","m-beton"],
+  histoire:"Collection outdoor en acier traité, légère et graphique comme une clôture.",conseil:"Terrasse moderne, en vert olive ou anthracite."},
+ {id:"f-gras",nom:"Lampe Gras",designer:"Bernard-Albin Gras",annee:1921,editeur:"DCW éditions",cat:"Luminaire",prix:"≈ 300 – 900 €",mats:["m-inox","m-laiton"],
+  histoire:"Lampe d'atelier sans vis ni soudure, adoptée par Le Corbusier.",conseil:"Applique au-dessus d'un lit ou d'un bureau : orientable, éternelle."},
+ {id:"f-ph5",nom:"PH 5",designer:"Poul Henningsen",annee:1958,editeur:"Louis Poulsen",cat:"Luminaire",prix:"≈ 900 – 1 400 €",mats:["m-inox","m-laque"],
+  histoire:"Abat-jours calculés pour ne jamais éblouir : la lumière est renvoyée vers le bas et les côtés.",conseil:"Au-dessus d'une table à manger, à 65 cm du plateau."},
+ {id:"f-arco",nom:"Arco",designer:"Achille & Pier Giacomo Castiglioni",annee:1962,editeur:"Flos",cat:"Luminaire",prix:"≈ 2 800 – 3 500 €",mats:["m-viola","m-inox"],
+  histoire:"Une base en marbre de Carrare pour éclairer une table sans percer le plafond.",conseil:"La solution quand le point lumineux n'est pas au bon endroit."},
+ {id:"f-akari",nom:"Akari",designer:"Isamu Noguchi",annee:1951,editeur:"Vitra",cat:"Luminaire",prix:"≈ 150 – 1 200 €",mats:["m-washi","m-chene"],
+  histoire:"Sculptures lumineuses en papier washi et bambou, fabriquées à Gifu, au Japon.",conseil:"Plusieurs tailles groupées pour une lumière de lanterne."},
+ {id:"f-mouille",nom:"Lampadaire 3 lumières",designer:"Serge Mouille",annee:1953,editeur:"Serge Mouille",cat:"Luminaire",prix:"≈ 4 500 – 7 000 €",mats:["m-inox","m-laque"],
+  histoire:"Bras articulés et réflecteurs en forme de mamelle : la quintessence du design français des années 50.",conseil:"Dans un angle, il dessine la pièce comme une sculpture."},
+ {id:"f-tulip",nom:"Tulip",designer:"Eero Saarinen",annee:1957,editeur:"Knoll",cat:"Table",prix:"≈ 3 000 – 9 000 €",mats:["m-viola","m-inox"],
+  histoire:"Un pied unique pour en finir avec « le bidonville de pieds » sous les tables.",conseil:"Table ronde de petite salle à manger : circulation fluide."},
+ {id:"f-string",nom:"String System",designer:"Nils Strinning",annee:1949,editeur:"String",cat:"Rangement",prix:"≈ 200 – 2 000 €",mats:["m-noyer","m-inox"],
+  histoire:"Étagères murales modulaires suédoises, à agrandir au fil des années.",conseil:"Bureau suspendu ou bibliothèque évolutive dans un petit espace."},
+ {id:"f-usm",nom:"USM Haller",designer:"Fritz Haller",annee:1963,editeur:"USM",cat:"Rangement",prix:"≈ 1 000 – 8 000 €",mats:["m-inox","m-laque"],
+  histoire:"Système à boules et tubes, entré au MoMA. Reconfigurable à l'infini.",conseil:"En buffet bas coloré, il structure un séjour minimaliste."},
+ {id:"f-flowerpot",nom:"Flowerpot",designer:"Verner Panton",annee:1968,editeur:"&Tradition",cat:"Luminaire",prix:"≈ 250 – 600 €",mats:["m-laque","m-inox"],
+  histoire:"Deux demi-sphères face à face, icône pop de l'ère Flower Power.",conseil:"Une touche de couleur franche en lampe à poser."}
+];
+
+const PLACES = [
+ {id:"l-eileen",nom:"Villa E-1027",auteur:"Eileen Gray & Jean Badovici",annee:1929,lieu:"Roquebrune-Cap-Martin, France",theme:"Riviera",motif:"sea",pal:["#F2F0EA","#2B4D7A","#C9B08A","#1D1D1D"],
+  lecon:["Mobilier pensé pour l'usage précis de chaque recoin","Le blanc comme toile de fond pour la mer","Textiles et tapis graphiques pour dessiner les zones"],mats:["m-chaux","m-inox","m-lin"]},
+ {id:"l-santo",nom:"Villa Santo Sospir",auteur:"Jean Cocteau (fresques)",annee:1950,lieu:"Saint-Jean-Cap-Ferrat, France",theme:"Riviera",motif:"arch",pal:["#F4EEDF","#3B6E8F","#C9844A","#2E2E2E"],
+  lecon:["Oser le dessin mural à la main","Mélanger antiquités et mobilier simple","La couleur comme une ligne, pas comme un aplat"],mats:["m-chaux","m-tomette","m-lin"]},
+ {id:"l-noailles",nom:"Villa Noailles",auteur:"Robert Mallet-Stevens",annee:1923,lieu:"Hyères, France",theme:"Modernisme",motif:"block",pal:["#EFEDE6","#3F5E4E","#B9A27C","#222"],
+  lecon:["Volumes cubiques et jardin cubiste","Couleurs posées sur des pans entiers","Lumière zénithale, verrières"],mats:["m-chaux","m-terrazzo","m-cannele"]},
+ {id:"l-verre",nom:"Maison de Verre",auteur:"Pierre Chareau & Bernard Bijvoet",annee:1932,lieu:"Paris, France",theme:"Modernisme",motif:"grid",pal:["#DCE3E1","#2B2B2B","#B33A2E","#C9C3B5"],
+  lecon:["Pavés de verre pour une lumière diffuse sans vis-à-vis","Métal et mécanismes laissés apparents","Cloisons mobiles pour une maison qui change"],mats:["m-cannele","m-inox","m-liege"]},
+ {id:"l-carre",nom:"Maison Louis Carré",auteur:"Alvar Aalto",annee:1959,lieu:"Bazoches-sur-Guyonne, France",theme:"Maisons d'architectes",motif:"wave",pal:["#F1ECE2","#6A4A35","#2F4A3D","#D8B98E"],
+  lecon:["Plafond en bois ondulé qui guide le regard","Luminaires dessinés pour chaque pièce","Matières nordiques dans une campagne française"],mats:["m-chene","m-noyer","m-cuir"]},
+ {id:"l-barragan",nom:"Casa Barragán",auteur:"Luis Barragán",annee:1948,lieu:"Mexico, Mexique",theme:"Couleur",motif:"wall",pal:["#E85C8C","#F2B33D","#E9DDCB","#5C3B2B"],
+  lecon:["Murs nus peints de couleurs intenses","Lumière naturelle mise en scène","Silence : peu d'objets, très choisis"],mats:["m-chaux","m-noyer","m-tomette"]},
+ {id:"l-malaparte",nom:"Casa Malaparte",auteur:"Adalberto Libera & Curzio Malaparte",annee:1937,lieu:"Capri, Italie",theme:"Méditerranée",motif:"stair",pal:["#B5533A","#2B6C9C","#E6DCC8","#4B4A3A"],
+  lecon:["Une seule couleur forte en façade","Grandes baies cadrées comme des tableaux","Sols en pierre, mobilier minimal"],mats:["m-tomette","m-travertin","m-noyer"]},
+ {id:"l-canlis",nom:"Can Lis",auteur:"Jørn Utzon",annee:1972,lieu:"Majorque, Espagne",theme:"Méditerranée",motif:"arch",pal:["#E4C9A0","#2E6F98","#F3EBDD","#7A6A55"],
+  lecon:["Banquettes maçonnées en pierre locale","Fenêtres profondes qui cadrent la mer","Céramique émaillée bleue en contrepoint"],mats:["m-travertin","m-zellige","m-chaux"]},
+ {id:"l-muralla",nom:"La Muralla Roja",auteur:"Ricardo Bofill",annee:1973,lieu:"Calpe, Espagne",theme:"Couleur",motif:"stair",pal:["#D3473F","#7FA4C8","#2C3E7A","#F0D3C2"],
+  lecon:["Rouge et bleus pour jouer avec le ciel","Escaliers et passages comme décor","Couleur appliquée aux volumes plutôt qu'aux objets"],mats:["m-chaux","m-terrazzo","m-laque"]},
+ {id:"l-necchi",nom:"Villa Necchi Campiglio",auteur:"Piero Portaluppi",annee:1935,lieu:"Milan, Italie",theme:"Art déco",motif:"arch",pal:["#2F4A3D","#C49A52","#EFE6D6","#6E3B33"],
+  lecon:["Marbres, bois précieux et laiton dans une harmonie stricte","Moquettes et boiseries qui feutrent","Symétrie rassurante"],mats:["m-verde","m-noyer","m-laiton"]},
+ {id:"l-tawaraya",nom:"Tawaraya Ryokan",auteur:"Auberge traditionnelle",annee:1709,lieu:"Kyoto, Japon",theme:"Japon",motif:"shoji",pal:["#E8E0CC","#6B5A43","#8A9A6E","#2B2722"],
+  lecon:["Le vide comme élément de décor","Lumière filtrée par le papier","Vue sur un jardin miniature depuis chaque pièce"],mats:["m-washi","m-chene","m-lin"]},
+ {id:"l-majorelle",nom:"Jardin Majorelle & Villa Oasis",auteur:"Jacques Majorelle, puis Yves Saint Laurent & Pierre Bergé",annee:1931,lieu:"Marrakech, Maroc",theme:"Riad",motif:"arch",pal:["#2A4EC1","#F2C14E","#3F7B4E","#E7D9C2"],
+  lecon:["Le « bleu Majorelle » en grands aplats","Végétal luxuriant en contraste","Zellige et bois peint"],mats:["m-zellige","m-tadelakt","m-cannage"],site:"https://www.jardinmajorelle.com"},
+ {id:"l-falling",nom:"Fallingwater",auteur:"Frank Lloyd Wright",annee:1937,lieu:"Pennsylvanie, États-Unis",theme:"Maisons d'architectes",motif:"block",pal:["#C46A3A","#8B8577","#D9CDB4","#3E4A3A"],
+  lecon:["La nature entre dans la maison : rochers au sol","Pierre brute + bois + une seule couleur (rouge Cherokee)","Banquettes intégrées partout"],mats:["m-noyer","m-travertin","m-cuir"],site:"https://fallingwater.org"},
+ {id:"l-radieuse",nom:"Cité radieuse",auteur:"Le Corbusier",annee:1952,lieu:"Marseille, France",theme:"Brutalisme",motif:"grid",pal:["#B9B5AC","#D33F2F","#F2C14E","#2F6FA8"],
+  lecon:["Béton brut et couleurs primaires sur les loggias","Cuisine ouverte et rangements intégrés","Mesures pensées au corps humain (Modulor)"],mats:["m-beton","m-chene","m-laque"]}
+];
+
+const ALL = [...MATERIALS.map(x=>({...x,kind:"matiere"})),...PAIRINGS.map(x=>({...x,kind:"accord"})),...FURNITURE.map(x=>({...x,kind:"meuble"})),...PLACES.map(x=>({...x,kind:"lieu"}))];
+const BYID = Object.fromEntries(ALL.map(x=>[x.id,x]));
+
+/* ================= RENDU GÉNÉRATIF DES MATIÈRES ================= */
+function rng(seed){let s=(seed>>>0)||1;return()=>{s^=s<<13;s>>>=0;s^=s>>>17;s^=s<<5;s>>>=0;return s/4294967296}}
+function hashStr(t){let h=2166136261;for(const ch of t){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`}
+function shade(hex,amt){const n=parseInt(hex.slice(1),16);let r=(n>>16&255)+amt,g=(n>>8&255)+amt,b=(n&255)+amt;
+  r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));return `rgb(${r|0},${g|0},${b|0})`}
+function blotches(x,R,W,H,col,n,rmin,rmax,a){for(let i=0;i<n;i++){const cx=R()*W,cy=R()*H,r=rmin+R()*(rmax-rmin);
+  const g=x.createRadialGradient(cx,cy,0,cx,cy,r);g.addColorStop(0,rgba(col,a));g.addColorStop(1,rgba(col,0));x.fillStyle=g;x.fillRect(cx-r,cy-r,2*r,2*r)}}
+function grain(x,R,W,H,a){const img=x.getImageData(0,0,W,H),d=img.data;for(let i=0;i<d.length;i+=4){const v=(R()-.5)*255*a;d[i]+=v;d[i+1]+=v;d[i+2]+=v}x.putImageData(img,0,0)}
+
+const PAINT = {
+ travertine(x,R,W,H,c){x.fillStyle=c[0];x.fillRect(0,0,W,H);
+  for(let y=0;y<H;y+=2){const a=.08+.08*Math.sin(y*.05+R()*2);x.fillStyle=rgba(R()<.5?c[1]:c[2],a);x.fillRect(0,y+Math.sin(y)*1,W,1.5+R()*2)}
+  for(let i=0;i<70;i++){const px=R()*W,py=R()*H,w=4+R()*18,h=1+R()*3;x.fillStyle=rgba(c[2],.35+R()*.3);x.beginPath();x.ellipse(px,py,w,h,0,0,7);x.fill()}
+  grain(x,R,W,H,.05)},
+ marble(x,R,W,H,c){x.fillStyle=c[0];x.fillRect(0,0,W,H);blotches(x,R,W,H,c[2],22,40,130,.18);
+  for(let v=0;v<7;v++){let px=R()*W,py=-10,ang=Math.PI/2+(R()-.5)*1.2;x.strokeStyle=rgba(c[1],.35+R()*.45);x.lineWidth=.6+R()*2.6;x.beginPath();x.moveTo(px,py);
+   for(let s=0;s<80;s++){ang+=(R()-.5)*.45;px+=Math.cos(ang)*6;py+=Math.sin(ang)*6;x.lineTo(px,py)}x.stroke()}
+  for(let v=0;v<14;v++){let px=R()*W,py=R()*H,ang=R()*7;x.strokeStyle=rgba(c[1],.15);x.lineWidth=.5;x.beginPath();x.moveTo(px,py);
+   for(let s=0;s<20;s++){ang+=(R()-.5)*.8;px+=Math.cos(ang)*5;py+=Math.sin(ang)*5;x.lineTo(px,py)}x.stroke()}
+  grain(x,R,W,H,.03)},
+ terrazzo(x,R,W,H,c){x.fillStyle=c[0];x.fillRect(0,0,W,H);grain(x,R,W,H,.05);
+  for(let i=0;i<260;i++){const col=c[1+Math.floor(R()*(c.length-1))],px=R()*W,py=R()*H,r=1.5+Math.pow(R(),3)*16;x.fillStyle=col;x.globalAlpha=.75+R()*.25;
+   x.beginPath();const k=4+Math.floor(R()*4);for(let j=0;j<k;j++){const a=j/k*6.283+R()*.6,rr=r*(.6+R()*.5);x.lineTo(px+Math.cos(a)*rr,py+Math.sin(a)*rr)}x.closePath();x.fill()}x.globalAlpha=1},
+ tile(x,R,W,H,c,m){const t=m.tile||{w:10,h:10,vary:.15,gloss:true};const tw=W/t.w,th=H/t.h;x.fillStyle="#d9d6cc";x.fillRect(0,0,W,H);
+  for(let i=0;i<t.w;i++)for(let j=0;j<t.h;j++){const base=c[Math.floor(R()*c.length)];const amt=(R()-.5)*90*t.vary;const X=i*tw+1.2,Y=j*th+1.2,w=tw-2.4,h=th-2.4;
+   x.fillStyle=shade(base,amt);x.fillRect(X,Y,w,h);if(t.gloss){const g=x.createLinearGradient(X,Y,X+w,Y+h);g.addColorStop(0,"rgba(255,255,255,.28)");g.addColorStop(.45,"rgba(255,255,255,0)");g.addColorStop(1,"rgba(0,0,0,.18)");x.fillStyle=g;x.fillRect(X,Y,w,h)}}},
+ cement(x,R,W,H,c){const n=4,s=W/n;for(let i=0;i<n;i++)for(let j=0;j<n;j++){const X=i*s,Y=j*s;x.fillStyle=c[0];x.fillRect(X,Y,s,s);
+   x.fillStyle=c[1];for(const[cx,cy]of[[X,Y],[X+s,Y],[X,Y+s],[X+s,Y+s]]){x.beginPath();x.arc(cx,cy,s*.42,0,7);x.fill()}
+   x.fillStyle=c[0];for(const[cx,cy]of[[X,Y],[X+s,Y],[X,Y+s],[X+s,Y+s]]){x.beginPath();x.arc(cx,cy,s*.3,0,7);x.fill()}
+   x.fillStyle=c[2];x.beginPath();x.moveTo(X+s/2,Y+s*.22);x.lineTo(X+s*.78,Y+s/2);x.lineTo(X+s/2,Y+s*.78);x.lineTo(X+s*.22,Y+s/2);x.closePath();x.fill();
+   x.strokeStyle="rgba(0,0,0,.12)";x.strokeRect(X,Y,s,s)}grain(x,R,W,H,.04)},
+ hex(x,R,W,H,c){x.fillStyle="#cbbfae";x.fillRect(0,0,W,H);const r=22,hw=Math.sqrt(3)*r;for(let row=-1;row<H/(r*1.5)+1;row++)for(let col=-1;col<W/hw+1;col++){
+   const cx=col*hw+(row%2?hw/2:0),cy=row*r*1.5;x.fillStyle=shade(c[Math.floor(R()*c.length)],(R()-.5)*30);x.beginPath();
+   for(let k=0;k<6;k++){const a=Math.PI/6+k*Math.PI/3;x.lineTo(cx+Math.cos(a)*(r-1.5),cy+Math.sin(a)*(r-1.5))}x.closePath();x.fill()}grain(x,R,W,H,.07)},
+ wood(x,R,W,H,c){const pw=W/3;for(let p=0;p<3;p++){const X=p*pw,off=R()*100;x.fillStyle=shade(c[0],(R()-.5)*20);x.fillRect(X,0,pw,H);
+   for(let k=0;k<55;k++){const x0=X+R()*pw;x.strokeStyle=rgba(R()<.5?c[1]:c[2],.25+R()*.35);x.lineWidth=.5+R()*1.6;x.beginPath();
+    for(let y=0;y<=H;y+=6){const xx=x0+Math.sin((y+off)*.02+k)*6+Math.sin(y*.11+k*3)*1.5;y?x.lineTo(xx,y):x.moveTo(xx,y)}x.stroke()}
+   x.fillStyle="rgba(0,0,0,.25)";x.fillRect(X,0,1,H)}grain(x,R,W,H,.04)},
+ cork(x,R,W,H,c){x.fillStyle=c[0];x.fillRect(0,0,W,H);for(let i=0;i<5000;i++){x.fillStyle=rgba(R()<.5?c[1]:c[2],.3+R()*.5);const s=.6+R()*2.4;x.fillRect(R()*W,R()*H,s,s)}},
+ cane(x,R,W,H,c){x.fillStyle=c[2];x.fillRect(0,0,W,H);const g=18;x.lineCap="round";
+  for(const [dx,dy,col] of [[1,0,c[0]],[0,1,c[0]],[1,1,c[1]],[1,-1,c[1]]]){x.strokeStyle=col;x.lineWidth=3.2;
+   for(let k=-W;k<W*2;k+=g){x.beginPath();if(dx&&!dy){x.moveTo(0,k);x.lineTo(W,k)}else if(dy&&!dx){x.moveTo(k,0);x.lineTo(k,H)}else if(dy>0){x.moveTo(k,0);x.lineTo(k+H,H)}else{x.moveTo(k,H);x.lineTo(k+H,0)}x.stroke()}}
+  x.fillStyle=c[2];for(let i=0;i<W;i+=g)for(let j=0;j<H;j+=g){x.beginPath();x.arc(i+g/2,j+g/2,3.4,0,7);x.fill()}grain(x,R,W,H,.05)},
+ weave(x,R,W,H,c){x.fillStyle=c[0];x.fillRect(0,0,W,H);for(let y=0;y<H;y+=2){x.fillStyle=rgba(R()<.5?c[1]:c[2],.25+R()*.4);x.fillRect(0,y,W,1)}
+  for(let i=0;i<W;i+=2){x.fillStyle=rgba(R()<.5?c[1]:c[2],.15+R()*.3);x.fillRect(i,0,1,H)}for(let k=0;k<30;k++){x.fillStyle=rgba(c[1],.25);x.fillRect(0,R()*H,W,1+R()*2)}},
+ boucle(x,R,W,H,c){x.fillStyle=c[1];x.fillRect(0,0,W,H);for(let i=0;i<2400;i++){const px=R()*W,py=R()*H,r=1.5+R()*3;x.strokeStyle=R()<.5?c[0]:c[2];x.lineWidth=1+R();
+   x.beginPath();x.arc(px,py,r,0,7);x.stroke();x.strokeStyle="rgba(0,0,0,.08)";x.beginPath();x.arc(px+.8,py+.8,r,0,3);x.stroke()}},
+ cord(x,R,W,H,c){for(let i=0;i<W;i+=7){const g=x.createLinearGradient(i,0,i+7,0);g.addColorStop(0,c[1]);g.addColorStop(.5,c[2]);g.addColorStop(1,c[1]);x.fillStyle=g;x.fillRect(i,0,7,H)}grain(x,R,W,H,.06)},
+ metal(x,R,W,H,c){const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,c[1]);g.addColorStop(.45,c[2]);g.addColorStop(.6,c[0]);g.addColorStop(1,c[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
+  for(let y=0;y<H;y+=1){x.fillStyle=rgba(R()<.5?"#ffffff":"#000000",R()*.08);x.fillRect(0,y,W,1)}},
+ plaster(x,R,W,H,c,m){x.fillStyle=c[0];x.fillRect(0,0,W,H);blotches(x,R,W,H,c[1],40,30,120,.22);blotches(x,R,W,H,c[2],30,20,90,.25);
+  if(m.pores)for(let i=0;i<220;i++){x.fillStyle="rgba(0,0,0,.18)";x.beginPath();x.arc(R()*W,R()*H,R()*1.4,0,7);x.fill()}
+  if(m.gloss){const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"rgba(255,255,255,.22)");g.addColorStop(.5,"rgba(255,255,255,0)");x.fillStyle=g;x.fillRect(0,0,W,H)}grain(x,R,W,H,.035)},
+ fluted(x,R,W,H,c){x.fillStyle=c[1];x.fillRect(0,0,W,H);blotches(x,R,W,H,"#ffffff",6,60,140,.3);for(let i=0;i<W;i+=12){const g=x.createLinearGradient(i,0,i+12,0);
+   g.addColorStop(0,"rgba(255,255,255,.55)");g.addColorStop(.35,"rgba(255,255,255,.05)");g.addColorStop(.8,"rgba(0,0,0,.12)");g.addColorStop(1,"rgba(255,255,255,.4)");x.fillStyle=g;x.fillRect(i,0,12,H)}},
+ lacquer(x,R,W,H,c){const g=x.createLinearGradient(0,0,W*.8,H);g.addColorStop(0,c[2]);g.addColorStop(.5,c[0]);g.addColorStop(1,c[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
+  const h=x.createLinearGradient(0,H*.2,0,H*.45);h.addColorStop(0,"rgba(255,255,255,0)");h.addColorStop(.5,"rgba(255,255,255,.35)");h.addColorStop(1,"rgba(255,255,255,0)");x.fillStyle=h;x.fillRect(0,H*.2,W,H*.25)},
+ leather(x,R,W,H,c){x.fillStyle=c[0];x.fillRect(0,0,W,H);blotches(x,R,W,H,c[1],30,30,100,.3);blotches(x,R,W,H,c[2],20,20,70,.25);
+  x.strokeStyle="rgba(0,0,0,.12)";x.lineWidth=.6;for(let i=0;i<400;i++){const px=R()*W,py=R()*H;x.beginPath();x.moveTo(px,py);x.lineTo(px+(R()-.5)*8,py+(R()-.5)*8);x.stroke()}grain(x,R,W,H,.05)},
+ raffia(x,R,W,H,c){x.fillStyle=c[1];x.fillRect(0,0,W,H);for(let y=0;y<H;y+=4){for(let xx=0;xx<W;){const w=10+R()*40;x.fillStyle=shade(c[R()<.5?0:2],(R()-.5)*30);x.fillRect(xx,y+(R()-.5),w,3.2);xx+=w+1+R()*2}}},
+ washi(x,R,W,H,c){x.fillStyle=c[0];x.fillRect(0,0,W,H);blotches(x,R,W,H,c[2],20,40,120,.35);x.strokeStyle=rgba(c[1],.6);x.lineWidth=.5;
+  for(let i=0;i<300;i++){let px=R()*W,py=R()*H,a=R()*7;x.beginPath();x.moveTo(px,py);for(let s=0;s<6;s++){a+=(R()-.5);px+=Math.cos(a)*4;py+=Math.sin(a)*4;x.lineTo(px,py)}x.stroke()}}
+};
+const _cache = new Map();
+function matImg(id,size=360){const k=id+":"+size;if(_cache.has(k))return _cache.get(k);const m=BYID[id];const cv=document.createElement("canvas");cv.width=cv.height=size;
+  const x=cv.getContext("2d",{willReadFrequently:true});x.save();x.scale(size/360,size/360);try{(PAINT[m.type]||PAINT.plaster)(x,rng(hashStr(id)),360,360,m.c,m)}catch(e){x.fillStyle=m.c[0];x.fillRect(0,0,360,360)}x.restore();
+  const u=cv.toDataURL("image/jpeg",.85);_cache.set(k,u);return u}
+
+/* Lieux : interprétation graphique (pas une photo) */
+function placeImg(id){const k="p:"+id;if(_cache.has(k))return _cache.get(k);const p=BYID[id];const W=480,H=360,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d",{willReadFrequently:true});const R=rng(hashStr(id));const [a,b,c,d]=p.pal;
+ const sky=x.createLinearGradient(0,0,0,H);sky.addColorStop(0,shade(a,10));sky.addColorStop(1,shade(a,-14));x.fillStyle=sky;x.fillRect(0,0,W,H);
+ const M=p.motif;
+ if(M==="sea"){x.fillStyle=b;x.fillRect(0,H*.62,W,H*.38);x.fillStyle=shade(b,30);for(let i=0;i<14;i++)x.fillRect(R()*W,H*.65+R()*H*.3,30+R()*60,1.5);x.fillStyle=a;x.fillRect(W*.08,H*.28,W*.62,H*.36);x.fillStyle=d;x.fillRect(W*.14,H*.36,W*.42,H*.12);x.fillStyle=c;x.fillRect(W*.08,H*.62,W*.62,6);x.fillStyle="rgba(0,0,0,.08)";x.fillRect(W*.7,H*.28,10,H*.36)}
+ else if(M==="arch"){x.fillStyle=c;x.fillRect(0,H*.78,W,H*.22);for(let i=0;i<3;i++){const X=W*(.12+i*.28),w=W*.2,top=H*.3;x.fillStyle=b;x.beginPath();x.moveTo(X,H*.78);x.lineTo(X,top+w/2);x.arc(X+w/2,top+w/2,w/2,Math.PI,0);x.lineTo(X+w,H*.78);x.closePath();x.fill();
+   x.fillStyle=shade(b,40);x.fillRect(X,H*.62,w,H*.16)}x.fillStyle=d;x.fillRect(0,H*.78,W,3)}
+ else if(M==="block"){x.fillStyle=c;x.fillRect(0,H*.8,W,H*.2);const blocks=[[.1,.4,.35,.4],[.4,.25,.3,.55],[.66,.48,.24,.32]];blocks.forEach(([X,Y,w,h],i)=>{x.fillStyle=i===1?b:shade(a,-8-i*6);x.fillRect(X*W,Y*H,w*W,h*H);x.fillStyle=d;x.fillRect(X*W+12,Y*H+20,w*W*.5,10)})}
+ else if(M==="grid"){x.fillStyle=c;x.fillRect(W*.1,H*.12,W*.8,H*.76);const n=8,m=6;for(let i=0;i<n;i++)for(let j=0;j<m;j++){x.fillStyle=R()<.12?(R()<.5?b:d):shade(c,(R()-.5)*30);x.fillRect(W*.1+i*W*.1+3,H*.12+j*H*.127+3,W*.1-6,H*.127-6)}}
+ else if(M==="wave"){x.fillStyle=c;x.fillRect(0,H*.75,W,H*.25);for(let k=0;k<10;k++){x.strokeStyle=shade(b,k*6);x.lineWidth=7;x.beginPath();for(let X=0;X<=W;X+=8){const Y=H*.12+k*9+Math.sin(X*.02+k*.2)*14;X?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke()}x.fillStyle=d;x.fillRect(W*.2,H*.45,W*.25,H*.3)}
+ else if(M==="wall"){x.fillStyle=a;x.fillRect(0,0,W*.55,H);x.fillStyle=b;x.fillRect(W*.55,0,W*.45,H*.7);x.fillStyle=c;x.fillRect(0,H*.82,W,H*.18);const g=x.createLinearGradient(W*.55,0,W,H*.7);g.addColorStop(0,"rgba(255,255,255,.35)");g.addColorStop(1,"rgba(0,0,0,.1)");x.fillStyle=g;x.fillRect(W*.55,0,W*.45,H*.7);x.fillStyle=d;x.fillRect(W*.3,H*.55,W*.18,H*.27)}
+ else if(M==="stair"){x.fillStyle=b;x.fillRect(0,0,W,H*.4);for(let i=0;i<8;i++){x.fillStyle=i%2?a:shade(a,-18);x.fillRect(W*(.1+i*.08),H*(.4+i*.06),W*(.9-i*.08),H*.06)}x.fillStyle=c;x.fillRect(W*.04,H*.18,W*.22,H*.22)}
+ else if(M==="shoji"){x.fillStyle=c;x.fillRect(0,H*.82,W,H*.18);x.fillStyle=shade(a,12);x.fillRect(W*.08,H*.08,W*.84,H*.74);x.strokeStyle=b;x.lineWidth=4;for(let i=0;i<=6;i++){x.beginPath();x.moveTo(W*(.08+i*.14),H*.08);x.lineTo(W*(.08+i*.14),H*.82);x.stroke()}
+   x.lineWidth=2;for(let j=1;j<6;j++){x.beginPath();x.moveTo(W*.08,H*(.08+j*.123));x.lineTo(W*.92,H*(.08+j*.123));x.stroke()}const g=x.createRadialGradient(W*.7,H*.4,10,W*.7,H*.4,200);g.addColorStop(0,"rgba(255,240,200,.45)");g.addColorStop(1,"rgba(255,240,200,0)");x.fillStyle=g;x.fillRect(0,0,W,H)}
+ grain(x,R,W,H,.04);const u=cv.toDataURL("image/jpeg",.85);_cache.set(k,u);return u}
+
+function visFor(it){
+ if(it.kind==="matiere") return `<img src="${matImg(it.id)}" alt="Rendu de la matière ${esc(it.nom)}">`;
+ if(it.kind==="lieu") return `<img src="${placeImg(it.id)}" alt="Interprétation graphique de ${esc(it.nom)}">`;
+ const ms=(it.mats||[]).filter(m=>BYID[m]);
+ if(ms.length>=3) return `<div class="split">${ms.slice(0,3).map(m=>`<img src="${matImg(m)}" alt="${esc(BYID[m].nom)}">`).join("")}</div>`;
+ if(ms.length===2) return `<div class="split" style="grid-template-rows:1fr"><img src="${matImg(ms[0])}" alt="${esc(BYID[ms[0]].nom)}"><img src="${matImg(ms[1])}" alt="${esc(BYID[ms[1]].nom)}" style="grid-row:auto"></div>`;
+ return "";
+}
+
+/* ================= OUTILS ================= */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const eur=n=>(n==null||isNaN(n))?"—":Math.round(n).toLocaleString("fr-FR")+" €";
+const brandUrl=b=>{if(!b)return null;if(BRANDS[b])return BRANDS[b];const k=Object.keys(BRANDS).find(x=>x.toLowerCase()===String(b).toLowerCase());return k?BRANDS[k]:null};
+const gSearch=q=>"https://www.google.com/search?q="+encodeURIComponent(q);
+const gShop=q=>"https://www.google.com/search?tbm=shop&q="+encodeURIComponent(q);
+const gImg=q=>"https://www.google.com/search?tbm=isch&q="+encodeURIComponent(q);
+const ytSearch=q=>"https://www.youtube.com/results?search_query="+encodeURIComponent(q);
+const KIND={matiere:"Matière",accord:"Accord",meuble:"Mobilier",lieu:"Lieu"};
+const HEART=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>`;
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+
+/* ================= ÉTAT ================= */
+const fav=new Set(store.get("pr_fav",[]));
+let view="accueil", filt={matieres:"Tout",accords:"Tout",mobilier:"Tout",lieux:"Tout"}, q="";
+let sampleFn=null, imagesOK=false, toolsOK=false, maxImages=4;
+
+function toggleFav(id){fav.has(id)?fav.delete(id):fav.add(id);store.set("pr_fav",[...fav]);updateCount();
+  document.querySelectorAll(`[data-fav="${id}"]`).forEach(b=>b.setAttribute("aria-pressed",fav.has(id)));if(view==="moodboard")render()}
+function updateCount(){$("#mbc1").textContent=fav.size}
+
+/* ================= CARTES ================= */
+function card(it){
+  let sub="",meta="";
+  if(it.kind==="matiere"){sub=it.resume;meta=`<span>${esc(it.fam)}</span><span>${esc(it.prix)}</span>`}
+  if(it.kind==="accord"){sub=it.ambiance;meta=`<span>${it.mats.map(m=>esc(BYID[m].nom)).join(" · ")}</span>`}
+  if(it.kind==="meuble"){sub=`${esc(it.designer)}, ${it.annee}`;meta=`<span>${esc(it.editeur)}</span><span>${esc(it.prix)}</span>`}
+  if(it.kind==="lieu"){sub=`${esc(it.auteur)} · ${it.annee}`;meta=`<span>${esc(it.lieu)}</span><span class="tag">${esc(it.theme)}</span>`}
+  return `<article class="card" tabindex="0" role="button" data-open="${it.id}" aria-label="${esc(KIND[it.kind]+" : "+it.nom)}">
+   <div class="vis">${visFor(it)}<button class="heart" type="button" data-fav="${it.id}" aria-pressed="${fav.has(it.id)}" aria-label="Ajouter au moodboard">${HEART}</button></div>
+   <div class="body"><span class="eyebrow">${KIND[it.kind]}</span><h3>${esc(it.nom)}</h3><p>${it.kind==="meuble"||it.kind==="lieu"?sub:esc(sub)}</p><div class="meta">${meta}</div></div></article>`;
+}
+
+/* ================= VUES ================= */
+const VIEWS={
+ accueil(){
+  const coll=[["m-travertin","1/4","1/3"],["m-zellige","4/7","1/2"],["m-noyer","4/5","2/4"],["m-bouclette","5/7","2/3"],["m-terrazzo","1/3","3/5"],["m-cannage","3/4","3/5"],["m-laiton","5/7","3/4"],["m-viola","4/7","4/5"]];
+  return `<section class="hero">
+   <div><span class="eyebrow">Architecture d'intérieur pour tous</span>
+    <h1>Votre intérieur rêvé, <em>réellement</em> faisable.</h1>
+    <p class="lead">Une photo, une envie. Recevez une étude complète avec de vraies références à acheter, des tutos pour tout poser vous-même, et une conseillère disponible à toute heure.</p>
+    <div class="ctas"><a class="btn primary" href="#projet">Transformer ma pièce</a><button class="btn" type="button" data-advisor>Poser une question à Camille</button></div>
+   </div>
+   <div class="collage" aria-label="Échantillons de matières">${coll.map(([id,c,r])=>`<button class="c" type="button" data-open="${id}" style="grid-column:${c};grid-row:${r};border:0;padding:0;cursor:pointer"><img src="${matImg(id,300)}" alt=""><span>${esc(BYID[id].nom)}</span></button>`).join("")}</div>
+  </section>
+  <div class="pillars">
+   <a class="pillar" href="#matieres"><span class="n">${MATERIALS.length} matières</span><h3>Matériauthèque</h3><p>Travertin, zellige, liège, tadelakt… ce qu'elles valent, où les poser, leur version petit budget.</p></a>
+   <a class="pillar" href="#accords"><span class="n">${PAIRINGS.length} accords</span><h3>Assemblages</h3><p>Les trios de matières qui marchent, et pourquoi, avec les proportions à respecter.</p></a>
+   <a class="pillar" href="#mobilier"><span class="n">${FURNITURE.length} pièces</span><h3>Mobilier culte</h3><p>Les meubles qui ont fait l'histoire du design, de 100 € à 25 000 €.</p></a>
+   <a class="pillar" href="#lieux"><span class="n">${PLACES.length} lieux</span><h3>Lieux d'exception</h3><p>Villas, ryokans et maisons d'architectes : ce qu'on peut leur emprunter chez soi.</p></a>
+  </div>
+  <section class="section"><div class="vhead"><div><h2>Accords à essayer</h2><p>Trois matières, une ambiance.</p></div><a class="btn small" href="#accords">Tous les accords</a></div>
+   <div class="cards wide">${PAIRINGS.slice(0,3).map(p=>card(BYID[p.id])).join("")}</div></section>
+  <section class="section"><div class="vhead"><div><h2>Icônes du design</h2><p>Des pièces à connaître, même pour un petit budget.</p></div><a class="btn small" href="#mobilier">Tout le mobilier</a></div>
+   <div class="cards">${["f-togo","f-gras","f-akari","f-poang"].map(i=>card(BYID[i])).join("")}</div></section>
+  <section class="section"><div class="vhead"><div><h2>Lieux qui inspirent</h2><p>Leurs leçons, adaptables à un appartement.</p></div><a class="btn small" href="#lieux">Tous les lieux</a></div>
+   <div class="cards wide">${["l-barragan","l-tawaraya","l-necchi"].map(i=>card(BYID[i])).join("")}</div></section>`;
+ },
+ matieres(){return explorer("matieres","Matériauthèque","Touchez une matière pour savoir où l'utiliser, comment l'entretenir et par quoi la remplacer si le budget est serré.",
+   ["Tout",...new Set(MATERIALS.map(m=>m.fam))],MATERIALS.map(m=>BYID[m.id]),(it,f)=>it.fam===f)},
+ accords(){return explorer("accords","Accords de matières","Les assemblages d'un architecte d'intérieur, expliqués : contrastes, proportions, pièces où ils brillent.",
+   ["Tout","Salon","Chambre","Cuisine","Salle de bain","Terrasse"],PAIRINGS.map(p=>BYID[p.id]),(it,f)=>it.pieces.includes(f),"wide")},
+ mobilier(){return explorer("mobilier","Mobilier culte","Les pièces qui ont écrit l'histoire du design, avec leur éditeur officiel et une idée pour les intégrer.",
+   ["Tout",...new Set(FURNITURE.map(m=>m.cat)),"Moins de 1 000 €"],FURNITURE.map(f=>BYID[f.id]),(it,f)=>f==="Moins de 1 000 €"?parseInt(it.prix.replace(/[^\d]/g,"").slice(0,4))<1000:it.cat===f)},
+ lieux(){return explorer("lieux","Lieux d'exception","Maisons d'architectes, villas et hôtels mythiques, classés par thème. Pour chacun : ce qu'on peut transposer chez soi.",
+   ["Tout",...new Set(PLACES.map(p=>p.theme))],PLACES.map(p=>BYID[p.id]),(it,f)=>it.theme===f,"wide")+
+   `<p class="notice" style="margin-top:18px">Les visuels des lieux sont des interprétations graphiques de leur palette. Chaque fiche renvoie vers les vraies photos.</p>`},
+ moodboard(){
+  const items=[...fav].map(id=>BYID[id]).filter(Boolean);
+  if(!items.length) return `<div class="vhead"><div><h2>Mon moodboard</h2><p>Rassemblez matières, meubles et lieux qui vous parlent. Camille et l'étude de projet s'en serviront.</p></div></div>
+   <div class="empty"><h3>Votre moodboard est vide</h3><p>Touchez le cœur sur une carte pour l'ajouter ici.</p><a class="btn primary" href="#matieres" style="margin-top:12px">Explorer les matières</a></div>`;
+  const cols=[...new Set(items.flatMap(i=>i.kind==="lieu"?i.pal:i.kind==="matiere"?[i.c[0]]:[]))].slice(0,10);
+  return `<div class="vhead"><div><h2>Mon moodboard</h2><p>${items.length} élément${items.length>1?"s":""}. Votre style se dessine.</p></div>
+   <div class="chips"><button class="btn primary small" type="button" data-advisor-ask="Analyse mon moodboard : quel style s'en dégage, est-ce cohérent, et que me conseilles-tu pour le concrétiser chez moi ?">Analyser avec Camille</button><a class="btn small" href="#projet">Utiliser pour mon projet</a></div></div>
+   ${cols.length?`<div class="swrow" style="margin-bottom:18px" aria-label="Palette du moodboard">${cols.map(c=>`<span style="background:${c}" title="${c}"></span>`).join("")}</div>`:""}
+   <div class="mb">${items.map(card).join("")}</div>`;
+ },
+ projet(){return projectView()}
+};
+function explorer(key,title,lead,filters,items,match,wide){
+  const f=filt[key];const qq=q.trim().toLowerCase();
+  const list=items.filter(it=>(f==="Tout"||match(it,f))&&(!qq||JSON.stringify(it).toLowerCase().includes(qq)));
+  return `<div class="vhead"><div><h2>${title}</h2><p>${lead}</p></div><input class="search" type="text" id="q" placeholder="Rechercher…" value="${esc(q)}" aria-label="Rechercher"></div>
+   <div class="chips" style="margin-bottom:20px">${filters.map(x=>`<button class="chip" type="button" data-filter="${esc(x)}" data-key="${key}" aria-pressed="${x===f}">${esc(x)}</button>`).join("")}</div>
+   <div class="cards ${wide||""}">${list.map(card).join("")||'<p class="muted">Aucun résultat.</p>'}</div>`;
+}
+
+/* ================= FICHES ================= */
+function openItem(id){
+  const it=BYID[id];if(!it)return;const d=$("#dlg");let txt="";
+  const askBtn=`<button class="btn small" type="button" data-advisor-ask="${esc(`Parle-moi de « ${it.nom} » : comment l'utiliser chez moi, avec quoi l'associer, et à quel budget ?`)}">Demander à Camille</button>`;
+  const favBtn=`<button class="btn small ${fav.has(id)?"dark":""}" type="button" data-fav="${id}" aria-pressed="${fav.has(id)}">${fav.has(id)?"Dans le moodboard":"Ajouter au moodboard"}</button>`;
+  if(it.kind==="matiere") txt=`<span class="eyebrow">Matière · ${esc(it.fam)}</span><h2>${esc(it.nom)}</h2><p>${esc(it.resume)}</p>
+   <dl class="kv"><dt>Origine</dt><dd>${esc(it.origine)}</dd><dt>Prix indicatif</dt><dd>${esc(it.prix)}</dd><dt>Entretien</dt><dd>${esc(it.entretien)}</dd></dl>
+   <div><span class="eyebrow">Où l'utiliser</span><ul class="dots" style="margin-top:8px">${it.usages.map(u=>`<li>${esc(u)}</li>`).join("")}</ul></div>
+   <div class="notice"><b>Version petit budget.</b> ${esc(it.malin)}</div>
+   <div><span class="eyebrow">Accords avec</span><div class="links" style="margin-top:8px">${PAIRINGS.filter(p=>p.mats.includes(id)).map(p=>`<button class="btn small" type="button" data-open="${p.id}">${esc(p.nom)}</button>`).join("")||'<span class="muted">—</span>'}</div></div>
+   <div class="links">${it.sources.map(s=>brandUrl(s)?`<a class="btn small" href="${brandUrl(s)}" target="_blank" rel="noopener">${esc(s)} ↗</a>`:"").join("")}<a class="btn small" href="${gShop(it.nom)}" target="_blank" rel="noopener">Comparer les prix ↗</a><a class="btn small" href="${ytSearch("pose "+it.nom+" tuto")}" target="_blank" rel="noopener">Tutos de pose ↗</a></div>`;
+  if(it.kind==="accord") txt=`<span class="eyebrow">Accord de matières</span><h2>${esc(it.nom)}</h2><p>${esc(it.ambiance)}</p>
+   <div class="links">${it.mats.map(m=>`<button class="btn small" type="button" data-open="${m}">${esc(BYID[m].nom)}</button>`).join("")}</div>
+   <div><span class="eyebrow">Pourquoi ça marche</span><p style="margin:6px 0 0">${esc(it.pourquoi)}</p></div>
+   <dl class="kv"><dt>Proportions</dt><dd>${esc(it.ratio)}</dd><dt>Idéal pour</dt><dd>${it.pieces.map(esc).join(", ")}</dd></dl>
+   ${it.ref?`<div class="notice">À voir en vrai : <button class="ref" type="button" data-open="${it.ref}">${esc(BYID[it.ref].nom)}</button></div>`:""}`;
+  if(it.kind==="meuble") txt=`<span class="eyebrow">${esc(it.cat)} · ${it.annee}</span><h2>${esc(it.nom)}</h2>
+   <dl class="kv"><dt>Designer</dt><dd>${esc(it.designer)}</dd><dt>Éditeur</dt><dd>${esc(it.editeur)}</dd><dt>Prix neuf</dt><dd>${esc(it.prix)}</dd></dl>
+   <p>${esc(it.histoire)}</p><div class="notice"><b>Comment l'intégrer.</b> ${esc(it.conseil)}</div>
+   <div class="links">${brandUrl(it.editeur)?`<a class="btn small primary" href="${brandUrl(it.editeur)}" target="_blank" rel="noopener">Éditeur officiel ↗</a>`:""}<a class="btn small" href="${gShop(it.nom+" "+it.designer)}" target="_blank" rel="noopener">Comparer les prix ↗</a><a class="btn small" href="https://www.selency.fr" target="_blank" rel="noopener">Chiner en vintage ↗</a></div>
+   <p class="notice">Méfiez-vous des copies : achetez auprès de l'éditeur officiel ou d'un revendeur agréé, ou en vintage authentifié.</p>`;
+  if(it.kind==="lieu") txt=`<span class="eyebrow">${esc(it.theme)} · ${it.annee}</span><h2>${esc(it.nom)}</h2>
+   <dl class="kv"><dt>Par</dt><dd>${esc(it.auteur)}</dd><dt>Où</dt><dd>${esc(it.lieu)}</dd></dl>
+   <div class="swrow">${it.pal.map(c=>`<span style="background:${c}"></span>`).join("")}</div>
+   <div><span class="eyebrow">À emprunter chez soi</span><ul class="dots" style="margin-top:8px">${it.lecon.map(l=>`<li>${esc(l)}</li>`).join("")}</ul></div>
+   <div><span class="eyebrow">Matières clés</span><div class="links" style="margin-top:8px">${it.mats.map(m=>`<button class="btn small" type="button" data-open="${m}">${esc(BYID[m].nom)}</button>`).join("")}</div></div>
+   <div class="links"><a class="btn small primary" href="${gImg(it.nom+" "+it.lieu+" intérieur")}" target="_blank" rel="noopener">Voir les vraies photos ↗</a>${it.site?`<a class="btn small" href="${it.site}" target="_blank" rel="noopener">Site officiel ↗</a>`:`<a class="btn small" href="${gSearch(it.nom+" visite")}" target="_blank" rel="noopener">Visiter ↗</a>`}</div>`;
+  d.innerHTML=`<div style="position:relative"><button class="btn small close" type="button" data-close aria-label="Fermer">✕</button><div class="dlg"><div class="vis">${visFor(it)}</div><div class="txt">${txt}<div class="links">${favBtn}${askBtn}</div></div></div></div>`;
+  if(!d.open)d.showModal();
+}
+$("#dlg").addEventListener("click",e=>{if(e.target.id==="dlg"||e.target.closest("[data-close]"))$("#dlg").close()});
+
+/* ================= ROUTAGE ================= */
+const NAVMAP={matieres:"explorer",accords:"explorer",mobilier:"explorer",lieux:"explorer"};
+function go(){const h=(location.hash||"#accueil").slice(1);if(h==="conseiller"){openDrawer();return}view=VIEWS[h]?h:"accueil";q="";render();window.scrollTo({top:0})}
+function render(){
+  $("#app").innerHTML=`<div class="view">${VIEWS[view]()}</div>`;
+  document.querySelectorAll("[data-nav]").forEach(a=>{const n=a.dataset.nav;a.setAttribute("aria-current",(n===view||n===NAVMAP[view])?"page":"false")});
+  if(view==="projet") wireProject();
+  const qi=$("#q");if(qi){qi.oninput=()=>{q=qi.value;const pos=qi.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(pos,pos)}}
+}
+window.addEventListener("hashchange",go);
+document.addEventListener("click",e=>{
+  const f=e.target.closest("[data-fav]");if(f){e.stopPropagation();toggleFav(f.dataset.fav);if($("#dlg").open&&f.closest("#dlg"))openItem(f.dataset.fav);return}
+  const fl=e.target.closest("[data-filter]");if(fl){filt[fl.dataset.key]=fl.dataset.filter;render();return}
+  const ask=e.target.closest("[data-advisor-ask]");if(ask){if($("#dlg").open)$("#dlg").close();openDrawer();sendChat(ask.dataset.advisorAsk);return}
+  if(e.target.closest("[data-advisor]")){openDrawer();return}
+  const o=e.target.closest("[data-open]");if(o){if(o.closest(".msgs"))closeDrawer();openItem(o.dataset.open);return}
+});
+document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches(".card[data-open]")){e.preventDefault();openItem(e.target.dataset.open)}});
+$("#themeBtn").onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;r.dataset.theme=dark?"light":"dark";store.set("pr_theme",r.dataset.theme)};
+{const t=store.get("pr_theme",null);if(t)document.documentElement.dataset.theme=t}
+
+/* ================= PROJET : ÉTUDE SUR PHOTO ================= */
+let photoFile=null,photoURL=null,inspFiles=[],study=store.get("pr_last",null),ptab="plan",activeZone=null,tintOn=false,shopF="Tout",busy=false,ctl=null;
+const picks=new Set();
+const brief=store.get("pr_brief",{space:"Salon",surface:"",wish:"",budget:"b2",statut:"s1",keep:"",styles:[]});
+const STYLES=["Japandi","Wabi-sabi","Haussmannien revisité","Méditerranéen","Riad","Art déco","Mid-century","Scandinave","Industriel","Bohème","Minimaliste","Maximaliste","Campagne chic","Années 70","Tropical","Contemporain luxe","Bord de mer"];
+const BUDGETS={b1:"Malin (moins de 1 500 €)",b2:"Confort (1 500 – 6 000 €)",b3:"Premium (6 000 – 20 000 €)",b4:"Haut de gamme (plus de 20 000 €)"};
+const STATUTS={s1:"Propriétaire : travaux possibles",s2:"Locataire : uniquement des solutions réversibles"};
+
+function projectView(){
+  return `<div class="vhead"><div><h2>Mon projet</h2><p>Une photo de votre pièce ou de votre extérieur, votre envie, et l'étude arrive en une à deux minutes.</p></div></div>
+  <div class="proj">
+   <form class="panel brief" id="brief" novalidate>
+    <div class="field"><span class="eyebrow">1 · Photo de votre espace</span>
+     <div class="drop" id="drop"><input type="file" id="photo" accept="image/jpeg,image/png,image/webp" aria-label="Choisir une photo">
+      <div id="dropEmpty" ${photoURL?"hidden":""}><b>Déposez une photo</b><br><span class="muted" style="font-size:13px">ou touchez pour choisir. Depuis un angle, en lumière du jour.</span></div>
+      <img id="dropImg" alt="Votre espace" ${photoURL?`src="${photoURL}"`:"hidden"}></div></div>
+    <div class="field"><span class="eyebrow">2 · Inspirations (facultatif)</span>
+     <div class="thumbs" id="thumbs">${inspFiles.map((f,i)=>`<figure><img src="${URL.createObjectURL(f)}" alt="Inspiration ${i+1}"><button type="button" data-rm="${i}" aria-label="Retirer">×</button></figure>`).join("")}
+      <label class="add" title="Ajouter">+<input type="file" id="insp" accept="image/jpeg,image/png,image/webp" multiple aria-label="Ajouter des inspirations"></label></div></div>
+    <div class="field"><label class="eyebrow" for="wish">3 · Votre envie</label>
+     <textarea id="wish" placeholder="Ex. : un salon chaleureux façon riad contemporain, tons terre et sauge, je garde mon canapé gris, il me faut plus de rangements.">${esc(brief.wish)}</textarea></div>
+    ${fav.size?`<div class="notice">Votre moodboard (${fav.size} éléments) sera pris en compte.</div>`:""}
+    <div class="field"><span class="eyebrow">Styles</span><div class="seg">${STYLES.map((s,i)=>`<input type="checkbox" id="st${i}" value="${esc(s)}" ${brief.styles.includes(s)?"checked":""}><label for="st${i}">${esc(s)}</label>`).join("")}</div></div>
+    <div class="row2"><div class="field"><label class="eyebrow" for="space">Espace</label><select id="space">${["Salon","Chambre","Cuisine","Salle de bain","Salle à manger","Bureau","Chambre d'enfant","Entrée / couloir","Terrasse / balcon","Jardin","Studio entier","Local pro / boutique"].map(s=>`<option ${s===brief.space?"selected":""}>${s}</option>`).join("")}</select></div>
+     <div class="field"><label class="eyebrow" for="surface">Surface (m²)</label><input type="text" id="surface" inputmode="decimal" value="${esc(brief.surface)}" placeholder="ex. 24"></div></div>
+    <div class="field"><span class="eyebrow">Budget</span><div class="seg">${Object.entries({b1:"< 1 500 €",b2:"1,5 – 6 k€",b3:"6 – 20 k€",b4:"20 k€ +"}).map(([k,l])=>`<input type="radio" name="budget" id="${k}" value="${k}" ${brief.budget===k?"checked":""}><label for="${k}">${l}</label>`).join("")}</div></div>
+    <div class="field"><span class="eyebrow">Situation</span><div class="seg">${Object.entries({s1:"Propriétaire",s2:"Locataire"}).map(([k,l])=>`<input type="radio" name="statut" id="${k}" value="${k}" ${brief.statut===k?"checked":""}><label for="${k}">${l}</label>`).join("")}</div></div>
+    <div class="field"><label class="eyebrow" for="keep">À conserver</label><input type="text" id="keep" value="${esc(brief.keep)}" placeholder="ex. canapé, parquet"></div>
+    <button class="btn primary" type="submit" id="go" style="padding:13px">Lancer l'étude</button>
+    <div class="status" id="status" hidden></div>
+    <p class="muted" style="font-size:12.5px;margin:0">Rédigée par Claude depuis votre compte. Vérifiez prix et disponibilité sur le site de la marque avant d'acheter.</p>
+   </form>
+   <section class="panel" id="board">${boardHTML()}</section>
+  </div>`;
+}
+function readBrief(){brief.space=$("#space").value;brief.surface=$("#surface").value.trim();brief.wish=$("#wish").value.trim();brief.keep=$("#keep").value.trim();
+  brief.budget=document.querySelector('input[name=budget]:checked').value;brief.statut=document.querySelector('input[name=statut]:checked').value;
+  brief.styles=[...document.querySelectorAll('#brief .seg input[type=checkbox]:checked')].map(i=>i.value);store.set("pr_brief",brief)}
+function wireProject(){
+  const drop=$("#drop");
+  const setPhoto=f=>{if(!f)return;photoFile=f;if(photoURL)URL.revokeObjectURL(photoURL);photoURL=URL.createObjectURL(f);$("#dropImg").src=photoURL;$("#dropImg").hidden=false;$("#dropEmpty").hidden=true};
+  $("#photo").onchange=e=>setPhoto(e.target.files[0]);
+  ["dragover","dragenter"].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.add("over")}));
+  ["dragleave","drop"].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.remove("over")}));
+  drop.addEventListener("drop",e=>{const f=e.dataTransfer.files[0];if(f&&f.type.startsWith("image/"))setPhoto(f)});
+  $("#insp").onchange=e=>{readBrief();for(const f of e.target.files)if(inspFiles.length<Math.max(0,maxImages-1))inspFiles.push(f);render()};
+  $("#thumbs").onclick=e=>{const b=e.target.closest("[data-rm]");if(b){readBrief();inspFiles.splice(+b.dataset.rm,1);render()}};
+  $("#brief").onsubmit=e=>{e.preventDefault();readBrief();runStudy()};
+  wireBoard();
+}
+
+function buildPrompt(extra){
+  const moods=[...fav].map(id=>BYID[id]).filter(Boolean).map(i=>`${KIND[i.kind]} : ${i.nom}`).join(" ; ");
+  const imgsDesc=(photoFile&&imagesOK)?`IMAGE 1 = photo de l'espace du client.${inspFiles.length?` IMAGES suivantes = ses inspirations.`:""}`:"Pas de photo : base-toi sur le brief.";
+  return `Tu es un architecte d'intérieur et paysagiste haut de gamme basé en France (20 ans d'expérience), expert des éditeurs de mobilier, nuanciers de peinture, papiers peints, tissus, artisans et enseignes accessibles.
+${imgsDesc}
+BRIEF
+- Espace : ${brief.space}${brief.surface?` · ${brief.surface} m²`:""}
+- Envie : ${brief.wish||"(non précisée : propose la meilleure transformation possible)"}
+- Styles : ${brief.styles.join(", ")||"non précisés"}
+- Budget : ${BUDGETS[brief.budget]}
+- Situation : ${STATUTS[brief.statut]}
+- À conserver : ${brief.keep||"rien de précisé"}
+- Moodboard du client : ${moods||"vide"}
+${extra?`\nMODIFICATION DEMANDÉE : ${extra}\nÉTUDE PRÉCÉDENTE : ${JSON.stringify(study)}\nRends l'étude complète mise à jour.`:""}
+MISSION : analyse la photo (volumes, lumière, sol, menuiseries, existant) et conçois une transformation réaliste, digne d'un studio haut de gamme, dans le budget.
+RÈGLES : uniquement des produits RÉELS de marques réelles, mélange grandes maisons, marques de niche et alternatives accessibles. Marques prioritaires : ${Object.keys(BRANDS).join(", ")}. Peintures : teinte et numéro exacts du nuancier + hex approchant. Si tu n'es pas sûr du modèle exact, donne la gamme et "confiance":"moyenne", n'invente jamais. Prix publics France en euros. 8 à 16 produits. Tutos concrets pour appliquer/installer les éléments clés. Zones : x,y en % de la photo, posés exactement sur l'élément.
+Réponds UNIQUEMENT en JSON :
+{"concept":{"titre":"…","resume":"3 phrases","ambiance":"…","analyse":["…"],"principes":["…"]},
+"palette":[{"nom":"…","marque":"…","reference":"…","hex":"#RRGGBB","usage":"…"}],
+"zones":[{"id":1,"x":50,"y":40,"titre":"…","action":"…"}],
+"produits":[{"zone_id":1,"categorie":"Peinture|Revêtement|Mobilier|Luminaire|Textile|Tapis|Décoration|Végétal|Extérieur|Rangement","nom":"…","marque":"…","gamme":"accessible|milieu|luxe|niche","prix_min":0,"prix_max":0,"dimensions":"…","pourquoi":"…","confiance":"haute|moyenne"}],
+"sur_mesure":[{"element":"…","artisan":"…","description":"…","budget_min":0,"budget_max":0}],
+"tutos":[{"titre":"…","zone_id":1,"difficulte":"Facile|Moyen|Avancé","duree":"…","outils":["…"],"etapes":["…"],"astuce":"…"}],
+"plan":[{"etape":"…","duree":"…"}]}
+3–5 couleurs, 4–8 zones, 2–4 tutos, 0–3 sur-mesure, 3–6 étapes.`;
+}
+const ERR={not_granted:"L'accès à Claude a été refusé pour cette page. Rouvrez-la pour l'autoriser.",sampling_disabled:"Claude n'est pas disponible sur ce compte.",
+ rate_limited:"Trop de demandes pour le moment. Réessayez dans quelques minutes.",image_rejected:"Cette image n'est pas acceptée. Essayez un JPG ou PNG de moins de 20 Mo.",
+ invalid_json:"L'étude reçue était incomplète. Relancez.",refused:"Cette demande n'a pas pu être traitée. Reformulez.",session_expired:"Session expirée : reconnectez-vous à Claude.",prompt_too_large:"Texte trop long, raccourcissez-le."};
+function setStatus(h,err){const s=$("#status");if(!s)return;s.hidden=!h;s.innerHTML=h||"";s.classList.toggle("err",!!err)}
+async function runStudy(extra){
+  if(busy)return;
+  if(!sampleFn){setStatus("L'étude par IA fonctionne quand la page est ouverte dans Claude.",true);return}
+  if(imagesOK&&!photoFile&&!extra){setStatus("Ajoutez d'abord une photo de votre espace.",true);return}
+  busy=true;$("#go").disabled=true;ctl=new AbortController();
+  const steps=["Lecture de la photo et des volumes…","Choix de la palette dans les nuanciers…","Sélection des pièces chez les éditeurs…","Rédaction des tutos…"];let si=0;
+  setStatus(`<span class="spinner"></span> <span id="stTxt">${steps[0]}</span> <button class="btn small" type="button" id="stop">Arrêter</button>`);
+  $("#stop").onclick=()=>ctl.abort();
+  const tick=setInterval(()=>{si=Math.min(si+1,steps.length-1);const t=$("#stTxt");if(t)t.textContent=steps[si]},10000);
+  try{
+    const imgs=(photoFile&&imagesOK)?[photoFile,...inspFiles].slice(0,maxImages):[];
+    const res=await sampleFn.json(buildPrompt(extra),{images:imgs.length?imgs:undefined,signal:ctl.signal,cache:false});
+    if(!res||!res.concept||!Array.isArray(res.produits))throw{code:"invalid_json"};
+    res.meta={space:brief.space,ts:Date.now(),photo:!!photoFile};study=res;store.set("pr_last",res);picks.clear();activeZone=null;ptab="plan";
+    $("#board").innerHTML=boardHTML();wireBoard();setStatus("");
+  }catch(e){if(e&&e.code==="cancelled")setStatus("");else setStatus(ERR[e?.code]||"La connexion a été interrompue. Relancez.",true)}
+  finally{clearInterval(tick);busy=false;const g=$("#go");if(g)g.disabled=false}
+}
+
+/* ---- planche ---- */
+function totals(){let a=0,b=0;(study?.produits||[]).forEach(p=>{a+=+p.prix_min||0;b+=+p.prix_max||0});(study?.sur_mesure||[]).forEach(p=>{a+=+p.budget_min||0;b+=+p.budget_max||0});return[a,b]}
+function boardHTML(){
+  if(!study) return `<div class="empty" style="border:0"><h3>Votre étude apparaîtra ici</h3><p>Plan annoté sur votre photo, palette avec les vraies références de nuancier, sélection shopping, tutos, sur-mesure et budget.</p>
+   <div class="cards" style="margin-top:20px;text-align:left">${["a-japandi","a-riviera","a-riad"].map(i=>card(BYID[i])).join("")}</div></div>`;
+  const [a,b]=totals();
+  return `<span class="eyebrow">${esc(study.meta?.space||"Projet")} · ${study.produits.length} références · ${eur(a)} – ${eur(b)}</span>
+   <h2 style="font-size:clamp(24px,3vw,34px);margin-top:6px">${esc(study.concept.titre)}</h2><p class="muted" style="margin:6px 0 0">${esc(study.concept.ambiance)}</p>
+   <div class="ptabs" role="tablist">${[["plan","Plan sur photo"],["concept","Concept & palette"],["shop","Shopping"],["tutos","Tutos"],["mesure","Sur-mesure"],["budget","Budget"]].map(([k,l])=>`<button role="tab" type="button" data-pt="${k}" aria-selected="${ptab===k}">${l}</button>`).join("")}</div>
+   <div class="ppane">${({plan:pPlan,concept:pConcept,shop:pShop,tutos:pTutos,mesure:pMesure,budget:pBudget})[ptab]()}</div>
+   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;border-top:1px solid var(--line);padding-top:16px">
+    <input type="text" id="refineIn" style="flex:1 1 240px" placeholder="Affiner : « plus lumineux », « budget divisé par deux »…" aria-label="Demander une modification">
+    <button class="btn" type="button" id="refineBtn">Affiner</button>
+    <button class="btn" type="button" data-advisor-ask="J'ai mon étude « ${esc(study.concept.titre)} ». Qu'est-ce que tu changerais ou ajouterais, et par quoi je commence ?">Avis de Camille</button>
+    <button class="btn" type="button" id="copyList">Copier la liste d'achats</button></div>`;
+}
+function wireBoard(){
+  const B=$("#board");if(!B)return;
+  B.onclick=e=>{const t=e.target.closest("[data-pt]");if(t){ptab=t.dataset.pt;B.innerHTML=boardHTML();wireBoard();return}
+   const z=e.target.closest("[data-z]");if(z){activeZone=activeZone==z.dataset.z?null:z.dataset.z;B.innerHTML=boardHTML();wireBoard();return}
+   if(e.target.closest("[data-tint]")){tintOn=!tintOn;B.innerHTML=boardHTML();wireBoard();return}
+   const s=e.target.closest("[data-sf]");if(s){shopF=s.dataset.sf;B.innerHTML=boardHTML();wireBoard()}};
+  B.onchange=e=>{const c=e.target.closest("[data-pick]");if(c){const i=+c.dataset.pick;c.checked?picks.add(i):picks.delete(i)}};
+  const rb=$("#refineBtn");if(rb){rb.onclick=()=>{const v=$("#refineIn").value.trim();if(v){readBrief();runStudy(v)}};
+   $("#refineIn").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();rb.click()}}}
+  const cl=$("#copyList");if(cl)cl.onclick=async()=>{const items=picks.size?[...picks].map(i=>study.produits[i]):study.produits;
+   const txt=`${study.concept.titre}\n\nPALETTE\n${(study.palette||[]).map(p=>`- ${p.nom} ${p.reference||""} (${p.marque||"—"}) : ${p.usage}`).join("\n")}\n\nACHATS\n${items.map(p=>`- ${p.marque} — ${p.nom} : ${eur(p.prix_min)}–${eur(p.prix_max)}${brandUrl(p.marque)?" · "+brandUrl(p.marque):""}`).join("\n")}`;
+   try{await navigator.clipboard.writeText(txt);cl.textContent="Liste copiée"}catch{cl.textContent="Copie impossible"}setTimeout(()=>cl.textContent="Copier la liste d'achats",2000)};
+}
+function pPlan(){
+  const z=study.zones||[];const p0=study.palette?.[1]?.hex||study.palette?.[0]?.hex||"#888";
+  const stage=(photoURL&&study.meta?.photo)?`<div class="stage"><img src="${photoURL}" alt="Votre espace"><div class="tint" style="background:${esc(p0)};mix-blend-mode:color;opacity:${tintOn?.35:0}"></div>
+   ${z.map(x=>`<button class="pin" type="button" data-z="${x.id}" style="left:${Math.min(97,Math.max(3,+x.x))}%;top:${Math.min(95,Math.max(5,+x.y))}%" aria-pressed="${activeZone==x.id}" aria-label="Zone ${x.id}">${x.id}</button>`).join("")}</div>
+   <div style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap"><button class="btn small" type="button" data-tint>${tintOn?"Photo d'origine":"Aperçu des couleurs"}</button><span class="muted" style="font-size:12.5px">Touchez un repère pour voir les références de la zone.</span></div>`
+   :`<p class="notice">La photo n'est pas conservée d'une visite à l'autre. Les zones restent consultables.</p>`;
+  return `${stage}<div class="zones">${z.map(x=>`<button type="button" class="zone ${activeZone==x.id?"on":""}" data-z="${x.id}"><b>${x.id}</b><strong>${esc(x.titre)}</strong><p>${esc(x.action)}</p></button>`).join("")}</div>
+   ${activeZone?`<h3 style="margin:22px 0 12px;font-size:20px">Références de la zone ${esc(activeZone)}</h3><div class="prods">${study.produits.filter(p=>p.zone_id==activeZone).map(prodCard).join("")||'<p class="muted">Aucune référence liée.</p>'}</div>`:""}`;
+}
+function pConcept(){const c=study.concept;return `<p style="max-width:66ch">${esc(c.resume)}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin:18px 0">
+   <div><span class="eyebrow">Ce que dit votre photo</span><ul class="dots" style="margin-top:8px">${(c.analyse||[]).map(a=>`<li>${esc(a)}</li>`).join("")}</ul></div>
+   <div><span class="eyebrow">Principes appliqués</span><ul class="dots" style="margin-top:8px">${(c.principes||[]).map(a=>`<li>${esc(a)}</li>`).join("")}</ul></div></div>
+  <span class="eyebrow">Palette</span><div class="swatches" style="margin-top:8px">${(study.palette||[]).map(p=>`<div class="sw"><div class="c" style="background:${esc(p.hex)}"></div><div class="t"><b>${esc(p.nom)}</b><br><span class="mono">${esc([p.marque,p.reference].filter(Boolean).join(" · "))}</span><br><span class="muted">${esc(p.usage)}</span>${p.marque?`<br><a href="${gSearch(p.marque+" "+p.nom+" "+(p.reference||""))}" target="_blank" rel="noopener">Voir la teinte ↗</a>`:""}</div></div>`).join("")}</div>`}
+function prodCard(p){const i=study.produits.indexOf(p),site=brandUrl(p.marque),q=`${p.marque} ${p.nom}`;
+  return `<article class="prod"><div class="top"><span class="bn">${esc(p.marque)}</span><span class="tag">${esc(p.gamme)}</span></div><h4>${esc(p.nom)}</h4>
+  <div class="top"><span class="muted" style="font-size:12.5px">${esc(p.categorie)}${p.dimensions?" · "+esc(p.dimensions):""}</span><span class="price">${eur(p.prix_min)}${p.prix_max!==p.prix_min?" – "+eur(p.prix_max):""}</span></div>
+  <p>${esc(p.pourquoi)}</p>${p.confiance==="moyenne"?'<span class="conf">Modèle exact à confirmer sur le site de la marque</span>':""}
+  <div class="links">${site?`<a class="btn small" href="${site}" target="_blank" rel="noopener">${esc(p.marque)} ↗</a>`:""}<a class="btn small" href="${gShop(q)}" target="_blank" rel="noopener">Prix ↗</a><a class="btn small" href="${gSearch(q)}" target="_blank" rel="noopener">Fiche ↗</a></div>
+  <label style="display:flex;gap:6px;font-size:12.5px;color:var(--muted)"><input type="checkbox" data-pick="${i}" ${picks.has(i)?"checked":""}> Dans ma liste d'achats</label></article>`}
+function pShop(){const cats=["Tout",...new Set(study.produits.map(p=>p.categorie)),...["accessible","milieu","luxe","niche"].filter(g=>study.produits.some(p=>p.gamme===g))];
+  const list=study.produits.filter(p=>shopF==="Tout"||p.categorie===shopF||p.gamme===shopF);
+  return `<div class="chips" style="margin-bottom:14px">${cats.map(c=>`<button class="chip" type="button" data-sf="${esc(c)}" aria-pressed="${c===shopF}">${esc(c)}</button>`).join("")}</div><div class="prods">${list.map(prodCard).join("")}</div>`}
+function pTutos(){return (study.tutos||[]).map((t,i)=>`<details class="tuto" ${i===0?"open":""}><summary><h4 style="font-size:18px">${esc(t.titre)}</h4><span class="muted" style="font-size:12.5px">${esc(t.difficulte)} · ${esc(t.duree)}</span></summary>
+  <div class="tb"><div><span class="eyebrow">Outils</span><ul class="dots" style="margin-top:8px">${(t.outils||[]).map(o=>`<li>${esc(o)}</li>`).join("")}</ul><a class="btn small" style="margin-top:12px" href="${ytSearch(t.titre+" tuto")}" target="_blank" rel="noopener">Vidéos ↗</a></div>
+  <div><span class="eyebrow">Étapes</span><ol style="margin-top:8px">${(t.etapes||[]).map(s=>`<li>${esc(s)}</li>`).join("")}</ol>${t.astuce?`<div class="pro"><b>Astuce d'atelier.</b> ${esc(t.astuce)}</div>`:""}</div></div></details>`).join("")||'<p class="muted">Pas de tuto.</p>'}
+function pMesure(){const m=study.sur_mesure||[];if(!m.length)return '<p class="muted">Aucun sur-mesure nécessaire.</p>';
+  return `<div class="prods">${m.map(x=>`<article class="prod"><span class="bn">${esc(x.artisan)}</span><h4>${esc(x.element)}</h4><span class="price">${eur(x.budget_min)} – ${eur(x.budget_max)}</span><p>${esc(x.description)}</p>
+  <div class="links"><a class="btn small" href="${gSearch(x.artisan+" "+x.element+" près de chez moi")}" target="_blank" rel="noopener">Trouver un artisan ↗</a></div></article>`).join("")}</div>
+  <p class="notice" style="margin-top:12px">Demandez 2 à 3 devis détaillés. Pour cuisine et dressing, des façades sur-mesure existent pour caissons IKEA (Plum Living, Reform).</p>`}
+function pBudget(){const [a,b]=totals();const sel=[...picks].map(i=>study.produits[i]).filter(Boolean);const s=sel.reduce((t,p)=>[t[0]+(+p.prix_min||0),t[1]+(+p.prix_max||0)],[0,0]);
+  return `<div style="display:flex;gap:32px;flex-wrap:wrap;margin-bottom:18px"><div><span class="eyebrow">Projet complet</span><div class="big">${eur(a)} – ${eur(b)}</div></div><div><span class="eyebrow">Ma liste (${sel.length})</span><div class="big">${sel.length?eur(s[0])+" – "+eur(s[1]):"—"}</div></div></div>
+  <span class="eyebrow">Ordre des travaux</span><div class="tw"><table style="margin:8px 0 20px"><tbody>${(study.plan||[]).map((p,i)=>`<tr><td class="mono">${i+1}</td><td>${esc(p.etape)}</td><td>${esc(p.duree)}</td></tr>`).join("")}</tbody></table></div>
+  <div class="tw"><table><thead><tr><th>Référence</th><th>Marque</th><th class="num">Min</th><th class="num">Max</th></tr></thead><tbody>
+  ${study.produits.map(p=>`<tr><td>${esc(p.nom)}</td><td>${esc(p.marque)}</td><td class="num">${eur(p.prix_min)}</td><td class="num">${eur(p.prix_max)}</td></tr>`).join("")}
+  ${(study.sur_mesure||[]).map(p=>`<tr><td>${esc(p.element)} (sur-mesure)</td><td>${esc(p.artisan)}</td><td class="num">${eur(p.budget_min)}</td><td class="num">${eur(p.budget_max)}</td></tr>`).join("")}</tbody></table></div>
+  <p class="muted" style="font-size:12.5px">Fourchettes indicatives. Les alternatives d'une même zone ne s'additionnent pas forcément.</p>`}
+
+/* ================= CONSEILLÈRE IA ================= */
+let turns=store.get("pr_chat",[]), chatBusy=false, chatCtl=null, chatImg=null;
+const SUGG=["Quelle couleur de mur avec un parquet en chêne ?","Comment agrandir visuellement une petite chambre ?","Salle de bain de locataire : que faire sans travaux ?","Quels meubles iconiques pour moins de 1 000 € ?","Aménager un balcon de 4 m² façon Méditerranée","Comment bien éclairer un salon le soir ?"];
+
+function libraryIndex(){return ALL.map(i=>`${i.id} | ${KIND[i.kind]} | ${i.nom}${i.kind==="meuble"?` (${i.designer}, ${i.editeur}, ${i.prix})`:i.kind==="matiere"?` (${i.prix})`:i.kind==="lieu"?` (${i.lieu}, ${i.theme})`:` (${i.mats.map(m=>BYID[m].nom).join(" + ")})`}`).join("\n")}
+function rules(){
+  const moods=[...fav].map(id=>BYID[id]?.nom).filter(Boolean).join(", ")||"vide";
+  const proj=study?`Projet en cours : « ${study.concept.titre} » (${study.meta?.space}), palette ${study.palette?.map(p=>p.nom).join(", ")}.`:"Pas encore d'étude de projet.";
+  return `Tu es Camille, conseillère en architecture d'intérieur au sein de l'application « Pièce Rêvée ». Tu as l'œil d'une architecte d'intérieur haut de gamme et le sens pratique de quelqu'un qui bricole. Tu parles français, chaleureusement, simplement, sans jargon inutile.
+
+Ta façon de conseiller :
+- Réponds de façon concrète et actionnable : quoi faire, avec quelle référence réelle (marque, teinte et numéro de nuancier, modèle), à quel prix indicatif en euros, dans quel ordre.
+- Propose toujours une option accessible ET une option plus haut de gamme quand c'est pertinent.
+- Tiens compte des contraintes (locataire, budget, enfants, animaux, lumière) ; si une info essentielle manque, pose UNE question courte à la fin.
+- Ne cite que des produits et marques qui existent. Si tu n'es pas sûre d'un modèle exact, dis-le.
+- Réponses courtes : 120 à 220 mots, listes à puces si utile, gras pour les références clés. Pas de titres.
+- Quand un élément de la bibliothèque de l'appli est pertinent, cite-le avec son identifiant entre doubles crochets, ex. [[m-travertin]] ou [[f-togo]] : il devient un lien cliquable. N'invente jamais d'identifiant.
+- Si l'utilisateur veut une étude complète sur photo de sa pièce, invite-le à utiliser l'onglet « Mon projet ».
+${toolsOK?"- Tu peux ajouter un élément au moodboard de l'utilisateur avec l'outil ajouter_moodboard quand il le demande ou l'accepte.":""}
+
+Bibliothèque de l'appli (identifiant | type | nom) :
+${libraryIndex()}
+
+Moodboard de l'utilisateur : ${moods}
+${proj}`;
+}
+function md(t){
+  let h=esc(t).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[\[([a-z]-[a-z0-9-]+)\]\]/g,(m,id)=>BYID[id]?`<button class="ref" type="button" data-open="${id}">${esc(BYID[id].nom)}</button>`:"");
+  const lines=h.split("\n");let out="",list=null;
+  for(const l of lines){const ul=l.match(/^\s*[-•*]\s+(.*)/),ol=l.match(/^\s*\d+[.)]\s+(.*)/);
+    if(ul||ol){const tag=ul?"ul":"ol";if(list!==tag){if(list)out+=`</${list}>`;out+=`<${tag}>`;list=tag}out+=`<li>${(ul||ol)[1]}</li>`}
+    else{if(list){out+=`</${list}>`;list=null}if(l.trim())out+=`<p>${l.replace(/^#+\s*/,"")}</p>`}}
+  if(list)out+=`</${list}>`;return out;
+}
+function renderMsgs(){
+  const M=$("#msgs");
+  if(!turns.length){M.innerHTML=`<div class="msg a"><p>Bonjour, je suis <strong>Camille</strong>. Je vous aide à choisir couleurs, matières, meubles et éclairage, et à tout rendre faisable selon votre budget.</p><p>Posez-moi une question, ou joignez une photo de votre pièce pour un avis.</p></div>`;$("#sugg").hidden=false}
+  else{M.innerHTML=turns.map(t=>t.role==="user"?`<div class="msg u">${t.img?`<span style="font-size:12px;opacity:.85">📷 Photo jointe</span><br>`:""}${esc(t.content)}</div>`:`<div class="msg a">${md(t.content)}</div>`).join("");$("#sugg").hidden=true}
+  M.scrollTop=M.scrollHeight;
+}
+$("#sugg").innerHTML=SUGG.map(s=>`<button type="button">${esc(s)}</button>`).join("");
+$("#sugg").onclick=e=>{const b=e.target.closest("button");if(b)sendChat(b.textContent)};
+
+async function sendChat(text){
+  text=(text||"").trim();if(!text||chatBusy)return;
+  if(!sampleFn){turns.push({role:"user",content:text},{role:"assistant",content:"Je fonctionne quand cette page est ouverte dans Claude. Ouvrez-la depuis votre compte Claude pour discuter avec moi."});renderMsgs();return}
+  const img=chatImg;chatImg=null;$("#attprev").hidden=true;$("#chatImg").value="";
+  turns.push({role:"user",content:text,img:!!img});renderMsgs();
+  const M=$("#msgs");const bubble=document.createElement("div");bubble.className="msg a";bubble.innerHTML=`<span class="spinner"></span> Camille réfléchit…`;M.append(bubble);M.scrollTop=M.scrollHeight;
+  chatBusy=true;$("#sendBtn").disabled=true;chatCtl=new AbortController();
+  const hist=turns.slice(-12).map(t=>({role:t.role,content:t.img&&t.role==="user"?t.content+(t===turns[turns.length-1]?" (photo jointe)":" (une photo avait été jointe)"):t.content}));
+  const input=[{role:"user",content:rules()},...hist];
+  const opts={signal:chatCtl.signal,onText:({text})=>{bubble.innerHTML=md(text);M.scrollTop=M.scrollHeight}};
+  if(img&&imagesOK)opts.images=[img];
+  if(toolsOK)opts.tools=[
+    {name:"ajouter_moodboard",description:"Ajoute un élément de la bibliothèque (par son identifiant, ex. m-travertin) au moodboard de l'utilisateur. Renvoie le nom de l'élément ajouté.",
+     inputSchema:{type:"object",properties:{id:{type:"string",description:"Identifiant de la bibliothèque"}},required:["id"]},
+     execute(inp){const id=String(inp.id||"");if(!BYID[id])throw new Error("Identifiant inconnu");if(!fav.has(id))toggleFav(id);
+       const n=document.createElement("div");n.className="toolnote";n.textContent="✓ "+BYID[id].nom+" ajouté au moodboard";M.insertBefore(n,bubble);return {ajoute:BYID[id].nom}}}];
+  else opts.cache=false;
+  try{const r=await sampleFn(input,opts);turns.push({role:"assistant",content:r.text})}
+  catch(e){if(e.code==="cancelled"){if(e.text)turns.push({role:"assistant",content:e.text})}
+    else{turns.push({role:"assistant",content:e.text?e.text+"\n\n(Réponse interrompue.)":(ERR[e.code]||"La connexion a été interrompue. Reposez votre question.")})}}
+  finally{chatBusy=false;$("#sendBtn").disabled=false;store.set("pr_chat",turns.slice(-30).map(({img,...t})=>t));renderMsgs()}
+}
+$("#composer").onsubmit=e=>{e.preventDefault();const v=$("#chatIn").value;$("#chatIn").value="";$("#chatIn").style.height="";sendChat(v)};
+$("#chatIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("#composer").requestSubmit()}});
+$("#chatIn").addEventListener("input",e=>{e.target.style.height="";e.target.style.height=Math.min(140,e.target.scrollHeight)+"px"});
+$("#chatImg").onchange=e=>{const f=e.target.files[0];if(!f)return;chatImg=f;const p=$("#attprev");p.hidden=false;p.innerHTML=`<img src="${URL.createObjectURL(f)}" alt="">Photo prête à envoyer <button class="btn small ghost" type="button" id="rmAtt">Retirer</button>`;$("#rmAtt").onclick=()=>{chatImg=null;p.hidden=true;$("#chatImg").value=""}};
+$("#newChat").onclick=()=>{chatCtl?.abort();turns=[];store.set("pr_chat",[]);renderMsgs()};
+
+function openDrawer(){$("#drawer").classList.add("open");$("#drawer").setAttribute("aria-hidden","false");$("#scrim").classList.add("on");renderMsgs();setTimeout(()=>$("#chatIn").focus(),250)}
+function closeDrawer(){$("#drawer").classList.remove("open");$("#drawer").setAttribute("aria-hidden","true");$("#scrim").classList.remove("on")}
+$("#fab").onclick=openDrawer;$("#tabAdv").onclick=openDrawer;$("#closeDrawer").onclick=closeDrawer;$("#scrim").onclick=closeDrawer;
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#drawer").classList.contains("open"))closeDrawer()});
+
+/* ================= DÉMARRAGE ================= */
+updateCount();go();
+(async()=>{try{
+  sampleFn=await window.claude?.use?.("sample");if(!sampleFn){$("#attWrap").hidden=true;return}
+  const lim=await sampleFn.limits().catch(()=>null);
+  if(lim?.images){imagesOK=true;maxImages=lim.images.maxCount}else $("#attWrap").hidden=true;
+  if(lim?.tools)toolsOK=true;
+}catch{}})();
+
+</script>
