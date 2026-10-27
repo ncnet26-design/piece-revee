@@ -1,7 +1,7 @@
 "use client";
 import { useSyncExternalStore } from "react";
 import { BriefSchema, isExterior, type Brief, type StudyResult } from "@core/schemas/study.ts";
-import { styleById } from "@/content/index";
+import { styleById } from "@/content/lookup";
 import { DEMO_EXTERIOR, DEMO_INTERIOR } from "./demo-studies";
 import { DEMO_MODE } from "./site";
 import { KEYS, local } from "./storage";

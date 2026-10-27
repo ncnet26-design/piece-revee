@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useId, useState } from "react";
 import { BUDGET_LABELS, SPACES_EXTERIOR, SPACES_INTERIOR, isExterior, type Brief } from "@core/schemas/study.ts";
-import { STYLES, styleById, libraryById } from "@/content/index";
+import { STYLES, styleById } from "@/content/lookup";
 import { createProject } from "@/lib/projects";
 import { preparePhoto, type PreparedPhoto } from "@/lib/photo";
 import { useFavorites } from "@/lib/favorites";
@@ -61,6 +61,7 @@ export function NewProject() {
     e.preventDefault(); setError(null);
     if (!photo && !DEMO_MODE) { setError("Ajoutez d'abord une photo de votre espace."); return; }
     setBusy(true);
+    const { libraryById } = await import("@/content/index");
     const moodboard = favs.map((id) => libraryById.get(id)?.name).filter(Boolean).slice(0, 12).join(", ");
     const brief: Brief = { space, surfaceM2: surface ? Number(surface.replace(",", ".")) || null : null, wish: [wish, moodboard ? `Moodboard : ${moodboard}` : ""].filter(Boolean).join("\n").slice(0, 2000), styles, budget, tenure, keep, postalCode: /^\d{5}$/.test(postal) ? postal : null };
     const r = await createProject({ brief, photo: photo ? { blob: photo.blob, dataUrl: photo.dataUrl } : null, inspirations: insp.map((i) => i.blob), homeId: params.get("maison") });

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { isExterior } from "@core/schemas/study.ts";
-import { STYLES, styleById } from "@/content/index";
+import { STYLES, styleById } from "@/content/lookup";
 import { homeStore, useHome } from "@/lib/home";
 import { openCamille } from "@/lib/camille-bus";
 import { useLocalProjects } from "@/lib/projects";

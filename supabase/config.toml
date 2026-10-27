@@ -1,0 +1,57 @@
+# Configuration Supabase (projet en région UE, offre gratuite).
+project_id = "piece-revee"
+
+[api]
+schemas = ["public"]
+max_rows = 1000
+
+[auth]
+site_url = "https://piece-revee.pages.dev"
+additional_redirect_urls = ["http://localhost:3000", "http://localhost:4173"]
+enable_signup = true
+jwt_expiry = 3600
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+
+[auth.external.google]
+enabled = false # à activer avec les identifiants OAuth Google (voir docs/RUNBOOK.md)
+client_id = "env(GOOGLE_CLIENT_ID)"
+secret = "env(GOOGLE_CLIENT_SECRET)"
+
+[auth.external.apple]
+enabled = false # à activer avec un compte Apple Developer (payant : à décider)
+client_id = "env(APPLE_CLIENT_ID)"
+secret = "env(APPLE_CLIENT_SECRET)"
+
+[storage]
+file_size_limit = "20MiB"
+
+[functions.stripe-webhook]
+verify_jwt = false # signature Stripe vérifiée dans la fonction
+import_map = "./functions/deno.json"
+
+[functions.maintenance]
+verify_jwt = false # clé service vérifiée dans la fonction
+import_map = "./functions/deno.json"
+
+[functions.study-start]
+import_map = "./functions/deno.json"
+[functions.study-refine]
+import_map = "./functions/deno.json"
+[functions.camille]
+import_map = "./functions/deno.json"
+[functions.checkout]
+import_map = "./functions/deno.json"
+[functions.billing-portal]
+import_map = "./functions/deno.json"
+[functions.account-export]
+import_map = "./functions/deno.json"
+[functions.account-delete]
+import_map = "./functions/deno.json"
+[functions.export-pdf]
+import_map = "./functions/deno.json"
+[functions.render-edit]
+import_map = "./functions/deno.json"

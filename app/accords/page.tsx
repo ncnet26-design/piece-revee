@@ -7,6 +7,6 @@ export const metadata = meta({ title: "Accords de matières : 30 trios qui fonct
 export default function Page() {
   return (<>
     <div className="vhead"><div><h1>Accords de matières</h1><p>{PAIRINGS.length} trios expliqués : pourquoi ils fonctionnent, dans quelles proportions, et où les utiliser.</p></div></div>
-    <ExploreList kind="accords" />
+    <ExploreList kind="accords" items={PAIRINGS} />
   </>);
 }

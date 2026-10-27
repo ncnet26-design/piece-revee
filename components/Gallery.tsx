@@ -1,8 +1,10 @@
 "use client";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useSearch } from "@/lib/use-search";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { GALLERY, GALLERY_SPACES, STYLES, styleById } from "@/content/index";
+import { GALLERY, GALLERY_SPACES } from "@/content/gallery";
+import { STYLES, styleById } from "@/content/lookup";
 import { searchCatalogDemo } from "@/lib/catalog";
 import { openCamille } from "@/lib/camille-bus";
 import { GalleryCard, GalleryVisual } from "./cards";
@@ -12,18 +14,23 @@ import { IconClose } from "./icons";
 type Scope = "interieur" | "exterieur";
 
 export function Gallery() {
-  const params = useSearchParams();
+  const params = useSearch();
+  const search = params.toString();
   const router = useRouter();
   const initial = useMemo(() => {
     const g = params.get("g"); const s = params.get("style");
     const it = g ? GALLERY.find((x) => x.id === g) : undefined;
     const st = s ? STYLES.find((x) => x.slug === s) : undefined;
     return { scope: (it?.scope ?? st?.scope ?? "interieur") as Scope, style: st?.id ?? "Tous", openId: it?.id ?? null };
-  }, [params]);
-  const [scope, setScope] = useState<Scope>(initial.scope);
-  const [style, setStyle] = useState(initial.style);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
+  const [scopeSel, setScope] = useState<Scope | null>(null);
+  const [styleSel, setStyle] = useState<string | null>(null);
   const [space, setSpace] = useState("Tous");
-  const [openId, setOpenId] = useState<string | null>(initial.openId);
+  const [openSel, setOpenId] = useState<string | null | undefined>(undefined);
+  const scope = scopeSel ?? initial.scope;
+  const style = styleSel ?? initial.style;
+  const openId = openSel === undefined ? initial.openId : openSel;
   const dlg = useRef<HTMLDialogElement>(null);
 
   useEffect(() => { if (openId) dlg.current?.showModal(); else dlg.current?.close(); }, [openId]);
@@ -52,6 +59,7 @@ export function Gallery() {
       <div className="mb-5 flex flex-wrap gap-1.5" role="group" aria-label="Styles">
         {[{ id: "Tous", name: "Tous" }, ...styles].map((s) => <button key={s.id} type="button" className="chip" aria-pressed={style === s.id} onClick={() => setStyle(s.id)}>{s.name}</button>)}
       </div>
+      <h2 className="sr-only">Inspirations</h2>
       <div className="grid-cards">{list.map((g) => <GalleryCard key={g.id} item={g} onOpen={setOpenId} />)}</div>
       <p className="notice mt-5">Les visuels marqués « Illustration » sont dessinés en attendant l'import des photos libres de droits (Unsplash, Pexels, Wikimedia Commons), affichées avec le nom du photographe et la licence.</p>
 

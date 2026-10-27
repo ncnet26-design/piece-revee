@@ -2,7 +2,7 @@
 import Link from "next/link";
 import type { FurnitureIcon, Material, Pairing, Place, Plant, StyleTheme } from "@/content/types";
 import type { GalleryItem } from "@/content/gallery";
-import { materialById, styleById } from "@/content/index";
+import { materialById, styleById } from "@/content/lookup";
 import { FavButton } from "./FavButton";
 import { MaterialSwatch, PlaceVisual, Scene } from "./Visual";
 
@@ -24,7 +24,7 @@ export function GalleryCard({ item, onOpen }: { item: GalleryItem; onOpen: (id: 
         <span className="eyebrow">{style?.name}</span>
         <h3><button type="button" className="card-link cursor-pointer border-0 bg-transparent p-0 text-left font-display text-[17.5px] font-semibold text-ink" onClick={() => onOpen(item.id)}>{item.title}</button></h3>
         <div className="mt-1 flex items-center justify-between gap-2">
-          <div className="pal" aria-label="Palette">{style?.palette.map((c) => <span key={c} style={{ background: c }} />)}</div>
+          <div className="pal" role="img" aria-label={`Palette : ${style?.palette.join(", ") ?? ""}`}>{style?.palette.map((c) => <span key={c} style={{ background: c }} />)}</div>
           {item.photo ? <span className="credit over">{item.photo.author} · {item.photo.source}</span> : <span className="tag">Illustration</span>}
         </div>
       </div>

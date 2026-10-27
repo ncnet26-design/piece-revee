@@ -7,7 +7,7 @@ export const metadata = meta({ title: "Fiches plantes : jardin, balcon et intér
 export default function Page() {
   return (<>
     <div className="vhead"><div><h1>Plantes</h1><p>{PLANTS.length} fiches pour le jardin, le balcon et l'intérieur : exposition, rusticité, arrosage, calendrier.</p></div></div>
-    <ExploreList kind="plantes" />
+    <ExploreList kind="plantes" items={PLANTS} />
     <p className="notice mt-6">Fiches indicatives, à adapter à votre climat local. La rusticité suppose un sol bien drainé.</p>
   </>);
 }

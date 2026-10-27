@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PLACES, PAIRINGS, materialById } from "@/content/index";
+import { PLACES, PAIRINGS, PLACE_PHOTOS, materialById } from "@/content/index";
 import { Crumbs } from "@/components/Crumbs";
 import { JsonLd } from "@/components/JsonLd";
 import { PlaceVisual } from "@/components/Visual";
@@ -23,17 +23,22 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const p = PLACES.find((x) => x.slug === slug);
   if (!p) notFound();
   const pairings = PAIRINGS.filter((x) => x.placeId === p.id);
+  const photo = PLACE_PHOTOS[p.id]?.[0];
   const commons = `https://commons.wikimedia.org/w/index.php?search=${encodeURIComponent(p.commonsQuery)}&title=Special:MediaSearch&type=image`;
   return (
     <article>
       <Crumbs items={[{ name: "Lieux d'exception", href: "/lieux/" }, { name: p.name, href: `/lieux/${p.slug}/` }]} />
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="relative overflow-hidden rounded-[var(--r)] bg-soft" style={{ aspectRatio: "4 / 3", maxWidth: "100%" }}>
-          <PlaceVisual palette={p.palette} seed={p.id} width={800} height={600} label={`Interprétation graphique de ${p.name}`} className="h-full w-full" />
+          {photo
+            // eslint-disable-next-line @next/next/no-img-element
+            ? <img src={photo.url} alt={photo.alt} className="h-full w-full object-cover" />
+            : <PlaceVisual palette={p.palette} seed={p.id} width={800} height={600} label={`Interprétation graphique de ${p.name}`} className="h-full w-full" />}
           <FavButton id={p.id} name={p.name} />
-          <span className="badge-ai">Interprétation graphique</span>
+          {!photo && <span className="badge-ai">Interprétation graphique</span>}
         </div>
         <div className="flex flex-col gap-4">
+          {photo && <p className="credit">Photo : {photo.author}, <a href={photo.sourceUrl} target="_blank" rel="noopener noreferrer">{photo.source}</a> · {photo.license}</p>}
           <span className="eyebrow">{p.theme} · {p.year}</span>
           <h1 className="text-[clamp(32px,4.4vw,52px)]">{p.name}</h1>
           <dl className="kv"><dt>Par</dt><dd>{p.author}</dd><dt>Où</dt><dd>{p.location}, {p.country}</dd><dt>Visite</dt><dd>{p.visitable ? "Ouvert au public (horaires à vérifier)" : "Non visitable ou sur demande"}</dd></dl>

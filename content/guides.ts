@@ -1,5 +1,5 @@
 import type { GuideArticle } from "./types.ts";
-import { SRC } from "./knowledge.ts";
+import { SRC } from "./sources.ts";
 
 export interface ProjectStep {
   id: "preparer" | "concevoir" | "acheter" | "realiser" | "entretenir";

@@ -17,10 +17,17 @@ export const rgba = (hex: string, a: number) => { const [r, g, b] = hx(hex); ret
 export const shade = (hex: string, amt: number) => { const [r, g, b] = hx(hex).map((v) => Math.max(0, Math.min(255, v + amt))) as [number, number, number]; return `rgb(${r | 0},${g | 0},${b | 0})`; };
 const pick = <T,>(arr: readonly T[], R: Rand): T => arr[Math.floor(R() * arr.length)] as T;
 
-function grain(x: Ctx, R: Rand, W: number, H: number, a: number) {
-  const img = x.getImageData(0, 0, W, H), d = img.data;
-  for (let i = 0; i < d.length; i += 4) { const v = (R() - .5) * 255 * a; d[i]! += v; d[i + 1]! += v; d[i + 2]! += v; }
-  x.putImageData(img, 0, 0);
+let noise: HTMLCanvasElement | null = null;
+/** Grain photographique : un motif de bruit 128 × 128 calculé une seule fois, superposé (bien plus léger qu'un calcul par pixel). */
+function grain(x: Ctx, _R: Rand, W: number, H: number, a: number) {
+  if (!noise) {
+    noise = document.createElement("canvas"); noise.width = noise.height = 128;
+    const n = noise.getContext("2d")!; const img = n.createImageData(128, 128); const r = rng(42);
+    for (let i = 0; i < img.data.length; i += 4) { const v = r() * 255; img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 255; }
+    n.putImageData(img, 0, 0);
+  }
+  const p = x.createPattern(noise, "repeat"); if (!p) return;
+  x.save(); x.globalAlpha = Math.min(0.5, a * 2.2); x.globalCompositeOperation = "overlay"; x.fillStyle = p; x.fillRect(0, 0, W, H); x.restore();
 }
 function blotches(x: Ctx, R: Rand, W: number, H: number, col: string, n: number, rmin: number, rmax: number, a: number) {
   for (let i = 0; i < n; i++) {

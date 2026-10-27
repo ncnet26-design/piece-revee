@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useLocal } from "@/lib/use-local";
 import type { User } from "@supabase/supabase-js";
 import { getPlan, type PlanId } from "@core/plans.ts";
-import { styleById } from "@/content/index";
+import { styleById } from "@/content/lookup";
 import { openBillingPortal } from "@/lib/billing";
 import { DEMO_MODE } from "@/lib/site";
 import { KEYS, local } from "@/lib/storage";

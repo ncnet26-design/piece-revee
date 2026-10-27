@@ -6,10 +6,14 @@ import { PLANTS } from "./plants.ts";
 import { STYLES } from "./styles.ts";
 import { KNOWLEDGE } from "./knowledge.ts";
 import { GUIDES, PROJECT_STEPS } from "./guides.ts";
-import { GALLERY, EXTRA_PHOTOS, GALLERY_SPACES } from "./gallery.ts";
+import { GALLERY, EXTRA_PHOTOS, GALLERY_SPACES, type FreePhoto } from "./gallery.ts";
+import placePhotos from "./data/place-photos.json" with { type: "json" };
 
 export { MATERIALS, PAIRINGS, FURNITURE, PLACES, PLANTS, STYLES, KNOWLEDGE, GUIDES, PROJECT_STEPS, GALLERY, EXTRA_PHOTOS, GALLERY_SPACES };
 export type * from "./types.ts";
+
+/** Photos libres des lieux (Wikimedia Commons), importées par scripts/import-images.ts. */
+export const PLACE_PHOTOS = placePhotos as Record<string, FreePhoto[]>;
 
 export const materialById = new Map(MATERIALS.map((m) => [m.id, m]));
 export const placeById = new Map(PLACES.map((p) => [p.id, p]));

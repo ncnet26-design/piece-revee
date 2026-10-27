@@ -7,6 +7,6 @@ export const metadata = meta({ title: "Matériauthèque : 60 matières pour la m
 export default function Page() {
   return (<>
     <div className="vhead"><div><h1>Matériauthèque</h1><p>{MATERIALS.length} matières : où les utiliser, comment les entretenir, et leur version petit budget.</p></div></div>
-    <ExploreList kind="matieres" />
+    <ExploreList kind="matieres" items={MATERIALS} />
   </>);
 }

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { isExterior } from "@core/schemas/study.ts";
-import { styleById } from "@/content/index";
+import { styleById } from "@/content/lookup";
 import { DEMO_EXTERIOR, DEMO_INTERIOR } from "@/lib/demo-studies";
 import { deleteLocalProject, fetchRemoteProject, fetchRemoteProjects, getLocalProject, runDemoPipeline, STEP_LABELS, useLocalProjects, type JobStep, type Project } from "@/lib/projects";
 import { DEMO_MODE } from "@/lib/site";
@@ -85,7 +85,7 @@ export function StudyPage() {
   }, [id, example]);
 
   if (!id) return <div className="panel"><p>Aucun projet sélectionné.</p><Link className="btn mt-3" href="/projet/">Mes projets</Link></div>;
-  if (!example && !DEMO_MODE && remote === undefined) return <div className="skeleton h-96" aria-label="Chargement" />;
+  if (!example && !DEMO_MODE && remote === undefined) return <div className="skeleton min-h-[100vh]" aria-label="Chargement" />;
   if (!project) return <div className="panel"><h1 className="text-2xl">Projet introuvable</h1><p className="mt-2 text-muted">Il a peut-être été supprimé, ou il a été créé sur un autre appareil.</p><Link className="btn mt-3" href="/projet/">Mes projets</Link></div>;
 
   if (project.status !== "termine" || project.versions.length === 0) {

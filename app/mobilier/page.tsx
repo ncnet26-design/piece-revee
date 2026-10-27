@@ -7,7 +7,7 @@ export const metadata = meta({ title: "Mobilier culte : les pièces qui ont fait
 export default function Page() {
   return (<>
     <div className="vhead"><div><h1>Mobilier culte</h1><p>{FURNITURE.length} pièces qui ont écrit l'histoire du design, avec leur éditeur officiel et une idée pour les intégrer.</p></div></div>
-    <ExploreList kind="mobilier" />
+    <ExploreList kind="mobilier" items={FURNITURE} />
     <p className="notice mt-6">Les noms de designers et d'éditeurs sont cités à titre informatif. Achetez auprès de l'éditeur officiel, d'un revendeur agréé ou en vintage authentifié : les copies sont nombreuses.</p>
   </>);
 }

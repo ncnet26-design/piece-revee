@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useMemo } from "react";
-import { STYLES, styleById } from "@/content/index";
+import { STYLES, styleById } from "@/content/lookup";
 import { KEYS } from "@/lib/storage";
 import { useHydrated, useLocal } from "@/lib/use-local";
 import { Scene } from "./Visual";

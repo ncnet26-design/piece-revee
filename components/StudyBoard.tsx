@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { StudyResult } from "@core/schemas/study.ts";
 import { isExterior } from "@core/schemas/study.ts";
-import { PROJECT_STEPS, plantById, styleById } from "@/content/index";
+import { PROJECT_STEPS, plantById, styleById } from "@/content/lookup";
 import { openCamille } from "@/lib/camille-bus";
 import { MERCHANTS } from "@/lib/catalog";
 import { refineStudy, updateLocalProject, type Project } from "@/lib/projects";

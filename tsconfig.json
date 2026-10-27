@@ -46,7 +46,16 @@
   "exclude": [
     "node_modules",
     "out",
-    "supabase/functions/**/index.ts",
-    "functions"
+    "functions",
+    "scripts/eval-renders.ts",
+    "supabase/functions/*/index.ts",
+    "supabase/functions/_shared/env.ts",
+    "supabase/functions/_shared/http.ts",
+    "supabase/functions/_shared/quota.ts",
+    "supabase/functions/_shared/claude.ts",
+    "supabase/functions/_shared/images.ts",
+    "supabase/functions/_shared/embeddings.ts",
+    "supabase/functions/_shared/study-pipeline.ts",
+    "supabase/functions/_shared/runtime.d.ts"
   ]
 }

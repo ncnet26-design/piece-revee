@@ -1,0 +1,56 @@
+name: Tâches nocturnes
+
+on:
+  schedule:
+    - cron: "17 2 * * *" # chaque nuit (UTC)
+  workflow_dispatch:
+    inputs:
+      images:
+        description: "Réimporter les photos libres de la galerie"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  catalogue:
+    name: Synchronisation des flux produits
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm catalog:ingest
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          FEED_AWIN_MAISON_URL: ${{ secrets.FEED_AWIN_MAISON_URL }}
+
+  images:
+    name: Import des photos libres (sur demande)
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.images }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm images:import
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+      - name: Proposer les nouvelles photos en pull request (relecture humaine avant publication)
+        run: |
+          git config user.name "piece-revee-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git checkout -b images/import-$(date +%Y%m%d)
+          git add content/data
+          git commit -m "contenu: import des photos libres" || exit 0
+          git push -u origin HEAD
+          gh pr create --fill --title "Import des photos libres de droits" --body "Photos importées avec auteur, source et licence. À vérifier avant fusion."
+        env: { GH_TOKEN: "${{ github.token }}" }

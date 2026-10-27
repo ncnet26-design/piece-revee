@@ -1,0 +1,5 @@
+Polices sous licence SIL Open Font License 1.1 (usage commercial autorisé), sous-ensemble latin :
+- Bricolage Grotesque (Ateliertriay) : https://github.com/ateliertriay/bricolage
+- Onest (Dmitri Voloshin) : https://github.com/simpals/onest
+- JetBrains Mono (JetBrains) : https://github.com/JetBrains/JetBrainsMono
+Fichiers issus des paquets @fontsource-variable (npm).

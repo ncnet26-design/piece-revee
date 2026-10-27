@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { GALLERY, STYLES } from "@/content/index";
+import { GALLERY } from "@/content/gallery";
+import { STYLES } from "@/content/lookup";
 import { BeforeAfter } from "./BeforeAfter";
 import { GalleryCard } from "./cards";
 import { Scene } from "./Visual";
