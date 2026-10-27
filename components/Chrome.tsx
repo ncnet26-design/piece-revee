@@ -12,10 +12,9 @@ import { IconChat, IconGrid, IconHeart, IconHouse, IconPhoto, IconSwatches, Icon
 const NAV = [
   { href: "/showroom/", label: "Showroom" },
   { href: "/planche/", label: "Planche 3D" },
+  { href: "/transformer/", label: "Transformer" },
   { href: "/visite-3d/", label: "Visite 3D" },
   { href: "/galerie/", label: "Inspirations" },
-  { href: "/matieres/", label: "Matières" },
-  { href: "/projet/", label: "Mon projet" },
   { href: "/tarifs/", label: "Tarifs" },
 ];
 const EXPLORE = ["/explorer/", "/matieres/", "/accords/", "/mobilier/", "/lieux/", "/plantes/", "/guides/", "/styles/"];
@@ -66,7 +65,7 @@ export function Header() {
         </Link>
         <ThemeToggle />
         <Link href="/compte/" className="btn btn-sm btn-ghost border-transparent px-2.5" aria-label="Mon compte"><IconUser width={17} height={17} /></Link>
-        <Link href="/visite-3d/" className="btn btn-primary hidden md:inline-flex">Commencer</Link>
+        <Link href="/transformer/" className="btn btn-primary hidden md:inline-flex">Commencer</Link>
       </div>
     </header>
   );
@@ -75,9 +74,9 @@ export function Header() {
 export function TabBar() {
   const path = usePathname() ?? "/";
   const items = [
-    { href: "/galerie/", label: "Galerie", Icon: IconGrid, active: path === "/" || path.startsWith("/galerie") || EXPLORE.some((p) => path.startsWith(p)) },
+    { href: "/showroom/", label: "Showroom", Icon: IconGrid, active: path.startsWith("/showroom") || path.startsWith("/galerie") || EXPLORE.some((p) => path.startsWith(p)) },
     { href: "/planche/", label: "Planche", Icon: IconSwatches, active: path.startsWith("/planche") },
-    { href: "/projet/", label: "Projet", Icon: IconPhoto, active: path.startsWith("/projet") },
+    { href: "/transformer/", label: "Transformer", Icon: IconPhoto, active: path.startsWith("/transformer") || path.startsWith("/projet") },
     { href: "/visite-3d/", label: "3D", Icon: IconHouse, active: path.startsWith("/visite-3d") || path.startsWith("/maison") },
   ];
   return (
@@ -131,7 +130,7 @@ export function CookieBanner() {
 
 export function Footer() {
   const cols = [
-    { title: "Créer", links: [["Showroom", "/showroom/"], ["Planche de matières 3D", "/planche/"], ["Visite 3D", "/visite-3d/"], ["Mon projet", "/projet/"], ["Inspirations", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
+    { title: "Créer", links: [["Showroom", "/showroom/"], ["Planche de matières 3D", "/planche/"], ["Transformer mon espace", "/transformer/"], ["Visite 3D", "/visite-3d/"], ["Mon projet", "/projet/"], ["Inspirations", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
     { title: "Explorer", links: [["Tout explorer", "/explorer/"], ["Matériauthèque", "/matieres/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
     { title: "Informations", links: [["Mentions légales", "/legal/mentions-legales/"], ["CGU", "/legal/cgu/"], ["CGV", "/legal/cgv/"], ["Confidentialité", "/legal/confidentialite/"], ["Cookies", "/legal/cookies/"], ["Liens affiliés", "/legal/affiliation/"]] },
   ];

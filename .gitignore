@@ -11,3 +11,4 @@ test-results/
 supabase/.temp/
 *.zip
 .cache/
+public/workers/

@@ -1,5 +1,20 @@
 # Journal des modifications
 
+## 0.6.0 — 27 octobre 2026
+
+- **Showroom** (`/showroom/`) : 12 familles et plus de 3 000 déclinaisons — zelliges (17 teintes, 7 formats, 2 émaux, 4 joints),
+  faïences et métros, tomettes, carreaux de ciment (8 motifs, 8 coloris), terrazzo, marbres et pierres, parquets (8 essences, 5 poses,
+  3 finitions), 116 teintes de peinture en 4 finitions, enduits décoratifs, tissus, cuirs et métaux. Chaque déclinaison est un vrai
+  échantillon en 3D (épaisseur, biseau, tranche, reflets de studio), à tourner du doigt, avec prix indicatif et liens d'achat.
+- Textures photographiées supplémentaires (Poly Haven, CC0) : coton, velours côtelé, bouclette, laine à chevrons, laine chinée,
+  cuirs pleine fleur et vieilli, nubuck, placage de chêne, bois fin, enduits et béton, avec leurs vrais reliefs.
+- **Transformer mon espace** (`/transformer/`) : une photo et trois inspirations (fichier, collage, glisser depuis Pinterest ou
+  Instagram, lien) donnent la palette, le style, les teintes, le sol, les tissus, les finitions et les objets, une **planche projet
+  2 400 × 3 000 px**, un **film de 24 s en motion design** (MP4 H.264, vertical ou paysage), les références à acheter et un
+  **budget par poste** modifiable.
+- Planche 3D : onglet Showroom, toutes les options réglables sur chaque échantillon, étiquettes de texte.
+- Calcul des textures dans des travailleurs en arrière-plan : la page ne se fige plus.
+
 ## 0.5.0 — 27 octobre 2026
 
 - **Planche de matières 3D** (`/planche/`) : de vrais échantillons (carreaux, lames, galets, tissus drapés, nuanciers de peinture),

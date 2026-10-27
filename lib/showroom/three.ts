@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { surfaceFor, toCanvases } from "./generate";
+import { surfaceFor, toCanvases } from "./surfaces";
 
 /**
  * Matériau 3D d'une déclinaison du showroom, à l'échelle réelle :
@@ -20,7 +20,7 @@ export async function showroomMaterial(ref: string, metersPerUv: number, opts: {
   const mat = new THREE.MeshPhysicalMaterial({
     map: tex(c.diff, true), roughnessMap: tex(c.rough, false), roughness: 1, metalness: p.metalness,
     clearcoat: p.clearcoat, clearcoatRoughness: p.clearcoatRoughness,
-    sheen: p.sheen, sheenRoughness: p.sheenRoughness, sheenColor: new THREE.Color("#ffffff").multiplyScalar(p.sheen ? 0.6 : 0),
+    sheen: p.sheen, sheenRoughness: p.sheenRoughness, anisotropy: p.anisotropy ?? 0, anisotropyRotation: 0, sheenColor: new THREE.Color("#ffffff").multiplyScalar(p.sheen ? 0.6 : 0),
   });
   if (!opts.light) {
     mat.normalMap = tex(c.normal, false);

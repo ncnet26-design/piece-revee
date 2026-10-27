@@ -125,5 +125,16 @@
     ],
     "license": "CC0 1.0",
     "tile": 2
+  },
+  "tx-bouclette": {
+    "assetId": "curly_teddy_natural",
+    "name": "Curly Teddy Natural",
+    "url": "https://polyhaven.com/a/curly_teddy_natural",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
   }
 }

@@ -88,7 +88,6 @@ export default function Transformer() {
     setMsg("Ce dépôt ne contient pas d'image lisible.");
   };
 
-  const ready = !!photo && insp.every(Boolean);
   const run = async () => {
     if (!photo) { setMsg("Ajoutez d'abord une photo de votre pièce."); return; }
     if (!insp.every(Boolean)) { setMsg("Ajoutez trois inspirations : ce sont elles qui donnent les couleurs et l'esprit du projet."); return; }
@@ -227,7 +226,7 @@ export default function Transformer() {
       </section>
 
       <div className="mt-6 flex flex-wrap items-center gap-4">
-        <button type="button" className="btn btn-lg btn-primary" onClick={() => void run()} aria-disabled={!ready}>Créer mon projet</button>
+        <button type="button" className="btn btn-lg btn-primary" onClick={() => void run()}>Créer mon projet</button>
         <span className="text-[13px] text-muted">Tout est calculé sur votre appareil : vos photos ne sont envoyées nulle part.</span>
       </div>
       {msg && <p role="alert" className="notice notice-warn mt-4">{msg}</p>}

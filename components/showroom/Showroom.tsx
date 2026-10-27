@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { materialById } from "@/content/lookup";
 import { FAMILIES, GROUPS, PAINT_FAMILIES, VARIANT_COUNT, familyById, makeRef, parseVariant, variantName, variantShop, withOption, type Family, type Opt } from "@/lib/showroom/catalog";
 import { addToStoredBoard } from "@/lib/board/state";
+import { sampleSize } from "@/lib/showroom/geometry";
 import { ShopLinks } from "../ShopLinks";
 import { IconClose } from "../icons";
 import { Swatch } from "./Swatch";
@@ -100,7 +101,7 @@ export default function Showroom() {
                 const ref = refFor(fam, o, fp), name = variantName(parseVariant(ref)!);
                 return (
                   <li key={o.id} className="group">
-                    <button type="button" className="block w-full text-left" onClick={() => setDetail(ref)} aria-label={`${name} : voir en détail`}>
+                    <button type="button" className="block w-full text-left" onClick={() => setDetail(ref)}>
                       <span aria-hidden="true" className="block overflow-hidden rounded-[14px] shadow-[0_1px_0_rgba(0,0,0,.04),0_10px_30px_-18px_rgba(40,30,20,.45)] transition duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_18px_40px_-20px_rgba(40,30,20,.55)]">
                         <Swatch key={ref} refId={ref} label={name} size={fam.id === "peinture" ? 200 : 320} className="aspect-square" />
                       </span>
@@ -108,7 +109,7 @@ export default function Showroom() {
                       {fam.id !== "peinture" && <span className="block truncate text-[12.5px] text-muted">{fam.axes.slice(1).map((a) => a.options.find((x) => x.id === fp[a.id])?.label).filter((l) => l && l !== "Joint clair").join(" · ")}</span>}
                       {fam.id === "peinture" && o.hex && <span className="block text-[11.5px] uppercase tracking-wider text-muted">{o.hex}</span>}
                     </button>
-                    <button type="button" className="mt-1.5 text-[12.5px] font-medium text-bronze underline-offset-4 hover:underline" onClick={() => add(ref)} aria-label={`Ajouter ${name} à ma planche`}>+ Ma planche</button>
+                    <button type="button" className="mt-1.5 text-[12.5px] font-medium text-bronze underline-offset-4 hover:underline" onClick={() => add(ref)}>+ Ma planche<span className="sr-only"> : {name}</span></button>
                   </li>
                 );
               })}
@@ -140,7 +141,7 @@ function Detail({ refId, onChange, onClose, onAdd }: { refId: string; onChange: 
       <div className="flex h-full w-full max-w-[1040px] flex-col overflow-y-auto bg-[var(--bg)] shadow-2xl lg:flex-row" onClick={(e) => e.stopPropagation()}>
         <div className="relative aspect-square w-full shrink-0 bg-[radial-gradient(circle_at_40%_35%,#FBF8F2,#E6E0D5)] lg:aspect-auto lg:h-full lg:w-[54%]">
           <SampleViewer refId={refId} label={`Échantillon en 3D : ${name}. Faites glisser pour le tourner.`} />
-          <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-white/70 px-3 py-1 text-[11.5px] uppercase tracking-[.14em] text-ink/70 backdrop-blur">Échantillon 20 × 20 cm</span>
+          <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-white/70 px-3 py-1 text-[11.5px] uppercase tracking-[.14em] text-ink/70 backdrop-blur">Échantillon {Math.round(sampleSize(v.family.gen) * 100)} × {Math.round(sampleSize(v.family.gen) * 100)} cm</span>
         </div>
         <div className="flex flex-1 flex-col gap-5 p-6 sm:p-8">
           <div className="flex items-start justify-between gap-4">

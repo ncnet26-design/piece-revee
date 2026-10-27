@@ -19,7 +19,7 @@ export function Swatch({ refId, label, size = 320, className = "", repeat = 1 }:
       let ok = false;
       try { ok = await shootSample(refId, cv.current); } catch { ok = false; }
       if (!ok && alive && cv.current) {
-        const { surfaceFor, renderSwatch } = await import("@/lib/showroom/generate");
+        const [{ surfaceFor }, { renderSwatch }] = await Promise.all([import("@/lib/showroom/surfaces"), import("@/lib/showroom/generate")]);
         const s = await surfaceFor(refId, 512);
         if (s && cv.current) renderSwatch(s, cv.current, repeat);
       }

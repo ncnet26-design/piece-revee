@@ -1,5 +1,6 @@
 /**
- * Générateurs de surfaces réalistes du showroom (navigateur uniquement).
+ * Générateurs de surfaces réalistes du showroom. Code « pur » : il tourne dans un travailleur en arrière-plan
+ * (OffscreenCanvas) pour ne jamais figer la page, ou dans la page à défaut.
  * Chaque déclinaison donne trois cartes raccordables (couleur, relief, rugosité) et ses paramètres de rendu,
  * à partir de textures photographiées (Poly Haven, CC0) quand elles existent, sinon d'une génération procédurale.
  */
@@ -7,7 +8,7 @@ import { parseVariant, opt, type Variant } from "./catalog";
 import { textureUrl } from "@/lib/textures";
 import { showroomTexture } from "./textures";
 
-export interface SurfaceParams { metalness: number; sheen: number; sheenRoughness: number; clearcoat: number; clearcoatRoughness: number; normalStrength: number; transmission?: number }
+export interface SurfaceParams { metalness: number; sheen: number; sheenRoughness: number; clearcoat: number; clearcoatRoughness: number; normalStrength: number; transmission?: number; anisotropy?: number }
 export interface Surface {
   size: number;
   /** Côté réel (m) couvert par une répétition de la texture. */
@@ -77,18 +78,22 @@ function blurWrap(src: Float32Array, w: number, r: number): Float32Array {
   for (let it = 0; it < 3; it++) { pass(a, b, true); pass(b, a, false); }
   return a;
 }
-function canvas(size: number): [HTMLCanvasElement, CanvasRenderingContext2D] {
-  const c = document.createElement("canvas"); c.width = c.height = size;
-  return [c, c.getContext("2d", { willReadFrequently: true })!];
+type AnyCanvas = HTMLCanvasElement | OffscreenCanvas;
+function canvas(size: number): [AnyCanvas, CanvasRenderingContext2D] {
+  const c: AnyCanvas = typeof OffscreenCanvas !== "undefined" ? new OffscreenCanvas(size, size) : Object.assign(document.createElement("canvas"), { width: size, height: size });
+  return [c, c.getContext("2d", { willReadFrequently: true }) as CanvasRenderingContext2D];
 }
-const imgCache = new Map<string, Promise<HTMLImageElement>>();
-function loadImg(url: string): Promise<HTMLImageElement> {
+const imgCache = new Map<string, Promise<ImageBitmap>>();
+function loadImg(url: string): Promise<ImageBitmap> {
   let p = imgCache.get(url);
-  if (!p) { p = new Promise((res, rej) => { const i = new Image(); i.decoding = "async"; i.onload = () => res(i); i.onerror = rej; i.src = url; }); imgCache.set(url, p); p.catch(() => imgCache.delete(url)); }
+  if (!p) {
+    p = fetch(url).then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.blob(); }).then((b) => createImageBitmap(b));
+    imgCache.set(url, p); p.catch(() => imgCache.delete(url));
+  }
   return p;
 }
 /** Luminance normalisée (moyenne 0,5) d'une photo de texture, redimensionnée. */
-async function lumaOf(url: string, size: number, rotate = false): Promise<Float32Array | null> {
+async function lumaOf(url: string, size: number, rotate = false, minSd = 0.02, blur = 0): Promise<Float32Array | null> {
   try {
     const img = await loadImg(url);
     const [c, x] = canvas(size);
@@ -99,10 +104,11 @@ async function lumaOf(url: string, size: number, rotate = false): Promise<Float3
     for (let i = 0; i < out.length; i++) { out[i] = (0.3 * d[i * 4]! + 0.59 * d[i * 4 + 1]! + 0.11 * d[i * 4 + 2]!) / 255; mean += out[i]!; }
     mean /= out.length;
     let v = 0; for (let i = 0; i < out.length; i++) v += (out[i]! - mean) ** 2;
-    const sd = Math.sqrt(v / out.length) || 1;
+    // Gain plafonné : une photo très unie ne doit pas faire ressortir ses artefacts de compression.
+    const sd = Math.max(minSd, Math.sqrt(v / out.length));
     for (let i = 0; i < out.length; i++) out[i] = clamp01(0.5 + ((out[i]! - mean) / sd) * 0.16);
     void c;
-    return out;
+    return blur > 0 ? blurWrap(out, size, blur) : out;
   } catch { return null; }
 }
 async function rgbOf(url: string, size: number): Promise<Uint8ClampedArray | null> {
@@ -511,7 +517,7 @@ function genPaint(v: Variant, size: number): Surface {
 async function genPlaster(v: Variant, size: number): Promise<Surface> {
   const seed = hashStr(v.ref), type = opt(v, "type")!.id, base = hex(opt(v, "teinte")!.hex!), asp = opt(v, "aspect")!.id, n = size * size;
   const detUrl = type === "beton-cire" || type === "microciment" ? src("tx-beton", "m-beton") : type === "chaux" ? src("tx-enduit-nuage", "m-chaux") : src("tx-enduit", "m-tadelakt");
-  const det = (await lumaOf(detUrl, size)) ?? new Float32Array(n).fill(0.5);
+  const det = (await lumaOf(detUrl, size, false, 0.06, Math.max(1, Math.round(size / 512)))) ?? new Float32Array(n).fill(0.5);
   const amp = { chaux: 0.26, tadelakt: 0.2, "beton-cire": 0.18, microciment: 0.1, stuc: 0.12, argile: 0.2 }[type] ?? 0.15;
   const a2 = asp === "nuage" ? amp * 1.35 : asp === "lisse" ? amp * 0.45 : amp;
   const r0 = { chaux: 0.94, tadelakt: 0.3, "beton-cire": 0.45, microciment: 0.52, stuc: 0.12, argile: 0.95 }[type] ?? 0.6;
@@ -607,59 +613,39 @@ function genMetal(v: Variant, size: number): Surface {
   const color = new Uint8ClampedArray(n * 4), height = new Float32Array(n), rough = new Float32Array(n);
   for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
     const i = y * size + x, u = x / size, w = y / size;
-    const streak = vnoise(u * 2, w * 420, 2, seed) * 0.7 + vnoise(u * 6, w * 900, 6, seed + 1) * 0.3, cl = fbm(u, w, 4, 5, seed + 2);
+    // Brossage : une rayure par ligne de pixels, modulée lentement dans la longueur (aucun effet de moiré).
+    const streak = h2(0, y, seed) * 0.5 + h2(1, y >> 1, seed) * 0.3 + vnoise(u * 3, w * 3, 3, seed + 1) * 0.2, cl = fbm(u, w, 4, 5, seed + 2);
     let c = base, h = 0.5, r = 0.08;
-    if (fin === "brosse") { c = mul(base, 0.94 + streak * 0.12); h = streak; r = 0.3 + streak * 0.08; }
+    if (fin === "brosse") { c = mul(base, 0.97 + streak * 0.06); h = streak * 0.12; r = 0.4 + streak * 0.08; }
     else if (fin === "vieilli") { const pat = smooth(0.45, 0.8, cl); c = mixc(mul(base, 0.8), mul(base, 0.45), pat); h = cl * 0.6 + streak * 0.2; r = 0.45 + pat * 0.25; }
     else { c = mul(base, 0.98 + (cl - 0.5) * 0.04); h = 0.5; r = 0.16 + (cl - 0.5) * 0.03; }
-    color[i * 4] = c[0]; color[i * 4 + 1] = c[1]; color[i * 4 + 2] = c[2]; color[i * 4 + 3] = 255;
+    // Albédo des métaux un peu retenu : sous la lumière du studio, ils restent profonds au lieu de saturer.
+    color[i * 4] = c[0] * 0.8; color[i * 4 + 1] = c[1] * 0.8; color[i * 4 + 2] = c[2] * 0.8; color[i * 4 + 3] = 255;
     height[i] = h; rough[i] = clamp01(r);
   }
-  return { size, period: 0.3, color, height, rough, params: P({ metalness: 1, normalStrength: fin === "brosse" ? 0.8 : fin === "vieilli" ? 1.4 : 0.1 }) };
+  return { size, period: 0.3, color, height, rough, params: P({ metalness: 1, normalStrength: fin === "brosse" ? 0.2 : fin === "vieilli" ? 1.2 : 0.1, anisotropy: fin === "brosse" ? 0.35 : 0 }) };
 }
 
 /* ——— Entrée ——— */
-const cache = new Map<string, Promise<Surface | null>>();
-/** Surface d'une déclinaison (mise en cache par référence et taille). */
-export function surfaceFor(ref: string, size = 512): Promise<Surface | null> {
-  const key = `${ref}|${size}`;
-  let p = cache.get(key);
-  if (!p) {
-    p = (async () => {
-      const v = parseVariant(ref); if (!v) return null;
-      await new Promise((r) => setTimeout(r, 0));
-      switch (v.family.gen) {
-        case "tile": return genTile(v, size);
-        case "cement": return genCement(v, size);
-        case "marble": return genMarble(v, size);
-        case "terrazzo": return genTerrazzo(v, size);
-        case "wood": return genWood(v, size);
-        case "paint": return genPaint(v, size);
-        case "plaster": return genPlaster(v, size);
-        case "fabric": return genFabric(v, size);
-        case "leather": return await genLeather(v, size);
-        case "metal": return genMetal(v, size);
-      }
-    })();
-    cache.set(key, p);
-    if (cache.size > 160) cache.delete(cache.keys().next().value!);
+/** Calcule la surface d'une déclinaison (sans cache : voir surfaces.ts). */
+export async function generateSurface(ref: string, size = 512): Promise<Surface | null> {
+  const v = parseVariant(ref); if (!v) return null;
+  switch (v.family.gen) {
+    case "tile": return genTile(v, size);
+    case "cement": return genCement(v, size);
+    case "marble": return genMarble(v, size);
+    case "terrazzo": return genTerrazzo(v, size);
+    case "wood": return genWood(v, size);
+    case "paint": return genPaint(v, size);
+    case "plaster": return genPlaster(v, size);
+    case "fabric": return genFabric(v, size);
+    case "leather": return genLeather(v, size);
+    case "metal": return genMetal(v, size);
   }
-  return p;
-}
-
-/** Cartes en toiles (couleur, relief en niveaux de gris, rugosité en niveaux de gris). */
-export function toCanvases(s: Surface): { diff: HTMLCanvasElement; height: HTMLCanvasElement; rough: HTMLCanvasElement; normal: HTMLCanvasElement } {
-  const mk = (fill: (d: Uint8ClampedArray) => void) => { const [c, x] = canvas(s.size); const im = x.createImageData(s.size, s.size); fill(im.data); x.putImageData(im, 0, 0); return c; };
-  return {
-    diff: mk((d) => d.set(s.color)),
-    height: mk((d) => { for (let i = 0; i < s.height.length; i++) { const v = s.height[i]! * 255; d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = v; d[i * 4 + 3] = 255; } }),
-    rough: mk((d) => { for (let i = 0; i < s.rough.length; i++) { const v = s.rough[i]! * 255; d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = v; d[i * 4 + 3] = 255; } }),
-    normal: mk((d) => normalInto(s, d)),
-  };
 }
 
 /** Carte de normales calculée en virgule flottante depuis le relief (pas d'escaliers sur les reflets). */
-function normalInto(s: Surface, d: Uint8ClampedArray) {
+export function normalInto(s: Surface, d: Uint8ClampedArray) {
   const S = s.size, k = s.params.normalStrength * (S / 256);
   for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
     const i = y * S + x, l = s.height[y * S + ((x + S - 1) % S)]!, r = s.height[y * S + ((x + 1) % S)]!, u = s.height[((y + S - 1) % S) * S + x]!, dn = s.height[((y + 1) % S) * S + x]!;

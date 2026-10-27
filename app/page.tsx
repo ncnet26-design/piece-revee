@@ -35,7 +35,7 @@ export default function Home() {
           <p className="mt-6 max-w-[48ch] text-[17px] text-muted sm:text-lg">Composez vos ambiances avec de vraies matières en 3D, visitez votre logement pièce par pièce, puis retrouvez chaque élément chez les enseignes que vous connaissez.</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link className="btn btn-lg btn-primary" href="/planche/">Créer ma planche</Link>
-            <Link className="btn btn-lg" href="/visite-3d/">Visiter en 3D</Link>
+            <Link className="btn btn-lg" href="/transformer/">Transformer mon espace</Link>
           </div>
           <p className="mt-6 text-[13.5px] text-muted">Gratuit, sans compte · {Object.keys(REAL_TEXTURES).length} matières photographiées · {LIBRARY_MODELS.length} objets 3D</p>
         </div>
@@ -66,9 +66,9 @@ export default function Home() {
       {/* ——— Trois façons ——— */}
       <section className="section grid gap-5 md:grid-cols-3" aria-label="Ce que vous pouvez faire">
         {[
-          { href: "/planche/", img: "/visuels/planche-sombre.webp", kicker: "01 · Planche 3D", title: "Composez avec du vrai", text: "Échantillons de bois, pierre, tissu et peinture posés en 3D, éclairés comme en atelier. Export HD en un clic." },
-          { href: "/visite-3d/", img: "/visuels/visite-3d.webp", kicker: "02 · Visite 3D", title: "Promenez-vous chez vous", text: "Dessinez vos pièces aux vraies mesures, puis déplacez-vous de l'entrée au jardin. Tout se modifie d'un geste." },
-          { href: "/matieres/", img: "/visuels/etude.webp", kicker: "03 · Matériauthèque", title: "De vraies matières", text: "Parquets, pierres, tissus, enduits : textures photographiées, fiches d'entretien et prix indicatifs." },
+          { href: "/showroom/", img: "/visuels/showroom.webp", kicker: "01 · Showroom", title: "Toutes les nuances", text: "Zelliges, marbres, parquets, peintures, tissus : près de 3 000 déclinaisons à comparer en 3D." },
+          { href: "/planche/", img: "/visuels/planche-sombre.webp", kicker: "02 · Planche 3D", title: "Composez avec du vrai", text: "Vos échantillons posés en 3D, éclairés comme en atelier, superposés, annotés, exportés en HD." },
+          { href: "/transformer/", img: "/visuels/transformer.webp", kicker: "03 · Transformer", title: "Votre projet, en film", text: "Une photo, trois inspirations : planche projet HD, vidéo, références à acheter et budget par poste." },
         ].map((f) => (
           <Link key={f.href} href={f.href} className="group relative block overflow-hidden rounded-[var(--r-l)] bg-[#161512] text-white no-underline" style={{ aspectRatio: "4 / 5" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}

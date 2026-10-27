@@ -22,7 +22,8 @@
     "eval:renders": "npx -y deno@2.9.6 run -A --config supabase/functions/deno.json scripts/eval-renders.ts",
     "server:assets": "node --experimental-strip-types scripts/build-server-assets.ts",
     "check:functions": "cd supabase/functions && npx -y deno@2.9.6 check --config deno.json */index.ts",
-    "prebuild": "node --experimental-strip-types scripts/build-server-assets.ts"
+    "prebuild": "node --experimental-strip-types scripts/build-server-assets.ts && node scripts/build-worker.mjs",
+    "predev": "node scripts/build-worker.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",
@@ -48,6 +49,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/three": "0.181.0",
+    "esbuild": "0.25.10",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.4.3",
     "serve": "^14.2.6",

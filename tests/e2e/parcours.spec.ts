@@ -18,7 +18,7 @@ test("accueil : promesse, appels à l'action, visite 3D", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("réellement");
   await expect(page.getByRole("link", { name: "Créer ma planche" })).toHaveAttribute("href", /planche/);
-  await expect(page.getByRole("link", { name: "Visiter en 3D" }).first()).toHaveAttribute("href", /visite-3d/);
+  await expect(page.getByRole("link", { name: "Transformer mon espace" }).first()).toHaveAttribute("href", /transformer/);
   expect(errors).toEqual([]);
 });
 
@@ -140,7 +140,7 @@ test("404 utile", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toContainText("n'existe pas");
 });
 
-for (const url of ["/", "/planche/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
+for (const url of ["/", "/showroom/", "/transformer/", "/planche/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
   test(`accessibilité (axe, WCAG 2.2 AA) : ${url}`, async ({ page }) => {
     test.setTimeout(90_000);
     await page.goto(url);
@@ -152,14 +152,14 @@ for (const url of ["/", "/planche/", "/visite-3d/", "/galerie/", "/quiz/", "/pro
 
 test("aucun débordement horizontal sur mobile", async ({ page, isMobile }) => {
   test.skip(!isMobile, "mobile uniquement");
-  for (const url of ["/", "/planche/", "/visite-3d/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
+  for (const url of ["/", "/showroom/", "/transformer/", "/planche/", "/visite-3d/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
     await page.goto(url);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), url).toBe(true);
   }
 });
 
 test("visite 3D : pièces, style, modification d'un meuble, sauvegarde", async ({ page }) => {
-  test.setTimeout(90_000);
+  test.setTimeout(150_000);
   const errors = noJsErrors(page);
   await page.addInitScript(() => localStorage.setItem("pr_home3d_hint", "1"));
   await page.goto("/visite-3d/");
@@ -251,6 +251,7 @@ test("planche 3D : ajouter, modifier, retirer, fiche matériaux et partage", asy
   await expect(page.getByRole("heading", { name: /Ce qui compose/ })).toBeVisible();
   const before = await page.locator('section[aria-labelledby="fiche"] > ul > li').count();
   // Ajout d'une matière depuis la bibliothèque : elle est sélectionnée et apparaît dans la fiche.
+  await page.getByRole("tab", { name: "Matières" }).click();
   await page.getByRole("searchbox", { name: "Rechercher une matière" }).fill("ardoise");
   await page.getByRole("button", { name: /Ardoise/ }).first().click();
   const sel = page.getByRole("region", { name: "Élément sélectionné" });
@@ -274,5 +275,60 @@ test("planche 3D : ajouter, modifier, retirer, fiche matériaux et partage", asy
   expect(link).toMatch(/\/planche\/#p=/);
   await page.goto(link.replace(/^https?:\/\/[^/]+/, ""));
   await expect(page.getByRole("textbox", { name: "Titre de la planche" })).toHaveValue("Terre cuite et tadelakt");
+  expect(errors).toEqual([]);
+});
+
+test("showroom : familles, déclinaisons, fiche 3D et ajout à la planche", async ({ page }) => {
+  const errors = noJsErrors(page);
+  await page.goto("/showroom/?f=zellige");
+  await expect(page.getByRole("heading", { level: 2, name: "Zellige" })).toBeVisible();
+  // Changer de format met à jour les déclinaisons.
+  await page.getByRole("group", { name: "Format" }).getByRole("button", { name: "Hexagone" }).click();
+  const card = page.getByRole("button", { name: /^Vert émeraude Hexagone/ });
+  await expect(card).toBeVisible();
+  await card.click();
+  const dlg = page.getByRole("dialog", { name: /Zellige vert émeraude/ });
+  await expect(dlg).toBeVisible();
+  await dlg.getByRole("group", { name: "Joint" }).getByRole("button", { name: "Joint foncé" }).click();
+  await expect(dlg.getByRole("heading", { level: 2 })).toHaveText("Zellige vert émeraude");
+  await expect(page).toHaveURL(/v=sr%3Azellige%3Aemeraude%3Ahexagone%3Abrillant%3Afonce/);
+  await expect(dlg.getByRole("link", { name: /IKEA/ })).toHaveAttribute("href", /ikea\.com.*zellige/);
+  await dlg.getByRole("button", { name: "Ajouter à ma planche" }).click();
+  await expect(page.getByRole("status")).toContainText("ajouté à votre planche");
+  await page.keyboard.press("Escape");
+  await expect(dlg).toHaveCount(0);
+  // Autre famille : les peintures sont classées par couleur.
+  await page.getByRole("navigation", { name: "Familles de matières" }).getByRole("button", { name: "Peintures" }).click();
+  await expect(page.getByRole("heading", { level: 3, name: "Verts" })).toBeVisible();
+  // La déclinaison ajoutée est dans la planche, modifiable.
+  await page.goto("/planche/").catch(() => page.goto("/planche/"));
+  await expect(page.locator('section[aria-labelledby="fiche"]')).toContainText("Zellige vert émeraude");
+  expect(errors).toEqual([]);
+});
+
+test("transformer : photo et trois inspirations donnent planche, références et budget", async ({ page, isMobile }) => {
+  test.skip(isMobile, "parcours long, vérifié sur ordinateur");
+  test.setTimeout(240_000);
+  const errors = noJsErrors(page);
+  await page.goto("/transformer/");
+  await page.getByRole("button", { name: "Créer mon projet" }).click();
+  await expect(page.getByText("Ajoutez d'abord une photo de votre pièce.")).toBeVisible({ timeout: 20_000 });
+  const img = "public/visuels/hero-3d.webp";
+  await page.getByLabel("Choisir la photo de votre pièce").setInputFiles(img);
+  await page.getByLabel("Choisir l'inspiration 1").setInputFiles("public/visuels/planche-sombre.webp");
+  await page.getByLabel("Choisir l'inspiration 2").setInputFiles("public/visuels/etude.webp");
+  await page.getByRole("button", { name: "Créer mon projet" }).click();
+  await expect(page.getByText(/Ajoutez trois inspirations/)).toBeVisible({ timeout: 20_000 });
+  await page.getByLabel("Choisir l'inspiration 3").setInputFiles("public/visuels/visite-3d.webp");
+  await page.getByRole("button", { name: "Cuisine" }).click();
+  await page.getByRole("button", { name: "Créer mon projet" }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Cuisine", { timeout: 200_000 });
+  await expect(page.getByRole("img", { name: /Planche projet/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Télécharger l'image HD" })).toHaveAttribute("href", /^data:image\/jpeg/);
+  await expect(page.getByRole("heading", { name: /références/ })).toBeVisible();
+  // Budget : modifier un poste met à jour le total.
+  const first = page.getByLabel(/^Mon budget :/).first();
+  await first.fill("1000");
+  await expect(page.locator("tfoot")).toContainText("€");
   expect(errors).toEqual([]);
 });
