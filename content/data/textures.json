@@ -1,1 +1,364 @@
-{}
+{
+  "m-chene": {
+    "assetId": "herringbone_parquet",
+    "name": "Herringbone Parquet",
+    "url": "https://polyhaven.com/a/herringbone_parquet",
+    "authors": [
+      "Jenelle van Heerden",
+      "Sergej Majboroda"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-chenefume": {
+    "assetId": "dark_wood",
+    "name": "Dark Wood",
+    "url": "https://polyhaven.com/a/dark_wood",
+    "authors": [
+      "Dario Barresi",
+      "Dimitrios Savva",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-noyer": {
+    "assetId": "walnut_veneer_02",
+    "name": "Walnut Veneer 02",
+    "url": "https://polyhaven.com/a/walnut_veneer_02",
+    "authors": [
+      "Jenelle van Heerden"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-pin": {
+    "assetId": "wood_floor_worn",
+    "name": "Wood Floor Worn",
+    "url": "https://polyhaven.com/a/wood_floor_worn",
+    "authors": [
+      "Dimitrios Savva"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-bouleau": {
+    "assetId": "plywood",
+    "name": "Plywood",
+    "url": "https://polyhaven.com/a/plywood",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-teck": {
+    "assetId": "wood_floor_deck",
+    "name": "Wood Floor Deck",
+    "url": "https://polyhaven.com/a/wood_floor_deck",
+    "authors": [
+      "Dimitrios Savva"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-composite": {
+    "assetId": "brown_planks_09",
+    "name": "Brown Planks 09",
+    "url": "https://polyhaven.com/a/brown_planks_09",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-bambou": {
+    "assetId": "bamboo_wall",
+    "name": "Bamboo Wall",
+    "url": "https://polyhaven.com/a/bamboo_wall",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-stratifie": {
+    "assetId": "laminate_floor_03",
+    "name": "Laminate Floor 03",
+    "url": "https://polyhaven.com/a/laminate_floor_03",
+    "authors": [
+      "Dario Barresi",
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-carrare": {
+    "assetId": "marble_01",
+    "name": "Marble 01",
+    "url": "https://polyhaven.com/a/marble_01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-verde": {
+    "assetId": "floor_tiles_06",
+    "name": "Floor Tiles 06",
+    "url": "https://polyhaven.com/a/floor_tiles_06",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-ardoise": {
+    "assetId": "stone_tiles_02",
+    "name": "Stone Tiles 02",
+    "url": "https://polyhaven.com/a/stone_tiles_02",
+    "authors": [
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-bourgogne": {
+    "assetId": "dry_riverbed_rock",
+    "name": "Dry Riverbed Rock",
+    "url": "https://polyhaven.com/a/dry_riverbed_rock",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-terrazzo": {
+    "assetId": "terrazzo_tiles",
+    "name": "Terrazzo Tiles",
+    "url": "https://polyhaven.com/a/terrazzo_tiles",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-ciment": {
+    "assetId": "large_floor_tiles_02",
+    "name": "Large Floor Tiles 02",
+    "url": "https://polyhaven.com/a/large_floor_tiles_02",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-tomette": {
+    "assetId": "hexagonal_concrete_paving",
+    "name": "Hexagonal Concrete Paving",
+    "url": "https://polyhaven.com/a/hexagonal_concrete_paving",
+    "authors": [
+      "Stephan Seeliger"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-terrecuite": {
+    "assetId": "roof_tiles",
+    "name": "Roof Tiles",
+    "url": "https://polyhaven.com/a/roof_tiles",
+    "authors": [
+      "Stephan Seeliger"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-gres": {
+    "assetId": "terracotta_floor_tiles",
+    "name": "Terracotta Floor Tiles",
+    "url": "https://polyhaven.com/a/terracotta_floor_tiles",
+    "authors": [
+      "Dimitrios Savva"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-zellige": {
+    "assetId": "ceramic_roof_01",
+    "name": "Ceramic Roof 01",
+    "url": "https://polyhaven.com/a/ceramic_roof_01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-metro": {
+    "assetId": "long_white_tiles",
+    "name": "Long White Tiles",
+    "url": "https://polyhaven.com/a/long_white_tiles",
+    "authors": [
+      "Jenelle van Heerden",
+      "Sergej Majboroda"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-beton": {
+    "assetId": "concrete_floor_worn_001",
+    "name": "Concrete Floor Worn 001",
+    "url": "https://polyhaven.com/a/concrete_floor_worn_001",
+    "authors": [
+      "Dimitrios Savva",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-microciment": {
+    "assetId": "yellow_plaster",
+    "name": "Yellow Plaster",
+    "url": "https://polyhaven.com/a/yellow_plaster",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-chaux": {
+    "assetId": "white_plaster_02",
+    "name": "White Plaster 02",
+    "url": "https://polyhaven.com/a/white_plaster_02",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-argile": {
+    "assetId": "sand_01",
+    "name": "Sand 01",
+    "url": "https://polyhaven.com/a/sand_01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-tadelakt": {
+    "assetId": "white_stucco",
+    "name": "White Stucco",
+    "url": "https://polyhaven.com/a/white_stucco",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-brique": {
+    "assetId": "red_brick",
+    "name": "Red Brick",
+    "url": "https://polyhaven.com/a/red_brick",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-gravier": {
+    "assetId": "rocks_ground_05",
+    "name": "Rocks Ground 05",
+    "url": "https://polyhaven.com/a/rocks_ground_05",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-pierre-seche": {
+    "assetId": "stone_wall",
+    "name": "Stone Wall",
+    "url": "https://polyhaven.com/a/stone_wall",
+    "authors": [
+      "Dario Barresi",
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-pelouse": {
+    "assetId": "coast_sand_rocks_02",
+    "name": "Coast Sand Rocks 02",
+    "url": "https://polyhaven.com/a/coast_sand_rocks_02",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-lin": {
+    "assetId": "rough_linen",
+    "name": "Rough Linen",
+    "url": "https://polyhaven.com/a/rough_linen",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-velours": {
+    "assetId": "velour_velvet",
+    "name": "Velour Velvet",
+    "url": "https://polyhaven.com/a/velour_velvet",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-laine": {
+    "assetId": "wool_boucle",
+    "name": "Wool Boucle",
+    "url": "https://polyhaven.com/a/wool_boucle",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-bouclette": {
+    "assetId": "wool_boucle",
+    "name": "Wool Boucle",
+    "url": "https://polyhaven.com/a/wool_boucle",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-jute": {
+    "assetId": "hessian_230",
+    "name": "Hessian 230",
+    "url": "https://polyhaven.com/a/hessian_230",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-corten": {
+    "assetId": "rusty_metal_04",
+    "name": "Rusty Metal 04",
+    "url": "https://polyhaven.com/a/rusty_metal_04",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  }
+}

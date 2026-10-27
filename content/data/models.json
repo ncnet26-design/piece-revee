@@ -1,1 +1,1358 @@
-[]
+[
+  {
+    "id": "potted_plant_02",
+    "name": "Potted Plant 02",
+    "categories": [
+      "decorative",
+      "plants",
+      "potted plants",
+      "nature"
+    ],
+    "tags": [
+      "potplant",
+      "plant",
+      "pot",
+      "vase",
+      "medium",
+      "leaf",
+      "green",
+      "terracotta"
+    ],
+    "file": "/models/potted_plant_02.glb",
+    "url": "https://polyhaven.com/a/potted_plant_02",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "marble_bust_01",
+    "name": "Marble Bust 01",
+    "categories": [
+      "decorative"
+    ],
+    "tags": [
+      "sculpt",
+      "sculpture",
+      "statue",
+      "art",
+      "sandstone",
+      "bust",
+      "marble",
+      "mansion",
+      "renaissance",
+      "man"
+    ],
+    "file": "/models/marble_bust_01.glb",
+    "url": "https://polyhaven.com/a/marble_bust_01",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "potted_plant_04",
+    "name": "Potted Plant 04",
+    "categories": [
+      "decorative",
+      "plants",
+      "potted plants",
+      "succulent",
+      "nature"
+    ],
+    "tags": [
+      "cactus",
+      "aloe",
+      "succulent",
+      "potplant",
+      "small",
+      "pot",
+      "plant",
+      "decor"
+    ],
+    "file": "/models/potted_plant_04.glb",
+    "url": "https://polyhaven.com/a/potted_plant_04",
+    "authors": [
+      "James Ray Cock"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "sofa_02",
+    "name": "Sofa 02",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "wood",
+      "furniture",
+      "chair",
+      "prop",
+      "couch",
+      "leather",
+      "fabric"
+    ],
+    "file": "/models/sofa_02.glb",
+    "url": "https://polyhaven.com/a/sofa_02",
+    "authors": [
+      "Kirill Sannikov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "fern_02",
+    "name": "Fern 02",
+    "categories": [
+      "plants",
+      "nature",
+      "collection: smugglers_cove",
+      "collection: pine_forest"
+    ],
+    "tags": [
+      "plant",
+      "fern",
+      "foliage",
+      "jungle",
+      "shrub",
+      "bush",
+      "leaf",
+      "leaves",
+      "green",
+      "nature",
+      "forest",
+      "outdoor"
+    ],
+    "file": "/models/fern_02.glb",
+    "url": "https://polyhaven.com/a/fern_02",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "celandine_01",
+    "name": "Celandine 01",
+    "categories": [
+      "nature",
+      "plants",
+      "ground cover",
+      "flowers"
+    ],
+    "tags": [
+      "field",
+      "nature",
+      "green",
+      "shrub",
+      "plant",
+      "outdoor",
+      "leaf",
+      "botany",
+      "leaves",
+      "meadow",
+      "floral",
+      "flower",
+      "small",
+      "natural",
+      "celandine"
+    ],
+    "file": "/models/celandine_01.glb",
+    "url": "https://polyhaven.com/a/celandine_01",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "Lantern_01",
+    "name": "Lantern 01",
+    "categories": [
+      "props",
+      "lighting"
+    ],
+    "tags": [
+      "prop",
+      "metal",
+      "glass",
+      "lantern",
+      "antique",
+      "vintage",
+      "hurricane",
+      "lamp",
+      "bronze",
+      "oldfashioned",
+      "brass",
+      "copper"
+    ],
+    "file": "/models/Lantern_01.glb",
+    "url": "https://polyhaven.com/a/Lantern_01",
+    "authors": [
+      "Rajil Jose Macatangay"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "potted_plant_01",
+    "name": "Potted Plant 01",
+    "categories": [
+      "decorative",
+      "plants",
+      "potted plants",
+      "nature"
+    ],
+    "tags": [
+      "potplant",
+      "plant",
+      "terracotta",
+      "pot",
+      "vase",
+      "medium",
+      "leaf",
+      "green"
+    ],
+    "file": "/models/potted_plant_01.glb",
+    "url": "https://polyhaven.com/a/potted_plant_01",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "dandelion_01",
+    "name": "Dandelion 01",
+    "categories": [
+      "plants",
+      "flowers",
+      "nature",
+      "ground cover"
+    ],
+    "tags": [
+      "plant",
+      "nature",
+      "green",
+      "shrub",
+      "outdoor",
+      "leaf",
+      "bush",
+      "botany",
+      "field",
+      "flower",
+      "meadow",
+      "foliage",
+      "small",
+      "floral"
+    ],
+    "file": "/models/dandelion_01.glb",
+    "url": "https://polyhaven.com/a/dandelion_01",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "wooden_table_02",
+    "name": "Wooden Table 02",
+    "categories": [
+      "furniture",
+      "table"
+    ],
+    "tags": [
+      "wooden",
+      "worn",
+      "village",
+      "rural",
+      "natural",
+      "simple"
+    ],
+    "file": "/models/wooden_table_02.glb",
+    "url": "https://polyhaven.com/a/wooden_table_02",
+    "authors": [
+      "Serhii Khromov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "sofa_03",
+    "name": "Sofa 03",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "vintage",
+      "chair",
+      "couch",
+      "seat",
+      "fancy",
+      "mansion",
+      "manor",
+      "victorian",
+      "antique",
+      "leather"
+    ],
+    "file": "/models/sofa_03.glb",
+    "url": "https://polyhaven.com/a/sofa_03",
+    "authors": [
+      "Fran Calvente"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "chess_set",
+    "name": "Chess Set",
+    "categories": [
+      "decorative",
+      "props"
+    ],
+    "tags": [
+      "boardgame",
+      "game",
+      "old",
+      "decor",
+      "home",
+      "vintage",
+      "antique",
+      "tabletop",
+      "display piece",
+      "ornamental",
+      "elegant"
+    ],
+    "file": "/models/chess_set.glb",
+    "url": "https://polyhaven.com/a/chess_set",
+    "authors": [
+      "Riley Queen"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "horse_statue_01",
+    "name": "Horse Statue 01",
+    "categories": [
+      "props",
+      "decorative"
+    ],
+    "tags": [
+      "decorative",
+      "horse",
+      "statue",
+      "figurine",
+      "porcelain",
+      "animal",
+      "sculpture",
+      "white",
+      "fancy"
+    ],
+    "file": "/models/horse_statue_01.glb",
+    "url": "https://polyhaven.com/a/horse_statue_01",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "concrete_cat_statue",
+    "name": "Concrete Cat Statue",
+    "categories": [
+      "decorative"
+    ],
+    "tags": [
+      "garden",
+      "outdoor",
+      "landscaping",
+      "gardening",
+      "statue",
+      "concrete",
+      "sculpture",
+      "cat",
+      "lawn decoration"
+    ],
+    "file": "/models/concrete_cat_statue.glb",
+    "url": "https://polyhaven.com/a/concrete_cat_statue",
+    "authors": [
+      "Rico Cilliers",
+      "Riley Queen"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "modern_arm_chair_01",
+    "name": "Modern Arm Chair 01",
+    "categories": [
+      "furniture",
+      "seating",
+      "office"
+    ],
+    "tags": [
+      "wood",
+      "leather",
+      "fancy",
+      "modern",
+      "chair",
+      "contemporary",
+      "wooden",
+      "lounge"
+    ],
+    "file": "/models/modern_arm_chair_01.glb",
+    "url": "https://polyhaven.com/a/modern_arm_chair_01",
+    "authors": [
+      "Vibrant Nordic"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "rubber_duck_toy",
+    "name": "Rubber Duck Toy",
+    "categories": [
+      "props",
+      "decorative",
+      "collection: the_shed"
+    ],
+    "tags": [
+      "shed",
+      "toy",
+      "bathroom",
+      "child",
+      "home",
+      "fun",
+      "kids",
+      "play",
+      "float",
+      "plastic",
+      "cute",
+      "animal"
+    ],
+    "file": "/models/rubber_duck_toy.glb",
+    "url": "https://polyhaven.com/a/rubber_duck_toy",
+    "authors": [
+      "Plat251"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "Sofa_01",
+    "name": "Sofa 01",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "wood",
+      "prop",
+      "furniture",
+      "vintage",
+      "gothic",
+      "chair",
+      "couch",
+      "victorian",
+      "decorative"
+    ],
+    "file": "/models/Sofa_01.glb",
+    "url": "https://polyhaven.com/a/Sofa_01",
+    "authors": [
+      "Kirill Sannikov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "dry_branches_medium_01",
+    "name": "Dry Branches Medium 01",
+    "categories": [
+      "props",
+      "nature",
+      "plants",
+      "ground cover",
+      "collection: pine_forest",
+      "collection: verdant_trail"
+    ],
+    "tags": [
+      "branches",
+      "dead",
+      "dry",
+      "plants",
+      "nature",
+      "natural",
+      "plant",
+      "outdoor",
+      "foliage",
+      "forest",
+      "jungle",
+      "shrub",
+      "medium",
+      "stick",
+      "twig",
+      "botany",
+      "wood"
+    ],
+    "file": "/models/dry_branches_medium_01.glb",
+    "url": "https://polyhaven.com/a/dry_branches_medium_01",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "grass_medium_02",
+    "name": "Grass Medium 02",
+    "categories": [
+      "nature",
+      "ground cover",
+      "grass",
+      "plants",
+      "collection: verdant_trail"
+    ],
+    "tags": [
+      "grass",
+      "field",
+      "meadow",
+      "shrub",
+      "small",
+      "green",
+      "nature",
+      "plant",
+      "foliage",
+      "natural",
+      "geometry nodes",
+      "ground cover",
+      "vegetation",
+      "undergrowth",
+      "ground",
+      "lawn",
+      "environment",
+      "pasture"
+    ],
+    "file": "/models/grass_medium_02.glb",
+    "url": "https://polyhaven.com/a/grass_medium_02",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "fancy_picture_frame_01",
+    "name": "Fancy Picture Frame 01",
+    "categories": [
+      "decorative",
+      "wall decoration"
+    ],
+    "tags": [
+      "art",
+      "vintage",
+      "old",
+      "dutch",
+      "painting",
+      "oil",
+      "antique",
+      "fancy",
+      "frame",
+      "picture"
+    ],
+    "file": "/models/fancy_picture_frame_01.glb",
+    "url": "https://polyhaven.com/a/fancy_picture_frame_01",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "alarm_clock_01",
+    "name": "Alarm Clock 01",
+    "categories": [
+      "props",
+      "decorative",
+      "rigged"
+    ],
+    "tags": [
+      "clock",
+      "time",
+      "alarm",
+      "bedside",
+      "old",
+      "90s",
+      "watch",
+      "blue",
+      "aqua"
+    ],
+    "file": "/models/alarm_clock_01.glb",
+    "url": "https://polyhaven.com/a/alarm_clock_01",
+    "authors": [
+      "Yann Kervran",
+      "James Ray Cock"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "book_encyclopedia_set_01",
+    "name": "Book Encyclopedia Set 01",
+    "categories": [
+      "props",
+      "decorative",
+      "books"
+    ],
+    "tags": [
+      "bookshelf",
+      "books",
+      "library",
+      "reading",
+      "encyclopedia",
+      "set"
+    ],
+    "file": "/models/book_encyclopedia_set_01.glb",
+    "url": "https://polyhaven.com/a/book_encyclopedia_set_01",
+    "authors": [
+      "John Malcolm"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "shrub_sorrel_01",
+    "name": "Shrub Sorrel 01",
+    "categories": [
+      "plants",
+      "flowers",
+      "nature",
+      "collection: smugglers_cove"
+    ],
+    "tags": [
+      "nature",
+      "sorrel",
+      "potplant",
+      "bush",
+      "shrub",
+      "leaf",
+      "leaves",
+      "green",
+      "small",
+      "forest",
+      "field",
+      "floral",
+      "flower"
+    ],
+    "file": "/models/shrub_sorrel_01.glb",
+    "url": "https://polyhaven.com/a/shrub_sorrel_01",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "round_wooden_table_01",
+    "name": "Round Wooden Table 01",
+    "categories": [
+      "furniture",
+      "table"
+    ],
+    "tags": [
+      "vintage",
+      "wooden",
+      "wood",
+      "polish",
+      "circle",
+      "dark",
+      "old"
+    ],
+    "file": "/models/round_wooden_table_01.glb",
+    "url": "https://polyhaven.com/a/round_wooden_table_01",
+    "authors": [
+      "Ulan Cabanilla"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "CoffeeCart_01",
+    "name": "Coffee Cart 01",
+    "categories": [
+      "appliances",
+      "props",
+      "furniture",
+      "office"
+    ],
+    "tags": [
+      "table",
+      "metal",
+      "shelf",
+      "plastic",
+      "cart",
+      "coffee",
+      "portable",
+      "wheels",
+      "tea",
+      "coffee maker",
+      "mobile",
+      "catering"
+    ],
+    "file": "/models/CoffeeCart_01.glb",
+    "url": "https://polyhaven.com/a/CoffeeCart_01",
+    "authors": [
+      "Joe Seabuhr"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "GothicCabinet_01",
+    "name": "Gothic Cabinet 01",
+    "categories": [
+      "furniture",
+      "shelves"
+    ],
+    "tags": [
+      "vintage",
+      "wood",
+      "gothic",
+      "furniture",
+      "table",
+      "shelf",
+      "decorative"
+    ],
+    "file": "/models/GothicCabinet_01.glb",
+    "url": "https://polyhaven.com/a/GothicCabinet_01",
+    "authors": [
+      "Kirill Sannikov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "outdoor_table_chair_set_01",
+    "name": "Outdoor Table Chair Set 01",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "outdoor",
+      "foldable",
+      "folding",
+      "seating",
+      "coffee",
+      "diner",
+      "street",
+      "urban",
+      "deli",
+      "wood",
+      "city",
+      "cafe"
+    ],
+    "file": "/models/outdoor_table_chair_set_01.glb",
+    "url": "https://polyhaven.com/a/outdoor_table_chair_set_01",
+    "authors": [
+      "James Ray Cock"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "anthurium_botany_01",
+    "name": "Anthurium Botany 01",
+    "categories": [
+      "plants",
+      "nature",
+      "collection: the_shed",
+      "collection: smugglers_cove"
+    ],
+    "tags": [
+      "nature",
+      "bush",
+      "leaf",
+      "shrub",
+      "leaves",
+      "forest",
+      "plant",
+      "green",
+      "jungle",
+      "outdoor",
+      "botany"
+    ],
+    "file": "/models/anthurium_botany_01.glb",
+    "url": "https://polyhaven.com/a/anthurium_botany_01",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "GreenChair_01",
+    "name": "Green Chair 01",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "vintage",
+      "wood",
+      "gothic",
+      "furniture",
+      "chair",
+      "fabric",
+      "decorative"
+    ],
+    "file": "/models/GreenChair_01.glb",
+    "url": "https://polyhaven.com/a/GreenChair_01",
+    "authors": [
+      "Kirill Sannikov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "treasure_chest",
+    "name": "Treasure Chest",
+    "categories": [
+      "props",
+      "containers",
+      "decorative",
+      "collection: smugglers_cove"
+    ],
+    "tags": [
+      "old",
+      "wooden",
+      "chest",
+      "treasure",
+      "pirates",
+      "gold",
+      "crate",
+      "maritime",
+      "colonial",
+      "worn",
+      "antique",
+      "wood",
+      "prop",
+      "container",
+      "metal",
+      "box",
+      "ornate"
+    ],
+    "file": "/models/treasure_chest.glb",
+    "url": "https://polyhaven.com/a/treasure_chest",
+    "authors": [
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "dead_tree_trunk_02",
+    "name": "Dead Tree Trunk 02",
+    "categories": [
+      "nature",
+      "plants",
+      "trees",
+      "collection: verdant_trail"
+    ],
+    "tags": [
+      "trunk",
+      "log",
+      "tree trunk",
+      "dead",
+      "decayed",
+      "dry",
+      "rough texture",
+      "forest floor",
+      "stump",
+      "bark",
+      "woodland",
+      "debris",
+      "environment",
+      "ground cover"
+    ],
+    "file": "/models/dead_tree_trunk_02.glb",
+    "url": "https://polyhaven.com/a/dead_tree_trunk_02",
+    "authors": [
+      "Jenelle van Heerden",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "moss_01",
+    "name": "Moss 01",
+    "categories": [
+      "nature",
+      "plants",
+      "ground cover",
+      "collection: pine_forest"
+    ],
+    "tags": [
+      "moss",
+      "ground cover",
+      "forest",
+      "woodland",
+      "foliage",
+      "nature",
+      "plant",
+      "natural",
+      "botany",
+      "small",
+      "geometry nodes",
+      "outdoor",
+      "undergrowth",
+      "vegetation",
+      "shrubs"
+    ],
+    "file": "/models/moss_01.glb",
+    "url": "https://polyhaven.com/a/moss_01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "ClassicConsole_01",
+    "name": "Classic Console 01",
+    "categories": [
+      "furniture",
+      "table"
+    ],
+    "tags": [
+      "wood",
+      "vintage",
+      "table",
+      "gothic",
+      "victorian",
+      "decorative"
+    ],
+    "file": "/models/ClassicConsole_01.glb",
+    "url": "https://polyhaven.com/a/ClassicConsole_01",
+    "authors": [
+      "Kirill Sannikov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "GothicCommode_01",
+    "name": "Gothic Commode 01",
+    "categories": [
+      "furniture",
+      "shelves"
+    ],
+    "tags": [
+      "vintage",
+      "wood",
+      "table",
+      "gothic",
+      "shelf",
+      "furniture",
+      "decorative"
+    ],
+    "file": "/models/GothicCommode_01.glb",
+    "url": "https://polyhaven.com/a/GothicCommode_01",
+    "authors": [
+      "Kirill Sannikov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "Chandelier_03",
+    "name": "Chandelier 03",
+    "categories": [
+      "lighting",
+      "decorative"
+    ],
+    "tags": [
+      "lighting",
+      "ceiling",
+      "hanging",
+      "fixture",
+      "chandelier",
+      "ornate",
+      "decor",
+      "elegant"
+    ],
+    "file": "/models/Chandelier_03.glb",
+    "url": "https://polyhaven.com/a/Chandelier_03",
+    "authors": [
+      "Kirill Sannikov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "GothicBed_01",
+    "name": "Gothic Bed 01",
+    "categories": [
+      "furniture",
+      "bed"
+    ],
+    "tags": [
+      "vintage",
+      "gothic",
+      "furniture",
+      "bed",
+      "wood",
+      "decorative"
+    ],
+    "file": "/models/GothicBed_01.glb",
+    "url": "https://polyhaven.com/a/GothicBed_01",
+    "authors": [
+      "Kirill Sannikov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "Chandelier_01",
+    "name": "Chandelier 01",
+    "categories": [
+      "lighting",
+      "decorative"
+    ],
+    "tags": [
+      "lighting",
+      "ceiling",
+      "hanging",
+      "fixture",
+      "chandelier",
+      "ornate",
+      "vintage"
+    ],
+    "file": "/models/Chandelier_01.glb",
+    "url": "https://polyhaven.com/a/Chandelier_01",
+    "authors": [
+      "Kirill Sannikov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "Ottoman_01",
+    "name": "Ottoman 01",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "furniture",
+      "leather",
+      "chair",
+      "fabric",
+      "ottoman",
+      "upholstery",
+      "interior design",
+      "living room",
+      "lounge"
+    ],
+    "file": "/models/Ottoman_01.glb",
+    "url": "https://polyhaven.com/a/Ottoman_01",
+    "authors": [
+      "Caspian Fortune"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "WoodenTable_01",
+    "name": "Wooden Table 01",
+    "categories": [
+      "furniture"
+    ],
+    "tags": [
+      "vintage",
+      "wood",
+      "prop",
+      "table",
+      "school",
+      "desk",
+      "old",
+      "worn"
+    ],
+    "file": "/models/WoodenTable_01.glb",
+    "url": "https://polyhaven.com/a/WoodenTable_01",
+    "authors": [
+      "Ethan Place"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "ornate_mirror_01",
+    "name": "Ornate Mirror 01",
+    "categories": [
+      "decorative",
+      "wall decoration",
+      "furniture"
+    ],
+    "tags": [
+      "decor",
+      "decoration",
+      "ornate",
+      "fancy",
+      "wealthy",
+      "mansion",
+      "manor",
+      "vintage",
+      "victorian",
+      "floral",
+      "gold",
+      "mirror"
+    ],
+    "file": "/models/ornate_mirror_01.glb",
+    "url": "https://polyhaven.com/a/ornate_mirror_01",
+    "authors": [
+      "James Ray Cock"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "nettle_plant",
+    "name": "Nettle Plant",
+    "categories": [
+      "nature",
+      "plants",
+      "ground cover",
+      "collection: the_shed"
+    ],
+    "tags": [
+      "nettle",
+      "plant",
+      "green",
+      "nature",
+      "shrub",
+      "outdoor",
+      "leaf",
+      "bush",
+      "botany",
+      "leaves",
+      "forest",
+      "jungle",
+      "foliage",
+      "field",
+      "meadow",
+      "natural",
+      "floral"
+    ],
+    "file": "/models/nettle_plant.glb",
+    "url": "https://polyhaven.com/a/nettle_plant",
+    "authors": [
+      "Rob Tuytel",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "plastic_monobloc_chair_01",
+    "name": "Plastic Monobloc Chair 01",
+    "categories": [
+      "furniture",
+      "seating",
+      "collection: the_shed"
+    ],
+    "tags": [
+      "plastic",
+      "dirty",
+      "old",
+      "monobloc",
+      "outdoor",
+      "cheap",
+      "shed"
+    ],
+    "file": "/models/plastic_monobloc_chair_01.glb",
+    "url": "https://polyhaven.com/a/plastic_monobloc_chair_01",
+    "authors": [
+      "Kuutti Siitonen"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "steel_frame_shelves_01",
+    "name": "Steel Frame Shelves 01",
+    "categories": [
+      "furniture",
+      "shelves",
+      "industrial",
+      "collection: the_shed"
+    ],
+    "tags": [
+      "commercial",
+      "modern",
+      "shelf",
+      "bookshelf",
+      "metal",
+      "wood"
+    ],
+    "file": "/models/steel_frame_shelves_01.glb",
+    "url": "https://polyhaven.com/a/steel_frame_shelves_01",
+    "authors": [
+      "James Ray Cock"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "ArmChair_01",
+    "name": "Arm Chair 01",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "gothic",
+      "vintage",
+      "chair",
+      "furniture",
+      "victorian",
+      "couch",
+      "wood",
+      "varnished",
+      "classic"
+    ],
+    "file": "/models/ArmChair_01.glb",
+    "url": "https://polyhaven.com/a/ArmChair_01",
+    "authors": [
+      "Kirill Sannikov"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "street_lamp_01",
+    "name": "Street Lamp 01",
+    "categories": [
+      "lighting",
+      "industrial",
+      "collection: hidden_alley"
+    ],
+    "tags": [
+      "street",
+      "road",
+      "light",
+      "lamppost",
+      "outdoor",
+      "pole",
+      "sidewalk",
+      "night",
+      " urban",
+      "city"
+    ],
+    "file": "/models/street_lamp_01.glb",
+    "url": "https://polyhaven.com/a/street_lamp_01",
+    "authors": [
+      "Josh Dean"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "Rockingchair_01",
+    "name": "Rockingchair 01",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "chair",
+      "vintage",
+      "prop",
+      "wood",
+      "furniture",
+      "rocking chair",
+      "rocking",
+      "decorative",
+      "curved legs",
+      "traditional",
+      "solid wood",
+      "armrest",
+      "slatted backrest",
+      "antique style"
+    ],
+    "file": "/models/Rockingchair_01.glb",
+    "url": "https://polyhaven.com/a/Rockingchair_01",
+    "authors": [
+      "Jorge Camacho"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "wooden_picnic_table",
+    "name": "Wooden Picnic Table",
+    "categories": [
+      "furniture",
+      "seating",
+      "table"
+    ],
+    "tags": [
+      "vintage",
+      "old",
+      "worn",
+      "park",
+      "bench",
+      "outdoor",
+      "weathered",
+      "countryside",
+      "outdoor seating"
+    ],
+    "file": "/models/wooden_picnic_table.glb",
+    "url": "https://polyhaven.com/a/wooden_picnic_table",
+    "authors": [
+      "Ulan Cabanilla"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "boombox",
+    "name": "Boombox",
+    "categories": [
+      "appliances",
+      "electronics",
+      "collection: hidden_alley"
+    ],
+    "tags": [
+      "loudspeaker",
+      "radio",
+      "cd player",
+      "stereo",
+      "80's",
+      "sound system",
+      "portable"
+    ],
+    "file": "/models/boombox.glb",
+    "url": "https://polyhaven.com/a/boombox",
+    "authors": [
+      "Thomas Paul Mouilleron"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "modern_ceiling_lamp_01",
+    "name": "Modern Ceiling Lamp 01",
+    "categories": [
+      "lighting"
+    ],
+    "tags": [
+      "lighting",
+      "light",
+      "modern",
+      "glass",
+      "round",
+      "hanging",
+      "hanging lamp",
+      "ceiling lamp",
+      "decorative lighting",
+      "modern decor",
+      "interior design"
+    ],
+    "file": "/models/modern_ceiling_lamp_01.glb",
+    "url": "https://polyhaven.com/a/modern_ceiling_lamp_01",
+    "authors": [
+      "James Ray Cock"
+    ],
+    "license": "CC0 1.0"
+  },
+  {
+    "id": "brass_candleholders",
+    "name": "Brass Candleholders",
+    "categories": [
+      "decorative",
+      "lighting"
+    ],
+    "tags": [
+      "vintage",
+      "antique",
+      "ornate",
+      "fancy",
+      "brass",
+      "pattern",
+      "candleholders",
+      "elegant",
+      "classic",
+      "ornamental"
+    ],
+    "file": "/models/brass_candleholders.glb",
+    "url": "https://polyhaven.com/a/brass_candleholders",
+    "authors": [
+      "Tina"
+    ],
+    "license": "CC0 1.0"
+  }
+]

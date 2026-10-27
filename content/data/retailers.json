@@ -1,1 +1,47 @@
-{}
+{
+  "ikea": {
+    "pattern": "https://www.ikea.com/fr/fr/search/?q={q}",
+    "checkedAt": "2026-10-27",
+    "detail": "200 https://www.ikea.com/fr/fr/search/?q=canap%C3%A9"
+  },
+  "leroymerlin": {
+    "pattern": null,
+    "checkedAt": "2026-10-27",
+    "detail": "403 https://www.leroymerlin.fr/recherche=canap%C3%A9 (protection anti-robot)"
+  },
+  "castorama": {
+    "pattern": "https://www.castorama.fr/search?term={q}",
+    "checkedAt": "2026-10-27",
+    "detail": "200 https://www.castorama.fr/canape/cat_id_0004397.cat"
+  },
+  "maisonsdumonde": {
+    "pattern": null,
+    "checkedAt": "2026-10-27",
+    "detail": "410 https://www.maisonsdumonde.com/FR/fr/search?q=canap%C3%A9"
+  },
+  "laredoute": {
+    "pattern": null,
+    "checkedAt": "2026-10-27",
+    "detail": "403 https://www.laredoute.fr/psrch/psrch.aspx?kwrd=canap%C3%A9 (protection anti-robot)"
+  },
+  "conforama": {
+    "pattern": null,
+    "checkedAt": "2026-10-27",
+    "detail": "403 https://www.conforama.fr/recherche-conforama/canap%C3%A9 (protection anti-robot)"
+  },
+  "but": {
+    "pattern": null,
+    "checkedAt": "2026-10-27",
+    "detail": "403 https://www.but.fr/recherche?q=canap%C3%A9 (protection anti-robot)"
+  },
+  "manomano": {
+    "pattern": null,
+    "checkedAt": "2026-10-27",
+    "detail": "403 https://www.manomano.fr/recherche/canap%C3%A9 (protection anti-robot)"
+  },
+  "selency": {
+    "pattern": null,
+    "checkedAt": "2026-10-27",
+    "detail": "404 https://www.selency.fr/recherche?q=canap%C3%A9"
+  }
+}
