@@ -50,7 +50,7 @@ export function Header() {
   return (
     <header className="sticky z-20 border-b border-line/70 backdrop-blur-xl" style={{ top: "env(safe-area-inset-top, 0px)", background: "color-mix(in srgb, var(--bg) 82%, transparent)" }}>
       <div className="wrap flex h-[70px] items-center gap-2 sm:gap-3">
-        <Link href="/" className="whitespace-nowrap text-ink no-underline" aria-label="Pièce Rêvée, accueil"><Logo /></Link>
+        <Link href="/" className="whitespace-nowrap text-ink no-underline"><Logo /><span className="sr-only"> (accueil)</span></Link>
         <nav aria-label="Navigation principale" className="mx-auto hidden gap-1 lg:flex">
           {NAV.map((n) => (
             <Link key={n.href} href={n.href} aria-current={isActive(path, n.href) ? "page" : undefined}

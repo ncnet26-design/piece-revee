@@ -318,7 +318,7 @@ export class HomeEngine {
     s.environmentIntensity = 0.4;
     pm.dispose();
     void this.loadHdri(mirror);
-    s.add(new THREE.HemisphereLight("#EAF2F8", "#B9A98F", 0.4));
+    s.add(new THREE.HemisphereLight("#EAF2F8", "#E6DFD3", 0.45));
     const sun = new THREE.DirectionalLight("#FFF1DC", 3.0);
     sun.castShadow = true;
     sun.shadow.mapSize.set(high ? 2048 : 1024, high ? 2048 : 1024);
@@ -340,7 +340,7 @@ export class HomeEngine {
       const pm = new THREE.PMREMGenerator(this.renderer);
       const env = pm.fromEquirectangular(inside).texture;
       pm.dispose();
-      this.envEquirect = inside; inside.mapping = THREE.EquirectangularReflectionMapping;
+      inside.dispose();
       this.scene.environment?.dispose();
       this.scene.environment = env; mirror.envMap = env;
       outside.mapping = THREE.EquirectangularReflectionMapping; outside.colorSpace = THREE.LinearSRGBColorSpace;
@@ -349,86 +349,53 @@ export class HomeEngine {
     } catch { /* on garde l'éclairage de secours */ }
   }
 
-  /* ——————————————— Rendu photo (tracé de chemins, sur l'appareil du visiteur) ——————————————— */
-  /** Faux sur les appareils sans carte graphique : le calcul serait beaucoup trop long. */
+  /* ——————————————— Rendu HD (image fixe très haute qualité) ——————————————— */
+  /** Faux sur les appareils sans carte graphique : le calcul serait trop long. */
   canPhoto = false;
-  private envEquirect: THREE.Texture | null = null;
-  private photo: { pt: import("three-gpu-pathtracer").WebGLPathTracer; target: number; onProgress: (p: number, done: boolean) => void; envBackup: THREE.Texture | null; exposure: number; grab: ((url: string) => void) | null } | null = null;
-  get photoActive() { return !!this.photo; }
-  private lastProgress = 0;
+  private rendering = false;
+  get photoActive() { return this.rendering; }
 
-  /** Copie épurée de la scène pour le rendu photo : matériaux standard, objets visibles uniquement. */
-  private photoScene(): THREE.Scene {
-    const sc = new THREE.Scene();
-    sc.background = this.scene.background;
-    sc.environment = this.envEquirect ?? this.scene.environment;
-    this.scene.updateMatrixWorld(true);
-    const cache = new Map<THREE.Material, THREE.Material>();
-    const conv = (m: THREE.Material): THREE.Material => {
-      let c = cache.get(m);
-      if (!c) {
-        const s0 = m as THREE.MeshStandardMaterial;
-        c = new THREE.MeshStandardMaterial({
-          color: s0.color ? s0.color.clone() : new THREE.Color("#cccccc"), map: s0.map ?? null, normalMap: s0.normalMap ?? null,
-          roughness: s0.roughness ?? 0.8, metalness: s0.metalness ?? 0, roughnessMap: s0.roughnessMap ?? null,
-          emissive: s0.emissive ? s0.emissive.clone() : new THREE.Color(0), emissiveIntensity: s0.emissiveIntensity ?? 0,
-          transparent: m.transparent, opacity: m.opacity, side: THREE.DoubleSide,
-        });
-        cache.set(m, c);
-      }
-      return c;
-    };
-    this.scene.traverseVisible((o) => {
-      const mesh = o as THREE.Mesh;
-      if (mesh.isMesh && !(o as THREE.Sprite).isSprite) {
-        const mats = Array.isArray(mesh.material) ? mesh.material.map(conv) : conv(mesh.material);
-        const c = new THREE.Mesh(mesh.geometry, mats);
-        c.matrixAutoUpdate = false; c.matrix.copy(mesh.matrixWorld); c.matrixWorld.copy(mesh.matrixWorld);
-        sc.add(c);
-      } else if ((o as THREE.DirectionalLight).isDirectionalLight) {
-        const l = o as THREE.DirectionalLight, d = new THREE.DirectionalLight(l.color, l.intensity);
-        d.position.setFromMatrixPosition(l.matrixWorld); d.target.position.setFromMatrixPosition(l.target.matrixWorld);
-        sc.add(d, d.target);
-      } else if ((o as THREE.PointLight).isPointLight) {
-        const l = o as THREE.PointLight, pl = new THREE.PointLight(l.color, l.intensity, l.distance, l.decay);
-        pl.position.setFromMatrixPosition(l.matrixWorld); sc.add(pl);
-      }
-    });
-    sc.updateMatrixWorld(true);
-    return sc;
+  /**
+   * Rendu HD de la vue courante : résolution multipliée, ombres fines (carte 4096), ombrage d'ambiance (GTAO)
+   * dans les angles et sous les meubles, lissage des contours. Renvoie une image JPEG.
+   */
+  async renderHD(): Promise<string> {
+    if (this.rendering) throw new Error("rendu en cours");
+    this.rendering = true;
+    const [{ EffectComposer }, { RenderPass }, { GTAOPass }, { OutputPass }] = await Promise.all([
+      import("three/examples/jsm/postprocessing/EffectComposer.js"), import("three/examples/jsm/postprocessing/RenderPass.js"),
+      import("three/examples/jsm/postprocessing/GTAOPass.js"), import("three/examples/jsm/postprocessing/OutputPass.js"),
+    ]);
+    const cv = this.renderer.domElement, w = cv.clientWidth || 1, h = cv.clientHeight || 1;
+    const ratio = this.renderer.getPixelRatio(), scale = Math.max(1, Math.min(3, 2600 / w));
+    const hidden = [this.labelGroup, this.noteGroup, this.selBox].filter(Boolean) as THREE.Object3D[];
+    const vis = hidden.map((o) => o.visible); hidden.forEach((o) => { o.visible = false; });
+    const shadowSize = this.sun.shadow.mapSize.x;
+    try {
+      this.camera.position.set(this.pos.x, EYE_H, this.pos.z);
+      if (this.mode === "visite") this.camera.rotation.set(this.pitch, this.yaw, 0);
+      this.renderer.setPixelRatio(scale); this.renderer.setSize(w, h, false);
+      this.sun.shadow.mapSize.set(4096, 4096); this.sun.shadow.map?.dispose(); this.sun.shadow.map = null;
+      const composer = new EffectComposer(this.renderer);
+      composer.setPixelRatio(scale); composer.setSize(w, h);
+      composer.addPass(new RenderPass(this.scene, this.camera));
+      const ao = new GTAOPass(this.scene, this.camera, w * scale, h * scale);
+      ao.blendIntensity = 0.9;
+      ao.updateGtaoMaterial({ radius: 0.6, distanceExponent: 1.2, thickness: 1.2, scale: 1, samples: 16 });
+      ao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6, rings: 2, samples: 16 });
+      composer.addPass(ao);
+      composer.addPass(new OutputPass());
+      composer.render();
+      const url = cv.toDataURL("image/jpeg", 0.93);
+      composer.dispose(); ao.dispose();
+      return url;
+    } finally {
+      this.renderer.setPixelRatio(ratio); this.renderer.setSize(w, h, false);
+      this.sun.shadow.mapSize.set(shadowSize, shadowSize); this.sun.shadow.map?.dispose(); this.sun.shadow.map = null;
+      hidden.forEach((o, i) => { o.visible = vis[i]!; });
+      this.rendering = false; this.dirty = true;
+    }
   }
-
-  /** Lance un rendu photoréaliste progressif de la vue courante. */
-  async startPhoto(onProgress: (p: number, done: boolean) => void, samples = 400) {
-    if (!this.canPhoto || this.photo) return;
-    this.lastProgress = 0;
-    const { WebGLPathTracer } = await import("three-gpu-pathtracer");
-    if (this.disposed) return;
-    this.tween = null; this.walkTarget = null; this.keys.clear(); this.joy = { x: 0, y: 0 };
-    const hidden: THREE.Object3D[] = [this.labelGroup, this.noteGroup, ...(this.selBox ? [this.selBox] : [])];
-    hidden.forEach((o) => { o.visible = false; });
-    const pt = new WebGLPathTracer(this.renderer);
-    pt.tiles.set(2, 2); pt.bounces = 6; pt.filterGlossyFactor = 0.5; pt.minSamples = 1; pt.fadeDuration = 300; pt.renderDelay = 0;
-    pt.renderScale = Math.min(1, 1.5 / this.renderer.getPixelRatio());
-    const envBackup = this.scene.environment;
-    if (this.envEquirect) this.scene.environment = this.envEquirect;
-    this.photo = { pt, target: samples, onProgress, envBackup, exposure: this.renderer.toneMappingExposure, grab: null };
-    this.renderer.toneMappingExposure = 1.25;
-    // Préparation synchrone de la scène (la version asynchrone exige un « worker » BVH dédié).
-    try { pt.setScene(this.photoScene(), this.camera); } catch (e) { this.stopPhoto(); throw e; }
-  }
-  /** Arrête le rendu photo et revient à la 3D interactive. */
-  stopPhoto() {
-    const ph = this.photo; if (!ph) return;
-    ph.pt.dispose();
-    this.scene.environment = ph.envBackup;
-    this.renderer.toneMappingExposure = ph.exposure;
-    this.labelGroup.visible = this.mode === "plan"; this.noteGroup.visible = true;
-    if (this.selBox) this.selBox.visible = true;
-    this.photo = null; this.dirty = true;
-  }
-  /** Image du rendu photo en cours (PNG). */
-  grabPhoto(): Promise<string> { return new Promise((res) => { if (this.photo) this.photo.grab = res; else res(this.capture()); }); }
 
   /** Murs, sols, plafonds, étiquettes et arbres : reconstruits quand le plan change. */
   private buildStructure() {
@@ -531,6 +498,18 @@ export class HomeEngine {
       const list = this.wallMeshesByRoom.get(rid) ?? []; list.push({ mesh, index }); this.wallMeshesByRoom.set(rid, list);
     });
     this.wallGroup.add(mesh);
+    // Plinthes au pied des murs, côté pièces intérieures.
+    if (y0 === 0 && len > 0.12) {
+      const pl = this.mats.std("#F4F1EA", 0.55);
+      for (const [idx, nx, nz] of sides) {
+        const rid = faceRooms[idx]; const r = rid ? this.room(rid) : undefined;
+        if (!r || !hasCeiling(r)) continue;
+        const off = thick / 2 + 0.007;
+        const g = new THREE.BoxGeometry(horiz ? len - 0.02 : 0.014, 0.08, horiz ? 0.014 : len - 0.02);
+        const m = new THREE.Mesh(g, pl); m.position.set(cx + nx * off, 0.04, cz + nz * off); m.receiveShadow = true; m.raycast = () => {};
+        this.wallGroup.add(m);
+      }
+    }
     if (blocks) this.wallBoxes.push({ x0: Math.min(ax, bx) - (horiz ? 0 : thick / 2), x1: Math.max(ax, bx) + (horiz ? 0 : thick / 2), z0: Math.min(az, bz) - (horiz ? thick / 2 : 0), z1: Math.max(az, bz) + (horiz ? thick / 2 : 0) });
   }
 
@@ -774,16 +753,7 @@ export class HomeEngine {
     if (this.disposed) return;
     this.raf = requestAnimationFrame(this.loop);
     const dt = Math.min(0.1, this.clock.getDelta());
-    const ph = this.photo;
-    if (ph) {
-      if (ph.pt.samples < ph.target) {
-        ph.pt.renderSample();
-        const now = performance.now();
-        if (now - this.lastProgress > 250) { this.lastProgress = now; ph.onProgress(Math.min(1, ph.pt.samples / ph.target), false); }
-      } else if (!ph.grab && this.lastProgress >= 0) { this.lastProgress = -1; ph.onProgress(1, true); }
-      if (ph.grab) { if (ph.pt.samples >= ph.target) ph.pt.renderSample(); const g = ph.grab; ph.grab = null; g(this.renderer.domElement.toDataURL("image/jpeg", 0.92)); }
-      return;
-    }
+    if (this.rendering) return;
     if (this.mode === "visite") this.stepVisit(dt);
     else if (this.orbit?.update()) this.dirty = true;
     const c = this.camera, l = this.lastCam;
@@ -858,7 +828,7 @@ export class HomeEngine {
   }
 
   private onDown = (e: PointerEvent) => {
-    if (this.photo) return;
+    if (this.rendering) return;
     if (this.pointer && this.pointer.id !== e.pointerId) return;
     const cv = this.renderer.domElement;
     cv.focus({ preventScroll: true });

@@ -176,7 +176,7 @@ export function StudyBoard({ project }: { project: Project }) {
                 <details key={st.id} className="rounded-[var(--r-s)] border border-line" open={i === 0 || (done > 0 && done < items.length)}>
                   <summary className="flex cursor-pointer items-center gap-3 px-3.5 py-3">
                     <span className={`grid h-7 w-7 flex-none place-items-center rounded-full border-[1.5px] font-mono text-xs ${done === items.length ? "border-good bg-good text-white" : "border-line"}`} style={done === items.length ? { background: "var(--good)", borderColor: "var(--good)" } : undefined}>{done === items.length ? "✓" : i + 1}</span>
-                    <span className="min-w-0 flex-1"><b className="block font-display text-[17px] font-semibold">{st.title}</b><small className="text-muted">{st.subtitle} · {done}/{items.length}</small></span>
+                    <span className="min-w-0 flex-1"><b className="block font-display text-[17px]">{st.title}</b><small className="text-muted">{st.subtitle} · {done}/{items.length}</small></span>
                   </summary>
                   <div className="grid gap-5 px-3.5 pb-4 md:grid-cols-2 md:pl-[54px]">
                     <div><span className="eyebrow">À faire</span>{items.map((t, j) => <label key={t} className="flex items-start gap-2 py-1 text-sm"><input type="checkbox" className="mt-1 accent-[var(--accent)]" checked={project.checklist.includes(`${st.id}-${j}`)} onChange={() => toggleCheck(`${st.id}-${j}`)} /><span>{t}</span></label>)}</div>

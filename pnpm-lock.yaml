@@ -29,12 +29,6 @@ importers:
       three:
         specifier: 0.181.0
         version: 0.181.0
-      three-gpu-pathtracer:
-        specifier: 0.0.24
-        version: 0.0.24(three-mesh-bvh@0.9.16(three@0.181.0))(three@0.181.0)(xatlas-web@0.1.0)
-      three-mesh-bvh:
-        specifier: 0.9.16
-        version: 0.9.16(three@0.181.0)
       zod:
         specifier: 4.6.7
         version: 4.6.7
@@ -51,6 +45,12 @@ importers:
       '@gltf-transform/cli':
         specifier: 4.2.1
         version: 4.2.1(@types/node@22.20.5)
+      '@gltf-transform/core':
+        specifier: 4.2.1
+        version: 4.2.1
+      '@gltf-transform/extensions':
+        specifier: 4.2.1
+        version: 4.2.1
       '@playwright/test':
         specifier: 1.63.0
         version: 1.63.0
@@ -268,8 +268,14 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  '@gltf-transform/core@4.2.1':
+    resolution: {integrity: sha512-qKhrQ29KJ9K6sz7xGoGRllqPBlROjPJMQPvCLBOfgMPH3S/Ph5E0e6fD5WmwTY5QPyBsDMRqKd1Vl0ncThTXGw==}
+
   '@gltf-transform/core@4.5.1':
     resolution: {integrity: sha512-OWgBYssKHKoXMIrMb2N20jXqWRnMP9HdtcTFQBEAJtz4P+OOxx5fozl5eAeK7nktIs5uDE/lu4NbkE5VCZaR9g==}
+
+  '@gltf-transform/extensions@4.2.1':
+    resolution: {integrity: sha512-ieHSJU9qvb3ucWDxgHFcff+C7fLtFPa6G0Wtc/ki7GsN6Rh7o9eoyqi7Ggj2LO4i3ynCwLLPb/onbJKw2fBtsA==}
 
   '@gltf-transform/extensions@4.5.1':
     resolution: {integrity: sha512-3jTe+GWRy4fj1TU790LPsO+rpO/4byUWPTpNkjy6M6h8RvrUivRf12Mptc0770K4ZczibpJDNHXZFkFsFMRDLA==}
@@ -2713,6 +2719,9 @@ packages:
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
 
+  property-graph@3.0.0:
+    resolution: {integrity: sha512-TnzxUsttmGtw+OiU0LDw+0FlMbJ8vV8pOjyDI7+Kdni4Tj0hW5BFh7TatQu7Y68hcvvFmiFOHilKShsA4R82fA==}
+
   property-graph@4.1.0:
     resolution: {integrity: sha512-AvPcP7XECNWy4LGmFQ77k7un4lSKM4eS29PTvW4ck95uYeLxXPWJM7hLuBqK91FaHqCcgJvIUCuNJjjxKE7VKQ==}
 
@@ -3060,18 +3069,6 @@ packages:
   text-hex@1.0.0:
     resolution: {integrity: sha512-uuVGNWzgJ4yhRaNSiubPY7OjISw4sw4E5Uv0wbjp+OzcbmVU/rsT8ujgcXJhn9ypzsgr5vlzpPqP+MBBKcGvbg==}
 
-  three-gpu-pathtracer@0.0.24:
-    resolution: {integrity: sha512-fHQ7g7ywvSwRAQywhsfech2/kspQKinfFNOcNDTJS2Q34CzcF1kpESlOVvJH8kX/bGlCnxMI+Qo16kWGAy7zCA==}
-    peerDependencies:
-      three: '>=0.180.0'
-      three-mesh-bvh: '>=0.7.4'
-      xatlas-web: ^0.1.0
-
-  three-mesh-bvh@0.9.16:
-    resolution: {integrity: sha512-2RK+5MJOaiHJhopURn2CUkOHiF3tFloD0uZBfhebV0CKB7mgVLpWUWaDpOyhNJRDkKKe7x4rRfTHZ32GwpXdkw==}
-    peerDependencies:
-      three: '>= 0.159.0'
-
   three@0.181.0:
     resolution: {integrity: sha512-KGf6EOCOQGshXeleKxpxhbowQwAXR2dLlD93egHtZ9Qmk07Saf8sXDR+7wJb53Z1ORZiatZ4WGST9UsVxhHEbg==}
 
@@ -3330,9 +3327,6 @@ packages:
     resolution: {integrity: sha512-42AtmgqjV+X1VpdOfyTGOYRi0/zsoLqtXQckTmqTeybT+BDIbM/Guxo7x3pE2vtpr1ok6xRqM9OpBe+Jyoqyww==}
     engines: {node: '>=18'}
 
-  xatlas-web@0.1.0:
-    resolution: {integrity: sha512-PprVfuXbaIskxLTLBUQRaWfgSy9xUQqAMIRooOw0P6NYqwgh6T0voeer6+Z5M7AFt5SGXUybuww/uDGs1yw8vQ==}
-
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
 
@@ -3574,8 +3568,8 @@ snapshots:
   '@gltf-transform/cli@4.2.1(@types/node@22.20.5)':
     dependencies:
       '@donmccurdy/caporal': 0.0.10
-      '@gltf-transform/core': 4.5.1
-      '@gltf-transform/extensions': 4.5.1
+      '@gltf-transform/core': 4.2.1
+      '@gltf-transform/extensions': 4.2.1
       '@gltf-transform/functions': 4.5.1(@types/node@22.20.5)
       '@types/language-tags': 1.0.4
       '@types/micromatch': 4.0.10
@@ -3607,9 +3601,18 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
+  '@gltf-transform/core@4.2.1':
+    dependencies:
+      property-graph: 3.0.0
+
   '@gltf-transform/core@4.5.1':
     dependencies:
       property-graph: 4.1.0
+
+  '@gltf-transform/extensions@4.2.1':
+    dependencies:
+      '@gltf-transform/core': 4.2.1
+      ktx-parse: 1.1.0
 
   '@gltf-transform/extensions@4.5.1':
     dependencies:
@@ -5993,6 +5996,8 @@ snapshots:
       object-assign: 4.1.1
       react-is: 16.13.1
 
+  property-graph@3.0.0: {}
+
   property-graph@4.1.0: {}
 
   punycode@2.3.1: {}
@@ -6463,16 +6468,6 @@ snapshots:
 
   text-hex@1.0.0: {}
 
-  three-gpu-pathtracer@0.0.24(three-mesh-bvh@0.9.16(three@0.181.0))(three@0.181.0)(xatlas-web@0.1.0):
-    dependencies:
-      three: 0.181.0
-      three-mesh-bvh: 0.9.16(three@0.181.0)
-      xatlas-web: 0.1.0
-
-  three-mesh-bvh@0.9.16(three@0.181.0):
-    dependencies:
-      three: 0.181.0
-
   three@0.181.0: {}
 
   tinybench@6.2.2: {}
@@ -6745,8 +6740,6 @@ snapshots:
       ansi-styles: 6.2.3
       string-width: 7.2.0
       strip-ansi: 7.2.0
-
-  xatlas-web@0.1.0: {}
 
   yallist@3.1.1: {}
 

@@ -9,7 +9,7 @@
 /* Identité premium : ivoire chaud, encre presque noire, bronze discret ; titres en Instrument Serif, texte en Onest. */
 :root {
   --bg: #F7F5F0; --surface: #FFFFFF; --soft: #EFECE5; --ink: #161512; --muted: #6A655C; --line: #E3DFD5;
-  --accent: #161512; --accent-ink: #FFFFFF; --accent-soft: #EFE7DA; --bronze: #9C7547; --good: #2B6B3A; --warn: #8A5A0E; --danger: #A3312A;
+  --accent: #161512; --accent-ink: #FFFFFF; --accent-soft: #EFE7DA; --bronze: #7B5831; --good: #2B6B3A; --warn: #8A5A0E; --danger: #A3312A;
   --scrim: rgba(12, 11, 10, .5);
   --f-display: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
   --f-ui: "Onest Variable", "Segoe UI", system-ui, sans-serif;

@@ -12,6 +12,7 @@ import {
 } from "@/lib/home3d/plan";
 import { roomAt as roomAtL, viewpoint } from "@/lib/home3d/layout";
 import PlanEditor from "./PlanEditor";
+import { LIBRARY_MODELS, frenchName, libGroup, libModel } from "@/lib/home3d/library";
 import { ShopLinks } from "../ShopLinks";
 import type { RetailerKind } from "@/lib/retailers";
 import { ITEM_TIPS, ROOM_TIPS } from "@/lib/home3d/tips";
@@ -26,6 +27,8 @@ const colorName = (hex?: string) => (hex ? COLORS.find((c) => c.hex.toLowerCase(
 /** Recherche d'achat décrivant l'objet tel qu'il est configuré (« canapé velours bleu nuit »). */
 function shopQuery(it: Item): { q: string; kinds: RetailerKind[] } {
   const e = CATALOG[it.type];
+  const lm = it.type === "objet" ? libModel(it.variant) : undefined;
+  if (lm) { const n = frenchName(lm).toLowerCase().replace(/ \(modèle \d+\)/, ""); return { q: n, kinds: libGroup(lm) === "Plantes" ? ["jardin", "deco"] : ["meuble", "deco"] }; }
   const fabric = it.fabric ?? e.fabric, structure = it.structure ?? e.structure;
   const words = [e.label.toLowerCase()];
   if (e.realistic && it.variant) words.push(it.variant.toLowerCase());
@@ -62,7 +65,7 @@ export default function Visite3D() {
   const [draft, setDraft] = useState("");
   const [pendingNote, setPendingNote] = useState<string | null>(null);
   const [planOpen, setPlanOpen] = useState(false);
-  const [photoState, setPhotoState] = useState<{ p: number; done: boolean } | null>(null);
+  const [photoState, setPhotoState] = useState<{ url: string | null } | null>(null);
   const pendingNoteRef = useRef<string | null>(null);
   useEffect(() => { pendingNoteRef.current = pendingNote; }, [pendingNote]);
 
@@ -132,14 +135,15 @@ export default function Visite3D() {
     say("Plan appliqué : bonne visite !");
   };
 
-  const addItem = (type: ItemType) => {
+  const addItem = (type: ItemType, variant?: string) => {
     const e = engine.current; if (!e) return;
     const sp = e.spawnPoint();
-    const it: Item = { id: uid("i"), type, x: sp.x, z: sp.z, rot: sp.rot };
+    const it: Item = { id: uid("i"), type, x: sp.x, z: sp.z, rot: sp.rot, ...(variant ? { variant } : {}) };
     pendingSelect.current = { kind: "item", id: it.id };
     update((s) => ({ ...s, items: [...s.items, it] }));
     setPanel(null);
-    say(`Ajouté : ${CATALOG[type].label.toLowerCase()}. Faites-le glisser pour le placer.`);
+    const lm = type === "objet" ? libModel(variant) : undefined;
+    say(`Ajouté : ${(lm ? frenchName(lm) : CATALOG[type].label).toLowerCase()}. Faites-le glisser pour le placer.`);
   };
   const removeItem = (id: string) => { update((s) => ({ ...s, items: s.items.filter((i) => i.id !== id) })); engine.current?.select(null); };
   const duplicate = (it: Item) => {
@@ -184,18 +188,17 @@ export default function Visite3D() {
     const e = engine.current; if (!e) return;
     const a = document.createElement("a"); a.href = e.capture(); a.download = `piece-revee-${room}.png`; a.click();
   };
-  /** Rendu photoréaliste progressif, calculé par la carte graphique du visiteur. */
+  /** Rendu HD de la vue (ombres fines, ombrage d'ambiance, très haute résolution). */
   const startRender = () => {
     const e = engine.current; if (!e) return;
-    if (!e.canPhoto) { say("Le rendu photo demande une carte graphique : essayez sur un ordinateur ou un téléphone récent."); return; }
-    close(); setPhotoState({ p: 0, done: false });
-    void e.startPhoto((p, done) => setPhotoState({ p, done })).catch(() => { setPhotoState(null); say("Le rendu photo n'a pas pu démarrer sur cet appareil."); });
+    if (!e.canPhoto) { say("Le rendu HD demande une carte graphique : essayez sur un ordinateur ou un téléphone récent."); return; }
+    close(); setPhotoState({ url: null });
+    window.setTimeout(() => { void e.renderHD().then((url) => setPhotoState({ url })).catch(() => { setPhotoState(null); say("Le rendu HD n'a pas pu être calculé sur cet appareil."); }); }, 60);
   };
-  const stopRender = () => { engine.current?.stopPhoto(); setPhotoState(null); };
-  const downloadRender = async () => {
-    const e = engine.current; if (!e) return;
-    const url = await e.grabPhoto();
-    const a = document.createElement("a"); a.href = url; a.download = `piece-revee-rendu-${room}.jpg`; a.click();
+  const stopRender = () => setPhotoState(null);
+  const downloadRender = () => {
+    if (!photoState?.url) return;
+    const a = document.createElement("a"); a.href = photoState.url; a.download = `piece-revee-rendu-${room}.jpg`; a.click();
   };
   const reset = () => {
     if (!window.confirm("Revenir à l'appartement d'origine ? Vos modifications seront effacées.")) return;
@@ -240,7 +243,7 @@ export default function Visite3D() {
       {/* Barre du haut : pièces et mode */}
       <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col gap-2 p-2.5 sm:p-3">
         <div className="pointer-events-auto flex items-center gap-2">
-          <h1 className="m-0 rounded-full bg-surface/90 px-3 py-1.5 font-display text-[15px] font-bold shadow-sm">Visite 3D</h1>
+          <h1 className="m-0 rounded-full bg-surface/90 px-3.5 py-1 font-display text-[19px] shadow-sm">Visite 3D</h1>
           <div role="group" aria-label="Mode d'affichage" className="flex rounded-full border border-line bg-surface p-0.5 shadow-sm">
             <button type="button" className="chip border-0" aria-pressed={mode === "visite"} onClick={() => switchMode("visite")}>Visite</button>
             <button type="button" className="chip border-0" aria-pressed={mode === "plan"} onClick={() => switchMode("plan")}>Vue d'ensemble</button>
@@ -254,7 +257,7 @@ export default function Visite3D() {
 
       {/* Actions (sur mobile, les moins utilisées sont regroupées dans « Plus ») */}
       <div className={`absolute right-2.5 top-[96px] flex flex-col items-end gap-1.5 ${sheetOpen ? "sm:right-[384px]" : "sm:right-3"}`}>
-        <button type="button" className="btn btn-sm btn-dark shadow-sm" onClick={startRender} disabled={!!photoState}>Rendu photo</button>
+        <button type="button" className="btn btn-sm btn-dark shadow-sm" onClick={startRender} disabled={!!photoState}>Rendu HD</button>
         <button type="button" className="btn btn-sm btn-primary shadow-sm" onClick={() => { close(); setPanel("ajouter"); }}>+ Ajouter</button>
         <button type="button" className="btn btn-sm shadow-sm" onClick={() => { close(); setRoomPanel(true); }}>Pièce</button>
         <button type="button" className="btn btn-sm shadow-sm" onClick={() => { close(); setPanel("astuces"); }}>Astuces{state && state.notes.length > 0 ? ` (${state.notes.length})` : ""}</button>
@@ -320,13 +323,17 @@ export default function Visite3D() {
       )}
 
       {photoState && (
-        <div className="absolute inset-x-3 bottom-3 z-20 mx-auto max-w-lg rounded-2xl bg-surface p-3.5 shadow-2xl" role="status" aria-live="polite">
-          <p className="text-sm font-semibold">{photoState.done ? "Rendu photoréaliste terminé" : `Rendu photoréaliste en cours : ${Math.round(photoState.p * 100)} %`}</p>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-soft"><div className="h-full bg-accent transition-[width]" style={{ width: `${Math.round(photoState.p * 100)} %`.replace(" ", "") }} /></div>
-          <p className="mt-1.5 text-[12px] text-muted">La lumière est calculée rayon par rayon : l'image s'affine pendant quelques secondes à une minute selon votre appareil.</p>
-          <div className="mt-2.5 flex flex-wrap gap-2">
-            <button type="button" className="btn btn-sm btn-primary" onClick={() => void downloadRender()}>Télécharger l'image</button>
-            <button type="button" className="btn btn-sm" onClick={stopRender}>Revenir à la 3D</button>
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Rendu HD">
+          <div className="flex max-h-full w-full max-w-5xl flex-col gap-3 rounded-[var(--r)] bg-surface p-3 shadow-2xl">
+            {photoState.url
+              // eslint-disable-next-line @next/next/no-img-element
+              ? <img src={photoState.url} alt={`Rendu HD : ${currentRoom.name}`} className="max-h-[70vh] w-full rounded-[var(--r-s)] object-contain" />
+              : <div className="grid aspect-video place-items-center rounded-[var(--r-s)] bg-soft text-sm text-muted" role="status"><span><span className="spinner" /> Calcul du rendu HD : ombres fines et lumière d'ambiance…</span></div>}
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="mr-auto text-[12.5px] text-muted">Image calculée sur votre appareil, en haute définition.</p>
+              <button type="button" className="btn btn-sm btn-primary" onClick={downloadRender} disabled={!photoState.url}>Télécharger</button>
+              <button type="button" className="btn btn-sm" onClick={stopRender}>Fermer</button>
+            </div>
           </div>
         </div>
       )}
@@ -353,10 +360,12 @@ function ItemEditor({ it, size, roomName, onPatch, onRemove, onDuplicate }: { it
   const tip = ITEM_TIPS[it.type];
   return (
     <div>
-      <h2 className="pr-8 text-lg">{e.label}{it.variant ? ` · ${it.variant}` : ""}</h2>
+      {(() => { const lm = it.type === "objet" ? libModel(it.variant) : undefined; return lm
+        ? <><h2 className="pr-8 text-lg">{frenchName(lm)}</h2><p className="text-[11.5px] text-muted">Modèle « {lm.name} » par {lm.authors.join(", ")}, <a href={lm.url} target="_blank" rel="noopener noreferrer">Poly Haven</a>, CC0</p></>
+        : <h2 className="pr-8 text-lg">{e.label}{it.variant ? ` · ${it.variant}` : ""}</h2>; })()}
       {e.realistic && <p className="mt-0.5 text-[12px] font-semibold text-accent">Modèle 3D réaliste</p>}
       <p className="text-[12.5px] text-muted">{roomName} · L {cm(size.w)} × P {cm(size.d)} × H {cm(size.h)}</p>
-      {e.variants && <><h3 className="mt-4 text-[13.5px] font-semibold">{e.variantLabel ?? "Modèle"}</h3><div className="mt-1.5 flex flex-wrap gap-1.5">{e.variants.map((v) => <button key={v} type="button" className="chip text-[12.5px]" aria-pressed={(it.variant ?? e.variants![0]) === v} onClick={() => onPatch({ variant: v })}>{v}</button>)}</div></>}
+      {e.variants && it.type !== "objet" && <><h3 className="mt-4 text-[13.5px] font-semibold">{e.variantLabel ?? "Modèle"}</h3><div className="mt-1.5 flex flex-wrap gap-1.5">{e.variants.map((v) => <button key={v} type="button" className="chip text-[12.5px]" aria-pressed={(it.variant ?? e.variants![0]) === v} onClick={() => onPatch({ variant: v })}>{v}</button>)}</div></>}
       {e.color && <>
         <h3 className="mt-4 text-[13.5px] font-semibold">Couleur</h3>
         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
@@ -422,17 +431,30 @@ function RoomEditor({ roomId, state, onPatch, onStyle, onSelectItem, onEditPlan 
   );
 }
 
-function Catalog({ roomKind, onAdd }: { roomKind: string; onAdd: (t: ItemType) => void }) {
+function Catalog({ roomKind, onAdd }: { roomKind: string; onAdd: (t: ItemType, variant?: string) => void }) {
+  const groups = [...new Set(LIBRARY_MODELS.map(libGroup))];
   const order = roomKind === "exterieur" ? ["Extérieur", ...CATEGORIES.filter((c) => c !== "Extérieur")] : CATEGORIES;
   return (
     <div>
       <h2 className="pr-8 text-lg">Ajouter un objet</h2>
       <p className="text-[12.5px] text-muted">Il apparaît devant vous ; faites-le glisser pour le placer.</p>
+      {LIBRARY_MODELS.length > 0 && (
+        <div className="mt-3 rounded-[var(--r-s)] bg-soft p-3">
+          <h3 className="text-[14px] font-semibold">Bibliothèque 3D réaliste <span className="font-normal text-muted">({LIBRARY_MODELS.length} modèles)</span></h3>
+          {groups.map((g) => (
+            <div key={g} className="mt-2.5">
+              <h4 className="text-[12px] uppercase tracking-[.12em] text-muted">{g}</h4>
+              <div className="mt-1.5 flex flex-wrap gap-1.5">{LIBRARY_MODELS.filter((m) => libGroup(m) === g).map((m) => <button key={m.id} type="button" className="chip text-[12.5px]" onClick={() => onAdd("objet", m.id)}>{frenchName(m)}</button>)}</div>
+            </div>
+          ))}
+          <p className="mt-2 text-[11px] text-muted">Modèles Poly Haven, licence CC0.</p>
+        </div>
+      )}
       {order.map((c) => (
         <div key={c} className="mt-3">
           <h3 className="text-[13.5px] font-semibold">{c}</h3>
           <div className="mt-1.5 flex flex-wrap gap-1.5">
-            {(Object.keys(CATALOG) as ItemType[]).filter((t) => CATALOG[t].category === c).map((t) => <button key={t} type="button" className="chip text-[12.5px]" onClick={() => onAdd(t)}>{CATALOG[t].label}</button>)}
+            {(Object.keys(CATALOG) as ItemType[]).filter((t) => t !== "objet" && CATALOG[t].category === c).map((t) => <button key={t} type="button" className="chip text-[12.5px]" onClick={() => onAdd(t)}>{CATALOG[t].label}</button>)}
           </div>
         </div>
       ))}

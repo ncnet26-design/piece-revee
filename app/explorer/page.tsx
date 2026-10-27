@@ -18,7 +18,7 @@ export default function Page() {
   return (<>
     <div className="vhead"><div><h1>Explorer</h1><p>Toute la bibliothèque de Pièce Rêvée : de quoi apprendre, comparer et s'inspirer.</p></div></div>
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      {items.map(([h, t, n, d]) => <Link key={h} href={h} className="panel flex flex-col gap-1.5 text-ink no-underline hover:border-ink"><span className="mono text-accent">{n}</span><span className="font-display text-2xl font-semibold">{t}</span><span className="text-sm text-muted">{d}</span></Link>)}
+      {items.map(([h, t, n, d]) => <Link key={h} href={h} className="panel flex flex-col gap-1.5 text-ink no-underline hover:border-ink"><span className="mono text-accent">{n}</span><span className="font-display text-2xl">{t}</span><span className="text-sm text-muted">{d}</span></Link>)}
     </div>
   </>);
 }

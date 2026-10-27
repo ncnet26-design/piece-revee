@@ -32,7 +32,7 @@ const DARK = "#1E1F21";
 
 type Builder = (g: G, it: Item, M: Mats, color: string) => void;
 
-const B: Omit<Record<Item["type"], Builder>, "canape-velours" | "fauteuil-velours" | "plante-reelle"> = {
+const B: Omit<Record<Item["type"], Builder>, "canape-velours" | "fauteuil-velours" | "plante-reelle" | "objet"> = {
   canape(g, it, M, color) {
     const f = M.fabric(it.fabric ?? CATALOG.canape.fabric, color), s = M.struct(it.structure ?? CATALOG.canape.structure);
     const W = it.variant === "2 places" ? 1.6 : it.variant === "D'angle" ? 2.6 : 2.1, D = 0.92;
@@ -324,7 +324,7 @@ const B: Omit<Record<Item["type"], Builder>, "canape-velours" | "fauteuil-velour
 const placeholder = (w: number, d: number, h: number): Builder => (g, _it, M) => {
   const m = box(g, w, h, d, M.std("#D9D4CA", 0.9), 0, h / 2, 0); m.userData.placeholder = true;
 };
-const BUILD: Record<Item["type"], Builder> = { ...B, "canape-velours": placeholder(2.19, 1.02, 0.79), "fauteuil-velours": placeholder(0.83, 0.57, 0.69), "plante-reelle": placeholder(0.6, 0.6, 0.8) };
+const BUILD: Record<Item["type"], Builder> = { ...B, "canape-velours": placeholder(2.19, 1.02, 0.79), "fauteuil-velours": placeholder(0.83, 0.57, 0.69), "plante-reelle": placeholder(0.6, 0.6, 0.8), objet: placeholder(0.5, 0.5, 0.6) };
 
 /** Construit l'objet 3D d'un élément du plan (origine au sol, face avant vers +z local). */
 export function buildItem(it: Item, M: Mats): THREE.Group {

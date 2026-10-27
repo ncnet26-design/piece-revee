@@ -11,7 +11,7 @@ export const MODELS: Partial<Record<ItemType, { url: string; variants?: Record<s
   "fauteuil-velours": { url: "/3d/fauteuil-velours.glb", variants: { Mangue: "Mango Velvet", Paon: "Peacock Velvet" } },
   "plante-reelle": { url: "/3d/plante.glb" },
 };
-export const isModel = (t: ItemType) => t in MODELS;
+export const isModel = (t: ItemType) => t in MODELS || t === "objet";
 
 const loader = new GLTFLoader();
 const files = new Map<string, Promise<GLTF>>();
@@ -51,10 +51,11 @@ function variantMaterials(url: string, gltf: GLTF, name: string): Promise<Map<nu
 
 /** Instancie un modèle : posé au sol (y = 0), centré en x/z, face avant vers +z. */
 export async function instantiate(type: ItemType, variant: string | undefined): Promise<THREE.Object3D> {
-  const def = MODELS[type]; if (!def) throw new Error(`modèle inconnu : ${type}`);
+  const def = type === "objet" ? (variant && /^[\w-]+$/.test(variant) ? { url: `/models/${variant}.glb`, variants: undefined } : undefined) : MODELS[type];
+  if (!def) throw new Error(`modèle inconnu : ${type}`);
   const gltf = await load(def.url);
   const clone = gltf.scene.clone(true);
-  const vName = variant && def.variants ? def.variants[variant] : def.variants ? Object.values(def.variants)[0] : undefined;
+  const vName = type !== "objet" && variant && def.variants ? def.variants[variant] : def.variants ? Object.values(def.variants)[0] : undefined;
   if (vName) {
     const mats = await variantMaterials(def.url, gltf, vName);
     let i = 0;

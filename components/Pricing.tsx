@@ -25,7 +25,7 @@ export function Pricing() {
             {p.id === "pass" && <span className="self-start rounded-full bg-soft px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-muted">Sans abonnement</span>}
             <h2 className="text-[22px]">{p.name}</h2>
             <p className="text-sm text-muted">{p.tagline}</p>
-            <div className="font-display text-4xl font-extrabold tracking-tight">{p.priceTtc === 0 ? "0 €" : formatEuros(p.priceTtc)} <small className="font-body text-sm font-medium tracking-normal text-muted">{UNIT[p.billing]}{p.accessDays && p.billing === "one_time" ? ` · ${p.accessDays === 365 ? "12 mois" : `${p.accessDays} jours`}` : ""}</small></div>
+            <div className="font-display text-4xl tracking-tight">{p.priceTtc === 0 ? "0 €" : formatEuros(p.priceTtc)} <small className="font-body text-sm font-medium tracking-normal text-muted">{UNIT[p.billing]}{p.accessDays && p.billing === "one_time" ? ` · ${p.accessDays === 365 ? "12 mois" : `${p.accessDays} jours`}` : ""}</small></div>
             <ul className="dots text-sm">{p.features.map((f) => <li key={f}>{f}</li>)}</ul>
             {p.soon && p.soon.length > 0 && <p className="mt-2 text-[12.5px] text-muted">Bientôt inclus, sans surcoût : {p.soon.map((f) => f.charAt(0).toLowerCase() + f.slice(1)).join(", ")}.</p>}
             {p.id === "decouverte"

@@ -3,6 +3,7 @@
  * Unités : mètres. Axe x vers la droite, axe z vers le bas du plan (sud), y vers le haut.
  */
 
+import { libModel } from "./library";
 import { ROOM_KINDS, exampleLayout, type Layout, type OpeningKind, type RoomDef, type RoomKind, type Side } from "./layout";
 export { EYE_H, WALL_H, roomArea, roomAt, type Layout, type RoomDef, type RoomKind } from "./layout";
 
@@ -37,7 +38,7 @@ export type ItemType =
   | "canape" | "fauteuil" | "table-basse" | "table" | "chaise" | "tabouret" | "lit" | "chevet" | "armoire" | "commode" | "bibliotheque"
   | "meuble-tv" | "bureau" | "tapis" | "lampadaire" | "suspension" | "plante" | "cuisine" | "ilot" | "refrigerateur" | "meuble-vasque"
   | "miroir" | "baignoire" | "douche" | "wc" | "tableau" | "console" | "porte-manteau" | "banc" | "salon-jardin" | "transat" | "parasol" | "jardiniere"
-  | "canape-velours" | "fauteuil-velours" | "plante-reelle";
+  | "canape-velours" | "fauteuil-velours" | "plante-reelle" | "objet";
 
 export type Category = "Salon" | "Repas" | "Chambre" | "Rangement" | "Cuisine" | "Salle de bain" | "Lumière et déco" | "Extérieur";
 
@@ -62,6 +63,8 @@ export const CATALOG: Record<ItemType, CatalogEntry> = {
   "canape-velours": { label: "Canapé velours", category: "Salon", variants: ["Bleu nuit", "Champagne", "Gris", "Noir", "Rose pâle"], variantLabel: "Coloris", realistic: true },
   "fauteuil-velours": { label: "Fauteuil velours", category: "Salon", variants: ["Mangue", "Paon"], variantLabel: "Coloris", realistic: true },
   "plante-reelle": { label: "Plante en pot", category: "Lumière et déco", realistic: true },
+  /** Objet de la bibliothèque 3D : la variante porte l'identifiant du modèle. */
+  objet: { label: "Objet 3D", category: "Lumière et déco", realistic: true },
   canape: { label: "Canapé", category: "Salon", color: "#D6C3A3", fabric: "m-lin", structure: "m-chene", variants: ["3 places", "2 places", "D'angle"] },
   fauteuil: { label: "Fauteuil", category: "Salon", color: "#B9874F", fabric: "m-bouclette", structure: "m-chene" },
   "table-basse": { label: "Table basse", category: "Salon", structure: "m-travertin", variants: ["Rectangulaire", "Ronde"] },
@@ -224,7 +227,7 @@ export function parseState(raw: unknown): HomeState | null {
     items.push({
       id: typeof s.id === "string" && s.id.length < 40 ? s.id : `i${items.length + 1}-${Date.now().toString(36)}`, type: s.type as ItemType, x, z, rot,
       color: hex(s.color), fabric: id(s.fabric), structure: id(s.structure),
-      variant: typeof s.variant === "string" && entry.variants?.includes(s.variant) ? s.variant : undefined,
+      variant: typeof s.variant === "string" && (entry.variants?.includes(s.variant) || (s.type === "objet" && /^[\w-]{1,60}$/.test(s.variant))) ? s.variant : undefined,
     });
   }
   const notes: Note[] = [];
@@ -326,5 +329,6 @@ export function itemDims(it: Pick<Item, "type" | "variant">): { w: number; d: nu
     case "canape-velours": return { w: 2.19, d: 1.02, h: 0.79 };
     case "fauteuil-velours": return { w: 0.83, d: 0.57, h: 0.69 };
     case "plante-reelle": return { w: 0.7, d: 0.66, h: 0.84 };
+    case "objet": return libModel(it.variant)?.dims ?? { w: 0.6, d: 0.6, h: 0.8 };
   }
 }
