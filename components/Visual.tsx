@@ -19,7 +19,7 @@ import { paintMaterial, paintPlace, paintScene, type SceneSpec } from "@/lib/dra
 import type { TextureKind } from "@/content/types";
 import { realTexture, textureUrl } from "@/lib/textures";
 
-const TINTED = new Set<TextureKind>(["weave", "boucle", "cord", "leather", "raffia", "cane"]);
+const TINTED = new Set<TextureKind>(["weave", "boucle", "cord", "leather", "raffia", "cane", "plaster"]);
 
 interface CanvasProps { width?: number; height?: number; label: string; className?: string }
 

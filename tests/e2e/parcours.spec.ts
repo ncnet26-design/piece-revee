@@ -4,7 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 const noJsErrors = (page: import("@playwright/test").Page) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  page.on("console", (m) => { if (m.type() === "error" && !m.text().includes("404")) errors.push(m.text()); });
+  page.on("console", (m) => { if (m.type() === "error" && !m.text().includes("404") && !/ERR_TUNNEL|ERR_NAME_NOT_RESOLVED|ERR_CONNECTION/.test(m.text())) errors.push(m.text()); });
   return errors;
 };
 
@@ -17,7 +17,7 @@ test("accueil : promesse, appels à l'action, visite 3D", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("réellement");
-  await expect(page.getByRole("link", { name: "Transformer mon espace" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Créer ma planche" })).toHaveAttribute("href", /planche/);
   await expect(page.getByRole("link", { name: "Visiter en 3D" }).first()).toHaveAttribute("href", /visite-3d/);
   expect(errors).toEqual([]);
 });
@@ -140,7 +140,7 @@ test("404 utile", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toContainText("n'existe pas");
 });
 
-for (const url of ["/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
+for (const url of ["/", "/planche/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
   test(`accessibilité (axe, WCAG 2.2 AA) : ${url}`, async ({ page }) => {
     test.setTimeout(90_000);
     await page.goto(url);
@@ -152,7 +152,7 @@ for (const url of ["/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/"
 
 test("aucun débordement horizontal sur mobile", async ({ page, isMobile }) => {
   test.skip(!isMobile, "mobile uniquement");
-  for (const url of ["/", "/visite-3d/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
+  for (const url of ["/", "/planche/", "/visite-3d/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
     await page.goto(url);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), url).toBe(true);
   }
@@ -239,5 +239,40 @@ test("plan : dessiner son logement puis le visiter en 3D", async ({ page }) => {
   expect(ch2.x1 - ch2.x0).toBeCloseTo(3.6);
   expect(saved.items.some((i: { type: string; x: number; z: number }) => i.type === "lit" && i.x > ch2.x0 && i.x < ch2.x1 && i.z > ch2.z0 && i.z < ch2.z1)).toBe(true);
   await rooms.getByRole("button", { name: "Chambre 2" }).click();
+  expect(errors).toEqual([]);
+});
+
+test("planche 3D : ajouter, modifier, retirer, fiche matériaux et partage", async ({ page, context, isMobile }) => {
+  test.skip(isMobile, "parcours souris");
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  const errors = noJsErrors(page);
+  await page.goto("/planche/");
+  await expect(page.getByText("Préparation de la planche")).toHaveCount(0, { timeout: 30000 });
+  await expect(page.getByRole("heading", { name: /Ce qui compose/ })).toBeVisible();
+  const before = await page.locator('section[aria-labelledby="fiche"] > ul > li').count();
+  // Ajout d'une matière depuis la bibliothèque : elle est sélectionnée et apparaît dans la fiche.
+  await page.getByRole("searchbox", { name: "Rechercher une matière" }).fill("ardoise");
+  await page.getByRole("button", { name: /Ardoise/ }).first().click();
+  const sel = page.getByRole("region", { name: "Élément sélectionné" });
+  await expect(sel).toContainText("Ardoise");
+  await sel.getByRole("button", { name: "Galet" }).click();
+  await expect(sel.getByRole("button", { name: "Galet" })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator('section[aria-labelledby="fiche"] > ul > li')).toHaveCount(before + 1);
+  await expect(page.locator('section[aria-labelledby="fiche"] > ul').getByRole("link", { name: /IKEA/ }).first()).toHaveAttribute("href", /ikea\.com/);
+  // Peinture, puis retrait.
+  await page.getByRole("tab", { name: "Peintures" }).click();
+  await page.getByRole("button", { name: /Sauge/ }).click();
+  await expect(sel).toContainText("Peinture sauge");
+  await sel.getByRole("button", { name: "Retirer" }).click();
+  await expect(sel).toHaveCount(0);
+  // Modèle de planche et partage par lien.
+  await page.getByRole("button", { name: "Modèles" }).click();
+  await page.getByRole("dialog").getByRole("button", { name: /Terre cuite/ }).click();
+  await expect(page.getByRole("textbox", { name: "Titre de la planche" })).toHaveValue("Terre cuite et tadelakt");
+  await page.getByRole("button", { name: "Partager" }).click();
+  const link = await page.evaluate(() => navigator.clipboard.readText());
+  expect(link).toMatch(/\/planche\/#p=/);
+  await page.goto(link.replace(/^https?:\/\/[^/]+/, ""));
+  await expect(page.getByRole("textbox", { name: "Titre de la planche" })).toHaveValue("Terre cuite et tadelakt");
   expect(errors).toEqual([]);
 });

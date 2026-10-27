@@ -7,14 +7,14 @@ import { useFavorites } from "@/lib/favorites";
 import { KEYS, local } from "@/lib/storage";
 import { openCamille } from "@/lib/camille-bus";
 import { POSTHOG_KEY } from "@/lib/site";
-import { IconChat, IconGrid, IconHeart, IconHome, IconHouse, IconPhoto, IconTheme, IconUser } from "./icons";
+import { IconChat, IconGrid, IconHeart, IconHouse, IconPhoto, IconSwatches, IconTheme, IconUser } from "./icons";
 
 const NAV = [
+  { href: "/planche/", label: "Planche 3D" },
   { href: "/visite-3d/", label: "Visite 3D" },
   { href: "/galerie/", label: "Inspirations" },
   { href: "/matieres/", label: "Matières" },
   { href: "/projet/", label: "Mon projet" },
-  { href: "/explorer/", label: "Explorer" },
   { href: "/tarifs/", label: "Tarifs" },
 ];
 const EXPLORE = ["/explorer/", "/matieres/", "/accords/", "/mobilier/", "/lieux/", "/plantes/", "/guides/", "/styles/"];
@@ -35,11 +35,11 @@ export function ThemeToggle() {
 }
 
 /** Logotype : monogramme et nom en serif. */
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({ className = "", onDark = false }: { className?: string; onDark?: boolean }) {
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
-      <i aria-hidden="true" className="grid h-8 w-8 flex-none place-items-center rounded-full bg-ink font-display text-[17px] not-italic leading-none text-bg">P</i>
-      <span className="font-display text-[25px] leading-none tracking-[-.01em]">Pièce <em className="text-bronze">Rêvée</em></span>
+      <i aria-hidden="true" className={`grid h-8 w-8 flex-none place-items-center rounded-full font-display text-[17px] not-italic leading-none ${onDark ? "bg-[#F2EEE6] text-[#161512]" : "bg-ink text-bg"}`}>P</i>
+      <span className="font-display text-[25px] leading-none tracking-[-.01em]">Pièce <em className={onDark ? "text-[#D2AE7E]" : "text-bronze"}>Rêvée</em></span>
     </span>
   );
 }
@@ -74,8 +74,8 @@ export function Header() {
 export function TabBar() {
   const path = usePathname() ?? "/";
   const items = [
-    { href: "/", label: "Accueil", Icon: IconHome, active: path === "/" },
-    { href: "/galerie/", label: "Galerie", Icon: IconGrid, active: path.startsWith("/galerie") || EXPLORE.some((p) => path.startsWith(p)) },
+    { href: "/galerie/", label: "Galerie", Icon: IconGrid, active: path === "/" || path.startsWith("/galerie") || EXPLORE.some((p) => path.startsWith(p)) },
+    { href: "/planche/", label: "Planche", Icon: IconSwatches, active: path.startsWith("/planche") },
     { href: "/projet/", label: "Projet", Icon: IconPhoto, active: path.startsWith("/projet") },
     { href: "/visite-3d/", label: "3D", Icon: IconHouse, active: path.startsWith("/visite-3d") || path.startsWith("/maison") },
   ];
@@ -130,8 +130,8 @@ export function CookieBanner() {
 
 export function Footer() {
   const cols = [
-    { title: "Créer", links: [["Visite 3D", "/visite-3d/"], ["Mon projet", "/projet/"], ["Inspirations", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
-    { title: "Explorer", links: [["Matériauthèque", "/matieres/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
+    { title: "Créer", links: [["Planche de matières 3D", "/planche/"], ["Visite 3D", "/visite-3d/"], ["Mon projet", "/projet/"], ["Inspirations", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
+    { title: "Explorer", links: [["Tout explorer", "/explorer/"], ["Matériauthèque", "/matieres/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
     { title: "Informations", links: [["Mentions légales", "/legal/mentions-legales/"], ["CGU", "/legal/cgu/"], ["CGV", "/legal/cgv/"], ["Confidentialité", "/legal/confidentialite/"], ["Cookies", "/legal/cookies/"], ["Liens affiliés", "/legal/affiliation/"]] },
   ];
   return (
@@ -140,7 +140,7 @@ export function Footer() {
         <p className="max-w-[18ch] font-display text-[clamp(40px,6vw,76px)] leading-[1.02] text-[#F2EEE6]">Votre intérieur, <em className="text-[#D2AE7E]">réellement</em> rêvé.</p>
         <div className="mt-14 grid gap-10 border-t border-white/10 pt-10 md:grid-cols-4">
           <div className="flex flex-col gap-3">
-            <span className="text-[#F2EEE6]"><Logo /></span>
+            <span className="text-[#F2EEE6]"><Logo onDark /></span>
             <p className="max-w-[34ch]">Architecture d'intérieur et paysage pour tous. Liens d'achat et images générées par IA toujours signalés.</p>
           </div>
           {cols.map((c) => (

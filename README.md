@@ -5,6 +5,7 @@ une **visite 3D** où l'on se promène de pièce en pièce et où tout se modifi
 des rendus de l'espace transformé, des produits réels d'enseignes, et **Camille**, assistante IA
 en architecture d'intérieur et en paysage, disponible à chaque étape.
 
+**Planche de matières 3D** (`/planche/`) pour composer une ambiance avec de vrais échantillons et l'exporter en HD.
 Matières en textures photographiées (Poly Haven, CC0), bibliothèque de 37 meubles 3D réalistes, rendu HD téléchargeable,
 et pour chaque objet des liens « Où l'acheter » vers IKEA, Castorama, Leroy Merlin, Maisons du Monde et d'autres enseignes.
 

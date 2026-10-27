@@ -10,6 +10,10 @@ import { COLLECTIONS, bestLandscape, byCollection } from "@/lib/photos";
 import { REAL_TEXTURES } from "@/lib/textures";
 import { RETAILERS } from "@/lib/retailers";
 import { meta } from "@/lib/seo";
+import { LIBRARY_MODELS, frenchName } from "@/lib/home3d/library";
+
+const SHOWCASE = ["sofa_02", "ArmChair_01", "Ottoman_01", "Chandelier_01", "ClassicConsole_01", "potted_plant_04", "Lantern_01", "marble_bust_01"]
+  .map((id) => LIBRARY_MODELS.find((m) => m.id === id)!).filter(Boolean);
 
 export const metadata = meta({ title: "Pièce Rêvée · Votre intérieur rêvé, réellement faisable", description: "Visitez et transformez votre logement en 3D, avec de vraies matières et de vrais meubles à acheter. Architecture d'intérieur et paysage pour tous.", path: "/" });
 
@@ -20,26 +24,37 @@ const FEATURED = ["m-chene", "m-travertin", "m-terrazzo", "m-lin", "m-velours", 
 
 export default function Home() {
   const pass = PLANS.find((p) => p.id === "pass")!;
-  const hero = bestLandscape(byCollection("interieurs")) ?? bestLandscape(byCollection("villas"));
   const collections = COLLECTIONS.map((c) => ({ ...c, photo: bestLandscape(byCollection(c.id)) })).filter((c) => c.photo).slice(0, 6);
   return (
     <>
-      {/* ——— Ouverture plein écran ——— */}
-      <section className="relative left-1/2 -mt-7 w-screen -translate-x-1/2 overflow-hidden bg-[#161512] text-white" style={{ minHeight: "min(92svh, 920px)" }}>
-        {hero
-          ? <Photo photo={hero} priority className="absolute inset-0 h-full w-full [&>img]:opacity-90" />
-          // eslint-disable-next-line @next/next/no-img-element
-          : <img src="/visuels/hero-3d.webp" alt="Salon en 3D réalisé avec Pièce Rêvée : canapé en velours, parquet de chêne, vue sur le jardin" className="absolute inset-0 h-full w-full object-cover opacity-90" fetchPriority="high" />}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/10" />
-        <div className="wrap relative flex min-h-[inherit] flex-col justify-end pb-14 pt-32 sm:pb-20" style={{ minHeight: "min(92svh, 920px)" }}>
-          <span className="font-ui text-[12px] font-semibold uppercase tracking-[.22em] text-[#E9DCC6]">Architecture d'intérieur et paysage pour tous</span>
-          <h1 className="mt-4 max-w-[14ch] text-[clamp(52px,9vw,128px)] leading-[.92] text-white">Votre intérieur rêvé, <em className="text-[#E9DCC6]">réellement</em> faisable.</h1>
-          <p className="mt-6 max-w-[52ch] text-[17px] text-white/85 sm:text-lg">Dessinez votre logement, visitez-le en 3D, essayez de vraies matières et de vrais meubles, puis achetez-les en un clic chez les enseignes que vous connaissez.</p>
+      {/* ——— Ouverture ——— */}
+      <section className="grid items-center gap-10 pt-6 sm:pt-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
+        <div>
+          <span className="eyebrow">Architecture d'intérieur et paysage pour tous</span>
+          <h1 className="mt-4 max-w-[13ch] text-[clamp(48px,7vw,104px)] leading-[.94]">Votre intérieur rêvé, <em>réellement</em> faisable.</h1>
+          <p className="mt-6 max-w-[48ch] text-[17px] text-muted sm:text-lg">Composez vos ambiances avec de vraies matières en 3D, visitez votre logement pièce par pièce, puis retrouvez chaque élément chez les enseignes que vous connaissez.</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link className="btn btn-lg btn-light" href="/visite-3d/">Visiter en 3D</Link>
-            <Link className="btn btn-lg border-white/40 bg-transparent text-white hover:border-white" href="/projet/">Transformer mon espace</Link>
+            <Link className="btn btn-lg btn-primary" href="/planche/">Créer ma planche</Link>
+            <Link className="btn btn-lg" href="/visite-3d/">Visiter en 3D</Link>
           </div>
+          <p className="mt-6 text-[13.5px] text-muted">Gratuit, sans compte · {Object.keys(REAL_TEXTURES).length} matières photographiées · {LIBRARY_MODELS.length} objets 3D</p>
         </div>
+        <div className="relative">
+          <Link href="/planche/" className="block overflow-hidden rounded-[var(--r-l)] bg-[#F4EFE6] shadow-[var(--shadow)]" aria-label="Ouvrir la planche de matières 3D">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/visuels/planche-hero.webp" width={1600} height={1200} alt="Planche de matières en 3D : travertin, parquet en point de Hongrie, lin, jute, béton et nuanciers de peinture" className="h-auto w-full" fetchPriority="high" />
+          </Link>
+          <span aria-hidden="true" className="absolute -left-3 bottom-8 hidden rounded-full bg-[var(--surface)] px-4 py-2 text-[13px] shadow-lg sm:block"><b>Travertin</b> · texture photographiée</span>
+          <span aria-hidden="true" className="absolute -right-2 top-6 hidden rounded-full bg-[var(--accent)] px-4 py-2 text-[13px] text-[var(--bg)] shadow-lg sm:block">Où l'acheter : IKEA, Castorama…</span>
+        </div>
+      </section>
+
+      {/* ——— Enseignes ——— */}
+      <section className="mt-16 border-y border-line py-6" aria-label="Enseignes vers lesquelles mènent nos liens">
+        <p className="text-center text-[12.5px] uppercase tracking-[.18em] text-muted">Retrouvez les produits chez</p>
+        <ul className="m-0 mt-4 flex list-none flex-wrap items-center justify-center gap-x-10 gap-y-3 p-0 font-display text-[clamp(20px,2.2vw,28px)] text-ink/70">
+          {RETAILERS.map((r) => <li key={r.id}>{r.name}</li>)}
+        </ul>
       </section>
 
       {/* ——— Promesse ——— */}
@@ -51,9 +66,9 @@ export default function Home() {
       {/* ——— Trois façons ——— */}
       <section className="section grid gap-5 md:grid-cols-3" aria-label="Ce que vous pouvez faire">
         {[
-          { href: "/visite-3d/", img: "/visuels/visite-3d.webp", kicker: "01 · Visite 3D", title: "Promenez-vous chez vous", text: "Dessinez vos pièces aux vraies mesures, puis déplacez-vous de l'entrée au jardin. Tout se modifie d'un geste." },
-          { href: "/projet/", img: "/visuels/etude.webp", kicker: "02 · Étude sur photo", title: "Une photo, un projet complet", text: "Palette, plan annoté, liste d'achats et tutos, à partir d'une simple photo de votre pièce." },
-          { href: "/matieres/", img: "/visuels/matieres.webp", kicker: "03 · Matériauthèque", title: "De vraies matières", text: "Parquets, pierres, tissus, enduits : textures photographiées, fiches d'entretien et prix indicatifs." },
+          { href: "/planche/", img: "/visuels/planche-sombre.webp", kicker: "01 · Planche 3D", title: "Composez avec du vrai", text: "Échantillons de bois, pierre, tissu et peinture posés en 3D, éclairés comme en atelier. Export HD en un clic." },
+          { href: "/visite-3d/", img: "/visuels/visite-3d.webp", kicker: "02 · Visite 3D", title: "Promenez-vous chez vous", text: "Dessinez vos pièces aux vraies mesures, puis déplacez-vous de l'entrée au jardin. Tout se modifie d'un geste." },
+          { href: "/matieres/", img: "/visuels/etude.webp", kicker: "03 · Matériauthèque", title: "De vraies matières", text: "Parquets, pierres, tissus, enduits : textures photographiées, fiches d'entretien et prix indicatifs." },
         ].map((f) => (
           <Link key={f.href} href={f.href} className="group relative block overflow-hidden rounded-[var(--r-l)] bg-[#161512] text-white no-underline" style={{ aspectRatio: "4 / 5" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -84,6 +99,20 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ——— Bibliothèque 3D ——— */}
+      <section className="section">
+        <div className="vhead"><div><span className="eyebrow">Bibliothèque 3D</span><h2 className="h2 mt-2">Des objets <em>photographiés</em>, pas dessinés</h2><p>{LIBRARY_MODELS.length} meubles et objets numérisés en 3D (licence libre) à poser sur vos planches et dans votre visite.</p></div><Link className="btn" href="/planche/">Les essayer</Link></div>
+        <ul className="m-0 grid list-none grid-cols-3 gap-3 p-0 sm:grid-cols-4 lg:grid-cols-8">
+          {SHOWCASE.map((m) => (
+            <li key={m.id} className="rounded-[var(--r)] bg-soft p-3 text-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/models/thumbs/${m.id}.webp`} alt="" width={240} height={240} loading="lazy" className="mx-auto aspect-square w-full object-contain" />
+              <span className="mt-2 block truncate text-[12.5px]">{frenchName(m)}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       {/* ——— Biens d'exception ——— */}
       {collections.length > 0 && (
         <section className="section">
@@ -91,7 +120,7 @@ export default function Home() {
           <div className="grid gap-4 md:grid-cols-6">
             {collections.map((c, i) => (
               <Link key={c.id} href={`/galerie/?collection=${c.id}`} className={`group relative block overflow-hidden rounded-[var(--r-l)] text-white no-underline ${i === 0 ? "md:col-span-4 md:row-span-2" : "md:col-span-2"}`} style={{ aspectRatio: i === 0 ? "4 / 3" : "4 / 3" }}>
-                <Photo photo={c.photo!} className="absolute inset-0 h-full w-full [&>img]:transition-transform [&>img]:duration-700 group-hover:[&>img]:scale-[1.04]" />
+                <Photo photo={c.photo!} inLink className="absolute inset-0 h-full w-full [&>img]:transition-transform [&>img]:duration-700 group-hover:[&>img]:scale-[1.04]" />
                 <span aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                 <span className="pointer-events-none absolute bottom-0 left-0 p-5"><span className="block font-display text-[clamp(24px,2.4vw,34px)] leading-tight">{c.label}</span><span className="mt-1 block max-w-[40ch] text-[13.5px] text-white/80">{c.blurb}</span></span>
               </Link>
@@ -108,9 +137,8 @@ export default function Home() {
           <p className="mt-4 max-w-[52ch] text-muted">Chaque meuble, chaque sol, chaque peinture de votre projet mène directement aux produits correspondants chez les grandes enseignes françaises, avec leurs prix et leurs disponibilités du jour.</p>
           <Link className="btn btn-primary mt-6" href="/visite-3d/">Essayer dans ma pièce</Link>
         </div>
-        <ul className="m-0 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3">
-          {RETAILERS.map((r) => <li key={r.id} className="rounded-[var(--r-s)] border border-line bg-surface px-4 py-5 text-center font-ui text-[15px] font-semibold">{r.name}</li>)}
-        </ul>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/visuels/hero-3d.webp" width={2000} height={1125} loading="lazy" alt="Salon de la visite 3D : canapé en velours bleu, parquet en point de Hongrie, ouverture sur la terrasse" className="h-auto w-full rounded-[var(--r)] shadow-[var(--shadow)]" />
       </section>
 
       {/* ——— Galerie par style ——— */}

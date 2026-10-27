@@ -16,3 +16,5 @@ export const IconExternal = (p: P) => <svg {...base} {...p}><path d="M14 4h6v6M2
 export const IconTheme = (p: P) => <svg {...base} {...p}><circle cx="12" cy="12" r="8" /><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" /></svg>;
 export const IconCheck = (p: P) => <svg {...base} strokeWidth={2.2} {...p}><path d="M5 12l5 5 9-10" /></svg>;
 export const IconUser = (p: P) => <svg {...base} {...p}><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>;
+/** Échantillons superposés (planche de matières). */
+export const IconSwatches = (p: P) => <svg {...base} {...p}><rect x="3" y="9" width="10" height="10" rx="1.5" transform="rotate(-8 8 14)" /><rect x="10" y="4" width="10" height="10" rx="1.5" transform="rotate(6 15 9)" /><circle cx="16.5" cy="17.5" r="3.5" /></svg>;

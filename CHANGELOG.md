@@ -2,6 +2,11 @@
 
 ## 0.5.0 — 27 octobre 2026
 
+- **Planche de matières 3D** (`/planche/`) : de vrais échantillons (carreaux, lames, galets, tissus drapés, nuanciers de peinture),
+  des objets 3D photographiés et vos photos, posés sur une planche éclairée comme en atelier, avec ombres douces et empilement réaliste.
+  Glisser-déposer, rotation, taille, vue de dessus ou en perspective, 3 modèles de départ, export image HD, partage par lien,
+  et une **fiche matériaux** imprimable avec origine, prix indicatif, crédits et liens « Où l'acheter ».
+- Page d'accueil repensée autour de la planche (rendus réels), bandeau des enseignes, vitrine de la bibliothèque 3D.
 - **Refonte premium** : nouvelle identité (ivoire, encre, bronze), titres en Instrument Serif, en-tête et pied de page redessinés,
   page d'accueil entièrement refaite avec de vrais rendus de la 3D et de vraies textures.
 - **Matières réelles** : 26 matières utilisent désormais des textures photographiées (couleur, relief, rugosité) de Poly Haven (CC0) :

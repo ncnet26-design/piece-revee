@@ -7,6 +7,7 @@ import type { TextureKind } from "@/content/types";
 import { buildItem, type Mats } from "./furniture";
 import { instantiate, isModel } from "./models";
 import { realTexture, textureUrl } from "@/lib/textures";
+import { normalFrom } from "./normal";
 import { deriveStructure, hasCeiling, roomAt as roomAtL, viewpoint, type Layout, type RoomDef, type Wall } from "./layout";
 import { CATALOG, EYE_H, PSEUDO_MATERIALS, WALL_H, defaultRoomStyle, type HomeState, type Item, type Note, type RoomStyle, type WallFinish } from "./plan";
 
@@ -27,23 +28,6 @@ const ACCENT = 0x2747d0;
 /** Intensité du relief (carte de normales calculée depuis la texture) selon le motif. */
 const BUMP: Partial<Record<TextureKind, number>> = { tile: 3, cement: 1.2, hex: 3, brick: 4, planks: 2.2, wood: 1.4, plaster: 1.2, marble: 0.3, travertine: 1.8, terrazzo: 0.8, slate: 2.6, gravel: 4, cork: 1.6, weave: 2.4, cane: 2.6, fluted: 3, washi: 1, boucle: 2.6, cord: 2.4, leather: 1.3, raffia: 2.4 };
 
-/** Carte de normales (relief) déduite de la luminosité : joints et veines sombres = creux. */
-function normalFrom(img: HTMLCanvasElement, strength: number): THREE.CanvasTexture {
-  const w = img.width, h = img.height, src = img.getContext("2d")!.getImageData(0, 0, w, h).data;
-  const lum = new Float32Array(w * h);
-  for (let i = 0; i < w * h; i++) lum[i] = (0.3 * src[i * 4]! + 0.59 * src[i * 4 + 1]! + 0.11 * src[i * 4 + 2]!) / 255;
-  const cv = document.createElement("canvas"); cv.width = w; cv.height = h;
-  const x = cv.getContext("2d")!, out = x.createImageData(w, h), d = out.data, k = strength * (w / 256);
-  for (let yy = 0; yy < h; yy++) for (let xx = 0; xx < w; xx++) {
-    const l = (xx - 1 + w) % w, r = (xx + 1) % w, u = ((yy - 1 + h) % h) * w, dn = ((yy + 1) % h) * w;
-    const nx = -(lum[yy * w + r]! - lum[yy * w + l]!) * k, ny = (lum[dn + xx]! - lum[u + xx]!) * k, len = Math.hypot(nx, ny, 1);
-    const o = (yy * w + xx) * 4;
-    d[o] = (nx / len * 0.5 + 0.5) * 255; d[o + 1] = (ny / len * 0.5 + 0.5) * 255; d[o + 2] = (1 / len * 0.5 + 0.5) * 255; d[o + 3] = 255;
-  }
-  x.putImageData(out, 0, 0);
-  const t = new THREE.CanvasTexture(cv); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.NoColorSpace;
-  return t;
-}
 /** Faces extérieures des murs qui ne donnent sur aucune pièce. */
 const FACADE = "_facade";
 
