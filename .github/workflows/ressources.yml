@@ -8,6 +8,8 @@ on:
       modeles: { description: "Meubles et objets 3D (Poly Haven, CC0)", type: boolean, default: true }
       photos: { description: "Photos libres de la galerie (Openverse ; Unsplash/Pexels si clés)", type: boolean, default: true }
       liens: { description: "Vérifier les liens d'achat des enseignes", type: boolean, default: true }
+      catalogue: { description: "Inventaire illustré des textures Poly Haven (pour choisir)", type: boolean, default: false }
+      choix: { description: "Télécharger les textures choisies (content/data/texture-picks.json)", type: boolean, default: false }
 
 permissions:
   contents: write
@@ -22,6 +24,14 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
+      - name: Inventaire des textures
+        if: ${{ inputs.catalogue }}
+        continue-on-error: true
+        run: node --experimental-strip-types scripts/texture-catalog.ts
+      - name: Textures choisies pour le showroom
+        if: ${{ inputs.choix }}
+        continue-on-error: true
+        run: node --experimental-strip-types scripts/fetch-assets.ts --picks
       - name: Textures photographiques
         if: ${{ inputs.textures }}
         continue-on-error: true
@@ -50,5 +60,6 @@ jobs:
           git config user.email "robot@users.noreply.github.com"
           git checkout -B robot/ressources
           git add public/textures public/models content/data || true
+          git add -f .robot || true
           git commit -m "ressources: textures, meubles 3D et photos libres ($(date +%Y-%m-%d))" || { echo "Rien de nouveau"; exit 0; }
           git push -f origin robot/ressources

@@ -13,7 +13,7 @@ import sharp from "sharp";
 const UA = { "user-agent": "PieceRevee-AssetFetcher/1.0 (site d'aménagement intérieur ; téléchargement ponctuel d'assets CC0)" };
 const API = "https://api.polyhaven.com";
 const args = new Set(process.argv.slice(2));
-const all = !args.has("--textures") && !args.has("--models");
+const all = !args.has("--textures") && !args.has("--models") && !args.has("--picks");
 
 type Asset = { name: string; type: number; categories: string[]; tags: string[]; download_count: number; authors: Record<string, string> };
 async function json<T>(url: string): Promise<T> {
@@ -151,5 +151,37 @@ async function fetchModels() {
   writeFileSync("content/data/models.json", `${JSON.stringify(manifest, null, 2)}\n`);
 }
 
+/* ——— 3. Textures choisies à la main (showroom) ——— */
+/** content/data/texture-picks.json : { "clé-du-site": "identifiant Poly Haven" }, choisis sur les planches-contact du robot. */
+async function fetchPicks() {
+  const { readFileSync } = await import("node:fs");
+  const picks = JSON.parse(readFileSync("content/data/texture-picks.json", "utf8")) as Record<string, string>;
+  const out: Record<string, { assetId: string; name: string; url: string; authors: string[]; license: string; tile: number }> = {};
+  const list = await json<Record<string, Asset>>(`${API}/assets?type=textures`);
+  for (const [key, id] of Object.entries(picks)) {
+    const a = list[id]; if (!a) { console.log(`✗ ${key} : ${id} introuvable`); continue; }
+    try {
+      const files = await json<Record<string, Record<string, Record<string, { url: string }>>>>(`${API}/files/${id}`);
+      const k = (re: RegExp) => Object.keys(files).find((x) => re.test(x));
+      const dir = join("public/textures", key);
+      rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true });
+      for (const [name, fk] of [["diff", k(/^diff/i)], ["nor", k(/^nor_gl$/i)], ["rough", k(/^rough$/i)]] as Array<[string, string | undefined]>) {
+        const src = fk ? files[fk]?.["1k"]?.jpg?.url ?? files[fk]?.["1k"]?.png?.url : undefined;
+        if (!src) continue;
+        const r = await fetch(src, { headers: UA, signal: AbortSignal.timeout(60000) }); if (!r.ok) continue;
+        await sharp(Buffer.from(await r.arrayBuffer())).resize(1024, 1024, { fit: "cover" }).webp({ quality: name === "diff" ? 84 : 88 }).toFile(join(dir, `${name}.webp`));
+      }
+      if (!existsSync(join(dir, "diff.webp"))) { console.log(`✗ ${key} : pas de couleur`); continue; }
+      const dim = a.tags.map((t) => /^(\d+(?:\.\d+)?)\s*m$/.exec(t)?.[1]).find(Boolean);
+      out[key] = { assetId: id, name: a.name, url: `https://polyhaven.com/a/${id}`, authors: Object.keys(a.authors), license: "CC0 1.0", tile: dim ? Number(dim) : 2 };
+      writeFileSync("content/data/textures-showroom.json", `${JSON.stringify(out, null, 2)}\n`);
+      console.log(`✓ ${key} ← ${a.name}`);
+    } catch (e) { console.log(`✗ ${key} : ${(e as Error).message}`); }
+    await sleep(200);
+  }
+  writeFileSync("content/data/textures-showroom.json", `${JSON.stringify(out, null, 2)}\n`);
+}
+
+if (args.has("--picks")) await fetchPicks();
 if (all || args.has("--textures")) await fetchTextures();
 if (all || args.has("--models")) await fetchModels();
