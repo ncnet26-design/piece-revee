@@ -93,7 +93,7 @@ export function StudyBoard({ project }: { project: Project }) {
               <span className="text-[12.5px] text-muted">Glissez pour comparer. Mention « Image générée par IA » sur chaque rendu.</span>
             </div>
             {!render?.url && <p className="notice">{project.demo ? "Démonstration : illustration dessinée. En production, un rendu photoréaliste de votre photo (même géométrie, même point de vue) s'affiche ici." : "Les rendus sont en cours de génération."}</p>}
-            <p className="text-[13px] text-muted">Retouche par zone : touchez un élément du rendu et décrivez le changement (« remplace le canapé par un modèle en velours vert »). Le reste de l'image reste identique.</p>
+            <p className="text-[13px] text-muted">Pour changer un élément, utilisez « Affiner » avec une consigne précise (« remplace le canapé par un modèle en velours vert »). La retouche par simple toucher sur l'image arrive bientôt.</p>
           </div>
         )}
 

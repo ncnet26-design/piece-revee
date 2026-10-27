@@ -24,7 +24,7 @@ export const PROJECT_STEPS: ProjectStep[] = [
     mistakes: ["Choisir une couleur sur écran sans échantillon", "Mélanger trop de styles dans une même pièce", "Oublier l'éclairage du soir"],
     camillePrompt: "Je suis à l'étape de conception. Comment savoir si mon projet est cohérent ?" },
   { id: "acheter", title: "Acheter", subtitle: "Liste d'achats, délais, alternatives",
-    todo: ["Commander d'abord les articles à long délai (canapé, sur-mesure)", "Vérifier les dimensions de chaque meuble sur le plan", "Comparer les alternatives proposées", "Activer les alertes de prix si vous pouvez attendre"],
+    todo: ["Commander d'abord les articles à long délai (canapé, sur-mesure)", "Vérifier les dimensions de chaque meuble sur le plan", "Comparer les alternatives proposées", "Surveiller les soldes et les promotions si vous pouvez attendre"],
     todoExterior: ["Acheter les plantes en saison de plantation", "Préférer de jeunes plants : moins chers, mieux installés"],
     mistakes: ["Tout commander d'un coup sans regarder les délais", "Oublier frais de livraison et de montage", "Acheter une copie d'un meuble de designer en pensant à l'original"],
     camillePrompt: "Je vais acheter. Par quoi commencer et comment éviter les erreurs ?" },

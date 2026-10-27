@@ -13,6 +13,8 @@ export interface Plan {
   accessDays?: number;
   tagline: string;
   features: string[];
+  /** Fonctions annoncées mais pas encore livrées : affichées « bientôt », jamais vendues comme acquises. */
+  soon?: string[];
   /** Quotas par période (mois glissant pour les abonnements, durée d'accès pour le Pass). `null` = illimité (usage raisonnable). */
   quotas: Record<UsageKind, number | null>;
   /** Limite de messages à Camille par jour. `null` = illimitée (usage raisonnable). */
@@ -36,14 +38,16 @@ export const PLANS: readonly Plan[] = [
   {
     id: "pass", name: "Pass Projet", priceTtc: 1490, billing: "one_time", accessDays: 30,
     tagline: "Une pièce à faire ? Sans abonnement",
-    features: ["3 études complètes", "30 rendus HD", "Retouche par zone et export PDF", "Camille illimitée et guide d'étapes"],
+    features: ["3 études complètes", "30 rendus HD sans filigrane", "Export PDF de l'étude", "Camille illimitée et guide d'étapes"],
+    soon: ["Retouche par zone"],
     quotas: { study: 3, render: 30, edit: 30, message: null, pdf: 10 },
     messagesPerDay: null, renderMaxPx: 2048, watermark: false, expectedAiCost: 470,
   },
   {
     id: "plus_mensuel", name: "Plus", priceTtc: 990, billing: "monthly",
     tagline: "Tout votre logement, mois après mois",
-    features: ["10 études et 60 rendus HD par mois", "Ma maison : toutes vos pièces", "Retouche par zone, PDF, alertes de prix", "Essai gratuit de 7 jours"],
+    features: ["10 études et 60 rendus HD par mois", "Ma maison : toutes vos pièces", "Export PDF illimité", "Essai gratuit de 7 jours"],
+    soon: ["Retouche par zone", "Alertes de prix"],
     quotas: { study: 10, render: 60, edit: 60, message: null, pdf: null },
     messagesPerDay: null, renderMaxPx: 4096, watermark: false, trialDays: 7, highlight: true, expectedAiCost: 350,
   },
@@ -64,14 +68,16 @@ export const PLANS: readonly Plan[] = [
   {
     id: "pro", name: "Pro", priceTtc: 2900, billing: "monthly",
     tagline: "Agents immobiliers et home stagers",
-    features: ["100 rendus par mois", "Home staging en lot (50 photos)", "Export HD sans filigrane", "Facture entreprise"],
+    features: ["30 études et 100 rendus par mois", "Export HD sans filigrane", "Facture Stripe à votre nom"],
+    soon: ["Home staging en lot"],
     quotas: { study: 30, render: 100, edit: 100, message: null, pdf: null },
     messagesPerDay: null, renderMaxPx: 4096, watermark: false, expectedAiCost: 1100,
   },
   {
     id: "agence", name: "Pro Agence", priceTtc: 7900, billing: "monthly",
     tagline: "Pour les équipes",
-    features: ["400 rendus par mois", "3 utilisateurs", "Marque blanche (votre logo)"],
+    features: ["100 études et 400 rendus par mois", "Export HD sans filigrane", "Facture Stripe à votre nom"],
+    soon: ["Plusieurs utilisateurs", "Marque blanche (votre logo)"],
     quotas: { study: 100, render: 400, edit: 400, message: null, pdf: null },
     messagesPerDay: null, renderMaxPx: 4096, watermark: false, expectedAiCost: 4400,
   },

@@ -1,6 +1,7 @@
 -- Tâches planifiées et file d'attente (extensions disponibles sur Supabase, y compris en offre gratuite).
 create extension if not exists pg_cron;
 create extension if not exists pgmq;
+create extension if not exists pg_net;
 
 select pgmq.create('etudes');
 select pgmq.create('rendus');

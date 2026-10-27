@@ -68,7 +68,7 @@ export function Account() {
       <section className="panel flex flex-col gap-3" aria-labelledby="acc-plan">
         <h2 id="acc-plan" className="text-xl">Mon offre : {plan.name}</h2>
         {ent ? <ul className="dots text-sm">
-          {(["study", "render", "edit"] as const).map((k) => { const lim = plan.quotas[k]; const used = ent.usage[k] ?? 0; return <li key={k}>{({ study: "Études", render: "Rendus", edit: "Retouches" })[k]} : {used} utilisé{used > 1 ? "s" : ""}{lim === null ? " (usage raisonnable)" : ` sur ${lim}`}</li>; })}
+          {(["study", "render"] as const).map((k) => { const lim = plan.quotas[k]; const used = ent.usage[k] ?? 0; return <li key={k}>{({ study: "Études", render: "Rendus", edit: "Retouches" })[k]} : {used} utilisé{used > 1 ? "s" : ""}{lim === null ? " (usage raisonnable)" : ` sur ${lim}`}</li>; })}
           {ent.creditBalance > 0 && <li>Crédits de rendu : {ent.creditBalance}</li>}
           {ent.accessUntil && <li>Accès jusqu'au {new Date(ent.accessUntil).toLocaleDateString("fr-FR")}</li>}
         </ul> : <p className="text-sm text-muted">{plan.features.join(" · ")}</p>}

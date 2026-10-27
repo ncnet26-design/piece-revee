@@ -27,6 +27,7 @@ export function Pricing() {
             <p className="text-sm text-muted">{p.tagline}</p>
             <div className="font-display text-4xl font-extrabold tracking-tight">{p.priceTtc === 0 ? "0 €" : formatEuros(p.priceTtc)} <small className="font-body text-sm font-medium tracking-normal text-muted">{UNIT[p.billing]}{p.accessDays && p.billing === "one_time" ? ` · ${p.accessDays === 365 ? "12 mois" : `${p.accessDays} jours`}` : ""}</small></div>
             <ul className="dots text-sm">{p.features.map((f) => <li key={f}>{f}</li>)}</ul>
+            {p.soon && p.soon.length > 0 && <p className="mt-2 text-[12.5px] text-muted">Bientôt inclus, sans surcoût : {p.soon.join(", ")}.</p>}
             {p.id === "decouverte"
               ? <Link className="btn mt-auto" href="/connexion/">Créer mon compte</Link>
               : <button type="button" className={`btn mt-auto ${p.highlight ? "btn-primary" : ""}`} disabled={busy !== null} onClick={() => void buy(p.id)}>{busy === p.id ? <><span className="spinner" /> Redirection…</> : p.trialDays ? `Essayer ${p.trialDays} jours` : "Choisir"}</button>}
