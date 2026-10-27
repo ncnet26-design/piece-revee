@@ -17,5 +17,5 @@ Rien n'est caché : voici ce qui ne fonctionne pas encore, ou seulement en parti
 | Sécurité | CSP avec `'unsafe-inline'` (contrainte de l'export statique) | Rendu serveur avec nonces |
 | Performance | Lighthouse mobile (performance) ≈ 84 à 95 selon les pages ; accessibilité, bonnes pratiques et SEO à 100 sur les pages publiques ; LCP ≈ 2,7 à 3,8 s en simulation 4G lente (objectif 2,5 s) | Hébergement CDN réel (Cloudflare) améliore en général ce chiffre |
 | Textes juridiques | Brouillons à faire relire ; éditeur et médiateur à compléter | Voir `docs/A_FAIRE.md` |
-| Visite 3D | Appartement d'exemple unique ; mobilier en volumes simplifiés (pas de modèles 3D photoréalistes) ; on ne peut pas encore dessiner son propre plan ni importer ses mesures ; les astuces restent sur l'appareil (pas encore de partage communautaire) | Éditeur de plan, bibliothèque de modèles 3D sous licence libre, comptes et modération |
+| Visite 3D et plan | Pièces rectangulaires uniquement (une pièce en L se compose de deux rectangles), un seul niveau, hauteur sous plafond fixe (2,60 m) ; mobilier en volumes simplifiés ; ameublement automatique = simple proposition ; les astuces restent sur l'appareil | Pièces de forme libre, étages, bibliothèque de modèles 3D sous licence libre, comptes et modération |
 | Dépôt | Pas encore poussé sur GitHub | Compte GitHub d'Ewan |

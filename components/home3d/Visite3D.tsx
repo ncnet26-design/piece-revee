@@ -6,18 +6,22 @@ import { STYLES } from "@/content/styles";
 import { openCamille } from "@/lib/camille-bus";
 import type { HomeEngine, Mode, Selection } from "@/lib/home3d/engine";
 import {
-  CATALOG, CATEGORIES, COLORS, FABRICS, FLOOR_MATERIALS_IN, FLOOR_MATERIALS_OUT, PAINTS, ROOMS, STORAGE_KEY, STRUCTURES, WALL_MATERIALS,
-  decodeState, defaultState, encodeState, itemDims, parseState, roomArea, roomAt, roomById,
-  type HomeState, type Item, type ItemType, type Note, type RoomStyle,
+  CATALOG, CATEGORIES, COLORS, FABRICS, FLOOR_MATERIALS_IN, FLOOR_MATERIALS_OUT, PAINTS, PSEUDO_MATERIALS, STORAGE_KEY, STRUCTURES, WALL_MATERIALS,
+  decodeState, defaultRoomStyle, defaultState, encodeState, itemDims, parseState, roomArea, syncRoomStyles,
+  type HomeState, type Item, type ItemType, type Layout, type Note, type RoomDef, type RoomStyle,
 } from "@/lib/home3d/plan";
+import { roomAt as roomAtL, viewpoint } from "@/lib/home3d/layout";
+import PlanEditor from "./PlanEditor";
 import { ITEM_TIPS, ROOM_TIPS } from "@/lib/home3d/tips";
 import { IconClose } from "../icons";
 
 type Panel = null | "ajouter" | "astuces";
 const uid = (p: string) => `${p}${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
-const matName = (id: string | undefined) => (id ? materialById.get(id)?.name ?? id : "");
-const matDot = (id: string) => materialById.get(id)?.colors[0] ?? "#ccc";
+const matName = (id: string | undefined) => (id ? materialById.get(id)?.name ?? PSEUDO_MATERIALS[id]?.name ?? id : "");
+const matDot = (id: string) => materialById.get(id)?.colors[0] ?? PSEUDO_MATERIALS[id]?.colors[0] ?? "#ccc";
 const cm = (m: number) => `${Math.round(m * 100)} cm`;
+
+const NO_ROOM: RoomDef = { id: "", name: "Pièce", kind: "salon", x0: 0, z0: 0, x1: 1, z1: 1 };
 
 function loadLocal(): HomeState | null {
   try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? parseState(JSON.parse(raw)) : null; } catch { return null; }
@@ -40,6 +44,7 @@ export default function Visite3D() {
   const [more, setMore] = useState(false);
   const [draft, setDraft] = useState("");
   const [pendingNote, setPendingNote] = useState<string | null>(null);
+  const [planOpen, setPlanOpen] = useState(false);
   const pendingNoteRef = useRef<string | null>(null);
   useEffect(() => { pendingNoteRef.current = pendingNote; }, [pendingNote]);
 
@@ -97,7 +102,17 @@ export default function Visite3D() {
 
   const update = (fn: (s: HomeState) => HomeState) => setState((s) => (s ? fn(s) : s));
   const patchItem = (id: string, p: Partial<Item>) => update((s) => ({ ...s, items: s.items.map((i) => (i.id === id ? { ...i, ...p } : i)) }));
-  const patchRoom = (rid: string, p: Partial<RoomStyle>) => update((s) => ({ ...s, rooms: { ...s.rooms, [rid]: { ...s.rooms[rid]!, ...p } } }));
+  const roomOf = (id: string) => state?.layout.rooms.find((r) => r.id === id);
+  const roomAt = (x: number, z: number) => (state ? roomAtL(state.layout, x, z) : undefined);
+  const patchRoom = (rid: string, p: Partial<RoomStyle>) => update((s) => ({ ...s, rooms: { ...s.rooms, [rid]: { ...(s.rooms[rid] ?? defaultRoomStyle(s.layout.rooms.find((r) => r.id === rid)?.kind ?? "salon")), ...p } } }));
+  const applyPlan = (layout: Layout, items: Item[]) => {
+    engine.current?.select(null); setSel(null);
+    update((s) => ({ ...s, layout, items, rooms: syncRoomStyles(layout, s.rooms) }));
+    setPlanOpen(false);
+    const first = layout.rooms.find((r) => r.kind !== "exterieur") ?? layout.rooms[0];
+    if (first) window.setTimeout(() => { engine.current?.teleport(first.id, false); setRoom(first.id); }, 50);
+    say("Plan appliqué : bonne visite !");
+  };
 
   const addItem = (type: ItemType) => {
     const e = engine.current; if (!e) return;
@@ -116,7 +131,7 @@ export default function Visite3D() {
   };
 
   const applyStyle = (rid: string, styleId: string) => {
-    const st = STYLES.find((s) => s.id === styleId); const r = roomById.get(rid);
+    const st = STYLES.find((s) => s.id === styleId); const r = roomOf(rid);
     if (!st || !r) return;
     const floors = r.kind === "exterieur" ? FLOOR_MATERIALS_OUT : FLOOR_MATERIALS_IN;
     const floor = st.materials.find((m) => floors.includes(m));
@@ -126,9 +141,9 @@ export default function Visite3D() {
     let k = 0;
     update((s) => ({
       ...s,
-      rooms: { ...s.rooms, [rid]: { wall: { kind: "peinture", hex: st.palette[0] }, floor: floor ?? s.rooms[rid]!.floor } },
+      rooms: { ...s.rooms, [rid]: { wall: { kind: "peinture", hex: st.palette[0] }, floor: floor ?? (s.rooms[rid] ?? defaultRoomStyle(r.kind)).floor } },
       items: s.items.map((i) => {
-        if (roomAt(i.x, i.z)?.id !== rid) return i;
+        if (roomAtL(s.layout, i.x, i.z)?.id !== rid) return i;
         const e = CATALOG[i.type], p: Partial<Item> = {};
         if (e.color) p.color = accents[k++ % accents.length];
         if (e.structure && structure) p.structure = structure;
@@ -166,12 +181,13 @@ export default function Visite3D() {
   };
   const addNoteHere = (text: string) => {
     const t = text.trim(); if (t.length < 3) { say("Écrivez votre astuce (3 caractères au moins)."); return; }
-    const r = roomById.get(room)!;
-    update((s) => ({ ...s, notes: [...s.notes, { id: uid("n"), roomId: room, x: r.spawn[0], y: 2.1, z: r.spawn[1] - 0.8, text: t, at: new Date().toISOString() }] }));
+    const r = roomOf(room); if (!r || !state) return;
+    const { spawn, look } = viewpoint(state.layout, r), d = Math.hypot(look[0] - spawn[0], look[1] - spawn[1]) || 1;
+    update((s) => ({ ...s, notes: [...s.notes, { id: uid("n"), roomId: room, x: spawn[0] + ((look[0] - spawn[0]) / d) * 0.9, y: 2.1, z: spawn[1] + ((look[1] - spawn[1]) / d) * 0.9, text: t, at: new Date().toISOString() }] }));
     setDraft(""); say("Astuce ajoutée à la pièce.");
   };
 
-  const currentRoom = roomById.get(room) ?? ROOMS[1]!;
+  const currentRoom = roomOf(room) ?? state?.layout.rooms[0] ?? NO_ROOM;
   const selItem = sel?.kind === "item" ? state?.items.find((i) => i.id === sel.id) : undefined;
   const selNote = sel?.kind === "note" ? state?.notes.find((n) => n.id === sel.id) : undefined;
   const editRoomId = sel?.kind === "wall" || sel?.kind === "room" ? sel.roomId : roomPanel ? room : null;
@@ -198,9 +214,10 @@ export default function Visite3D() {
             <button type="button" className="chip border-0" aria-pressed={mode === "visite"} onClick={() => switchMode("visite")}>Visite</button>
             <button type="button" className="chip border-0" aria-pressed={mode === "plan"} onClick={() => switchMode("plan")}>Vue d'ensemble</button>
           </div>
+          <button type="button" className="btn btn-sm btn-dark shadow-sm" onClick={() => { close(); setPlanOpen(true); }} disabled={!state}>Mon plan</button>
         </div>
         <nav aria-label="Pièces" className="pointer-events-auto -mx-2.5 flex gap-1.5 overflow-x-auto px-2.5 pb-1 [scrollbar-width:none]">
-          {ROOMS.map((r) => <button key={r.id} type="button" className="chip flex-none shadow-sm" aria-current={room === r.id && mode === "visite" ? "page" : undefined} onClick={() => go(r.id)}>{r.name}</button>)}
+          {(state?.layout.rooms ?? []).map((r) => <button key={r.id} type="button" className="chip flex-none shadow-sm" aria-current={room === r.id && mode === "visite" ? "page" : undefined} onClick={() => go(r.id)}>{r.name}</button>)}
         </nav>
       </div>
 
@@ -240,12 +257,12 @@ export default function Visite3D() {
             <div>
               <h2 className="pr-8 text-lg">Astuce épinglée</h2>
               <p className="mt-2 whitespace-pre-wrap">{selNote.text}</p>
-              <p className="mt-1 text-[12.5px] text-muted">Vous · {new Date(selNote.at).toLocaleDateString("fr-FR")} · {roomById.get(selNote.roomId)?.name}</p>
+              <p className="mt-1 text-[12.5px] text-muted">Vous · {new Date(selNote.at).toLocaleDateString("fr-FR")} · {roomOf(selNote.roomId)?.name}</p>
               <button type="button" className="btn btn-sm mt-3" onClick={() => { update((s) => ({ ...s, notes: s.notes.filter((n) => n.id !== selNote.id) })); close(); }}>Supprimer l'astuce</button>
             </div>
           )}
           {editRoomId && <RoomEditor roomId={editRoomId} state={state} onPatch={(p) => patchRoom(editRoomId, p)} onStyle={(sid) => applyStyle(editRoomId, sid)}
-            onSelectItem={(id) => engine.current?.select({ kind: "item", id })} />}
+            onSelectItem={(id) => engine.current?.select({ kind: "item", id })} onEditPlan={() => { close(); setPlanOpen(true); }} />}
           {panel === "ajouter" && <Catalog roomKind={currentRoom.kind} onAdd={addItem} />}
           {panel === "astuces" && (
             <div>
@@ -255,7 +272,7 @@ export default function Visite3D() {
               </ul>
               <h3 className="mt-5 text-[15px] font-semibold">Vos astuces</h3>
               {state.notes.length === 0 ? <p className="mt-1 text-[13.5px] text-muted">Aucune pour l'instant. Partagez la vôtre : un rangement malin, une couleur qui marche, une erreur à éviter.</p> : (
-                <ul className="mt-2 flex flex-col gap-2">{state.notes.map((n) => <li key={n.id}><button type="button" className="w-full cursor-pointer rounded-xl border border-line bg-surface p-2.5 text-left text-[13.5px]" onClick={() => { go(n.roomId); engine.current?.select({ kind: "note", id: n.id }); }}><span className="text-muted">{roomById.get(n.roomId)?.name} · </span>{n.text}</button></li>)}</ul>
+                <ul className="mt-2 flex flex-col gap-2">{state.notes.map((n) => <li key={n.id}><button type="button" className="w-full cursor-pointer rounded-xl border border-line bg-surface p-2.5 text-left text-[13.5px]" onClick={() => { go(n.roomId); engine.current?.select({ kind: "note", id: n.id }); }}><span className="text-muted">{roomOf(n.roomId)?.name} · </span>{n.text}</button></li>)}</ul>
               )}
               <label htmlFor="astuce" className="mt-4 block text-[13.5px] font-semibold">Partager une astuce</label>
               <textarea id="astuce" className="input mt-1 min-h-20" maxLength={500} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Ex. : un rideau tringlé au ras du plafond agrandit la hauteur." />
@@ -269,6 +286,8 @@ export default function Visite3D() {
           )}
         </aside>
       )}
+
+      {planOpen && state && <PlanEditor layout={state.layout} items={state.items} onApply={applyPlan} onCancel={() => setPlanOpen(false)} />}
 
       <div role="status" aria-live="polite" className={`pointer-events-none absolute left-1/2 top-[60px] -translate-x-1/2 rounded-full bg-ink px-4 py-2 text-[13px] text-bg shadow-lg transition-opacity ${toast ? "opacity-100" : "opacity-0"}`}>{toast}</div>
     </section>
@@ -324,17 +343,18 @@ function ItemEditor({ it, size, roomName, onPatch, onRemove, onDuplicate }: { it
   );
 }
 
-function RoomEditor({ roomId, state, onPatch, onStyle, onSelectItem }: { roomId: string; state: HomeState; onPatch: (p: Partial<RoomStyle>) => void; onStyle: (id: string) => void; onSelectItem: (id: string) => void }) {
-  const r = roomById.get(roomId)!; const st = state.rooms[roomId]!;
+function RoomEditor({ roomId, state, onPatch, onStyle, onSelectItem, onEditPlan }: { roomId: string; state: HomeState; onPatch: (p: Partial<RoomStyle>) => void; onStyle: (id: string) => void; onSelectItem: (id: string) => void; onEditPlan: () => void }) {
+  const r = state.layout.rooms.find((x) => x.id === roomId) ?? NO_ROOM; const st = state.rooms[roomId] ?? defaultRoomStyle(r.kind);
   const outdoor = r.kind === "exterieur";
   const floors = outdoor ? FLOOR_MATERIALS_OUT : FLOOR_MATERIALS_IN;
   const styles = useMemo(() => STYLES.filter((s) => s.scope === (outdoor ? "exterieur" : "interieur")), [outdoor]);
-  const items = state.items.filter((i) => roomAt(i.x, i.z)?.id === roomId);
+  const items = state.items.filter((i) => roomAtL(state.layout, i.x, i.z)?.id === roomId);
   const floorMat = materialById.get(st.floor);
   return (
     <div>
       <h2 className="pr-8 text-lg">{r.name}</h2>
-      <p className="text-[12.5px] text-muted">{roomArea(r).toFixed(0)} m² · {items.length} objet{items.length > 1 ? "s" : ""}</p>
+      <p className="text-[12.5px] text-muted">{(r.x1 - r.x0).toFixed(2).replace(".", ",")} × {(r.z1 - r.z0).toFixed(2).replace(".", ",")} m · {roomArea(r).toFixed(1).replace(".", ",")} m² · {items.length} objet{items.length > 1 ? "s" : ""}</p>
+      <button type="button" className="btn btn-sm mt-2" onClick={onEditPlan}>Modifier les dimensions, portes et fenêtres</button>
       <h3 className="mt-4 text-[13.5px] font-semibold">Appliquer un style</h3>
       <div className="mt-1.5 flex flex-wrap gap-1.5">{styles.map((s) => <button key={s.id} type="button" className="chip text-[12.5px]" onClick={() => onStyle(s.id)}><i aria-hidden="true" className="inline-flex">{s.palette.slice(0, 3).map((c) => <i key={c} className="inline-block h-3 w-2" style={{ background: c }} />)}</i>{s.name}</button>)}</div>
       <h3 className="mt-4 text-[13.5px] font-semibold">{outdoor ? "Façade" : "Murs"} : peinture</h3>

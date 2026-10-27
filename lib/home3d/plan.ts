@@ -3,56 +3,8 @@
  * Unités : mètres. Axe x vers la droite, axe z vers le bas du plan (sud), y vers le haut.
  */
 
-export type RoomKind = "salon" | "cuisine" | "chambre" | "sdb" | "entree" | "exterieur";
-export interface Room {
-  id: string; name: string; kind: RoomKind;
-  x0: number; z0: number; x1: number; z1: number;
-  /** Point de départ de la visite et point regardé. */
-  spawn: [number, number]; look: [number, number];
-  ceiling: boolean;
-}
-
-export const WALL_H = 2.6;
-export const EYE_H = 1.6;
-
-export const ROOMS: Room[] = [
-  { id: "entree", name: "Entrée", kind: "entree", x0: 0, z0: 5, x1: 3, z1: 9, spawn: [1.45, 8.3], look: [1.45, 3], ceiling: true },
-  { id: "salon", name: "Salon", kind: "salon", x0: 0, z0: 0, x1: 7, z1: 5, spawn: [6.55, 3.3], look: [1.0, 3.4], ceiling: true },
-  { id: "cuisine", name: "Cuisine", kind: "cuisine", x0: 7, z0: 0, x1: 12, z1: 5, spawn: [7.6, 1.0], look: [10.5, 4.2], ceiling: true },
-  { id: "chambre", name: "Chambre", kind: "chambre", x0: 3, z0: 5, x1: 8, z1: 9, spawn: [7.2, 5.8], look: [4, 7.6], ceiling: true },
-  { id: "sdb", name: "Salle de bain", kind: "sdb", x0: 8, z0: 5, x1: 12, z1: 9, spawn: [8.7, 6.5], look: [11.5, 8.2], ceiling: true },
-  { id: "terrasse", name: "Terrasse", kind: "exterieur", x0: 0, z0: -4, x1: 12, z1: 0, spawn: [3.5, -0.5], look: [6, -6], ceiling: false },
-];
-export const roomById = new Map(ROOMS.map((r) => [r.id, r]));
-export function roomAt(x: number, z: number): Room | undefined {
-  return ROOMS.find((r) => x > r.x0 && x < r.x1 && z > r.z0 && z < r.z1);
-}
-export const roomArea = (r: Room) => (r.x1 - r.x0) * (r.z1 - r.z0);
-
-export type OpeningKind = "porte" | "passage" | "fenetre" | "baie" | "porte-entree";
-export interface Opening { at: number; width: number; height: number; sill: number; kind: OpeningKind }
-export interface Wall { a: [number, number]; b: [number, number]; thick: number; openings: Opening[] }
-
-const door = (at: number, width = 0.83): Opening => ({ at, width, height: 2.04, sill: 0, kind: "porte" });
-const win = (at: number, width: number, sill = 0.9, height = 1.35): Opening => ({ at, width, height, sill, kind: "fenetre" });
-
-/** Murs : segments alignés sur les axes ; `at` = position du centre de l'ouverture depuis le point a. */
-export const WALLS: Wall[] = [
-  // Façades
-  { a: [0, 0], b: [12, 0], thick: 0.2, openings: [{ at: 3.5, width: 3, height: 2.25, sill: 0, kind: "baie" }, win(9.8, 1.4, 1.0, 1.25)] },
-  { a: [12, 0], b: [12, 9], thick: 0.2, openings: [win(2.4, 1.2, 1.0, 1.25), win(7, 0.7, 1.5, 0.6)] },
-  { a: [0, 9], b: [12, 9], thick: 0.2, openings: [{ at: 1.45, width: 0.93, height: 2.15, sill: 0, kind: "porte-entree" }, win(5.6, 1.4)] },
-  { a: [0, 0], b: [0, 9], thick: 0.2, openings: [win(2.5, 1.4)] },
-  // Cloisons
-  { a: [0, 5], b: [12, 5], thick: 0.1, openings: [{ ...door(1.45, 0.9), kind: "passage" }, door(6.4)] },
-  { a: [7, 0], b: [7, 5], thick: 0.1, openings: [{ at: 2.4, width: 2, height: 2.2, sill: 0, kind: "passage" }] },
-  { a: [3, 5], b: [3, 9], thick: 0.1, openings: [] },
-  { a: [8, 5], b: [8, 9], thick: 0.1, openings: [door(1.5, 0.8)] },
-];
-
-/** Garde-corps de la terrasse. */
-export const RAILINGS: Array<[[number, number], [number, number]]> = [[[0, -4], [12, -4]], [[0, -4], [0, 0]], [[12, -4], [12, 0]]];
-export const BOUNDS = { x0: 0.25, x1: 11.75, z0: -3.75, z1: 8.75 };
+import { ROOM_KINDS, exampleLayout, type Layout, type OpeningKind, type RoomDef, type RoomKind, type Side } from "./layout";
+export { EYE_H, WALL_H, roomArea, roomAt, type Layout, type RoomDef, type RoomKind } from "./layout";
 
 /* ——— Habillage des murs et des sols ——— */
 export type WallFinish = { kind: "peinture"; hex: string } | { kind: "matiere"; id: string };
@@ -65,7 +17,11 @@ export const PAINTS: Array<{ name: string; hex: string }> = [
 ];
 export const WALL_MATERIALS = ["m-chaux", "m-argile", "m-tadelakt", "m-beton", "m-brique", "m-metro", "m-zellige", "m-washi", "m-panoramique"];
 export const FLOOR_MATERIALS_IN = ["m-chene", "m-chenefume", "m-noyer", "m-pin", "m-bambou", "m-stratifie", "m-liege", "m-travertin", "m-carrare", "m-verde", "m-ardoise", "m-bourgogne", "m-terrazzo", "m-ciment", "m-tomette", "m-terrecuite", "m-gres", "m-zellige", "m-beton", "m-microciment", "m-ceramique-frittee", "m-lino"];
-export const FLOOR_MATERIALS_OUT = ["m-teck", "m-pin", "m-composite", "m-chataignier", "m-travertin", "m-bourgogne", "m-ardoise", "m-gres", "m-tomette", "m-gravier", "m-pierre-seche"];
+/** Revêtements propres à la 3D, absents de la matériauthèque (pas de fiche). */
+export const PSEUDO_MATERIALS: Record<string, { name: string; colors: string[]; texture: "gravel" }> = {
+  "m-pelouse": { name: "Pelouse", colors: ["#7FA05A", "#6A8C4A", "#93B26B"], texture: "gravel" },
+};
+export const FLOOR_MATERIALS_OUT = ["m-pelouse", "m-teck", "m-pin", "m-composite", "m-chataignier", "m-travertin", "m-bourgogne", "m-ardoise", "m-gres", "m-tomette", "m-gravier", "m-pierre-seche"];
 export const FABRICS = ["m-lin", "m-bouclette", "m-velours", "m-laine", "m-cuir", "m-feutre"];
 export const STRUCTURES = ["m-chene", "m-noyer", "m-chenefume", "m-bouleau", "m-teck", "m-cannage", "m-acier", "m-laiton", "m-inox", "m-carrare", "m-travertin", "m-laque", "m-beton"];
 
@@ -140,7 +96,23 @@ export interface Item {
 }
 export interface Note { id: string; roomId: string; x: number; y: number; z: number; text: string; at: string }
 export interface RoomStyle { wall: WallFinish; floor: string }
-export interface HomeState { v: 1; rooms: Record<string, RoomStyle>; items: Item[]; notes: Note[] }
+export interface HomeState { v: 1; layout: Layout; rooms: Record<string, RoomStyle>; items: Item[]; notes: Note[] }
+
+/** Habillage par défaut d'une nouvelle pièce, selon son type. */
+export function defaultRoomStyle(kind: RoomKind, area = 0): RoomStyle {
+  switch (kind) {
+    case "cuisine": return { wall: { kind: "peinture", hex: "#F1EEE7" }, floor: "m-ciment" };
+    case "chambre": return { wall: { kind: "peinture", hex: "#E6DCCB" }, floor: "m-chene" };
+    case "sdb": return { wall: { kind: "matiere", id: "m-chaux" }, floor: "m-gres" };
+    case "entree": return { wall: { kind: "peinture", hex: "#E6DCCB" }, floor: "m-tomette" };
+    case "exterieur": return { wall: { kind: "peinture", hex: "#EDE6DA" }, floor: area >= 30 ? "m-pelouse" : "m-teck" };
+    default: return { wall: { kind: "peinture", hex: "#F1EEE7" }, floor: "m-chene" };
+  }
+}
+/** Complète les habillages manquants (pièces ajoutées) et retire ceux des pièces supprimées. */
+export function syncRoomStyles(layout: Layout, rooms: Record<string, RoomStyle>): Record<string, RoomStyle> {
+  return Object.fromEntries(layout.rooms.map((r) => [r.id, rooms[r.id] ?? defaultRoomStyle(r.kind, (r.x1 - r.x0) * (r.z1 - r.z0))]));
+}
 
 const R = Math.PI;
 let n = 0;
@@ -151,6 +123,7 @@ export function defaultState(): HomeState {
   n = 0;
   return {
     v: 1,
+    layout: exampleLayout(),
     rooms: {
       entree: { wall: { kind: "peinture", hex: "#E6DCCB" }, floor: "m-tomette" },
       salon: { wall: { kind: "peinture", hex: "#F1EEE7" }, floor: "m-chene" },
@@ -216,7 +189,7 @@ export function defaultState(): HomeState {
 /* ——— Sauvegarde et partage ——— */
 export const STORAGE_KEY = "pr_home3d_v1";
 
-const isObj = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null;
+export const isObj = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null;
 /** Valide un état venant du stockage local ou d'un lien partagé (données non fiables). */
 export function parseState(raw: unknown): HomeState | null {
   if (!isObj(raw) || raw.v !== 1 || !isObj(raw.rooms) || !Array.isArray(raw.items)) return null;
@@ -224,8 +197,9 @@ export function parseState(raw: unknown): HomeState | null {
   const id = (v: unknown) => (typeof v === "string" && /^m-[a-z-]{2,30}$/.test(v) ? v : undefined);
   const num = (v: unknown, lo: number, hi: number) => (typeof v === "number" && Number.isFinite(v) ? Math.min(hi, Math.max(lo, v)) : null);
   const base = defaultState();
-  const rooms: Record<string, RoomStyle> = { ...base.rooms };
-  for (const r of ROOMS) {
+  const layout = parseLayout(raw.layout) ?? base.layout;
+  const rooms: Record<string, RoomStyle> = syncRoomStyles(layout, base.rooms);
+  for (const r of layout.rooms) {
     const src = raw.rooms[r.id];
     if (!isObj(src)) continue;
     const w = src.wall; let wall = rooms[r.id]!.wall;
@@ -236,7 +210,7 @@ export function parseState(raw: unknown): HomeState | null {
   const items: Item[] = [];
   for (const s of raw.items.slice(0, 300)) {
     if (!isObj(s) || typeof s.type !== "string" || !(s.type in CATALOG)) continue;
-    const x = num(s.x, -1, 13), z = num(s.z, -5, 10), rot = num(s.rot, -10, 10);
+    const x = num(s.x, -61, 61), z = num(s.z, -61, 61), rot = num(s.rot, -10, 10);
     if (x === null || z === null || rot === null) continue;
     const entry = CATALOG[s.type as ItemType];
     items.push({
@@ -248,11 +222,38 @@ export function parseState(raw: unknown): HomeState | null {
   const notes: Note[] = [];
   if (Array.isArray(raw.notes)) for (const s of raw.notes.slice(0, 100)) {
     if (!isObj(s) || typeof s.text !== "string" || typeof s.roomId !== "string") continue;
-    const x = num(s.x, -1, 13), y = num(s.y, 0, 3), z = num(s.z, -5, 10);
+    const x = num(s.x, -61, 61), y = num(s.y, 0, 3), z = num(s.z, -61, 61);
     if (x === null || y === null || z === null) continue;
     notes.push({ id: typeof s.id === "string" ? s.id.slice(0, 40) : `n${notes.length}`, roomId: s.roomId.slice(0, 20), x, y, z, text: s.text.slice(0, 500), at: typeof s.at === "string" ? s.at.slice(0, 30) : new Date().toISOString() });
   }
-  return { v: 1, rooms, items, notes };
+  return { v: 1, layout, rooms, items, notes };
+}
+
+const KINDS = new Set<string>(ROOM_KINDS.map((k) => k.kind));
+const OKINDS = new Set<string>(["porte", "passage", "fenetre", "baie", "porte-entree"]);
+/** Valide un plan venant d'un lien ou du stockage (données non fiables). */
+export function parseLayout(raw: unknown): Layout | null {
+  if (!isObj(raw) || !Array.isArray(raw.rooms) || !Array.isArray(raw.openings)) return null;
+  const n = (v: unknown, lo: number, hi: number) => (typeof v === "number" && Number.isFinite(v) ? Math.min(hi, Math.max(lo, Math.round(v * 100) / 100)) : null);
+  const rooms: RoomDef[] = [];
+  for (const r of raw.rooms.slice(0, 40)) {
+    if (!isObj(r) || typeof r.id !== "string" || !/^[\w-]{1,24}$/.test(r.id) || typeof r.kind !== "string" || !KINDS.has(r.kind)) continue;
+    const x0 = n(r.x0, -60, 60), z0 = n(r.z0, -60, 60), x1 = n(r.x1, -60, 60), z1 = n(r.z1, -60, 60);
+    if (x0 === null || z0 === null || x1 === null || z1 === null || x1 - x0 < 0.8 || z1 - z0 < 0.8 || rooms.some((o) => o.id === r.id)) continue;
+    const pt = (v: unknown): [number, number] | undefined => (Array.isArray(v) && v.length === 2 && v.every((c) => typeof c === "number" && Number.isFinite(c)) ? [v[0] as number, v[1] as number] : undefined);
+    const spawn = pt(r.spawn), look = pt(r.look);
+    rooms.push({ id: r.id, name: typeof r.name === "string" && r.name.trim() ? r.name.trim().slice(0, 40) : "Pièce", kind: r.kind as RoomKind, x0, z0, x1, z1, ...(spawn && look ? { spawn, look } : {}) });
+  }
+  if (!rooms.length) return null;
+  const openings: Layout["openings"] = [];
+  for (const o of raw.openings.slice(0, 200)) {
+    if (!isObj(o) || typeof o.roomId !== "string" || !rooms.some((r) => r.id === o.roomId) || typeof o.kind !== "string" || !OKINDS.has(o.kind)) continue;
+    if (o.side !== "n" && o.side !== "s" && o.side !== "e" && o.side !== "w") continue;
+    const offset = n(o.offset, 0, 60), width = n(o.width, 0.3, 6), height = n(o.height, 0.3, 2.5), sill = n(o.sill, 0, 2);
+    if (offset === null || width === null || height === null || sill === null) continue;
+    openings.push({ id: typeof o.id === "string" ? o.id.slice(0, 24) : `o${openings.length}`, roomId: o.roomId, side: o.side as Side, offset, width, height, sill, kind: o.kind as OpeningKind });
+  }
+  return { rooms, openings };
 }
 
 async function pipe(bytes: Uint8Array, stream: CompressionStream | DecompressionStream): Promise<Uint8Array> {

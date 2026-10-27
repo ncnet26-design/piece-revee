@@ -5,10 +5,8 @@ import { paintMaterial, shade } from "@/lib/draw";
 import { materialById } from "@/content/lookup";
 import type { TextureKind } from "@/content/types";
 import { buildItem, type Mats } from "./furniture";
-import {
-  BOUNDS, CATALOG, EYE_H, RAILINGS, ROOMS, WALL_H, WALLS, roomAt, roomById,
-  type HomeState, type Item, type Note, type Room, type RoomStyle, type WallFinish,
-} from "./plan";
+import { deriveStructure, hasCeiling, roomAt as roomAtL, viewpoint, type Layout, type RoomDef, type Wall } from "./layout";
+import { CATALOG, EYE_H, PSEUDO_MATERIALS, WALL_H, defaultRoomStyle, type HomeState, type Item, type Note, type RoomStyle, type WallFinish } from "./plan";
 
 export type Selection = { kind: "item"; id: string } | { kind: "wall"; roomId: string } | { kind: "room"; roomId: string } | { kind: "note"; id: string };
 export type Mode = "visite" | "plan";
@@ -24,6 +22,8 @@ export interface EngineEvents {
 const TILE: Partial<Record<TextureKind, number>> = { wood: 0.6, planks: 1.4, tile: 1.0, cement: 0.8, hex: 1.1, marble: 1.8, travertine: 1.4, terrazzo: 1.0, slate: 1.2, gravel: 1.0, plaster: 2.2, brick: 1.1, washi: 1.6, cork: 0.8, weave: 1.0, fluted: 0.8, metal: 1.5, cane: 0.6 };
 const ROUGH: Record<string, number> = { Pierre: 0.35, Terre: 0.55, Bois: 0.55, Fibre: 0.85, Textile: 0.95, Métal: 0.35, Verre: 0.08, Composite: 0.45, Extérieur: 0.7 };
 const ACCENT = 0x2747d0;
+/** Faces extérieures des murs qui ne donnent sur aucune pièce. */
+const FACADE = "_facade";
 
 type Box2 = { x0: number; x1: number; z0: number; z1: number };
 
@@ -52,7 +52,7 @@ class MatFactory implements Mats {
   /** Surface à coordonnées de texture en mètres (sols, murs). */
   surface(id: string): THREE.MeshStandardMaterial {
     return this.memo(`surf|${id}`, () => {
-      const m = materialById.get(id);
+      const m = materialById.get(id) ?? (PSEUDO_MATERIALS[id] ? { ...PSEUDO_MATERIALS[id]!, family: "Extérieur" as const } : undefined);
       if (!m) return new THREE.MeshStandardMaterial({ color: "#cccccc", roughness: 0.8 });
       const tex = this.texture(m.texture, m.colors, id).clone(); tex.needsUpdate = true;
       const tile = TILE[m.texture] ?? 1.2; tex.repeat.set(1 / tile, 1 / tile);
@@ -158,9 +158,16 @@ export class HomeEngine {
   private tween: { t: number; dur: number; from: { x: number; z: number; yaw: number; pitch: number }; to: { x: number; z: number; yaw: number; pitch: number } } | null = null;
   private currentRoom = "";
 
+  private structure = new THREE.Group();
   private wallGroup = new THREE.Group();
   private floorGroup = new THREE.Group();
   private ceilingGroup = new THREE.Group();
+  private treeGroup = new THREE.Group();
+  private sun!: THREE.DirectionalLight;
+  private bounds = { x0: 0, x1: 1, z0: 0, z1: 1 };
+  private center = new THREE.Vector3();
+  private span = 12;
+  private layoutSig = "";
   private itemGroup = new THREE.Group();
   private noteGroup = new THREE.Group();
   private labelGroup = new THREE.Group();
@@ -206,8 +213,10 @@ export class HomeEngine {
     this.camera.rotation.order = "YXZ";
     this.state = state;
 
-    this.buildWorld(high);
-    this.scene.add(this.wallGroup, this.floorGroup, this.ceilingGroup, this.itemGroup, this.noteGroup, this.labelGroup);
+    this.buildEnv(high);
+    this.structure.add(this.wallGroup, this.floorGroup, this.ceilingGroup, this.labelGroup, this.treeGroup);
+    this.scene.add(this.structure, this.itemGroup, this.noteGroup);
+    this.buildStructure();
     this.applyRooms();
     this.syncItems();
     this.syncNotes();
@@ -224,12 +233,18 @@ export class HomeEngine {
     this.ro = new ResizeObserver(() => this.resize());
     this.ro.observe(container);
     this.resize();
-    this.teleport("salon", false);
+    const start = this.layout.rooms.find((r) => r.id === "salon") ?? this.layout.rooms.find((r) => hasCeiling(r)) ?? this.layout.rooms[0];
+    if (start) this.teleport(start.id, false);
     this.loop();
   }
 
   /* ——————————————— Construction ——————————————— */
-  private buildWorld(high: boolean) {
+  private get layout(): Layout { return this.state.layout; }
+  private roomAt(x: number, z: number): RoomDef | undefined { return roomAtL(this.layout, x, z); }
+  private room(id: string): RoomDef | undefined { return this.layout.rooms.find((r) => r.id === id); }
+
+  /** Ciel, lumière, sol extérieur : construits une seule fois. */
+  private buildEnv(high: boolean) {
     const s = this.scene;
     s.background = new THREE.Color("#CFE0EA");
     s.fog = new THREE.Fog("#CFE0EA", 30, 90);
@@ -238,63 +253,82 @@ export class HomeEngine {
     const mirror = this.mats.mirror() as THREE.MeshStandardMaterial; mirror.envMap = s.environment; mirror.envMapIntensity = 1.6;
     s.environmentIntensity = 0.3;
     pm.dispose();
-
     s.add(new THREE.HemisphereLight("#EAF2F8", "#B9A98F", 0.4));
     const sun = new THREE.DirectionalLight("#FFF1DC", 3.0);
-    sun.position.set(-2, 11, -11); sun.target.position.set(6, 0, 3);
     sun.castShadow = true;
     sun.shadow.mapSize.set(high ? 2048 : 1024, high ? 2048 : 1024);
-    Object.assign(sun.shadow.camera, { left: -11, right: 11, top: 11, bottom: -11, near: 1, far: 40 });
     sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
     s.add(sun, sun.target);
+    this.sun = sun;
+    const grass = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), new THREE.MeshStandardMaterial({ color: "#9DAF7E", roughness: 1 }));
+    grass.rotation.x = -Math.PI / 2; grass.position.y = -0.02; grass.receiveShadow = true; s.add(grass);
+  }
 
-    // Sol extérieur, arbres au loin
-    const grass = new THREE.Mesh(new THREE.PlaneGeometry(140, 140), new THREE.MeshStandardMaterial({ color: "#9DAF7E", roughness: 1 }));
-    grass.rotation.x = -Math.PI / 2; grass.position.set(6, -0.02, 2); grass.receiveShadow = true; s.add(grass);
-    const trunk = new THREE.MeshStandardMaterial({ color: "#6A5A45", roughness: 1 });
-    const crowns = [new THREE.MeshStandardMaterial({ color: "#5E7A4E", roughness: 1, flatShading: true }), new THREE.MeshStandardMaterial({ color: "#7A8F58", roughness: 1, flatShading: true })];
-    for (let i = 0; i < 14; i++) {
-      const x = -8 + i * 2.1 + Math.sin(i * 7.3) * 0.8, z = -9 - Math.abs(Math.cos(i * 3.1)) * 6, h = 2.5 + Math.abs(Math.sin(i * 1.7)) * 3;
-      const t = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, h, 8), trunk); t.position.set(x, h / 2, z);
-      const c = new THREE.Mesh(new THREE.IcosahedronGeometry(1.3 + Math.abs(Math.sin(i)) * 0.9, 1), crowns[i % 2]!); c.position.set(x, h + 0.6, z); c.scale.y = 1.25;
-      t.castShadow = c.castShadow = true; s.add(t, c);
+  /** Murs, sols, plafonds, étiquettes et arbres : reconstruits quand le plan change. */
+  private buildStructure() {
+    for (const g of [this.wallGroup, this.floorGroup, this.ceilingGroup, this.labelGroup, this.treeGroup]) {
+      g.traverse((o) => {
+        const m = o as THREE.Mesh; if (m.isMesh) m.geometry.dispose();
+        const sp = o as THREE.Sprite; if (sp.isSprite) { (sp.material as THREE.SpriteMaterial).map?.dispose(); sp.material.dispose(); }
+      });
+      g.clear();
     }
+    this.wallBoxes = []; this.floors.clear(); this.wallMeshesByRoom.clear(); this.clipped.clear();
+    const l = this.layout, st = deriveStructure(l), bb = st.bbox;
+    this.layoutSig = JSON.stringify(l);
+    this.bounds = { x0: bb.x0 + 0.25, x1: bb.x1 - 0.25, z0: bb.z0 + 0.25, z1: bb.z1 - 0.25 };
+    this.center.set((bb.x0 + bb.x1) / 2, 0, (bb.z0 + bb.z1) / 2);
+    this.span = Math.max(bb.x1 - bb.x0, bb.z1 - bb.z0, 4);
+    const half = this.span / 2 + 3;
+    this.sun.position.set(this.center.x - 8, 11 + this.span * 0.2, this.center.z - 14); this.sun.target.position.copy(this.center);
+    Object.assign(this.sun.shadow.camera, { left: -half, right: half, top: half, bottom: -half, near: 1, far: 40 + this.span * 2 });
+    this.sun.shadow.camera.updateProjectionMatrix();
 
-    // Murs
-    for (const w of WALLS) this.buildWall(w);
-    // Garde-corps de la terrasse
+    for (const w of st.walls) this.buildWall(w);
     const rail = this.mats.std("#3B3D3F", 0.4, 0.7);
-    for (const [a, b] of RAILINGS) {
+    for (const [a, b] of st.railings) {
       const horiz = a[1] === b[1], len = horiz ? b[0] - a[0] : b[1] - a[1], cx = (a[0] + b[0]) / 2, cz = (a[1] + b[1]) / 2;
       const glass = new THREE.Mesh(new THREE.BoxGeometry(horiz ? len : 0.02, 0.95, horiz ? 0.02 : len), this.mats.glass()); glass.position.set(cx, 0.5, cz);
       const top = new THREE.Mesh(new THREE.BoxGeometry(horiz ? len : 0.05, 0.05, horiz ? 0.05 : len), rail); top.position.set(cx, 1.0, cz); top.castShadow = true;
       this.wallGroup.add(glass, top);
       this.wallBoxes.push(horiz ? { x0: a[0], x1: b[0], z0: cz - 0.05, z1: cz + 0.05 } : { x0: cx - 0.05, x1: cx + 0.05, z0: a[1], z1: b[1] });
     }
-    // Sols, plafonds, éclairage et étiquettes de pièce
-    for (const r of ROOMS) {
+    for (const r of l.rooms) {
       const w = r.x1 - r.x0, d = r.z1 - r.z0, cx = (r.x0 + r.x1) / 2, cz = (r.z0 + r.z1) / 2;
       const g = new THREE.PlaneGeometry(w, d); g.rotateX(-Math.PI / 2); g.translate(cx, 0, cz); worldUV(g);
       const floor = new THREE.Mesh(g, this.mats.surface("m-chene")); floor.receiveShadow = true; floor.userData = { pick: "floor", roomId: r.id };
       this.floors.set(r.id, floor); this.floorGroup.add(floor);
-      if (r.ceiling) {
+      if (hasCeiling(r)) {
         const cg = new THREE.PlaneGeometry(w, d); cg.rotateX(Math.PI / 2); cg.translate(cx, WALL_H, cz);
-        const ceil = new THREE.Mesh(cg, this.mats.std("#F7F5F1", 0.95)); ceil.castShadow = true; ceil.receiveShadow = true; this.ceilingGroup.add(ceil);
+        const ceil = new THREE.Mesh(cg, this.mats.std("#F7F5F1", 0.95)); ceil.castShadow = true; ceil.receiveShadow = true; ceil.visible = this.mode !== "plan"; this.ceilingGroup.add(ceil);
         const lamp = new THREE.PointLight("#FFD8A8", 3.2, 0, 2); lamp.position.set(cx, WALL_H - 0.25, cz); this.ceilingGroup.add(lamp);
       }
       const lab = labelSprite(r.name, `${(w * d).toFixed(0)} m²`); lab.position.set(cx, 1.7, cz); this.labelGroup.add(lab);
     }
-    this.labelGroup.visible = false;
+    this.labelGroup.visible = this.mode === "plan";
+    // Arbres autour du terrain
+    const trunk = this.mats.std("#6A5A45", 1), crowns = [this.mats.std("#5E7A4E", 1), this.mats.std("#7A8F58", 1)];
+    const R = this.span / 2 + 7;
+    for (let i = 0; i < 18; i++) {
+      const a = (i / 18) * Math.PI * 2 + Math.sin(i * 3.7) * 0.15, rr = R + Math.abs(Math.sin(i * 1.3)) * 5, h = 2.5 + Math.abs(Math.sin(i * 1.7)) * 3;
+      const x = this.center.x + Math.cos(a) * rr, z = this.center.z + Math.sin(a) * rr;
+      const t = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, h, 8), trunk); t.position.set(x, h / 2, z);
+      const c = new THREE.Mesh(new THREE.IcosahedronGeometry(1.3 + Math.abs(Math.sin(i)) * 0.9, 1), crowns[i % 2]!); c.position.set(x, h + 0.6, z); c.scale.y = 1.25;
+      t.castShadow = c.castShadow = true; this.treeGroup.add(t, c);
+    }
+    this.applyRooms();
+    if (this.mode === "plan") this.setClipping(true);
+    this.dirty = true;
   }
 
-  private buildWall(w: (typeof WALLS)[number]) {
+  private buildWall(w: Wall) {
     const horiz = w.a[1] === w.b[1];
     const L = horiz ? w.b[0] - w.a[0] : w.b[1] - w.a[1];
     const along = (t: number): [number, number] => (horiz ? [w.a[0] + t, w.a[1]] : [w.a[0], w.a[1] + t]);
     const ops = w.openings.map((o) => ({ ...o, s: o.at - o.width / 2, e: o.at + o.width / 2 }));
     const cuts = new Set<number>([0, L]);
     for (const o of ops) { cuts.add(o.s); cuts.add(o.e); }
-    for (const r of ROOMS) for (const v of horiz ? [r.x0 - w.a[0], r.x1 - w.a[0]] : [r.z0 - w.a[1], r.z1 - w.a[1]]) if (v > 0 && v < L) cuts.add(v);
+    for (const r of this.layout.rooms) for (const v of horiz ? [r.x0 - w.a[0], r.x1 - w.a[0]] : [r.z0 - w.a[1], r.z1 - w.a[1]]) if (v > 0 && v < L) cuts.add(v);
     const pts = [...cuts].sort((a, b) => a - b);
     const t = w.thick;
     for (let i = 0; i < pts.length - 1; i++) {
@@ -320,8 +354,8 @@ export class HomeEngine {
     const sides: Array<[number, number, number]> = horiz ? [[4, 0, 1], [5, 0, -1]] : [[0, 1, 0], [1, -1, 0]];
     const faceRooms: Array<string | null> = [null, null, null, null, null, null];
     for (const [idx, nx, nz] of sides) {
-      const r = roomAt(cx + nx * (thick / 2 + 0.2), cz + nz * (thick / 2 + 0.2));
-      faceRooms[idx] = r?.id ?? "terrasse";
+      const r = this.roomAt(cx + nx * (thick / 2 + 0.2), cz + nz * (thick / 2 + 0.2));
+      faceRooms[idx] = r?.id ?? FACADE;
     }
     const mesh = new THREE.Mesh(geo, faceRooms.map(() => this.edgeMat));
     mesh.castShadow = true; mesh.receiveShadow = true;
@@ -370,16 +404,22 @@ export class HomeEngine {
     this.dirty = true;
     const roomsChanged = JSON.stringify(next.rooms) !== JSON.stringify(this.state.rooms);
     this.state = next;
-    if (roomsChanged) this.applyRooms();
+    if (JSON.stringify(next.layout) !== this.layoutSig) {
+      this.buildStructure();
+      if (!this.room(this.currentRoom) || !this.roomAt(this.pos.x, this.pos.z)) { const first = next.layout.rooms.find((r) => hasCeiling(r)) ?? next.layout.rooms[0]; if (first) this.teleport(first.id, false); }
+      if (this.mode === "plan") this.framePlan();
+    } else if (roomsChanged) this.applyRooms();
     this.syncItems();
     this.syncNotes();
     this.refreshSelection();
   }
 
   private applyRooms() {
-    for (const r of ROOMS) {
-      const st: RoomStyle | undefined = this.state.rooms[r.id];
-      if (!st) continue;
+    const outside = this.layout.rooms.find((r) => r.kind === "exterieur");
+    const facade = (outside && this.state.rooms[outside.id]?.wall) ?? defaultRoomStyle("exterieur").wall;
+    for (const { mesh, index } of this.wallMeshesByRoom.get(FACADE) ?? []) (mesh.material as THREE.Material[])[index] = this.mats.wallMaterial(facade);
+    for (const r of this.layout.rooms) {
+      const st: RoomStyle = this.state.rooms[r.id] ?? defaultRoomStyle(r.kind);
       const wm = this.mats.wallMaterial(st.wall);
       for (const { mesh, index } of this.wallMeshesByRoom.get(r.id) ?? []) (mesh.material as THREE.Material[])[index] = wm;
       const floor = this.floors.get(r.id);
@@ -458,17 +498,24 @@ export class HomeEngine {
     this.scene.fog = plan ? null : new THREE.Fog("#CFE0EA", 30, 90);
     if (plan) {
       this.camera.fov = 45; this.camera.updateProjectionMatrix();
-      this.camera.position.set(6, 15.5, 17); this.camera.lookAt(6, 0, 2.5);
       if (!this.orbit) {
         this.orbit = new OrbitControls(this.camera, this.renderer.domElement);
-        this.orbit.enableDamping = true; this.orbit.maxPolarAngle = 1.3; this.orbit.minDistance = 5; this.orbit.maxDistance = 34; this.orbit.screenSpacePanning = false;
+        this.orbit.enableDamping = true; this.orbit.maxPolarAngle = 1.3; this.orbit.minDistance = 4; this.orbit.screenSpacePanning = false;
       }
-      this.orbit.target.set(6, 0, 2.5); this.orbit.enabled = true; this.orbit.update();
+      this.framePlan();
+      this.orbit.enabled = true;
     } else {
       if (this.orbit) this.orbit.enabled = false;
       this.camera.fov = 68; this.camera.updateProjectionMatrix();
     }
     this.ev.onModeChange(m);
+  }
+
+  private framePlan() {
+    const c = this.center, k = this.span;
+    this.camera.position.set(c.x, k * 1.15 + 2, c.z + k * 1.2 + 2); this.camera.lookAt(c);
+    if (this.orbit) { this.orbit.maxDistance = k * 3 + 10; this.orbit.target.copy(c); this.orbit.update(); }
+    this.dirty = true;
   }
 
   private setClipping(on: boolean) {
@@ -481,9 +528,10 @@ export class HomeEngine {
 
   /** Va dans une pièce : déplacement fluide jusqu'au point de vue de la pièce. */
   teleport(roomId: string, smooth = true) {
-    const r = roomById.get(roomId); if (!r) return;
+    const r = this.room(roomId); if (!r) return;
     if (this.mode === "plan") this.setMode("visite");
-    const to = { x: r.spawn[0], z: r.spawn[1], yaw: Math.atan2(-(r.look[0] - r.spawn[0]), -(r.look[1] - r.spawn[1])), pitch: -0.08 };
+    const { spawn, look } = viewpoint(this.layout, r);
+    const to = { x: spawn[0], z: spawn[1], yaw: Math.atan2(-(look[0] - spawn[0]), -(look[1] - spawn[1])), pitch: -0.08 };
     this.walkTarget = null;
     if (!smooth) { this.pos.set(to.x, EYE_H, to.z); this.yaw = to.yaw; this.pitch = to.pitch; this.tween = null; this.updateRoom(); return; }
     let dy = to.yaw - this.yaw; while (dy > Math.PI) dy -= Math.PI * 2; while (dy < -Math.PI) dy += Math.PI * 2;
@@ -496,12 +544,12 @@ export class HomeEngine {
   /** Point de pose d'un nouvel objet : devant la caméra, dans la pièce courante. */
   spawnPoint(): { x: number; z: number; rot: number; roomId: string } {
     if (this.mode === "plan") {
-      const r = roomById.get(this.currentRoom) ?? ROOMS[1]!;
+      const r = this.room(this.currentRoom) ?? this.layout.rooms[0]!;
       return { x: (r.x0 + r.x1) / 2, z: (r.z0 + r.z1) / 2, rot: 0, roomId: r.id };
     }
     const fx = -Math.sin(this.yaw), fz = -Math.cos(this.yaw);
     let x = this.pos.x + fx * 1.6, z = this.pos.z + fz * 1.6;
-    const r = roomAt(this.pos.x, this.pos.z) ?? roomById.get(this.currentRoom);
+    const r = this.roomAt(this.pos.x, this.pos.z) ?? this.room(this.currentRoom);
     if (r) { x = Math.min(r.x1 - 0.5, Math.max(r.x0 + 0.5, x)); z = Math.min(r.z1 - 0.5, Math.max(r.z0 + 0.5, z)); }
     const snap = (v: number) => Math.round(v * 20) / 20;
     return { x: snap(x), z: snap(z), rot: Math.round(this.yaw / (Math.PI / 4)) * (Math.PI / 4), roomId: r?.id ?? this.currentRoom };
@@ -525,7 +573,8 @@ export class HomeEngine {
 
   private blocked(x: number, z: number): boolean {
     const r = 0.22;
-    if (x < BOUNDS.x0 || x > BOUNDS.x1 || z < BOUNDS.z0 || z > BOUNDS.z1) return true;
+    const B = this.bounds;
+    if (x < B.x0 || x > B.x1 || z < B.z0 || z > B.z1) return true;
     const hit = (b: Box2) => x > b.x0 - r && x < b.x1 + r && z > b.z0 - r && z < b.z1 + r;
     if (this.wallBoxes.some(hit)) return true;
     for (const b of this.itemBoxes.values()) if (hit(b)) return true;
@@ -539,7 +588,7 @@ export class HomeEngine {
     return moved;
   }
   private updateRoom() {
-    const r = roomAt(this.pos.x, this.pos.z);
+    const r = this.roomAt(this.pos.x, this.pos.z);
     if (r && r.id !== this.currentRoom) { this.currentRoom = r.id; this.ev.onRoom(r.id); }
   }
 
@@ -672,7 +721,7 @@ export class HomeEngine {
       const n = h.face ? h.face.normal.clone().transformDirection(o.matrixWorld) : new THREE.Vector3(0, 1, 0);
       const p = h.point.clone().addScaledVector(n, 0.12);
       if (p.y < 0.3) p.y = 1.3;
-      const r = roomAt(p.x, p.z);
+      const r = this.roomAt(p.x, p.z);
       this.setNotePlacement(false);
       this.ev.onNotePlaced({ x: p.x, y: Math.min(2.4, p.y), z: p.z, roomId: r?.id ?? this.currentRoom });
       return;
@@ -746,4 +795,4 @@ export class HomeEngine {
   }
 }
 
-export type { Note, Room };
+export type { Note };

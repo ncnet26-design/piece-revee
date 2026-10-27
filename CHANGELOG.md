@@ -1,5 +1,14 @@
 # Journal des modifications
 
+## 0.3.0 — 27 octobre 2026
+
+- **Mon plan** : chacun dessine son propre logement aux vraies mesures (pièces, portes, fenêtres, baies, passages, terrasse ou jardin),
+  à la souris, au doigt ou en saisissant les cotes. Les cloisons, façades et garde-corps se créent automatiquement quand les pièces se touchent.
+- Quatre modèles de départ (studio, deux-pièces, maison avec jardin, partir de zéro) en plus de l'appartement d'exemple.
+- Ameublement automatique de chaque pièce (lit contre un mur plein, cuisine sur le plus grand linéaire libre, etc.), à ajuster ensuite.
+- Le plan dessiné se visite aussitôt en 3D, se modifie, s'enregistre et se partage par lien.
+- Nouveau revêtement « Pelouse » pour les jardins.
+
 ## 0.2.0 — 27 octobre 2026
 
 - **Visite 3D** (`/visite-3d/`) : appartement complet de 6 espaces (entrée, salon, cuisine, chambre, salle de bain, terrasse)
