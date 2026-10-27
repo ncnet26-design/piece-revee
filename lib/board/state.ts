@@ -1,12 +1,13 @@
 import { materialById } from "@/content/lookup";
 import { libModel } from "@/lib/home3d/library";
 import { COLORS } from "@/lib/home3d/plan";
+import { parseVariant, variantName } from "@/lib/showroom/catalog";
 
 /**
  * Planche de matières 3D : de vrais échantillons (bois, pierre, tissu, peinture), des objets 3D et des photos
  * posés sur un fond, éclairés comme sur une table d'atelier. Coordonnées en mètres, origine au centre de la planche.
  */
-export type Shape = "carre" | "rond" | "lame" | "drape" | "nuancier" | "objet" | "photo";
+export type Shape = "carre" | "rond" | "lame" | "drape" | "nuancier" | "objet" | "photo" | "etiquette";
 export interface BoardItem {
   id: string;
   /** Matière (« m-chene »), teinte (« #D8C9B4 »), modèle 3D (« Ottoman_01 ») ou photo importée (« up-… »). */
@@ -35,7 +36,18 @@ export const BACKGROUNDS: Array<{ id: string; name: string }> = [
 
 /** Formes d'échantillon possibles selon la famille de la matière. */
 export function shapesFor(ref: string): Shape[] {
+  if (ref.startsWith("t:")) return ["etiquette"];
   if (ref.startsWith("#")) return ["nuancier", "carre", "rond"];
+  const v = parseVariant(ref);
+  if (v) {
+    switch (v.family.gen) {
+      case "paint": return ["nuancier", "carre", "rond"];
+      case "fabric": case "leather": return ["drape", "carre", "rond"];
+      case "wood": return ["carre", "lame", "rond"];
+      case "metal": return ["rond", "carre", "lame"];
+      default: return ["carre", "rond", "lame"];
+    }
+  }
   const m = materialById.get(ref);
   if (m) {
     if (m.family === "Textile" || (m.family === "Fibre" && m.texture !== "cane")) return ["drape", "carre", "rond"];
@@ -47,7 +59,11 @@ export function shapesFor(ref: string): Shape[] {
 export const defaultShape = (ref: string): Shape => shapesFor(ref)[0]!;
 
 /** Nom lisible d'un élément. */
+/** Étiquette de texte : « t:Votre texte » (sans caractère de contrôle, 40 caractères au plus). */
+export const labelRef = (text: string) => `t:${text.replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, 40) || "Étiquette"}`;
 export function itemName(ref: string): string {
+  if (ref.startsWith("t:")) return `Étiquette « ${ref.slice(2)} »`;
+  const v = parseVariant(ref); if (v) return variantName(v);
   if (ref.startsWith("#")) { const c = COLORS.find((x) => x.hex.toLowerCase() === ref.toLowerCase()); return c ? `Peinture ${c.name.toLowerCase()}` : `Peinture ${ref.toUpperCase()}`; }
   const m = materialById.get(ref); if (m) return m.name;
   if (ref.startsWith("up-")) return "Photo importée";
@@ -56,7 +72,7 @@ export function itemName(ref: string): string {
 
 const ID = /^[\w-]{1,60}$/;
 const HEX = /^#[0-9a-fA-F]{6}$/;
-const SHAPES: Shape[] = ["carre", "rond", "lame", "drape", "nuancier", "objet", "photo"];
+const SHAPES: Shape[] = ["carre", "rond", "lame", "drape", "nuancier", "objet", "photo", "etiquette"];
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
 /** Valide une planche venue du stockage local ou d'un lien partagé (rien n'est exécuté, tout est borné). */
@@ -68,10 +84,17 @@ export function parseBoard(raw: unknown): Board | null {
   for (const it of r.items.slice(0, 80) as Array<Record<string, unknown>>) {
     if (!it || typeof it !== "object") continue;
     const ref = String(it.ref ?? ""), shape = String(it.shape ?? "") as Shape;
-    if (!(HEX.test(ref) || ID.test(ref)) || !SHAPES.includes(shape)) continue;
-    if (!HEX.test(ref) && !ref.startsWith("up-") && !materialById.get(ref) && !libModel(ref)) continue;
+    if (ref.startsWith("t:")) {
+      if (shape !== "etiquette") continue;
+      const n = (k: string, d: number) => (typeof it[k] === "number" && Number.isFinite(it[k]) ? (it[k] as number) : d);
+      items.push({ id: ID.test(String(it.id)) ? String(it.id) : uid(), ref: labelRef(ref.slice(2)), shape, x: clamp(n("x", 0), -BOARD_W / 2, BOARD_W / 2), z: clamp(n("z", 0), -BOARD_D / 2, BOARD_D / 2), rot: n("rot", 0) % 360, s: clamp(n("s", 1), SCALE_MIN, SCALE_MAX) });
+      continue;
+    }
+    const variant = ref.startsWith("sr:") ? parseVariant(ref) : null;
+    if (!(HEX.test(ref) || ID.test(ref) || variant) || !SHAPES.includes(shape)) continue;
+    if (!HEX.test(ref) && !variant && !ref.startsWith("up-") && !materialById.get(ref) && !libModel(ref)) continue;
     const n = (k: string, d: number) => (typeof it[k] === "number" && Number.isFinite(it[k]) ? (it[k] as number) : d);
-    items.push({ id: ID.test(String(it.id)) ? String(it.id) : uid(), ref, shape, x: clamp(n("x", 0), -BOARD_W / 2, BOARD_W / 2), z: clamp(n("z", 0), -BOARD_D / 2, BOARD_D / 2), rot: n("rot", 0) % 360, s: clamp(n("s", 1), SCALE_MIN, SCALE_MAX) });
+    items.push({ id: ID.test(String(it.id)) ? String(it.id) : uid(), ref: variant ? variant.ref : ref, shape, x: clamp(n("x", 0), -BOARD_W / 2, BOARD_W / 2), z: clamp(n("z", 0), -BOARD_D / 2, BOARD_D / 2), rot: n("rot", 0) % 360, s: clamp(n("s", 1), SCALE_MIN, SCALE_MAX) });
   }
   const bg = String(r.bg ?? "");
   return { v: 1, title: String(r.title ?? "Ma planche").slice(0, 80), bg: HEX.test(bg) || materialById.get(bg) ? bg : "#EFEBE3", items };
@@ -115,3 +138,17 @@ export const TEMPLATES: Array<{ id: string; name: string; text: string; board: (
   },
 ];
 export const emptyBoard = (): Board => ({ v: 1, title: "Ma planche", bg: "#EFEBE3", items: [] });
+
+const STORE = "pr_planche";
+/** Ajoute un élément à la planche enregistrée sur l'appareil (depuis le showroom, une fiche…). */
+export function addToStoredBoard(ref: string): number {
+  let b: Board | null = null;
+  try { const r = localStorage.getItem(STORE); b = r ? parseBoard(JSON.parse(r)) : null; } catch { b = null; }
+  b ??= emptyBoard();
+  const n = b.items.length, ang = n * 2.4;
+  b.items.push({ id: uid(), ref, shape: defaultShape(ref), x: Math.max(-0.5, Math.min(0.5, Math.cos(ang) * 0.12 * Math.sqrt(n))), z: Math.max(-0.32, Math.min(0.32, Math.sin(ang) * 0.09 * Math.sqrt(n))), rot: Math.round((Math.random() - 0.5) * 14), s: 1.2 });
+  b.items = b.items.slice(-80);
+  try { localStorage.setItem(STORE, JSON.stringify(b)); } catch { /* stockage plein */ }
+  window.dispatchEvent(new Event("pr-planche"));
+  return b.items.length;
+}

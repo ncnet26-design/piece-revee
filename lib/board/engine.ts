@@ -8,6 +8,9 @@ import { normalFrom } from "@/lib/home3d/normal";
 import { instantiate } from "@/lib/home3d/models";
 import { libModel } from "@/lib/home3d/library";
 import { BOARD_D, BOARD_W, type Board, type BoardItem } from "./state";
+import { parseVariant } from "@/lib/showroom/catalog";
+import { bodyColor } from "@/lib/showroom/geometry";
+import { showroomMaterial } from "@/lib/showroom/three";
 
 export interface BoardEvents {
   onSelect(id: string | null): void;
@@ -31,7 +34,7 @@ function drapeGeometry(size: number): THREE.BufferGeometry {
     const x = p.getX(i) / size, z = p.getZ(i) / size;
     const fold = Math.max(0, Math.sin((x + 0.15) * Math.PI * 2.2)) * 0.014 * (0.6 + z);
     const curl = Math.max(0, x + z - 0.45) ** 2 * 0.16;
-    p.setY(i, 0.002 + fold + curl + Math.sin(z * 9 + x * 3) * 0.0022);
+    p.setY(i, 0.0045 + fold + curl + Math.sin(z * 9 + x * 3) * 0.0022);
   }
   g.computeVertexNormals();
   return g;
@@ -199,6 +202,40 @@ export class BoardEngine {
     return this.matCache.get(`edge|${c}`) ?? (() => { const e = new THREE.MeshStandardMaterial({ color: c, roughness: 0.7 }); this.matCache.set(`edge|${c}`, e); return e; })();
   }
 
+  /** Matériau d'une déclinaison du showroom, à l'échelle réelle (mis en cache par référence et échelle). */
+  private srCache = new Map<string, Promise<THREE.Material>>();
+  private srMat(ref: string, metersPerUv: number): Promise<THREE.Material> {
+    const key = `${ref}|${metersPerUv}`;
+    let p = this.srCache.get(key);
+    if (!p) {
+      p = showroomMaterial(ref, metersPerUv, { size: this.software ? 512 : 1024, anisotropy: this.renderer.capabilities.getMaxAnisotropy(), light: this.software })
+        .then((m) => m ?? new THREE.MeshStandardMaterial({ color: "#cccccc" }));
+      this.srCache.set(key, p);
+    }
+    return p;
+  }
+  private plain(color: string, roughness = 0.8): THREE.Material {
+    const k = `plain|${color}|${roughness}`;
+    return this.matCache.get(k) ?? (() => { const e = new THREE.MeshStandardMaterial({ color, roughness }); this.matCache.set(k, e); return e; })();
+  }
+  /** Étiquette : carte crème, texte en capitales fines, comme une planche d'architecte. */
+  private label(text: string): THREE.Group {
+    const g = new THREE.Group(), w = 0.17, d = 0.042;
+    const card = new THREE.Mesh(new RoundedBoxGeometry(w, 0.0025, d, 2, 0.001), this.plain("#FBF8F1", 0.75));
+    card.position.y = 0.00125;
+    const cv = document.createElement("canvas"); cv.width = 1600; cv.height = 400;
+    const x = cv.getContext("2d")!;
+    x.fillStyle = "#2A2621"; x.textAlign = "center"; x.textBaseline = "middle";
+    let size = 150; x.font = `${size}px "Instrument Serif", Georgia, serif`;
+    while (x.measureText(text).width > 1480 && size > 60) { size -= 6; x.font = `${size}px "Instrument Serif", Georgia, serif`; }
+    x.fillText(text, 800, 210);
+    const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+    const plane = new THREE.Mesh(new THREE.PlaneGeometry(w - 0.006, d - 0.004), new THREE.MeshStandardMaterial({ map: t, transparent: true, roughness: 0.9 }));
+    plane.rotation.x = -Math.PI / 2; plane.position.y = 0.0026;
+    g.add(card, plane);
+    return g;
+  }
+
   /* ——— Construction des éléments ——— */
   private async build(it: BoardItem, uploads: Map<string, string>): Promise<{ obj: THREE.Object3D; h: number }> {
     const g = new THREE.Group();
@@ -211,6 +248,43 @@ export class BoardEngine {
       const k = SIZE.objet / Math.max(size.x, size.z, size.y * 0.8, 0.01);
       model.scale.setScalar(k); cast(model); g.add(model);
       return { obj: g, h: (lm?.dims?.h ?? size.y) * k };
+    }
+    if (it.shape === "etiquette") {
+      const lab = this.label(it.ref.slice(2)); cast(lab); g.add(lab);
+      return { obj: g, h: 0.003 };
+    }
+    const variant = it.ref.startsWith("sr:") ? parseVariant(it.ref) : null;
+    if (variant) {
+      const gen = variant.family.gen, body = bodyColor(variant);
+      if (it.shape === "nuancier") {
+        const card = new THREE.Mesh(new RoundedBoxGeometry(SIZE.chipW, 0.002, SIZE.chipD, 2, 0.001), this.plain("#FAF8F3", 0.7));
+        card.position.y = 0.001;
+        const sw = new THREE.Mesh(new THREE.PlaneGeometry(SIZE.chipW - 0.008, SIZE.chipD * 0.72), await this.srMat(it.ref, SIZE.chipW));
+        sw.rotation.x = -Math.PI / 2; sw.position.set(0, 0.00205, -SIZE.chipD * 0.1);
+        g.add(card, sw); cast(g);
+        return { obj: g, h: 0.0022 };
+      }
+      if (it.shape === "drape") {
+        const mat = await this.srMat(it.ref, SIZE.drape) as THREE.MeshPhysicalMaterial; mat.side = THREE.DoubleSide;
+        g.add(new THREE.Mesh(drapeGeometry(SIZE.drape), mat)); cast(g);
+        return { obj: g, h: 0.008 };
+      }
+      const th = gen === "paint" || gen === "leather" ? 0.004 : gen === "metal" ? 0.005 : gen === "fabric" ? 0.003 : gen === "wood" ? 0.016 : 0.013;
+      const side = body ? this.plain(body, 0.85) : null;
+      if (it.shape === "rond") {
+        const top = await this.srMat(it.ref, SIZE.rond * 2);
+        const mesh = new THREE.Mesh(new THREE.CylinderGeometry(SIZE.rond, SIZE.rond, th, 72, 1), [side ?? top, top, side ?? top]);
+        mesh.position.y = th / 2; g.add(mesh); cast(g);
+        return { obj: g, h: th };
+      }
+      const [w, d] = it.shape === "lame" ? [SIZE.lameL, SIZE.lameW] : [SIZE.carre, SIZE.carre];
+      const geo = new RoundedBoxGeometry(w, th, d, 3, Math.min(0.0025, th / 3));
+      const uv = geo.attributes.uv as THREE.BufferAttribute, pos = geo.attributes.position as THREE.BufferAttribute;
+      for (let i = 0; i < uv.count; i++) uv.setXY(i, (pos.getX(i) + w / 2) / 0.2, (pos.getZ(i) + d / 2) / 0.2);
+      const top = await this.srMat(it.ref, 0.2);
+      const mesh = new THREE.Mesh(geo, side ? [side, side, top, side, side, side] : top);
+      mesh.position.y = th / 2; g.add(mesh); cast(g);
+      return { obj: g, h: th };
     }
     if (it.shape === "photo") {
       const url = uploads.get(it.ref);

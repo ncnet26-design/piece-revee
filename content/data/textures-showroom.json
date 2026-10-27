@@ -1,0 +1,129 @@
+{
+  "tx-coton": {
+    "assetId": "stretch_poplin",
+    "name": "Stretch Poplin",
+    "url": "https://polyhaven.com/a/stretch_poplin",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-cotele": {
+    "assetId": "ribbed_corduroy",
+    "name": "Ribbed Corduroy",
+    "url": "https://polyhaven.com/a/ribbed_corduroy",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-laine": {
+    "assetId": "poly_wool_herringbone",
+    "name": "Poly Wool Herringbone",
+    "url": "https://polyhaven.com/a/poly_wool_herringbone",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-chine": {
+    "assetId": "jersey_melange",
+    "name": "Jersey Melange",
+    "url": "https://polyhaven.com/a/jersey_melange",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-cuir": {
+    "assetId": "brown_leather",
+    "name": "Brown Leather",
+    "url": "https://polyhaven.com/a/brown_leather",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-cuir-vieilli": {
+    "assetId": "fabric_leather_02",
+    "name": "Fabric Leather 02",
+    "url": "https://polyhaven.com/a/fabric_leather_02",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-nubuck": {
+    "assetId": "scuba_suede",
+    "name": "Scuba Suede",
+    "url": "https://polyhaven.com/a/scuba_suede",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-chene": {
+    "assetId": "oak_veneer_01",
+    "name": "Oak Veneer 01",
+    "url": "https://polyhaven.com/a/oak_veneer_01",
+    "authors": [
+      "Jenelle van Heerden"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-bois-fin": {
+    "assetId": "fine_grained_wood",
+    "name": "Fine Grained Wood",
+    "url": "https://polyhaven.com/a/fine_grained_wood",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-enduit": {
+    "assetId": "beige_wall_001",
+    "name": "Beige Wall 001",
+    "url": "https://polyhaven.com/a/beige_wall_001",
+    "authors": [
+      "Dimitrios Savva",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-enduit-nuage": {
+    "assetId": "grey_plaster",
+    "name": "Grey Plaster",
+    "url": "https://polyhaven.com/a/grey_plaster",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "tx-beton": {
+    "assetId": "concrete_wall_008",
+    "name": "Concrete Wall 008",
+    "url": "https://polyhaven.com/a/concrete_wall_008",
+    "authors": [
+      "Dario Barresi",
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  }
+}

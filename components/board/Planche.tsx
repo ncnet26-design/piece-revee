@@ -6,7 +6,7 @@ import { materialById } from "@/content/lookup";
 import type { Material } from "@/content/types";
 import type { BoardEngine, View } from "@/lib/board/engine";
 import {
-  BACKGROUNDS, SCALE_MAX, SCALE_MIN, TEMPLATES, decodeBoard, defaultShape, emptyBoard, encodeBoard, itemName, parseBoard, shapesFor, uid,
+  BACKGROUNDS, SCALE_MAX, SCALE_MIN, TEMPLATES, decodeBoard, defaultShape, emptyBoard, encodeBoard, itemName, labelRef, parseBoard, shapesFor, uid,
   type Board, type BoardItem, type Shape,
 } from "@/lib/board/state";
 import { COLORS } from "@/lib/home3d/plan";
@@ -18,16 +18,20 @@ import type { RetailerKind } from "@/lib/retailers";
 import { MaterialSwatch } from "../Visual";
 import { ShopLinks } from "../ShopLinks";
 import { IconClose } from "../icons";
+import { Swatch } from "../showroom/Swatch";
+import { FAMILIES as SR_FAMILIES, familyById, makeRef, parseVariant, variantName, variantShop, withOption } from "@/lib/showroom/catalog";
 
 const KEY = "pr_planche";
 const UP_KEY = "pr_planche_photos";
-type Tab = "matieres" | "peintures" | "objets" | "photos";
+type Tab = "showroom" | "matieres" | "peintures" | "objets" | "photos";
 const FAMILIES: Array<Material["family"] | "Toutes"> = ["Toutes", "Bois", "Pierre", "Terre", "Textile", "Fibre", "Métal", "Composite", "Verre", "Extérieur"];
-const SHAPE_LABEL: Record<Shape, string> = { carre: "Carreau", rond: "Galet", lame: "Lame", drape: "Tissu", nuancier: "Nuancier", objet: "Objet", photo: "Photo" };
+const SHAPE_LABEL: Record<Shape, string> = { carre: "Carreau", rond: "Galet", lame: "Lame", drape: "Tissu", nuancier: "Nuancier", objet: "Objet", photo: "Photo", etiquette: "Étiquette" };
 const MODELS = LIBRARY_MODELS.filter((m) => !/street_lamp|picnic|CoffeeCart|GothicBed/i.test(m.id));
 
 /** Recherche d'achat et rayons adaptés à un élément de la planche. */
 function shopFor(ref: string): { q: string; kinds: RetailerKind[] } {
+  const v = parseVariant(ref); if (v) return variantShop(v);
+  if (ref.startsWith("t:")) return { q: "", kinds: [] };
   if (ref.startsWith("#")) return { q: `${itemName(ref).toLowerCase()} mate`, kinds: ["bricolage", "deco"] };
   const m = materialById.get(ref);
   if (m) {
@@ -42,6 +46,8 @@ function shopFor(ref: string): { q: string; kinds: RetailerKind[] } {
 }
 
 function Thumb({ refId, className = "" }: { refId: string; className?: string }) {
+  if (refId.startsWith("sr:")) return <Swatch key={refId} refId={refId} label="Aperçu de l'échantillon" size={120} className={className} />;
+  if (refId.startsWith("t:")) return <span className={`grid place-items-center bg-[#FBF8F1] font-display text-[22px] text-ink ${className}`} aria-hidden="true">Aa</span>;
   if (refId.startsWith("#")) return <span className={`block ${className}`} style={{ background: refId }} aria-hidden="true" />;
   const m = materialById.get(refId);
   if (m) return <MaterialSwatch texture={m.texture} colors={m.colors} seed={m.id} width={160} height={160} label={`Échantillon dessiné : ${m.name}`} className={`block ${className}`} />;
@@ -64,7 +70,8 @@ export default function Planche() {
   const [board, setBoard] = useState<Board | null>(null);
   const [uploads, setUploads] = useState<Map<string, string>>(() => new Map());
   const [sel, setSel] = useState<string | null>(null);
-  const [tab, setTab] = useState<Tab>("matieres");
+  const [tab, setTab] = useState<Tab>("showroom");
+  const [srFam, setSrFam] = useState("zellige");
   const [family, setFamily] = useState<(typeof FAMILIES)[number]>("Toutes");
   const [q, setQ] = useState("");
   const [view, setView] = useState<View>("perspective");
@@ -157,7 +164,7 @@ export default function Planche() {
       .sort((a, b) => Number(!!realTexture(b.id)) - Number(!!realTexture(a.id)));
   }, [q, family]);
   const current = board?.items.find((i) => i.id === sel);
-  const sheet = useMemo(() => [...new Map((board?.items ?? []).filter((i) => !i.ref.startsWith("up-")).map((i) => [i.ref, i])).values()], [board]);
+  const sheet = useMemo(() => [...new Map((board?.items ?? []).filter((i) => !i.ref.startsWith("up-") && !i.ref.startsWith("t:")).map((i) => [i.ref, i])).values()], [board]);
 
   const tile = (ref: string, label: string, sub?: string) => (
     <li key={ref}>
@@ -196,11 +203,18 @@ export default function Planche() {
         {/* Bibliothèque */}
         <aside className="panel order-2 flex max-h-[min(74vh,760px)] flex-col p-0 lg:order-1" aria-label="Bibliothèque">
           <div className="flex gap-1 overflow-x-auto border-b border-line p-2" role="tablist" aria-label="Rubriques de la bibliothèque">
-            {([["matieres", "Matières"], ["peintures", "Peintures"], ["objets", "Objets 3D"], ["photos", "Mes photos"]] as Array<[Tab, string]>).map(([t, l]) => (
+            {([["showroom", "Showroom"], ["matieres", "Matières"], ["peintures", "Peintures"], ["objets", "Objets 3D"], ["photos", "Mes photos"]] as Array<[Tab, string]>).map(([t, l]) => (
               <button key={t} type="button" role="tab" aria-selected={tab === t} className={`chip whitespace-nowrap ${tab === t ? "chip-on" : ""}`} onClick={() => setTab(t)}>{l}</button>
             ))}
           </div>
           <div className="min-h-0 flex-1 overflow-y-auto p-3">
+            {tab === "showroom" && <>
+              <div className="mb-3 flex flex-wrap gap-1" role="group" aria-label="Familles du showroom">
+                {SR_FAMILIES.map((f) => <button key={f.id} type="button" aria-pressed={srFam === f.id} className={`chip text-[12px] ${srFam === f.id ? "chip-on" : ""}`} onClick={() => setSrFam(f.id)}>{f.name}</button>)}
+              </div>
+              <ul className="grid grid-cols-3 gap-x-2 gap-y-3">{(() => { const f = familyById.get(srFam)!; return f.axes[0]!.options.map((o) => { const ref = makeRef(f, [o, ...f.axes.slice(1).map((a) => a.options[0]!)]); return tile(ref, o.label, f.name); }); })()}</ul>
+              <p className="mt-3 text-[12px] text-muted">Formats, finitions et joints se règlent ensuite sur l'échantillon. <Link className="underline" href={`/showroom/?f=${srFam}`}>Tout le showroom</Link></p>
+            </>}
             {tab === "matieres" && <>
               <input className="input mb-2 w-full" type="search" placeholder="Chêne, marbre, lin…" aria-label="Rechercher une matière" value={q} onChange={(e) => setQ(e.target.value)} />
               <div className="mb-3 flex flex-wrap gap-1">
@@ -254,7 +268,7 @@ export default function Planche() {
                 <div className="flex items-start gap-3">
                   <span aria-hidden="true" className="h-12 w-12 shrink-0 overflow-hidden rounded-[8px]"><Thumb refId={current.ref} className="h-full w-full" /></span>
                   <div className="min-w-0 flex-1">
-                    <b className="block truncate text-[14px]">{current.ref.startsWith("up-") ? "Photo importée" : libModel(current.ref) ? frenchName(libModel(current.ref)!) : itemName(current.ref)}</b>
+                    <b className="block truncate text-[14px]">{current.ref.startsWith("up-") ? "Photo importée" : libModel(current.ref) ? frenchName(libModel(current.ref)!) : parseVariant(current.ref) ? variantName(parseVariant(current.ref)!, true) : itemName(current.ref)}</b>
                     <div className="mt-1 flex flex-wrap gap-1">
                       {shapesFor(current.ref).length > 1 && shapesFor(current.ref).map((s) => (
                         <button key={s} type="button" aria-pressed={current.shape === s} className={`chip text-[11.5px] ${current.shape === s ? "chip-on" : ""}`} onClick={() => update(current.id, { shape: s })}>{SHAPE_LABEL[s]}</button>
@@ -263,6 +277,22 @@ export default function Planche() {
                   </div>
                   <button type="button" className="btn btn-sm btn-ghost" aria-label="Fermer" onClick={() => setSel(null)}><IconClose width={16} height={16} /></button>
                 </div>
+                {(() => { const v = parseVariant(current.ref); return v && (
+                  <div className="mt-2 grid grid-cols-2 gap-2 text-[12px]">
+                    {v.family.axes.map((a, i) => (
+                      <label key={a.id} className="min-w-0">{a.label}
+                        <select className="input mt-0.5 w-full px-2 py-1 text-[12.5px]" value={v.opts[i]!.id} onChange={(e) => update(current.id, { ref: withOption(current.ref, a.id, e.target.value) })}>
+                          {a.options.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
+                        </select>
+                      </label>
+                    ))}
+                  </div>
+                ); })()}
+                {current.ref.startsWith("t:") && (
+                  <label className="mt-2 block text-[12px]">Texte de l'étiquette
+                    <input className="input mt-0.5 w-full px-2 py-1 text-[13px]" maxLength={40} defaultValue={current.ref.slice(2)} key={current.id} onChange={(e) => update(current.id, { ref: labelRef(e.target.value) })} />
+                  </label>
+                )}
                 <div className="mt-2 grid grid-cols-2 gap-3 text-[12px]">
                   <label>Rotation<input type="range" min={-180} max={180} value={((current.rot + 540) % 360) - 180} onChange={(e) => update(current.id, { rot: Number(e.target.value) })} className="w-full accent-[var(--bronze)]" /></label>
                   <label>Taille<input type="range" min={SCALE_MIN} max={SCALE_MAX} step={0.05} value={current.s} onChange={(e) => update(current.id, { s: Number(e.target.value) })} className="w-full accent-[var(--bronze)]" /></label>
@@ -286,6 +316,7 @@ export default function Planche() {
               </button>
             ))}
             <span className="ml-auto flex gap-2">
+              <button type="button" className="btn btn-sm" onClick={() => addAt(labelRef(board?.title || "Ma planche"), 0.36, 0.3)}>+ Étiquette</button>
               <button type="button" className="btn btn-sm btn-ghost" onClick={() => { setBoard((b) => (b ? { ...emptyBoard(), title: b.title, bg: b.bg } : b)); setSel(null); }}>Vider</button>
               <button type="button" className="btn btn-sm" onClick={() => openCamille(`Voici ma planche de matières « ${board?.title} » : ${sheet.map((i) => itemName(i.ref)).join(", ")}. Ces matières vont-elles bien ensemble, et dans quelle pièce les utiliser ?`)}>Avis de Camille</button>
             </span>
@@ -303,14 +334,14 @@ export default function Planche() {
           </div>
           <ul className="mt-6 grid gap-4 md:grid-cols-2">
             {sheet.map((i) => {
-              const m = materialById.get(i.ref), lm = libModel(i.ref), rt = realTexture(i.ref), shop = shopFor(i.ref);
+              const v = parseVariant(i.ref), m = materialById.get(i.ref) ?? (v?.family.materialId ? materialById.get(v.family.materialId) : undefined), lm = libModel(i.ref), rt = realTexture(i.ref), shop = shopFor(i.ref);
               return (
                 <li key={i.ref} className="panel flex gap-4">
                   <span className="h-24 w-24 shrink-0 overflow-hidden rounded-[12px]"><Thumb refId={i.ref} className="h-full w-full" /></span>
                   <div className="min-w-0 flex-1">
                     <h3 className="font-ui text-[15.5px] font-semibold">{lm ? frenchName(lm) : itemName(i.ref)}</h3>
                     <p className="text-[13px] text-muted">
-                      {m ? <>{m.family} · {m.origin}</> : lm ? <>Modèle 3D {lm.authors.join(", ")} · <a className="underline" href={lm.url} target="_blank" rel="noopener noreferrer">Poly Haven</a> (CC0)</> : <>Teinte {i.ref.toUpperCase()}</>}
+                      {v ? <>Showroom · {v.family.name}</> : m ? <>{m.family} · {m.origin}</> : lm ? <>Modèle 3D {lm.authors.join(", ")} · <a className="underline" href={lm.url} target="_blank" rel="noopener noreferrer">Poly Haven</a> (CC0)</> : <>Teinte {i.ref.toUpperCase()}</>}
                     </p>
                     {m && <p className="mt-1 text-[13px]">{m.priceRange} · <Link className="underline" href={`/matieres/${m.slug}/`}>fiche complète</Link></p>}
                     {rt && <p className="mt-0.5 text-[11.5px] text-muted">Texture : {rt.name}, {rt.authors.join(", ")} (Poly Haven, CC0)</p>}
