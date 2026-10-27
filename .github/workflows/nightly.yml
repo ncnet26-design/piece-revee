@@ -17,6 +17,8 @@ permissions:
 jobs:
   catalogue:
     name: Synchronisation des flux produits
+    # Actif seulement une fois les flux d'affiliation configurés (variable de dépôt CATALOGUE_ACTIF = true).
+    if: ${{ vars.CATALOGUE_ACTIF == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

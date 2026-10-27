@@ -1,0 +1,43 @@
+name: Ressources réalistes (textures, meubles 3D, photos)
+
+# Se lance à la main : onglet « Actions » → « Ressources réalistes » → « Run workflow ».
+on:
+  workflow_dispatch:
+    inputs:
+      textures: { description: "Textures photographiques (Poly Haven, CC0)", type: boolean, default: true }
+      modeles: { description: "Meubles et objets 3D (Poly Haven, CC0)", type: boolean, default: true }
+      photos: { description: "Photos libres de la galerie (Openverse ; Unsplash/Pexels si clés)", type: boolean, default: true }
+
+permissions:
+  contents: write
+
+jobs:
+  ressources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - name: Textures photographiques
+        if: ${{ inputs.textures }}
+        run: node --experimental-strip-types scripts/fetch-assets.ts --textures
+      - name: Meubles et objets 3D
+        if: ${{ inputs.modeles }}
+        run: node --experimental-strip-types scripts/fetch-assets.ts --models
+      - name: Photos libres
+        if: ${{ inputs.photos }}
+        run: pnpm images:import
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+      - name: Déposer les ressources dans la branche robot/ressources (relecture avant intégration)
+        run: |
+          git config user.name "piece-revee-robot"
+          git config user.email "robot@users.noreply.github.com"
+          git checkout -B robot/ressources
+          git add public/textures public/models content/data || true
+          git commit -m "ressources: textures, meubles 3D et photos libres ($(date +%Y-%m-%d))" || { echo "Rien de nouveau"; exit 0; }
+          git push -f origin robot/ressources
