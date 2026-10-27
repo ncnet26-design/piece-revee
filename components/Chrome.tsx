@@ -10,6 +10,7 @@ import { POSTHOG_KEY } from "@/lib/site";
 import { IconChat, IconGrid, IconHeart, IconHome, IconHouse, IconPhoto, IconTheme, IconUser } from "./icons";
 
 const NAV = [
+  { href: "/visite-3d/", label: "Visite 3D" },
   { href: "/galerie/", label: "Galerie" },
   { href: "/quiz/", label: "Mon style" },
   { href: "/projet/", label: "Mon projet" },
@@ -69,7 +70,7 @@ export function TabBar() {
     { href: "/", label: "Accueil", Icon: IconHome, active: path === "/" },
     { href: "/galerie/", label: "Galerie", Icon: IconGrid, active: path.startsWith("/galerie") || EXPLORE.some((p) => path.startsWith(p)) },
     { href: "/projet/", label: "Projet", Icon: IconPhoto, active: path.startsWith("/projet") },
-    { href: "/maison/", label: "Maison", Icon: IconHouse, active: path.startsWith("/maison") },
+    { href: "/visite-3d/", label: "3D", Icon: IconHouse, active: path.startsWith("/visite-3d") || path.startsWith("/maison") },
   ];
   return (
     <nav aria-label="Navigation mobile" className="fixed inset-x-0 bottom-0 z-25 border-t border-line bg-surface lg:hidden"
@@ -122,7 +123,7 @@ export function CookieBanner() {
 
 export function Footer() {
   const cols = [
-    { title: "Créer", links: [["Mon projet", "/projet/"], ["Galerie d'inspiration", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
+    { title: "Créer", links: [["Visite 3D", "/visite-3d/"], ["Mon projet", "/projet/"], ["Galerie d'inspiration", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
     { title: "Explorer", links: [["Matériauthèque", "/matieres/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
     { title: "Informations", links: [["Mentions légales", "/legal/mentions-legales/"], ["CGU", "/legal/cgu/"], ["CGV", "/legal/cgv/"], ["Confidentialité", "/legal/confidentialite/"], ["Cookies", "/legal/cookies/"], ["Liens affiliés", "/legal/affiliation/"]] },
   ];

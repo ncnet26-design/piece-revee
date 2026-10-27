@@ -1,5 +1,15 @@
 # Journal des modifications
 
+## 0.2.0 — 27 octobre 2026
+
+- **Visite 3D** (`/visite-3d/`) : appartement complet de 6 espaces (entrée, salon, cuisine, chambre, salle de bain, terrasse)
+  où l'on se déplace librement (souris, clavier ZQSD ou flèches, toucher du sol, joystick sur mobile) ou en vue d'ensemble façon maquette.
+- Tout se modifie : couleur, tissu, matière et modèle de 33 types d'objets ; peinture ou enduit des murs ; sol choisi dans la matériauthèque ;
+  style appliqué à une pièce en un geste ; déplacement des meubles par glisser-déposer, rotation, duplication, ajout depuis un catalogue.
+- Astuces d'aménagement par pièce et par objet, astuces personnelles épinglées dans la 3D, Camille accessible pendant la visite.
+- Plan enregistré sur l'appareil, partage par simple lien (sans serveur), capture photo de la vue.
+- Offres : les fonctions pas encore livrées sont affichées « bientôt » et ne sont plus vendues.
+
 ## 0.1.0 — 27 octobre 2026
 
 Première version complète, utilisable en mode démonstration sans aucune clé.

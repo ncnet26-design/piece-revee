@@ -1,7 +1,7 @@
 # Pièce Rêvée
 
 Plateforme web (mobile d'abord, installable en PWA) d'aménagement intérieur **et** extérieur :
-une photo de la pièce ou du jardin → une étude d'aménagement (palette, zones, besoins, tutos),
+une **visite 3D** où l'on se promène de pièce en pièce et où tout se modifie (meubles, couleurs, murs, sols, styles), une photo de la pièce ou du jardin → une étude d'aménagement (palette, zones, besoins, tutos),
 des rendus de l'espace transformé, des produits réels d'enseignes, et **Camille**, assistante IA
 en architecture d'intérieur et en paysage, disponible à chaque étape.
 

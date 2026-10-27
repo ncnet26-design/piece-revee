@@ -22,7 +22,7 @@ export default function Home() {
             Votre intérieur rêvé, <em className="not-italic text-accent">réellement</em> faisable.
           </h1>
           <p className="my-5 max-w-[46ch] text-lg text-muted">Une photo de votre pièce ou de votre jardin. Recevez des rendus de <b className="text-ink">votre</b> espace transformé, de vrais produits à acheter, et un guide pour tout réaliser, étape par étape.</p>
-          <div className="flex flex-wrap gap-2.5"><Link className="btn btn-primary btn-lg" href="/projet/">Transformer mon espace</Link><Link className="btn btn-lg" href="/quiz/">Trouver mon style</Link></div>
+          <div className="flex flex-wrap gap-2.5"><Link className="btn btn-primary btn-lg" href="/visite-3d/">Visiter en 3D</Link><Link className="btn btn-lg" href="/projet/">Transformer mon espace</Link></div>
           <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1 p-0 text-[13px] text-muted" style={{ listStyle: "none" }}>
             <li>✓ 1 étude complète offerte</li><li>✓ Sans abonnement possible</li><li>✓ Intérieur et extérieur</li>
           </ul>

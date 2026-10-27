@@ -140,7 +140,7 @@ test("404 utile", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toContainText("n'existe pas");
 });
 
-for (const url of ["/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
+for (const url of ["/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
   test(`accessibilité (axe, WCAG 2.2 AA) : ${url}`, async ({ page }) => {
     await page.goto(url);
     await page.waitForLoadState("networkidle");
@@ -151,8 +151,56 @@ for (const url of ["/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etud
 
 test("aucun débordement horizontal sur mobile", async ({ page, isMobile }) => {
   test.skip(!isMobile, "mobile uniquement");
-  for (const url of ["/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
+  for (const url of ["/", "/visite-3d/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
     await page.goto(url);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), url).toBe(true);
   }
+});
+
+test("visite 3D : pièces, style, modification d'un meuble, sauvegarde", async ({ page }) => {
+  test.setTimeout(90_000);
+  const errors = noJsErrors(page);
+  await page.addInitScript(() => localStorage.setItem("pr_home3d_hint", "1"));
+  await page.goto("/visite-3d/");
+  await expect(page.getByRole("heading", { level: 1, name: "Visite 3D" })).toBeVisible();
+  await expect(page.getByText("Chargement de la 3D")).toBeHidden({ timeout: 30_000 });
+  await expect(page.getByText("La 3D ne peut pas s'afficher")).toHaveCount(0);
+  await page.getByRole("navigation", { name: "Pièces" }).getByRole("button", { name: "Chambre" }).click();
+  await page.getByRole("button", { name: "Pièce", exact: true }).click();
+  const panel = page.getByRole("complementary", { name: "Réglages" });
+  await expect(panel.getByRole("heading", { name: "Chambre" })).toBeVisible();
+  await panel.getByRole("button", { name: "Scandinave" }).click();
+  await panel.getByRole("button", { name: "Lit" }).click();
+  await expect(panel.getByRole("heading", { name: /Lit/ })).toBeVisible();
+  await panel.getByRole("button", { name: "180 × 200" }).click();
+  await panel.getByRole("button", { name: "Bleu nuit" }).click();
+  await expect(panel.getByText("L 194 cm")).toBeVisible();
+  await page.waitForTimeout(600);
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("pr_home3d_v1") ?? "{}"));
+  const bed = saved.items.find((i: { type: string }) => i.type === "lit");
+  expect(bed).toMatchObject({ variant: "180 × 200", color: "#232F4A" });
+  expect(saved.rooms.chambre.wall).toEqual({ kind: "peinture", hex: "#F2F2EE" });
+  await page.reload();
+  await expect(page.getByText("Chargement de la 3D")).toBeHidden({ timeout: 30_000 });
+  const again = await page.evaluate(() => JSON.parse(localStorage.getItem("pr_home3d_v1") ?? "{}"));
+  expect(again.items.find((i: { type: string }) => i.type === "lit").color).toBe("#232F4A");
+  expect(errors).toEqual([]);
+});
+
+test("visite 3D : ajouter un objet et une astuce", async ({ page }) => {
+  test.setTimeout(90_000);
+  await page.addInitScript(() => localStorage.setItem("pr_home3d_hint", "1"));
+  await page.goto("/visite-3d/");
+  await expect(page.getByText("Chargement de la 3D")).toBeHidden({ timeout: 30_000 });
+  const before = await page.evaluate(() => JSON.parse(localStorage.getItem("pr_home3d_v1") ?? "{\"items\":[]}").items.length);
+  await page.getByRole("button", { name: "+ Ajouter" }).click();
+  await page.getByRole("complementary", { name: "Réglages" }).getByRole("button", { name: "Lampadaire" }).click();
+  await expect(page.getByRole("complementary", { name: "Réglages" }).getByRole("heading", { name: "Lampadaire" })).toBeVisible();
+  await page.getByRole("button", { name: "Astuces" }).click();
+  await page.getByLabel("Partager une astuce").fill("Une lampe dans chaque coin sombre.");
+  await page.getByRole("button", { name: "Ajouter à la pièce" }).click();
+  await page.waitForTimeout(600);
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("pr_home3d_v1") ?? "{}"));
+  expect(saved.items.length).toBeGreaterThan(before === 0 ? 50 : before);
+  expect(saved.notes.map((n: { text: string }) => n.text)).toContain("Une lampe dans chaque coin sombre.");
 });
