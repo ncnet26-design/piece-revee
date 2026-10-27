@@ -69,7 +69,7 @@ export default function CamilleDrawer({ open, onClose, request }: { open: boolea
         className={`fixed inset-y-0 right-0 z-40 flex w-full max-w-[460px] flex-col border-l border-line bg-surface transition-transform duration-300 ${open ? "translate-x-0 shadow-2xl" : "translate-x-full"}`}
         style={{ paddingTop: "env(safe-area-inset-top, 0px)", paddingBottom: "env(safe-area-inset-bottom, 0px)", paddingRight: "env(safe-area-inset-right, 0px)" }}>
         <div className="flex items-center gap-3 border-b border-line px-4 py-3.5">
-          <span aria-hidden="true" className="h-[38px] w-[38px] flex-none rounded-full" style={{ background: "conic-gradient(from 30deg,#2747D0,#9DB1FF,#C9B08A,#3E5B4C,#2747D0)" }} />
+          <span aria-hidden="true" className="h-[38px] w-[38px] flex-none rounded-full" style={{ background: "radial-gradient(circle at 30% 30%,#E9DCC6,#9C7547 55%,#161512)" }} />
           <div className="min-w-0 flex-1"><b className="block font-display text-[17px]">Camille</b><small className="text-[12.5px] text-muted">Assistante IA · intérieur et jardin</small></div>
           {turns.length > 0 && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setTurns([])}>Effacer</button>}
           <button type="button" className="btn btn-sm btn-ghost" onClick={() => setOpen(false)} aria-label="Fermer Camille"><IconClose width={16} height={16} /></button>

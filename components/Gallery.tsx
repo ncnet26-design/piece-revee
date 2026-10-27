@@ -44,7 +44,7 @@ export function Gallery() {
   return (
     <>
       <div className="vhead">
-        <div><h1>Galerie d'inspiration</h1><p>Trouvez l'ambiance qui vous ressemble. « Je veux ça chez moi » applique le style et la palette à la photo de votre espace.</p></div>
+        <div><p className="!mt-0">Trouvez l'ambiance qui vous ressemble. « Je veux ça chez moi » applique le style et la palette à la photo de votre espace.</p></div>
         <div className="seg" role="group" aria-label="Intérieur ou extérieur">
           {(["interieur", "exterieur"] as const).map((s) => <button key={s} type="button" aria-pressed={scope === s} onClick={() => { setScope(s); setStyle("Tous"); setSpace("Tous"); }}>{s === "interieur" ? "Intérieur" : "Extérieur"}</button>)}
         </div>

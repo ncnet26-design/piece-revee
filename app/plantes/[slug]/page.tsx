@@ -7,7 +7,7 @@ import { FavButton } from "@/components/FavButton";
 import { AskCamille } from "@/components/DetailBits";
 import { YearRow } from "@/components/Calendar";
 import { PlantCard } from "@/components/cards";
-import { MERCHANTS } from "@/lib/catalog";
+import { ShopLinks } from "@/components/ShopLinks";
 import { meta } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
@@ -58,8 +58,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <YearRow label="Taille, entretien" months={p.prune} tone="prune" />
         </div></div>
       </section>
-      <section className="section"><h2>Où l'acheter</h2><p className="mb-3 mt-1 text-muted">Les catalogues des jardineries partenaires ne sont pas encore branchés. Cherchez « {p.latin} » sur les sites officiels ou chez un pépiniériste près de chez vous.</p>
-        <div className="flex flex-wrap gap-1.5">{MERCHANTS.filter((m) => ["Leroy Merlin", "Castorama"].includes(m.merchant)).map((m) => <a key={m.merchant} className="btn btn-sm" href={m.url} target="_blank" rel="noopener noreferrer">{m.merchant} ↗</a>)}<a className="btn btn-sm" href="https://www.tela-botanica.org" target="_blank" rel="noopener noreferrer">Fiche botanique (Tela Botanica) ↗</a></div></section>
+      <section className="section"><h2>Où l'acheter</h2><p className="mb-3 mt-1 text-muted">Trouvez « {p.name.toLowerCase()} » en jardinerie en ligne, ou chez un pépiniériste près de chez vous.</p>
+        <ShopLinks query={p.name} kinds={["jardin"]} title="" />
+        <a className="btn btn-sm mt-3" href="https://www.tela-botanica.org" target="_blank" rel="noopener noreferrer">Fiche botanique (Tela Botanica) ↗</a></section>
       {similar.length > 0 && <section className="section"><h2>Plantes compagnes</h2><div className="grid-cards mt-4">{similar.map((x) => <PlantCard key={x.id} p={x} />)}</div></section>}
       <JsonLd data={{ "@context": "https://schema.org", "@type": "Article", headline: `${p.name} (${p.latin})`, about: { "@type": "Thing", name: p.latin }, description: p.notes, inLanguage: "fr-FR", url: absoluteUrl(`/plantes/${p.slug}/`) }} />
     </article>

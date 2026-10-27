@@ -208,6 +208,9 @@ export class HomeEngine {
 
   private pos = new THREE.Vector3();
   private yaw = 0;
+  private viewYaw = 0;
+  private viewPitch = -0.08;
+  private vel = new THREE.Vector3();
   private pitch = -0.08;
   private keys = new Set<string>();
   private joy = { x: 0, y: 0 };
@@ -354,6 +357,47 @@ export class HomeEngine {
   get photoActive() { return !!this.photo; }
   private lastProgress = 0;
 
+  /** Copie épurée de la scène pour le rendu photo : matériaux standard, objets visibles uniquement. */
+  private photoScene(): THREE.Scene {
+    const sc = new THREE.Scene();
+    sc.background = this.scene.background;
+    sc.environment = this.envEquirect ?? this.scene.environment;
+    this.scene.updateMatrixWorld(true);
+    const cache = new Map<THREE.Material, THREE.Material>();
+    const conv = (m: THREE.Material): THREE.Material => {
+      let c = cache.get(m);
+      if (!c) {
+        const s0 = m as THREE.MeshStandardMaterial;
+        c = new THREE.MeshStandardMaterial({
+          color: s0.color ? s0.color.clone() : new THREE.Color("#cccccc"), map: s0.map ?? null, normalMap: s0.normalMap ?? null,
+          roughness: s0.roughness ?? 0.8, metalness: s0.metalness ?? 0, roughnessMap: s0.roughnessMap ?? null,
+          emissive: s0.emissive ? s0.emissive.clone() : new THREE.Color(0), emissiveIntensity: s0.emissiveIntensity ?? 0,
+          transparent: m.transparent, opacity: m.opacity, side: THREE.DoubleSide,
+        });
+        cache.set(m, c);
+      }
+      return c;
+    };
+    this.scene.traverseVisible((o) => {
+      const mesh = o as THREE.Mesh;
+      if (mesh.isMesh && !(o as THREE.Sprite).isSprite) {
+        const mats = Array.isArray(mesh.material) ? mesh.material.map(conv) : conv(mesh.material);
+        const c = new THREE.Mesh(mesh.geometry, mats);
+        c.matrixAutoUpdate = false; c.matrix.copy(mesh.matrixWorld); c.matrixWorld.copy(mesh.matrixWorld);
+        sc.add(c);
+      } else if ((o as THREE.DirectionalLight).isDirectionalLight) {
+        const l = o as THREE.DirectionalLight, d = new THREE.DirectionalLight(l.color, l.intensity);
+        d.position.setFromMatrixPosition(l.matrixWorld); d.target.position.setFromMatrixPosition(l.target.matrixWorld);
+        sc.add(d, d.target);
+      } else if ((o as THREE.PointLight).isPointLight) {
+        const l = o as THREE.PointLight, pl = new THREE.PointLight(l.color, l.intensity, l.distance, l.decay);
+        pl.position.setFromMatrixPosition(l.matrixWorld); sc.add(pl);
+      }
+    });
+    sc.updateMatrixWorld(true);
+    return sc;
+  }
+
   /** Lance un rendu photoréaliste progressif de la vue courante. */
   async startPhoto(onProgress: (p: number, done: boolean) => void, samples = 400) {
     if (!this.canPhoto || this.photo) return;
@@ -370,7 +414,8 @@ export class HomeEngine {
     if (this.envEquirect) this.scene.environment = this.envEquirect;
     this.photo = { pt, target: samples, onProgress, envBackup, exposure: this.renderer.toneMappingExposure, grab: null };
     this.renderer.toneMappingExposure = 1.25;
-    await pt.setSceneAsync(this.scene, this.camera);
+    // Préparation synchrone de la scène (la version asynchrone exige un « worker » BVH dédié).
+    try { pt.setScene(this.photoScene(), this.camera); } catch (e) { this.stopPhoto(); throw e; }
   }
   /** Arrête le rendu photo et revient à la 3D interactive. */
   stopPhoto() {
@@ -666,7 +711,7 @@ export class HomeEngine {
     const { spawn, look } = viewpoint(this.layout, r);
     const to = { x: spawn[0], z: spawn[1], yaw: Math.atan2(-(look[0] - spawn[0]), -(look[1] - spawn[1])), pitch: -0.08 };
     this.walkTarget = null;
-    if (!smooth) { this.pos.set(to.x, EYE_H, to.z); this.yaw = to.yaw; this.pitch = to.pitch; this.tween = null; this.updateRoom(); return; }
+    if (!smooth) { this.pos.set(to.x, EYE_H, to.z); this.yaw = this.viewYaw = to.yaw; this.pitch = this.viewPitch = to.pitch; this.tween = null; this.vel.set(0, 0, 0); this.updateRoom(); return; }
     let dy = to.yaw - this.yaw; while (dy > Math.PI) dy -= Math.PI * 2; while (dy < -Math.PI) dy += Math.PI * 2;
     this.tween = { t: 0, dur: 0.9, from: { x: this.pos.x, z: this.pos.z, yaw: this.yaw, pitch: this.pitch }, to: { ...to, yaw: this.yaw + dy } };
   }
@@ -758,6 +803,8 @@ export class HomeEngine {
       this.yaw = tw.from.yaw + (tw.to.yaw - tw.from.yaw) * e; this.pitch = tw.from.pitch + (tw.to.pitch - tw.from.pitch) * e;
       if (tw.t >= 1) this.tween = null;
       this.updateRoom();
+      this.vel.set(0, 0, 0);
+      this.viewYaw = this.yaw; this.viewPitch = this.pitch;
     } else {
       const k = this.keys;
       let f = (k.has("KeyW") || k.has("ArrowUp") ? 1 : 0) - (k.has("KeyS") || k.has("ArrowDown") ? 1 : 0) + this.joy.y;
@@ -765,24 +812,36 @@ export class HomeEngine {
       const turn = (k.has("ArrowLeft") ? 1 : 0) - (k.has("ArrowRight") ? 1 : 0) + (k.has("KeyQ") ? 1 : 0) - (k.has("KeyE") ? 1 : 0);
       if (turn) this.yaw += turn * 1.8 * dt;
       f = Math.max(-1, Math.min(1, f)); s = Math.max(-1, Math.min(1, s));
-      const speed = (k.has("ShiftLeft") || k.has("ShiftRight") ? 3.6 : 2.2) * dt;
+      // Vitesse visée, puis accélération et freinage progressifs : déplacement fluide, sans à-coups.
+      const max = k.has("ShiftLeft") || k.has("ShiftRight") ? 3.4 : 2.0;
+      let tx = 0, tz = 0;
       if (f || s) {
         this.walkTarget = null;
         const fx = -Math.sin(this.yaw), fz = -Math.cos(this.yaw), rx = Math.cos(this.yaw), rz = -Math.sin(this.yaw);
-        this.tryMove((fx * f + rx * s) * speed, (fz * f + rz * s) * speed);
-        this.updateRoom();
+        const len = Math.hypot(f, s) || 1, n = Math.min(1, len);
+        tx = ((fx * f + rx * s) / len) * n * max; tz = ((fz * f + rz * s) / len) * n * max;
       } else if (this.walkTarget) {
         const dx = this.walkTarget.x - this.pos.x, dz = this.walkTarget.z - this.pos.z, dist = Math.hypot(dx, dz);
-        if (dist < 0.05) this.walkTarget = null;
-        else {
-          const step = Math.min(dist, 2.6 * dt);
-          if (!this.tryMove((dx / dist) * step, (dz / dist) * step)) this.walkTarget = null;
-          this.updateRoom();
-        }
+        if (dist < 0.04) this.walkTarget = null;
+        else { const v = Math.min(2.4, dist * 3); tx = (dx / dist) * v; tz = (dz / dist) * v; }
       }
+      const a = Math.min(1, dt * (tx || tz ? 9 : 12));
+      this.vel.x += (tx - this.vel.x) * a; this.vel.z += (tz - this.vel.z) * a;
+      if (Math.hypot(this.vel.x, this.vel.z) > 0.002) {
+        const before = { x: this.pos.x, z: this.pos.z };
+        this.tryMove(this.vel.x * dt, this.vel.z * dt);
+        // Contre un obstacle : on annule la composante bloquée (glisse le long des murs).
+        if (this.pos.x === before.x) this.vel.x = 0;
+        if (this.pos.z === before.z) this.vel.z = 0;
+        if (this.walkTarget && !this.vel.x && !this.vel.z) this.walkTarget = null;
+        this.updateRoom();
+      } else this.vel.set(0, 0, 0);
+      // Regard lissé.
+      const l = Math.min(1, dt * 16);
+      this.viewYaw += (this.yaw - this.viewYaw) * l; this.viewPitch += (this.pitch - this.viewPitch) * l;
     }
     this.camera.position.set(this.pos.x, EYE_H, this.pos.z);
-    this.camera.rotation.set(this.pitch, this.yaw, 0);
+    this.camera.rotation.set(this.viewPitch, this.viewYaw, 0);
   }
 
   /* ——————————————— Entrées ——————————————— */

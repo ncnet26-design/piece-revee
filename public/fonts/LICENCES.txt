@@ -3,3 +3,5 @@ Polices sous licence SIL Open Font License 1.1 (usage commercial autorisé), sou
 - Onest (Dmitri Voloshin) : https://github.com/simpals/onest
 - JetBrains Mono (JetBrains) : https://github.com/JetBrains/JetBrainsMono
 Fichiers issus des paquets @fontsource-variable (npm).
+
+Instrument Serif (instrument-serif-latin*.woff2) : © 2022 The Instrument Serif Project Authors, SIL Open Font License 1.1, via @fontsource/instrument-serif.

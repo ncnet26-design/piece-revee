@@ -5,7 +5,7 @@ import type { StudyResult } from "@core/schemas/study.ts";
 import { isExterior } from "@core/schemas/study.ts";
 import { PROJECT_STEPS, plantById, styleById } from "@/content/lookup";
 import { openCamille } from "@/lib/camille-bus";
-import { MERCHANTS } from "@/lib/catalog";
+import { ShopLinks } from "./ShopLinks";
 import { refineStudy, updateLocalProject, type Project } from "@/lib/projects";
 import { SITE } from "@/lib/site";
 import { BeforeAfter } from "./BeforeAfter";
@@ -221,7 +221,7 @@ function NeedCard({ need, picked, onPick }: { need: StudyResult["needs"][number]
     <article className="mb-3 rounded-[var(--r)] border border-line p-4">
       <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2.5">
         <div><span className="eyebrow">{need.category} · zone {need.zoneId}</span><h3 className="mt-0.5 text-[17px]">{need.description}</h3></div>
-        <span className="tag tag-warn">À chercher</span>
+        <span className="tag">À choisir</span>
       </div>
       <dl className="kv text-[13.5px]">
         <dt>Budget</dt><dd>{need.priceRange.min} à {need.priceRange.max} € {need.quantity > 1 ? `(× ${need.quantity})` : ""}</dd>
@@ -229,7 +229,7 @@ function NeedCard({ need, picked, onPick }: { need: StudyResult["needs"][number]
         {need.colors.length > 0 && <><dt>Couleurs</dt><dd>{need.colors.join(", ")}</dd></>}
         {(need.maxDimensionsCm.w || need.maxDimensionsCm.d || need.maxDimensionsCm.h) && <><dt>Dimensions max</dt><dd>{[need.maxDimensionsCm.w && `L ${need.maxDimensionsCm.w}`, need.maxDimensionsCm.d && `P ${need.maxDimensionsCm.d}`, need.maxDimensionsCm.h && `H ${need.maxDimensionsCm.h}`].filter(Boolean).join(" × ")} cm</dd></>}
       </dl>
-      <div className="mt-3 flex flex-wrap gap-1.5">{MERCHANTS.slice(0, 4).map((m) => <a key={m.merchant} className="btn btn-sm" href={m.url} target="_blank" rel="noopener noreferrer">{m.merchant} ↗</a>)}</div>
+      <div className="mt-3"><ShopLinks compact title="" max={4} query={[need.category, need.materials[0], need.colors[0]].filter(Boolean).join(" ").toLowerCase()} kinds={/sol|mur|peinture|carrel|parquet|luminaire/i.test(need.category) ? ["bricolage", "deco"] : ["meuble", "deco"]} /></div>
       {onPick && <label className="mt-2.5 flex items-center gap-1.5 text-[12.5px] text-muted"><input type="checkbox" checked={picked} onChange={onPick} /> Dans ma liste d'achats</label>}
     </article>
   );

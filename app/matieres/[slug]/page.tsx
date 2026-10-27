@@ -7,7 +7,7 @@ import { MaterialSwatch } from "@/components/Visual";
 import { FavButton } from "@/components/FavButton";
 import { AskCamille } from "@/components/DetailBits";
 import { PairingCard } from "@/components/cards";
-import { MERCHANTS } from "@/lib/catalog";
+import { ShopLinks } from "@/components/ShopLinks";
 import { meta } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 import { realTexture } from "@/lib/textures";
@@ -61,8 +61,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
       <section className="section">
         <h2>Où l'acheter</h2>
-        <p className="mb-3 mt-1 text-muted">Le catalogue des enseignes partenaires n'est pas encore branché : aucun produit ni prix n'est affiché. Cherchez « {m.name.toLowerCase()} » sur ces sites officiels :</p>
-        <div className="flex flex-wrap gap-1.5">{MERCHANTS.map((s) => <a key={s.merchant} className="btn btn-sm" href={s.url} target="_blank" rel="noopener noreferrer">{s.merchant} ↗</a>)}</div>
+        <p className="mb-3 mt-1 text-muted">Trouvez « {m.name.toLowerCase()} » chez les enseignes françaises : vous accédez directement à leurs produits, avec leurs prix.</p>
+        <ShopLinks query={m.name} kinds={["bricolage", "deco"]} title="" />
       </section>
 
       {pairings.length > 0 && <section className="section"><h2>Accords avec cette matière</h2><div className="grid-cards wide mt-4">{pairings.map((p) => <PairingCard key={p.id} p={p} />)}</div></section>}

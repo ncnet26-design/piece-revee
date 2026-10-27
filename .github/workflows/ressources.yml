@@ -7,6 +7,7 @@ on:
       textures: { description: "Textures photographiques (Poly Haven, CC0)", type: boolean, default: true }
       modeles: { description: "Meubles et objets 3D (Poly Haven, CC0)", type: boolean, default: true }
       photos: { description: "Photos libres de la galerie (Openverse ; Unsplash/Pexels si clés)", type: boolean, default: true }
+      liens: { description: "Vérifier les liens d'achat des enseignes", type: boolean, default: true }
 
 permissions:
   contents: write
@@ -33,10 +34,15 @@ jobs:
       - name: Photos libres
         if: ${{ inputs.photos }}
         continue-on-error: true
+        timeout-minutes: 40
         run: pnpm images:import
         env:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+      - name: Liens d'achat des enseignes
+        if: ${{ inputs.liens }}
+        continue-on-error: true
+        run: node --experimental-strip-types scripts/check-retailers.ts
       - name: Déposer les ressources dans la branche robot/ressources (relecture avant intégration)
         if: ${{ always() }}
         run: |

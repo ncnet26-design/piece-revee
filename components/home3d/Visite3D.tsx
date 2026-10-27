@@ -12,6 +12,8 @@ import {
 } from "@/lib/home3d/plan";
 import { roomAt as roomAtL, viewpoint } from "@/lib/home3d/layout";
 import PlanEditor from "./PlanEditor";
+import { ShopLinks } from "../ShopLinks";
+import type { RetailerKind } from "@/lib/retailers";
 import { ITEM_TIPS, ROOM_TIPS } from "@/lib/home3d/tips";
 import { IconClose } from "../icons";
 
@@ -20,6 +22,21 @@ const uid = (p: string) => `${p}${Date.now().toString(36)}${Math.random().toStri
 const matName = (id: string | undefined) => (id ? materialById.get(id)?.name ?? PSEUDO_MATERIALS[id]?.name ?? id : "");
 const matDot = (id: string) => materialById.get(id)?.colors[0] ?? PSEUDO_MATERIALS[id]?.colors[0] ?? "#ccc";
 const cm = (m: number) => `${Math.round(m * 100)} cm`;
+const colorName = (hex?: string) => (hex ? COLORS.find((c) => c.hex.toLowerCase() === hex.toLowerCase())?.name.toLowerCase() : undefined);
+/** Recherche d'achat décrivant l'objet tel qu'il est configuré (« canapé velours bleu nuit »). */
+function shopQuery(it: Item): { q: string; kinds: RetailerKind[] } {
+  const e = CATALOG[it.type];
+  const fabric = it.fabric ?? e.fabric, structure = it.structure ?? e.structure;
+  const words = [e.label.toLowerCase()];
+  if (e.realistic && it.variant) words.push(it.variant.toLowerCase());
+  else {
+    if (fabric) words.push(matName(fabric).toLowerCase().split(" ")[0]!);
+    else if (structure && !/^m-(laque|beton)$/.test(structure)) words.push(matName(structure).toLowerCase().split(" ")[0]!);
+    const c = colorName(it.color ?? e.color); if (c && c !== "blanc") words.push(c);
+  }
+  const kinds: RetailerKind[] = e.category === "Extérieur" ? ["jardin", "meuble"] : e.category === "Salle de bain" ? ["bricolage", "deco"] : e.category === "Cuisine" ? ["meuble", "bricolage"] : ["meuble", "deco"];
+  return { q: [...new Set(words)].join(" ").replace(/\s+/g, " ").trim(), kinds };
+}
 
 const NO_ROOM: RoomDef = { id: "", name: "Pièce", kind: "salon", x0: 0, z0: 0, x1: 1, z1: 1 };
 
@@ -365,6 +382,7 @@ function ItemEditor({ it, size, roomName, onPatch, onRemove, onDuplicate }: { it
         <button type="button" className="btn btn-sm px-2" aria-label="Déplacer vers la droite" onClick={() => onPatch({ x: Math.round((it.x + 0.1) * 20) / 20 })}>→</button>
       </div>
       <p className="mt-2 text-[12.5px] text-muted">Astuce : faites glisser l'objet sélectionné directement dans la 3D.</p>
+      <div className="mt-4 border-t border-line pt-3"><ShopLinks compact max={4} {...(({ q, kinds }) => ({ query: q, kinds }))(shopQuery(it))} /></div>
       {tip && <p className="notice mt-4 text-[13.5px]"><b>Le bon repère.</b> {tip}</p>}
       <button type="button" className="btn btn-sm mt-3" onClick={() => openCamille(`Comment bien choisir et placer ${e.label.toLowerCase()} dans ${roomName ? `la pièce « ${roomName} »` : "ma pièce"} ?`, { step: "visite-3d" })}>Demander à Camille</button>
     </div>
@@ -392,6 +410,8 @@ function RoomEditor({ roomId, state, onPatch, onStyle, onSelectItem, onEditPlan 
       <h3 className="mt-4 text-[13.5px] font-semibold">Sol</h3>
       <div className="mt-1.5 flex flex-wrap gap-1.5">{floors.map((m) => <MatChip key={m} id={m} active={st.floor === m} onClick={() => onPatch({ floor: m })} />)}</div>
       {floorMat && <p className="mt-2 text-[12.5px] text-muted">{floorMat.name} : {floorMat.priceRange}, à titre indicatif. <Link href={`/matieres/${floorMat.slug}/`}>Voir la fiche</Link></p>}
+      {floorMat && <div className="mt-3"><ShopLinks compact max={4} title="Acheter ce sol" query={floorMat.name.toLowerCase()} kinds={outdoor ? ["jardin", "bricolage"] : ["bricolage"]} /></div>}
+      {st.wall.kind === "peinture" && <div className="mt-3"><ShopLinks compact max={3} title="Acheter cette peinture" query={`peinture murale ${PAINTS.find((p) => p.hex.toLowerCase() === (st.wall as { hex: string }).hex.toLowerCase())?.name.toLowerCase() ?? ""}`.trim()} kinds={["bricolage"]} /></div>}
       {items.length > 0 && <>
         <h3 className="mt-4 text-[13.5px] font-semibold">Objets de la pièce</h3>
         <div className="mt-1.5 flex flex-wrap gap-1.5">{items.map((i) => <button key={i.id} type="button" className="chip text-[12.5px]" onClick={() => onSelectItem(i.id)}>{CATALOG[i.type].label}</button>)}</div>

@@ -11,17 +11,16 @@ import { IconChat, IconGrid, IconHeart, IconHome, IconHouse, IconPhoto, IconThem
 
 const NAV = [
   { href: "/visite-3d/", label: "Visite 3D" },
-  { href: "/galerie/", label: "Galerie" },
-  { href: "/quiz/", label: "Mon style" },
+  { href: "/galerie/", label: "Inspirations" },
+  { href: "/matieres/", label: "Matières" },
   { href: "/projet/", label: "Mon projet" },
-  { href: "/maison/", label: "Ma maison" },
   { href: "/explorer/", label: "Explorer" },
   { href: "/tarifs/", label: "Tarifs" },
 ];
 const EXPLORE = ["/explorer/", "/matieres/", "/accords/", "/mobilier/", "/lieux/", "/plantes/", "/guides/", "/styles/"];
 
 function isActive(path: string, href: string) {
-  if (href === "/explorer/") return EXPLORE.some((p) => path.startsWith(p));
+  if (href === "/explorer/") return EXPLORE.some((p) => p !== "/matieres/" && path.startsWith(p));
   return path.startsWith(href);
 }
 
@@ -35,30 +34,38 @@ export function ThemeToggle() {
   return <button type="button" className="btn btn-sm btn-ghost" onClick={toggle} aria-label="Changer de thème (clair ou sombre)"><IconTheme width={16} height={16} /></button>;
 }
 
+/** Logotype : monogramme et nom en serif. */
+export function Logo({ className = "" }: { className?: string }) {
+  return (
+    <span className={`flex items-center gap-2.5 ${className}`}>
+      <i aria-hidden="true" className="grid h-8 w-8 flex-none place-items-center rounded-full bg-ink font-display text-[17px] not-italic leading-none text-bg">P</i>
+      <span className="font-display text-[25px] leading-none tracking-[-.01em]">Pièce <em className="text-bronze">Rêvée</em></span>
+    </span>
+  );
+}
+
 export function Header() {
   const path = usePathname() ?? "/";
   const favs = useFavorites();
   return (
-    <header className="sticky z-20 border-b border-line backdrop-blur-md" style={{ top: "env(safe-area-inset-top, 0px)", background: "color-mix(in srgb, var(--bg) 88%, transparent)" }}>
-      <div className="wrap flex h-[62px] items-center gap-1.5 sm:gap-3">
-        <Link href="/" className="flex items-center gap-2 whitespace-nowrap font-display text-[19px] font-extrabold sm:text-[21px] tracking-tight text-ink no-underline">
-          <i aria-hidden="true" className="inline-block h-[22px] w-[22px] rounded-md" style={{ background: "conic-gradient(from 210deg,#C9B08A,#3E5B4C,#2747D0,#D8C9B6,#C9B08A)" }} />
-          Pièce Rêvée
-        </Link>
-        <nav aria-label="Navigation principale" className="ml-2 hidden gap-0.5 overflow-x-auto lg:flex">
+    <header className="sticky z-20 border-b border-line/70 backdrop-blur-xl" style={{ top: "env(safe-area-inset-top, 0px)", background: "color-mix(in srgb, var(--bg) 82%, transparent)" }}>
+      <div className="wrap flex h-[70px] items-center gap-2 sm:gap-3">
+        <Link href="/" className="whitespace-nowrap text-ink no-underline" aria-label="Pièce Rêvée, accueil"><Logo /></Link>
+        <nav aria-label="Navigation principale" className="mx-auto hidden gap-1 lg:flex">
           {NAV.map((n) => (
             <Link key={n.href} href={n.href} aria-current={isActive(path, n.href) ? "page" : undefined}
-              className="whitespace-nowrap rounded-full px-3 py-2 text-[14.5px] font-medium text-muted no-underline aria-[current=page]:bg-soft aria-[current=page]:text-ink">
+              className="relative whitespace-nowrap px-3 py-2 font-ui text-[14px] font-medium text-muted no-underline transition-colors hover:text-ink aria-[current=page]:text-ink after:absolute after:inset-x-3 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-ink after:transition-transform aria-[current=page]:after:scale-x-100 hover:after:scale-x-100">
               {n.label}
             </Link>
           ))}
         </nav>
-        <span className="flex-1" />
-        <Link href="/moodboard/" className="btn btn-sm btn-ghost" aria-label={`Moodboard, ${favs.length} élément${favs.length > 1 ? "s" : ""}`}>
-          <IconHeart width={15} height={15} /><span className="hidden sm:inline">Moodboard</span> <span className="mono rounded-full bg-accent px-1.5 text-accent-ink">{favs.length}</span>
+        <span className="flex-1 lg:hidden" />
+        <Link href="/moodboard/" className="btn btn-sm btn-ghost border-transparent px-2.5" aria-label={`Moodboard, ${favs.length} élément${favs.length > 1 ? "s" : ""}`}>
+          <IconHeart width={16} height={16} />{favs.length > 0 && <span className="mono rounded-full bg-ink px-1.5 text-[10.5px] text-bg">{favs.length}</span>}
         </Link>
         <ThemeToggle />
-        <Link href="/compte/" className="btn btn-sm px-2.5 sm:px-3" aria-label="Mon compte"><IconUser width={16} height={16} /><span className="hidden sm:inline">Compte</span></Link>
+        <Link href="/compte/" className="btn btn-sm btn-ghost border-transparent px-2.5" aria-label="Mon compte"><IconUser width={17} height={17} /></Link>
+        <Link href="/visite-3d/" className="btn btn-primary hidden md:inline-flex">Commencer</Link>
       </div>
     </header>
   );
@@ -123,23 +130,27 @@ export function CookieBanner() {
 
 export function Footer() {
   const cols = [
-    { title: "Créer", links: [["Visite 3D", "/visite-3d/"], ["Mon projet", "/projet/"], ["Galerie d'inspiration", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
+    { title: "Créer", links: [["Visite 3D", "/visite-3d/"], ["Mon projet", "/projet/"], ["Inspirations", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
     { title: "Explorer", links: [["Matériauthèque", "/matieres/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
     { title: "Informations", links: [["Mentions légales", "/legal/mentions-legales/"], ["CGU", "/legal/cgu/"], ["CGV", "/legal/cgv/"], ["Confidentialité", "/legal/confidentialite/"], ["Cookies", "/legal/cookies/"], ["Liens affiliés", "/legal/affiliation/"]] },
   ];
   return (
-    <footer className="mt-20 border-t border-line py-10 text-sm text-muted">
-      <div className="wrap grid gap-8 md:grid-cols-4">
-        <div className="flex flex-col gap-2">
-          <span className="font-display text-lg font-extrabold text-ink">Pièce Rêvée</span>
-          <p>Architecture d'intérieur et paysage pour tous. Liens affiliés et images générées par IA toujours signalés.</p>
+    <footer className="mt-32 bg-[#161512] pb-12 pt-20 text-[14px] text-[#B9B2A6]" style={{ colorScheme: "dark" }}>
+      <div className="wrap">
+        <p className="max-w-[18ch] font-display text-[clamp(40px,6vw,76px)] leading-[1.02] text-[#F2EEE6]">Votre intérieur, <em className="text-[#D2AE7E]">réellement</em> rêvé.</p>
+        <div className="mt-14 grid gap-10 border-t border-white/10 pt-10 md:grid-cols-4">
+          <div className="flex flex-col gap-3">
+            <span className="text-[#F2EEE6]"><Logo /></span>
+            <p className="max-w-[34ch]">Architecture d'intérieur et paysage pour tous. Liens d'achat et images générées par IA toujours signalés.</p>
+          </div>
+          {cols.map((c) => (
+            <nav key={c.title} aria-label={c.title} className="flex flex-col gap-2">
+              <span className="font-ui text-[11.5px] font-semibold uppercase tracking-[.18em] text-[#D2AE7E]">{c.title}</span>
+              {c.links.map(([l, h]) => <Link key={h} href={h!} className="text-[#B9B2A6] no-underline transition-colors hover:text-white">{l}</Link>)}
+            </nav>
+          ))}
         </div>
-        {cols.map((c) => (
-          <nav key={c.title} aria-label={c.title} className="flex flex-col gap-1.5">
-            <span className="eyebrow">{c.title}</span>
-            {c.links.map(([l, h]) => <Link key={h} href={h!} className="text-muted no-underline hover:text-ink">{l}</Link>)}
-          </nav>
-        ))}
+        <p className="mt-12 text-[12.5px] text-[#8C857A]">© {new Date().getFullYear()} Pièce Rêvée · Textures et modèles 3D : Poly Haven et Khronos (CC0 / CC BY) · Photos : auteurs crédités sur chaque image.</p>
       </div>
     </footer>
   );
