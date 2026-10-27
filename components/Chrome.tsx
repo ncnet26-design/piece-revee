@@ -6,6 +6,7 @@ import { useHydrated, useLocal } from "@/lib/use-local";
 import { useFavorites } from "@/lib/favorites";
 import { KEYS, local } from "@/lib/storage";
 import { openCamille } from "@/lib/camille-bus";
+import { POSTHOG_KEY } from "@/lib/site";
 import { IconChat, IconGrid, IconHeart, IconHome, IconHouse, IconPhoto, IconTheme, IconUser } from "./icons";
 
 const NAV = [
@@ -99,7 +100,8 @@ export function CookieBanner() {
   const [consent, setConsent] = useLocal<{ analytics: boolean; at: string; version: number } | null>(KEYS.consent, null);
   useEffect(() => { if (consent?.analytics) void import("@/lib/analytics").then((m) => m.startAnalytics()); }, [consent]);
   const decide = (analytics: boolean) => setConsent({ analytics, at: new Date().toISOString(), version: 1 });
-  if (!hydrated || consent) return null;
+  // Aucun traceur configuré : rien à consentir, pas de bandeau (CNIL).
+  if (!POSTHOG_KEY || !hydrated || consent) return null;
   return (
     <div role="region" aria-label="Cookies" className="fixed inset-x-0 z-30 lg:bottom-4" style={{ bottom: "calc(70px + env(safe-area-inset-bottom, 0px))" }}>
       <div className="wrap">

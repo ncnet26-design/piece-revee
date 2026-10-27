@@ -22,7 +22,17 @@ test("accueil : promesse, appel à l'action, comparateur", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("sans mesure d'audience configurée : aucun bandeau ni traceur", async ({ browser }) => {
+  test.skip(!!process.env.NEXT_PUBLIC_POSTHOG_KEY, "mesure d'audience configurée");
+  const page = await (await browser.newContext()).newPage();
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+  await expect(page.getByRole("region", { name: "Cookies" })).toHaveCount(0);
+  expect(await page.evaluate(() => document.getElementById("ph-script"))).toBeNull();
+});
+
 test("bandeau cookies : refuser est aussi simple qu'accepter", async ({ browser }) => {
+  test.skip(!process.env.NEXT_PUBLIC_POSTHOG_KEY, "bandeau affiché seulement si la mesure d'audience est configurée");
   const page = await (await browser.newContext()).newPage();
   await page.goto("/");
   const region = page.getByRole("region", { name: "Cookies" });
