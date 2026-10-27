@@ -1,5 +1,19 @@
 # Journal des modifications
 
+## 0.5.0 — 27 octobre 2026
+
+- **Refonte premium** : nouvelle identité (ivoire, encre, bronze), titres en Instrument Serif, en-tête et pied de page redessinés,
+  page d'accueil entièrement refaite avec de vrais rendus de la 3D et de vraies textures.
+- **Matières réelles** : 26 matières utilisent désormais des textures photographiées (couleur, relief, rugosité) de Poly Haven (CC0) :
+  parquet en point de Hongrie, travertin, terrazzo, brique, béton, lin, velours, jute… dans les fiches comme dans la 3D.
+- **Bibliothèque 3D réaliste** : 37 meubles et objets photographiés (canapés, fauteuils, tables, luminaires, miroirs, plantes…) à poser dans la visite.
+- **Rendu HD** : une image haute définition de la vue, téléchargeable.
+- **Où l'acheter** : chaque meuble, sol, peinture, matière et plante renvoie vers la recherche correspondante chez IKEA et Castorama,
+  et vers Leroy Merlin, Maisons du Monde, La Redoute, Conforama, BUT, ManoMano et Selency.
+- **Inspirations** : collections de photos libres (châteaux, gîtes, haussmannien, lofts, villas, cuisines, bains, jardins), avec crédits.
+- 3D plus fluide : déplacements avec accélération douce, glissement le long des murs, objets suspendus et posés sans collision parasite.
+- Robot GitHub « Ressources » qui télécharge et vérifie textures, modèles, photos et liens d'enseignes.
+
 ## 0.4.0 — 27 octobre 2026
 
 - Visite 3D plus réaliste : éclairage photographique HDRI (Poly Haven, CC0) avec un parc visible par les fenêtres,

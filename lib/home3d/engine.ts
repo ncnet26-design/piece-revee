@@ -136,7 +136,7 @@ class MatFactory implements Mats {
       const tex = this.texture(m.texture, m.colors, `${id}-meuble`);
       const mat = new THREE.MeshStandardMaterial({ map: tex, normalMap: this.normal(m.texture, tex), normalScale: new THREE.Vector2(0.5, 0.5), roughness: ROUGH[m.family] ?? 0.55 });
       // Une photo de sol (chevrons, lames, carreaux) ne convient pas à un meuble : on garde alors le bois dessiné.
-      if (!/herringbone|parquet|floor|tiles|planks|deck|paving|laminate/i.test(realTexture(id!)?.name ?? "")) this.real(mat, id!, 0.6, true);
+      if (/veneer|plywood|dark wood|rust|stucco|plaster|concrete/i.test(realTexture(id!)?.name ?? "") && !/tiles|floor|planks|paving/i.test(realTexture(id!)?.name ?? "")) this.real(mat, id!, 0.6, true);
       return mat;
     });
   }
@@ -271,7 +271,7 @@ export class HomeEngine {
     this.renderer.localClippingEnabled = true;
     const cv = this.renderer.domElement;
     cv.style.display = "block"; cv.style.width = "100%"; cv.style.height = "100%"; cv.style.touchAction = "none"; cv.style.outline = "none";
-    cv.setAttribute("aria-hidden", "true");
+    cv.setAttribute("aria-hidden", "true"); cv.tabIndex = -1;
     container.appendChild(cv);
 
     this.mats = new MatFactory(Math.min(8, this.renderer.capabilities.getMaxAnisotropy()), software ? 256 : high ? 512 : 384, software, () => { this.dirty = true; });
@@ -923,7 +923,8 @@ export class HomeEngine {
   }
 
   private onWheel = (e: WheelEvent) => {
-    if (this.mode !== "visite") return;
+    // La molette fait défiler la page tant qu'on n'a pas cliqué dans la 3D.
+    if (this.mode !== "visite" || document.activeElement !== this.renderer.domElement) return;
     e.preventDefault();
     const step = Math.max(-0.6, Math.min(0.6, -e.deltaY * 0.0025));
     this.tryMove(-Math.sin(this.yaw) * step, -Math.cos(this.yaw) * step);

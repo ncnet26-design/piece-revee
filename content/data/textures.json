@@ -93,16 +93,6 @@
     "license": "CC0 1.0",
     "tile": 2
   },
-  "m-carrare": {
-    "assetId": "marble_01",
-    "name": "Marble 01",
-    "url": "https://polyhaven.com/a/marble_01",
-    "authors": [
-      "Rob Tuytel"
-    ],
-    "license": "CC0 1.0",
-    "tile": 2
-  },
   "m-ardoise": {
     "assetId": "stone_tiles_02",
     "name": "Stone Tiles 02",
@@ -248,28 +238,6 @@
     "license": "CC0 1.0",
     "tile": 2
   },
-  "m-laine": {
-    "assetId": "wool_boucle",
-    "name": "Wool Boucle",
-    "url": "https://polyhaven.com/a/wool_boucle",
-    "authors": [
-      "colormass",
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0",
-    "tile": 2
-  },
-  "m-bouclette": {
-    "assetId": "wool_boucle",
-    "name": "Wool Boucle",
-    "url": "https://polyhaven.com/a/wool_boucle",
-    "authors": [
-      "colormass",
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0",
-    "tile": 2
-  },
   "m-jute": {
     "assetId": "hessian_230",
     "name": "Hessian 230",
@@ -287,6 +255,16 @@
     "url": "https://polyhaven.com/a/rusty_metal_04",
     "authors": [
       "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "tile": 2
+  },
+  "m-travertin": {
+    "assetId": "marble_01",
+    "name": "Marble 01",
+    "url": "https://polyhaven.com/a/marble_01",
+    "authors": [
+      "Rob Tuytel"
     ],
     "license": "CC0 1.0",
     "tile": 2

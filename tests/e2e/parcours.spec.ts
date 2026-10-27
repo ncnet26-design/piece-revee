@@ -13,12 +13,12 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem("pr_consent", JSON.stringify({ analytics: false, at: "2026-10-26", version: 1 })));
 });
 
-test("accueil : promesse, appel à l'action, comparateur", async ({ page }) => {
+test("accueil : promesse, appels à l'action, visite 3D", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("réellement");
   await expect(page.getByRole("link", { name: "Transformer mon espace" })).toBeVisible();
-  await page.getByLabel("Comparer avant et après").first().fill("20");
+  await expect(page.getByRole("link", { name: "Visiter en 3D" }).first()).toHaveAttribute("href", /visite-3d/);
   expect(errors).toEqual([]);
 });
 

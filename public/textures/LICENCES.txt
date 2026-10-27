@@ -1,0 +1,29 @@
+Textures photographiques (Poly Haven, https://polyhaven.com) — licence CC0 1.0 (domaine public).
+Converties en WebP 1024 px. Matière du site ← texture d'origine (auteurs) :
+
+m-ardoise ← Stone Tiles 02 (Charlotte Baglioni) https://polyhaven.com/a/stone_tiles_02
+m-bambou ← Bamboo Wall (Amal Kumar) https://polyhaven.com/a/bamboo_wall
+m-beton ← Concrete Floor Worn 001 (Dimitrios Savva, Rico Cilliers) https://polyhaven.com/a/concrete_floor_worn_001
+m-bouleau ← Plywood (Rob Tuytel) https://polyhaven.com/a/plywood
+m-brique ← Red Brick (Rob Tuytel) https://polyhaven.com/a/red_brick
+m-chaux ← White Plaster 02 (Rob Tuytel) https://polyhaven.com/a/white_plaster_02
+m-chene ← Herringbone Parquet (Jenelle van Heerden, Sergej Majboroda) https://polyhaven.com/a/herringbone_parquet
+m-chenefume ← Dark Wood (Dario Barresi, Dimitrios Savva, Rico Cilliers) https://polyhaven.com/a/dark_wood
+m-ciment ← Large Floor Tiles 02 (Rob Tuytel) https://polyhaven.com/a/large_floor_tiles_02
+m-composite ← Brown Planks 09 (Rob Tuytel) https://polyhaven.com/a/brown_planks_09
+m-corten ← Rusty Metal 04 (Amal Kumar) https://polyhaven.com/a/rusty_metal_04
+m-gravier ← Rocks Ground 05 (Rob Tuytel) https://polyhaven.com/a/rocks_ground_05
+m-gres ← Terracotta Floor Tiles (Dimitrios Savva) https://polyhaven.com/a/terracotta_floor_tiles
+m-jute ← Hessian 230 (colormass, Rico Cilliers) https://polyhaven.com/a/hessian_230
+m-lin ← Rough Linen (colormass, Rico Cilliers) https://polyhaven.com/a/rough_linen
+m-metro ← Long White Tiles (Jenelle van Heerden, Sergej Majboroda) https://polyhaven.com/a/long_white_tiles
+m-noyer ← Walnut Veneer 02 (Jenelle van Heerden) https://polyhaven.com/a/walnut_veneer_02
+m-pierre-seche ← Stone Wall (Dario Barresi, Charlotte Baglioni) https://polyhaven.com/a/stone_wall
+m-pin ← Wood Floor Worn (Dimitrios Savva) https://polyhaven.com/a/wood_floor_worn
+m-stratifie ← Laminate Floor 03 (Dario Barresi, Charlotte Baglioni) https://polyhaven.com/a/laminate_floor_03
+m-tadelakt ← White Stucco (Amal Kumar) https://polyhaven.com/a/white_stucco
+m-teck ← Wood Floor Deck (Dimitrios Savva) https://polyhaven.com/a/wood_floor_deck
+m-terrazzo ← Terrazzo Tiles (Amal Kumar) https://polyhaven.com/a/terrazzo_tiles
+m-tomette ← Hexagonal Concrete Paving (Stephan Seeliger) https://polyhaven.com/a/hexagonal_concrete_paving
+m-travertin ← Marble 01 (Rob Tuytel) https://polyhaven.com/a/marble_01
+m-velours ← Velour Velvet (colormass, Rico Cilliers) https://polyhaven.com/a/velour_velvet

@@ -31,9 +31,10 @@ async function pexels(q: string): Promise<FreePhoto[]> {
   const j = await r.json() as { photos: { id: number; width: number; height: number; alt: string; url: string; photographer: string; photographer_url: string; src: { large: string; medium: string } }[] };
   return j.photos.map((p) => ({ id: `pexels-${p.id}`, styleId: "", space: "", url: p.src.large, thumbUrl: p.src.medium, width: p.width, height: p.height, alt: p.alt || q, author: p.photographer, authorUrl: p.photographer_url, source: "Pexels" as const, sourceUrl: p.url, license: "Licence Pexels", licenseUrl: "https://www.pexels.com/license/" }));
 }
+let openverseWarned = false;
 async function openverse(q: string): Promise<FreePhoto[]> {
   const r = await fetch(`https://api.openverse.org/v1/images/?page_size=${PER_COMBO}&license_type=commercial&category=photograph&size=large&mature=false&q=${encodeURIComponent(q)}`, { headers: UA });
-  if (!r.ok) return [];
+  if (!r.ok) { if (!openverseWarned) { openverseWarned = true; console.log(`Openverse indisponible (${r.status}) : ${(await r.text()).slice(0, 200)}`); } return []; }
   const j = await r.json() as { results: { id: string; url: string; thumbnail: string; width: number | null; height: number | null; title: string; creator: string | null; creator_url: string | null; foreign_landing_url: string; license: string; license_version: string; license_url: string }[] };
   return j.results.filter((p) => OK_OPENVERSE.has(p.license) && p.url.startsWith("https://") && (p.width ?? 0) >= 900).map((p) => ({ id: `openverse-${p.id}`, styleId: "", space: "", url: p.url, thumbUrl: p.thumbnail, width: p.width ?? 1200, height: p.height ?? 800, alt: p.title || q,
     author: p.creator ?? "Auteur inconnu", authorUrl: p.creator_url, source: "Openverse" as const, sourceUrl: p.foreign_landing_url, license: `CC ${p.license.toUpperCase()} ${p.license_version}`.replace("CC PDM", "Domaine public").replace("CC CC0", "CC0"), licenseUrl: p.license_url }));

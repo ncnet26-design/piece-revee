@@ -5,6 +5,12 @@ une **visite 3D** où l'on se promène de pièce en pièce et où tout se modifi
 des rendus de l'espace transformé, des produits réels d'enseignes, et **Camille**, assistante IA
 en architecture d'intérieur et en paysage, disponible à chaque étape.
 
+Matières en textures photographiées (Poly Haven, CC0), bibliothèque de 37 meubles 3D réalistes, rendu HD téléchargeable,
+et pour chaque objet des liens « Où l'acheter » vers IKEA, Castorama, Leroy Merlin, Maisons du Monde et d'autres enseignes.
+
+> **Ressources libres** : textures, modèles 3D, photos et liens d'enseignes sont récupérés et vérifiés par le robot GitHub
+> « Ressources » (`.github/workflows/ressources.yml`, lancement manuel dans l'onglet *Actions*). Crédits dans `public/*/LICENCES.txt`.
+
 > **Budget : 0 €.** Tout repose sur des offres gratuites (Cloudflare Pages, Supabase Free, GitHub).
 > L'IA n'est financée que par les ventes (voir [docs/COSTS.md](docs/COSTS.md)).
 

@@ -44,3 +44,14 @@ Les fichiers `content/data/gallery-photos.json` et `place-photos.json` sont **vi
 Uniquement des flux CSV fournis par les plateformes d'affiliation (Awin, Effiliation…) : nom, prix, image et lien viennent du flux,
 rien n'est inventé. Les produits sont dédoublonnés, catégorisés et vectorisés (gte-small) pour l'appariement avec les besoins de l'étude.
 Tant qu'aucun flux n'est branché, l'étude propose des fourchettes de prix et des liens vers les pages d'accueil des enseignes.
+
+## Textures, modèles 3D et liens d'achat (robot de ressources)
+
+- **Textures photographiques** : Poly Haven (CC0), récupérées par `scripts/fetch-assets.ts` (GitHub Actions, workflow « Ressources réalistes »),
+  liste et auteurs dans `public/textures/LICENCES.txt` et `content/data/textures.json`. Les correspondances douteuses sont retirées à la main.
+- **Modèles 3D** : Poly Haven (CC0) dans `public/models/` (liste dans `public/models/LICENCES.txt`), plus trois modèles Khronos (CC0 / CC BY 4.0)
+  dans `public/3d/LICENCES.txt`. Dimensions réelles calculées par `scripts/model-dims.ts`.
+- **Photos d'architecture** : Wikimedia Commons (licences libres, auteur et licence affichés sur chaque image).
+  Pour des photos d'intérieur en nombre, ajouter une clé gratuite Pexels ou Unsplash dans les secrets GitHub, puis relancer le robot.
+- **Liens d'achat** : recherche directe chez les enseignes dont le format d'adresse est vérifié par `scripts/check-retailers.ts`
+  (IKEA et Castorama au 27/10/2026) ; page d'accueil pour les autres (protections anti-robot). Aucun prix ni produit n'est inventé.

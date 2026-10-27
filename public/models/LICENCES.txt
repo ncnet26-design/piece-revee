@@ -1,0 +1,40 @@
+Modèles 3D (Poly Haven, https://polyhaven.com) — licence CC0 1.0 (domaine public).
+Optimisés pour le web (textures WebP 1024 px). Modèle (auteurs) :
+
+potted_plant_02 : Potted Plant 02 (Rico Cilliers) https://polyhaven.com/a/potted_plant_02
+marble_bust_01 : Marble Bust 01 (Rico Cilliers) https://polyhaven.com/a/marble_bust_01
+potted_plant_04 : Potted Plant 04 (James Ray Cock) https://polyhaven.com/a/potted_plant_04
+sofa_02 : Sofa 02 (Kirill Sannikov) https://polyhaven.com/a/sofa_02
+fern_02 : Fern 02 (Rob Tuytel, Rico Cilliers) https://polyhaven.com/a/fern_02
+Lantern_01 : Lantern 01 (Rajil Jose Macatangay) https://polyhaven.com/a/Lantern_01
+potted_plant_01 : Potted Plant 01 (Rico Cilliers) https://polyhaven.com/a/potted_plant_01
+wooden_table_02 : Wooden Table 02 (Serhii Khromov) https://polyhaven.com/a/wooden_table_02
+sofa_03 : Sofa 03 (Fran Calvente) https://polyhaven.com/a/sofa_03
+chess_set : Chess Set (Riley Queen) https://polyhaven.com/a/chess_set
+horse_statue_01 : Horse Statue 01 (Rico Cilliers) https://polyhaven.com/a/horse_statue_01
+concrete_cat_statue : Concrete Cat Statue (Rico Cilliers, Riley Queen) https://polyhaven.com/a/concrete_cat_statue
+modern_arm_chair_01 : Modern Arm Chair 01 (Vibrant Nordic) https://polyhaven.com/a/modern_arm_chair_01
+Sofa_01 : Sofa 01 (Kirill Sannikov) https://polyhaven.com/a/Sofa_01
+fancy_picture_frame_01 : Fancy Picture Frame 01 (Rob Tuytel, Rico Cilliers) https://polyhaven.com/a/fancy_picture_frame_01
+alarm_clock_01 : Alarm Clock 01 (Yann Kervran, James Ray Cock) https://polyhaven.com/a/alarm_clock_01
+book_encyclopedia_set_01 : Book Encyclopedia Set 01 (John Malcolm) https://polyhaven.com/a/book_encyclopedia_set_01
+round_wooden_table_01 : Round Wooden Table 01 (Ulan Cabanilla) https://polyhaven.com/a/round_wooden_table_01
+CoffeeCart_01 : Coffee Cart 01 (Joe Seabuhr) https://polyhaven.com/a/CoffeeCart_01
+GothicCabinet_01 : Gothic Cabinet 01 (Kirill Sannikov) https://polyhaven.com/a/GothicCabinet_01
+outdoor_table_chair_set_01 : Outdoor Table Chair Set 01 (James Ray Cock) https://polyhaven.com/a/outdoor_table_chair_set_01
+GreenChair_01 : Green Chair 01 (Kirill Sannikov) https://polyhaven.com/a/GreenChair_01
+ClassicConsole_01 : Classic Console 01 (Kirill Sannikov) https://polyhaven.com/a/ClassicConsole_01
+GothicCommode_01 : Gothic Commode 01 (Kirill Sannikov) https://polyhaven.com/a/GothicCommode_01
+Chandelier_03 : Chandelier 03 (Kirill Sannikov) https://polyhaven.com/a/Chandelier_03
+GothicBed_01 : Gothic Bed 01 (Kirill Sannikov) https://polyhaven.com/a/GothicBed_01
+Chandelier_01 : Chandelier 01 (Kirill Sannikov) https://polyhaven.com/a/Chandelier_01
+Ottoman_01 : Ottoman 01 (Caspian Fortune) https://polyhaven.com/a/Ottoman_01
+WoodenTable_01 : Wooden Table 01 (Ethan Place) https://polyhaven.com/a/WoodenTable_01
+ornate_mirror_01 : Ornate Mirror 01 (James Ray Cock) https://polyhaven.com/a/ornate_mirror_01
+plastic_monobloc_chair_01 : Plastic Monobloc Chair 01 (Kuutti Siitonen) https://polyhaven.com/a/plastic_monobloc_chair_01
+ArmChair_01 : Arm Chair 01 (Kirill Sannikov) https://polyhaven.com/a/ArmChair_01
+street_lamp_01 : Street Lamp 01 (Josh Dean) https://polyhaven.com/a/street_lamp_01
+Rockingchair_01 : Rockingchair 01 (Jorge Camacho) https://polyhaven.com/a/Rockingchair_01
+wooden_picnic_table : Wooden Picnic Table (Ulan Cabanilla) https://polyhaven.com/a/wooden_picnic_table
+modern_ceiling_lamp_01 : Modern Ceiling Lamp 01 (James Ray Cock) https://polyhaven.com/a/modern_ceiling_lamp_01
+brass_candleholders : Brass Candleholders (Tina) https://polyhaven.com/a/brass_candleholders
