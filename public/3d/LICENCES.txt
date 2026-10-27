@@ -1,0 +1,14 @@
+Modèles et éclairages 3D utilisés par la visite 3D (fichiers optimisés pour le web : textures réduites et converties en WebP).
+
+canape-velours.glb : « GlamVelvetSofa », Khronos glTF Sample Assets.
+  © 2023 Wayfair, LLC, modélisation Eric Chadwick. Licence CC BY 4.0 : https://creativecommons.org/licenses/by/4.0/
+
+fauteuil-velours.glb : « SheenChair », Khronos glTF Sample Assets.
+  Wayfair, LLC, modélisation Eric Chadwick. Licence CC0 1.0 (domaine public).
+
+plante.glb : « DiffuseTransmissionPlant », Khronos glTF Sample Assets.
+  Modèle © Darmstadt Graphics Group GmbH (Eric Chadwick), CC BY 4.0 ; textures Rico Cilliers, CC0 1.0. Géométrie simplifiée.
+
+apartment.exr, park.exr : HDRI Poly Haven (https://polyhaven.com), CC0 1.0, via le paquet @pmndrs/assets (CC0), 512 × 512.
+
+Source : https://github.com/KhronosGroup/glTF-Sample-Assets

@@ -66,12 +66,12 @@ export function furnishRoom(l: Layout, r: RoomDef): Item[] {
       const pSofa = Math.min(E1 - HALF_WALL - 0.48, HALF_WALL + 0.4 + 2.6 + 0.46);
       if (pSofa > 1.8) {
         const c = at(r, s1, m1, pSofa);
-        items.push(mk("canape", c.x, c.z, ROT[s1] + PI, { variant: sideLength(r, s1) >= 3 ? "3 places" : "2 places" }));
+        items.push(sideLength(r, s1) >= 3 ? mk("canape-velours", c.x, c.z, ROT[s1] + PI, { variant: "Champagne" }) : mk("canape", c.x, c.z, ROT[s1] + PI, { variant: "2 places" }));
         const t = at(r, s1, m1, pSofa - 0.46 - 0.75); items.push(mk("table-basse", t.x, t.z, rugRot));
         const g = at(r, s1, m1, pSofa - 1.0); items.push(mk("tapis", g.x, g.z, rugRot, { variant: E1 > 4 ? "200 × 300" : "160 × 230" }));
         const lt = clampT(r, s1, m1 + 1.35, 0.25), lp = at(r, s1, lt, pSofa); items.push(mk("lampadaire", lp.x, lp.z, 0));
       }
-      const c0 = corner(0); items.push(mk("plante", c0.x, c0.z, 0, { variant: "Grande" }));
+      const c0 = corner(0); items.push(mk("plante-reelle", c0.x, c0.z, 0));
       if (w2 && w2.iv[1] - w2.iv[0] >= 1.4) items.push(against(r, w2.s, (w2.iv[0] + w2.iv[1]) / 2, 0.35, "bibliotheque"));
       break;
     }
@@ -84,7 +84,7 @@ export function furnishRoom(l: Layout, r: RoomDef): Item[] {
         for (const d of [-1, 1]) { const t = m1 + d * (bw / 2 + 0.28); if (t > a1 + 0.2 && t < b1 - 0.2) items.push(against(r, s1, t, 0.4, "chevet")); }
       }
       if (w2 && w2.iv[1] - w2.iv[0] >= 1.4) items.push(against(r, w2.s, (w2.iv[0] + w2.iv[1]) / 2, 0.6, "armoire"));
-      const c3 = corner(3); items.push(mk("plante", c3.x, c3.z, 0, { variant: "Grande" }));
+      const c3 = corner(3); items.push(mk("plante-reelle", c3.x, c3.z, 0));
       break;
     }
     case "cuisine": {

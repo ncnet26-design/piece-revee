@@ -310,8 +310,9 @@ function ItemEditor({ it, size, roomName, onPatch, onRemove, onDuplicate }: { it
   return (
     <div>
       <h2 className="pr-8 text-lg">{e.label}{it.variant ? ` · ${it.variant}` : ""}</h2>
+      {e.realistic && <p className="mt-0.5 text-[12px] font-semibold text-accent">Modèle 3D réaliste</p>}
       <p className="text-[12.5px] text-muted">{roomName} · L {cm(size.w)} × P {cm(size.d)} × H {cm(size.h)}</p>
-      {e.variants && <><h3 className="mt-4 text-[13.5px] font-semibold">Modèle</h3><div className="mt-1.5 flex flex-wrap gap-1.5">{e.variants.map((v) => <button key={v} type="button" className="chip text-[12.5px]" aria-pressed={(it.variant ?? e.variants![0]) === v} onClick={() => onPatch({ variant: v })}>{v}</button>)}</div></>}
+      {e.variants && <><h3 className="mt-4 text-[13.5px] font-semibold">{e.variantLabel ?? "Modèle"}</h3><div className="mt-1.5 flex flex-wrap gap-1.5">{e.variants.map((v) => <button key={v} type="button" className="chip text-[12.5px]" aria-pressed={(it.variant ?? e.variants![0]) === v} onClick={() => onPatch({ variant: v })}>{v}</button>)}</div></>}
       {e.color && <>
         <h3 className="mt-4 text-[13.5px] font-semibold">Couleur</h3>
         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">

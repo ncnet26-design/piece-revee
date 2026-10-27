@@ -5,6 +5,7 @@ import { paintMaterial, shade } from "@/lib/draw";
 import { materialById } from "@/content/lookup";
 import type { TextureKind } from "@/content/types";
 import { buildItem, type Mats } from "./furniture";
+import { instantiate, isModel } from "./models";
 import { deriveStructure, hasCeiling, roomAt as roomAtL, viewpoint, type Layout, type RoomDef, type Wall } from "./layout";
 import { CATALOG, EYE_H, PSEUDO_MATERIALS, WALL_H, defaultRoomStyle, type HomeState, type Item, type Note, type RoomStyle, type WallFinish } from "./plan";
 
@@ -22,6 +23,26 @@ export interface EngineEvents {
 const TILE: Partial<Record<TextureKind, number>> = { wood: 0.6, planks: 1.4, tile: 1.0, cement: 0.8, hex: 1.1, marble: 1.8, travertine: 1.4, terrazzo: 1.0, slate: 1.2, gravel: 1.0, plaster: 2.2, brick: 1.1, washi: 1.6, cork: 0.8, weave: 1.0, fluted: 0.8, metal: 1.5, cane: 0.6 };
 const ROUGH: Record<string, number> = { Pierre: 0.35, Terre: 0.55, Bois: 0.55, Fibre: 0.85, Textile: 0.95, Métal: 0.35, Verre: 0.08, Composite: 0.45, Extérieur: 0.7 };
 const ACCENT = 0x2747d0;
+/** Intensité du relief (carte de normales calculée depuis la texture) selon le motif. */
+const BUMP: Partial<Record<TextureKind, number>> = { tile: 3, cement: 1.2, hex: 3, brick: 4, planks: 2.2, wood: 1.4, plaster: 1.2, marble: 0.3, travertine: 1.8, terrazzo: 0.8, slate: 2.6, gravel: 4, cork: 1.6, weave: 2.4, cane: 2.6, fluted: 3, washi: 1, boucle: 2.6, cord: 2.4, leather: 1.3, raffia: 2.4 };
+
+/** Carte de normales (relief) déduite de la luminosité : joints et veines sombres = creux. */
+function normalFrom(img: HTMLCanvasElement, strength: number): THREE.CanvasTexture {
+  const w = img.width, h = img.height, src = img.getContext("2d")!.getImageData(0, 0, w, h).data;
+  const lum = new Float32Array(w * h);
+  for (let i = 0; i < w * h; i++) lum[i] = (0.3 * src[i * 4]! + 0.59 * src[i * 4 + 1]! + 0.11 * src[i * 4 + 2]!) / 255;
+  const cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+  const x = cv.getContext("2d")!, out = x.createImageData(w, h), d = out.data, k = strength * (w / 256);
+  for (let yy = 0; yy < h; yy++) for (let xx = 0; xx < w; xx++) {
+    const l = (xx - 1 + w) % w, r = (xx + 1) % w, u = ((yy - 1 + h) % h) * w, dn = ((yy + 1) % h) * w;
+    const nx = -(lum[yy * w + r]! - lum[yy * w + l]!) * k, ny = (lum[dn + xx]! - lum[u + xx]!) * k, len = Math.hypot(nx, ny, 1);
+    const o = (yy * w + xx) * 4;
+    d[o] = (nx / len * 0.5 + 0.5) * 255; d[o + 1] = (ny / len * 0.5 + 0.5) * 255; d[o + 2] = (1 / len * 0.5 + 0.5) * 255; d[o + 3] = 255;
+  }
+  x.putImageData(out, 0, 0);
+  const t = new THREE.CanvasTexture(cv); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.NoColorSpace;
+  return t;
+}
 /** Faces extérieures des murs qui ne donnent sur aucune pièce. */
 const FACADE = "_facade";
 
@@ -30,19 +51,27 @@ type Box2 = { x0: number; x1: number; z0: number; z1: number };
 class MatFactory implements Mats {
   private cache = new Map<string, THREE.Material>();
   private textures = new Map<string, THREE.CanvasTexture>();
-  constructor(private maxAniso: number, private texSize: number) {}
+  constructor(private maxAniso: number, private texSize: number, private light = false) {}
 
-  texture(kind: TextureKind, colors: readonly string[], key: string): THREE.CanvasTexture {
-    const k = `${kind}|${colors.join(",")}|${key}`;
+  private normals = new Map<string, THREE.CanvasTexture>();
+  texture(kind: TextureKind, colors: readonly string[], key: string, size = this.texSize): THREE.CanvasTexture {
+    const k = `${kind}|${colors.join(",")}|${key}|${size}`;
     let t = this.textures.get(k);
     if (!t) {
-      const cv = document.createElement("canvas"); cv.width = cv.height = this.texSize;
+      const cv = document.createElement("canvas"); cv.width = cv.height = size;
       paintMaterial(cv, kind, colors, key);
       t = new THREE.CanvasTexture(cv);
       t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = this.maxAniso;
       this.textures.set(k, t);
     }
     return t;
+  }
+  /** Relief associé à une texture (mis en cache). */
+  normal(kind: TextureKind, base: THREE.CanvasTexture): THREE.CanvasTexture | null {
+    const s = BUMP[kind]; if (!s || this.light) return null;
+    let n = this.normals.get(base.uuid);
+    if (!n) { n = normalFrom(base.image as HTMLCanvasElement, s); n.anisotropy = this.maxAniso; this.normals.set(base.uuid, n); }
+    return n;
   }
   private memo<T extends THREE.Material>(k: string, make: () => T): T {
     let m = this.cache.get(k) as T | undefined;
@@ -54,9 +83,11 @@ class MatFactory implements Mats {
     return this.memo(`surf|${id}`, () => {
       const m = materialById.get(id) ?? (PSEUDO_MATERIALS[id] ? { ...PSEUDO_MATERIALS[id]!, family: "Extérieur" as const } : undefined);
       if (!m) return new THREE.MeshStandardMaterial({ color: "#cccccc", roughness: 0.8 });
-      const tex = this.texture(m.texture, m.colors, id).clone(); tex.needsUpdate = true;
+      const base = this.texture(m.texture, m.colors, id, this.light ? this.texSize : this.texSize * 2), tex = base.clone(); tex.needsUpdate = true;
       const tile = TILE[m.texture] ?? 1.2; tex.repeat.set(1 / tile, 1 / tile);
-      return new THREE.MeshStandardMaterial({ map: tex, roughness: ROUGH[m.family] ?? 0.6, metalness: m.family === "Métal" ? 0.6 : 0 });
+      const nb = this.normal(m.texture, base), nm = nb ? nb.clone() : null;
+      if (nm) { nm.needsUpdate = true; nm.repeat.copy(tex.repeat); }
+      return new THREE.MeshStandardMaterial({ map: tex, normalMap: nm, roughness: ROUGH[m.family] ?? 0.6, metalness: m.family === "Métal" ? 0.6 : 0 });
     });
   }
   wallMaterial(f: WallFinish): THREE.MeshStandardMaterial {
@@ -66,8 +97,12 @@ class MatFactory implements Mats {
     return this.memo(`fab|${id}|${hex}`, () => {
       const m = id ? materialById.get(id) : undefined;
       if (!m) return new THREE.MeshStandardMaterial({ color: hex, roughness: 0.95 });
-      const tex = this.texture(m.texture, [hex, shade(hex, -9), shade(hex, 7)], id ?? "tissu").clone(); tex.needsUpdate = true; tex.repeat.set(3, 3);
-      return new THREE.MeshStandardMaterial({ map: tex, roughness: m.id === "m-cuir" ? 0.55 : 0.97 });
+      const base = this.texture(m.texture, [hex, shade(hex, -9), shade(hex, 7)], id ?? "tissu"), tex = base.clone(); tex.needsUpdate = true; tex.repeat.set(3, 3);
+      const nb = this.normal(m.texture, base), nm = nb ? nb.clone() : null;
+      if (nm) { nm.needsUpdate = true; nm.repeat.set(3, 3); }
+      if (m.id === "m-cuir" || this.light) return new THREE.MeshStandardMaterial({ map: tex, normalMap: nm, roughness: m.id === "m-cuir" ? 0.5 : 0.95 });
+      // Tissu : reflet doux sur les arêtes (« sheen »), comme un vrai velours ou un lin.
+      return new THREE.MeshPhysicalMaterial({ map: tex, normalMap: nm, normalScale: new THREE.Vector2(0.6, 0.6), roughness: 0.92, sheen: m.id === "m-velours" ? 1 : 0.6, sheenRoughness: m.id === "m-velours" ? 0.35 : 0.7, sheenColor: new THREE.Color(shade(hex, 45)) });
     });
   }
   struct(id: string | undefined): THREE.Material {
@@ -77,7 +112,7 @@ class MatFactory implements Mats {
       if (m.family === "Métal") return new THREE.MeshStandardMaterial({ color: m.colors[1] ?? m.colors[0], metalness: 0.85, roughness: 0.32 });
       if (m.texture === "lacquer") return new THREE.MeshStandardMaterial({ color: m.colors[0], roughness: 0.12 });
       const tex = this.texture(m.texture, m.colors, `${id}-meuble`);
-      return new THREE.MeshStandardMaterial({ map: tex, roughness: ROUGH[m.family] ?? 0.55 });
+      return new THREE.MeshStandardMaterial({ map: tex, normalMap: this.normal(m.texture, tex), normalScale: new THREE.Vector2(0.5, 0.5), roughness: ROUGH[m.family] ?? 0.55 });
     });
   }
   paint(hex: string, rough = 0.6): THREE.Material { return this.std(hex, rough); }
@@ -95,7 +130,7 @@ class MatFactory implements Mats {
       return new THREE.MeshStandardMaterial({ map: tex, roughness: 0.9 });
     });
   }
-  dispose() { this.cache.forEach((m) => m.dispose()); this.textures.forEach((t) => t.dispose()); }
+  dispose() { this.cache.forEach((m) => m.dispose()); this.textures.forEach((t) => t.dispose()); this.normals.forEach((t) => t.dispose()); }
 }
 
 /** Réécrit les coordonnées de texture en mètres (monde), pour des motifs à la bonne échelle sur tous les murs et sols. */
@@ -193,13 +228,16 @@ export class HomeEngine {
   private floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
   constructor(private container: HTMLElement, state: HomeState, private ev: EngineEvents, opts: { quality: "haute" | "standard" }) {
-    const high = opts.quality === "haute";
     this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: false });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, high ? 2 : 1.5));
+    // Sans carte graphique (rendu logiciel), on allège tout pour rester fluide.
+    const gl = this.renderer.getContext(), dbg = gl.getExtension("WEBGL_debug_renderer_info");
+    const software = /swiftshader|llvmpipe|software|basic render/i.test(String(dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : ""));
+    const high = opts.quality === "haute" && !software;
+    this.renderer.setPixelRatio(software ? 1 : Math.min(window.devicePixelRatio, high ? 2 : 1.5));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 0.92;
-    this.renderer.shadowMap.enabled = true;
+    this.renderer.toneMappingExposure = 1.0;
+    this.renderer.shadowMap.enabled = !software;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.localClippingEnabled = true;
     const cv = this.renderer.domElement;
@@ -207,7 +245,7 @@ export class HomeEngine {
     cv.setAttribute("aria-hidden", "true");
     container.appendChild(cv);
 
-    this.mats = new MatFactory(Math.min(8, this.renderer.capabilities.getMaxAnisotropy()), high ? 512 : 384);
+    this.mats = new MatFactory(Math.min(8, this.renderer.capabilities.getMaxAnisotropy()), software ? 256 : high ? 512 : 384, software);
     this.edgeMat = new THREE.MeshStandardMaterial({ color: "#EFEBE4", roughness: 0.9 });
     this.camera = new THREE.PerspectiveCamera(68, 1, 0.05, 200);
     this.camera.rotation.order = "YXZ";
@@ -251,8 +289,9 @@ export class HomeEngine {
     const pm = new THREE.PMREMGenerator(this.renderer);
     s.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
     const mirror = this.mats.mirror() as THREE.MeshStandardMaterial; mirror.envMap = s.environment; mirror.envMapIntensity = 1.6;
-    s.environmentIntensity = 0.3;
+    s.environmentIntensity = 0.4;
     pm.dispose();
+    void this.loadHdri(mirror);
     s.add(new THREE.HemisphereLight("#EAF2F8", "#B9A98F", 0.4));
     const sun = new THREE.DirectionalLight("#FFF1DC", 3.0);
     sun.castShadow = true;
@@ -262,6 +301,25 @@ export class HomeEngine {
     this.sun = sun;
     const grass = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), new THREE.MeshStandardMaterial({ color: "#9DAF7E", roughness: 1 }));
     grass.rotation.x = -Math.PI / 2; grass.position.y = -0.02; grass.receiveShadow = true; s.add(grass);
+  }
+
+  /** Éclairage photographique (HDRI Poly Haven, CC0) : reflets d'intérieur réels et parc visible par les fenêtres. */
+  private hdri = false;
+  private async loadHdri(mirror: THREE.MeshStandardMaterial) {
+    try {
+      const { EXRLoader } = await import("three/examples/jsm/loaders/EXRLoader.js");
+      const l = new EXRLoader();
+      const [inside, outside] = await Promise.all([l.loadAsync("/3d/apartment.exr"), l.loadAsync("/3d/park.exr")]);
+      if (this.disposed) { inside.dispose(); outside.dispose(); return; }
+      const pm = new THREE.PMREMGenerator(this.renderer);
+      const env = pm.fromEquirectangular(inside).texture;
+      pm.dispose(); inside.dispose();
+      this.scene.environment?.dispose();
+      this.scene.environment = env; mirror.envMap = env;
+      outside.mapping = THREE.EquirectangularReflectionMapping; outside.colorSpace = THREE.LinearSRGBColorSpace;
+      this.scene.background = outside; this.scene.backgroundIntensity = 0.9; this.scene.backgroundBlurriness = 0.04;
+      this.scene.fog = null; this.hdri = true; this.dirty = true;
+    } catch { /* on garde l'éclairage de secours */ }
   }
 
   /** Murs, sols, plafonds, étiquettes et arbres : reconstruits quand le plan change. */
@@ -438,13 +496,25 @@ export class HomeEngine {
       const obj = buildItem(it, this.mats);
       this.itemObjs.set(it.id, obj); this.itemSig.set(it.id, sig); this.itemGroup.add(obj);
       this.updateItemBox(it);
+      if (isModel(it.type)) void this.attachModel(it, obj);
     }
     for (const id of [...this.itemObjs.keys()]) if (!seen.has(id)) this.removeItemObj(id);
+  }
+  /** Remplace l'emplacement provisoire par le modèle réaliste dès qu'il est chargé. */
+  private async attachModel(it: Item, obj: THREE.Group) {
+    try {
+      const model = await instantiate(it.type, it.variant);
+      if (this.disposed || this.itemObjs.get(it.id) !== obj) return;
+      model.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh) { m.castShadow = true; m.receiveShadow = true; m.userData.itemId = it.id; m.userData.shared = true; } });
+      for (const c of [...obj.children]) if (c.userData.placeholder) { obj.remove(c); (c as THREE.Mesh).geometry.dispose(); }
+      obj.add(model);
+      this.updateItemBox(it); this.refreshSelection();
+    } catch { /* le volume provisoire reste affiché */ }
   }
   private removeItemObj(id: string) {
     const o = this.itemObjs.get(id); if (!o) return;
     this.itemGroup.remove(o);
-    o.traverse((c) => { if ((c as THREE.Mesh).isMesh) (c as THREE.Mesh).geometry.dispose(); });
+    o.traverse((c) => { if ((c as THREE.Mesh).isMesh && !c.userData.shared) (c as THREE.Mesh).geometry.dispose(); });
     this.itemObjs.delete(id); this.itemSig.delete(id); this.itemBoxes.delete(id);
   }
   private updateItemBox(it: Item) {
@@ -495,7 +565,7 @@ export class HomeEngine {
     this.labelGroup.visible = plan;
     this.dirty = true;
     this.setClipping(plan);
-    this.scene.fog = plan ? null : new THREE.Fog("#CFE0EA", 30, 90);
+    this.scene.fog = plan || this.hdri ? null : new THREE.Fog("#CFE0EA", 30, 90);
     if (plan) {
       this.camera.fov = 45; this.camera.updateProjectionMatrix();
       if (!this.orbit) {

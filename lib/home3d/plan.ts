@@ -36,7 +36,8 @@ export const COLORS: Array<{ name: string; hex: string }> = [
 export type ItemType =
   | "canape" | "fauteuil" | "table-basse" | "table" | "chaise" | "tabouret" | "lit" | "chevet" | "armoire" | "commode" | "bibliotheque"
   | "meuble-tv" | "bureau" | "tapis" | "lampadaire" | "suspension" | "plante" | "cuisine" | "ilot" | "refrigerateur" | "meuble-vasque"
-  | "miroir" | "baignoire" | "douche" | "wc" | "tableau" | "console" | "porte-manteau" | "banc" | "salon-jardin" | "transat" | "parasol" | "jardiniere";
+  | "miroir" | "baignoire" | "douche" | "wc" | "tableau" | "console" | "porte-manteau" | "banc" | "salon-jardin" | "transat" | "parasol" | "jardiniere"
+  | "canape-velours" | "fauteuil-velours" | "plante-reelle";
 
 export type Category = "Salon" | "Repas" | "Chambre" | "Rangement" | "Cuisine" | "Salle de bain" | "Lumière et déco" | "Extérieur";
 
@@ -51,9 +52,16 @@ export interface CatalogEntry {
   walkThrough?: boolean;
   /** Hauteur de pose (objets muraux). */
   mount?: number;
+  /** Intitulé du choix de variante (« Modèle » par défaut). */
+  variantLabel?: string;
+  /** Modèle 3D réaliste (fichier glTF sous licence libre). */
+  realistic?: boolean;
 }
 
 export const CATALOG: Record<ItemType, CatalogEntry> = {
+  "canape-velours": { label: "Canapé velours", category: "Salon", variants: ["Bleu nuit", "Champagne", "Gris", "Noir", "Rose pâle"], variantLabel: "Coloris", realistic: true },
+  "fauteuil-velours": { label: "Fauteuil velours", category: "Salon", variants: ["Mangue", "Paon"], variantLabel: "Coloris", realistic: true },
+  "plante-reelle": { label: "Plante en pot", category: "Lumière et déco", realistic: true },
   canape: { label: "Canapé", category: "Salon", color: "#D6C3A3", fabric: "m-lin", structure: "m-chene", variants: ["3 places", "2 places", "D'angle"] },
   fauteuil: { label: "Fauteuil", category: "Salon", color: "#B9874F", fabric: "m-bouclette", structure: "m-chene" },
   "table-basse": { label: "Table basse", category: "Salon", structure: "m-travertin", variants: ["Rectangulaire", "Ronde"] },
@@ -135,13 +143,13 @@ export function defaultState(): HomeState {
     items: [
       // Salon
       it("tapis", 2.65, 3.7, 0, { color: "#D6C3A3" }),
-      it("canape", 4.55, 3.6, -R / 2),
+      it("canape-velours", 4.6, 3.7, -R / 2, { variant: "Bleu nuit" }),
       it("table-basse", 2.95, 3.7, R / 2),
       it("meuble-tv", 0.3, 4.0, R / 2),
-      it("fauteuil", 1.35, 1.55, R / 4 + R / 2),
+      it("fauteuil-velours", 1.35, 1.55, R / 4 + R / 2, { variant: "Mangue" }),
       it("lampadaire", 4.55, 4.8),
       it("bibliotheque", 2.9, 4.8, R),
-      it("plante", 0.5, 0.55, 0, { variant: "Grande" }),
+      it("plante-reelle", 0.55, 0.55, 0),
       it("tableau", 6.93, 4.2, -R / 2, { color: "#B8694A" }),
       it("table", 5.65, 1.25, 0, { variant: "4 personnes" }),
       it("chaise", 5.3, 0.48, 0), it("chaise", 6.0, 0.48, 0), it("chaise", 5.3, 2.02, R), it("chaise", 6.0, 2.02, R),
@@ -167,7 +175,7 @@ export function defaultState(): HomeState {
       it("armoire", 4.4, 5.36, 0),
       it("bureau", 7.0, 8.6, R),
       it("chaise", 7.0, 8.0, 0),
-      it("plante", 7.55, 7.4, 0, { variant: "Grande" }),
+      it("plante-reelle", 7.5, 7.4, 0),
       it("tableau", 3.07, 7.2, R / 2, { color: "#3E5B4C" }),
       // Salle de bain
       it("baignoire", 10.85, 8.5),
@@ -315,5 +323,8 @@ export function itemDims(it: Pick<Item, "type" | "variant">): { w: number; d: nu
     case "transat": return { w: 0.68, d: 1.9, h: 0.75 };
     case "parasol": return { w: 2.9, d: 2.9, h: 2.46 };
     case "jardiniere": return { w: 1.2, d: 0.42, h: 0.7 };
+    case "canape-velours": return { w: 2.19, d: 1.02, h: 0.79 };
+    case "fauteuil-velours": return { w: 0.83, d: 0.57, h: 0.69 };
+    case "plante-reelle": return { w: 0.7, d: 0.66, h: 0.84 };
   }
 }

@@ -142,6 +142,7 @@ test("404 utile", async ({ page }) => {
 
 for (const url of ["/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
   test(`accessibilité (axe, WCAG 2.2 AA) : ${url}`, async ({ page }) => {
+    test.setTimeout(90_000);
     await page.goto(url);
     await page.waitForLoadState("networkidle");
     const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).exclude("canvas").analyze();

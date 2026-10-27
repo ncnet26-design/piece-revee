@@ -1,5 +1,12 @@
 # Journal des modifications
 
+## 0.4.0 — 27 octobre 2026
+
+- Visite 3D plus réaliste : éclairage photographique HDRI (Poly Haven, CC0) avec un parc visible par les fenêtres,
+  relief sur tous les sols, murs et meubles (lames, joints, briques), tissus au reflet velouté, miroirs qui reflètent la pièce.
+- Premiers modèles 3D photoréalistes sous licence libre : canapé en velours (5 coloris), fauteuil (2 coloris), plante en pot.
+- Mode allégé automatique sur les appareils sans carte graphique.
+
 ## 0.3.0 — 27 octobre 2026
 
 - **Mon plan** : chacun dessine son propre logement aux vraies mesures (pièces, portes, fenêtres, baies, passages, terrasse ou jardin),

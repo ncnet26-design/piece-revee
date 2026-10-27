@@ -40,6 +40,9 @@ export const ROOM_TIPS: Record<RoomKind, Tip[]> = {
 };
 
 export const ITEM_TIPS: Partial<Record<ItemType, string>> = {
+  "canape-velours": "Le velours accroche la lumière : placez-le face à une fenêtre pour profiter de ses reflets, et gardez 40 à 45 cm jusqu'à la table basse.",
+  "fauteuil-velours": "Un fauteuil de couleur vive suffit à réveiller un salon neutre : une seule touche forte, le reste en tons calmes.",
+  "plante-reelle": "Une grande plante dans un angle adoucit la pièce ; vérifiez l'exposition et éloignez-la des radiateurs.",
   canape: "Laissez 40 à 45 cm entre le canapé et la table basse : assez pour passer, assez près pour poser un verre.",
   fauteuil: "Orientez le fauteuil vers le canapé pour créer un coin conversation, à moins de 2,5 m pour se parler sans hausser la voix.",
   "table-basse": "Une table basse de la hauteur de l'assise du canapé, ou un peu plus basse, est la plus confortable.",
