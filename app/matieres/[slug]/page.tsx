@@ -10,6 +10,7 @@ import { PairingCard } from "@/components/cards";
 import { MERCHANTS } from "@/lib/catalog";
 import { meta } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
+import { realTexture } from "@/lib/textures";
 
 export const dynamicParams = false;
 export function generateStaticParams() { return MATERIALS.map((m) => ({ slug: m.slug })); }
@@ -33,6 +34,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <div className="relative overflow-hidden rounded-[var(--r)] bg-soft" style={{ aspectRatio: "1 / 1", maxWidth: "100%" }}>
           <MaterialSwatch texture={m.texture} colors={m.colors} seed={m.id} width={720} height={720} label={`Échantillon dessiné : ${m.name}`} className="h-full w-full" />
           <FavButton id={m.id} name={m.name} />
+          {realTexture(m.id) && <p className="absolute bottom-2 left-2 rounded-full bg-black/55 px-2.5 py-1 text-[11.5px] text-white">Texture « {realTexture(m.id)!.name} », <a href={realTexture(m.id)!.url} className="text-white underline" target="_blank" rel="noopener noreferrer">Poly Haven</a>, CC0</p>}
         </div>
         <div className="flex flex-col gap-4">
           <span className="eyebrow">Matière · {m.family}</span>

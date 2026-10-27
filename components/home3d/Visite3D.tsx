@@ -45,6 +45,7 @@ export default function Visite3D() {
   const [draft, setDraft] = useState("");
   const [pendingNote, setPendingNote] = useState<string | null>(null);
   const [planOpen, setPlanOpen] = useState(false);
+  const [photoState, setPhotoState] = useState<{ p: number; done: boolean } | null>(null);
   const pendingNoteRef = useRef<string | null>(null);
   useEffect(() => { pendingNoteRef.current = pendingNote; }, [pendingNote]);
 
@@ -166,6 +167,19 @@ export default function Visite3D() {
     const e = engine.current; if (!e) return;
     const a = document.createElement("a"); a.href = e.capture(); a.download = `piece-revee-${room}.png`; a.click();
   };
+  /** Rendu photoréaliste progressif, calculé par la carte graphique du visiteur. */
+  const startRender = () => {
+    const e = engine.current; if (!e) return;
+    if (!e.canPhoto) { say("Le rendu photo demande une carte graphique : essayez sur un ordinateur ou un téléphone récent."); return; }
+    close(); setPhotoState({ p: 0, done: false });
+    void e.startPhoto((p, done) => setPhotoState({ p, done })).catch(() => { setPhotoState(null); say("Le rendu photo n'a pas pu démarrer sur cet appareil."); });
+  };
+  const stopRender = () => { engine.current?.stopPhoto(); setPhotoState(null); };
+  const downloadRender = async () => {
+    const e = engine.current; if (!e) return;
+    const url = await e.grabPhoto();
+    const a = document.createElement("a"); a.href = url; a.download = `piece-revee-rendu-${room}.jpg`; a.click();
+  };
   const reset = () => {
     if (!window.confirm("Revenir à l'appartement d'origine ? Vos modifications seront effacées.")) return;
     engine.current?.select(null); setState(defaultState()); say("Appartement réinitialisé.");
@@ -223,6 +237,7 @@ export default function Visite3D() {
 
       {/* Actions (sur mobile, les moins utilisées sont regroupées dans « Plus ») */}
       <div className={`absolute right-2.5 top-[96px] flex flex-col items-end gap-1.5 ${sheetOpen ? "sm:right-[384px]" : "sm:right-3"}`}>
+        <button type="button" className="btn btn-sm btn-dark shadow-sm" onClick={startRender} disabled={!!photoState}>Rendu photo</button>
         <button type="button" className="btn btn-sm btn-primary shadow-sm" onClick={() => { close(); setPanel("ajouter"); }}>+ Ajouter</button>
         <button type="button" className="btn btn-sm shadow-sm" onClick={() => { close(); setRoomPanel(true); }}>Pièce</button>
         <button type="button" className="btn btn-sm shadow-sm" onClick={() => { close(); setPanel("astuces"); }}>Astuces{state && state.notes.length > 0 ? ` (${state.notes.length})` : ""}</button>
@@ -243,7 +258,7 @@ export default function Visite3D() {
         </div>
       )}
 
-      {coarse && mode === "visite" && status === "pret" && !sheetOpen && !hint && <Joystick onChange={(x, y) => engine.current?.setJoystick(x, y)} />}
+      {coarse && mode === "visite" && status === "pret" && !sheetOpen && !hint && !photoState && <Joystick onChange={(x, y) => engine.current?.setJoystick(x, y)} />}
 
       {pendingNote && <div className="absolute inset-x-0 top-[96px] mx-auto w-fit rounded-full bg-ink px-4 py-2 text-sm text-bg shadow-lg">Touchez l'endroit où épingler votre astuce <button type="button" className="ml-2 underline" onClick={() => { setPendingNote(null); engine.current?.setNotePlacement(false); }}>Annuler</button></div>}
 
@@ -285,6 +300,18 @@ export default function Visite3D() {
             </div>
           )}
         </aside>
+      )}
+
+      {photoState && (
+        <div className="absolute inset-x-3 bottom-3 z-20 mx-auto max-w-lg rounded-2xl bg-surface p-3.5 shadow-2xl" role="status" aria-live="polite">
+          <p className="text-sm font-semibold">{photoState.done ? "Rendu photoréaliste terminé" : `Rendu photoréaliste en cours : ${Math.round(photoState.p * 100)} %`}</p>
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-soft"><div className="h-full bg-accent transition-[width]" style={{ width: `${Math.round(photoState.p * 100)} %`.replace(" ", "") }} /></div>
+          <p className="mt-1.5 text-[12px] text-muted">La lumière est calculée rayon par rayon : l'image s'affine pendant quelques secondes à une minute selon votre appareil.</p>
+          <div className="mt-2.5 flex flex-wrap gap-2">
+            <button type="button" className="btn btn-sm btn-primary" onClick={() => void downloadRender()}>Télécharger l'image</button>
+            <button type="button" className="btn btn-sm" onClick={stopRender}>Revenir à la 3D</button>
+          </div>
+        </div>
       )}
 
       {planOpen && state && <PlanEditor layout={state.layout} items={state.items} onApply={applyPlan} onCancel={() => setPlanOpen(false)} />}

@@ -17,6 +17,7 @@ function useLazyPaint(ref: RefObject<HTMLCanvasElement | null>, paint: (c: HTMLC
 }
 import { paintMaterial, paintPlace, paintScene, type SceneSpec } from "@/lib/draw";
 import type { TextureKind } from "@/content/types";
+import { realTexture, textureUrl } from "@/lib/textures";
 
 interface CanvasProps { width?: number; height?: number; label: string; className?: string }
 
@@ -25,6 +26,11 @@ export function MaterialSwatch({ texture, colors, seed, width = 360, height = 27
   const ref = useRef<HTMLCanvasElement>(null);
   const key = colors.join(",");
   useLazyPaint(ref, (c) => paintMaterial(c, texture, key.split(","), seed), `${texture}|${key}|${seed}`);
+  if (realTexture(seed)) {
+    // Vraie texture photographiée (Poly Haven, CC0) quand le robot de ressources l'a récupérée.
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={textureUrl(seed, "diff")} width={width} height={height} loading="lazy" decoding="async" alt={label.replace("Échantillon dessiné", "Texture photographiée")} className={`object-cover ${className ?? ""}`} />;
+  }
   return <canvas ref={ref} width={width} height={height} role="img" aria-label={label} className={className} />;
 }
 

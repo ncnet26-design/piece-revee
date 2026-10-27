@@ -6,6 +6,7 @@ import { materialById } from "@/content/lookup";
 import type { TextureKind } from "@/content/types";
 import { buildItem, type Mats } from "./furniture";
 import { instantiate, isModel } from "./models";
+import { realTexture, textureUrl } from "@/lib/textures";
 import { deriveStructure, hasCeiling, roomAt as roomAtL, viewpoint, type Layout, type RoomDef, type Wall } from "./layout";
 import { CATALOG, EYE_H, PSEUDO_MATERIALS, WALL_H, defaultRoomStyle, type HomeState, type Item, type Note, type RoomStyle, type WallFinish } from "./plan";
 
@@ -51,7 +52,22 @@ type Box2 = { x0: number; x1: number; z0: number; z1: number };
 class MatFactory implements Mats {
   private cache = new Map<string, THREE.Material>();
   private textures = new Map<string, THREE.CanvasTexture>();
-  constructor(private maxAniso: number, private texSize: number, private light = false) {}
+  constructor(private maxAniso: number, private texSize: number, private light = false, private onUpdate: () => void = () => {}) {}
+  private loader = new THREE.TextureLoader();
+  /** Remplace les motifs dessinés par les vraies textures photographiées (Poly Haven, CC0) quand elles existent. */
+  private real(mat: THREE.MeshStandardMaterial, id: string, repeat: number, withColor: boolean) {
+    if (this.light || !realTexture(id)) return;
+    for (const map of (withColor ? ["diff", "nor", "rough"] : ["nor", "rough"]) as Array<"diff" | "nor" | "rough">) {
+      this.loader.load(textureUrl(id, map), (t) => {
+        t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(repeat, repeat); t.anisotropy = this.maxAniso;
+        t.colorSpace = map === "diff" ? THREE.SRGBColorSpace : THREE.NoColorSpace;
+        if (map === "diff") { mat.map?.dispose(); mat.map = t; mat.color.set("#ffffff"); }
+        else if (map === "nor") mat.normalMap = t;
+        else { mat.roughnessMap = t; mat.roughness = 1; }
+        mat.needsUpdate = true; this.onUpdate();
+      }, undefined, () => { /* texture absente : on garde le motif dessiné */ });
+    }
+  }
 
   private normals = new Map<string, THREE.CanvasTexture>();
   texture(kind: TextureKind, colors: readonly string[], key: string, size = this.texSize): THREE.CanvasTexture {
@@ -87,7 +103,9 @@ class MatFactory implements Mats {
       const tile = TILE[m.texture] ?? 1.2; tex.repeat.set(1 / tile, 1 / tile);
       const nb = this.normal(m.texture, base), nm = nb ? nb.clone() : null;
       if (nm) { nm.needsUpdate = true; nm.repeat.copy(tex.repeat); }
-      return new THREE.MeshStandardMaterial({ map: tex, normalMap: nm, roughness: ROUGH[m.family] ?? 0.6, metalness: m.family === "Métal" ? 0.6 : 0 });
+      const mat = new THREE.MeshStandardMaterial({ map: tex, normalMap: nm, roughness: ROUGH[m.family] ?? 0.6, metalness: m.family === "Métal" ? 0.6 : 0 });
+      const rt = realTexture(id); if (rt) this.real(mat, id, 1 / rt.tile, true);
+      return mat;
     });
   }
   wallMaterial(f: WallFinish): THREE.MeshStandardMaterial {
@@ -100,9 +118,11 @@ class MatFactory implements Mats {
       const base = this.texture(m.texture, [hex, shade(hex, -9), shade(hex, 7)], id ?? "tissu"), tex = base.clone(); tex.needsUpdate = true; tex.repeat.set(3, 3);
       const nb = this.normal(m.texture, base), nm = nb ? nb.clone() : null;
       if (nm) { nm.needsUpdate = true; nm.repeat.set(3, 3); }
-      if (m.id === "m-cuir" || this.light) return new THREE.MeshStandardMaterial({ map: tex, normalMap: nm, roughness: m.id === "m-cuir" ? 0.5 : 0.95 });
+      if (m.id === "m-cuir" || this.light) { const mat = new THREE.MeshStandardMaterial({ map: tex, normalMap: nm, roughness: m.id === "m-cuir" ? 0.5 : 0.95 }); this.real(mat, m.id, 3, false); return mat; }
       // Tissu : reflet doux sur les arêtes (« sheen »), comme un vrai velours ou un lin.
-      return new THREE.MeshPhysicalMaterial({ map: tex, normalMap: nm, normalScale: new THREE.Vector2(0.6, 0.6), roughness: 0.92, sheen: m.id === "m-velours" ? 1 : 0.6, sheenRoughness: m.id === "m-velours" ? 0.35 : 0.7, sheenColor: new THREE.Color(shade(hex, 45)) });
+      const mat = new THREE.MeshPhysicalMaterial({ map: tex, normalMap: nm, normalScale: new THREE.Vector2(0.6, 0.6), roughness: 0.92, sheen: m.id === "m-velours" ? 1 : 0.6, sheenRoughness: m.id === "m-velours" ? 0.35 : 0.7, sheenColor: new THREE.Color(shade(hex, 45)) });
+      this.real(mat, m.id, 3, false);
+      return mat;
     });
   }
   struct(id: string | undefined): THREE.Material {
@@ -112,7 +132,9 @@ class MatFactory implements Mats {
       if (m.family === "Métal") return new THREE.MeshStandardMaterial({ color: m.colors[1] ?? m.colors[0], metalness: 0.85, roughness: 0.32 });
       if (m.texture === "lacquer") return new THREE.MeshStandardMaterial({ color: m.colors[0], roughness: 0.12 });
       const tex = this.texture(m.texture, m.colors, `${id}-meuble`);
-      return new THREE.MeshStandardMaterial({ map: tex, normalMap: this.normal(m.texture, tex), normalScale: new THREE.Vector2(0.5, 0.5), roughness: ROUGH[m.family] ?? 0.55 });
+      const mat = new THREE.MeshStandardMaterial({ map: tex, normalMap: this.normal(m.texture, tex), normalScale: new THREE.Vector2(0.5, 0.5), roughness: ROUGH[m.family] ?? 0.55 });
+      this.real(mat, id!, 0.6, true);
+      return mat;
     });
   }
   paint(hex: string, rough = 0.6): THREE.Material { return this.std(hex, rough); }
@@ -232,6 +254,7 @@ export class HomeEngine {
     // Sans carte graphique (rendu logiciel), on allège tout pour rester fluide.
     const gl = this.renderer.getContext(), dbg = gl.getExtension("WEBGL_debug_renderer_info");
     const software = /swiftshader|llvmpipe|software|basic render/i.test(String(dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : ""));
+    this.canPhoto = !software;
     const high = opts.quality === "haute" && !software;
     this.renderer.setPixelRatio(software ? 1 : Math.min(window.devicePixelRatio, high ? 2 : 1.5));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -245,7 +268,7 @@ export class HomeEngine {
     cv.setAttribute("aria-hidden", "true");
     container.appendChild(cv);
 
-    this.mats = new MatFactory(Math.min(8, this.renderer.capabilities.getMaxAnisotropy()), software ? 256 : high ? 512 : 384, software);
+    this.mats = new MatFactory(Math.min(8, this.renderer.capabilities.getMaxAnisotropy()), software ? 256 : high ? 512 : 384, software, () => { this.dirty = true; });
     this.edgeMat = new THREE.MeshStandardMaterial({ color: "#EFEBE4", roughness: 0.9 });
     this.camera = new THREE.PerspectiveCamera(68, 1, 0.05, 200);
     this.camera.rotation.order = "YXZ";
@@ -313,7 +336,8 @@ export class HomeEngine {
       if (this.disposed) { inside.dispose(); outside.dispose(); return; }
       const pm = new THREE.PMREMGenerator(this.renderer);
       const env = pm.fromEquirectangular(inside).texture;
-      pm.dispose(); inside.dispose();
+      pm.dispose();
+      this.envEquirect = inside; inside.mapping = THREE.EquirectangularReflectionMapping;
       this.scene.environment?.dispose();
       this.scene.environment = env; mirror.envMap = env;
       outside.mapping = THREE.EquirectangularReflectionMapping; outside.colorSpace = THREE.LinearSRGBColorSpace;
@@ -321,6 +345,45 @@ export class HomeEngine {
       this.scene.fog = null; this.hdri = true; this.dirty = true;
     } catch { /* on garde l'éclairage de secours */ }
   }
+
+  /* ——————————————— Rendu photo (tracé de chemins, sur l'appareil du visiteur) ——————————————— */
+  /** Faux sur les appareils sans carte graphique : le calcul serait beaucoup trop long. */
+  canPhoto = false;
+  private envEquirect: THREE.Texture | null = null;
+  private photo: { pt: import("three-gpu-pathtracer").WebGLPathTracer; target: number; onProgress: (p: number, done: boolean) => void; envBackup: THREE.Texture | null; exposure: number; grab: ((url: string) => void) | null } | null = null;
+  get photoActive() { return !!this.photo; }
+  private lastProgress = 0;
+
+  /** Lance un rendu photoréaliste progressif de la vue courante. */
+  async startPhoto(onProgress: (p: number, done: boolean) => void, samples = 400) {
+    if (!this.canPhoto || this.photo) return;
+    this.lastProgress = 0;
+    const { WebGLPathTracer } = await import("three-gpu-pathtracer");
+    if (this.disposed) return;
+    this.tween = null; this.walkTarget = null; this.keys.clear(); this.joy = { x: 0, y: 0 };
+    const hidden: THREE.Object3D[] = [this.labelGroup, this.noteGroup, ...(this.selBox ? [this.selBox] : [])];
+    hidden.forEach((o) => { o.visible = false; });
+    const pt = new WebGLPathTracer(this.renderer);
+    pt.tiles.set(2, 2); pt.bounces = 6; pt.filterGlossyFactor = 0.5; pt.minSamples = 1; pt.fadeDuration = 300; pt.renderDelay = 0;
+    pt.renderScale = Math.min(1, 1.5 / this.renderer.getPixelRatio());
+    const envBackup = this.scene.environment;
+    if (this.envEquirect) this.scene.environment = this.envEquirect;
+    this.photo = { pt, target: samples, onProgress, envBackup, exposure: this.renderer.toneMappingExposure, grab: null };
+    this.renderer.toneMappingExposure = 1.25;
+    await pt.setSceneAsync(this.scene, this.camera);
+  }
+  /** Arrête le rendu photo et revient à la 3D interactive. */
+  stopPhoto() {
+    const ph = this.photo; if (!ph) return;
+    ph.pt.dispose();
+    this.scene.environment = ph.envBackup;
+    this.renderer.toneMappingExposure = ph.exposure;
+    this.labelGroup.visible = this.mode === "plan"; this.noteGroup.visible = true;
+    if (this.selBox) this.selBox.visible = true;
+    this.photo = null; this.dirty = true;
+  }
+  /** Image du rendu photo en cours (PNG). */
+  grabPhoto(): Promise<string> { return new Promise((res) => { if (this.photo) this.photo.grab = res; else res(this.capture()); }); }
 
   /** Murs, sols, plafonds, étiquettes et arbres : reconstruits quand le plan change. */
   private buildStructure() {
@@ -666,6 +729,16 @@ export class HomeEngine {
     if (this.disposed) return;
     this.raf = requestAnimationFrame(this.loop);
     const dt = Math.min(0.1, this.clock.getDelta());
+    const ph = this.photo;
+    if (ph) {
+      if (ph.pt.samples < ph.target) {
+        ph.pt.renderSample();
+        const now = performance.now();
+        if (now - this.lastProgress > 250) { this.lastProgress = now; ph.onProgress(Math.min(1, ph.pt.samples / ph.target), false); }
+      } else if (!ph.grab && this.lastProgress >= 0) { this.lastProgress = -1; ph.onProgress(1, true); }
+      if (ph.grab) { if (ph.pt.samples >= ph.target) ph.pt.renderSample(); const g = ph.grab; ph.grab = null; g(this.renderer.domElement.toDataURL("image/jpeg", 0.92)); }
+      return;
+    }
     if (this.mode === "visite") this.stepVisit(dt);
     else if (this.orbit?.update()) this.dirty = true;
     const c = this.camera, l = this.lastCam;
@@ -726,6 +799,7 @@ export class HomeEngine {
   }
 
   private onDown = (e: PointerEvent) => {
+    if (this.photo) return;
     if (this.pointer && this.pointer.id !== e.pointerId) return;
     const cv = this.renderer.domElement;
     cv.focus({ preventScroll: true });

@@ -23,17 +23,22 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Textures photographiques
         if: ${{ inputs.textures }}
+        continue-on-error: true
         run: node --experimental-strip-types scripts/fetch-assets.ts --textures
       - name: Meubles et objets 3D
         if: ${{ inputs.modeles }}
+        continue-on-error: true
+        env: { NODE_OPTIONS: "--max-old-space-size=6144" }
         run: node --experimental-strip-types scripts/fetch-assets.ts --models
       - name: Photos libres
         if: ${{ inputs.photos }}
+        continue-on-error: true
         run: pnpm images:import
         env:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
       - name: Déposer les ressources dans la branche robot/ressources (relecture avant intégration)
+        if: ${{ always() }}
         run: |
           git config user.name "piece-revee-robot"
           git config user.email "robot@users.noreply.github.com"

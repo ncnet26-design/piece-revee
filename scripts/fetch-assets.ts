@@ -6,7 +6,7 @@
  * Usage : node --experimental-strip-types scripts/fetch-assets.ts [--textures] [--models]
  */
 import { execFileSync } from "node:child_process";
-import { mkdirSync, rmSync, writeFileSync, existsSync } from "node:fs";
+import { mkdirSync, rmSync, writeFileSync, existsSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import sharp from "sharp";
 
@@ -130,6 +130,8 @@ async function fetchModels() {
       const files = await json<{ gltf?: Record<string, { gltf?: { url: string; include?: Record<string, { url: string }> } }> }>(`${API}/files/${id}`);
       const g = files.gltf?.["1k"]?.gltf;
       if (!g) { console.log(`✗ ${id} : pas de glTF`); continue; }
+      const total = Object.values(g.include ?? {}).reduce((n, f) => n + ((f as { size?: number }).size ?? 0), 0);
+      if (total > 40_000_000) { console.log(`✗ ${id} : fichiers trop lourds`); continue; }
       const dir = join(tmp, id);
       rmSync(dir, { recursive: true, force: true });
       const main = join(dir, `${id}.gltf`);
@@ -137,8 +139,11 @@ async function fetchModels() {
       for (const [rel, f] of Object.entries(g.include ?? {})) await download(f.url, join(dir, rel));
       const out = join("public/models", `${id}.glb`);
       mkdirSync("public/models", { recursive: true });
-      execFileSync("npx", ["-y", "@gltf-transform/cli@4.2.1", "optimize", main, out, "--texture-compress", "webp", "--texture-size", "1024", "--compress", "false"], { stdio: "ignore" });
+      execFileSync("node_modules/.bin/gltf-transform", ["optimize", main, out, "--texture-compress", "webp", "--texture-size", "1024", "--compress", "false"], { stdio: "ignore", timeout: 180_000 });
+      rmSync(dir, { recursive: true, force: true });
+      if (statSync(out).size > 6_000_000) { rmSync(out); console.log(`✗ ${id} : trop lourd pour le web`); continue; }
       manifest.push({ id, name: a.name, categories: a.categories, tags: a.tags, file: `/models/${id}.glb`, url: `https://polyhaven.com/a/${id}`, authors: Object.keys(a.authors), license: "CC0 1.0" });
+      writeFileSync("content/data/models.json", `${JSON.stringify(manifest, null, 2)}\n`);
       console.log(`✓ ${a.name}`);
     } catch (e) { console.log(`✗ ${id} : ${(e as Error).message}`); }
     await sleep(250);
