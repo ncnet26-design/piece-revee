@@ -103,6 +103,8 @@ export const CATEGORIES: Category[] = ["Salon", "Repas", "Chambre", "Rangement",
 
 export interface Item {
   id: string; type: ItemType; x: number; z: number; rot: number;
+  /** Hauteur de pose (m) : objet posé sur un meuble, accroché au mur ou suspendu. */
+  y?: number;
   color?: string; fabric?: string; structure?: string; variant?: string;
 }
 export interface Note { id: string; roomId: string; x: number; y: number; z: number; text: string; at: string }
@@ -156,7 +158,8 @@ export function defaultState(): HomeState {
       it("tableau", 6.93, 4.2, -R / 2, { color: "#B8694A" }),
       it("table", 5.65, 1.25, 0, { variant: "4 personnes" }),
       it("chaise", 5.3, 0.48, 0), it("chaise", 6.0, 0.48, 0), it("chaise", 5.3, 2.02, R), it("chaise", 6.0, 2.02, R),
-      it("suspension", 5.65, 1.25),
+      it("objet", 5.65, 1.25, 0, { variant: "Chandelier_01", y: 1.78 }),
+      it("objet", 2.45, 2.15, 0, { variant: "Ottoman_01" }),
       // Cuisine
       it("cuisine", 9.6, 4.65, R, { variant: "2,40 m" }),
       it("refrigerateur", 11.55, 4.62, R),
@@ -166,6 +169,7 @@ export function defaultState(): HomeState {
       it("plante", 7.55, 0.55, 0, { variant: "Petite" }),
       // Entrée
       it("console", 0.27, 6.6, R / 2),
+      it("objet", 0.27, 6.85, R / 2, { variant: "book_encyclopedia_set_01", y: 0.84 }),
       it("miroir", 0.13, 6.6, R / 2, { variant: "Rond" }),
       it("porte-manteau", 2.75, 7.6, -R / 2),
       it("banc", 2.7, 6.4, -R / 2),
@@ -221,11 +225,11 @@ export function parseState(raw: unknown): HomeState | null {
   const items: Item[] = [];
   for (const s of raw.items.slice(0, 300)) {
     if (!isObj(s) || typeof s.type !== "string" || !(s.type in CATALOG)) continue;
-    const x = num(s.x, -61, 61), z = num(s.z, -61, 61), rot = num(s.rot, -10, 10);
+    const x = num(s.x, -61, 61), z = num(s.z, -61, 61), rot = num(s.rot, -10, 10), y = num(s.y, 0, 3);
     if (x === null || z === null || rot === null) continue;
     const entry = CATALOG[s.type as ItemType];
     items.push({
-      id: typeof s.id === "string" && s.id.length < 40 ? s.id : `i${items.length + 1}-${Date.now().toString(36)}`, type: s.type as ItemType, x, z, rot,
+      id: typeof s.id === "string" && s.id.length < 40 ? s.id : `i${items.length + 1}-${Date.now().toString(36)}`, type: s.type as ItemType, x, z, rot, ...(y ? { y } : {}),
       color: hex(s.color), fabric: id(s.fabric), structure: id(s.structure),
       variant: typeof s.variant === "string" && (entry.variants?.includes(s.variant) || (s.type === "objet" && /^[\w-]{1,60}$/.test(s.variant))) ? s.variant : undefined,
     });

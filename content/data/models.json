@@ -23,7 +23,12 @@
     "authors": [
       "Rico Cilliers"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.7,
+      "d": 0.66,
+      "h": 0.84
+    }
   },
   {
     "id": "marble_bust_01",
@@ -48,7 +53,12 @@
     "authors": [
       "Rico Cilliers"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.27,
+      "d": 0.3,
+      "h": 0.51
+    }
   },
   {
     "id": "potted_plant_04",
@@ -75,7 +85,12 @@
     "authors": [
       "James Ray Cock"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.17,
+      "d": 0.18,
+      "h": 0.27
+    }
   },
   {
     "id": "sofa_02",
@@ -98,7 +113,12 @@
     "authors": [
       "Kirill Sannikov"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.81,
+      "d": 0.82,
+      "h": 0.71
+    }
   },
   {
     "id": "fern_02",
@@ -129,41 +149,12 @@
       "Rob Tuytel",
       "Rico Cilliers"
     ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "celandine_01",
-    "name": "Celandine 01",
-    "categories": [
-      "nature",
-      "plants",
-      "ground cover",
-      "flowers"
-    ],
-    "tags": [
-      "field",
-      "nature",
-      "green",
-      "shrub",
-      "plant",
-      "outdoor",
-      "leaf",
-      "botany",
-      "leaves",
-      "meadow",
-      "floral",
-      "flower",
-      "small",
-      "natural",
-      "celandine"
-    ],
-    "file": "/models/celandine_01.glb",
-    "url": "https://polyhaven.com/a/celandine_01",
-    "authors": [
-      "Rob Tuytel",
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.97,
+      "d": 1.72,
+      "h": 0.43
+    }
   },
   {
     "id": "Lantern_01",
@@ -191,7 +182,12 @@
     "authors": [
       "Rajil Jose Macatangay"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.12,
+      "d": 0.1,
+      "h": 0.29
+    }
   },
   {
     "id": "potted_plant_01",
@@ -217,40 +213,12 @@
     "authors": [
       "Rico Cilliers"
     ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "dandelion_01",
-    "name": "Dandelion 01",
-    "categories": [
-      "plants",
-      "flowers",
-      "nature",
-      "ground cover"
-    ],
-    "tags": [
-      "plant",
-      "nature",
-      "green",
-      "shrub",
-      "outdoor",
-      "leaf",
-      "bush",
-      "botany",
-      "field",
-      "flower",
-      "meadow",
-      "foliage",
-      "small",
-      "floral"
-    ],
-    "file": "/models/dandelion_01.glb",
-    "url": "https://polyhaven.com/a/dandelion_01",
-    "authors": [
-      "Rob Tuytel",
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.59,
+      "d": 0.63,
+      "h": 1.35
+    }
   },
   {
     "id": "wooden_table_02",
@@ -272,7 +240,12 @@
     "authors": [
       "Serhii Khromov"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.13,
+      "d": 0.71,
+      "h": 0.8
+    }
   },
   {
     "id": "sofa_03",
@@ -298,7 +271,12 @@
     "authors": [
       "Fran Calvente"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 2.73,
+      "d": 0.93,
+      "h": 1.12
+    }
   },
   {
     "id": "chess_set",
@@ -325,7 +303,12 @@
     "authors": [
       "Riley Queen"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.55,
+      "d": 0.55,
+      "h": 0.11
+    }
   },
   {
     "id": "horse_statue_01",
@@ -350,7 +333,12 @@
     "authors": [
       "Rico Cilliers"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.16,
+      "d": 0.11,
+      "h": 0.22
+    }
   },
   {
     "id": "concrete_cat_statue",
@@ -375,7 +363,12 @@
       "Rico Cilliers",
       "Riley Queen"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.15,
+      "d": 0.25,
+      "h": 0.28
+    }
   },
   {
     "id": "modern_arm_chair_01",
@@ -400,36 +393,12 @@
     "authors": [
       "Vibrant Nordic"
     ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "rubber_duck_toy",
-    "name": "Rubber Duck Toy",
-    "categories": [
-      "props",
-      "decorative",
-      "collection: the_shed"
-    ],
-    "tags": [
-      "shed",
-      "toy",
-      "bathroom",
-      "child",
-      "home",
-      "fun",
-      "kids",
-      "play",
-      "float",
-      "plastic",
-      "cute",
-      "animal"
-    ],
-    "file": "/models/rubber_duck_toy.glb",
-    "url": "https://polyhaven.com/a/rubber_duck_toy",
-    "authors": [
-      "Plat251"
-    ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.82,
+      "d": 0.99,
+      "h": 1.02
+    }
   },
   {
     "id": "Sofa_01",
@@ -454,81 +423,12 @@
     "authors": [
       "Kirill Sannikov"
     ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "dry_branches_medium_01",
-    "name": "Dry Branches Medium 01",
-    "categories": [
-      "props",
-      "nature",
-      "plants",
-      "ground cover",
-      "collection: pine_forest",
-      "collection: verdant_trail"
-    ],
-    "tags": [
-      "branches",
-      "dead",
-      "dry",
-      "plants",
-      "nature",
-      "natural",
-      "plant",
-      "outdoor",
-      "foliage",
-      "forest",
-      "jungle",
-      "shrub",
-      "medium",
-      "stick",
-      "twig",
-      "botany",
-      "wood"
-    ],
-    "file": "/models/dry_branches_medium_01.glb",
-    "url": "https://polyhaven.com/a/dry_branches_medium_01",
-    "authors": [
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "grass_medium_02",
-    "name": "Grass Medium 02",
-    "categories": [
-      "nature",
-      "ground cover",
-      "grass",
-      "plants",
-      "collection: verdant_trail"
-    ],
-    "tags": [
-      "grass",
-      "field",
-      "meadow",
-      "shrub",
-      "small",
-      "green",
-      "nature",
-      "plant",
-      "foliage",
-      "natural",
-      "geometry nodes",
-      "ground cover",
-      "vegetation",
-      "undergrowth",
-      "ground",
-      "lawn",
-      "environment",
-      "pasture"
-    ],
-    "file": "/models/grass_medium_02.glb",
-    "url": "https://polyhaven.com/a/grass_medium_02",
-    "authors": [
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.57,
+      "d": 0.66,
+      "h": 0.8
+    }
   },
   {
     "id": "fancy_picture_frame_01",
@@ -555,7 +455,12 @@
       "Rob Tuytel",
       "Rico Cilliers"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.6,
+      "d": 0.02,
+      "h": 0.46
+    }
   },
   {
     "id": "alarm_clock_01",
@@ -582,7 +487,12 @@
       "Yann Kervran",
       "James Ray Cock"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.13,
+      "d": 0.07,
+      "h": 0.17
+    }
   },
   {
     "id": "book_encyclopedia_set_01",
@@ -605,38 +515,12 @@
     "authors": [
       "John Malcolm"
     ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "shrub_sorrel_01",
-    "name": "Shrub Sorrel 01",
-    "categories": [
-      "plants",
-      "flowers",
-      "nature",
-      "collection: smugglers_cove"
-    ],
-    "tags": [
-      "nature",
-      "sorrel",
-      "potplant",
-      "bush",
-      "shrub",
-      "leaf",
-      "leaves",
-      "green",
-      "small",
-      "forest",
-      "field",
-      "floral",
-      "flower"
-    ],
-    "file": "/models/shrub_sorrel_01.glb",
-    "url": "https://polyhaven.com/a/shrub_sorrel_01",
-    "authors": [
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.55,
+      "d": 0.16,
+      "h": 0.24
+    }
   },
   {
     "id": "round_wooden_table_01",
@@ -659,7 +543,12 @@
     "authors": [
       "Ulan Cabanilla"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.4,
+      "d": 1.4,
+      "h": 1.01
+    }
   },
   {
     "id": "CoffeeCart_01",
@@ -689,7 +578,12 @@
     "authors": [
       "Joe Seabuhr"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 2.17,
+      "d": 1.07,
+      "h": 1.72
+    }
   },
   {
     "id": "GothicCabinet_01",
@@ -712,7 +606,12 @@
     "authors": [
       "Kirill Sannikov"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.72,
+      "d": 1.12,
+      "h": 2.36
+    }
   },
   {
     "id": "outdoor_table_chair_set_01",
@@ -740,37 +639,12 @@
     "authors": [
       "James Ray Cock"
     ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "anthurium_botany_01",
-    "name": "Anthurium Botany 01",
-    "categories": [
-      "plants",
-      "nature",
-      "collection: the_shed",
-      "collection: smugglers_cove"
-    ],
-    "tags": [
-      "nature",
-      "bush",
-      "leaf",
-      "shrub",
-      "leaves",
-      "forest",
-      "plant",
-      "green",
-      "jungle",
-      "outdoor",
-      "botany"
-    ],
-    "file": "/models/anthurium_botany_01.glb",
-    "url": "https://polyhaven.com/a/anthurium_botany_01",
-    "authors": [
-      "Rob Tuytel",
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.74,
+      "d": 1.72,
+      "h": 0.86
+    }
   },
   {
     "id": "GreenChair_01",
@@ -793,108 +667,12 @@
     "authors": [
       "Kirill Sannikov"
     ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "treasure_chest",
-    "name": "Treasure Chest",
-    "categories": [
-      "props",
-      "containers",
-      "decorative",
-      "collection: smugglers_cove"
-    ],
-    "tags": [
-      "old",
-      "wooden",
-      "chest",
-      "treasure",
-      "pirates",
-      "gold",
-      "crate",
-      "maritime",
-      "colonial",
-      "worn",
-      "antique",
-      "wood",
-      "prop",
-      "container",
-      "metal",
-      "box",
-      "ornate"
-    ],
-    "file": "/models/treasure_chest.glb",
-    "url": "https://polyhaven.com/a/treasure_chest",
-    "authors": [
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "dead_tree_trunk_02",
-    "name": "Dead Tree Trunk 02",
-    "categories": [
-      "nature",
-      "plants",
-      "trees",
-      "collection: verdant_trail"
-    ],
-    "tags": [
-      "trunk",
-      "log",
-      "tree trunk",
-      "dead",
-      "decayed",
-      "dry",
-      "rough texture",
-      "forest floor",
-      "stump",
-      "bark",
-      "woodland",
-      "debris",
-      "environment",
-      "ground cover"
-    ],
-    "file": "/models/dead_tree_trunk_02.glb",
-    "url": "https://polyhaven.com/a/dead_tree_trunk_02",
-    "authors": [
-      "Jenelle van Heerden",
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "moss_01",
-    "name": "Moss 01",
-    "categories": [
-      "nature",
-      "plants",
-      "ground cover",
-      "collection: pine_forest"
-    ],
-    "tags": [
-      "moss",
-      "ground cover",
-      "forest",
-      "woodland",
-      "foliage",
-      "nature",
-      "plant",
-      "natural",
-      "botany",
-      "small",
-      "geometry nodes",
-      "outdoor",
-      "undergrowth",
-      "vegetation",
-      "shrubs"
-    ],
-    "file": "/models/moss_01.glb",
-    "url": "https://polyhaven.com/a/moss_01",
-    "authors": [
-      "Rob Tuytel"
-    ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.67,
+      "d": 0.66,
+      "h": 1.06
+    }
   },
   {
     "id": "ClassicConsole_01",
@@ -916,7 +694,12 @@
     "authors": [
       "Kirill Sannikov"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.54,
+      "d": 0.59,
+      "h": 0.95
+    }
   },
   {
     "id": "GothicCommode_01",
@@ -939,7 +722,12 @@
     "authors": [
       "Kirill Sannikov"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.2,
+      "d": 0.58,
+      "h": 1.21
+    }
   },
   {
     "id": "Chandelier_03",
@@ -963,7 +751,12 @@
     "authors": [
       "Kirill Sannikov"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.78,
+      "d": 0.79,
+      "h": 1.04
+    }
   },
   {
     "id": "GothicBed_01",
@@ -985,7 +778,12 @@
     "authors": [
       "Kirill Sannikov"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.49,
+      "d": 2.04,
+      "h": 1.53
+    }
   },
   {
     "id": "Chandelier_01",
@@ -1008,7 +806,12 @@
     "authors": [
       "Kirill Sannikov"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.75,
+      "d": 0.82,
+      "h": 0.8
+    }
   },
   {
     "id": "Ottoman_01",
@@ -1033,7 +836,12 @@
     "authors": [
       "Caspian Fortune"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.88,
+      "d": 0.62,
+      "h": 0.62
+    }
   },
   {
     "id": "WoodenTable_01",
@@ -1056,7 +864,12 @@
     "authors": [
       "Ethan Place"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.8,
+      "d": 0.66,
+      "h": 0.55
+    }
   },
   {
     "id": "ornate_mirror_01",
@@ -1085,43 +898,12 @@
     "authors": [
       "James Ray Cock"
     ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "nettle_plant",
-    "name": "Nettle Plant",
-    "categories": [
-      "nature",
-      "plants",
-      "ground cover",
-      "collection: the_shed"
-    ],
-    "tags": [
-      "nettle",
-      "plant",
-      "green",
-      "nature",
-      "shrub",
-      "outdoor",
-      "leaf",
-      "bush",
-      "botany",
-      "leaves",
-      "forest",
-      "jungle",
-      "foliage",
-      "field",
-      "meadow",
-      "natural",
-      "floral"
-    ],
-    "file": "/models/nettle_plant.glb",
-    "url": "https://polyhaven.com/a/nettle_plant",
-    "authors": [
-      "Rob Tuytel",
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.49,
+      "d": 0.03,
+      "h": 0.74
+    }
   },
   {
     "id": "plastic_monobloc_chair_01",
@@ -1145,31 +927,12 @@
     "authors": [
       "Kuutti Siitonen"
     ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "steel_frame_shelves_01",
-    "name": "Steel Frame Shelves 01",
-    "categories": [
-      "furniture",
-      "shelves",
-      "industrial",
-      "collection: the_shed"
-    ],
-    "tags": [
-      "commercial",
-      "modern",
-      "shelf",
-      "bookshelf",
-      "metal",
-      "wood"
-    ],
-    "file": "/models/steel_frame_shelves_01.glb",
-    "url": "https://polyhaven.com/a/steel_frame_shelves_01",
-    "authors": [
-      "James Ray Cock"
-    ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.64,
+      "d": 0.63,
+      "h": 0.88
+    }
   },
   {
     "id": "ArmChair_01",
@@ -1194,7 +957,12 @@
     "authors": [
       "Kirill Sannikov"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.85,
+      "d": 0.77,
+      "h": 1.07
+    }
   },
   {
     "id": "street_lamp_01",
@@ -1221,7 +989,12 @@
     "authors": [
       "Josh Dean"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.7,
+      "d": 0.39,
+      "h": 3.87
+    }
   },
   {
     "id": "Rockingchair_01",
@@ -1251,7 +1024,12 @@
     "authors": [
       "Jorge Camacho"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.71,
+      "d": 0.83,
+      "h": 0.99
+    }
   },
   {
     "id": "wooden_picnic_table",
@@ -1277,31 +1055,12 @@
     "authors": [
       "Ulan Cabanilla"
     ],
-    "license": "CC0 1.0"
-  },
-  {
-    "id": "boombox",
-    "name": "Boombox",
-    "categories": [
-      "appliances",
-      "electronics",
-      "collection: hidden_alley"
-    ],
-    "tags": [
-      "loudspeaker",
-      "radio",
-      "cd player",
-      "stereo",
-      "80's",
-      "sound system",
-      "portable"
-    ],
-    "file": "/models/boombox.glb",
-    "url": "https://polyhaven.com/a/boombox",
-    "authors": [
-      "Thomas Paul Mouilleron"
-    ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 2.24,
+      "d": 3.02,
+      "h": 0.75
+    }
   },
   {
     "id": "modern_ceiling_lamp_01",
@@ -1327,7 +1086,12 @@
     "authors": [
       "James Ray Cock"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.43,
+      "d": 0.43,
+      "h": 0.95
+    }
   },
   {
     "id": "brass_candleholders",
@@ -1353,6 +1117,11 @@
     "authors": [
       "Tina"
     ],
-    "license": "CC0 1.0"
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 1.05,
+      "d": 0.36,
+      "h": 0.84
+    }
   }
 ]

@@ -14,8 +14,11 @@ const VERIFIED = verified as Record<string, { pattern: string | null; checkedAt:
 export interface ShopLink { retailer: string; url: string; exact: boolean }
 /** Liens d'achat pour une recherche (« canapé velours bleu »), limités aux enseignes adaptées. */
 export function shopLinks(query: string, kinds: RetailerKind[] = ["meuble", "deco"], max = 5): ShopLink[] {
-  return RETAILERS.filter((r) => r.kinds.some((k) => kinds.includes(k))).slice(0, max).map((r) => {
-    const p = VERIFIED[r.id]?.pattern;
-    return p ? { retailer: r.name, url: p.replace("{q}", encodeURIComponent(query)), exact: true } : { retailer: r.name, url: r.home, exact: false };
-  });
+  // Enseignes dont la recherche est vérifiée d'abord, puis les autres (lien vers leur site).
+  return RETAILERS.filter((r) => r.kinds.some((k) => kinds.includes(k)))
+    .map((r) => {
+      const p = VERIFIED[r.id]?.pattern;
+      return p ? { retailer: r.name, url: p.replace("{q}", encodeURIComponent(query)), exact: true } : { retailer: r.name, url: r.home, exact: false };
+    })
+    .sort((a, b) => Number(b.exact) - Number(a.exact)).slice(0, max);
 }

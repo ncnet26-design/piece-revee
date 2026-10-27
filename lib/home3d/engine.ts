@@ -56,8 +56,10 @@ class MatFactory implements Mats {
   private loader = new THREE.TextureLoader();
   /** Remplace les motifs dessinés par les vraies textures photographiées (Poly Haven, CC0) quand elles existent. */
   private real(mat: THREE.MeshStandardMaterial, id: string, repeat: number, withColor: boolean) {
-    if (this.light || !realTexture(id)) return;
-    for (const map of (withColor ? ["diff", "nor", "rough"] : ["nor", "rough"]) as Array<"diff" | "nor" | "rough">) {
+    if (!realTexture(id)) return;
+    // Appareils modestes : la photo de la matière seulement (le relief et la rugosité coûtent plus cher).
+    const maps = (this.light ? (withColor ? ["diff"] : []) : withColor ? ["diff", "nor", "rough"] : ["nor", "rough"]) as Array<"diff" | "nor" | "rough">;
+    for (const map of maps) {
       this.loader.load(textureUrl(id, map), (t) => {
         t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(repeat, repeat); t.anisotropy = this.maxAniso;
         t.colorSpace = map === "diff" ? THREE.SRGBColorSpace : THREE.NoColorSpace;
@@ -133,7 +135,8 @@ class MatFactory implements Mats {
       if (m.texture === "lacquer") return new THREE.MeshStandardMaterial({ color: m.colors[0], roughness: 0.12 });
       const tex = this.texture(m.texture, m.colors, `${id}-meuble`);
       const mat = new THREE.MeshStandardMaterial({ map: tex, normalMap: this.normal(m.texture, tex), normalScale: new THREE.Vector2(0.5, 0.5), roughness: ROUGH[m.family] ?? 0.55 });
-      this.real(mat, id!, 0.6, true);
+      // Une photo de sol (chevrons, lames, carreaux) ne convient pas à un meuble : on garde alors le bois dessiné.
+      if (!/herringbone|parquet|floor|tiles|planks|deck|paving|laminate/i.test(realTexture(id!)?.name ?? "")) this.real(mat, id!, 0.6, true);
       return mat;
     });
   }
@@ -606,7 +609,7 @@ export class HomeEngine {
   }
   private updateItemBox(it: Item) {
     const o = this.itemObjs.get(it.id); if (!o) return;
-    if (CATALOG[it.type].walkThrough) { this.itemBoxes.delete(it.id); return; }
+    if (CATALOG[it.type].walkThrough || (it.y ?? 0) > 0.3) { this.itemBoxes.delete(it.id); return; }
     const b = new THREE.Box3().setFromObject(o);
     if (b.max.y - b.min.y < 0.2) { this.itemBoxes.delete(it.id); return; }
     this.itemBoxes.set(it.id, { x0: b.min.x, x1: b.max.x, z0: b.min.z, z1: b.max.z });

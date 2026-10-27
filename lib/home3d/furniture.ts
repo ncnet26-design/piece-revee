@@ -333,7 +333,7 @@ export function buildItem(it: Item, M: Mats): THREE.Group {
   BUILD[it.type](g, it, M, it.color ?? entry.color ?? "#D6C3A3");
   g.traverse((o) => { if ((o as THREE.Mesh).isMesh) { o.castShadow = true; o.receiveShadow = true; o.userData.itemId = it.id; } });
   if (it.type === "tapis") g.traverse((o) => { o.castShadow = false; });
-  g.position.set(it.x, 0, it.z);
+  g.position.set(it.x, it.y ?? 0, it.z);
   g.rotation.y = it.rot;
   g.userData.itemId = it.id;
   return g;

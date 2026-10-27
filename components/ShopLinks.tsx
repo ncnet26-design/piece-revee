@@ -9,11 +9,11 @@ export function ShopLinks({ query, kinds, max = 5, title = "Où l'acheter", comp
   return (
     <div>
       {title && <h3 className={compact ? "text-[13.5px] font-semibold font-ui" : "font-ui text-[15px] font-semibold"}>{title}</h3>}
-      <p className="mt-0.5 text-[12px] text-muted">Recherche « {query} » chez :</p>
+      <p className="mt-0.5 text-[12px] text-muted">« {query} » chez :</p>
       <div className="mt-2 flex flex-wrap gap-1.5">
         {links.map((l) => (
           <a key={l.retailer} className="btn btn-sm" href={l.url} target="_blank" rel="noopener noreferrer nofollow" title={l.exact ? `Résultats « ${query} » sur ${l.retailer}` : `Site de ${l.retailer}`}>
-            {l.retailer} <span aria-hidden="true">↗</span><span className="sr-only"> (nouvel onglet)</span>
+            {l.retailer}{!l.exact && <span className="font-normal text-muted"> · site</span>} <span aria-hidden="true">↗</span><span className="sr-only"> (nouvel onglet{l.exact ? ", résultats de recherche" : ", page d'accueil"})</span>
           </a>
         ))}
       </div>

@@ -103,32 +103,12 @@
     "license": "CC0 1.0",
     "tile": 2
   },
-  "m-verde": {
-    "assetId": "floor_tiles_06",
-    "name": "Floor Tiles 06",
-    "url": "https://polyhaven.com/a/floor_tiles_06",
-    "authors": [
-      "Rob Tuytel"
-    ],
-    "license": "CC0 1.0",
-    "tile": 2
-  },
   "m-ardoise": {
     "assetId": "stone_tiles_02",
     "name": "Stone Tiles 02",
     "url": "https://polyhaven.com/a/stone_tiles_02",
     "authors": [
       "Charlotte Baglioni"
-    ],
-    "license": "CC0 1.0",
-    "tile": 2
-  },
-  "m-bourgogne": {
-    "assetId": "dry_riverbed_rock",
-    "name": "Dry Riverbed Rock",
-    "url": "https://polyhaven.com/a/dry_riverbed_rock",
-    "authors": [
-      "Amal Kumar"
     ],
     "license": "CC0 1.0",
     "tile": 2
@@ -163,32 +143,12 @@
     "license": "CC0 1.0",
     "tile": 2
   },
-  "m-terrecuite": {
-    "assetId": "roof_tiles",
-    "name": "Roof Tiles",
-    "url": "https://polyhaven.com/a/roof_tiles",
-    "authors": [
-      "Stephan Seeliger"
-    ],
-    "license": "CC0 1.0",
-    "tile": 2
-  },
   "m-gres": {
     "assetId": "terracotta_floor_tiles",
     "name": "Terracotta Floor Tiles",
     "url": "https://polyhaven.com/a/terracotta_floor_tiles",
     "authors": [
       "Dimitrios Savva"
-    ],
-    "license": "CC0 1.0",
-    "tile": 2
-  },
-  "m-zellige": {
-    "assetId": "ceramic_roof_01",
-    "name": "Ceramic Roof 01",
-    "url": "https://polyhaven.com/a/ceramic_roof_01",
-    "authors": [
-      "Rob Tuytel"
     ],
     "license": "CC0 1.0",
     "tile": 2
@@ -215,30 +175,10 @@
     "license": "CC0 1.0",
     "tile": 2
   },
-  "m-microciment": {
-    "assetId": "yellow_plaster",
-    "name": "Yellow Plaster",
-    "url": "https://polyhaven.com/a/yellow_plaster",
-    "authors": [
-      "Rob Tuytel"
-    ],
-    "license": "CC0 1.0",
-    "tile": 2
-  },
   "m-chaux": {
     "assetId": "white_plaster_02",
     "name": "White Plaster 02",
     "url": "https://polyhaven.com/a/white_plaster_02",
-    "authors": [
-      "Rob Tuytel"
-    ],
-    "license": "CC0 1.0",
-    "tile": 2
-  },
-  "m-argile": {
-    "assetId": "sand_01",
-    "name": "Sand 01",
-    "url": "https://polyhaven.com/a/sand_01",
     "authors": [
       "Rob Tuytel"
     ],
@@ -282,16 +222,6 @@
     "authors": [
       "Dario Barresi",
       "Charlotte Baglioni"
-    ],
-    "license": "CC0 1.0",
-    "tile": 2
-  },
-  "m-pelouse": {
-    "assetId": "coast_sand_rocks_02",
-    "name": "Coast Sand Rocks 02",
-    "url": "https://polyhaven.com/a/coast_sand_rocks_02",
-    "authors": [
-      "Rob Tuytel"
     ],
     "license": "CC0 1.0",
     "tile": 2

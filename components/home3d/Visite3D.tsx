@@ -12,7 +12,7 @@ import {
 } from "@/lib/home3d/plan";
 import { roomAt as roomAtL, viewpoint } from "@/lib/home3d/layout";
 import PlanEditor from "./PlanEditor";
-import { LIBRARY_MODELS, frenchName, libGroup, libModel } from "@/lib/home3d/library";
+import { LIBRARY_MODELS, defaultY, frenchName, libGroup, libModel } from "@/lib/home3d/library";
 import { ShopLinks } from "../ShopLinks";
 import type { RetailerKind } from "@/lib/retailers";
 import { ITEM_TIPS, ROOM_TIPS } from "@/lib/home3d/tips";
@@ -138,7 +138,9 @@ export default function Visite3D() {
   const addItem = (type: ItemType, variant?: string) => {
     const e = engine.current; if (!e) return;
     const sp = e.spawnPoint();
-    const it: Item = { id: uid("i"), type, x: sp.x, z: sp.z, rot: sp.rot, ...(variant ? { variant } : {}) };
+    const lmY = type === "objet" ? libModel(variant) : undefined;
+    const y = lmY ? defaultY(lmY) : 0;
+    const it: Item = { id: uid("i"), type, x: sp.x, z: sp.z, rot: sp.rot, ...(variant ? { variant } : {}), ...(y ? { y } : {}) };
     pendingSelect.current = { kind: "item", id: it.id };
     update((s) => ({ ...s, items: [...s.items, it] }));
     setPanel(null);
@@ -379,6 +381,12 @@ function ItemEditor({ it, size, roomName, onPatch, onRemove, onDuplicate }: { it
       </>}
       {e.fabric && <><h3 className="mt-4 text-[13.5px] font-semibold">Tissu</h3><div className="mt-1.5 flex flex-wrap gap-1.5">{FABRICS.map((f) => <MatChip key={f} id={f} active={fabric === f} onClick={() => onPatch({ fabric: f })} />)}</div></>}
       {e.structure && <><h3 className="mt-4 text-[13.5px] font-semibold">{it.type === "cuisine" || it.type === "ilot" || it.type === "meuble-vasque" ? "Plan de travail" : "Matière"}</h3><div className="mt-1.5 flex flex-wrap gap-1.5">{STRUCTURES.map((s) => <MatChip key={s} id={s} active={structure === s} onClick={() => onPatch({ structure: s })} />)}</div></>}
+      {it.type === "objet" && (
+        <label className="mt-4 flex flex-col gap-1 text-[13.5px] font-semibold">Hauteur de pose : {cm(it.y ?? 0)}
+          <input type="range" min={0} max={2.5} step={0.05} value={it.y ?? 0} onChange={(ev) => onPatch({ y: Number(ev.target.value) })} />
+          <span className="text-[12px] font-normal text-muted">0 = au sol · 75 cm = sur une table · plus haut = au mur ou suspendu</span>
+        </label>
+      )}
       <div className="mt-4 flex flex-wrap gap-2">
         <button type="button" className="btn btn-sm" onClick={() => onPatch({ rot: it.rot + Math.PI / 4 })}>Tourner</button>
         <button type="button" className="btn btn-sm" onClick={onDuplicate}>Dupliquer</button>

@@ -24,6 +24,14 @@ export function frenchName(m: Pick<LibModel, "name">): string {
   const label = [noun, ...adj].join(" ");
   return `${label.charAt(0).toUpperCase()}${label.slice(1)}${num && Number(num) > 1 ? ` (modèle ${num})` : ""}`;
 }
+/** Hauteur de pose par défaut : lustres au plafond, cadres et miroirs au mur, petits objets sur un meuble. */
+export function defaultY(m: LibModel, ceiling = 2.6): number {
+  const d = m.dims; if (!d) return 0;
+  if (/chandelier|ceiling/i.test(m.name)) return Math.max(0, Math.round((ceiling - d.h - 0.02) * 100) / 100);
+  if (/frame|mirror|painting/i.test(m.name)) return Math.round((1.5 - d.h / 2) * 100) / 100;
+  if (d.h < 0.35 && d.w < 0.6 && d.d < 0.6) return 0.75;
+  return 0;
+}
 export const libModel = (id: string | undefined) => (id ? LIBRARY_MODELS.find((m) => m.id === id) : undefined);
 /** Rubrique du catalogue selon les catégories Poly Haven. */
 export function libGroup(m: LibModel): string {
