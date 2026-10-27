@@ -1,1 +1,15 @@
-{}
+{
+  "tx-coton": "stretch_poplin",
+  "tx-cotele": "ribbed_corduroy",
+  "tx-bouclette": "wool_boucle",
+  "tx-laine": "poly_wool_herringbone",
+  "tx-chine": "jersey_melange",
+  "tx-cuir": "brown_leather",
+  "tx-cuir-vieilli": "fabric_leather_02",
+  "tx-nubuck": "scuba_suede",
+  "tx-chene": "oak_veneer_01",
+  "tx-bois-fin": "fine_grained_wood",
+  "tx-enduit": "beige_wall_001",
+  "tx-enduit-nuage": "grey_plaster",
+  "tx-beton": "concrete_wall_008"
+}
