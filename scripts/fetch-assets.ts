@@ -126,9 +126,14 @@ async function fetchModels() {
     .filter(([id, a]) => a.categories.some((c) => MODEL_CATEGORIES.includes(c.toLowerCase())) && !MODEL_EXCLUDE.test(`${id} ${a.name} ${a.tags.join(" ")}`))
     .sort((p, q) => q[1].download_count - p[1].download_count)
     .slice(0, MAX_MODELS);
-  const manifest: Array<{ id: string; name: string; categories: string[]; tags: string[]; file: string; url: string; authors: string[]; license: string }> = [];
+  type Entry = { id: string; name: string; categories: string[]; tags: string[]; file: string; url: string; authors: string[]; license: string; dims?: unknown };
+  // On repart de la bibliothèque existante : les objets déjà présents ne sont ni retéléchargés ni perdus.
+  let manifest: Entry[] = [];
+  try { manifest = (JSON.parse((await import("node:fs")).readFileSync("content/data/models.json", "utf8")) as Entry[]).filter((m) => existsSync(join("public", m.file))); } catch { manifest = []; }
+  console.log(`Bibliothèque existante : ${manifest.length} objets ; candidats Poly Haven : ${picks.length}`);
   const tmp = ".cache/models";
   for (const [id, a] of picks) {
+    if (manifest.some((m) => m.id === id)) continue;
     try {
       const files = await json<{ gltf?: Record<string, { gltf?: { url: string; include?: Record<string, { url: string }> } }> }>(`${API}/files/${id}`);
       const g = files.gltf?.["1k"]?.gltf;

@@ -40,7 +40,10 @@ jobs:
         if: ${{ inputs.modeles }}
         continue-on-error: true
         env: { NODE_OPTIONS: "--max-old-space-size=6144" }
-        run: node --experimental-strip-types scripts/fetch-assets.ts --models && node --experimental-strip-types scripts/model-dims.ts
+        run: |
+          mkdir -p .robot
+          node --experimental-strip-types scripts/fetch-assets.ts --models 2>&1 | tee .robot/modeles.log
+          node --experimental-strip-types scripts/model-dims.ts 2>&1 | tail -5 | tee -a .robot/modeles.log
       - name: Photos libres
         if: ${{ inputs.photos }}
         continue-on-error: true
