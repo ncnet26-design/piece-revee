@@ -59,17 +59,28 @@ function monogram(c: Ctx, x: number, y: number, size: number, alpha = 1) {
   text(c, "P", x, y + size * 0.2, `${size * 0.56}px ${SERIF}`, IVORY, { align: "center" });
   c.restore();
 }
+const GREY = "#76767E";
+/** Marque Pièce Rêvée : arche, goutte et carreau superposés. */
+function logoMark(c: Ctx, x: number, y: number, size: number) {
+  const k = size / 40;
+  c.save(); c.translate(x, y); c.scale(k, k);
+  c.fillStyle = "#C0714F"; c.beginPath(); c.moveTo(5, 37); c.lineTo(5, 17.5); c.arc(15.5, 17.5, 10.5, Math.PI, 0); c.lineTo(26, 37); c.closePath(); c.fill();
+  c.globalCompositeOperation = "multiply";
+  c.fillStyle = "#8FA38A"; c.beginPath(); c.arc(27.5, 12.5, 8.5, 0, Math.PI * 2); c.fill();
+  c.fillStyle = "#D9C3A0"; c.beginPath(); c.roundRect(20, 24, 15, 13, 2.2); c.fill();
+  c.restore();
+}
 const retailersFor = (p: Pick) => (p.shop.kinds.includes("bricolage") ? "Leroy Merlin · Castorama · ManoMano" : p.shop.kinds.includes("jardin") ? "Leroy Merlin · Castorama" : "IKEA · Maisons du Monde · La Redoute");
 
 /* ——— Planche projet (image 2400 × 3000) ——— */
 export function drawPoster(d: ProjectData): HTMLCanvasElement {
   const W = 2400, H = 3000, M = 120, cv = document.createElement("canvas"); cv.width = W; cv.height = H;
   const c = cv.getContext("2d")!;
-  c.fillStyle = IVORY; c.fillRect(0, 0, W, H);
+  c.fillStyle = "#FFFFFF"; c.fillRect(0, 0, W, H);
   // En-tête
-  text(c, `PIÈCE RÊVÉE · PROJET ${d.room.toUpperCase()}`, M, 170, `600 30px ${SANS}`, BRONZE, { spacing: 7 });
-  text(c, d.title, M, 330, `150px ${SERIF}`, INK, { maxW: W - 2 * M });
-  text(c, `Esprit ${d.style.name.toLowerCase()} · ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}`, M, 400, `italic 52px ${SERIF}`, BRONZE);
+  text(c, `PIÈCE RÊVÉE · PROJET ${d.room.toUpperCase()}`, M, 170, `600 28px ${SANS}`, GREY, { spacing: 7 });
+  text(c, d.title, M, 330, `650 150px ${SANS}`, INK, { maxW: W - 2 * M, spacing: -4 });
+  text(c, `Esprit ${d.style.name.toLowerCase()} · ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}`, M, 400, `400 48px ${SANS}`, GREY);
   // Avant + inspirations
   if (d.after) {
     // La pièce transformée en grand, la photo d'origine en médaillon.
@@ -87,31 +98,31 @@ export function drawPoster(d: ProjectData): HTMLCanvasElement {
   text(c, "INSPIRATIONS", W - M, 455, `600 24px ${SANS}`, MUTED, { align: "right", spacing: 6 });
   // Palette
   const py = 1530, pw = (W - 2 * M - 5 * 24) / 6;
-  text(c, "LA PALETTE", M, py - 26, `600 26px ${SANS}`, BRONZE, { spacing: 6 });
+  text(c, "LA PALETTE", M, py - 26, `600 26px ${SANS}`, GREY, { spacing: 6 });
   d.palette.slice(0, 6).forEach((p, i) => {
     const x = M + i * (pw + 24);
     c.save(); rr(c, x, py, pw, 190, 18); c.fillStyle = p.hex; c.fill(); c.restore();
-    text(c, p.name, x, py + 245, `44px ${SERIF}`, INK, { maxW: pw });
+    text(c, p.name, x, py + 245, `600 38px ${SANS}`, INK, { maxW: pw });
     text(c, p.hex.toUpperCase(), x, py + 290, `500 24px ${SANS}`, MUTED, { spacing: 2 });
   });
   // Planche 3D et références
   const by = 1900;
-  text(c, "LES MATIÈRES", M, by - 26, `600 26px ${SANS}`, BRONZE, { spacing: 6 });
+  text(c, "LES MATIÈRES", M, by - 26, `600 26px ${SANS}`, GREY, { spacing: 6 });
   if (d.board) framed(c, d.board, M, by, 1300, 867, 28, 1.04);
   const rx = M + 1360, rw = W - M - rx;
-  text(c, "LES RÉFÉRENCES", rx, by - 26, `600 26px ${SANS}`, BRONZE, { spacing: 6 });
+  text(c, "LES RÉFÉRENCES", rx, by - 26, `600 26px ${SANS}`, GREY, { spacing: 6 });
   const refs = d.picks.slice(0, 9), rh = 867 / Math.max(refs.length, 1);
   refs.forEach((p, i) => {
     const y = by + i * rh, s = d.samples.get(p.ref);
-    if (s) { c.save(); rr(c, rx, y + 6, rh - 16, rh - 16, 12); c.clip(); c.fillStyle = "#EAE4D9"; c.fillRect(rx, y + 6, rh - 16, rh - 16); cover(c, s as HTMLCanvasElement, rx, y + 6, rh - 16, rh - 16, 1.15); c.restore(); }
-    text(c, p.name.split(" · ")[0]!, rx + rh + 4, y + rh * 0.46, `40px ${SERIF}`, INK, { maxW: rw - rh - 10 });
+    if (s) { c.save(); rr(c, rx, y + 6, rh - 16, rh - 16, 12); c.clip(); c.fillStyle = "#F2F2F4"; c.fillRect(rx, y + 6, rh - 16, rh - 16); cover(c, s as HTMLCanvasElement, rx, y + 6, rh - 16, rh - 16, 1.15); c.restore(); }
+    text(c, p.name.split(" · ")[0]!, rx + rh + 4, y + rh * 0.46, `600 34px ${SANS}`, INK, { maxW: rw - rh - 10 });
     text(c, `${p.role} · ${retailersFor(p)}`, rx + rh + 4, y + rh * 0.46 + 38, `500 21px ${SANS}`, MUTED, { maxW: rw - rh - 10 });
   });
   // Pied
-  c.fillStyle = "rgba(22,21,18,.12)"; c.fillRect(M, 2850, W - 2 * M, 2);
-  text(c, `Budget indicatif ${TIERS[d.tier].toLowerCase()} : ${euros(d.budget.low)} à ${euros(d.budget.high)}`, M, 2930, `46px ${SERIF}`, INK);
-  monogram(c, W - M - 380, 2914, 64);
-  text(c, "Pièce Rêvée", W - M - 330, 2930, `52px ${SERIF}`, INK);
+  c.fillStyle = "#E6E6EA"; c.fillRect(M, 2850, W - 2 * M, 2);
+  text(c, `Budget indicatif ${TIERS[d.tier].toLowerCase()} : ${euros(d.budget.low)} à ${euros(d.budget.high)}`, M, 2930, `600 42px ${SANS}`, INK);
+  logoMark(c, W - M - 400, 2876, 64);
+  text(c, "Pièce Rêvée", W - M - 322, 2930, `650 46px ${SANS}`, INK, { spacing: -1 });
   return cv;
 }
 

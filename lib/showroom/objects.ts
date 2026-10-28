@@ -545,9 +545,9 @@ async function styling(objet: string, mat: THREE.Material, matFor: MatFor): Prom
   const bark = plain("#6B4A33", 0.85), stem = plain("#7C8550", 0.7, { sheen: 0.3, sheenColor: new THREE.Color("#C9C79A") }), dried = plain("#B9AE86", 0.8, { sheen: 0.4, sheenColor: new THREE.Color("#E9E0C2"), side: THREE.DoubleSide });
   switch (objet) {
     case "branche": {
-      add(taperTube(spline([[-0.24, 0.006, 0.05], [-0.1, 0.008, 0.0], [0.04, 0.007, 0.03], [0.16, 0.005, -0.04], [0.26, 0.004, -0.02]]), 0.007, 0.0025), bark);
+      add(taperTube(spline([[-0.24, 0.006, 0.05], [-0.1, 0.008, 0.0], [0.04, 0.007, 0.03], [0.16, 0.005, -0.04], [0.26, 0.004, -0.02]]), 0.0048, 0.0016), bark);
       for (const [x, z, dx, dz] of [[-0.12, 0.0, -0.06, -0.09], [0.0, 0.02, 0.05, 0.1], [0.1, -0.01, 0.06, -0.1], [0.18, -0.03, 0.08, 0.05], [-0.04, 0.01, -0.03, 0.11]] as Array<[number, number, number, number]>)
-        add(taperTube(spline([[x, 0.006, z], [x + dx * 0.5, 0.007, z + dz * 0.45], [x + dx, 0.004, z + dz]]), 0.003, 0.0008, 40), bark);
+        add(taperTube(spline([[x, 0.006, z], [x + dx * 0.5, 0.007, z + dz * 0.45], [x + dx, 0.004, z + dz]]), 0.0022, 0.0006, 40), bark);
       return { g, h: 0.014 };
     }
     case "tulipe": {

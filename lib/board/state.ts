@@ -141,7 +141,7 @@ export const TEMPLATES: Array<{ id: string; name: string; text: string; board: (
       it("sr:tissu:laine:anthracite", 0.42, -0.06, 0, 0.95, "drape"), it("sr:cannage:tresse:naturel", -0.36, 0.18, 0, 0.8, "piece"),
       it("sr:terrazzo:gris:fins:ton", 0.2, 0.2, 0, 1.0, "carre"), it("sr:peinture:blanc-casse:brillant", 0.06, -0.08, 0, 1.6, "goutte"),
       it("sr:quincaillerie:pastille:acier-noir:brosse", 0.3, 0.27, 0, 1.6, "piece"), it("sr:stylisme:tasse:sable", 0.24, 0.08, 0, 1.3, "piece"),
-      it("sr:stylisme:branche:sable", -0.04, 0.0, 80, 1.35, "piece"),
+      it("sr:stylisme:branche:sable", -0.04, 0.0, 80, 1.1, "piece"),
     ] }),
   },
   {
@@ -152,7 +152,7 @@ export const TEMPLATES: Array<{ id: string; name: string; text: string; board: (
       it("vis-planche-hero", 0.28, -0.2, 3, 1.3, "photo"), it("sr:tissu:chine:bleu-gris", -0.3, 0.2, 6, 0.95, "drape"),
       it("sr:tissu:cotele:canard", 0.35, 0.05, -4, 0.9, "drape"), it("sr:marbre:carrare:poli", -0.2, -0.18, 0, 0.75, "carre"),
       it("sr:quincaillerie:barre-moletee:laiton:brosse", 0.24, -0.04, 0, 1.4, "piece"), it("sr:quincaillerie:pastille:bronze:brosse", -0.05, -0.02, 0, 1.6, "piece"),
-      it("sr:stylisme:branche:sable", -0.15, 0.0, 60, 1.3, "piece"),
+      it("sr:stylisme:branche:sable", -0.15, 0.0, 60, 1.05, "piece"),
     ] }),
   },
   {

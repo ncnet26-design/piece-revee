@@ -10,6 +10,8 @@ on:
       liens: { description: "Vérifier les liens d'achat des enseignes", type: boolean, default: true }
       catalogue: { description: "Inventaire illustré des textures Poly Haven (pour choisir)", type: boolean, default: false }
       choix: { description: "Télécharger les textures choisies (content/data/texture-picks.json)", type: boolean, default: false }
+      inspirations: { description: "Photos d'inspiration candidates (planches-contact à trier)", type: boolean, default: false }
+      inspirations_choix: { description: "Télécharger les photos d'inspiration choisies (content/data/inspiration-picks.json)", type: boolean, default: false }
 
 permissions:
   contents: write
@@ -32,6 +34,22 @@ jobs:
         if: ${{ inputs.choix }}
         continue-on-error: true
         run: node --experimental-strip-types scripts/fetch-assets.ts --picks
+      - name: Photos d'inspiration candidates
+        if: ${{ inputs.inspirations }}
+        continue-on-error: true
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: |
+          mkdir -p .robot
+          node --experimental-strip-types scripts/inspirations.ts --candidats 2>&1 | tee -a .robot/inspirations.log
+      - name: Photos d'inspiration choisies
+        if: ${{ inputs.inspirations_choix }}
+        continue-on-error: true
+        run: |
+          mkdir -p .robot
+          git fetch origin robot/ressources && git checkout origin/robot/ressources -- .robot/inspirations/candidats.json || true
+          node --experimental-strip-types scripts/inspirations.ts --choix 2>&1 | tee -a .robot/inspirations.log
       - name: Textures photographiques
         if: ${{ inputs.textures }}
         continue-on-error: true
@@ -62,7 +80,7 @@ jobs:
           git config user.name "piece-revee-robot"
           git config user.email "robot@users.noreply.github.com"
           git checkout -B robot/ressources
-          git add public/textures public/models content/data || true
+          git add public/textures public/models public/inspirations content/data || true
           git add -f .robot || true
           git commit -m "ressources: textures, meubles 3D et photos libres ($(date +%Y-%m-%d))" || { echo "Rien de nouveau"; exit 0; }
           git push -f origin robot/ressources

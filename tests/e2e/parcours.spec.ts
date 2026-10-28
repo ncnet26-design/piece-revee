@@ -49,20 +49,6 @@ test("bandeau cookies : refuser est aussi simple qu'accepter", async ({ browser 
   expect(await page.evaluate(() => document.getElementById("ph-script"))).toBeNull();
 });
 
-test("galerie : filtres, fiche, moodboard", async ({ page }) => {
-  await page.goto("/galerie/");
-  await page.getByRole("button", { name: "Extérieur" }).click();
-  await page.getByRole("group", { name: "Styles" }).getByRole("button", { name: "Jardin japonais" }).click();
-  await expect(page.locator("article.card")).toHaveCount(5);
-  await page.locator("article.card h3 button").first().click();
-  const dialog = page.getByRole("dialog");
-  await expect(dialog.getByRole("link", { name: "Je veux ça chez moi" })).toBeVisible();
-  await dialog.getByRole("button", { name: "Ajouter au moodboard" }).click();
-  await dialog.getByRole("button", { name: "Fermer" }).click();
-  await page.goto("/moodboard/");
-  await expect(page.locator("article.card")).toHaveCount(1);
-});
-
 test("quiz : 16 réponses donnent un profil", async ({ page }) => {
   await page.goto("/quiz/");
   for (let i = 0; i < 16; i++) await page.getByRole("button", { name: i % 2 ? "J'aime" : "Pas pour moi" }).click();
@@ -469,15 +455,18 @@ test("planche : composer une planche à partir d'une image", async ({ page, isMo
   expect(errors).toEqual([]);
 });
 
-test("inspirations : transformer une inspiration en moodboard", async ({ page }) => {
+test("inspirations : photo d'ambiance par collection, puis moodboard (service simulé)", async ({ page }) => {
   test.setTimeout(120_000);
+  const fs = await import("node:fs");
+  const img = `data:image/webp;base64,${fs.readFileSync("public/visuels/hero-3d.webp").toString("base64")}`;
+  await page.route("https://piece-revee-ia.ewanesteves26.workers.dev/concept", (route) => route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ image: img, restant: 4 }) }));
   await page.goto("/galerie/");
-  await page.locator(".grid-cards article h3 button").first().click();
-  const dlg = page.locator("dialog[open]");
-  await expect(dlg.getByRole("button", { name: "Générer une photo d'ambiance" })).toBeVisible();
-  await dlg.getByRole("button", { name: "Créer un moodboard" }).click();
+  await page.getByRole("group", { name: "Collections" }).getByRole("button", { name: "Villas d'architecte" }).click();
+  await page.getByRole("button", { name: "Générer une photo" }).click();
+  await page.getByRole("button", { name: /^Villas d'architecte :/ }).first().click();
+  await page.getByRole("dialog").getByRole("button", { name: "Créer un moodboard" }).click();
   await expect(page).toHaveURL(/planche/, { timeout: 30_000 });
-  await expect(page.getByText("Préparation de la planche")).toHaveCount(0, { timeout: 30000 });
+  await expect(page.getByRole("textbox", { name: "Titre de la planche" })).toHaveValue("Villas d'architecte", { timeout: 30_000 });
 });
 
 test("showroom : teinte sur mesure (matières sans limite)", async ({ page }) => {

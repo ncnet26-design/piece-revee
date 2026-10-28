@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { MATERIALS, PLACES, PLANTS, STYLES } from "@/content/index";
-import { HomeInspirations } from "@/components/HomeBits";
 import { StyleCard } from "@/components/cards";
 import { MaterialSwatch } from "@/components/Visual";
 import { Photo } from "@/components/Photo";
@@ -125,12 +124,6 @@ export default function Home() {
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/visuels/hero-3d.webp" width={2000} height={1125} loading="lazy" alt="Salon de la visite 3D : canapé en velours bleu, parquet en point de Hongrie, ouverture sur la terrasse" className="h-auto w-full rounded-[var(--r)] shadow-[var(--shadow)]" />
-      </section>
-
-      {/* ——— Galerie par style ——— */}
-      <section data-reveal className="section">
-        <div className="vhead"><div><span className="eyebrow">Galerie</span><h2 className="h2 mt-2">Reconnaissez <em>votre</em> style</h2><p>{STYLES.length} styles d'intérieur et de jardin, expliqués simplement et applicables à votre pièce.</p></div><Link className="btn" href="/quiz/">Faire le quiz</Link></div>
-        <HomeInspirations />
       </section>
 
       {/* ——— Comment ça marche ——— */}
