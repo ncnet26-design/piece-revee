@@ -1,0 +1,943 @@
+[
+ {
+  "id": "ikea-vimle-3p-djuparp-vert",
+  "brand": "IKEA",
+  "retailer": "IKEA France",
+  "name": "VIMLE canapé 3 places, accoudoirs larges, Djuparp vert foncé",
+  "category": "canape",
+  "tier": "economique",
+  "designer": null,
+  "reference": "694.326.81",
+  "dimensions": null,
+  "image": null,
+  "price": null,
+  "availability": null,
+  "url": "https://www.ikea.com/fr/fr/p/vimle-canape-3-places-av-accoudoirs-larges-djuparp-vert-fonce-s69432681/",
+  "material": "Velours polyester Djuparp",
+  "materials": [
+   "velours"
+  ],
+  "colors": [
+   {
+    "name": "Vert foncé",
+    "hex": "#2F4A3D"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain",
+   "confort"
+  ],
+  "silhouette": [
+   "droit",
+   "accoudoirs-larges",
+   "bas"
+  ],
+  "materialId": "velours-foret",
+  "demo": false,
+  "note": "Prix non relevé : plusieurs prix contradictoires selon les pages, voir la fiche.",
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.ikea.com/fr/fr/p/vimle-canape-3-places-av-accoudoirs-larges-djuparp-vert-fonce-s69432681/"
+   ]
+  }
+ },
+ {
+  "id": "lr-topim-canape-velours-3p",
+  "brand": "La Redoute Intérieurs",
+  "retailer": "La Redoute",
+  "name": "Canapé velours 3 places, Topim",
+  "category": "canape",
+  "tier": "intermediaire",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 199,
+   "d": 87,
+   "h": 86,
+   "text": "L 199 × P 87 × H 86 cm (3 places)",
+   "source": "https://www.laredoute.fr/ppdp/prod-500809592.aspx"
+  },
+  "image": null,
+  "price": {
+   "amount": 1099,
+   "currency": "EUR",
+   "text": "1 099 € (prix affiché hors promotion)",
+   "region": "France",
+   "source": "https://www.laredoute.fr/ppdp/prod-500809592.aspx",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.laredoute.fr/ppdp/prod-500809592.aspx",
+  "material": "Velours",
+  "materials": [
+   "velours"
+  ],
+  "colors": [
+   {
+    "name": "Plusieurs coloris",
+    "hex": "#6B6F5E"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain",
+   "vintage"
+  ],
+  "silhouette": [
+   "arrondi",
+   "accoudoirs-ronds"
+  ],
+  "materialId": "velours-foret",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.laredoute.fr/ppdp/prod-500809592.aspx"
+   ]
+  }
+ },
+ {
+  "id": "gubi-pacha-sofa-4",
+  "brand": "GUBI",
+  "retailer": "GUBI",
+  "name": "Pacha Sofa, 4 places avec accoudoirs",
+  "category": "canape",
+  "tier": "premium",
+  "designer": "Pierre Paulin",
+  "reference": null,
+  "dimensions": {
+   "w": 330,
+   "d": 85,
+   "h": 65,
+   "text": "L 330 × P 85 × H 65 cm (assise H 37 cm)",
+   "source": "https://gubi.com/en/fr/products/pacha-sofa-4-seater-with-armrests"
+  },
+  "image": null,
+  "price": null,
+  "availability": null,
+  "url": "https://gubi.com/en/fr/products/pacha-sofa-4-seater-with-armrests",
+  "material": "Structure rembourrée, tissu ou cuir au choix",
+  "materials": [
+   "velours",
+   "boucle",
+   "cuir"
+  ],
+  "colors": [
+   {
+    "name": "Selon revêtement",
+    "hex": "#D8CFC0"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "seventies",
+   "design-iconique"
+  ],
+  "silhouette": [
+   "arrondi",
+   "tres-bas",
+   "sans-pieds",
+   "modulaire"
+  ],
+  "materialId": "velours-foret",
+  "demo": false,
+  "note": "Prix selon revêtement : voir la fiche GUBI.",
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://gubi.com/en/fr/products/pacha-sofa-4-seater-with-armrests",
+    "https://gubi.com/en/us/designers/pierre-paulin"
+   ]
+  }
+ },
+ {
+  "id": "ikea-vimle-fauteuil-djuparp-vert",
+  "brand": "IKEA",
+  "retailer": "IKEA France",
+  "name": "VIMLE fauteuil, Djuparp vert foncé",
+  "category": "fauteuil",
+  "tier": "economique",
+  "designer": null,
+  "reference": "994.771.40",
+  "dimensions": null,
+  "image": null,
+  "price": null,
+  "availability": null,
+  "url": "https://www.ikea.com/fr/fr/p/vimle-fauteuil-djuparp-vert-fonce-s99477140/",
+  "material": "Velours polyester Djuparp",
+  "materials": [
+   "velours"
+  ],
+  "colors": [
+   {
+    "name": "Vert foncé",
+    "hex": "#2F4A3D"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain",
+   "confort"
+  ],
+  "silhouette": [
+   "droit",
+   "accoudoirs-larges"
+  ],
+  "materialId": "velours-foret",
+  "demo": false,
+  "note": "Prix non relevé : 469 € et 519 € affichés selon les pages.",
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.ikea.com/fr/fr/p/vimle-fauteuil-djuparp-vert-fonce-s99477140/"
+   ]
+  }
+ },
+ {
+  "id": "ikea-strandmon-tommaboda-beige",
+  "brand": "IKEA",
+  "retailer": "IKEA France",
+  "name": "STRANDMON fauteuil à oreilles, Tommaboda beige profond",
+  "category": "fauteuil",
+  "tier": "economique",
+  "designer": null,
+  "reference": "506.131.63",
+  "dimensions": null,
+  "image": null,
+  "price": {
+   "amount": 349,
+   "currency": "EUR",
+   "text": "349 €",
+   "region": "France",
+   "source": "https://www.ikea.com/fr/fr/p/strandmon-fauteuil-a-oreilles-tommaboda-beige-profond-50613163/",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.ikea.com/fr/fr/p/strandmon-fauteuil-a-oreilles-tommaboda-beige-profond-50613163/",
+  "material": "Velours doux Tommaboda",
+  "materials": [
+   "velours"
+  ],
+  "colors": [
+   {
+    "name": "Beige profond",
+    "hex": "#B9A27F"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "classique"
+  ],
+  "silhouette": [
+   "oreilles",
+   "pieds-bois"
+  ],
+  "materialId": "velours-foret",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.ikea.com/fr/fr/p/strandmon-fauteuil-a-oreilles-tommaboda-beige-profond-50613163/"
+   ]
+  }
+ },
+ {
+  "id": "lr-leone-fauteuil-velours",
+  "brand": "La Redoute Intérieurs",
+  "retailer": "La Redoute",
+  "name": "Fauteuil velours, Leone",
+  "category": "fauteuil",
+  "tier": "intermediaire",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 92,
+   "d": 87,
+   "h": 80,
+   "text": "L 92 × P 87 × H 80 cm",
+   "source": "https://www.laredoute.fr/ppdp/prod-528977282.aspx"
+  },
+  "image": null,
+  "price": {
+   "amount": 429,
+   "currency": "EUR",
+   "text": "429 €",
+   "region": "France",
+   "source": "https://www.laredoute.fr/ppdp/prod-528977282.aspx",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.laredoute.fr/ppdp/prod-528977282.aspx",
+  "material": "Velours",
+  "materials": [
+   "velours"
+  ],
+  "colors": [
+   {
+    "name": "Plusieurs coloris",
+    "hex": "#7A6A55"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain",
+   "vintage"
+  ],
+  "silhouette": [
+   "arrondi",
+   "enveloppant"
+  ],
+  "materialId": "velours-foret",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.laredoute.fr/ppdp/prod-528977282.aspx"
+   ]
+  }
+ },
+ {
+  "id": "gubi-pacha-lounge-chair",
+  "brand": "GUBI",
+  "retailer": "GUBI",
+  "name": "Pacha Lounge Chair",
+  "category": "fauteuil",
+  "tier": "premium",
+  "designer": "Pierre Paulin",
+  "reference": null,
+  "dimensions": null,
+  "image": null,
+  "price": {
+   "amount": 5499,
+   "currency": "USD",
+   "text": "5 499 $ HT (tissu Karakorum, Dedar)",
+   "region": "Boutique GUBI États-Unis",
+   "source": "https://gubi.com/en/us/products/pacha-lounge-chair",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://gubi.com/en/us/products/pacha-lounge-chair",
+  "material": "Rembourrage tissu, piètement métal",
+  "materials": [
+   "boucle",
+   "velours",
+   "metal"
+  ],
+  "colors": [
+   {
+    "name": "Selon tissu",
+    "hex": "#D8CFC0"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "seventies",
+   "design-iconique"
+  ],
+  "silhouette": [
+   "arrondi",
+   "tres-bas",
+   "enveloppant"
+  ],
+  "materialId": "velours-foret",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://gubi.com/en/us/products/pacha-lounge-chair"
+   ]
+  }
+ },
+ {
+  "id": "ikea-borgeby-bouleau-70",
+  "brand": "IKEA",
+  "retailer": "IKEA France",
+  "name": "BORGEBY table basse, plaqué bouleau, Ø 70 cm",
+  "category": "table-basse",
+  "tier": "economique",
+  "designer": null,
+  "reference": "703.893.56",
+  "dimensions": {
+   "w": 70,
+   "d": 70,
+   "h": 42,
+   "text": "Ø 70 × H 42 cm",
+   "source": "https://www.ikea.com/fr/fr/p/borgeby-table-basse-plaque-bouleau-70389356/"
+  },
+  "image": null,
+  "price": {
+   "amount": 99.95,
+   "currency": "EUR",
+   "text": "99,95 €",
+   "region": "France",
+   "source": "https://www.ikea.com/fr/fr/p/borgeby-table-basse-plaque-bouleau-70389356/",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.ikea.com/fr/fr/p/borgeby-table-basse-plaque-bouleau-70389356/",
+  "material": "Plaqué bouleau",
+  "materials": [
+   "bois"
+  ],
+  "colors": [
+   {
+    "name": "Bouleau",
+    "hex": "#D9BF94"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "scandinave"
+  ],
+  "silhouette": [
+   "ronde",
+   "plateau-bois"
+  ],
+  "materialId": "chene-naturel",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.ikea.com/fr/fr/p/borgeby-table-basse-plaque-bouleau-70389356/"
+   ]
+  }
+ },
+ {
+  "id": "ikea-stockholm-2025-chene-verre",
+  "brand": "IKEA",
+  "retailer": "IKEA France",
+  "name": "STOCKHOLM 2025 table basse, plaqué chêne/verre, Ø 97 cm",
+  "category": "table-basse",
+  "tier": "economique",
+  "designer": null,
+  "reference": "205.865.52",
+  "dimensions": {
+   "w": 97,
+   "d": 97,
+   "h": 38,
+   "text": "Ø 97 × H 38 cm",
+   "source": "https://www.ikea.com/fr/fr/p/stockholm-2025-table-basse-plaque-chene-verre-20586552/"
+  },
+  "image": null,
+  "price": {
+   "amount": 249,
+   "currency": "EUR",
+   "text": "249 €",
+   "region": "France",
+   "source": "https://www.ikea.com/fr/fr/p/stockholm-2025-table-basse-plaque-chene-verre-20586552/",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.ikea.com/fr/fr/p/stockholm-2025-table-basse-plaque-chene-verre-20586552/",
+  "material": "Plaqué chêne et verre",
+  "materials": [
+   "bois",
+   "verre"
+  ],
+  "colors": [
+   {
+    "name": "Chêne",
+    "hex": "#B98E5E"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "scandinave",
+   "contemporain"
+  ],
+  "silhouette": [
+   "ronde",
+   "basse"
+  ],
+  "materialId": "chene-naturel",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.ikea.com/fr/fr/p/stockholm-2025-table-basse-plaque-chene-verre-20586552/"
+   ]
+  }
+ },
+ {
+  "id": "ampm-guimel-travertin",
+  "brand": "AM.PM",
+  "retailer": "La Redoute",
+  "name": "Table basse travertin, Guimel",
+  "category": "table-basse",
+  "tier": "intermediaire",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 130,
+   "d": 82.5,
+   "h": 29,
+   "text": "L 130 × P 82,5 × H 29 cm",
+   "source": "https://www.laredoute.fr/ppdp/prod-602053824.aspx"
+  },
+  "image": null,
+  "price": {
+   "amount": 1500,
+   "currency": "EUR",
+   "text": "1 500 € (prix de base, souvent remisé)",
+   "region": "France",
+   "source": "https://www.laredoute.fr/ppdp/prod-602053824.aspx",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.laredoute.fr/ppdp/prod-602053824.aspx",
+  "material": "Travertin",
+  "materials": [
+   "travertin",
+   "pierre"
+  ],
+  "colors": [
+   {
+    "name": "Travertin",
+    "hex": "#DCCBAE"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "minimal",
+   "mineral"
+  ],
+  "silhouette": [
+   "organique",
+   "basse",
+   "massive"
+  ],
+  "materialId": "travertin",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.laredoute.fr/ppdp/prod-602053824.aspx"
+   ]
+  }
+ },
+ {
+  "id": "gubi-epic-coffee-table-round",
+  "brand": "GUBI",
+  "retailer": "GUBI",
+  "name": "Epic Coffee Table, ronde, travertin",
+  "category": "table-basse",
+  "tier": "premium",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 110,
+   "d": 110,
+   "h": 34,
+   "text": "Ø 110 × H 34 cm",
+   "source": "https://gubi.com/products/epic-coffee-table-round?itemNumber=10042375"
+  },
+  "image": null,
+  "price": {
+   "amount": 2999,
+   "currency": "EUR",
+   "text": "2 999 € (Ø 110 cm, selon finition du piètement)",
+   "region": "Boutique GUBI Europe",
+   "source": "https://gubi.com/products/epic-coffee-table-round?itemNumber=10042375",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://gubi.com/products/epic-coffee-table-round?itemNumber=10042375",
+  "material": "Plateau travertin, piètement acier",
+  "materials": [
+   "travertin",
+   "pierre",
+   "metal"
+  ],
+  "colors": [
+   {
+    "name": "Travertin",
+    "hex": "#DCCBAE"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "minimal",
+   "mineral",
+   "design-iconique"
+  ],
+  "silhouette": [
+   "ronde",
+   "basse",
+   "massive"
+  ],
+  "materialId": "travertin",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://gubi.com/products/epic-coffee-table-round?itemNumber=10042375",
+    "https://gubi.com/en/us/products/epic-coffee-table-round"
+   ]
+  }
+ },
+ {
+  "id": "ikea-akterspring-lampadaire",
+  "brand": "IKEA",
+  "retailer": "IKEA France",
+  "name": "AKTERSPRING lampadaire, verre opalin/laitonné, 162 cm",
+  "category": "lampadaire",
+  "tier": "economique",
+  "designer": null,
+  "reference": "306.143.14",
+  "dimensions": {
+   "w": null,
+   "d": null,
+   "h": 162,
+   "text": "H 162 cm · abat-jour Ø 13,5 cm",
+   "source": "https://www.ikea.com/fr/fr/p/akterspring-lampadaire-opalin-verre-laitonne-30614314/"
+  },
+  "image": null,
+  "price": {
+   "amount": 39.99,
+   "currency": "EUR",
+   "text": "39,99 € (+ éco-participation)",
+   "region": "France",
+   "source": "https://www.ikea.com/fr/fr/p/akterspring-lampadaire-opalin-verre-laitonne-30614314/",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.ikea.com/fr/fr/p/akterspring-lampadaire-opalin-verre-laitonne-30614314/",
+  "material": "Métal laitonné, verre opalin",
+  "materials": [
+   "laiton",
+   "verre"
+  ],
+  "colors": [
+   {
+    "name": "Laiton et opale",
+    "hex": "#C9A564"
+   }
+  ],
+  "finish": "Laitonné",
+  "style": [
+   "contemporain",
+   "art-deco"
+  ],
+  "silhouette": [
+   "globe",
+   "tige-fine"
+  ],
+  "materialId": "laiton-brosse",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.ikea.com/fr/fr/p/akterspring-lampadaire-opalin-verre-laitonne-30614314/"
+   ]
+  }
+ },
+ {
+  "id": "lr-moricio-lampadaire",
+  "brand": "La Redoute Intérieurs",
+  "retailer": "La Redoute",
+  "name": "Lampadaire laiton et verre opaline, Moricio",
+  "category": "lampadaire",
+  "tier": "intermediaire",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 43,
+   "d": 43,
+   "h": 165,
+   "text": "H 165 cm · Ø 43 cm, 3 globes",
+   "source": "https://www.laredoute.fr/ppdp/prod-513626540.aspx"
+  },
+  "image": null,
+  "price": {
+   "amount": 279.99,
+   "currency": "EUR",
+   "text": "279,99 € (prix de base, souvent remisé)",
+   "region": "France",
+   "source": "https://www.laredoute.fr/ppdp/prod-513626540.aspx",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.laredoute.fr/ppdp/prod-513626540.aspx",
+  "material": "Laiton, verre opalin",
+  "materials": [
+   "laiton",
+   "verre"
+  ],
+  "colors": [
+   {
+    "name": "Laiton et blanc",
+    "hex": "#C9A564"
+   }
+  ],
+  "finish": "Laiton",
+  "style": [
+   "art-deco",
+   "contemporain"
+  ],
+  "silhouette": [
+   "globe",
+   "tige-fine",
+   "multi-bras"
+  ],
+  "materialId": "laiton-brosse",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.laredoute.fr/ppdp/prod-513626540.aspx"
+   ]
+  }
+ },
+ {
+  "id": "flos-ic-lights-f1-laiton",
+  "brand": "Flos",
+  "retailer": "Flos",
+  "name": "IC Lights F1, laiton",
+  "category": "lampadaire",
+  "tier": "premium",
+  "designer": "Michael Anastassiades",
+  "reference": "F3173059",
+  "dimensions": {
+   "w": 20,
+   "d": 27.5,
+   "h": 135,
+   "text": "H 135 cm · base 20 × 27,5 cm",
+   "source": "https://flos.com/en/wo/ic-lights-floor/M-ic-lights-floor.html"
+  },
+  "image": null,
+  "price": {
+   "amount": 750,
+   "currency": "EUR",
+   "text": "750 €",
+   "region": "Boutique Flos Slovénie",
+   "source": "https://flos.com/en/si/ic-lights-floor/M-ic-lights-floor.html",
+   "observedAt": "2026-10-28"
+  },
+  "availability": {
+   "text": "Livraison annoncée en 1 à 2 semaines (boutique Slovénie)",
+   "source": "https://flos.com/en/si/ic-lights-floor/M-ic-lights-floor.html",
+   "observedAt": "2026-10-28"
+  },
+  "url": "https://flos.com/en/wo/ic-lights-floor/M-ic-lights-floor.html",
+  "material": "Laiton, diffuseur en verre soufflé opalin",
+  "materials": [
+   "laiton",
+   "verre"
+  ],
+  "colors": [
+   {
+    "name": "Laiton et opale",
+    "hex": "#C9A564"
+   }
+  ],
+  "finish": "Laiton brossé, vernis transparent",
+  "style": [
+   "design-iconique",
+   "minimal"
+  ],
+  "silhouette": [
+   "globe",
+   "tige-fine"
+  ],
+  "materialId": "laiton-brosse",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://flos.com/en/wo/ic-lights-floor/M-ic-lights-floor.html",
+    "https://flos.com/en/si/ic-lights-floor/M-ic-lights-floor.html",
+    "https://professional.flos.com/en/global/product/ic-lights-f1-f3173059/"
+   ]
+  }
+ },
+ {
+  "id": "ikea-eneryda-laiton-112",
+  "brand": "IKEA",
+  "retailer": "IKEA France",
+  "name": "ENERYDA poignée, couleur laiton, 112 mm (lot de 2)",
+  "category": "poignee",
+  "tier": "economique",
+  "designer": null,
+  "reference": "306.108.58",
+  "dimensions": {
+   "w": null,
+   "d": null,
+   "h": null,
+   "text": "Longueur 112 mm · entraxe 96 mm",
+   "source": "https://www.ikea.com/fr/fr/p/eneryda-poignee-couleur-laiton-30610858/"
+  },
+  "image": null,
+  "price": {
+   "amount": 9,
+   "currency": "EUR",
+   "text": "9 € les 2",
+   "region": "France",
+   "source": "https://www.ikea.com/fr/fr/p/eneryda-poignee-couleur-laiton-30610858/",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.ikea.com/fr/fr/p/eneryda-poignee-couleur-laiton-30610858/",
+  "material": "Métal finition laiton",
+  "materials": [
+   "laiton"
+  ],
+  "colors": [
+   {
+    "name": "Laiton",
+    "hex": "#C9A564"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain"
+  ],
+  "silhouette": [
+   "barre",
+   "arrondie"
+  ],
+  "materialId": "laiton-brosse",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.ikea.com/fr/fr/p/eneryda-poignee-couleur-laiton-30610858/"
+   ]
+  }
+ },
+ {
+  "id": "ikea-bagganas-laiton-143",
+  "brand": "IKEA",
+  "retailer": "IKEA France",
+  "name": "BAGGANÄS poignée, couleur laiton, 143 mm",
+  "category": "poignee",
+  "tier": "economique",
+  "designer": null,
+  "reference": "003.384.07",
+  "dimensions": {
+   "w": null,
+   "d": null,
+   "h": null,
+   "text": "Longueur 143 mm",
+   "source": "https://www.ikea.com/fr/fr/p/bagganaes-poignee-couleur-laiton-00338407/"
+  },
+  "image": null,
+  "price": null,
+  "availability": null,
+  "url": "https://www.ikea.com/fr/fr/p/bagganaes-poignee-couleur-laiton-00338407/",
+  "material": "Métal finition laiton",
+  "materials": [
+   "laiton"
+  ],
+  "colors": [
+   {
+    "name": "Laiton",
+    "hex": "#C9A564"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "minimal"
+  ],
+  "silhouette": [
+   "barre",
+   "fine"
+  ],
+  "materialId": "laiton-brosse",
+  "demo": false,
+  "note": "Prix France non relevé : voir la fiche.",
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.ikea.com/fr/fr/p/bagganaes-poignee-couleur-laiton-00338407/"
+   ]
+  }
+ },
+ {
+  "id": "buster-punch-pull-bar-linear-laiton",
+  "brand": "Buster + Punch",
+  "retailer": "Buster + Punch",
+  "name": "Pull Bar / Linear / Brass",
+  "category": "poignee",
+  "tier": "premium",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": null,
+   "d": null,
+   "h": null,
+   "text": "Longueurs 150, 250 ou 350 mm",
+   "source": "https://www.busterandpunch.com/shop/cabinet-hardware/pull-bar/pull-bar-linear-brass/"
+  },
+  "image": null,
+  "price": {
+   "amount": 49,
+   "currency": "GBP",
+   "text": "À partir de 49 £ (150 mm)",
+   "region": "Boutique Royaume-Uni",
+   "source": "https://www.busterandpunch.com/shop/cabinet-hardware/pull-bar/pull-bar-linear-brass/?attribute_pa_size=small-150mm",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.busterandpunch.com/shop/cabinet-hardware/pull-bar/pull-bar-linear-brass/",
+  "material": "Laiton massif, moletage linéaire taillé au diamant",
+  "materials": [
+   "laiton"
+  ],
+  "colors": [
+   {
+    "name": "Laiton",
+    "hex": "#C9A564"
+   }
+  ],
+  "finish": "Laiton, vernis transparent",
+  "style": [
+   "industriel-chic",
+   "design-iconique"
+  ],
+  "silhouette": [
+   "barre",
+   "moletee"
+  ],
+  "materialId": "laiton-brosse",
+  "demo": false,
+  "note": null,
+  "verification": {
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.busterandpunch.com/shop/cabinet-hardware/pull-bar/pull-bar-linear-brass/?attribute_pa_size=small-150mm",
+    "https://www.busterandpunch.com/us/shop/cabinet-hardware/pull-bar/pull-bar-linear-brass/"
+   ]
+  }
+ }
+]

@@ -1,164 +1,531 @@
 /**
- * Pièce Rêvée · service d'images IA (Cloudflare Worker « piece-revee-ia »).
+ * Pièce Rêvée · service d'images IA (Cloudflare Worker « piece-revee-ia »). FICHIER GÉNÉRÉ : modifier workers/ia/src puis
+ * lancer « node scripts/build-ia-worker.mjs ». À coller tel quel dans Cloudflare (Edit code), puis Deploy.
  *
- * À coller tel quel dans l'éditeur du worker (Edit code), puis Deploy.
- * Réglages nécessaires dans Cloudflare (Settings → Variables and Secrets / Bindings) :
- *   - Secret      GEMINI_API_KEY : la clé Google AI Studio (jamais dans le site, jamais dans le code)
- *   - Liaison KV  QUOTA          : un espace KV (sert à compter les images et à plafonner la dépense)
- *
- * Routes :
- *   GET  /            → état du service (ne coûte rien)
- *   POST /redesign    → { photo, inspirations?, brief, aspect? } : la pièce de la photo, réaménagée
- *   POST /concept     → { brief, aspect? }                         : une image d'ambiance à partir d'un texte
- *   POST /photo       → { image, brief?, aspect? }                 : rendu 3D d'une planche ou d'un échantillon → photo de studio réaliste
- * Réponse : { image: "data:image/jpeg;base64,…", restant: n }
+ * Réglages Cloudflare (Settings → Variables and Secrets / Bindings) :
+ *   Secrets (au moins un) : OPENAI_API_KEY, GEMINI_API_KEY, FAL_KEY, REPLICATE_API_TOKEN — jamais dans le site ni dans le code.
+ *   Liaison KV  QUOTA     : compteurs, budget, fiches des tâches (et images si pas de R2).
+ *   Liaison R2  IMAGES    : facultative, stockage durable des images produites.
+ *   Variables facultatives : IA_FOURNISSEUR, OPENAI_IMAGE_MODEL, OPENAI_MODE (images | background), BUDGET_MOIS_USD (15),
+ *   BUDGET_VISITEUR_MOIS_USD (1.5), IMAGES_JOUR (30), IMAGES_VISITEUR_JOUR (6).
  */
 
-// ——— Réglages ———
-const MODEL = "gemini-nano-banana-2.1";               // modèle d'images Google recommandé (≈ 0,034 $ l'image 1K)
-const API = "https://generativelanguage.googleapis.com/v1beta/interactions";
-const DAILY_TOTAL = 30;                               // images par jour, tous visiteurs confondus
-const DAILY_PER_VISITOR = 6;                          // images par jour et par adresse IP
-const MAX_BODY = 9 * 1024 * 1024;                     // 9 Mo par requête
-const ALLOWED_ORIGINS = [
+// workers/ia/src/config.ts
+var ALLOWED_ORIGINS = [
   "https://odd-bar-c583.ewanesteves26.workers.dev",
   "http://localhost:3000",
-  "http://localhost:4173",
+  "http://localhost:4173"
 ];
-const ASPECTS = ["1:1", "4:3", "3:4", "3:2", "2:3", "16:9", "9:16", "4:5", "5:4"];
+var isAllowedOrigin = (origin) => ALLOWED_ORIGINS.includes(origin) || /^https:\/\/[a-z0-9-]+\.pages\.dev$/.test(origin) && origin.includes("piece-revee");
+var MAX_BODY = 12 * 1024 * 1024;
+var num = (v, d) => v !== void 0 && v !== "" && Number.isFinite(Number(v)) ? Number(v) : d;
+var limits = (env) => ({
+  monthUsd: num(env.BUDGET_MOIS_USD, 15),
+  visitorMonthUsd: num(env.BUDGET_VISITEUR_MOIS_USD, 1.5),
+  dayImages: num(env.IMAGES_JOUR, 30),
+  visitorDayImages: num(env.IMAGES_VISITEUR_JOUR, 6)
+});
+var PRICE_ESTIMATE = {
+  openai: { brouillon: 0.02, standard: 0.06, premium: 0.2 },
+  gemini: { brouillon: 0.04, standard: 0.04, premium: 0.14 },
+  fal: { brouillon: 0.04, standard: 0.04, premium: 0.08 },
+  replicate: { brouillon: 0.04, standard: 0.04, premium: 0.08 }
+};
+var OPENAI_TOKEN_USD = { textIn: 5, imageIn: 8, imageOut: 30 };
 
-export default {
-  async fetch(request, env) {
-    const origin = request.headers.get("Origin") || "";
-    const allowed = ALLOWED_ORIGINS.includes(origin) || (/^https:\/\/[a-z0-9-]+\.pages\.dev$/.test(origin) && origin.includes("piece-revee"));
-    const cors = {
-      "Access-Control-Allow-Origin": allowed ? origin : ALLOWED_ORIGINS[0],
-      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Max-Age": "86400",
-      "Vary": "Origin",
-    };
-    const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" } });
+// workers/ia/src/prompts.ts
+var KEEP = {
+  fenetres: "every window: exact position, size, frames, glazing bars and the view outside",
+  portes: "every door and doorway: exact position, size and opening",
+  murs: "the wall layout, corners, niches and wall openings",
+  plafond: "the ceiling height, beams, cornices and ceiling roses",
+  sol: "the existing floor material, its pattern and its direction",
+  moulures: "all mouldings, wall panelling and skirting boards",
+  cheminee: "the fireplace and its mantelpiece",
+  escalier: "the staircase and its handrail",
+  radiateurs: "the radiators and their position",
+  mobilier: "the furniture already in the room (same pieces, same places)"
+};
+var PHOTO = [
+  "Shot like an architectural interior photograph for a high-end design magazine: full-frame camera, 24-35mm lens, eye-level, verticals perfectly straight,",
+  "soft natural daylight with physically correct bounce light and soft contact shadows, no blown highlights.",
+  "Materials must read as real at close range: wood grain and pores, stone veining and honed or polished sheen, fabric weave and pile, brushed metal with soft anisotropic highlights, glazed ceramic with slight irregularity.",
+  "No text, no logo, no watermark, no people, no distorted furniture, no duplicated objects."
+].join(" ");
+function buildPrompt(p) {
+  const lines = [];
+  if (p.mode === "transform") {
+    lines.push(
+      "You are an award-winning interior designer and architectural photographer.",
+      "Image 1 is a photo of the client's real room. Redesign it according to the brief below.",
+      "ABSOLUTE CONSTRAINTS \u2014 the result must be the same room seen from the same point:",
+      "- identical camera position, height, lens and perspective; identical framing and aspect ratio;",
+      "- identical room geometry: wall positions, corners, ceiling height, window and door openings stay exactly where they are;"
+    );
+    const keep = (p.keep ?? []).map((k) => KEEP[k]).filter(Boolean);
+    if (keep.length) lines.push(`- keep strictly unchanged: ${keep.join("; ")};`);
+    if (p.keepFree) lines.push(`- the client also wants to keep (French): "${p.keepFree}";`);
+    lines.push("- change only finishes, colours, furniture, textiles, lighting and decor that the brief asks for.");
+  } else {
+    lines.push("Create one photorealistic interior photograph of a single room, designed by an award-winning interior architect.");
+  }
+  if (p.references) lines.push(`Images ${p.mode === "transform" ? 2 : 1} to ${p.references + (p.mode === "transform" ? 1 : 0)} are references (materials, finishes or products): reproduce their colour, texture and finish faithfully, do not copy their room.`);
+  if (p.materials?.length) lines.push(`Materials to use (exact finishes): ${p.materials.join("; ")}.`);
+  if (p.products?.length) lines.push(`Design pieces to show, faithful to their real shape: ${p.products.join("; ")}.`);
+  lines.push(`Brief (written in French): ${p.brief}`, PHOTO);
+  return lines.join("\n");
+}
 
-    if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-    const url = new URL(request.url);
+// workers/ia/src/validate.ts
+var DATA_URL = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/;
+var isDataUrl = (v) => typeof v === "string" && v.length <= 9e6 && DATA_URL.test(v);
+var QUALITIES = ["brouillon", "standard", "premium"];
+var FOURNISSEURS = ["openai", "gemini", "fal", "replicate"];
+function parseJobBody(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  const b = raw;
+  const str = (v, max) => typeof v === "string" ? v.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, max) : "";
+  const strs = (v, n2, max) => Array.isArray(v) ? v.filter((x) => typeof x === "string").slice(0, n2).map((x) => str(x, max)).filter(Boolean) : [];
+  const int = (v, d) => typeof v === "number" && Number.isInteger(v) && v >= 256 && v <= 8e3 ? v : d;
+  if (b.mode !== "generate" && b.mode !== "transform") return null;
+  const brief = str(b.brief, 2e3);
+  if (brief.length < 3) return null;
+  if (typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return null;
+  if (b.photo !== void 0 && !isDataUrl(b.photo)) return null;
+  if (b.mode === "transform" && !b.photo) return null;
+  const refs = Array.isArray(b.references) ? b.references : [];
+  if (refs.length > 6 || !refs.every(isDataUrl)) return null;
+  return {
+    mode: b.mode,
+    brief,
+    photo: b.photo,
+    references: refs,
+    keep: strs(b.keep, 12, 20).filter((k) => k in KEEP),
+    keepFree: str(b.keepFree, 300) || void 0,
+    materials: strs(b.materials, 10, 160),
+    products: strs(b.products, 6, 160),
+    quality: QUALITIES.includes(b.quality) ? b.quality : "standard",
+    width: int(b.width, 1536),
+    height: int(b.height, 1024),
+    visiteur: b.visiteur,
+    fournisseur: FOURNISSEURS.includes(b.fournisseur) ? b.fournisseur : void 0
+  };
+}
 
-    if (request.method === "GET" && url.pathname === "/") {
-      const day = today();
-      const used = env.QUOTA ? Number(await env.QUOTA.get(`total:${day}`)) || 0 : null;
-      return json({ ok: true, service: "Pièce Rêvée · images IA", cle: Boolean(env.GEMINI_API_KEY), compteur: Boolean(env.QUOTA), utilisees_aujourdhui: used, plafond_jour: DAILY_TOTAL });
-    }
-    if (request.method !== "POST" || !["/redesign", "/concept", "/photo"].includes(url.pathname)) return json({ erreur: "Adresse inconnue." }, 404);
-    if (!allowed) return json({ erreur: "Ce service n'accepte que les demandes du site Pièce Rêvée." }, 403);
-    if (!env.GEMINI_API_KEY) return json({ erreur: "Le service n'est pas encore configuré (clé manquante)." }, 503);
-    if (!env.QUOTA) return json({ erreur: "Le service n'est pas encore configuré (compteur manquant)." }, 503);
-    if (Number(request.headers.get("Content-Length") || 0) > MAX_BODY) return json({ erreur: "Images trop lourdes." }, 413);
-
-    // ——— Plafonds de dépense ———
-    const day = today(), ip = request.headers.get("CF-Connecting-IP") || "inconnu";
-    const totalKey = `total:${day}`, ipKey = `ip:${day}:${ip}`;
-    const total = Number(await env.QUOTA.get(totalKey)) || 0, mine = Number(await env.QUOTA.get(ipKey)) || 0;
-    if (total >= DAILY_TOTAL) return json({ erreur: "Le nombre d'images du jour est atteint. Revenez demain." }, 429);
-    if (mine >= DAILY_PER_VISITOR) return json({ erreur: `Vous avez utilisé vos ${DAILY_PER_VISITOR} images du jour. Revenez demain.` }, 429);
-
-    let body;
-    try { body = await request.json(); } catch { return json({ erreur: "Demande illisible." }, 400); }
-    const brief = clean(body.brief, 1200) || (url.pathname === "/photo" ? "Planche de matières." : "");
-    if (!brief) return json({ erreur: "Décrivez le projet." }, 400);
-    const aspect = ASPECTS.includes(body.aspect) ? body.aspect : "4:3";
-
-    const input = [];
-    if (url.pathname === "/redesign") {
-      const photo = image(body.photo);
-      if (!photo) return json({ erreur: "Ajoutez une photo de la pièce (JPEG ou PNG)." }, 400);
-      input.push({ type: "text", text: redesignPrompt(brief) });
-      input.push({ type: "text", text: "Image 1: the client's room. Keep its architecture, camera position, perspective, windows, doors and ceiling height exactly." });
-      input.push(photo);
-      const insp = Array.isArray(body.inspirations) ? body.inspirations.slice(0, 3).map(image).filter(Boolean) : [];
-      insp.forEach((im, i) => { input.push({ type: "text", text: `Inspiration ${i + 1}: use only for mood, palette and materials. Do not copy its room.` }); input.push(im); });
-    } else if (url.pathname === "/photo") {
-      const render = image(body.image);
-      if (!render) return json({ erreur: "Image de la planche manquante." }, 400);
-      input.push({ type: "text", text: photoPrompt(brief) });
-      input.push(render);
-    } else {
-      input.push({ type: "text", text: conceptPrompt(brief) });
-    }
-
-    // Le compteur avance avant l'appel : une erreur côté Google compte aussi, par prudence.
-    await env.QUOTA.put(totalKey, String(total + 1), { expirationTtl: 172800 });
-    await env.QUOTA.put(ipKey, String(mine + 1), { expirationTtl: 172800 });
-
-    let res;
+// workers/ia/src/providers.ts
+var ProviderError = class extends Error {
+  constructor(message, retryable, detail = "") {
+    super(message);
+    this.retryable = retryable;
+    this.detail = detail;
+  }
+};
+var b64ToBytes = (b64) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+var pause = (ms) => new Promise((r) => setTimeout(r, ms));
+async function fetchRetry(url, init, tries = 3) {
+  let last;
+  for (let i = 0; i < tries; i++) {
     try {
-      res = await fetch(API, {
+      const r = await fetch(url, init);
+      if (r.status !== 429 && r.status < 500) return r;
+      last = new ProviderError(r.status === 429 ? "Le fournisseur d'images est satur\xE9." : "Le fournisseur d'images est indisponible.", true, `HTTP ${r.status}`);
+    } catch (e) {
+      last = new ProviderError("Le fournisseur d'images ne r\xE9pond pas.", true, String(e));
+    }
+    if (i < tries - 1) await pause(1500 * 3 ** i);
+  }
+  throw last;
+}
+async function failure(r, who) {
+  const j = await r.json().catch(() => null);
+  const msg = typeof j?.error === "string" ? j.error : j?.error?.message ?? (j?.detail ? JSON.stringify(j.detail) : "");
+  const moderation = /safety|moderation|policy|content/i.test(msg);
+  throw new ProviderError(moderation ? "La demande a \xE9t\xE9 refus\xE9e par le filtre de contenu du fournisseur. Reformulez-la." : `${who} a refus\xE9 la demande.`, false, `${r.status} ${msg}`.slice(0, 300));
+}
+function pickSize(w, h, quality, model) {
+  const free = /^gpt-image-2/.test(model);
+  const r = Math.min(3, Math.max(1 / 3, w / h));
+  if (!free) return r > 1.2 ? { w: 1536, h: 1024 } : r < 0.83 ? { w: 1024, h: 1536 } : { w: 1024, h: 1024 };
+  const long = quality === "premium" ? 2048 : quality === "standard" ? 1536 : 1024;
+  const s16 = (v) => Math.max(256, Math.round(v / 16) * 16);
+  return r >= 1 ? { w: s16(long), h: s16(long / r) } : { w: s16(long * r), h: s16(long) };
+}
+var OPENAI_QUALITY = { brouillon: "low", standard: "medium", premium: "high" };
+var openaiModel = (env) => env.OPENAI_IMAGE_MODEL || "gpt-image-2.5-sunburst";
+var openai = {
+  id: "openai",
+  configured: (env) => Boolean(env.OPENAI_API_KEY),
+  model: (env) => openaiModel(env),
+  async submit(req, env) {
+    const model = openaiModel(env), size = pickSize(req.width, req.height, req.quality, model);
+    const fidelity = /^gpt-image-1\.5/.test(model) ? { input_fidelity: "high" } : {};
+    const images = [...req.photo ? [req.photo] : [], ...req.references].slice(0, 16);
+    const auth = { authorization: `Bearer ${env.OPENAI_API_KEY}` };
+    if (env.OPENAI_MODE === "background") {
+      const r2 = await fetchRetry("https://api.openai.com/v1/responses", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+        headers: { ...auth, "content-type": "application/json" },
         body: JSON.stringify({
-          model: MODEL,
-          input,
-          response_format: { type: "image", mime_type: "image/jpeg", aspect_ratio: aspect, image_size: "1K" },
-          generation_config: { thinking_level: "minimal" },
-          store: false,
-        }),
+          model: env.OPENAI_RESPONSES_MODEL || "gpt-5.4-mini",
+          background: true,
+          store: true,
+          input: [{ role: "user", content: [{ type: "input_text", text: req.prompt }, ...images.map((im) => ({ type: "input_image", image_url: `data:${im.mime};base64,${im.b64}`, detail: "high" }))] }],
+          tools: [{ type: "image_generation", model, quality: OPENAI_QUALITY[req.quality], size: `${size.w}x${size.h}`, output_format: "jpeg", action: req.mode === "transform" ? "edit" : "generate", ...fidelity }],
+          tool_choice: { type: "image_generation" }
+        })
       });
-    } catch {
-      return json({ erreur: "Le service d'images ne répond pas. Réessayez dans un instant." }, 502);
+      if (!r2.ok) await failure(r2, "OpenAI");
+      const j2 = await r2.json();
+      return { state: "pending", ref: j2.id };
     }
-    const data = await res.json().catch(() => null);
-    if (!res.ok || !data) {
-      const detail = data && data.error && data.error.message ? String(data.error.message).slice(0, 200) : `code ${res.status}`;
-      return json({ erreur: "Le service d'images a refusé la demande.", detail }, 502);
+    let r;
+    if (images.length === 0) {
+      r = await fetchRetry("https://api.openai.com/v1/images/generations", {
+        method: "POST",
+        headers: { ...auth, "content-type": "application/json" },
+        body: JSON.stringify({ model, prompt: req.prompt, size: `${size.w}x${size.h}`, quality: OPENAI_QUALITY[req.quality], output_format: "jpeg", output_compression: 92, n: 1 })
+      });
+    } else {
+      const form = new FormData();
+      form.append("model", model);
+      form.append("prompt", req.prompt);
+      form.append("size", `${size.w}x${size.h}`);
+      form.append("quality", OPENAI_QUALITY[req.quality]);
+      form.append("output_format", "jpeg");
+      form.append("output_compression", "92");
+      if (fidelity.input_fidelity) form.append("input_fidelity", fidelity.input_fidelity);
+      const field = images.length > 1 ? "image[]" : "image";
+      images.forEach((im, i) => form.append(field, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i + 1}.${im.mime.split("/")[1]}`));
+      r = await fetchRetry("https://api.openai.com/v1/images/edits", { method: "POST", headers: auth, body: form });
     }
-    for (const step of data.steps || []) {
-      if (step.type !== "model_output") continue;
-      for (const block of step.content || []) {
-        if (block.type === "image" && block.data) {
-          return json({ image: `data:${block.mime_type || "image/jpeg"};base64,${block.data}`, restant: Math.max(0, DAILY_PER_VISITOR - mine - 1) });
+    if (!r.ok) await failure(r, "OpenAI");
+    const j = await r.json();
+    const b64 = j.data?.[0]?.b64_json;
+    if (!b64) throw new ProviderError("Aucune image n'a \xE9t\xE9 produite.", true);
+    const u = j.usage;
+    const costUsd = u ? ((u.input_tokens_details?.text_tokens ?? 0) * OPENAI_TOKEN_USD.textIn + (u.input_tokens_details?.image_tokens ?? 0) * OPENAI_TOKEN_USD.imageIn + (u.output_tokens ?? 0) * OPENAI_TOKEN_USD.imageOut) / 1e6 : void 0;
+    return { state: "done", image: b64ToBytes(b64), mime: "image/jpeg", costUsd };
+  },
+  async poll(ref, env) {
+    const r = await fetchRetry(`https://api.openai.com/v1/responses/${encodeURIComponent(ref)}`, { headers: { authorization: `Bearer ${env.OPENAI_API_KEY}` } });
+    if (!r.ok) return { state: "error", message: "Suivi de la t\xE2che OpenAI impossible.", retryable: true };
+    const j = await r.json();
+    if (j.status === "queued" || j.status === "in_progress") return { state: "pending" };
+    const call = j.output?.find((o) => o.type === "image_generation_call" && o.result);
+    if (j.status === "completed" && call?.result) return { state: "done", image: b64ToBytes(call.result), mime: "image/jpeg" };
+    return { state: "error", message: j.error?.message ? "La g\xE9n\xE9ration a \xE9chou\xE9 chez OpenAI." : "Aucune image n'a \xE9t\xE9 produite.", retryable: j.status !== "cancelled" };
+  }
+};
+var GEMINI_MODEL = "gemini-nano-banana-2.1";
+var nearestRatio = (w, h) => ["1:1", "4:3", "3:4", "3:2", "2:3", "16:9", "9:16", "4:5", "5:4"].reduce((a, b) => {
+  const v = (s) => {
+    const [x, y] = s.split(":").map(Number);
+    return Math.abs(Math.log(x / y / (w / h)));
+  };
+  return v(b) < v(a) ? b : a;
+}, "1:1");
+var gemini = {
+  id: "gemini",
+  configured: (env) => Boolean(env.GEMINI_API_KEY),
+  model: () => GEMINI_MODEL,
+  async submit(req, env) {
+    const input = [{ type: "text", text: req.prompt }];
+    if (req.photo) input.push({ type: "image", mime_type: req.photo.mime, data: req.photo.b64 });
+    req.references.slice(0, 4).forEach((im) => input.push({ type: "image", mime_type: im.mime, data: im.b64 }));
+    const r = await fetchRetry("https://generativelanguage.googleapis.com/v1beta/interactions", {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+      body: JSON.stringify({ model: GEMINI_MODEL, input, response_format: { type: "image", mime_type: "image/jpeg", aspect_ratio: nearestRatio(req.width, req.height), image_size: req.quality === "premium" ? "2K" : "1K" }, generation_config: { thinking_level: "minimal" }, store: false })
+    });
+    if (!r.ok) await failure(r, "Google");
+    const j = await r.json();
+    const block = j.steps?.flatMap((s) => s.type === "model_output" ? s.content ?? [] : []).find((c) => c.type === "image" && c.data);
+    if (!block?.data) throw new ProviderError("Aucune image n'a \xE9t\xE9 produite. Reformulez la demande.", true);
+    return { state: "done", image: b64ToBytes(block.data), mime: block.mime_type || "image/jpeg" };
+  }
+};
+var falModel = (env, mode) => mode === "transform" ? env.FAL_MODEL_EDIT || "fal-ai/flux-pro/kontext" : env.FAL_MODEL_TEXT || "fal-ai/flux-pro/kontext/text-to-image";
+var falApp = (model) => model.split("/").slice(0, 2).join("/");
+async function fetchImage(url) {
+  const r = await fetchRetry(url, {});
+  if (!r.ok) throw new ProviderError("Image produite mais introuvable chez le fournisseur.", true);
+  return { state: "done", image: new Uint8Array(await r.arrayBuffer()), mime: r.headers.get("content-type") || "image/jpeg" };
+}
+var fal = {
+  id: "fal",
+  configured: (env) => Boolean(env.FAL_KEY),
+  model: falModel,
+  async submit(req, env) {
+    const model = falModel(env, req.mode);
+    const input = { prompt: req.prompt, aspect_ratio: nearestRatio(req.width, req.height), output_format: "jpeg", num_images: 1 };
+    if (req.photo) input.image_url = `data:${req.photo.mime};base64,${req.photo.b64}`;
+    const r = await fetchRetry(`https://queue.fal.run/${model}`, { method: "POST", headers: { authorization: `Key ${env.FAL_KEY}`, "content-type": "application/json" }, body: JSON.stringify(input) });
+    if (!r.ok) await failure(r, "fal.ai");
+    const j = await r.json();
+    return { state: "pending", ref: `${falApp(model)}|${j.request_id}` };
+  },
+  async poll(ref, env) {
+    const [app, id] = ref.split("|");
+    const h = { authorization: `Key ${env.FAL_KEY}` };
+    const s = await fetchRetry(`https://queue.fal.run/${app}/requests/${id}/status`, { headers: h });
+    if (!s.ok) return { state: "error", message: "Suivi de la t\xE2che fal.ai impossible.", retryable: true };
+    const st = await s.json();
+    if (st.status !== "COMPLETED") return { state: "pending" };
+    const r = await fetchRetry(`https://queue.fal.run/${app}/requests/${id}`, { headers: h });
+    const j = await r.json().catch(() => null);
+    const url = j?.images?.[0]?.url;
+    return url ? fetchImage(url) : { state: "error", message: "fal.ai n'a pas produit d'image.", retryable: true };
+  }
+};
+var replicateModel = (env) => env.REPLICATE_MODEL || "black-forest-labs/flux-kontext-pro";
+var replicate = {
+  id: "replicate",
+  configured: (env) => Boolean(env.REPLICATE_API_TOKEN),
+  model: (env) => replicateModel(env),
+  async submit(req, env) {
+    const input = { prompt: req.prompt, aspect_ratio: req.photo ? "match_input_image" : nearestRatio(req.width, req.height), output_format: "jpg" };
+    if (req.photo) input.input_image = `data:${req.photo.mime};base64,${req.photo.b64}`;
+    const r = await fetchRetry(`https://api.replicate.com/v1/models/${replicateModel(env)}/predictions`, { method: "POST", headers: { authorization: `Bearer ${env.REPLICATE_API_TOKEN}`, "content-type": "application/json" }, body: JSON.stringify({ input }) });
+    if (!r.ok) await failure(r, "Replicate");
+    const j = await r.json();
+    return { state: "pending", ref: j.id };
+  },
+  async poll(ref, env) {
+    const r = await fetchRetry(`https://api.replicate.com/v1/predictions/${encodeURIComponent(ref)}`, { headers: { authorization: `Bearer ${env.REPLICATE_API_TOKEN}` } });
+    if (!r.ok) return { state: "error", message: "Suivi de la t\xE2che Replicate impossible.", retryable: true };
+    const j = await r.json();
+    if (j.status === "starting" || j.status === "processing") return { state: "pending" };
+    const url = Array.isArray(j.output) ? j.output[0] : j.output;
+    if (j.status === "succeeded" && url) return fetchImage(url);
+    return { state: "error", message: "Replicate n'a pas produit d'image.", retryable: j.status === "failed" };
+  }
+};
+var PROVIDERS = [openai, gemini, fal, replicate];
+function chooseProvider(env, wanted) {
+  const ok = PROVIDERS.filter((p) => p.configured(env));
+  return ok.find((p) => p.id === wanted) ?? ok.find((p) => p.id === env.IA_FOURNISSEUR) ?? ok[0] ?? null;
+}
+
+// workers/ia/src/jobs.ts
+var DAY = 86400;
+var today = () => (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+var month = () => (/* @__PURE__ */ new Date()).toISOString().slice(0, 7);
+async function sha(s) {
+  const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return [...new Uint8Array(d)].slice(0, 12).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+var saveJob = (env, j) => env.QUOTA.put(`job:${j.id}`, JSON.stringify(j), { expirationTtl: 90 * DAY });
+async function loadJob(env, id) {
+  if (!/^[0-9a-f-]{36}$/.test(id)) return null;
+  const s = await env.QUOTA.get(`job:${id}`);
+  return s ? JSON.parse(s) : null;
+}
+var saveInput = (env, id, input) => env.QUOTA.put(`in:${id}`, JSON.stringify(input), { expirationTtl: 2 * DAY });
+async function loadInput(env, id) {
+  const s = await env.QUOTA.get(`in:${id}`);
+  return s ? JSON.parse(s) : null;
+}
+async function storeImage(env, key, bytes, mime) {
+  if (env.IMAGES) await env.IMAGES.put(key, bytes, { httpMetadata: { contentType: mime } });
+  else await env.QUOTA.put(`img:${key}`, bytes, { expirationTtl: 30 * DAY, metadata: { mime } });
+}
+async function readImage(env, key, mime) {
+  if (env.IMAGES) {
+    const o = await env.IMAGES.get(key);
+    if (o) return { body: await o.arrayBuffer(), mime: o.httpMetadata?.contentType ?? mime };
+  }
+  const b = await env.QUOTA.get(`img:${key}`, "arrayBuffer");
+  return b ? { body: b, mime } : null;
+}
+var n = async (env, k) => Number(await env.QUOTA.get(k)) || 0;
+var add = (env, k, v, ttl) => n(env, k).then((cur) => env.QUOTA.put(k, String(Math.round((cur + v) * 1e4) / 1e4), { expirationTtl: ttl }));
+async function usage(env, visitor, ip) {
+  const L = limits(env), d = today(), m = month();
+  const [dayImg, ipImg, vImg, mUsd, vUsd, ipUsd] = await Promise.all([n(env, `total:${d}`), n(env, `ip:${d}:${ip}`), n(env, `v:${d}:${visitor}`), n(env, `usd:${m}`), n(env, `usd:${m}:v:${visitor}`), n(env, `usd:${m}:ip:${ip}`)]);
+  return { day: { images: dayImg, max: L.dayImages }, visitorDay: { images: Math.max(ipImg, vImg), max: L.visitorDayImages }, month: { usd: mUsd, max: L.monthUsd }, visitorMonth: { usd: Math.max(vUsd, ipUsd), max: L.visitorMonthUsd } };
+}
+function overLimit(u, estimate2) {
+  if (u.day.images >= u.day.max) return "Le nombre d'images du jour est atteint. Revenez demain.";
+  if (u.visitorDay.images >= u.visitorDay.max) return `Vous avez utilis\xE9 vos ${u.visitorDay.max} images du jour. Revenez demain.`;
+  if (u.month.usd + estimate2 > u.month.max) return "Le budget d'images du mois est atteint.";
+  if (u.visitorMonth.usd + estimate2 > u.visitorMonth.max) return "Vous avez atteint votre budget d'images du mois.";
+  return null;
+}
+var estimate = (provider, quality) => PRICE_ESTIMATE[provider]?.[quality] ?? 0.2;
+async function reserve(env, visitor, ip, usd) {
+  const d = today(), m = month();
+  await Promise.all([add(env, `total:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY), add(env, `usd:${m}`, usd, 62 * DAY), add(env, `usd:${m}:v:${visitor}`, usd, 62 * DAY), add(env, `usd:${m}:ip:${ip}`, usd, 62 * DAY)]);
+}
+async function settle(env, visitor, ip, delta) {
+  if (!delta) return;
+  const m = month();
+  await Promise.all([add(env, `usd:${m}`, delta, 62 * DAY), add(env, `usd:${m}:v:${visitor}`, delta, 62 * DAY), add(env, `usd:${m}:ip:${ip}`, delta, 62 * DAY)]);
+}
+
+// workers/ia/src/index.ts
+var toImg = (s) => {
+  const m = /^data:(image\/\w+);base64,(.+)$/.exec(s);
+  return { mime: m[1], b64: m[2] };
+};
+var pub = (j, base) => ({ ...j, ref: void 0, visitor: void 0, ipHash: void 0, error: j.error ? { message: j.error.message, retryable: j.error.retryable } : void 0, imageUrl: j.image ? `${base}/v2/images/${j.id}` : null });
+async function run(env, job, input) {
+  const provider = PROVIDERS.find((p) => p.id === job.provider);
+  const req = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor };
+  job.attempts += 1;
+  job.status = "en_cours";
+  job.error = void 0;
+  job.ref = void 0;
+  job.updatedAt = (/* @__PURE__ */ new Date()).toISOString();
+  try {
+    const r = await provider.submit(req, env);
+    if (r.state === "pending") job.ref = r.ref;
+    else await finish(env, job, r.image, r.mime, r.costUsd);
+  } catch (e) {
+    const pe = e instanceof ProviderError ? e : new ProviderError("Erreur inattendue pendant la g\xE9n\xE9ration.", true, String(e));
+    job.status = "erreur";
+    job.error = { message: pe.message, retryable: pe.retryable, detail: pe.detail };
+  }
+  job.updatedAt = (/* @__PURE__ */ new Date()).toISOString();
+  await saveJob(env, job);
+  return job;
+}
+async function finish(env, job, image, mime, costUsd) {
+  await storeImage(env, job.id, image, mime);
+  job.image = { key: job.id, mime, bytes: image.byteLength };
+  job.status = "terminee";
+  if (costUsd !== void 0) {
+    await settle(env, job.visitor, job.ipHash, costUsd - job.costUsd);
+    job.costUsd = Math.round(costUsd * 1e4) / 1e4;
+  }
+}
+var index_default = {
+  async fetch(request, env, _ctx) {
+    const origin = request.headers.get("Origin") || "";
+    const allowed = isAllowedOrigin(origin);
+    const cors = { "Access-Control-Allow-Origin": allowed ? origin : ALLOWED_ORIGINS[0], "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Max-Age": "86400", Vary: "Origin" };
+    const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" } });
+    if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
+    const url = new URL(request.url), path = url.pathname, base = url.origin;
+    if (request.method === "GET" && path === "/") {
+      return json({ ok: true, service: "Pi\xE8ce R\xEAv\xE9e \xB7 images IA", fournisseurs: PROVIDERS.filter((p) => p.configured(env)).map((p) => p.id), defaut: chooseProvider(env)?.id ?? null, compteur: Boolean(env.QUOTA), stockage: env.IMAGES ? "R2" : "KV", cle: Boolean(env.GEMINI_API_KEY) });
+    }
+    const img = /^\/v2\/images\/([0-9a-f-]{36})$/.exec(path);
+    if (request.method === "GET" && img) {
+      const job = env.QUOTA ? await loadJob(env, img[1]) : null;
+      const file = job?.image ? await readImage(env, job.image.key, job.image.mime) : null;
+      return file ? new Response(file.body, { headers: { ...cors, "Content-Type": file.mime, "Cache-Control": "public, max-age=31536000, immutable" } }) : json({ erreur: "Image introuvable." }, 404);
+    }
+    if (!allowed) return json({ erreur: "Ce service n'accepte que les demandes du site Pi\xE8ce R\xEAv\xE9e." }, 403);
+    if (!env.QUOTA) return json({ erreur: "Le service n'est pas encore configur\xE9 (compteur manquant)." }, 503);
+    const ip = request.headers.get("CF-Connecting-IP") || "inconnu", ipHash = await sha(`ip|${ip}`);
+    if (request.method === "GET" && path === "/v2/usage") {
+      const v = url.searchParams.get("visiteur") ?? "";
+      if (!/^[a-z0-9-]{8,64}$/.test(v)) return json({ erreur: "Visiteur inconnu." }, 400);
+      return json({ ...await usage(env, await sha(`v|${v}`), ipHash), fournisseurs: PROVIDERS.filter((p) => p.configured(env)).map((p) => p.id) });
+    }
+    if (request.method === "POST" && path === "/v2/jobs") {
+      if (Number(request.headers.get("Content-Length") || 0) > MAX_BODY) return json({ erreur: "Images trop lourdes." }, 413);
+      const b = parseJobBody(await request.json().catch(() => null));
+      if (!b) return json({ erreur: "Demande incompl\xE8te : d\xE9crivez le projet (et ajoutez la photo pour une transformation)." }, 400);
+      const provider = chooseProvider(env, b.fournisseur);
+      if (!provider) return json({ erreur: "Aucun fournisseur d'images n'est configur\xE9 (cl\xE9 manquante)." }, 503);
+      const visitor = await sha(`v|${b.visiteur}`), cost = estimate(provider.id, b.quality);
+      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
+      if (refusal) return json({ erreur: refusal }, 429);
+      const now = (/* @__PURE__ */ new Date()).toISOString();
+      const job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
+      const input = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, materials: b.materials, products: b.products }), photo: b.photo ? toImg(b.photo) : void 0, references: b.references.map(toImg) };
+      await Promise.all([saveInput(env, job.id, input), reserve(env, visitor, ipHash, cost)]);
+      return json(pub(await run(env, job, input), base), 201);
+    }
+    const m = /^\/v2\/jobs\/([0-9a-f-]{36})(\/retry)?$/.exec(path);
+    if (m) {
+      const job = await loadJob(env, m[1]);
+      if (!job) return json({ erreur: "T\xE2che introuvable." }, 404);
+      if (request.method === "GET" && !m[2]) {
+        const provider = PROVIDERS.find((p) => p.id === job.provider);
+        if (job.status === "en_cours" && job.ref && provider?.poll) {
+          const r = await provider.poll(job.ref, env).catch((e) => ({ state: "error", message: e instanceof ProviderError ? e.message : "Suivi impossible.", retryable: true }));
+          if (r.state === "done") await finish(env, job, r.image, r.mime, r.costUsd);
+          else if (r.state === "error") {
+            job.status = "erreur";
+            job.error = { message: r.message, retryable: r.retryable };
+          } else if (Date.now() - Date.parse(job.updatedAt) > 10 * 6e4) {
+            job.status = "erreur";
+            job.error = { message: "La g\xE9n\xE9ration a pris trop de temps.", retryable: true };
+          }
+          if (r.state !== "pending" || job.status === "erreur") {
+            job.updatedAt = (/* @__PURE__ */ new Date()).toISOString();
+            await saveJob(env, job);
+          }
         }
+        return json(pub(job, base));
+      }
+      if (request.method === "POST" && m[2]) {
+        if (job.status !== "erreur") return json({ erreur: "Seule une t\xE2che en erreur peut \xEAtre relanc\xE9e." }, 409);
+        if (job.attempts >= 3) return json({ erreur: "Trois tentatives d\xE9j\xE0 faites : modifiez la demande." }, 409);
+        const input = await loadInput(env, job.id);
+        if (!input) return json({ erreur: "Les donn\xE9es de d\xE9part ont expir\xE9 : relancez une nouvelle demande." }, 410);
+        const cost = estimate(job.provider, job.quality);
+        const refusal = overLimit(await usage(env, job.visitor, ipHash), cost);
+        if (refusal) return json({ erreur: refusal }, 429);
+        await reserve(env, job.visitor, ipHash, cost);
+        job.costUsd += cost;
+        return json(pub(await run(env, job, input), base));
       }
     }
-    return json({ erreur: "Aucune image n'a été produite. Reformulez la demande ou changez de photo." }, 502);
-  },
+    if (request.method === "POST" && ["/redesign", "/concept", "/photo"].includes(path)) return legacy(request, env, path, ip, json);
+    return json({ erreur: "Adresse inconnue." }, 404);
+  }
 };
-
-function today() { return new Date().toISOString().slice(0, 10); }
-function clean(s, max) { return typeof s === "string" ? s.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, max) : ""; }
-function image(dataUrl) {
-  if (typeof dataUrl !== "string") return null;
-  const m = /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(dataUrl);
-  if (!m || m[2].length > 6_000_000) return null;
-  return { type: "image", mime_type: m[1], data: m[2] };
+var ASPECTS = ["1:1", "4:3", "3:4", "3:2", "2:3", "16:9", "9:16", "4:5", "5:4"];
+var LEGACY_DAY = 30;
+var LEGACY_VISITOR = 6;
+async function legacy(request, env, path, ip, json) {
+  if (!env.GEMINI_API_KEY) return json({ erreur: "Le service n'est pas encore configur\xE9 (cl\xE9 manquante)." }, 503);
+  if (Number(request.headers.get("Content-Length") || 0) > MAX_BODY) return json({ erreur: "Images trop lourdes." }, 413);
+  const day = today(), totalKey = `total:${day}`, ipKey = `ip:${day}:${ip}`;
+  const total = Number(await env.QUOTA.get(totalKey)) || 0, mine = Number(await env.QUOTA.get(ipKey)) || 0;
+  if (total >= LEGACY_DAY) return json({ erreur: "Le nombre d'images du jour est atteint. Revenez demain." }, 429);
+  if (mine >= LEGACY_VISITOR) return json({ erreur: `Vous avez utilis\xE9 vos ${LEGACY_VISITOR} images du jour. Revenez demain.` }, 429);
+  const body = await request.json().catch(() => null);
+  if (!body) return json({ erreur: "Demande illisible." }, 400);
+  const clean = (s, max) => typeof s === "string" ? s.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, max) : "";
+  const image = (s) => isDataUrl(s) ? toImg(s) : null;
+  const brief = clean(body.brief, 1200) || (path === "/photo" ? "Planche de mati\xE8res." : "");
+  if (!brief) return json({ erreur: "D\xE9crivez le projet." }, 400);
+  const aspect = ASPECTS.includes(String(body.aspect)) ? String(body.aspect) : "4:3";
+  const [aw, ah] = aspect.split(":").map(Number);
+  let photo, references = [], prompt;
+  if (path === "/redesign") {
+    photo = image(body.photo) ?? void 0;
+    if (!photo) return json({ erreur: "Ajoutez une photo de la pi\xE8ce (JPEG ou PNG)." }, 400);
+    references = Array.isArray(body.inspirations) ? body.inspirations.slice(0, 3).map(image).filter(Boolean) : [];
+    prompt = buildPrompt({ mode: "transform", brief, keep: ["fenetres", "portes", "murs", "plafond"], references: references.length });
+  } else if (path === "/photo") {
+    photo = image(body.image) ?? void 0;
+    if (!photo) return json({ erreur: "Image de la planche manquante." }, 400);
+    prompt = [
+      "This image is a 3D render of an interior designer's flat-lay material board (or a single material sample).",
+      "Turn it into a photorealistic studio photograph of the very same physical samples.",
+      "Keep EXACTLY the same layout, positions, overlaps, shapes, sizes, colours and camera angle. Do not add, remove or move any object.",
+      "Give every sample its real-world material detail at macro level: wood grain and pores, stone veining and polish, fabric weave and pinked edges, brushed or knurled metal with soft reflections, glossy wet paint, paper fibres, ceramic glaze.",
+      "Soft natural window daylight from the upper right, long gentle shadows, white textured paper background, high-end editorial look, no text, no watermark.",
+      `Details (written in French): ${brief}`
+    ].join("\n");
+  } else prompt = buildPrompt({ mode: "generate", brief });
+  await env.QUOTA.put(totalKey, String(total + 1), { expirationTtl: 172800 });
+  await env.QUOTA.put(ipKey, String(mine + 1), { expirationTtl: 172800 });
+  try {
+    const r = await gemini.submit({ mode: path === "/concept" ? "generate" : "transform", prompt, photo, references, width: aw * 400, height: ah * 400, quality: "standard", visitor: ip }, env);
+    if (r.state !== "done") throw new ProviderError("Aucune image n'a \xE9t\xE9 produite.", true);
+    let bin = "";
+    for (let i = 0; i < r.image.length; i += 32768) bin += String.fromCharCode(...r.image.subarray(i, i + 32768));
+    return json({ image: `data:${r.mime};base64,${btoa(bin)}`, restant: Math.max(0, LEGACY_VISITOR - mine - 1) });
+  } catch (e) {
+    return json({ erreur: e instanceof ProviderError ? e.message : "Le service d'images ne r\xE9pond pas. R\xE9essayez dans un instant." }, 502);
+  }
 }
-function redesignPrompt(brief) {
-  return [
-    "You are an award-winning interior designer and architectural photographer.",
-    "Redesign the client's room shown in Image 1 according to this brief (written in French):",
-    brief,
-    "Requirements: keep the exact same room geometry, camera angle, lens, windows and doors.",
-    "Replace finishes, colours, furniture, textiles, lighting and decor to match the brief.",
-    "Output a single photorealistic interior photograph: natural daylight, soft shadows, true-to-life materials",
-    "(wood grain, stone veining, fabric weave), editorial magazine quality, no text, no watermark, no people.",
-  ].join("\n");
-}
-function conceptPrompt(brief) {
-  return [
-    "Create a single photorealistic interior photograph for a high-end design magazine.",
-    "Brief (written in French):",
-    brief,
-    "Natural daylight, believable proportions, true-to-life materials (wood grain, stone veining, fabric weave),",
-    "calm editorial composition, no text, no watermark, no people.",
-  ].join("\n");
-}
-function photoPrompt(brief) {
-  return [
-    "This image is a 3D render of an interior designer's flat-lay material board (or a single material sample).",
-    "Turn it into a photorealistic studio photograph of the very same physical samples.",
-    "Keep EXACTLY the same layout, positions, overlaps, shapes, sizes, colours and camera angle. Do not add, remove or move any object.",
-    "Give every sample its real-world material detail at macro level: wood grain and pores, stone veining and polish, fabric weave and pinked edges,",
-    "brushed or knurled metal with soft reflections, glossy wet paint, paper fibres, ceramic glaze.",
-    "Soft natural window daylight from the upper right, long gentle shadows, white textured paper background, high-end editorial look, no text, no watermark.",
-    "Details (written in French):",
-    brief,
-  ].join("\n");
-}
+export {
+  index_default as default
+};

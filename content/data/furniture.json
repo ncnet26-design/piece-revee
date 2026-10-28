@@ -1,0 +1,552 @@
+[
+ {
+  "id": "canape-glam-velours",
+  "model": "wf_glam_velvet_sofa",
+  "kind": "glb",
+  "name": "Canapé incurvé en velours",
+  "category": "canape",
+  "style": [
+   "contemporain",
+   "glam"
+  ],
+  "colors": [
+   {
+    "name": "Bleu nuit",
+    "hex": "#24345A"
+   }
+  ],
+  "materials": [
+   "velours",
+   "metal"
+  ],
+  "silhouette": [
+   "arrondi",
+   "pieds-fins",
+   "accoudoirs-ronds"
+  ],
+  "features": [
+   "Dossier incurvé",
+   "Pieds métal fins",
+   "5 coloris de velours"
+  ],
+  "productId": null
+ },
+ {
+  "id": "canape-cuir-capitonne",
+  "model": "Sofa_01",
+  "kind": "glb",
+  "name": "Canapé chesterfield en cuir",
+  "category": "canape",
+  "style": [
+   "classique"
+  ],
+  "colors": [
+   {
+    "name": "Noir",
+    "hex": "#2A2A2A"
+   }
+  ],
+  "materials": [
+   "cuir",
+   "bois"
+  ],
+  "silhouette": [
+   "capitonne",
+   "accoudoirs-ronds",
+   "pieds-bois"
+  ],
+  "features": [
+   "Capitonnage",
+   "Piètement bois"
+  ],
+  "productId": null
+ },
+ {
+  "id": "canape-classique-lin",
+  "model": "sofa_02",
+  "kind": "glb",
+  "name": "Canapé classique en lin",
+  "category": "canape",
+  "style": [
+   "classique"
+  ],
+  "colors": [
+   {
+    "name": "Écru",
+    "hex": "#E3DED3"
+   }
+  ],
+  "materials": [
+   "lin",
+   "bois"
+  ],
+  "silhouette": [
+   "droit",
+   "pieds-bois",
+   "moulures"
+  ],
+  "features": [
+   "Bois mouluré",
+   "Assise en lin"
+  ],
+  "productId": null
+ },
+ {
+  "id": "fauteuil-lounge-cuir",
+  "model": "mid_century_lounge_chair",
+  "kind": "glb",
+  "name": "Fauteuil lounge en cuir et bois courbé",
+  "category": "fauteuil",
+  "style": [
+   "mid-century",
+   "design-iconique"
+  ],
+  "colors": [
+   {
+    "name": "Cognac",
+    "hex": "#8A5434"
+   }
+  ],
+  "materials": [
+   "cuir",
+   "bois",
+   "metal"
+  ],
+  "silhouette": [
+   "enveloppant",
+   "pivotant",
+   "coque-bois"
+  ],
+  "features": [
+   "Coque en bois courbé",
+   "Piètement étoile pivotant"
+  ],
+  "productId": null
+ },
+ {
+  "id": "fauteuil-velours-corail",
+  "model": "wf_sheen_chair",
+  "kind": "glb",
+  "name": "Fauteuil en velours capitonné",
+  "category": "fauteuil",
+  "style": [
+   "contemporain",
+   "vintage"
+  ],
+  "colors": [
+   {
+    "name": "Corail",
+    "hex": "#E8705A"
+   }
+  ],
+  "materials": [
+   "velours",
+   "bois"
+  ],
+  "silhouette": [
+   "droit",
+   "pieds-bois",
+   "capitonne"
+  ],
+  "features": [
+   "Velours capitonné",
+   "Pieds bois fuselés",
+   "2 coloris"
+  ],
+  "productId": null
+ },
+ {
+  "id": "fauteuil-moderne",
+  "model": "modern_arm_chair_01",
+  "kind": "glb",
+  "name": "Fauteuil de bureau moderne",
+  "category": "fauteuil",
+  "style": [
+   "contemporain"
+  ],
+  "colors": [
+   {
+    "name": "Gris",
+    "hex": "#6E6A66"
+   }
+  ],
+  "materials": [
+   "tissu",
+   "metal"
+  ],
+  "silhouette": [
+   "droit"
+  ],
+  "features": [
+   "Accoudoirs"
+  ],
+  "productId": null
+ },
+ {
+  "id": "table-basse-marbre-ronde",
+  "model": "modern_coffee_table_02",
+  "kind": "glb",
+  "name": "Table basse ronde, plateau marbre",
+  "category": "table-basse",
+  "style": [
+   "contemporain",
+   "minimal"
+  ],
+  "colors": [
+   {
+    "name": "Marbre blanc",
+    "hex": "#EEEAE3"
+   }
+  ],
+  "materials": [
+   "marbre",
+   "metal"
+  ],
+  "silhouette": [
+   "ronde",
+   "basse",
+   "pieds-metal"
+  ],
+  "features": [
+   "Plateau marbre blanc",
+   "Piètement ruban métal"
+  ],
+  "productId": null
+ },
+ {
+  "id": "table-basse-ronde-bois",
+  "model": "coffee_table_round_01",
+  "kind": "glb",
+  "name": "Table basse ronde en bois",
+  "category": "table-basse",
+  "style": [
+   "classique"
+  ],
+  "colors": [
+   {
+    "name": "Bois foncé",
+    "hex": "#3A2A20"
+   }
+  ],
+  "materials": [
+   "bois"
+  ],
+  "silhouette": [
+   "ronde",
+   "basse"
+  ],
+  "features": [
+   "Bois massif"
+  ],
+  "productId": null
+ },
+ {
+  "id": "table-basse-ajouree",
+  "model": "modern_coffee_table_01",
+  "kind": "glb",
+  "name": "Table basse cube ajourée",
+  "category": "table-basse",
+  "style": [
+   "contemporain"
+  ],
+  "colors": [
+   {
+    "name": "Noir et bois",
+    "hex": "#2B2522"
+   }
+  ],
+  "materials": [
+   "bois"
+  ],
+  "silhouette": [
+   "carree",
+   "massive"
+  ],
+  "features": [
+   "Motif ajouré"
+  ],
+  "productId": null
+ },
+ {
+  "id": "buffet-cannele",
+  "model": "modern_wooden_cabinet",
+  "kind": "glb",
+  "name": "Buffet bas cannelé en noyer",
+  "category": "rangement",
+  "style": [
+   "mid-century",
+   "contemporain"
+  ],
+  "colors": [
+   {
+    "name": "Noyer",
+    "hex": "#5B4030"
+   }
+  ],
+  "materials": [
+   "bois",
+   "metal"
+  ],
+  "silhouette": [
+   "bas",
+   "cannele",
+   "pieds-metal"
+  ],
+  "features": [
+   "Façades cannelées",
+   "2,44 m de long"
+  ],
+  "productId": null
+ },
+ {
+  "id": "console-classique",
+  "model": "ClassicConsole_01",
+  "kind": "glb",
+  "name": "Console sculptée",
+  "category": "rangement",
+  "style": [
+   "classique"
+  ],
+  "colors": [
+   {
+    "name": "Gris patiné",
+    "hex": "#55524E"
+   }
+  ],
+  "materials": [
+   "bois"
+  ],
+  "silhouette": [
+   "sculpte"
+  ],
+  "features": [
+   "Pieds galbés"
+  ],
+  "productId": null
+ },
+ {
+  "id": "console-laquee",
+  "model": "chinese_console_table",
+  "kind": "glb",
+  "name": "Console laquée",
+  "category": "rangement",
+  "style": [
+   "classique"
+  ],
+  "colors": [
+   {
+    "name": "Laque",
+    "hex": "#3B2620"
+   }
+  ],
+  "materials": [
+   "bois"
+  ],
+  "silhouette": [
+   "fine"
+  ],
+  "features": [
+   "Laque"
+  ],
+  "productId": null
+ },
+ {
+  "id": "suspension-globe",
+  "model": "modern_ceiling_lamp_01",
+  "kind": "glb",
+  "name": "Suspension globe opalin",
+  "category": "luminaire",
+  "style": [
+   "contemporain",
+   "minimal"
+  ],
+  "colors": [
+   {
+    "name": "Opale et chrome",
+    "hex": "#E9E9E6"
+   }
+  ],
+  "materials": [
+   "verre",
+   "metal"
+  ],
+  "silhouette": [
+   "globe"
+  ],
+  "features": [
+   "Globe opalin",
+   "Monture chromée"
+  ],
+  "productId": null
+ },
+ {
+  "id": "lustre-classique",
+  "model": "Chandelier_01",
+  "kind": "glb",
+  "name": "Lustre à bras",
+  "category": "luminaire",
+  "style": [
+   "classique"
+  ],
+  "colors": [
+   {
+    "name": "Laiton",
+    "hex": "#B88A45"
+   }
+  ],
+  "materials": [
+   "laiton",
+   "verre"
+  ],
+  "silhouette": [
+   "multi-bras"
+  ],
+  "features": [
+   "Bras courbés"
+  ],
+  "productId": null
+ },
+ {
+  "id": "lampadaire-globe",
+  "model": "proc:lampadaire",
+  "kind": "procedural",
+  "name": "Lampadaire globe, tige laiton",
+  "category": "lampadaire",
+  "style": [
+   "contemporain",
+   "art-deco",
+   "minimal"
+  ],
+  "colors": [
+   {
+    "name": "Laiton et opale",
+    "hex": "#C9A564"
+   }
+  ],
+  "materials": [
+   "laiton",
+   "verre"
+  ],
+  "silhouette": [
+   "globe",
+   "tige-fine"
+  ],
+  "features": [
+   "Globe opalin Ø 30 cm",
+   "Tige fine en laiton",
+   "Hauteur 140 cm"
+  ],
+  "productId": null
+ },
+ {
+  "id": "poignee-barre-moletee",
+  "model": "proc:poignee",
+  "kind": "procedural",
+  "name": "Poignée barre moletée",
+  "category": "poignee",
+  "style": [
+   "design-iconique",
+   "industriel-chic",
+   "contemporain"
+  ],
+  "colors": [
+   {
+    "name": "Laiton",
+    "hex": "#C9A564"
+   }
+  ],
+  "materials": [
+   "laiton"
+  ],
+  "silhouette": [
+   "barre",
+   "moletee"
+  ],
+  "features": [
+   "Barre Ø 12 mm moletée",
+   "Entraxe 160 mm"
+  ],
+  "productId": null
+ },
+ {
+  "id": "plante-translucide",
+  "model": "wf_diffuse_transmission_plant",
+  "kind": "glb",
+  "name": "Plante en pot terre cuite",
+  "category": "deco",
+  "style": [
+   "naturel"
+  ],
+  "colors": [
+   {
+    "name": "Vert",
+    "hex": "#5F7F4A"
+   }
+  ],
+  "materials": [
+   "terre-cuite",
+   "vegetal"
+  ],
+  "silhouette": [
+   "pot"
+  ],
+  "features": [
+   "Feuilles translucides"
+  ],
+  "productId": null
+ },
+ {
+  "id": "vase-laiton",
+  "model": "brass_vase_01",
+  "kind": "glb",
+  "name": "Vase en laiton",
+  "category": "deco",
+  "style": [
+   "art-deco"
+  ],
+  "colors": [
+   {
+    "name": "Laiton",
+    "hex": "#B88A45"
+   }
+  ],
+  "materials": [
+   "laiton"
+  ],
+  "silhouette": [
+   "vase"
+  ],
+  "features": [
+   "Laiton patiné"
+  ],
+  "productId": null
+ },
+ {
+  "id": "tapis-laine",
+  "model": "proc:tapis",
+  "kind": "procedural",
+  "name": "Tapis en laine tissée",
+  "category": "tapis",
+  "style": [
+   "contemporain",
+   "naturel"
+  ],
+  "colors": [
+   {
+    "name": "Crème",
+    "hex": "#E6DCCB"
+   }
+  ],
+  "materials": [
+   "laine"
+  ],
+  "silhouette": [
+   "rectangulaire"
+  ],
+  "features": [
+   "240 × 170 cm",
+   "Laine épaisse"
+  ],
+  "productId": null
+ }
+]

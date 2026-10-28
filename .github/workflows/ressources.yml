@@ -13,6 +13,7 @@ on:
       inspirations: { description: "Photos d'inspiration candidates (planches-contact à trier)", type: boolean, default: false }
       inspirations_ia: { description: "Photos d'inspiration créées par IA (gratuit via FLUX ; Gemini si le secret GEMINI_API_KEY existe)", type: boolean, default: false }
       inspirations_choix: { description: "Télécharger les photos d'inspiration choisies (content/data/inspiration-picks.json)", type: boolean, default: false }
+      studio: { description: "Studio : veille concurrents, textures PBR 2K, image de la pièce témoin, vérification des fiches produits", type: boolean, default: false }
 
 permissions:
   contents: write
@@ -60,6 +61,13 @@ jobs:
           mkdir -p .robot
           git fetch origin robot/ressources && git checkout origin/robot/ressources -- .robot/inspirations/candidats.json || true
           node --experimental-strip-types scripts/inspirations.ts --choix 2>&1 | tee -a .robot/inspirations.log
+      - name: Studio (veille, PBR 2K, pièce témoin, fiches produits)
+        if: ${{ inputs.studio }}
+        continue-on-error: true
+        timeout-minutes: 40
+        run: |
+          mkdir -p .robot
+          node --experimental-strip-types scripts/robot-studio.ts --veille --pbr --image --produits 2>&1 | tee .robot/studio.log
       - name: Textures photographiques
         if: ${{ inputs.textures }}
         continue-on-error: true
@@ -90,7 +98,7 @@ jobs:
           git config user.name "piece-revee-robot"
           git config user.email "robot@users.noreply.github.com"
           git checkout -B robot/ressources
-          git add public/textures public/models public/inspirations content/data || true
+          git add public/textures public/models public/inspirations public/materiaux public/prototype content/data || true
           git add -f .robot || true
           git commit -m "ressources: textures, meubles 3D et photos libres ($(date +%Y-%m-%d))" || { echo "Rien de nouveau"; exit 0; }
           git push -f origin robot/ressources

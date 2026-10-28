@@ -17,7 +17,7 @@ const loader = new GLTFLoader();
 const files = new Map<string, Promise<GLTF>>();
 const variantCache = new Map<string, Promise<Map<number, THREE.Material>>>();
 
-function load(url: string): Promise<GLTF> {
+export function load(url: string): Promise<GLTF> {
   let p = files.get(url);
   if (!p) { p = loader.loadAsync(url); files.set(url, p); p.catch(() => files.delete(url)); }
   return p;
@@ -25,7 +25,7 @@ function load(url: string): Promise<GLTF> {
 
 type VariantsExt = { mappings?: Array<{ material: number; variants: number[] }> };
 /** Matériaux d'une variante, indexés par l'ordre de parcours des maillages de la scène d'origine. */
-function variantMaterials(url: string, gltf: GLTF, name: string): Promise<Map<number, THREE.Material>> {
+export function variantMaterials(url: string, gltf: GLTF, name: string): Promise<Map<number, THREE.Material>> {
   const key = `${url}|${name}`;
   let p = variantCache.get(key);
   if (!p) {

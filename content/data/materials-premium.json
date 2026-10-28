@@ -1,0 +1,298 @@
+[
+  {
+    "id": "laiton-brosse",
+    "name": "Laiton brossé",
+    "category": "Métal",
+    "finish": "Brossé, vernis mat",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#C9A564",
+    "description": "Laiton massif brossé dans un seul sens : reflets étirés, chaleur dorée. Se patine avec le temps s'il n'est pas verni.",
+    "usages": [
+      "Poignées",
+      "Robinetterie",
+      "Luminaires",
+      "Plinthes et nez de marche"
+    ],
+    "pbr": {
+      "metalness": 1,
+      "roughness": 0.3,
+      "anisotropy": 0.8,
+      "normalScale": 0.25
+    },
+    "tileMeters": 0.12,
+    "textures": {
+      "kind": "procedural",
+      "generator": "brosse"
+    },
+    "compare": [
+      "chrome-poli",
+      "noir-mat"
+    ],
+    "showroom": "sr:quincaillerie:pastille:laiton:brosse"
+  },
+  {
+    "id": "chrome-poli",
+    "name": "Chrome poli",
+    "category": "Métal",
+    "finish": "Poli miroir",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#D6D8DA",
+    "description": "Dépôt de chrome sur laiton, poli miroir : reflets nets et froids, entretien facile.",
+    "usages": [
+      "Robinetterie",
+      "Poignées",
+      "Accessoires de bain"
+    ],
+    "pbr": {
+      "metalness": 1,
+      "roughness": 0.05,
+      "normalScale": 0.05
+    },
+    "tileMeters": 0.12,
+    "textures": {
+      "kind": "procedural",
+      "generator": "poli"
+    },
+    "compare": [
+      "laiton-brosse",
+      "noir-mat"
+    ],
+    "showroom": "sr:quincaillerie:pastille:chrome:poli"
+  },
+  {
+    "id": "noir-mat",
+    "name": "Noir mat",
+    "category": "Métal",
+    "finish": "Laquage poudre mat",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#1E1E20",
+    "description": "Acier ou laiton laqué époxy noir, toucher velouté et grain très fin, sans reflet métallique.",
+    "usages": [
+      "Robinetterie",
+      "Poignées",
+      "Luminaires",
+      "Verrières"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.62,
+      "clearcoat": 0.1,
+      "clearcoatRoughness": 0.6,
+      "normalScale": 0.35
+    },
+    "tileMeters": 0.12,
+    "textures": {
+      "kind": "procedural",
+      "generator": "poudre"
+    },
+    "compare": [
+      "laiton-brosse",
+      "chrome-poli"
+    ],
+    "showroom": "sr:quincaillerie:pastille:noir:mat"
+  },
+  {
+    "id": "zellige-emeraude",
+    "name": "Zellige artisanal émeraude",
+    "category": "Céramique",
+    "finish": "Émail brillant, bords irréguliers",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#1E6B55",
+    "description": "Terre cuite émaillée et taillée à la main : chaque carreau a sa nuance, son relief et sa brillance.",
+    "usages": [
+      "Crédence",
+      "Douche",
+      "Habillage de cheminée"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.18,
+      "clearcoat": 1,
+      "clearcoatRoughness": 0.08,
+      "normalScale": 1
+    },
+    "tileMeters": 0.4,
+    "textures": {
+      "kind": "showroom",
+      "ref": "sr:zellige:emeraude:carre10:brillant:clair"
+    },
+    "compare": [
+      "marbre-calacatta",
+      "travertin"
+    ],
+    "showroom": "sr:zellige:emeraude:carre10:brillant:clair"
+  },
+  {
+    "id": "marbre-calacatta",
+    "name": "Marbre Calacatta",
+    "category": "Pierre",
+    "finish": "Adouci (mat soyeux)",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#EEEAE3",
+    "description": "Fond blanc chaud et veines grises à dorées, larges et irrégulières.",
+    "usages": [
+      "Plans de travail",
+      "Tables",
+      "Sols",
+      "Salles de bain"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.32,
+      "clearcoat": 0.3,
+      "clearcoatRoughness": 0.25,
+      "normalScale": 0.4
+    },
+    "tileMeters": 1.2,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "calacatta",
+        "white marble",
+        "marble"
+      ],
+      "fallbackRef": "sr:marbre:calacatta:adouci"
+    },
+    "compare": [
+      "travertin",
+      "zellige-emeraude"
+    ],
+    "showroom": "sr:marbre:calacatta:adouci"
+  },
+  {
+    "id": "travertin",
+    "name": "Travertin",
+    "category": "Pierre",
+    "finish": "Adouci, pores ouverts",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#DCCBAE",
+    "description": "Pierre calcaire beige veinée dans le sens du lit, avec ses alvéoles caractéristiques.",
+    "usages": [
+      "Tables basses",
+      "Sols",
+      "Habillages muraux"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.55,
+      "normalScale": 0.9
+    },
+    "tileMeters": 1,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "travertine",
+        "limestone"
+      ],
+      "fallbackRef": "sr:marbre:travertin:adouci"
+    },
+    "compare": [
+      "marbre-calacatta",
+      "chene-naturel"
+    ],
+    "showroom": "sr:marbre:travertin:adouci"
+  },
+  {
+    "id": "chene-naturel",
+    "name": "Chêne naturel",
+    "category": "Bois",
+    "finish": "Huilé mat",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#B98E5E",
+    "description": "Chêne européen huilé : fil droit, maillures et pores visibles, teinte miel naturelle.",
+    "usages": [
+      "Parquets",
+      "Mobilier",
+      "Menuiseries"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.58,
+      "normalScale": 0.6
+    },
+    "tileMeters": 1,
+    "textures": {
+      "kind": "photo",
+      "assetId": "oak_veneer_01",
+      "fallbackDir": "/textures/tx-chene"
+    },
+    "compare": [
+      "travertin",
+      "velours-foret"
+    ],
+    "showroom": "sr:parquet:chene:larges:huile"
+  },
+  {
+    "id": "velours-foret",
+    "name": "Velours vert forêt",
+    "category": "Textile",
+    "finish": "Velours ras, reflet satiné",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#2F4A3D",
+    "description": "Velours de coton à poil ras : la couleur change avec la lumière et le sens du poil.",
+    "usages": [
+      "Canapés",
+      "Fauteuils",
+      "Têtes de lit",
+      "Rideaux"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.85,
+      "sheen": 1,
+      "sheenRoughness": 0.35,
+      "sheenColor": "#9FBFAF",
+      "normalScale": 0.5,
+      "tint": true
+    },
+    "tileMeters": 0.5,
+    "textures": {
+      "kind": "photo",
+      "assetId": "velour_velvet",
+      "fallbackDir": "/textures/m-velours"
+    },
+    "compare": [
+      "chene-naturel",
+      "laiton-brosse"
+    ],
+    "showroom": "sr:tissu:velours:vert-foret"
+  },
+  {
+    "id": "parquet-chevron",
+    "name": "Parquet chêne point de Hongrie",
+    "category": "Bois",
+    "finish": "Huilé naturel",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#A87B4F",
+    "description": "Lames de chêne posées en chevrons, teinte miel, veinage et nœuds discrets.",
+    "usages": [
+      "Sols"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.5,
+      "clearcoat": 0.15,
+      "clearcoatRoughness": 0.4,
+      "normalScale": 0.7
+    },
+    "tileMeters": 2,
+    "textures": {
+      "kind": "photo",
+      "assetId": "herringbone_parquet",
+      "fallbackDir": "/textures/m-chene"
+    },
+    "compare": [
+      "chene-naturel",
+      "travertin"
+    ]
+  }
+]
