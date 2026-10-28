@@ -73,5 +73,354 @@
       "ao": "ao.webp",
       "displacement": "displacement.webp"
     }
+  },
+  "chene-fume": {
+    "assetId": "oak_veneer_05",
+    "name": "Oak Veneer 05",
+    "url": "https://polyhaven.com/a/oak_veneer_05",
+    "authors": [
+      "Jenelle van Heerden"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/chene-fume",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "noyer-verni": {
+    "assetId": "walnut_veneer_02",
+    "name": "Walnut Veneer 02",
+    "url": "https://polyhaven.com/a/walnut_veneer_02",
+    "authors": [
+      "Jenelle van Heerden"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/noyer-verni",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "bois-huile": {
+    "assetId": "fine_grained_wood",
+    "name": "Fine Grained Wood",
+    "url": "https://polyhaven.com/a/fine_grained_wood",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/bois-huile",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp"
+    }
+  },
+  "peinture-mate": {
+    "assetId": "painted_plaster_wall",
+    "name": "Painted Plaster Wall",
+    "url": "https://polyhaven.com/a/painted_plaster_wall",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/enduit-chaux",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "peinture-velours": {
+    "assetId": "painted_plaster_wall",
+    "name": "Painted Plaster Wall",
+    "url": "https://polyhaven.com/a/painted_plaster_wall",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/enduit-chaux",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "peinture-satinee": {
+    "assetId": "painted_plaster_wall",
+    "name": "Painted Plaster Wall",
+    "url": "https://polyhaven.com/a/painted_plaster_wall",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/enduit-chaux",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "laque-brillante": {
+    "assetId": "painted_plaster_wall",
+    "name": "Painted Plaster Wall",
+    "url": "https://polyhaven.com/a/painted_plaster_wall",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/enduit-chaux",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "enduit-chaux": {
+    "assetId": "painted_plaster_wall",
+    "name": "Painted Plaster Wall",
+    "url": "https://polyhaven.com/a/painted_plaster_wall",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/enduit-chaux",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "tadelakt": {
+    "assetId": "white_stucco",
+    "name": "White Stucco",
+    "url": "https://polyhaven.com/a/white_stucco",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/tadelakt",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "platre-texture": {
+    "assetId": "white_plaster_02",
+    "name": "White Plaster 02",
+    "url": "https://polyhaven.com/a/white_plaster_02",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/platre-texture",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "travertin": {
+    "assetId": "Travertine009",
+    "name": "Travertine 009",
+    "url": "https://ambientcg.com/view?id=Travertine009",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/travertin",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "pierre-naturelle": {
+    "assetId": "sandstone_cracks",
+    "name": "Sandstone Cracks",
+    "url": "https://polyhaven.com/a/sandstone_cracks",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/pierre-naturelle",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "pierre-mate": {
+    "assetId": "stone_tiles_02",
+    "name": "Stone Tiles 02",
+    "url": "https://polyhaven.com/a/stone_tiles_02",
+    "authors": [
+      "Charlotte Baglioni"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/pierre-mate",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "terrazzo": {
+    "assetId": "terrazzo_tiles",
+    "name": "Terrazzo Tiles",
+    "url": "https://polyhaven.com/a/terrazzo_tiles",
+    "authors": [
+      "Amal Kumar"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/terrazzo",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "lin-lave": {
+    "assetId": "rough_linen",
+    "name": "Rough Linen",
+    "url": "https://polyhaven.com/a/rough_linen",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/lin-lave",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp",
+      "metallic": "metallic.webp"
+    }
+  },
+  "coton": {
+    "assetId": "cotton_jersey",
+    "name": "Cotton Jersey",
+    "url": "https://polyhaven.com/a/cotton_jersey",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/coton",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp",
+      "metallic": "metallic.webp"
+    }
+  },
+  "boucle": {
+    "assetId": "curly_teddy_natural",
+    "name": "Curly Teddy Natural",
+    "url": "https://polyhaven.com/a/curly_teddy_natural",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/boucle",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp",
+      "metallic": "metallic.webp"
+    }
+  },
+  "terre-cuite": {
+    "assetId": "terracotta_floor_tiles",
+    "name": "Terracotta Floor Tiles",
+    "url": "https://polyhaven.com/a/terracotta_floor_tiles",
+    "authors": [
+      "Dimitrios Savva"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/terre-cuite",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "tapis-laine": {
+    "assetId": "curly_teddy_natural",
+    "name": "Curly Teddy Natural",
+    "url": "https://polyhaven.com/a/curly_teddy_natural",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/boucle",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp",
+      "metallic": "metallic.webp"
+    }
   }
 }

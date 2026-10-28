@@ -1034,11 +1034,7 @@
     "tileMeters": 0.3,
     "textures": {
       "kind": "photo",
-      "search": [
-        "boucle",
-        "teddy",
-        "wool"
-      ],
+      "assetId": "curly_teddy_natural",
       "fallbackDir": "/textures/tx-bouclette"
     },
     "compare": [
@@ -1073,10 +1069,7 @@
     "tileMeters": 0.3,
     "textures": {
       "kind": "photo",
-      "search": [
-        "wool",
-        "herringbone fabric"
-      ],
+      "assetId": "poly_wool_herringbone",
       "fallbackDir": "/textures/tx-laine"
     },
     "compare": [

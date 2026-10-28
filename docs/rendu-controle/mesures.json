@@ -36,39 +36,39 @@
     "luminance": 88.2
   },
   "apres/generale": {
-    "detail": 8.73,
-    "contraste": 52.6,
-    "brules_pct": 0.24,
-    "luminance": 169.5
+    "detail": 9.46,
+    "contraste": 51.6,
+    "brules_pct": 0.12,
+    "luminance": 166.7
   },
   "apres/bois": {
-    "detail": 10.55,
-    "contraste": 45.7,
+    "detail": 11.97,
+    "contraste": 45.1,
     "brules_pct": 0,
-    "luminance": 151.9
+    "luminance": 149.7
   },
   "apres/murs": {
-    "detail": 7.16,
-    "contraste": 20.5,
+    "detail": 4.69,
+    "contraste": 19.3,
     "brules_pct": 0,
-    "luminance": 176.8
+    "luminance": 173.9
   },
   "apres/pierre": {
-    "detail": 12.77,
-    "contraste": 48,
-    "brules_pct": 0,
-    "luminance": 153.4
+    "detail": 10.7,
+    "contraste": 47.1,
+    "brules_pct": 0.02,
+    "luminance": 152.2
   },
   "apres/metal": {
-    "detail": 5.44,
-    "contraste": 43.7,
+    "detail": 6.36,
+    "contraste": 44.6,
     "brules_pct": 0,
-    "luminance": 202.7
+    "luminance": 201.6
   },
   "apres/tissu": {
-    "detail": 9.57,
-    "contraste": 45.3,
+    "detail": 14.25,
+    "contraste": 40.6,
     "brules_pct": 0,
-    "luminance": 180
+    "luminance": 163.4
   }
 }

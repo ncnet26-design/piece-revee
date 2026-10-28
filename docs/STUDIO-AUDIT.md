@@ -12,7 +12,7 @@ Ce document fait le point vérifié de l'application, compare les plateformes de
 | Base de données / comptes | Supabase prévu (migrations SQL, RLS, Edge Functions, Stripe) mais **non déployé** : le site tourne en « mode démo », les projets vivent sur l'appareil (localStorage). |
 | Moteur 3D | three.js 0.181, trois moteurs impératifs : planche de matières, Visite 3D (appartement), et désormais le Studio. |
 | Rendu final | `three-gpu-pathtracer` 0.0.24 (MIT), lancer de rayons dans le navigateur, résolution native jusqu'à 3840 × 2160. |
-| Ressources | Textures PBR 2K complètes (couleur, normales, rugosité, occlusion, relief) pour 25 des 37 matières (Poly Haven et ambientCG, CC0), 1K ou calculées pour les autres ; 64 modèles 3D (Poly Haven CC0, Wayfair/Khronos CC BY 4.0 / CC0). |
+| Ressources | Textures PBR 2K complètes (couleur, normales, rugosité, occlusion, relief) pour 24 des 37 matières (Poly Haven et ambientCG, CC0), 1K ou calculées pour les autres ; 64 modèles 3D (Poly Haven CC0, Wayfair/Khronos CC BY 4.0 / CC0). |
 | Tests | Vitest (106 tests unitaires), Playwright desktop + mobile avec axe (accessibilité). |
 | Robot de ressources | GitHub Actions (`ressources.yml`) : seul endroit avec Internet libre (le bac à sable de développement ne joint pas la plupart des sites). |
 
@@ -28,16 +28,16 @@ Ce document fait le point vérifié de l'application, compare les plateformes de
 ### Mesure avant/après (banc d'essai `/studio/controle/`, script `scripts/rendu-controle.mjs`)
 Indicateur « détail » = énergie moyenne du laplacien (micro-relief visible) ; mesure faite en rendu logiciel (sans carte graphique), donc sans l'occlusion ambiante haute qualité.
 
-| Vue | Détail avant | Détail après | Hautes lumières brûlées après |
-|---|---|---|---|
-| Vue générale | 3,40 | 8,73 | 0,24 % |
-| Noyer verni | 1,06 | 10,55 | 0 % |
-| Peinture et enduit | 0,11 | 7,16 | 0 % |
-| Travertin | 3,21 | 12,77 | 0 % |
-| Laiton brossé | 1,68 | 5,44 | 0 % |
-| Bouclé | 2,00 | 9,57 | 0 % |
+| Vue | Détail avant | Détail après | Gain | Hautes lumières brûlées après |
+|---|---|---|---|---|
+| Vue générale | 3,40 | 9,46 | ×3 | 0,12 % |
+| Noyer verni | 1,06 | 11,97 | ×11 | 0,00 % |
+| Peinture et enduit | 0,11 | 4,69 | ×43 | 0,00 % |
+| Travertin | 3,21 | 10,70 | ×3 | 0,02 % |
+| Laiton brossé | 1,68 | 6,36 | ×4 | 0,00 % |
+| Bouclé | 2,00 | 14,25 | ×7 | 0,00 % |
 
-Planche visuelle : `docs/rendu-controle/planche-avant-apres.jpg`. Défauts corrigés après la première mesure : enduit taché de vert (teinte recalculée sur une photo désaturée), parquet trop brillant (rugosité multipliée).
+Planche visuelle : `docs/rendu-controle/planche-avant-apres.jpg`. Défauts corrigés après relecture des mesures : enduit taché de vert (teinte recalculée sur une photo désaturée), parquet trop brillant (rugosité multipliée), texture « bouclé » qui était en fait un tissu à carreaux (remplacée), béton fissuré (écarté).
 
 ## 2. Plateformes de référence (pages lues par le robot le 28/10/2026, `docs/veille/`)
 
@@ -62,7 +62,7 @@ Planche visuelle : `docs/rendu-controle/planche-avant-apres.jpg`. Défauts corri
 | Vérification de compatibilité (dimensions) | GENA | ◐ filtre largeur max | Forte (mesure) | Forte | À construire : mesure manuelle puis assistée |
 | Vraie scène 3D manipulable | aucun (d'après les pages lues) | ✔ Studio 3D | Forte | Forte | **Différenciation majeure** |
 | Rendu final 4K natif | aucun ne l'affirme | ✔ lancer de rayons 3840 × 2160 | Moyenne | Moyenne | Honnêteté « natif, non agrandi » |
-| Bibliothèque de matières PBR | Mattoboard (non consulté) | ✔ 37 matières, 25 en 2K complet | Moyenne | Forte | Planche + 3D + rendu dans un seul outil |
+| Bibliothèque de matières PBR | Mattoboard (non consulté) | ✔ 37 matières, 24 en 2K complet | Moyenne | Forte | Planche + 3D + rendu dans un seul outil |
 | Liste d'achats + budget | airender, RoomRecipe | ✔ | Faible | Forte | Budget par devise, prix datés |
 | Versions et comparaison | — | ✔ | Faible | Moyenne | — |
 | Partage de projet | — | ✔ lien sans photos personnelles | Faible | Moyenne | — |
@@ -105,7 +105,7 @@ Prochaines couches (non commencées, dans cet ordre) : modèle de données du lo
 3. ✔ Studio : Explorer, Créer, 3D, Ma liste ; 12 tests de parcours (ordinateur + mobile) et axe.
 4. ☐ Coller le nouveau service dans Cloudflare, ajouter une clé, tester une vraie génération (vous).
 5. ☐ Images de démonstration haut de gamme pour « Explorer » (vos images IA ou génération payante validée).
-6. ◐ Textures 2K : 25 matières faites ; reste cuir, métaux et verres (calculés), zellige et faïence (calculés), béton ciré (la seule texture trouvée était fissurée : écartée, retour au béton 1K).
+6. ◐ Textures 2K : 24 matières faites ; reste cuir, métaux et verres (calculés), zellige et faïence (calculés), béton ciré (la seule texture trouvée était fissurée : écartée, retour au béton 1K).
 7. ☐ Modèle de données du logement + mesures manuelles + vérification « ça rentre ».
 8. ☐ Flux produits autorisés (photos) : programmes d'affiliation (Awin, Effiliation) ou API d'enseignes.
 9. ☐ Recherche visuelle par empreintes d'images (dès que les photos produits sont autorisées).
