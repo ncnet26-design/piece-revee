@@ -1,0 +1,11 @@
+{
+  // Déploiement automatique sur Cloudflare (Workers Builds) : le site statique construit dans out/.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "odd-bar-c583",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
