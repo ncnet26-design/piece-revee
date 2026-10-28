@@ -2,7 +2,7 @@
 
 ## 0.8.0 — 28 octobre 2026
 
-- **Showroom : 31 familles**, avec une référence Pièce Rêvée pour chaque déclinaison (« PR-QUI-02·01·01 ») et une **teinte sur mesure** sur tous les axes de couleur (matières sans limite) :
+- **Showroom : 25 familles**, avec une référence Pièce Rêvée pour chaque déclinaison (« PR-QUI-02·01·01 ») et une **teinte sur mesure** sur tous les axes de couleur (matières sans limite) :
   bois cannelé et tasseaux, cannage et rotin, papiers peints, moquettes, mosaïques de marbre, quincaillerie (barre moletée, boutons, coquille demi-lune, béquille, mitigeur, pastille de finition),
   interrupteurs et prises, luminaires et LED (lumière 2700 à 4000 K), canapés et assises, tapis, tableaux, objets de design (15 formes × 15 matières), objets de stylisme (tulipe, branche, feuille, tasse, cuillère, galet).
 - Échantillons en vrai volume : goutte de peinture laquée, tissus à bords crantés ou déchirés, cuir embossé croco, résine ambre.
