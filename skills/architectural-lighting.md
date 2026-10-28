@@ -1,0 +1,1 @@
+../.claude/skills/architectural-lighting/SKILL.md

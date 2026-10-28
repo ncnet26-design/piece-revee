@@ -1,0 +1,1 @@
+../.claude/skills/product-visual-similarity/SKILL.md

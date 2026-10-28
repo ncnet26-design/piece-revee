@@ -30,14 +30,14 @@ export function Comparator({ features, objectName, preset, inList, onAdd, onRepl
   const sel = "rounded-lg border border-line bg-white px-2 py-1.5 text-[12px]";
 
   return (
-    <section aria-labelledby="h-compare" className="mt-6">
+    <section aria-labelledby="h-compare" data-objet={objectName} className="mt-6">
       <div className="flex items-baseline justify-between gap-2">
         <h3 id="h-compare" className="text-[15px] font-semibold tracking-tight">Où trouver un modèle ressemblant</h3>
         <span className="text-[11.5px] text-muted" aria-live="polite">{matches.length} résultat{matches.length > 1 ? "s" : ""}</span>
       </div>
       {!features.productId && (
         <p className="mt-1.5 text-[12px] leading-snug text-[#5F5F67]">
-          Ce {objectName.toLowerCase()} est une création originale : voici des <strong className="font-semibold text-ink">alternatives ressemblantes</strong> vendues aujourd'hui, pas le modèle exact.
+          Ce meuble est une création originale : voici des <strong className="font-semibold text-ink">alternatives ressemblantes</strong> vendues aujourd'hui, pas le modèle exact.
         </p>
       )}
       <details className="group mt-3 rounded-xl border border-line bg-white/70 open:bg-white">

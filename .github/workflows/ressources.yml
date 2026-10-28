@@ -98,7 +98,7 @@ jobs:
           git config user.name "piece-revee-robot"
           git config user.email "robot@users.noreply.github.com"
           git checkout -B robot/ressources
-          git add public/textures public/models public/inspirations public/materiaux public/prototype content/data || true
+          for p in public/textures public/models public/inspirations public/materiaux public/prototype content/data; do [ -e "$p" ] && git add "$p"; done
           git add -f .robot || true
           git commit -m "ressources: textures, meubles 3D et photos libres ($(date +%Y-%m-%d))" || { echo "Rien de nouveau"; exit 0; }
           git push -f origin robot/ressources

@@ -1,0 +1,1 @@
+../.claude/skills/furniture-design/SKILL.md

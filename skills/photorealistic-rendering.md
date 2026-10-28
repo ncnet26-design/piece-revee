@@ -1,0 +1,1 @@
+../.claude/skills/photorealistic-rendering/SKILL.md

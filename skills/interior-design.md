@@ -1,0 +1,1 @@
+../.claude/skills/interior-design/SKILL.md
