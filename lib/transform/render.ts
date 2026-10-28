@@ -18,6 +18,8 @@ export interface ProjectData {
   samples: Map<string, CanvasImageSource>;
   board: HTMLImageElement | null;
   budget: { low: number; high: number };
+  /** Rendu photoréaliste de la pièce transformée (service d'images IA), s'il a été créé. */
+  after?: HTMLImageElement | null;
 }
 
 const IVORY = "#F4F0E8", INK = "#161512", BRONZE = "#7B5831", MUTED = "#6F675D", SERIF = '"Instrument Serif", Georgia, serif', SANS = '"Onest", system-ui, sans-serif';
@@ -69,8 +71,17 @@ export function drawPoster(d: ProjectData): HTMLCanvasElement {
   text(c, d.title, M, 330, `150px ${SERIF}`, INK, { maxW: W - 2 * M });
   text(c, `Esprit ${d.style.name.toLowerCase()} · ${new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}`, M, 400, `italic 52px ${SERIF}`, BRONZE);
   // Avant + inspirations
-  framed(c, d.photo, M, 470, 1300, 975, 28);
-  text(c, "VOTRE PIÈCE", M + 36, 470 + 975 - 40, `600 26px ${SANS}`, "#fff", { spacing: 6 });
+  if (d.after) {
+    // La pièce transformée en grand, la photo d'origine en médaillon.
+    framed(c, d.after, M, 470, 1300, 975, 28);
+    text(c, "VOTRE PIÈCE TRANSFORMÉE", M + 36, 470 + 975 - 40, `600 26px ${SANS}`, "#fff", { spacing: 6 });
+    c.save(); rr(c, M + 1300 - 380, 470 + 24, 356, 267, 18); c.fillStyle = "#fff"; c.shadowColor = "rgba(0,0,0,.25)"; c.shadowBlur = 30; c.fill(); c.restore();
+    framed(c, d.photo, M + 1300 - 372, 470 + 32, 340, 251, 12, 1, false);
+    text(c, "AVANT", M + 1300 - 356, 470 + 32 + 251 - 18, `600 20px ${SANS}`, "#fff", { spacing: 5 });
+  } else {
+    framed(c, d.photo, M, 470, 1300, 975, 28);
+    text(c, "VOTRE PIÈCE", M + 36, 470 + 975 - 40, `600 26px ${SANS}`, "#fff", { spacing: 6 });
+  }
   const ih = (975 - 2 * 30) / 3;
   d.inspirations.slice(0, 3).forEach((img, i) => framed(c, img, M + 1340, 470 + i * (ih + 30), W - 2 * M - 1340, ih, 22));
   text(c, "INSPIRATIONS", W - M, 455, `600 24px ${SANS}`, MUTED, { align: "right", spacing: 6 });
@@ -138,6 +149,19 @@ export function drawFrame(c: Ctx, t: number, d: ProjectData, W: number, H: numbe
     const g = c.createLinearGradient(0, H * 0.55, 0, H); g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(0,0,0,.55)"); c.fillStyle = g; c.fillRect(0, 0, W, H);
     text(c, "AVANT", M, H - 210 * u, `600 ${24 * u}px ${SANS}`, "#F2E7D6", { spacing: 8 * u, alpha: out(seg(t, 3.4, 4)) });
     text(c, "Votre pièce aujourd'hui", M, H - 130 * u, `${72 * u}px ${SERIF}`, "#fff", { alpha: out(seg(t, 3.6, 4.3)) });
+    if (d.after) {
+      // Révélation de la pièce transformée, par un balayage de gauche à droite.
+      const k = ease(seg(t, 4.6, 5.7));
+      if (k > 0) {
+        c.save(); c.beginPath(); c.rect(0, 0, W * k, H); c.clip();
+        cover(c, d.after, 0, 0, W, H, z);
+        c.fillStyle = g; c.fillRect(0, 0, W, H);
+        text(c, "APRÈS", M, H - 210 * u, `600 ${24 * u}px ${SANS}`, "#F2E7D6", { spacing: 8 * u });
+        text(c, "Votre pièce transformée", M, H - 130 * u, `${72 * u}px ${SERIF}`, "#fff", { maxW: W - 2 * M });
+        c.restore();
+        if (k < 1) { c.fillStyle = "#fff"; c.fillRect(W * k - 2 * u, 0, 4 * u, H); }
+      }
+    }
     c.globalAlpha = 1;
   }
   // 3. Les inspirations

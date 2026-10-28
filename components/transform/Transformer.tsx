@@ -9,6 +9,8 @@ import { ROOMS, TIERS, chooseReferences, composeBoard, dist, estimateBudget, gue
 import type { ProjectData } from "@/lib/transform/render";
 import { libModel } from "@/lib/home3d/library";
 import { ShopLinks } from "../ShopLinks";
+import { BeforeAfter } from "../BeforeAfter";
+import { redesignRoom } from "@/lib/ia";
 import { IconCamera, IconClose } from "../icons";
 
 type Phase = "form" | "analyse" | "resultat";
@@ -52,6 +54,9 @@ export default function Transformer() {
   const [film, setFilm] = useState<{ url: string; ext: string; format: string } | null>(null);
   const [filmProgress, setFilmProgress] = useState<number | null>(null);
   const [filmFormat, setFilmFormat] = useState<"vertical" | "paysage">("vertical");
+  const [after, setAfter] = useState<string | null>(null);
+  const [iaBusy, setIaBusy] = useState(false);
+  const [iaMsg, setIaMsg] = useState<string | null>(null);
   const target = useRef<"photo" | number>("photo");
 
   const setSlot = useCallback((i: number, v: Img | null) => setInsp((cur) => cur.map((x, j) => (j === i ? v : x))), []);
@@ -145,6 +150,29 @@ export default function Transformer() {
   };
   useEffect(() => () => { if (film) URL.revokeObjectURL(film.url); }, [film]);
 
+  /** Brief du projet, en clair, pour le rendu photoréaliste. */
+  const briefOf = (d: ProjectData) => [
+    `Pièce : ${d.room}. Style : ${d.style.name} (${d.style.summary})`,
+    `Palette : ${d.palette.map((p) => `${p.name} ${p.hex}`).join(", ")}.`,
+    ...d.picks.map((p) => `${p.role} : ${p.name.split(" · ")[0]}${p.name.includes(" · ") ? ` (${p.name.split(" · ").slice(1).join(", ")})` : ""}.`),
+    "Ambiance haut de gamme, lumière naturelle, matières réalistes.",
+  ].join("\n").slice(0, 1200);
+  const makeAfter = async () => {
+    if (!result || !photo) return;
+    setIaBusy(true); setIaMsg(null);
+    const r = await redesignRoom(photo.url, insp.filter(Boolean).map((x) => x!.url), briefOf(result.data));
+    if (r.ok) {
+      const R = await import("@/lib/transform/render");
+      const img = await R.loadImage(r.image);
+      const data = { ...result.data, after: img };
+      setAfter(r.image);
+      setResult({ ...result, data, poster: R.drawPoster(data).toDataURL("image/jpeg", 0.92) });
+      setFilm(null);
+      setIaMsg(r.left > 0 ? `Il vous reste ${r.left} rendu${r.left > 1 ? "s" : ""} aujourd'hui.` : "C'était votre dernier rendu du jour.");
+    } else setIaMsg(r.message);
+    setIaBusy(false);
+  };
+
   const openBoard = () => {
     if (!result) return;
     try { localStorage.setItem("pr_planche", JSON.stringify({ v: 1, title: result.data.title, bg: "#EFEBE3", items: result.items })); } catch { /* stockage plein */ }
@@ -227,7 +255,7 @@ export default function Transformer() {
 
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <button type="button" className="btn btn-lg btn-primary" onClick={() => void run()}>Créer mon projet</button>
-        <span className="text-[13px] text-muted">Tout est calculé sur votre appareil : vos photos ne sont envoyées nulle part.</span>
+        <span className="text-[13px] text-muted">Le projet est calculé sur votre appareil ; votre photo n'est envoyée au service d'images que si vous demandez le rendu photoréaliste.</span>
       </div>
       {msg && <p role="alert" className="notice notice-warn mt-4">{msg}</p>}
     </div>
@@ -261,10 +289,33 @@ export default function Transformer() {
           <p className="mt-3 max-w-[60ch] text-muted">{d.style.summary}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <button type="button" className="btn" onClick={() => { setPhase("form"); setResult(null); }}>Nouveau projet</button>
+          <button type="button" className="btn" onClick={() => { setPhase("form"); setResult(null); setAfter(null); setIaMsg(null); }}>Nouveau projet</button>
           <button type="button" className="btn btn-primary" onClick={openBoard}>Personnaliser dans ma planche</button>
         </div>
       </header>
+
+      <section className="mb-10 grid gap-6 rounded-[var(--r-l)] bg-[#161512] p-5 text-[#F2EEE6] sm:p-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:items-center" aria-labelledby="t-ia">
+        <div className="overflow-hidden rounded-[var(--r)]">
+          {after && photo
+            // eslint-disable-next-line @next/next/no-img-element
+            ? <BeforeAfter ratio={`${d.photo.naturalWidth} / ${d.photo.naturalHeight}`} before={<img src={photo.url} alt="Votre pièce avant" />} after={<img src={after} alt={`Votre pièce transformée, esprit ${d.style.name.toLowerCase()}`} />} labelAfter="Après" />
+            // eslint-disable-next-line @next/next/no-img-element
+            : <img src={photo?.url} alt="Votre pièce aujourd'hui" className={`w-full object-cover ${iaBusy ? "animate-pulse" : ""}`} style={{ aspectRatio: `${d.photo.naturalWidth} / ${d.photo.naturalHeight}` }} />}
+        </div>
+        <div className="flex flex-col gap-4">
+          <span className="font-ui text-[12px] font-semibold uppercase tracking-[.2em] text-[#D2AE7E]">Rendu photoréaliste</span>
+          <h2 id="t-ia" className="text-[clamp(30px,3.4vw,46px)] leading-[1.02] text-[#F7F4EE]">Votre pièce, <em className="text-[#D2AE7E]">transformée</em></h2>
+          <p className="text-[15px] text-[#F2EEE6]/75">Notre intelligence artificielle d'images garde l'architecture et le point de vue de votre photo, et y applique la palette, les matières et le mobilier de votre projet.</p>
+          {!after
+            ? <button type="button" className="btn btn-lg btn-light self-start" onClick={() => void makeAfter()} disabled={iaBusy}>{iaBusy ? <><span className="spinner" /> Création du rendu (20 à 40 s)…</> : "Créer le rendu de ma pièce"}</button>
+            : <div className="flex flex-wrap gap-2">
+                <a className="btn btn-light" href={after} download={`piece-revee-${d.room.toLowerCase().replace(/\s+/g, "-")}-apres.jpg`}>Télécharger le rendu</a>
+                <button type="button" className="btn border-white/30 bg-transparent text-[#F2EEE6] hover:border-white" onClick={() => void makeAfter()} disabled={iaBusy}>{iaBusy ? "Création…" : "Autre proposition"}</button>
+              </div>}
+          {iaMsg && <p role="status" className="text-[13.5px] text-[#F2EEE6]/80">{iaMsg}</p>}
+          <p className="text-[11.5px] text-[#F2EEE6]/55">Image générée par IA, à titre d'inspiration : proportions et produits à vérifier avant achat. Votre photo est envoyée au service d'images pour ce rendu uniquement.</p>
+        </div>
+      </section>
 
       <section className="grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]" aria-label="Planche projet et film">
         <figure className="m-0">

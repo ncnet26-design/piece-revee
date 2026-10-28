@@ -326,6 +326,17 @@ test("transformer : photo et trois inspirations donnent planche, références et
   await expect(page.getByRole("img", { name: /Planche projet/ })).toBeVisible();
   await expect(page.getByRole("link", { name: "Télécharger l'image HD" })).toHaveAttribute("href", /^data:image\/jpeg/);
   await expect(page.getByRole("heading", { name: /références/ })).toBeVisible();
+  // Rendu photoréaliste : le service d'images est simulé (aucun appel payant pendant les tests).
+  await page.route("https://piece-revee-ia.ewanesteves26.workers.dev/redesign", async (route) => {
+    const body = route.request().postDataJSON() as { photo: string; inspirations: string[]; brief: string };
+    expect(body.photo).toMatch(/^data:image\/jpeg;base64,/);
+    expect(body.inspirations).toHaveLength(3);
+    expect(body.brief).toContain("Pièce : Cuisine");
+    await route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ image: body.photo, restant: 5 }) });
+  });
+  await page.getByRole("button", { name: "Créer le rendu de ma pièce" }).click();
+  await expect(page.getByRole("link", { name: "Télécharger le rendu" })).toBeVisible({ timeout: 60_000 });
+  await expect(page.getByText("Il vous reste 5 rendus aujourd'hui.")).toBeVisible();
   // Budget : modifier un poste met à jour le total.
   const first = page.getByLabel(/^Mon budget :/).first();
   await first.fill("1000");
