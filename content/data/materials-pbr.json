@@ -118,7 +118,7 @@
     ],
     "license": "CC0 1.0",
     "resolution": 2048,
-    "dir": "/materiaux/enduit-chaux",
+    "dir": "/materiaux/peinture-mate",
     "maps": {
       "basecolor": "basecolor.webp",
       "normal": "normal.webp",
@@ -136,7 +136,7 @@
     ],
     "license": "CC0 1.0",
     "resolution": 2048,
-    "dir": "/materiaux/enduit-chaux",
+    "dir": "/materiaux/peinture-velours",
     "maps": {
       "basecolor": "basecolor.webp",
       "normal": "normal.webp",
@@ -154,7 +154,7 @@
     ],
     "license": "CC0 1.0",
     "resolution": 2048,
-    "dir": "/materiaux/enduit-chaux",
+    "dir": "/materiaux/peinture-satinee",
     "maps": {
       "basecolor": "basecolor.webp",
       "normal": "normal.webp",
@@ -172,7 +172,7 @@
     ],
     "license": "CC0 1.0",
     "resolution": 2048,
-    "dir": "/materiaux/enduit-chaux",
+    "dir": "/materiaux/laque-brillante",
     "maps": {
       "basecolor": "basecolor.webp",
       "normal": "normal.webp",
@@ -395,7 +395,63 @@
     ],
     "license": "CC0 1.0",
     "resolution": 2048,
-    "dir": "/materiaux/boucle",
+    "dir": "/materiaux/tapis-laine",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp",
+      "metallic": "metallic.webp"
+    }
+  },
+  "beton-cire": {
+    "assetId": "cracked_concrete_wall",
+    "name": "Cracked Concrete Wall",
+    "url": "https://polyhaven.com/a/cracked_concrete_wall",
+    "authors": [
+      "Dimitrios Savva",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/beton-cire",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "marbre-calacatta": {
+    "assetId": "Marble012",
+    "name": "Marble 012",
+    "url": "https://ambientcg.com/view?id=Marble012",
+    "authors": [
+      "ambientCG (Lennart Demes)"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/marbre-calacatta",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "laine": {
+    "assetId": "poly_wool_herringbone",
+    "name": "Poly Wool Herringbone",
+    "url": "https://polyhaven.com/a/poly_wool_herringbone",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/laine",
     "maps": {
       "basecolor": "basecolor.webp",
       "normal": "normal.webp",

@@ -1,0 +1,48 @@
+✓ chene-naturel ← Oak Veneer 01 (basecolor, normal, roughness, ao, displacement)
+✓ chene-fume ← Oak Veneer 05 (basecolor, normal, roughness, ao, displacement)
+✓ noyer-verni ← Walnut Veneer 02 (basecolor, normal, roughness, ao, displacement)
+✓ bois-huile ← Fine Grained Wood (basecolor, normal, roughness, ao)
+✓ parquet-chevron ← Herringbone Parquet (basecolor, normal, roughness, ao, displacement)
+✓ peinture-mate ← Painted Plaster Wall (basecolor, normal, roughness, ao, displacement)
+✓ peinture-velours ← Painted Plaster Wall (basecolor, normal, roughness, ao, displacement)
+✓ peinture-satinee ← Painted Plaster Wall (basecolor, normal, roughness, ao, displacement)
+✓ laque-brillante ← Painted Plaster Wall (basecolor, normal, roughness, ao, displacement)
+✓ enduit-chaux ← Painted Plaster Wall (basecolor, normal, roughness, ao, displacement)
+✓ tadelakt ← White Stucco (basecolor, normal, roughness, ao, displacement)
+✓ beton-cire ← Cracked Concrete Wall (basecolor, normal, roughness, ao, displacement)
+✓ platre-texture ← White Plaster 02 (basecolor, normal, roughness, ao, displacement)
+✓ travertin ← ambientCG Travertine009 (basecolor, normal, roughness, ao, displacement)
+✓ marbre-calacatta ← ambientCG Marble012 (basecolor, normal, roughness, displacement)
+✓ pierre-naturelle ← Sandstone Cracks (basecolor, normal, roughness, ao, displacement)
+✓ pierre-mate ← Stone Tiles 02 (basecolor, normal, roughness, ao, displacement)
+✓ terrazzo ← Terrazzo Tiles (basecolor, normal, roughness, ao, displacement)
+✓ lin-lave ← Rough Linen (basecolor, normal, roughness, ao, displacement, metallic)
+✓ coton ← Cotton Jersey (basecolor, normal, roughness, ao, displacement, metallic)
+✓ velours-foret ← Velour Velvet (basecolor, normal, roughness, ao, displacement, metallic)
+✓ boucle ← Curly Teddy Natural (basecolor, normal, roughness, ao, displacement, metallic)
+✓ laine ← Poly Wool Herringbone (basecolor, normal, roughness, ao, displacement, metallic)
+✗ cuir-pleine-fleur : pas de couleur
+✓ terre-cuite ← Terracotta Floor Tiles (basecolor, normal, roughness, ao, displacement)
+✓ tapis-laine ← Curly Teddy Natural (basecolor, normal, roughness, ao, displacement, metallic)
+✗ lr-topim-canape-velours-3p (403) sans données structurées
+✓ ikea-strandmon-tommaboda-beige (200) données produit trouvées
+✗ lr-leone-fauteuil-velours (403) sans données structurées
+✓ gubi-pacha-lounge-chair (200) données produit trouvées
+✓ ikea-borgeby-bouleau-70 (200) données produit trouvées
+✓ ikea-stockholm-2025-chene-verre (200) données produit trouvées
+✗ ampm-guimel-travertin (403) sans données structurées
+✓ gubi-epic-coffee-table-round (200) données produit trouvées
+✓ ikea-akterspring-lampadaire (200) données produit trouvées
+✗ lr-moricio-lampadaire (403) sans données structurées
+✓ flos-ic-lights-f1-laiton (200) données produit trouvées
+✓ ikea-eneryda-laiton-112 (200) données produit trouvées
+✓ ikea-bagganas-laiton-143 (200) données produit trouvées
+✓ buster-punch-pull-bar-linear-laiton (200) données produit trouvées
+✗ drawer-oris-effet-travertin (403) sans données structurées
+✗ mdm-krille-ovale-effet-travertin (403) sans données structurées
+✗ kave-drasi-ronde-90 (429) sans données structurées
+✓ westwing-distinct-travertin (200) données produit trouvées
+✗ sweeek-feel-boucle-creme (403) sans données structurées
+✗ mdm-nola-boucle-creme (403) sans données structurées
+✓ westwing-alba-creme (200) données produit trouvées
+✓ westwing-wolke-modulable-3p (200) données produit trouvées
