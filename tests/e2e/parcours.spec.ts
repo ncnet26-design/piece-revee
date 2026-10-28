@@ -13,15 +13,17 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => { localStorage.setItem("pr_consent", JSON.stringify({ analytics: false, at: "2026-10-26", version: 1 })); localStorage.setItem("pr_camille_guide", "off"); });
 });
 
-test("accueil : promesse, appels à l'action, visite 3D", async ({ page }) => {
+test("accueil : promesse, accès direct au Studio, sections éditoriales", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("réellement");
-  await expect(page.getByRole("link", { name: "Transformer ma pièce" })).toHaveAttribute("href", /transformer/);
-  await expect(page.getByRole("link", { name: "Explorer le showroom" }).first()).toHaveAttribute("href", /showroom/);
-  const tools = page.getByRole("list", { name: "Les outils" });
-  await expect(tools.getByRole("link", { name: /Créer une planche/ })).toHaveAttribute("href", /planche/);
-  await expect(tools.getByRole("link", { name: /Générer un concept/ })).toHaveAttribute("href", /concept/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("dessiné");
+  await expect(page.getByRole("link", { name: "Commencer un projet" }).first()).toHaveAttribute("href", /studio\/\?etape=creer/);
+  const mobile = (page.viewportSize()?.width ?? 1200) < 1024;
+  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Studio", "Inspirations", "Matières", "Planches"]);
+  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Studio", "Inspirations", "Matières", "Planches"]);
+  await expect(page.getByRole("heading", { name: /trois façons de l'avoir/ })).toBeVisible();
+  await expect(page.getByText(/Prix relevés sur les sites des enseignes/)).toBeVisible();
+  await expect(page.getByRole("slider", { name: /Bouclé et noyer/ })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
@@ -154,6 +156,7 @@ test("visite 3D : pièces, style, modification d'un meuble, sauvegarde", async (
   await page.addInitScript(() => localStorage.setItem("pr_home3d_hint", "1"));
   await page.goto("/visite-3d/");
   await expect(page.getByRole("heading", { level: 1, name: "Visite 3D" })).toBeVisible();
+  await expect(page.getByText(/Maquette d'appartement simplifiée/)).toBeVisible();
   await expect(page.getByText("Chargement de la 3D")).toBeHidden({ timeout: 30_000 });
   await expect(page.getByText("La 3D ne peut pas s'afficher")).toHaveCount(0);
   await page.getByRole("navigation", { name: "Pièces" }).getByRole("button", { name: "Chambre" }).click();
@@ -455,18 +458,22 @@ test("planche : composer une planche à partir d'une image", async ({ page, isMo
   expect(errors).toEqual([]);
 });
 
-test("inspirations : photo d'ambiance par collection, puis moodboard (service simulé)", async ({ page }) => {
-  test.setTimeout(120_000);
-  const fs = await import("node:fs");
-  const img = `data:image/webp;base64,${fs.readFileSync("public/visuels/hero-3d.webp").toString("base64")}`;
-  await page.route("https://piece-revee-ia.ewanesteves26.workers.dev/concept", (route) => route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ image: img, restant: 4 }) }));
+test("inspirations : filtrer, garder en favori, lancer un projet avec un style", async ({ page }) => {
   await page.goto("/galerie/");
-  await page.getByRole("group", { name: "Collections" }).getByRole("button", { name: "Villas", exact: true }).click();
-  await page.getByRole("button", { name: "Générer une photo" }).click();
-  await page.getByRole("button", { name: /^Villas :/ }).first().click();
-  await page.getByRole("dialog").getByRole("button", { name: "Créer un moodboard" }).click();
-  await expect(page).toHaveURL(/planche/, { timeout: 30_000 });
-  await expect(page.getByRole("textbox", { name: "Titre de la planche" })).toHaveValue("Villas", { timeout: 30_000 });
+  await page.getByRole("textbox", { name: "Rechercher une inspiration" }).fill("japandi");
+  await expect(page.getByText("1 inspiration")).toBeVisible();
+  await page.getByRole("button", { name: "Ajouter Japandi des favoris" }).click();
+  await page.getByRole("button", { name: "Japandi : voir le détail" }).click();
+  const d = page.getByRole("dialog", { name: "Japandi" });
+  await expect(d.getByText("Chêne fumé")).toBeVisible();
+  await expect(d.getByText(/CC0/)).toBeVisible();
+  await d.getByRole("button", { name: "Créer un projet avec ce style" }).click();
+  await expect(page).toHaveURL(/studio\/\?etape=creer/);
+  await expect(page.getByRole("textbox", { name: "Décrivez la pièce que vous imaginez" })).toHaveValue(/Japandi/);
+  await expect(page.getByRole("button", { name: "Japandi", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await page.goto("/galerie/");
+  await page.getByRole("button", { name: /Mes favoris \(1\)/ }).click();
+  await expect(page.getByRole("heading", { name: "Japandi" })).toBeVisible();
 });
 
 test("showroom : teinte sur mesure (matières sans limite)", async ({ page }) => {

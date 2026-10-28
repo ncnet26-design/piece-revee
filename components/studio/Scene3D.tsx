@@ -99,7 +99,7 @@ export function Scene3D({ intent, inList, onAdd, onFinal }: { intent: Intent | n
   const btn = (on: boolean) => `grid h-10 min-w-10 place-items-center rounded-full px-3 text-[12.5px] font-medium transition ${on ? "bg-ink text-white" : "text-ink hover:bg-black/5"}`;
   return (
     <div className="relative">
-      <div ref={host} className="relative h-[min(78vh,760px)] min-h-[420px] scroll-mt-3 overflow-hidden rounded-[22px] bg-[#E9E6E0]" data-testid="scene-3d">
+      <div ref={host} className="relative h-[min(78vh,760px)] min-h-[420px] scroll-mt-3 overflow-hidden rounded-[14px] bg-[#E9E6E0]" data-testid="scene-3d">
         {state !== "pret" && <div className="absolute inset-0 grid place-items-center text-[13px] text-muted">{state === "indisponible" ? "La 3D n'est pas disponible sur cet appareil." : "Préparation de la pièce…"}</div>}
         {state === "pret" && loading > 0 && <div role="status" className="studio-progress absolute left-1/2 top-4 -translate-x-1/2 rounded-full bg-white/85 px-3 py-1 text-[12px] backdrop-blur">Chargement des meubles et des matières…</div>}
       </div>

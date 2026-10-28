@@ -15,6 +15,8 @@ export interface SceneObject {
   materials?: Record<string, string>;
   /** Couleur appliquée par zone. */
   colors?: Record<string, string>;
+  /** Matière appliquée à la zone principale (la plus grande) tant qu'aucune matière n'a été choisie. */
+  mainMaterial?: string;
 }
 export interface StudioScene {
   v: 1;
@@ -27,10 +29,10 @@ export const DEFAULT_SCENE: StudioScene = {
   room: { w: 5.6, d: 4.8, h: 2.9, wall: "#EDE8DF", floor: "parquet-chevron", wallFinish: "peinture-mate" },
   objects: [
     { uid: "tapis-1", furnitureId: "tapis-laine", x: -0.25, y: 0, z: 0.2, rotY: Math.PI / 2 },
-    { uid: "canape-1", furnitureId: "canape-glam-velours", x: -2.15, y: 0, z: 0.2, rotY: Math.PI / 2, variant: "Champagne" },
+    { uid: "canape-1", furnitureId: "canape-glam-velours", x: -2.15, y: 0, z: 0.2, rotY: Math.PI / 2, variant: "Champagne", mainMaterial: "boucle" },
     { uid: "fauteuil-1", furnitureId: "fauteuil-lounge-cuir", x: 1.05, y: 0, z: 1.25, rotY: -2.3 },
     { uid: "table-basse-1", furnitureId: "table-basse-galet-travertin", x: -0.55, y: 0, z: 0.2, rotY: Math.PI / 2 },
-    { uid: "buffet-1", furnitureId: "buffet-cannele", x: 2.52, y: 0, z: -0.2, rotY: -Math.PI / 2 },
+    { uid: "buffet-1", furnitureId: "buffet-cannele", x: 2.52, y: 0, z: -0.2, rotY: -Math.PI / 2, mainMaterial: "noyer-verni" },
     { uid: "poignee-1", furnitureId: "poignee-barre-moletee", parent: "buffet-1", x: -0.42, y: 0.52, z: 0.275, rotY: 0 },
     { uid: "poignee-2", furnitureId: "poignee-barre-moletee", parent: "buffet-1", x: 0.42, y: 0.52, z: 0.275, rotY: 0 },
     { uid: "vase-1", furnitureId: "vase-laiton", parent: "buffet-1", x: 0.75, y: 0.68, z: 0, rotY: 0 },
@@ -63,7 +65,7 @@ export const QA_VIEWS: Record<string, { pos: [number, number, number]; target: [
   tissu: { pos: [-0.5, 0.9, 1.2], target: [-1.45, 0.45, 0.35], fov: 32 },
 };
 
-const KEY = "pr_studio_scene_v2";
+const KEY = "pr_studio_scene_v3";
 export function loadScene(): StudioScene {
   try {
     const s = JSON.parse(localStorage.getItem(KEY) ?? "null") as StudioScene | null;

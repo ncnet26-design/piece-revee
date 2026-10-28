@@ -36,7 +36,7 @@ export function Comparator({ features, objectName, preset, inList, onAdd, onRepl
         <span className="text-[11.5px] text-muted" aria-live="polite">{matches.length} résultat{matches.length > 1 ? "s" : ""}</span>
       </div>
       {!features.productId && (
-        <p className="mt-1.5 text-[12px] leading-snug text-[#5F5F67]">
+        <p className="mt-1.5 text-[12px] leading-snug text-muted">
           Ce meuble est une création originale : voici des <strong className="font-semibold text-ink">alternatives ressemblantes</strong> vendues aujourd'hui, pas le modèle exact.
         </p>
       )}
@@ -100,7 +100,7 @@ function ProductCard({ m, added, onAdd, onReplace }: { m: Match; added: boolean;
         {p.reference && <><dt className="text-muted">Réf.</dt><dd className="font-mono">{p.reference}</dd></>}
         {p.availability && <><dt className="text-muted">Dispo.</dt><dd>{p.availability.text}</dd></>}
       </dl>
-      {m.reasons.length > 0 && <p className="mt-1.5 text-[11.5px] text-[#5F5F67]">{m.reasons.slice(0, 4).join(" · ")}</p>}
+      {m.reasons.length > 0 && <p className="mt-1.5 text-[11.5px] text-muted">{m.reasons.slice(0, 4).join(" · ")}</p>}
       {p.note && <p className="mt-1 text-[11px] text-[#9A5B1E]">{p.note}</p>}
       <p className={`mt-1.5 text-[10.5px] ${old ? "text-[#9A5B1E]" : "text-muted"}`}>{p.demo ? "Donnée de démonstration (fictive)" : `Vérifié le ${fmtDate(p.verification.at)}${p.price ? ` · ${p.price.region}` : ""}`}</p>
       <div className="mt-2 flex flex-wrap items-center gap-1.5">

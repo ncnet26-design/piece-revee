@@ -36,7 +36,7 @@ export const MaterialSchema = z.object({
   textures: z.discriminatedUnion("kind", [
     z.object({ kind: z.literal("procedural"), generator: z.enum(["brosse", "poli", "poudre"]) }),
     z.object({ kind: z.literal("showroom"), ref: z.string() }),
-    z.object({ kind: z.literal("photo"), assetId: z.string().optional(), search: z.array(z.string()).optional(), fallbackDir: z.string().optional(), fallbackRef: z.string().optional() }),
+    z.object({ kind: z.literal("photo"), assetId: z.string().optional(), search: z.array(z.string()).optional(), prefer: z.enum(["polyhaven", "ambientcg"]).optional(), fallbackDir: z.string().optional(), fallbackRef: z.string().optional() }),
   ]),
   compare: z.array(z.string()),
   showroom: z.string().optional(),

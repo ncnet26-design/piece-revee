@@ -12,7 +12,7 @@ export function ShoppingList({ project }: { project: Project }) {
   const fmt = (v: number, c: string) => v.toLocaleString("fr-FR", { style: "currency", currency: c, maximumFractionDigits: 2 });
   const qty = (id: string, d: number) => updateProject((p) => ({ ...p, list: p.list.map((x) => (x.productId === id ? { ...x, qty: Math.max(1, x.qty + d) } : x)) }));
   const remove = (id: string) => updateProject((p) => ({ ...p, list: p.list.filter((x) => x.productId !== id) }));
-  if (!rows.length) return <div className="grid place-items-center rounded-[22px] border border-dashed border-line bg-white/60 p-10 text-center text-[13.5px] text-muted">Votre liste est vide. Touchez un meuble dans votre rendu ou dans la 3D, puis « Ajouter à ma liste ».</div>;
+  if (!rows.length) return <div className="grid place-items-center rounded-[14px] border border-dashed border-line bg-white/60 p-10 text-center text-[13.5px] text-muted">Votre liste est vide. Touchez un meuble dans votre rendu ou dans la 3D, puis « Ajouter à ma liste ».</div>;
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
       <ul className="grid list-none gap-2 p-0">
@@ -34,7 +34,7 @@ export function ShoppingList({ project }: { project: Project }) {
           </li>
         ))}
       </ul>
-      <aside className="h-fit rounded-[22px] border border-line bg-white p-5" aria-label="Budget">
+      <aside className="h-fit rounded-[14px] border border-line bg-white p-5" aria-label="Budget">
         <p className="text-[10.5px] font-semibold uppercase tracking-[.16em] text-muted">Budget</p>
         {[...totals].map(([c, v]) => <p key={c} className="mt-1 text-[26px] font-semibold tabular-nums tracking-tight">{fmt(v, c)}</p>)}
         {unknown > 0 && <p className="mt-1 text-[12px] text-muted">+ {unknown} produit{unknown > 1 ? "s" : ""} sans prix relevé</p>}

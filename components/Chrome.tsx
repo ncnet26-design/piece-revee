@@ -10,15 +10,12 @@ import { CamilleAvatar } from "./CamilleAvatar";
 import { POSTHOG_KEY } from "@/lib/site";
 import { IconGrid, IconHeart, IconHouse, IconPhoto, IconSwatches, IconTheme, IconUser } from "./icons";
 
+/** Quatre destinations : créer (Studio), choisir un style (Inspirations), choisir les matières, composer la planche. */
 const NAV = [
   { href: "/studio/", label: "Studio" },
-  { href: "/showroom/", label: "Showroom" },
-  { href: "/planche/", label: "Planche 3D" },
-  { href: "/transformer/", label: "Transformer" },
-  { href: "/concept/", label: "Concept" },
-  { href: "/visite-3d/", label: "Visite 3D" },
   { href: "/galerie/", label: "Inspirations" },
-  { href: "/tarifs/", label: "Tarifs" },
+  { href: "/showroom/", label: "Matières" },
+  { href: "/planche/", label: "Planches" },
 ];
 const EXPLORE = ["/explorer/", "/matieres/", "/accords/", "/mobilier/", "/lieux/", "/plantes/", "/guides/", "/styles/"];
 
@@ -42,9 +39,9 @@ export function ThemeToggle() {
 export function LogoMark({ className = "h-9 w-9" }: { className?: string }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 40 40" className={`flex-none ${className}`} style={{ isolation: "isolate" }}>
-      <path d="M5 37V17.5a10.5 10.5 0 0 1 21 0V37z" fill="#C0714F" />
-      <circle cx="27.5" cy="12.5" r="8.5" fill="#8FA38A" style={{ mixBlendMode: "multiply" }} />
-      <rect x="20" y="24" width="15" height="13" rx="2.2" fill="#D9C3A0" style={{ mixBlendMode: "multiply" }} />
+      <path d="M5 37V17.5a10.5 10.5 0 0 1 21 0V37z" fill="#A9774E" />
+      <circle cx="27.5" cy="12.5" r="8.5" fill="#9AA392" style={{ mixBlendMode: "multiply" }} />
+      <rect x="20" y="24" width="15" height="13" rx="1.5" fill="#D9C7AE" style={{ mixBlendMode: "multiply" }} />
     </svg>
   );
 }
@@ -52,7 +49,7 @@ export function Logo({ className = "", onDark = false }: { className?: string; o
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
       <LogoMark />
-      <span className={`font-ui text-[23px] font-[650] leading-none tracking-[-.035em] ${onDark ? "text-[#F2EEE6]" : ""}`}>Pièce<span className="font-[400]"> Rêvée</span></span>
+      <span className={`font-display text-[26px] leading-none tracking-[-.01em] ${onDark ? "text-[#F2EEE6]" : ""}`}>Pièce Rêvée</span>
     </span>
   );
 }
@@ -78,7 +75,7 @@ export function Header() {
         </Link>
         <ThemeToggle />
         <Link href="/compte/" className="btn btn-sm btn-ghost border-transparent px-2.5" aria-label="Mon compte"><IconUser width={17} height={17} /></Link>
-        <Link href="/transformer/" className="btn btn-primary hidden md:inline-flex">Commencer</Link>
+        <Link href="/studio/?etape=creer" className="btn btn-primary hidden md:inline-flex">Commencer un projet</Link>
       </div>
     </header>
   );
@@ -87,10 +84,10 @@ export function Header() {
 export function TabBar() {
   const path = usePathname() ?? "/";
   const items = [
-    { href: "/showroom/", label: "Showroom", Icon: IconGrid, active: path.startsWith("/showroom") || path.startsWith("/galerie") || EXPLORE.some((p) => path.startsWith(p)) },
-    { href: "/planche/", label: "Planche", Icon: IconSwatches, active: path.startsWith("/planche") },
-    { href: "/transformer/", label: "Transformer", Icon: IconPhoto, active: path.startsWith("/transformer") || path.startsWith("/projet") },
-    { href: "/visite-3d/", label: "3D", Icon: IconHouse, active: path.startsWith("/visite-3d") || path.startsWith("/maison") },
+    { href: "/studio/", label: "Studio", Icon: IconHouse, active: path.startsWith("/studio") || path.startsWith("/transformer") || path.startsWith("/concept") || path.startsWith("/visite-3d") },
+    { href: "/galerie/", label: "Inspirations", Icon: IconPhoto, active: path.startsWith("/galerie") },
+    { href: "/showroom/", label: "Matières", Icon: IconGrid, active: path.startsWith("/showroom") || EXPLORE.some((p) => path.startsWith(p)) },
+    { href: "/planche/", label: "Planches", Icon: IconSwatches, active: path.startsWith("/planche") },
   ];
   return (
     <nav aria-label="Navigation mobile" className="fixed inset-x-0 bottom-0 z-25 border-t border-line bg-surface lg:hidden"
@@ -143,15 +140,16 @@ export function CookieBanner() {
 
 export function Footer() {
   const cols = [
-    { title: "Créer", links: [["Studio", "/studio/"], ["Showroom", "/showroom/"], ["Planche de matières 3D", "/planche/"], ["Transformer mon espace", "/transformer/"], ["Générer un concept", "/concept/"], ["Visite 3D", "/visite-3d/"], ["Mon projet", "/projet/"], ["Inspirations", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
+    { title: "Créer", links: [["Studio", "/studio/"], ["Inspirations", "/galerie/"], ["Matières", "/showroom/"], ["Planches", "/planche/"], ["Trouver mon style", "/quiz/"], ["Tarifs", "/tarifs/"]] },
+    { title: "Autres outils", links: [["Transformer (première version)", "/transformer/"], ["Concept éditorial", "/concept/"], ["Maquette d'appartement 3D", "/visite-3d/"], ["Mon projet d'étude", "/projet/"], ["Ma maison", "/maison/"]] },
     { title: "Explorer", links: [["Tout explorer", "/explorer/"], ["Matériauthèque", "/matieres/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
     { title: "Informations", links: [["Mentions légales", "/legal/mentions-legales/"], ["CGU", "/legal/cgu/"], ["CGV", "/legal/cgv/"], ["Confidentialité", "/legal/confidentialite/"], ["Cookies", "/legal/cookies/"], ["Liens affiliés", "/legal/affiliation/"]] },
   ];
   return (
     <footer className="mt-32 bg-[#161512] pb-12 pt-20 text-[14px] text-[#B9B2A6]" style={{ colorScheme: "dark" }}>
       <div className="wrap">
-        <p className="max-w-[18ch] font-display text-[clamp(40px,6vw,76px)] leading-[1.02] text-[#F2EEE6]">Votre intérieur, <em className="text-[#D2AE7E]">réellement</em> rêvé.</p>
-        <div className="mt-14 grid gap-10 border-t border-white/10 pt-10 md:grid-cols-4">
+        <p className="max-w-[20ch] font-display text-[clamp(40px,6vw,76px)] leading-[1.02] text-[#F2EEE6]">Dessiner, choisir, <em className="text-[#D2AE7E]">habiter.</em></p>
+        <div className="mt-14 grid gap-10 border-t border-white/10 pt-10 md:grid-cols-5">
           <div className="flex flex-col gap-3">
             <span className="text-[#F2EEE6]"><Logo onDark /></span>
             <p className="max-w-[34ch]">Architecture d'intérieur et paysage pour tous. Liens d'achat et images générées par IA toujours signalés.</p>

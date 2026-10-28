@@ -1,22 +1,4 @@
 {
-  "marbre-calacatta": {
-    "assetId": "marble_01",
-    "name": "Marble 01",
-    "url": "https://polyhaven.com/a/marble_01",
-    "authors": [
-      "Rob Tuytel"
-    ],
-    "license": "CC0 1.0",
-    "resolution": 2048,
-    "dir": "/materiaux/marbre-calacatta",
-    "maps": {
-      "basecolor": "basecolor.webp",
-      "normal": "normal.webp",
-      "roughness": "roughness.webp",
-      "ao": "ao.webp",
-      "displacement": "displacement.webp"
-    }
-  },
   "chene-naturel": {
     "assetId": "oak_veneer_01",
     "name": "Oak Veneer 01",

@@ -36,12 +36,14 @@ async function veille() {
 /* ——— Cartes PBR haute définition ——— */
 type Asset = { name: string; tags: string[]; categories: string[]; download_count: number; authors: Record<string, string> };
 async function pbr() {
-  const mats = JSON.parse(readFileSync("content/data/materials-premium.json", "utf8")) as Array<{ id: string; textures: { kind: string; assetId?: string; search?: string[] } }>;
+  const mats = JSON.parse(readFileSync("content/data/materials-premium.json", "utf8")) as Array<{ id: string; textures: { kind: string; assetId?: string; search?: string[]; prefer?: string } }>;
   const out = existsSync("content/data/materials-pbr.json") ? JSON.parse(readFileSync("content/data/materials-pbr.json", "utf8")) as Record<string, unknown> : {};
   const list = await (await get("https://api.polyhaven.com/assets?type=textures")).json() as Record<string, Asset>;
   for (const m of mats) {
     if (m.textures.kind !== "photo") continue;
     let id = m.textures.assetId;
+    // Quand Poly Haven n'a pas la bonne matière (ex. son « marble » est un dallage beige), ambientCG d'abord.
+    if (!id && m.textures.prefer === "ambientcg" && await ambient(m.id, m.textures.search ?? [], out)) continue;
     if (!id && m.textures.search) {
       for (const w of m.textures.search) {
         const hit = Object.entries(list).filter(([k, a]) => `${k} ${a.name} ${a.tags.join(" ")}`.toLowerCase().includes(w)).sort((a, b) => b[1].download_count - a[1].download_count)[0];

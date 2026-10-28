@@ -15,6 +15,8 @@ export interface Brief {
   budget: number | null;
   keep: string[];
   keepFree: string;
+  /** Matières choisies (identifiants du moteur de matières). */
+  materials?: string[];
   notes: string;
   /** Photo de la pièce et inspirations, réduites (data URL). */
   photo: string | null;

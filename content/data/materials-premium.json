@@ -17,7 +17,7 @@
       "metalness": 0,
       "roughness": 0.58,
       "normalScale": 0.6,
-      "roughnessScale": 1.3
+      "roughnessScale": 1.7
     },
     "tileMeters": 1,
     "textures": {
@@ -151,7 +151,7 @@
       "clearcoat": 0,
       "clearcoatRoughness": 0.5,
       "normalScale": 0.7,
-      "roughnessScale": 1.8
+      "roughnessScale": 2.8
     },
     "tileMeters": 2,
     "textures": {
@@ -510,10 +510,11 @@
     "textures": {
       "kind": "photo",
       "search": [
-        "calacatta",
         "white marble",
+        "calacatta",
         "marble"
       ],
+      "prefer": "ambientcg",
       "fallbackRef": "sr:marbre:calacatta:adouci"
     },
     "compare": [
@@ -1014,7 +1015,7 @@
     "finish": "Bouclette laine",
     "manufacturer": null,
     "reference": null,
-    "baseColor": "#EEE7DA",
+    "baseColor": "#EFE5D3",
     "description": "Laine bouclette : boucles serrées qui captent la lumière, toucher moelleux.",
     "usages": [
       "Canapés",

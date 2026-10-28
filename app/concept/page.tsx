@@ -1,5 +1,6 @@
 import Concept from "@/components/concept/Concept";
 import { meta } from "@/lib/seo";
+import { LegacyNotice } from "@/components/LegacyNotice";
 
 export const metadata = meta({
   title: "Générer un concept : une phrase, une image éditoriale et ses matières assorties",
@@ -8,5 +9,8 @@ export const metadata = meta({
 });
 
 export default function Page() {
-  return <Concept />;
+  return (<>
+    <LegacyNotice>Le concept éditorial est désormais une étape du Studio : décrivez la pièce dans « Créer ».</LegacyNotice>
+    <Concept />
+  </>);
 }

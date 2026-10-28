@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { preparePhoto } from "@/lib/photo";
+import bank from "@/content/data/inspiration-bank.json";
 import { MATERIALS } from "@/lib/materials/schema";
 import { createJob, retryJob, waitForJob, type IaJob, type Quality } from "@/lib/ia-jobs";
 import { updateProject, uid, type Brief, type Project, type RoomType, type Version } from "@/lib/studio/project";
 
 const ROOMS: Array<[RoomType, string]> = [["salon", "Salon"], ["chambre", "Chambre"], ["cuisine", "Cuisine"], ["salle-de-bain", "Salle de bain"], ["entree", "Entrée"], ["bureau", "Bureau"]];
-const STYLES = ["Parisien contemporain", "Minimal chaleureux", "Organique et minéral", "Mid-century", "Japandi", "Art déco revisité", "Méditerranéen", "Classique haussmannien"];
+const STYLES = (bank as Array<{ type: string; title: string }>).filter((e) => e.type === "style").map((e) => e.title);
 const PALETTES: Array<[string, string[]]> = [["Sable et pierre", ["#EDE6DA", "#D6C3A3", "#A08A66"]], ["Olive et laiton", ["#6E7344", "#C9A564", "#EDE8DF"]], ["Terre et rouille", ["#B35A3B", "#D8A79A", "#EFE3DC"]], ["Bleu nuit et crème", ["#24345A", "#E9DFC8", "#C9A564"]], ["Noir et blanc chaud", ["#1E1E20", "#EEE8DC", "#9A8C7A"]]];
 const KEEPS: Array<[string, string]> = [["fenetres", "Fenêtres"], ["portes", "Portes"], ["murs", "Murs"], ["plafond", "Plafond"], ["sol", "Sol"], ["moulures", "Moulures"], ["cheminee", "Cheminée"], ["radiateurs", "Radiateurs"], ["mobilier", "Mon mobilier"]];
 const EXAMPLE = "Un salon parisien contemporain avec une table basse sculpturale en pierre naturelle, un canapé crème aux formes organiques, un fauteuil vert olive, un éclairage indirect chaleureux et des finitions haut de gamme.";
@@ -18,13 +19,16 @@ export function Create({ project, onExplore }: { project: Project; onExplore: (v
   const b = project.brief;
   const set = (p: Partial<Brief>) => updateProject((x) => ({ ...x, brief: { ...x.brief, ...p } }));
   const [text, setText] = useState(b.notes);
+  // Idée transmise par la banque d'inspiration (une seule fois).
+  useEffect(() => { try { const i = localStorage.getItem("pr_studio_idee"); if (i) { localStorage.removeItem("pr_studio_idee"); setTimeout(() => setText(i), 0); } } catch { /* */ } }, []);
   const [quality, setQuality] = useState<Quality>("standard");
   const [variants, setVariants] = useState(2);
   const [runs, setRuns] = useState<Run[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [cmp, setCmp] = useState<[string, string] | null>(null);
   const [adjust, setAdjust] = useState<{ v: Version; text: string } | null>(null);
-  const [mats, setMats] = useState<string[]>([]);
+  const [mats, setMatsState] = useState<string[]>(b.materials ?? []);
+  const setMats = (f: (x: string[]) => string[]) => setMatsState((x) => { const n = f(x); set({ materials: n }); return n; });
   const [now, setNow] = useState(() => Date.now());
   const photoIn = useRef<HTMLInputElement>(null), inspIn = useRef<HTMLInputElement>(null);
   useEffect(() => { if (!runs.some((r) => r.job.status === "en_cours" || r.job.status === "en_attente")) return; const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, [runs]);
@@ -100,7 +104,7 @@ export function Create({ project, onExplore }: { project: Project; onExplore: (v
           <div className="flex flex-wrap gap-1.5">{STYLES.map((s) => <button key={s} type="button" aria-pressed={b.style === s} className={chip(b.style === s)} onClick={() => set({ style: b.style === s ? null : s })}>{s}</button>)}</div>
           <div className="flex flex-wrap gap-2">{PALETTES.map(([n, cs]) => { const on = b.palette.join() === n; return (
             <button key={n} type="button" aria-pressed={on} onClick={() => set({ palette: on ? [] : [n] })} className={`flex items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-[12px] ${on ? "border-ink" : "border-line bg-white"}`}><span className="flex">{cs.map((c) => <span key={c} className="-ml-1 size-5 rounded-full ring-2 ring-white first:ml-0" style={{ background: c }} />)}</span>{n}</button>); })}</div>
-          <div className="flex flex-wrap gap-1.5">{MATERIALS.filter((m) => ["travertin", "marbre-calacatta", "noyer-verni", "chene-naturel", "boucle", "velours-foret", "lin-lave", "laiton-brosse", "enduit-chaux", "zellige-emeraude"].includes(m.id)).map((m) => (
+          <div className="flex flex-wrap gap-1.5">{MATERIALS.filter((m) => ["travertin", "marbre-calacatta", "noyer-verni", "chene-naturel", "boucle", "velours-foret", "lin-lave", "laiton-brosse", "enduit-chaux", "zellige-emeraude"].includes(m.id) || mats.includes(m.id)).map((m) => (
             <button key={m.id} type="button" aria-pressed={mats.includes(m.id)} className={`${chip(mats.includes(m.id))} flex items-center gap-1.5`} onClick={() => setMats((x) => (x.includes(m.id) ? x.filter((y) => y !== m.id) : [...x, m.id]))}><span aria-hidden className="size-3.5 rounded-full ring-1 ring-black/10" style={{ background: m.baseColor }} />{m.name}</button>))}</div>
           <label className="flex items-center gap-2 text-[13px]">Budget mobilier<input type="number" min={0} step={100} value={b.budget ?? ""} onChange={(e) => set({ budget: e.target.value ? Number(e.target.value) : null })} className="w-28 rounded-xl border border-line bg-white px-3 py-1.5" placeholder="—" /> €</label>
         </fieldset>
@@ -125,10 +129,10 @@ export function Create({ project, onExplore }: { project: Project; onExplore: (v
           </div>
         ))}
         {versions.length === 0 && runs.length === 0 && (
-          <div className="grid aspect-[3/2] place-items-center rounded-[22px] border border-dashed border-line bg-white/60 p-8 text-center text-[13.5px] text-muted">Vos propositions apparaîtront ici, avec chaque version conservée pour les comparer.</div>
+          <div className="grid aspect-[3/2] place-items-center rounded-[14px] border border-dashed border-line bg-white/60 p-8 text-center text-[13.5px] text-muted">Vos propositions apparaîtront ici, avec chaque version conservée pour les comparer.</div>
         )}
         {cmpA && cmpB && (
-          <figure className="studio-compare relative overflow-hidden rounded-[22px]" style={{ aspectRatio: "3 / 2" }}>
+          <figure className="studio-compare relative overflow-hidden rounded-[14px]" style={{ aspectRatio: "3 / 2" }}>
             { }
             <img src={cmpA.imageUrl!} alt={cmpA.label} className="absolute inset-0 size-full object-cover" />
             { }
@@ -140,7 +144,7 @@ export function Create({ project, onExplore }: { project: Project; onExplore: (v
         )}
         <ul className="grid list-none gap-4 p-0 sm:grid-cols-2">
           {versions.map((v) => (
-            <li key={v.id} className="pr-card overflow-hidden rounded-[20px] border border-line bg-white">
+            <li key={v.id} className="pr-card overflow-hidden rounded-[12px] border border-line bg-white">
               { }
               <img src={v.imageUrl!} alt={v.label} className="aspect-[3/2] w-full object-cover" loading="lazy" />
               <div className="grid gap-2 p-3 text-[12.5px]">

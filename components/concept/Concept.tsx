@@ -89,7 +89,7 @@ export default function Concept() {
           className="block w-full resize-none border-0 bg-transparent p-2 text-[18px] leading-relaxed outline-none placeholder:text-muted" />
         <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
           <p className="m-0 text-[13px] text-muted">Image créée par IA · 6 par jour et par visiteur</p>
-          <button type="submit" className="btn btn-lg border-0 bg-[#6542E8] text-white hover:bg-[#5434D0]" disabled={busy}>{busy ? <><span className="spinner" /> Création (20 à 40 s)…</> : "Créer le concept"}</button>
+          <button type="submit" className="btn btn-primary btn-lg" disabled={busy}>{busy ? <><span className="spinner" /> Création (20 à 40 s)…</> : "Créer le concept"}</button>
         </div>
       </form>
       <ul className="mx-auto mt-4 flex max-w-[860px] list-none flex-wrap justify-center gap-2 p-0" aria-label="Idées">

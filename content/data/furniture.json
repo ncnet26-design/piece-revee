@@ -93,66 +93,6 @@
   "productId": null
  },
  {
-  "id": "canape-cuir-capitonne",
-  "model": "Sofa_01",
-  "kind": "glb",
-  "name": "Canapé chesterfield en cuir",
-  "category": "canape",
-  "style": [
-   "classique"
-  ],
-  "colors": [
-   {
-    "name": "Noir",
-    "hex": "#2A2A2A"
-   }
-  ],
-  "materials": [
-   "cuir",
-   "bois"
-  ],
-  "silhouette": [
-   "capitonne",
-   "accoudoirs-ronds",
-   "pieds-bois"
-  ],
-  "features": [
-   "Capitonnage",
-   "Piètement bois"
-  ],
-  "productId": null
- },
- {
-  "id": "canape-classique-lin",
-  "model": "sofa_02",
-  "kind": "glb",
-  "name": "Canapé classique en lin",
-  "category": "canape",
-  "style": [
-   "classique"
-  ],
-  "colors": [
-   {
-    "name": "Écru",
-    "hex": "#E3DED3"
-   }
-  ],
-  "materials": [
-   "lin",
-   "bois"
-  ],
-  "silhouette": [
-   "droit",
-   "pieds-bois",
-   "moulures"
-  ],
-  "features": [
-   "Bois mouluré",
-   "Assise en lin"
-  ],
-  "productId": null
- },
- {
   "id": "fauteuil-lounge-cuir",
   "model": "mid_century_lounge_chair",
   "kind": "glb",
@@ -217,33 +157,6 @@
   "productId": null
  },
  {
-  "id": "fauteuil-moderne",
-  "model": "modern_arm_chair_01",
-  "kind": "glb",
-  "name": "Fauteuil de bureau moderne",
-  "category": "fauteuil",
-  "style": [
-   "contemporain"
-  ],
-  "colors": [
-   {
-    "name": "Gris",
-    "hex": "#6E6A66"
-   }
-  ],
-  "materials": [
-   "tissu",
-   "metal"
-  ],
-  "silhouette": [
-   "droit"
-  ],
-  "features": [
-   "Accoudoirs"
-  ],
-  "productId": null
- },
- {
   "id": "table-basse-marbre-ronde",
   "model": "modern_coffee_table_02",
   "kind": "glb",
@@ -271,60 +184,6 @@
   "features": [
    "Plateau marbre blanc",
    "Piètement ruban métal"
-  ],
-  "productId": null
- },
- {
-  "id": "table-basse-ronde-bois",
-  "model": "coffee_table_round_01",
-  "kind": "glb",
-  "name": "Table basse ronde en bois",
-  "category": "table-basse",
-  "style": [
-   "classique"
-  ],
-  "colors": [
-   {
-    "name": "Bois foncé",
-    "hex": "#3A2A20"
-   }
-  ],
-  "materials": [
-   "bois"
-  ],
-  "silhouette": [
-   "ronde",
-   "basse"
-  ],
-  "features": [
-   "Bois massif"
-  ],
-  "productId": null
- },
- {
-  "id": "table-basse-ajouree",
-  "model": "modern_coffee_table_01",
-  "kind": "glb",
-  "name": "Table basse cube ajourée",
-  "category": "table-basse",
-  "style": [
-   "contemporain"
-  ],
-  "colors": [
-   {
-    "name": "Noir et bois",
-    "hex": "#2B2522"
-   }
-  ],
-  "materials": [
-   "bois"
-  ],
-  "silhouette": [
-   "carree",
-   "massive"
-  ],
-  "features": [
-   "Motif ajouré"
   ],
   "productId": null
  },
@@ -360,58 +219,6 @@
   "productId": null
  },
  {
-  "id": "console-classique",
-  "model": "ClassicConsole_01",
-  "kind": "glb",
-  "name": "Console sculptée",
-  "category": "rangement",
-  "style": [
-   "classique"
-  ],
-  "colors": [
-   {
-    "name": "Gris patiné",
-    "hex": "#55524E"
-   }
-  ],
-  "materials": [
-   "bois"
-  ],
-  "silhouette": [
-   "sculpte"
-  ],
-  "features": [
-   "Pieds galbés"
-  ],
-  "productId": null
- },
- {
-  "id": "console-laquee",
-  "model": "chinese_console_table",
-  "kind": "glb",
-  "name": "Console laquée",
-  "category": "rangement",
-  "style": [
-   "classique"
-  ],
-  "colors": [
-   {
-    "name": "Laque",
-    "hex": "#3B2620"
-   }
-  ],
-  "materials": [
-   "bois"
-  ],
-  "silhouette": [
-   "fine"
-  ],
-  "features": [
-   "Laque"
-  ],
-  "productId": null
- },
- {
   "id": "suspension-globe",
   "model": "modern_ceiling_lamp_01",
   "kind": "glb",
@@ -437,33 +244,6 @@
   "features": [
    "Globe opalin",
    "Monture chromée"
-  ],
-  "productId": null
- },
- {
-  "id": "lustre-classique",
-  "model": "Chandelier_01",
-  "kind": "glb",
-  "name": "Lustre à bras",
-  "category": "luminaire",
-  "style": [
-   "classique"
-  ],
-  "colors": [
-   {
-    "name": "Laiton",
-    "hex": "#B88A45"
-   }
-  ],
-  "materials": [
-   "laiton",
-   "verre"
-  ],
-  "silhouette": [
-   "multi-bras"
-  ],
-  "features": [
-   "Bras courbés"
   ],
   "productId": null
  },
@@ -607,6 +387,35 @@
   "features": [
    "240 × 170 cm",
    "Laine épaisse"
+  ],
+  "productId": null
+ },
+ {
+  "id": "pouf-soie",
+  "model": "wf_specular_silk_pouf",
+  "kind": "glb",
+  "name": "Pouf capitonné en soie",
+  "category": "deco",
+  "style": [
+   "contemporain",
+   "glam"
+  ],
+  "colors": [
+   {
+    "name": "Prune",
+    "hex": "#6E3550"
+   }
+  ],
+  "materials": [
+   "soie"
+  ],
+  "silhouette": [
+   "rond",
+   "bas",
+   "capitonne"
+  ],
+  "features": [
+   "Capiton central"
   ],
   "productId": null
  }

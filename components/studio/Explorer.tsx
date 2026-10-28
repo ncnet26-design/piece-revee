@@ -87,7 +87,7 @@ export function Explorer({ image, intent, onObjects, onNewVersion, inList, onAdd
 
   return (
     <div className="relative">
-      <div ref={box} onClick={onImageClick} className={`relative overflow-hidden rounded-[22px] bg-[#E9E6E0] ${markMode ? "cursor-crosshair" : ""}`} style={{ aspectRatio: `${image.width} / ${image.height}` }}>
+      <div ref={box} onClick={onImageClick} className={`relative overflow-hidden rounded-[14px] bg-[#E9E6E0] ${markMode ? "cursor-crosshair" : ""}`} style={{ aspectRatio: `${image.width} / ${image.height}` }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={image.src} alt={image.title} className="absolute inset-0 size-full object-cover" crossOrigin="anonymous" />
         {image.objects.map((o, i) => {

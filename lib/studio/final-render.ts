@@ -19,7 +19,7 @@ export async function pathTrace(scene: THREE.Scene, sourceCamera: THREE.Perspect
   tracer.bounces = o.bounces ?? 6; tracer.transmissiveBounces = 6; tracer.filterGlossyFactor = 0.4; tracer.minSamples = 1; tracer.renderDelay = 0; tracer.fadeDuration = 0;
   tracer.tiles.set(o.width > 2000 ? 3 : 2, o.width > 2000 ? 3 : 2);
   try {
-    await tracer.setSceneAsync(scene, cam);
+    tracer.setScene(scene, cam);
     while (tracer.samples < o.samples) {
       if (o.signal?.aborted) throw new DOMException("Rendu annulé", "AbortError");
       tracer.renderSample();

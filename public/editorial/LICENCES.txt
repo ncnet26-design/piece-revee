@@ -1,0 +1,1 @@
+Visuels composés pour Pièce Rêvée à partir de textures CC0 (Poly Haven, ambientCG ; voir content/data/materials-pbr.json). Métaux : textures calculées.

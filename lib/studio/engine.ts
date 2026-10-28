@@ -53,6 +53,7 @@ export class StudioEngine {
   private down: { x: number; y: number; t: number } | null = null;
   private ray = new THREE.Raycaster();
   private floorMat: THREE.Material | null = null;
+  private envEquirect: THREE.Texture | null = null;
 
   constructor(private host: HTMLElement, scene: StudioScene, private ev: StudioEvents, private quality: "haute" | "standard" = "haute", private opts: { baseline?: boolean } = {}) {
     this.state = structuredClone(scene);
@@ -146,8 +147,10 @@ export class StudioEngine {
       tex.mapping = THREE.EquirectangularReflectionMapping;
       const pm = new THREE.PMREMGenerator(this.renderer);
       const env = pm.fromEquirectangular(tex).texture;
-      pm.dispose(); tex.dispose();
-      if (this.disposed) { env.dispose(); return; }
+      pm.dispose();
+      if (this.disposed) { env.dispose(); tex.dispose(); return; }
+      // L'image d'origine (équirectangulaire) sert au rendu final par lancer de rayons.
+      this.envEquirect = tex;
       this.scene.environment = env; this.scene.environmentIntensity = 0.75;
       this.dirty = true;
     } catch { /* éclairage direct seul */ }
@@ -262,6 +265,10 @@ export class StudioEngine {
       });
       l.slots = byMat;
       for (const [slot, mid] of Object.entries(o.materials ?? {})) await this.applyMaterial(l, slot, mid);
+      if (o.mainMaterial && !Object.keys(o.materials ?? {}).length && !Object.keys(o.colors ?? {}).length) {
+        const main = this.slots(o.uid)[0];
+        if (main) await this.applyMaterial(l, main.id, o.mainMaterial);
+      }
       for (const [slot, hex] of Object.entries(o.colors ?? {})) this.applyColor(l, slot, hex);
     } catch { /* modèle indisponible : l'objet reste vide mais garde sa place */ }
     finally { this.pending--; this.ev.onLoading(this.pending); this.dirty = true; }
@@ -382,7 +389,7 @@ export class StudioEngine {
   async setMaterial(uid: string, slot: string, materialId: string | null) {
     const l = this.live.get(uid); if (!l) return;
     const o = this.find(uid)!;
-    o.materials = { ...(o.materials ?? {}) }; o.colors = { ...(o.colors ?? {}) };
+    o.materials = { ...(o.materials ?? {}) }; o.colors = { ...(o.colors ?? {}) }; o.mainMaterial = undefined;
     delete o.colors[slot];
     if (materialId) { o.materials[slot] = materialId; await this.applyMaterial(l, slot, materialId); }
     else { delete o.materials[slot]; l.slots.get(slot)?.forEach((x) => { x.material = l.originals.get(x) ?? x.material; }); this.dirty = true; }
@@ -397,13 +404,13 @@ export class StudioEngine {
   }
   async setVariant(uid: string, variant: string) {
     const o = this.find(uid); if (!o) return;
-    o.variant = variant; o.materials = {}; o.colors = {};
+    o.variant = variant; o.materials = {}; o.colors = {}; o.mainMaterial = undefined;
     await this.ensure(o); this.refreshOutline(); this.emit();
   }
   /** Remplace le modèle en gardant l'identifiant, la position et l'orientation. */
   async replace(uid: string, furnitureId: string) {
     const o = this.find(uid); if (!o || !furnitureById(furnitureId)) return;
-    o.furnitureId = furnitureId; o.variant = undefined; o.materials = {}; o.colors = {};
+    o.furnitureId = furnitureId; o.variant = undefined; o.materials = {}; o.colors = {}; o.mainMaterial = undefined;
     await this.ensure(o); this.refreshOutline(); this.emit();
   }
   remove(uid: string) {
@@ -531,8 +538,10 @@ export class StudioEngine {
     const keep = this.outline?.selectedObjects ?? []; if (this.outline) this.outline.selectedObjects = [];
     const helper = this.transform.getHelper(); const vis = helper.visible; helper.visible = false;
     const wasRunning = !this.disposed;
+    const env = this.scene.environment;
+    this.scene.environment = this.envEquirect;
     try { return await pathTrace(this.scene, this.camera, o); }
-    finally { if (this.outline) this.outline.selectedObjects = keep; helper.visible = vis; if (wasRunning) this.dirty = true; }
+    finally { this.scene.environment = env; if (this.outline) this.outline.selectedObjects = keep; helper.visible = vis; if (wasRunning) this.dirty = true; }
   }
   /** Caméras prédéfinies (vue générale et gros plans). */
   view(name: string, views: Record<string, { pos: [number, number, number]; target: [number, number, number]; fov?: number }>) {
@@ -547,6 +556,6 @@ export class StudioEngine {
     cv.removeEventListener("pointerdown", this.onDown); cv.removeEventListener("pointerup", this.onUp); cv.removeEventListener("keydown", this.onKey);
     this.transform.dispose(); this.controls.dispose(); this.composer?.dispose();
     this.scene.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh) m.geometry?.dispose(); });
-    this.scene.environment?.dispose(); this.renderer.dispose(); cv.remove();
+    this.scene.environment?.dispose(); this.envEquirect?.dispose(); this.renderer.dispose(); cv.remove();
   }
 }

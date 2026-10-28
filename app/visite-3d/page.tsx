@@ -1,15 +1,17 @@
 import Link from "next/link";
 import Visite3D from "@/components/home3d/Visite3D";
 import { meta } from "@/lib/seo";
+import { LegacyNotice } from "@/components/LegacyNotice";
 
 export const metadata = meta({
-  title: "Visite 3D : aménagez votre intérieur pièce par pièce",
+  title: "Maquette d'appartement 3D : tester un plan pièce par pièce",
   description: "Promenez-vous de pièce en pièce dans un appartement en 3D, changez murs, sols, meubles et couleurs, appliquez un style et partagez vos astuces.",
   path: "/visite-3d/",
 });
 
 export default function Page() {
   return (<>
+    <LegacyNotice href="/studio/?etape=3d" cta="Ouvrir la scène 3D du Studio">Maquette d'appartement simplifiée, pour tester un plan et des volumes. Pour une pièce aux matières photographiées, utilisez la scène 3D du Studio.</LegacyNotice>
     <Visite3D />
     <section className="mx-auto mt-8 max-w-3xl">
       <h2 className="text-2xl">Votre intérieur, en vrai volume</h2>

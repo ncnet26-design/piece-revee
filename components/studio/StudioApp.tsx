@@ -21,6 +21,11 @@ const TABS: Array<[Tab, string]> = [["explorer", "Explorer"], ["creer", "Créer"
 export default function StudioApp() {
   const project = useProject();
   const [tab, setTab] = useState<Tab>("explorer");
+  // Arrivée depuis « Commencer un projet » ou une inspiration : directement à l'étape demandée.
+  useEffect(() => {
+    const e = new URLSearchParams(window.location.search).get("etape");
+    if (e === "creer" || e === "3d" || e === "liste" || e === "explorer") setTimeout(() => setTab(e), 0);
+  }, []);
   const [current, setCurrent] = useState<string | null>(null);
   const [cmd, setCmd] = useState("");
   const [intent, setIntent] = useState<Intent | null>(null);
@@ -135,7 +140,7 @@ export default function StudioApp() {
           )}
           <Explorer key={image.id} image={image} intent={intent} onObjects={setObjects} onNewVersion={onNewVersion} inList={inList} onAdd={onAdd} />
         </>) : (
-          <div className="grid place-items-center gap-3 rounded-[22px] border border-dashed border-line bg-white/60 p-10 text-center">
+          <div className="grid place-items-center gap-3 rounded-[14px] border border-dashed border-line bg-white/60 p-10 text-center">
             <p className="text-[15px] font-medium">Aucun rendu à explorer pour l'instant</p>
             <p className="max-w-md text-[13px] text-muted">Créez une pièce dans « Créer », ou ajoutez une image d'intérieur (par exemple une création faite avec un autre outil d'IA) : vous pourrez y désigner chaque meuble et trouver des modèles ressemblants.</p>
             <button type="button" className="btn btn-primary" onClick={() => setTab("creer")}>Créer une pièce</button>

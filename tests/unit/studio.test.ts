@@ -71,7 +71,7 @@ describe("données", () => {
     }
   });
   it("la bibliothèque 3D a des dimensions pour chaque meuble", () => {
-    expect(FURNITURE.length).toBeGreaterThanOrEqual(15);
+    expect(FURNITURE.length).toBeGreaterThanOrEqual(12); // bibliothèque volontairement resserrée (qualité > quantité)
     for (const f of FURNITURE) expect(f.dims, f.id).not.toBeNull();
   });
 });

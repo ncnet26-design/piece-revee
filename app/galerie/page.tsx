@@ -1,11 +1,15 @@
-import { Inspirations } from "@/components/Inspirations";
+import { InspirationBank } from "@/components/InspirationBank";
 import { meta } from "@/lib/seo";
 
-export const metadata = meta({ title: "Inspirations : villas, haussmannien, appartements de designer", description: "Des photos d'intérieurs d'exception, libres de droits : villas d'architecte, appartements haussmanniens, suites, cuisines, salles de bain. Transformez chacune en moodboard.", path: "/galerie/" });
+export const metadata = meta({ title: "Inspirations : styles, espaces et matières", description: "Douze styles, onze espaces et les matières qui les composent : choisissez un point de départ, gardez vos favoris et lancez votre projet dans le Studio.", path: "/galerie/" });
 
 export default function Page() {
-  return (<>
-    <div className="vhead"><div><span className="eyebrow">Inspirations</span><h1 className="mt-2">Des lieux qui font <em>rêver.</em></h1><p>Villas d'architecte, appartements haussmanniens, suites et cuisines d'exception. Chaque photo devient un moodboard en un geste.</p></div></div>
-    <Inspirations />
-  </>);
+  return (
+    <section className="pt-6">
+      <p className="eyebrow">Inspirations</p>
+      <h1 className="mt-3 max-w-[16ch] text-[clamp(44px,6.4vw,88px)]">Trouver le ton <em>avant le meuble.</em></h1>
+      <p className="mt-5 max-w-[56ch] text-[16px] text-muted">Un style, c'est d'abord une famille de matières et une palette. Choisissez un point de départ, il préremplit votre projet dans le Studio.</p>
+      <div className="mt-12"><InspirationBank /></div>
+    </section>
+  );
 }
