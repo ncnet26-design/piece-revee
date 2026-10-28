@@ -1,6 +1,6 @@
 import data from "@/content/data/models.json";
 
-/** Bibliothèque de meubles et objets 3D réalistes (Poly Haven, CC0), récupérée par le robot de ressources. */
+/** Bibliothèque de meubles et objets 3D réalistes (Poly Haven CC0, Wayfair/Khronos CC BY), récupérée par le robot de ressources. */
 export interface LibModel { id: string; name: string; categories: string[]; tags: string[]; file: string; url: string; authors: string[]; license: string; dims?: { w: number; d: number; h: number } }
 export const LIBRARY_MODELS = (data as LibModel[]).filter((m) => m.dims);
 
@@ -17,6 +17,8 @@ const ADJ: Array<[RegExp, string]> = [[/\bwooden\b|\bwood\b/i, "en bois"], [/\bm
 
 /** Nom français lisible (« Fauteuil en cuir ancien »), à partir du nom anglais du modèle. */
 export function frenchName(m: Pick<LibModel, "name">): string {
+  // Noms déjà rédigés en français (modèles Wayfair) : gardés tels quels.
+  if (/[éèàêç]|\b(en|et|de)\b/.test(m.name)) return m.name;
   const noun = WORDS.find(([re]) => re.test(m.name))?.[1];
   if (!noun) return m.name.replace(/[_\d]+/g, " ").replace(/\s+/g, " ").trim();
   const adj = ADJ.filter(([re]) => re.test(m.name)).map(([, a]) => a).slice(0, 2);

@@ -363,7 +363,7 @@ function ItemEditor({ it, size, roomName, onPatch, onRemove, onDuplicate }: { it
   return (
     <div>
       {(() => { const lm = it.type === "objet" ? libModel(it.variant) : undefined; return lm
-        ? <><h2 className="pr-8 text-lg">{frenchName(lm)}</h2><p className="text-[11.5px] text-muted">Modèle « {lm.name} » par {lm.authors.join(", ")}, <a href={lm.url} target="_blank" rel="noopener noreferrer">Poly Haven</a>, CC0</p></>
+        ? <><h2 className="pr-8 text-lg">{frenchName(lm)}</h2><p className="text-[11.5px] text-muted">Modèle « {lm.name} » par {lm.authors.join(", ")}, <a href={lm.url} target="_blank" rel="noopener noreferrer">{lm.url.includes("polyhaven") ? "Poly Haven" : "Khronos glTF Sample Assets"}</a>, {lm.license}</p></>
         : <h2 className="pr-8 text-lg">{e.label}{it.variant ? ` · ${it.variant}` : ""}</h2>; })()}
       {e.realistic && <p className="mt-0.5 text-[12px] font-semibold text-accent">Modèle 3D réaliste</p>}
       <p className="text-[12.5px] text-muted">{roomName} · L {cm(size.w)} × P {cm(size.d)} × H {cm(size.h)}</p>
@@ -455,7 +455,7 @@ function Catalog({ roomKind, onAdd }: { roomKind: string; onAdd: (t: ItemType, v
               <div className="mt-1.5 flex flex-wrap gap-1.5">{LIBRARY_MODELS.filter((m) => libGroup(m) === g).map((m) => <button key={m.id} type="button" className="chip text-[12.5px]" onClick={() => onAdd("objet", m.id)}>{frenchName(m)}</button>)}</div>
             </div>
           ))}
-          <p className="mt-2 text-[11px] text-muted">Modèles Poly Haven, licence CC0.</p>
+          <p className="mt-2 text-[11px] text-muted">Modèles Poly Haven (CC0) et Wayfair via Khronos (CC BY 4.0 / CC0).</p>
         </div>
       )}
       {order.map((c) => (

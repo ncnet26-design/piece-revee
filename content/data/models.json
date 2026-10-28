@@ -1709,5 +1709,181 @@
       "d": 0.5,
       "h": 0.37
     }
+  },
+  {
+    "id": "wf_anisotropy_barn_lamp",
+    "name": "Applique en cuivre brossé",
+    "categories": [
+      "lighting",
+      "decorative"
+    ],
+    "tags": [
+      "lamp",
+      "brass",
+      "pendant"
+    ],
+    "file": "/models/wf_anisotropy_barn_lamp.glb",
+    "url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/AnisotropyBarnLamp",
+    "authors": [
+      "Eric Chadwick",
+      "Wayfair LLC"
+    ],
+    "license": "CC BY 4.0",
+    "dims": {
+      "w": 0.19,
+      "d": 0.23,
+      "h": 0.26
+    }
+  },
+  {
+    "id": "wf_diffuse_transmission_plant",
+    "name": "Plante en pot, feuilles translucides",
+    "categories": [
+      "decorative",
+      "plants",
+      "potted plants",
+      "nature"
+    ],
+    "tags": [
+      "plant",
+      "pot"
+    ],
+    "file": "/models/wf_diffuse_transmission_plant.glb",
+    "url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/DiffuseTransmissionPlant",
+    "authors": [
+      "Eric Chadwick",
+      "Darmstadt Graphics Group GmbH",
+      "Rico Cilliers"
+    ],
+    "license": "CC BY 4.0",
+    "dims": {
+      "w": 0.7,
+      "d": 0.66,
+      "h": 0.84
+    }
+  },
+  {
+    "id": "wf_glam_velvet_sofa",
+    "name": "Canapé glam en velours",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "sofa",
+      "velvet"
+    ],
+    "file": "/models/wf_glam_velvet_sofa.glb",
+    "url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/GlamVelvetSofa",
+    "authors": [
+      "Eric Chadwick",
+      "Wayfair LLC"
+    ],
+    "license": "CC BY 4.0",
+    "dims": {
+      "w": 2.19,
+      "d": 1.02,
+      "h": 0.79
+    }
+  },
+  {
+    "id": "wf_glass_vase_flowers",
+    "name": "Vase en verre et fleurs",
+    "categories": [
+      "vases",
+      "decorative",
+      "plants"
+    ],
+    "tags": [
+      "vase",
+      "glass",
+      "flowers"
+    ],
+    "file": "/models/wf_glass_vase_flowers.glb",
+    "url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/GlassVaseFlowers",
+    "authors": [
+      "Eric Chadwick",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.22,
+      "d": 0.14,
+      "h": 0.2
+    }
+  },
+  {
+    "id": "wf_iridescence_lamp",
+    "name": "Lampe à poser irisée",
+    "categories": [
+      "lighting",
+      "decorative"
+    ],
+    "tags": [
+      "lamp",
+      "table lamp"
+    ],
+    "file": "/models/wf_iridescence_lamp.glb",
+    "url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/IridescenceLamp",
+    "authors": [
+      "Eric Chadwick",
+      "Wayfair LLC"
+    ],
+    "license": "CC BY 4.0",
+    "dims": {
+      "w": 0.3,
+      "d": 0.3,
+      "h": 0.48
+    }
+  },
+  {
+    "id": "wf_sheen_chair",
+    "name": "Fauteuil en velours et bois",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "chair",
+      "velvet",
+      "wood"
+    ],
+    "file": "/models/wf_sheen_chair.glb",
+    "url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/SheenChair",
+    "authors": [
+      "Eric Chadwick",
+      "Wayfair LLC"
+    ],
+    "license": "CC0 1.0",
+    "dims": {
+      "w": 0.83,
+      "d": 0.57,
+      "h": 0.69
+    }
+  },
+  {
+    "id": "wf_specular_silk_pouf",
+    "name": "Pouf en soie",
+    "categories": [
+      "furniture",
+      "seating"
+    ],
+    "tags": [
+      "pouf",
+      "silk",
+      "ottoman"
+    ],
+    "file": "/models/wf_specular_silk_pouf.glb",
+    "url": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/SpecularSilkPouf",
+    "authors": [
+      "Eric Chadwick",
+      "Wayfair LLC"
+    ],
+    "license": "CC BY 4.0",
+    "dims": {
+      "w": 0.61,
+      "d": 0.61,
+      "h": 0.2
+    }
   }
 ]

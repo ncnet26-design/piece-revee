@@ -309,7 +309,7 @@ export default function Planche() {
               <p className="mt-2 text-[12px] text-muted">Les couleurs à l'écran sont indicatives : demandez toujours un échantillon réel en magasin.</p>
             </>}
             {tab === "objets" && <>
-              <p className="mb-3 text-[12.5px] text-muted">Meubles et objets photographiés en 3D (Poly Haven, licence libre CC0).</p>
+              <p className="mb-3 text-[12.5px] text-muted">Meubles et objets modélisés en 3D (Poly Haven et Wayfair via Khronos, licences libres CC0 / CC BY).</p>
               <ul className="grid grid-cols-3 gap-x-2 gap-y-3">{MODELS.map((m) => tile(m.id, frenchName(m), libGroup(m)))}</ul>
             </>}
             {tab === "photos" && <>
@@ -454,7 +454,7 @@ export default function Planche() {
                   <div className="min-w-0 flex-1">
                     <h3 className="font-ui text-[15.5px] font-semibold">{lm ? frenchName(lm) : itemName(i.ref)}</h3>
                     <p className="text-[13px] text-muted">
-                      {v ? <>Showroom · {v.family.name} · Réf. {variantCode(v)}</> : m ? <>{m.family} · {m.origin}</> : lm ? <>Modèle 3D {lm.authors.join(", ")} · <a className="underline" href={lm.url} target="_blank" rel="noopener noreferrer">Poly Haven</a> (CC0)</> : <>Teinte {i.ref.toUpperCase()}</>}
+                      {v ? <>Showroom · {v.family.name} · Réf. {variantCode(v)}</> : m ? <>{m.family} · {m.origin}</> : lm ? <>Modèle 3D {lm.authors.join(", ")} · <a className="underline" href={lm.url} target="_blank" rel="noopener noreferrer">{lm.url.includes("polyhaven") ? "Poly Haven" : "Khronos glTF Sample Assets"}</a> ({lm.license})</> : <>Teinte {i.ref.toUpperCase()}</>}
                     </p>
                     {m && <p className="mt-1 text-[13px]">{m.priceRange} · <Link className="underline" href={`/matieres/${m.slug}/`}>fiche complète</Link></p>}
                     {rt && <p className="mt-0.5 text-[11.5px] text-muted">Texture : {rt.name}, {rt.authors.join(", ")} (Poly Haven, CC0)</p>}
