@@ -1,50 +1,5 @@
 [
  {
-  "id": "ikea-vimle-3p-djuparp-vert",
-  "brand": "IKEA",
-  "retailer": "IKEA France",
-  "name": "VIMLE canapé 3 places, accoudoirs larges, Djuparp vert foncé",
-  "category": "canape",
-  "tier": "economique",
-  "designer": null,
-  "reference": "694.326.81",
-  "dimensions": null,
-  "image": null,
-  "price": null,
-  "availability": null,
-  "url": "https://www.ikea.com/fr/fr/p/vimle-canape-3-places-av-accoudoirs-larges-djuparp-vert-fonce-s69432681/",
-  "material": "Velours polyester Djuparp",
-  "materials": [
-   "velours"
-  ],
-  "colors": [
-   {
-    "name": "Vert foncé",
-    "hex": "#2F4A3D"
-   }
-  ],
-  "finish": null,
-  "style": [
-   "contemporain",
-   "confort"
-  ],
-  "silhouette": [
-   "droit",
-   "accoudoirs-larges",
-   "bas"
-  ],
-  "materialId": "velours-foret",
-  "demo": false,
-  "note": "Prix non relevé : plusieurs prix contradictoires selon les pages, voir la fiche.",
-  "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
-   "at": "2026-10-28",
-   "sources": [
-    "https://www.ikea.com/fr/fr/p/vimle-canape-3-places-av-accoudoirs-larges-djuparp-vert-fonce-s69432681/"
-   ]
-  }
- },
- {
   "id": "lr-topim-canape-velours-3p",
   "brand": "La Redoute Intérieurs",
   "retailer": "La Redoute",
@@ -94,111 +49,13 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit) · relecture automatique bloquée par le site (403)",
    "at": "2026-10-28",
    "sources": [
     "https://www.laredoute.fr/ppdp/prod-500809592.aspx"
    ]
-  }
- },
- {
-  "id": "gubi-pacha-sofa-4",
-  "brand": "GUBI",
-  "retailer": "GUBI",
-  "name": "Pacha Sofa, 4 places avec accoudoirs",
-  "category": "canape",
-  "tier": "premium",
-  "designer": "Pierre Paulin",
-  "reference": null,
-  "dimensions": {
-   "w": 330,
-   "d": 85,
-   "h": 65,
-   "text": "L 330 × P 85 × H 65 cm (assise H 37 cm)",
-   "source": "https://gubi.com/en/fr/products/pacha-sofa-4-seater-with-armrests"
   },
-  "image": null,
-  "price": null,
-  "availability": null,
-  "url": "https://gubi.com/en/fr/products/pacha-sofa-4-seater-with-armrests",
-  "material": "Structure rembourrée, tissu ou cuir au choix",
-  "materials": [
-   "velours",
-   "boucle",
-   "cuir"
-  ],
-  "colors": [
-   {
-    "name": "Selon revêtement",
-    "hex": "#D8CFC0"
-   }
-  ],
-  "finish": null,
-  "style": [
-   "seventies",
-   "design-iconique"
-  ],
-  "silhouette": [
-   "arrondi",
-   "tres-bas",
-   "sans-pieds",
-   "modulaire"
-  ],
-  "materialId": "velours-foret",
-  "demo": false,
-  "note": "Prix selon revêtement : voir la fiche GUBI.",
-  "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
-   "at": "2026-10-28",
-   "sources": [
-    "https://gubi.com/en/fr/products/pacha-sofa-4-seater-with-armrests",
-    "https://gubi.com/en/us/designers/pierre-paulin"
-   ]
-  }
- },
- {
-  "id": "ikea-vimle-fauteuil-djuparp-vert",
-  "brand": "IKEA",
-  "retailer": "IKEA France",
-  "name": "VIMLE fauteuil, Djuparp vert foncé",
-  "category": "fauteuil",
-  "tier": "economique",
-  "designer": null,
-  "reference": "994.771.40",
-  "dimensions": null,
-  "image": null,
-  "price": null,
-  "availability": null,
-  "url": "https://www.ikea.com/fr/fr/p/vimle-fauteuil-djuparp-vert-fonce-s99477140/",
-  "material": "Velours polyester Djuparp",
-  "materials": [
-   "velours"
-  ],
-  "colors": [
-   {
-    "name": "Vert foncé",
-    "hex": "#2F4A3D"
-   }
-  ],
-  "finish": null,
-  "style": [
-   "contemporain",
-   "confort"
-  ],
-  "silhouette": [
-   "droit",
-   "accoudoirs-larges"
-  ],
-  "materialId": "velours-foret",
-  "demo": false,
-  "note": "Prix non relevé : 469 € et 519 € affichés selon les pages.",
-  "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
-   "at": "2026-10-28",
-   "sources": [
-    "https://www.ikea.com/fr/fr/p/vimle-fauteuil-djuparp-vert-fonce-s99477140/"
-   ]
-  }
+  "market": "FR"
  },
  {
   "id": "ikea-strandmon-tommaboda-beige",
@@ -219,7 +76,11 @@
    "source": "https://www.ikea.com/fr/fr/p/strandmon-fauteuil-a-oreilles-tommaboda-beige-profond-50613163/",
    "observedAt": "2026-10-28"
   },
-  "availability": null,
+  "availability": {
+   "text": "Indiqué « en stock » en ligne",
+   "source": "https://www.ikea.com/fr/fr/p/strandmon-fauteuil-a-oreilles-tommaboda-beige-profond-50613163/",
+   "observedAt": "2026-10-28"
+  },
   "url": "https://www.ikea.com/fr/fr/p/strandmon-fauteuil-a-oreilles-tommaboda-beige-profond-50613163/",
   "material": "Velours doux Tommaboda",
   "materials": [
@@ -243,12 +104,13 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Relecture automatique de la fiche (données structurées schema.org) + recherche web",
    "at": "2026-10-28",
    "sources": [
     "https://www.ikea.com/fr/fr/p/strandmon-fauteuil-a-oreilles-tommaboda-beige-profond-50613163/"
    ]
-  }
+  },
+  "market": "FR"
  },
  {
   "id": "lr-leone-fauteuil-velours",
@@ -300,12 +162,13 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit) · relecture automatique bloquée par le site (403)",
    "at": "2026-10-28",
    "sources": [
     "https://www.laredoute.fr/ppdp/prod-528977282.aspx"
    ]
-  }
+  },
+  "market": "FR"
  },
  {
   "id": "gubi-pacha-lounge-chair",
@@ -354,12 +217,13 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Relecture automatique de la fiche (données structurées schema.org) + recherche web",
    "at": "2026-10-28",
    "sources": [
     "https://gubi.com/en/us/products/pacha-lounge-chair"
    ]
-  }
+  },
+  "market": "US"
  },
  {
   "id": "ikea-borgeby-bouleau-70",
@@ -386,7 +250,11 @@
    "source": "https://www.ikea.com/fr/fr/p/borgeby-table-basse-plaque-bouleau-70389356/",
    "observedAt": "2026-10-28"
   },
-  "availability": null,
+  "availability": {
+   "text": "Indiqué « en stock » en ligne",
+   "source": "https://www.ikea.com/fr/fr/p/borgeby-table-basse-plaque-bouleau-70389356/",
+   "observedAt": "2026-10-28"
+  },
   "url": "https://www.ikea.com/fr/fr/p/borgeby-table-basse-plaque-bouleau-70389356/",
   "material": "Plaqué bouleau",
   "materials": [
@@ -410,12 +278,13 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Relecture automatique de la fiche (données structurées schema.org) + recherche web",
    "at": "2026-10-28",
    "sources": [
     "https://www.ikea.com/fr/fr/p/borgeby-table-basse-plaque-bouleau-70389356/"
    ]
-  }
+  },
+  "market": "FR"
  },
  {
   "id": "ikea-stockholm-2025-chene-verre",
@@ -442,7 +311,11 @@
    "source": "https://www.ikea.com/fr/fr/p/stockholm-2025-table-basse-plaque-chene-verre-20586552/",
    "observedAt": "2026-10-28"
   },
-  "availability": null,
+  "availability": {
+   "text": "Indiqué « en stock » en ligne",
+   "source": "https://www.ikea.com/fr/fr/p/stockholm-2025-table-basse-plaque-chene-verre-20586552/",
+   "observedAt": "2026-10-28"
+  },
   "url": "https://www.ikea.com/fr/fr/p/stockholm-2025-table-basse-plaque-chene-verre-20586552/",
   "material": "Plaqué chêne et verre",
   "materials": [
@@ -468,12 +341,13 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Relecture automatique de la fiche (données structurées schema.org) + recherche web",
    "at": "2026-10-28",
    "sources": [
     "https://www.ikea.com/fr/fr/p/stockholm-2025-table-basse-plaque-chene-verre-20586552/"
    ]
-  }
+  },
+  "market": "FR"
  },
  {
   "id": "ampm-guimel-travertin",
@@ -527,12 +401,13 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit) · relecture automatique bloquée par le site (403)",
    "at": "2026-10-28",
    "sources": [
     "https://www.laredoute.fr/ppdp/prod-602053824.aspx"
    ]
-  }
+  },
+  "market": "FR"
  },
  {
   "id": "gubi-epic-coffee-table-round",
@@ -588,13 +463,14 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Relecture automatique de la fiche (données structurées schema.org) + recherche web",
    "at": "2026-10-28",
    "sources": [
     "https://gubi.com/products/epic-coffee-table-round?itemNumber=10042375",
     "https://gubi.com/en/us/products/epic-coffee-table-round"
    ]
-  }
+  },
+  "market": "EU"
  },
  {
   "id": "ikea-akterspring-lampadaire",
@@ -621,7 +497,11 @@
    "source": "https://www.ikea.com/fr/fr/p/akterspring-lampadaire-opalin-verre-laitonne-30614314/",
    "observedAt": "2026-10-28"
   },
-  "availability": null,
+  "availability": {
+   "text": "Indiqué « en stock » en ligne",
+   "source": "https://www.ikea.com/fr/fr/p/akterspring-lampadaire-opalin-verre-laitonne-30614314/",
+   "observedAt": "2026-10-28"
+  },
   "url": "https://www.ikea.com/fr/fr/p/akterspring-lampadaire-opalin-verre-laitonne-30614314/",
   "material": "Métal laitonné, verre opalin",
   "materials": [
@@ -647,12 +527,13 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Relecture automatique de la fiche (données structurées schema.org) + recherche web",
    "at": "2026-10-28",
    "sources": [
     "https://www.ikea.com/fr/fr/p/akterspring-lampadaire-opalin-verre-laitonne-30614314/"
    ]
-  }
+  },
+  "market": "FR"
  },
  {
   "id": "lr-moricio-lampadaire",
@@ -706,12 +587,13 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit) · relecture automatique bloquée par le site (403)",
    "at": "2026-10-28",
    "sources": [
     "https://www.laredoute.fr/ppdp/prod-513626540.aspx"
    ]
-  }
+  },
+  "market": "FR"
  },
  {
   "id": "flos-ic-lights-f1-laiton",
@@ -768,14 +650,15 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Relecture automatique de la fiche (données structurées schema.org) + recherche web",
    "at": "2026-10-28",
    "sources": [
     "https://flos.com/en/wo/ic-lights-floor/M-ic-lights-floor.html",
     "https://flos.com/en/si/ic-lights-floor/M-ic-lights-floor.html",
     "https://professional.flos.com/en/global/product/ic-lights-f1-f3173059/"
    ]
-  }
+  },
+  "market": "EU"
  },
  {
   "id": "ikea-eneryda-laiton-112",
@@ -802,7 +685,11 @@
    "source": "https://www.ikea.com/fr/fr/p/eneryda-poignee-couleur-laiton-30610858/",
    "observedAt": "2026-10-28"
   },
-  "availability": null,
+  "availability": {
+   "text": "Indiqué « en stock » en ligne",
+   "source": "https://www.ikea.com/fr/fr/p/eneryda-poignee-couleur-laiton-30610858/",
+   "observedAt": "2026-10-28"
+  },
   "url": "https://www.ikea.com/fr/fr/p/eneryda-poignee-couleur-laiton-30610858/",
   "material": "Métal finition laiton",
   "materials": [
@@ -826,12 +713,13 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Relecture automatique de la fiche (données structurées schema.org) + recherche web",
    "at": "2026-10-28",
    "sources": [
     "https://www.ikea.com/fr/fr/p/eneryda-poignee-couleur-laiton-30610858/"
    ]
-  }
+  },
+  "market": "FR"
  },
  {
   "id": "ikea-bagganas-laiton-143",
@@ -850,8 +738,19 @@
    "source": "https://www.ikea.com/fr/fr/p/bagganaes-poignee-couleur-laiton-00338407/"
   },
   "image": null,
-  "price": null,
-  "availability": null,
+  "price": {
+   "amount": 8.0,
+   "currency": "EUR",
+   "text": "8 €",
+   "region": "France",
+   "source": "https://www.ikea.com/fr/fr/p/bagganaes-poignee-couleur-laiton-00338407/",
+   "observedAt": "2026-10-28"
+  },
+  "availability": {
+   "text": "Indiqué « en stock » en ligne",
+   "source": "https://www.ikea.com/fr/fr/p/bagganaes-poignee-couleur-laiton-00338407/",
+   "observedAt": "2026-10-28"
+  },
   "url": "https://www.ikea.com/fr/fr/p/bagganaes-poignee-couleur-laiton-00338407/",
   "material": "Métal finition laiton",
   "materials": [
@@ -873,14 +772,15 @@
   ],
   "materialId": "laiton-brosse",
   "demo": false,
-  "note": "Prix France non relevé : voir la fiche.",
+  "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Relecture automatique de la fiche (données structurées schema.org) + recherche web",
    "at": "2026-10-28",
    "sources": [
     "https://www.ikea.com/fr/fr/p/bagganaes-poignee-couleur-laiton-00338407/"
    ]
-  }
+  },
+  "market": "FR"
  },
  {
   "id": "buster-punch-pull-bar-linear-laiton",
@@ -932,11 +832,482 @@
   "demo": false,
   "note": null,
   "verification": {
-   "method": "Recherche web sur le site officiel de la marque ou de l'enseigne (extraits de la fiche produit)",
+   "method": "Relecture automatique de la fiche (données structurées schema.org) + recherche web",
    "at": "2026-10-28",
    "sources": [
     "https://www.busterandpunch.com/shop/cabinet-hardware/pull-bar/pull-bar-linear-brass/?attribute_pa_size=small-150mm",
     "https://www.busterandpunch.com/us/shop/cabinet-hardware/pull-bar/pull-bar-linear-brass/"
+   ]
+  },
+  "market": "UK"
+ },
+ {
+  "id": "drawer-oris-effet-travertin",
+  "brand": "Drawer",
+  "retailer": "La Redoute",
+  "name": "Table basse organique effet travertin 120 × 65 cm, Oris",
+  "category": "table-basse",
+  "tier": "economique",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 120,
+   "d": 65,
+   "h": null,
+   "text": "120 × 65 cm",
+   "source": "https://www.laredoute.fr/ppdp/prod-602419414.aspx"
+  },
+  "image": null,
+  "price": {
+   "amount": 119.99,
+   "currency": "EUR",
+   "text": "119,99 € (souvent remisé)",
+   "region": "France",
+   "source": "https://www.laredoute.fr/ppdp/prod-602419414.aspx",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.laredoute.fr/ppdp/prod-602419414.aspx",
+  "material": "Mélaminé effet travertin",
+  "materials": [
+   "travertin-effet"
+  ],
+  "colors": [
+   {
+    "name": "Beige travertin",
+    "hex": "#DCCBAE"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain",
+   "organique"
+  ],
+  "silhouette": [
+   "organique",
+   "basse"
+  ],
+  "materialId": "travertin",
+  "demo": false,
+  "note": "Imitation : panneau mélaminé à l'aspect travertin, pas de pierre.",
+  "market": "FR",
+  "verification": {
+   "method": "Recherche web sur le site de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.laredoute.fr/ppdp/prod-602419414.aspx"
+   ]
+  }
+ },
+ {
+  "id": "mdm-krille-ovale-effet-travertin",
+  "brand": "Maisons du Monde",
+  "retailer": "Maisons du Monde",
+  "name": "Table basse ovale effet travertin 120 × 60 cm, Krille",
+  "category": "table-basse",
+  "tier": "economique",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 120,
+   "d": 60,
+   "h": null,
+   "text": "120 × 60 cm",
+   "source": "https://www.maisonsdumonde.com/FR/fr/p/table-basse-ovale-effet-travertin-120x60cm-beige-krille-M25108467.htm"
+  },
+  "image": null,
+  "price": {
+   "amount": 329,
+   "currency": "EUR",
+   "text": "329 €",
+   "region": "France",
+   "source": "https://www.maisonsdumonde.com/FR/fr/p/table-basse-ovale-effet-travertin-120x60cm-beige-krille-M25108467.htm",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.maisonsdumonde.com/FR/fr/p/table-basse-ovale-effet-travertin-120x60cm-beige-krille-M25108467.htm",
+  "material": "Effet travertin",
+  "materials": [
+   "travertin-effet"
+  ],
+  "colors": [
+   {
+    "name": "Beige travertin",
+    "hex": "#DCCBAE"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain"
+  ],
+  "silhouette": [
+   "ovale",
+   "basse"
+  ],
+  "materialId": "travertin",
+  "demo": false,
+  "note": "Imitation travertin.",
+  "market": "FR",
+  "verification": {
+   "method": "Recherche web sur le site de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.maisonsdumonde.com/FR/fr/p/table-basse-ovale-effet-travertin-120x60cm-beige-krille-M25108467.htm"
+   ]
+  }
+ },
+ {
+  "id": "kave-drasi-ronde-90",
+  "brand": "Kave Home",
+  "retailer": "Kave Home",
+  "name": "Table basse Drasi, ciment effet travertin, Ø 90 cm",
+  "category": "table-basse",
+  "tier": "intermediaire",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 90,
+   "d": 90,
+   "h": 40,
+   "text": "Ø 90 × H 40 cm",
+   "source": "https://kavehome.com/en/en/p/drasi-cement-coffee-table-with-travertine-effect-finish-o90cm"
+  },
+  "image": null,
+  "price": {
+   "amount": 839,
+   "currency": "EUR",
+   "text": "839 €",
+   "region": "Boutique Kave Home (Europe)",
+   "source": "https://kavehome.com/en/en/p/drasi-cement-coffee-table-with-travertine-effect-finish-o90cm",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://kavehome.com/en/en/p/drasi-cement-coffee-table-with-travertine-effect-finish-o90cm",
+  "material": "Ciment, finition effet travertin",
+  "materials": [
+   "travertin-effet",
+   "ciment"
+  ],
+  "colors": [
+   {
+    "name": "Beige travertin",
+    "hex": "#DCCBAE"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "minimal",
+   "mineral"
+  ],
+  "silhouette": [
+   "ronde",
+   "basse",
+   "massive"
+  ],
+  "materialId": "travertin",
+  "demo": false,
+  "note": "Matière minérale à l'aspect travertin, utilisable en extérieur couvert.",
+  "market": "EU",
+  "verification": {
+   "method": "Recherche web sur le site de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://kavehome.com/en/en/p/drasi-cement-coffee-table-with-travertine-effect-finish-o90cm"
+   ]
+  }
+ },
+ {
+  "id": "westwing-distinct-travertin",
+  "brand": "Westwing",
+  "retailer": "Westwing",
+  "name": "Table basse en travertin Distinct",
+  "category": "table-basse",
+  "tier": "premium",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": null,
+   "d": null,
+   "h": null,
+   "text": "Voir la fiche",
+   "source": "https://www.westwing.fr/table-basse-en-travertin-distinct-165646.html"
+  },
+  "image": null,
+  "price": {
+   "amount": 1449,
+   "currency": "EUR",
+   "text": "1 449 €",
+   "region": "France",
+   "source": "https://www.westwing.fr/table-basse-en-travertin-distinct-165646.html",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.westwing.fr/table-basse-en-travertin-distinct-165646.html",
+  "material": "Travertin",
+  "materials": [
+   "travertin",
+   "pierre"
+  ],
+  "colors": [
+   {
+    "name": "Beige travertin",
+    "hex": "#DCCBAE"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "minimal",
+   "mineral"
+  ],
+  "silhouette": [
+   "massive"
+  ],
+  "materialId": "travertin",
+  "demo": false,
+  "note": "Forme exacte et dimensions à vérifier sur la fiche.",
+  "market": "FR",
+  "verification": {
+   "method": "Recherche web sur le site de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.westwing.fr/table-basse-en-travertin-distinct-165646.html"
+   ]
+  }
+ },
+ {
+  "id": "sweeek-feel-boucle-creme",
+  "brand": "Sweeek",
+  "retailer": "La Redoute",
+  "name": "Canapé convertible 3 places bouclette Feel, crème",
+  "category": "canape",
+  "tier": "economique",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 231,
+   "d": 96.5,
+   "h": 80,
+   "text": "L 231 × P 96,5 × H 80 cm",
+   "source": "https://www.laredoute.fr/ppdp/prod-601719514.aspx"
+  },
+  "image": null,
+  "price": {
+   "amount": 419.99,
+   "currency": "EUR",
+   "text": "419,99 €",
+   "region": "France",
+   "source": "https://www.laredoute.fr/ppdp/prod-601719514.aspx",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.laredoute.fr/ppdp/prod-601719514.aspx",
+  "material": "Tissu bouclette",
+  "materials": [
+   "boucle"
+  ],
+  "colors": [
+   {
+    "name": "Crème",
+    "hex": "#EEE7DA"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain"
+  ],
+  "silhouette": [
+   "droit",
+   "convertible"
+  ],
+  "materialId": "boucle",
+  "demo": false,
+  "note": "Convertible ; dossier droit.",
+  "market": "FR",
+  "verification": {
+   "method": "Recherche web sur le site de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.laredoute.fr/ppdp/prod-601719514.aspx"
+   ]
+  }
+ },
+ {
+  "id": "mdm-nola-boucle-creme",
+  "brand": "Maisons du Monde",
+  "retailer": "Maisons du Monde",
+  "name": "Canapé 3 places en tissu bouclette crème, Nola",
+  "category": "canape",
+  "tier": "economique",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 226,
+   "d": 86,
+   "h": 68,
+   "text": "L 226 × P 86 × H 68 cm",
+   "source": "https://www.maisonsdumonde.com/FR/fr/p/canape-3-places-en-tissu-bouclette-creme-nola-M24151895.htm"
+  },
+  "image": null,
+  "price": {
+   "amount": 599,
+   "currency": "EUR",
+   "text": "599 € (prix soldé relevé)",
+   "region": "France",
+   "source": "https://www.maisonsdumonde.com/FR/fr/p/canape-3-places-en-tissu-bouclette-creme-nola-M24151895.htm",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.maisonsdumonde.com/FR/fr/p/canape-3-places-en-tissu-bouclette-creme-nola-M24151895.htm",
+  "material": "Tissu bouclette",
+  "materials": [
+   "boucle"
+  ],
+  "colors": [
+   {
+    "name": "Crème",
+    "hex": "#EEE7DA"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain",
+   "organique"
+  ],
+  "silhouette": [
+   "bas",
+   "arrondi"
+  ],
+  "materialId": "boucle",
+  "demo": false,
+  "note": "Forme arrondie non confirmée sur la fiche.",
+  "market": "FR",
+  "verification": {
+   "method": "Recherche web sur le site de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.maisonsdumonde.com/FR/fr/p/canape-3-places-en-tissu-bouclette-creme-nola-M24151895.htm"
+   ]
+  }
+ },
+ {
+  "id": "westwing-alba-creme",
+  "brand": "Westwing Collection",
+  "retailer": "Westwing",
+  "name": "Canapé 3 places Alba (forme haricot), crème",
+  "category": "canape",
+  "tier": "intermediaire",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 235,
+   "d": 114,
+   "h": 69,
+   "text": "L 235 × P 114 × H 69 cm",
+   "source": "https://www.westwing.fr/canape-haricot-3-places-creme-alba-141471.html"
+  },
+  "image": null,
+  "price": {
+   "amount": 1699,
+   "currency": "EUR",
+   "text": "1 699 €",
+   "region": "France",
+   "source": "https://www.westwing.fr/canape-haricot-3-places-creme-alba-141471.html",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.westwing.fr/canape-haricot-3-places-creme-alba-141471.html",
+  "material": "Velours",
+  "materials": [
+   "velours"
+  ],
+  "colors": [
+   {
+    "name": "Blanc crème",
+    "hex": "#ECE4D6"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain",
+   "organique",
+   "glam"
+  ],
+  "silhouette": [
+   "arrondi",
+   "organique",
+   "bas"
+  ],
+  "materialId": "boucle",
+  "demo": false,
+  "note": "En velours, pas en bouclette.",
+  "market": "FR",
+  "verification": {
+   "method": "Recherche web sur le site de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.westwing.fr/canape-haricot-3-places-creme-alba-141471.html"
+   ]
+  }
+ },
+ {
+  "id": "westwing-wolke-modulable-3p",
+  "brand": "Westwing Collection",
+  "retailer": "Westwing",
+  "name": "Canapé modulable 3 places en bouclette Wolke",
+  "category": "canape",
+  "tier": "premium",
+  "designer": null,
+  "reference": null,
+  "dimensions": {
+   "w": 256,
+   "d": 118,
+   "h": 65,
+   "text": "L 256 × P 118 × H 65 cm",
+   "source": "https://www.westwing.fr/canape-modulable-3-places-en-boucle-wolke-159800.html"
+  },
+  "image": null,
+  "price": {
+   "amount": 2299,
+   "currency": "EUR",
+   "text": "2 299 €",
+   "region": "France",
+   "source": "https://www.westwing.fr/canape-modulable-3-places-en-boucle-wolke-159800.html",
+   "observedAt": "2026-10-28"
+  },
+  "availability": null,
+  "url": "https://www.westwing.fr/canape-modulable-3-places-en-boucle-wolke-159800.html",
+  "material": "Tissu bouclette",
+  "materials": [
+   "boucle"
+  ],
+  "colors": [
+   {
+    "name": "Blanc cassé",
+    "hex": "#EDE6DA"
+   }
+  ],
+  "finish": null,
+  "style": [
+   "contemporain",
+   "organique",
+   "minimal"
+  ],
+  "silhouette": [
+   "arrondi",
+   "organique",
+   "bas",
+   "modulaire",
+   "tres-bas"
+  ],
+  "materialId": "boucle",
+  "demo": false,
+  "note": "Couleur crème à confirmer selon la configuration.",
+  "market": "FR",
+  "verification": {
+   "method": "Recherche web sur le site de l'enseigne (extraits de la fiche produit)",
+   "at": "2026-10-28",
+   "sources": [
+    "https://www.westwing.fr/canape-modulable-3-places-en-boucle-wolke-159800.html"
    ]
   }
  }

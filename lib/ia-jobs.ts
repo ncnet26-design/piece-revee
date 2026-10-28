@@ -15,6 +15,8 @@ export interface JobRequest {
   mode: "generate" | "transform"; brief: string; photo?: string; references?: string[];
   keep?: string[]; keepFree?: string; materials?: string[]; products?: string[];
   quality?: Quality; width?: number; height?: number; fournisseur?: string;
+  /** Édition localisée : masque PNG (zones transparentes = à modifier) et zone décrite. */
+  mask?: string; onlyZone?: { label: string; x: number; y: number; w: number; h: number };
 }
 export type Result<T> = { ok: true; value: T } | { ok: false; message: string };
 
@@ -55,6 +57,21 @@ export async function retryJob(id: string): Promise<Result<IaJob>> {
   return res;
 }
 export const usage = () => call<{ day: { images: number; max: number }; visitorDay: { images: number; max: number }; month: { usd: number; max: number }; visitorMonth: { usd: number; max: number }; fournisseurs: string[] }>(`/v2/usage?visiteur=${visitorId()}`);
+
+/** Masque PNG aux dimensions de l'image : la zone (en %) est transparente, donc modifiable ; le reste est protégé. */
+export async function maskFor(src: string, z: { x: number; y: number; w: number; h: number }, margin = 4): Promise<{ image: string; mask: string }> {
+  const img = await shrink(src, 2048, 0.92);
+  const im = new Image(); im.src = img; await im.decode();
+  const c = document.createElement("canvas"); c.width = im.naturalWidth; c.height = im.naturalHeight;
+  const x = c.getContext("2d")!; x.fillStyle = "#000"; x.fillRect(0, 0, c.width, c.height);
+  const px = (v: number, total: number) => (v / 100) * total;
+  x.clearRect(px(Math.max(0, z.x - margin), c.width), px(Math.max(0, z.y - margin), c.height), px(Math.min(100, z.w + 2 * margin), c.width), px(Math.min(100, z.h + 2 * margin), c.height));
+  return { image: img, mask: c.toDataURL("image/png") };
+}
+/** Meubles visibles d'une image (zones et traits visuels), par le service d'analyse. */
+export async function analyseImage(src: string) {
+  return call<{ objects: unknown[] }>("/v2/analyse", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ image: await shrink(src, 1536, 0.88), visiteur: visitorId() }) });
+}
 
 /** Suit la tâche jusqu'à la fin (intervalle croissant de 2 à 6 s, 8 minutes au plus). */
 export async function waitForJob(job: IaJob, onUpdate: (j: IaJob) => void, signal?: AbortSignal): Promise<IaJob> {

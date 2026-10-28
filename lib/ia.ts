@@ -6,7 +6,9 @@ export const IA_URL = (process.env.NEXT_PUBLIC_IA_URL || "https://piece-revee-ia
 
 /** Réduit une image avant l'envoi (moins de données, réponse plus rapide). */
 export async function shrink(src: string, maxSide: number, quality = 0.86): Promise<string> {
-  const img = new Image(); img.decoding = "async"; img.src = src; await img.decode();
+  const img = new Image(); img.decoding = "async";
+  if (!src.startsWith("data:")) img.crossOrigin = "anonymous"; // images du service : lisibles grâce à CORS
+  img.src = src; await img.decode();
   const k = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight));
   const c = document.createElement("canvas"); c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
   c.getContext("2d")!.drawImage(img, 0, 0, c.width, c.height);

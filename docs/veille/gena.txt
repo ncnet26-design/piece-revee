@@ -1,0 +1,154 @@
+URL: https://gena-interior.com/en
+HTTP: 200 OK
+Récupéré le : 2026-10-28T19:44:31.930Z
+Longueur HTML : 235073
+
+description: Upload a photo, get your room measured in centimetres and refurnished by AI: real furniture with price, size and buy link — try it free.
+og:title: GENA Interior – AI Room Planner: Measure &amp; Redesign Your Room
+og:description: Upload a photo, get your room measured in centimetres and refurnished by AI: real furniture with price, size and buy link — try it free.
+
+Liens utiles :
+
+Texte visible :
+GENA Interior – AI Room Planner: Measure & Redesign Your Room 
+GENA . 
+ Feedback 
+Skip to content 
+ GENA . 
+How it works 
+What you get 
+Pricing 
+FAQ 
+ English 
+Sign in 
+ Try free Try it for free 
+AI room planner, to the centimetre 
+Measured first. Furnished second. 
+GENA is your AI room planner: it measures your room from a photo — walls, windows and doors in centimetres. Only then does the AI furnish it. That is why the sofa fits the wall it is placed against. 
+ No credit card 
+ 5 free generations a month 
+ Cancel monthly 
+Try it for free 
+Sign in 
+ How GENA works 
+ Real GENA output — unedited Before After 
+Drag the handle for before/after · tap a dot for product, price and shop 
+Fit check 
+The difference: GENA does the maths 
+Image generators put down a sofa wider than the wall behind it. GENA measured that wall first and checks every product it finds against that number — before you click buy. 
+Precise measuring — walls, windows and doors in centimetres — is available from the Hobby plan; the more exact the measurement, the more reliable the fit badge on every product in the shopping list. 
+ Measured wall 246 cm 
+ Sofa found 220 cm 
+ 220 cm 
+ 26 cm 
+ Fits 220 cm wide — 26 cm to spare along the Fensterwand. 
+Fit checked against the measured walls, including door width and walkway. When the measurements come from the photo it is an estimate with a stated tolerance — upload the floor plan or measure up for a certain verdict. 
+The iron rule 
+Windows stay windows. Doors stay doors. Load-bearing walls keep standing. GENA never changes your room&#x27;s structure — unless you explicitly allow it. 
+From photo to finished room 
+ 1 
+Photograph 
+Upload one or more photos of your room — from your phone or computer. A floor plan is welcome too. 
+ 2 
+Pick a style 
+26 styles from Japandi to country, 17 room types from bathroom to terrace — plus your own wishes and annotations in the photo. 
+ 3 
+Furnish & shop 
+GENA restyles the room photorealistically and finds matching real products — with price, dimensions, fit verdict and link. 
+What GENA does that image generators cannot 
+Everything here is built and usable in the app — not off-the-shelf virtual staging, but AI interior design that does the maths. 
+Fit check 
+Every product is measured against the wall GENA measured: fits, tight, too big. 
+26 styles, 17 room types 
+Garden, terrace, balcony, pool, facade and carport included — not just interiors. 
+Floor plan in, floor plan out 
+Add your own floor plan — and download a dimensioned drawing of your room. 
+Photo 3D with buy points 
+Your result becomes a spatial relief — with clickable buy points on every recognised piece, straight from the image. 
+Walkable room & video — alpha 
+In testing: walk through a to-scale rebuild of the room and record the tour as an MP4. 
+Several viewpoints 
+Shoot the room from two directions. One furnishing, one shopping list. 
+Four modes 
+Furnish, empty out, declutter — or refine a finished result in conversation. 
+Change one piece 
+Pick a piece in the finished image and describe the change — only that area is replaced, the rest stays put, pixel for pixel. 
+Budget and delivery country 
+Set a ceiling and your delivery country (DE, AT, CH) — GENA only looks for what fits the budget and ships there. 
+Alternatives, not one hit 
+Several retailers per piece, with a price range instead of a single price. 
+Your own inspiration 
+Up to eight collected images set the direction — a mood, not one picture to copy. 
+API and batch 
+Whole properties at once, or call GENA from your own software. 
+Buy points in the image 
+In the finished room, buy points pulse on every recognised piece. One click opens the product with price and purchase link — plus a toggle between before/after and shopping view. 
+Lumi advises you 
+An AI helper, anywhere on screen. Answers interior questions, knows your rooms and budget, finds real products and guides you through the interface with a tour. 
+Shop my room 
+No redesign needed: upload your own photo and GENA finds the furniture in it as buyable products — no AI image, no watermark. 
+Plan your own products 
+Add a product by link, photo, search or by hand — GENA places it to scale in the room and checks the fit. 
+Versions & before-after 
+Every generation is kept as its own version. Compare the original photo and the result with a slider — and jump back to an earlier version anytime. 
+Draw on the photo 
+Draw coloured marks on the source photo and note what should happen at each spot — optionally with a specific product. GENA acts exactly there. 
+Everything in the picture is shoppable 
+GENA recognizes every placed furniture piece, finds the matching real product and pins it as a hotspot: tap, see the price, buy. The list here comes from exactly the image above. 
+Furnish your own room 
+Shopping list 
+ TARVA Bettgestell — Kiefer, 140×200 cm B 148 cm × T 209 cm 149,00 € 
+ LOHALS Teppich flach gewebt — natur, 200×300 cm B 200 cm × T 300 cm 99,99 € 
+ BLIDVÄDER Tischleuchte — elfenbeinweiß Keramik/beige, 50 cm H 50 cm 59,99 € 
+ MÖRBYLÅNGA Bank — Eichenfurnier/braun lasiert, 180 cm B 180 cm × T 35 cm × H 45 cm 299,00 € 
+ LACK Beistelltisch — weiß, 55×55 cm B 55 cm × T 55 cm × H 45 cm 9,99 € 
+ BOYSENBÄR Übertopf — hellgrau, 24 cm Ø 24 cm × H 26 cm 19,99 € 
+ Total of found prices 637,96 € 
+Every result is labelled as AI-generated 
+Visible in the image and machine-readable in the metadata (IPTC DigitalSourceType) — as Article 50 of the EU AI Act has required since 2 August 2026. On Pro too, and in 4K. 
+A price that keeps up 
+Start free. Hobby for your own home, Pro for business. 
+Monthly 
+Yearly 
+Free 
+0 € 
+free, no credit card 
+ 1 project 
+ 5 generations per month — free, no credit card 
+ Shopping view with buy links 
+Start free 
+ Most popular 
+Hobby 
+12,42 € per month 
+149 € per year, paid up front — 17 % cheaper than monthly. Cancel any time to the end of the term. Prices incl. VAT. 
+ 20 projects 
+ 50 generations per month 
+ 20 room analyses per month with measurement editor & fit check 
+ Annotations & your own product catalog 
+ Floor plan, 3D view & video 
+Choose Hobby 
+Pro 
+20,75 € per month 
+249 € per year, paid up front — 17 % cheaper than monthly. Cancel any time to the end of the term. Prices incl. VAT. 
+ Unlimited projects 
+ 300 generations per month 
+ Unlimited room analyses 
+ Everything in Hobby 
+ 4K export, API access & commercial use 
+Choose Pro 
+Frequently asked questions 
+ What is GENA Interior? 
+GENA Interior is an AI room planner: you upload a photo of your room, GENA measures walls, windows and doors in centimetres and then refurnishes the room photorealistically — with real furniture that provably fits, including price and buy link. Built for renters, homeowners and anyone who wants to see a room before furnishing or selling it. How accurate are the measurements from the photo? 
+GENA derives the measurements from the photo — good enough for proportions and furniture suggestions. From a single image the error is typically around ten percent. Before you buy, it is best to measure yourself. Is GENA suitable for virtual home staging? 
+Yes. Because GENA measures the real room and checks every piece of furniture against that measurement, you get precise virtual staging instead of image-generator décor — ideal for showing a room before furnishing or selling. What does GENA Interior cost? 
+GENA starts free with 5 generations per month, no credit card. Hobby (€14.99 a month or €149 a year, equal to €12.42/month) gives you 50 generations and 20 room analyses per month; Pro (€24.99 a month or €249 a year, equal to €20.75/month) gives you 300 generations, unlimited analyses, 4K export, API access and commercial use — monthly plans cancellable monthly, yearly plans at the end of the term, no minimum term beyond that. Can I cancel anytime? 
+Yes. On the monthly plan, Hobby and Pro are cancellable monthly, there is no minimum term, and you cancel directly in the app. The yearly plan (€149 or €249 a year, paid upfront) can be cancelled any time to the end of the term. Free needs no subscription and stays at 5 generations per month. Is the result labelled as an AI image? 
+Yes. Every result is labelled as AI-generated — visibly in the image and machine-readable in the metadata — as required by Article 50 of the EU AI Act, including on Pro and in 4K. 
+Your room is waiting. 
+Start for free — one photo is enough. 
+Try it for free 
+ GENA . 
+Imprint 
+Privacy 
+Terms 
+Cookie settings

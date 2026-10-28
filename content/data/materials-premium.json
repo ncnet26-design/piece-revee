@@ -1,130 +1,488 @@
 [
   {
-    "id": "laiton-brosse",
-    "name": "Laiton brossé",
-    "category": "Métal",
-    "finish": "Brossé, vernis mat",
+    "id": "chene-naturel",
+    "name": "Chêne naturel",
+    "category": "Bois",
+    "finish": "Huilé mat",
     "manufacturer": null,
     "reference": null,
-    "baseColor": "#C9A564",
-    "description": "Laiton massif brossé dans un seul sens : reflets étirés, chaleur dorée. Se patine avec le temps s'il n'est pas verni.",
+    "baseColor": "#B98E5E",
+    "description": "Chêne européen huilé : fil droit, maillures et pores visibles, teinte miel naturelle.",
     "usages": [
-      "Poignées",
-      "Robinetterie",
-      "Luminaires",
-      "Plinthes et nez de marche"
+      "Parquets",
+      "Mobilier",
+      "Menuiseries"
     ],
     "pbr": {
-      "metalness": 1,
-      "roughness": 0.3,
-      "anisotropy": 0.8,
-      "normalScale": 0.25
+      "metalness": 0,
+      "roughness": 0.58,
+      "normalScale": 0.6,
+      "roughnessScale": 1.3
     },
-    "tileMeters": 0.12,
+    "tileMeters": 1,
     "textures": {
-      "kind": "procedural",
-      "generator": "brosse"
+      "kind": "photo",
+      "assetId": "oak_veneer_01",
+      "fallbackDir": "/textures/tx-chene"
     },
     "compare": [
-      "chrome-poli",
-      "noir-mat"
+      "travertin",
+      "velours-foret"
     ],
-    "showroom": "sr:quincaillerie:pastille:laiton:brosse"
+    "showroom": "sr:parquet:chene:larges:huile"
   },
   {
-    "id": "chrome-poli",
-    "name": "Chrome poli",
-    "category": "Métal",
-    "finish": "Poli miroir",
+    "id": "chene-fume",
+    "name": "Chêne fumé",
+    "category": "Bois",
+    "finish": "Huilé, teinte fumée",
     "manufacturer": null,
     "reference": null,
-    "baseColor": "#D6D8DA",
-    "description": "Dépôt de chrome sur laiton, poli miroir : reflets nets et froids, entretien facile.",
+    "baseColor": "#5E4632",
+    "description": "Chêne traité à l'ammoniaque : teinte brun profond, veinage et maillures conservés.",
     "usages": [
-      "Robinetterie",
-      "Poignées",
-      "Accessoires de bain"
+      "Parquets",
+      "Mobilier"
     ],
     "pbr": {
-      "metalness": 1,
-      "roughness": 0.05,
-      "normalScale": 0.05
+      "metalness": 0,
+      "roughness": 0.55,
+      "normalScale": 0.6,
+      "tint": true,
+      "textureContrast": 0.9
     },
-    "tileMeters": 0.12,
+    "tileMeters": 1,
     "textures": {
-      "kind": "procedural",
-      "generator": "poli"
+      "kind": "photo",
+      "search": [
+        "smoked oak",
+        "dark oak",
+        "oak"
+      ],
+      "fallbackDir": "/textures/m-chenefume"
     },
     "compare": [
-      "laiton-brosse",
-      "noir-mat"
-    ],
-    "showroom": "sr:quincaillerie:pastille:chrome:poli"
+      "chene-naturel",
+      "noyer-verni"
+    ]
   },
   {
-    "id": "noir-mat",
-    "name": "Noir mat",
-    "category": "Métal",
-    "finish": "Laquage poudre mat",
+    "id": "noyer-verni",
+    "name": "Noyer verni",
+    "category": "Bois",
+    "finish": "Vernis satiné",
     "manufacturer": null,
     "reference": null,
-    "baseColor": "#1E1E20",
-    "description": "Acier ou laiton laqué époxy noir, toucher velouté et grain très fin, sans reflet métallique.",
+    "baseColor": "#5B4030",
+    "description": "Noyer massif au veinage ondulé, vernis satiné qui accroche la lumière sans effet plastique.",
     "usages": [
-      "Robinetterie",
-      "Poignées",
-      "Luminaires",
-      "Verrières"
+      "Mobilier",
+      "Façades",
+      "Plateaux"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.42,
+      "clearcoat": 0.55,
+      "clearcoatRoughness": 0.28,
+      "normalScale": 0.5
+    },
+    "tileMeters": 0.8,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "walnut"
+      ],
+      "fallbackDir": "/textures/m-noyer"
+    },
+    "compare": [
+      "chene-naturel",
+      "bois-huile"
+    ]
+  },
+  {
+    "id": "bois-huile",
+    "name": "Bois huilé clair",
+    "category": "Bois",
+    "finish": "Huile naturelle, mat",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#C49A6C",
+    "description": "Bois clair simplement huilé : toucher brut, pores ouverts, aucune brillance.",
+    "usages": [
+      "Tables",
+      "Plans",
+      "Menuiseries"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.72,
+      "normalScale": 0.7
+    },
+    "tileMeters": 1,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "fine grained wood",
+        "light wood"
+      ],
+      "fallbackDir": "/textures/tx-bois-fin"
+    },
+    "compare": [
+      "chene-naturel",
+      "noyer-verni"
+    ]
+  },
+  {
+    "id": "parquet-chevron",
+    "name": "Parquet chêne point de Hongrie",
+    "category": "Bois",
+    "finish": "Huilé naturel",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#A87B4F",
+    "description": "Lames de chêne posées en chevrons, teinte miel, veinage et nœuds discrets.",
+    "usages": [
+      "Sols"
     ],
     "pbr": {
       "metalness": 0,
       "roughness": 0.62,
-      "clearcoat": 0.1,
-      "clearcoatRoughness": 0.6,
-      "normalScale": 0.35
+      "clearcoat": 0,
+      "clearcoatRoughness": 0.5,
+      "normalScale": 0.7,
+      "roughnessScale": 1.8
     },
-    "tileMeters": 0.12,
+    "tileMeters": 2,
     "textures": {
-      "kind": "procedural",
-      "generator": "poudre"
+      "kind": "photo",
+      "assetId": "herringbone_parquet",
+      "fallbackDir": "/textures/m-chene"
     },
     "compare": [
-      "laiton-brosse",
-      "chrome-poli"
-    ],
-    "showroom": "sr:quincaillerie:pastille:noir:mat"
+      "chene-naturel",
+      "travertin"
+    ]
   },
   {
-    "id": "zellige-emeraude",
-    "name": "Zellige artisanal émeraude",
-    "category": "Céramique",
-    "finish": "Émail brillant, bords irréguliers",
+    "id": "peinture-mate",
+    "name": "Peinture mate",
+    "category": "Peinture",
+    "finish": "Mat profond (≈ 3 % de brillance)",
     "manufacturer": null,
     "reference": null,
-    "baseColor": "#1E6B55",
-    "description": "Terre cuite émaillée et taillée à la main : chaque carreau a sa nuance, son relief et sa brillance.",
+    "baseColor": "#EDE8DF",
+    "description": "Peinture mate minérale : lumière très diffuse, micro-irrégularités du rouleau à peine visibles.",
     "usages": [
-      "Crédence",
-      "Douche",
-      "Habillage de cheminée"
+      "Murs",
+      "Plafonds"
     ],
     "pbr": {
       "metalness": 0,
-      "roughness": 0.18,
-      "clearcoat": 1,
-      "clearcoatRoughness": 0.08,
-      "normalScale": 1
+      "roughness": 0.95,
+      "clearcoat": 0,
+      "clearcoatRoughness": 0.35,
+      "normalScale": 0.12,
+      "tint": true,
+      "textureContrast": 0.15
     },
-    "tileMeters": 0.4,
+    "tileMeters": 1.5,
     "textures": {
-      "kind": "showroom",
-      "ref": "sr:zellige:emeraude:carre10:brillant:clair"
+      "kind": "photo",
+      "search": [
+        "painted plaster",
+        "plaster"
+      ],
+      "fallbackDir": "/textures/tx-enduit"
+    },
+    "compare": [
+      "peinture-velours",
+      "enduit-chaux"
+    ]
+  },
+  {
+    "id": "peinture-velours",
+    "name": "Peinture velours",
+    "category": "Peinture",
+    "finish": "Velours (≈ 10 % de brillance)",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#E8E1D4",
+    "description": "Finition entre mat et satin : douce au regard, plus lessivable qu'un mat.",
+    "usages": [
+      "Murs de séjour",
+      "Chambres"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.78,
+      "clearcoat": 0,
+      "clearcoatRoughness": 0.35,
+      "normalScale": 0.12,
+      "tint": true,
+      "textureContrast": 0.15
+    },
+    "tileMeters": 1.5,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "painted plaster",
+        "plaster"
+      ],
+      "fallbackDir": "/textures/tx-enduit"
+    },
+    "compare": [
+      "peinture-mate",
+      "peinture-satinee"
+    ]
+  },
+  {
+    "id": "peinture-satinee",
+    "name": "Peinture satinée",
+    "category": "Peinture",
+    "finish": "Satiné (≈ 30 % de brillance)",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#E8E1D4",
+    "description": "Reflet soyeux qui souligne les volumes : boiseries, portes, pièces d'eau.",
+    "usages": [
+      "Boiseries",
+      "Portes",
+      "Cuisines"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.42,
+      "clearcoat": 0.2,
+      "clearcoatRoughness": 0.35,
+      "normalScale": 0.12,
+      "tint": true,
+      "textureContrast": 0.15
+    },
+    "tileMeters": 1.5,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "painted plaster",
+        "plaster"
+      ],
+      "fallbackDir": "/textures/tx-enduit"
+    },
+    "compare": [
+      "peinture-velours",
+      "laque-brillante"
+    ]
+  },
+  {
+    "id": "laque-brillante",
+    "name": "Laque brillante",
+    "category": "Peinture",
+    "finish": "Laqué brillant",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#1F3A33",
+    "description": "Laque tendue et profonde, reflets nets : façades, portes, plafonds laqués.",
+    "usages": [
+      "Façades",
+      "Portes",
+      "Plafonds"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.12,
+      "clearcoat": 1,
+      "clearcoatRoughness": 0.05,
+      "normalScale": 0.04,
+      "tint": true,
+      "textureContrast": 0.15
+    },
+    "tileMeters": 1.5,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "painted plaster"
+      ],
+      "fallbackDir": "/textures/tx-enduit"
+    },
+    "compare": [
+      "peinture-satinee"
+    ]
+  },
+  {
+    "id": "enduit-chaux",
+    "name": "Enduit à la chaux",
+    "category": "Enduit",
+    "finish": "Taloché, nuancé",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#E6DDCF",
+    "description": "Chaux aérienne appliquée en passes croisées : nuances nuageuses et léger relief.",
+    "usages": [
+      "Murs",
+      "Niches"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.9,
+      "normalScale": 0.9,
+      "tint": true,
+      "textureContrast": 0.45
+    },
+    "tileMeters": 1.2,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "lime plaster",
+        "plaster",
+        "stucco"
+      ],
+      "fallbackDir": "/textures/tx-enduit-nuage"
+    },
+    "compare": [
+      "peinture-mate",
+      "tadelakt"
+    ]
+  },
+  {
+    "id": "tadelakt",
+    "name": "Tadelakt",
+    "category": "Enduit",
+    "finish": "Ciré, satiné",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#D9C7AE",
+    "description": "Chaux de Marrakech serrée au galet et savonnée : satiné doux, étanche.",
+    "usages": [
+      "Salles de bain",
+      "Douches"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.45,
+      "clearcoat": 0.45,
+      "clearcoatRoughness": 0.3,
+      "normalScale": 0.5,
+      "tint": true,
+      "textureContrast": 0.6
+    },
+    "tileMeters": 1.2,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "stucco",
+        "plaster"
+      ],
+      "fallbackDir": "/textures/m-tadelakt"
+    },
+    "compare": [
+      "enduit-chaux",
+      "beton-cire"
+    ]
+  },
+  {
+    "id": "beton-cire",
+    "name": "Béton ciré",
+    "category": "Enduit",
+    "finish": "Ciré mat",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#B7B2AA",
+    "description": "Micro-ciment lissé et ciré : nuances de truelle, aspect minéral continu.",
+    "usages": [
+      "Sols",
+      "Murs",
+      "Plans"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.55,
+      "clearcoat": 0.3,
+      "clearcoatRoughness": 0.35,
+      "normalScale": 0.5,
+      "tint": true,
+      "textureContrast": 0.6
+    },
+    "tileMeters": 1.5,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "concrete wall",
+        "concrete"
+      ],
+      "fallbackDir": "/textures/tx-beton"
+    },
+    "compare": [
+      "tadelakt",
+      "pierre-naturelle"
+    ]
+  },
+  {
+    "id": "platre-texture",
+    "name": "Plâtre texturé",
+    "category": "Enduit",
+    "finish": "Brut, mat",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#EFEBE4",
+    "description": "Plâtre lissé à la main, légères ondulations et grain fin.",
+    "usages": [
+      "Murs",
+      "Plafonds"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.93,
+      "normalScale": 0.6,
+      "tint": true,
+      "textureContrast": 0.45
+    },
+    "tileMeters": 1.5,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "white plaster",
+        "plaster"
+      ],
+      "fallbackDir": "/textures/m-chaux"
+    },
+    "compare": [
+      "enduit-chaux",
+      "peinture-mate"
+    ]
+  },
+  {
+    "id": "travertin",
+    "name": "Travertin",
+    "category": "Pierre",
+    "finish": "Adouci, pores ouverts",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#DCCBAE",
+    "description": "Pierre calcaire beige veinée dans le sens du lit, avec ses alvéoles caractéristiques.",
+    "usages": [
+      "Tables basses",
+      "Sols",
+      "Habillages muraux"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.55,
+      "normalScale": 0.9
+    },
+    "tileMeters": 1,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "travertine",
+        "limestone"
+      ],
+      "fallbackRef": "sr:marbre:travertin:adouci"
     },
     "compare": [
       "marbre-calacatta",
-      "travertin"
+      "chene-naturel"
     ],
-    "showroom": "sr:zellige:emeraude:carre10:brillant:clair"
+    "showroom": "sr:marbre:travertin:adouci"
   },
   {
     "id": "marbre-calacatta",
@@ -165,69 +523,452 @@
     "showroom": "sr:marbre:calacatta:adouci"
   },
   {
-    "id": "travertin",
-    "name": "Travertin",
+    "id": "pierre-naturelle",
+    "name": "Pierre calcaire",
     "category": "Pierre",
-    "finish": "Adouci, pores ouverts",
+    "finish": "Adoucie",
     "manufacturer": null,
     "reference": null,
-    "baseColor": "#DCCBAE",
-    "description": "Pierre calcaire beige veinée dans le sens du lit, avec ses alvéoles caractéristiques.",
+    "baseColor": "#D9CDB8",
+    "description": "Calcaire clair à grain fin, fossiles et nuances discrètes.",
     "usages": [
-      "Tables basses",
       "Sols",
-      "Habillages muraux"
+      "Plans",
+      "Cheminées"
     ],
     "pbr": {
       "metalness": 0,
-      "roughness": 0.55,
-      "normalScale": 0.9
-    },
-    "tileMeters": 1,
-    "textures": {
-      "kind": "photo",
-      "search": [
-        "travertine",
-        "limestone"
-      ],
-      "fallbackRef": "sr:marbre:travertin:adouci"
-    },
-    "compare": [
-      "marbre-calacatta",
-      "chene-naturel"
-    ],
-    "showroom": "sr:marbre:travertin:adouci"
-  },
-  {
-    "id": "chene-naturel",
-    "name": "Chêne naturel",
-    "category": "Bois",
-    "finish": "Huilé mat",
-    "manufacturer": null,
-    "reference": null,
-    "baseColor": "#B98E5E",
-    "description": "Chêne européen huilé : fil droit, maillures et pores visibles, teinte miel naturelle.",
-    "usages": [
-      "Parquets",
-      "Mobilier",
-      "Menuiseries"
-    ],
-    "pbr": {
-      "metalness": 0,
-      "roughness": 0.58,
+      "roughness": 0.6,
       "normalScale": 0.6
     },
     "tileMeters": 1,
     "textures": {
       "kind": "photo",
-      "assetId": "oak_veneer_01",
-      "fallbackDir": "/textures/tx-chene"
+      "search": [
+        "limestone",
+        "sandstone",
+        "stone floor"
+      ],
+      "fallbackRef": "sr:marbre:bourgogne:adouci"
     },
     "compare": [
       "travertin",
-      "velours-foret"
+      "pierre-mate"
     ],
-    "showroom": "sr:parquet:chene:larges:huile"
+    "showroom": "sr:marbre:bourgogne:adouci"
+  },
+  {
+    "id": "pierre-mate",
+    "name": "Ardoise mate",
+    "category": "Pierre",
+    "finish": "Brute, clivée",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#3F4448",
+    "description": "Pierre sombre clivée : surface mate et feuilletée.",
+    "usages": [
+      "Sols",
+      "Crédences"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.8,
+      "normalScale": 1
+    },
+    "tileMeters": 1,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "slate"
+      ],
+      "fallbackDir": "/textures/m-ardoise"
+    },
+    "compare": [
+      "pierre-naturelle",
+      "beton-cire"
+    ]
+  },
+  {
+    "id": "terrazzo",
+    "name": "Terrazzo",
+    "category": "Pierre",
+    "finish": "Poli",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#E3DCD0",
+    "description": "Éclats de marbre noyés dans un liant puis polis.",
+    "usages": [
+      "Sols",
+      "Plans",
+      "Tables"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.3,
+      "clearcoat": 0.3,
+      "clearcoatRoughness": 0.2,
+      "normalScale": 0.3
+    },
+    "tileMeters": 1,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "terrazzo"
+      ],
+      "fallbackDir": "/textures/m-terrazzo"
+    },
+    "compare": [
+      "marbre-calacatta",
+      "pierre-naturelle"
+    ]
+  },
+  {
+    "id": "laiton-brosse",
+    "name": "Laiton brossé",
+    "category": "Métal",
+    "finish": "Brossé, vernis mat",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#C9A564",
+    "description": "Laiton massif brossé dans un seul sens : reflets étirés, chaleur dorée. Se patine avec le temps s'il n'est pas verni.",
+    "usages": [
+      "Poignées",
+      "Robinetterie",
+      "Luminaires",
+      "Plinthes et nez de marche"
+    ],
+    "pbr": {
+      "metalness": 1,
+      "roughness": 0.3,
+      "anisotropy": 0.8,
+      "normalScale": 0.25
+    },
+    "tileMeters": 0.12,
+    "textures": {
+      "kind": "procedural",
+      "generator": "brosse"
+    },
+    "compare": [
+      "chrome-poli",
+      "noir-mat"
+    ],
+    "showroom": "sr:quincaillerie:pastille:laiton:brosse"
+  },
+  {
+    "id": "bronze-brosse",
+    "name": "Bronze brossé",
+    "category": "Métal",
+    "finish": "Brossé, patiné",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#8C6A3F",
+    "description": "Bronze aux reflets brun-doré, brossage fin et légère patine.",
+    "usages": [
+      "Poignées",
+      "Robinetterie",
+      "Luminaires"
+    ],
+    "pbr": {
+      "metalness": 1,
+      "roughness": 0.36,
+      "anisotropy": 0.7,
+      "normalScale": 0.25
+    },
+    "tileMeters": 0.12,
+    "textures": {
+      "kind": "procedural",
+      "generator": "brosse"
+    },
+    "compare": [
+      "laiton-brosse",
+      "inox-brosse"
+    ]
+  },
+  {
+    "id": "inox-brosse",
+    "name": "Inox brossé",
+    "category": "Métal",
+    "finish": "Brossé",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#B9BCBF",
+    "description": "Acier inoxydable brossé : reflets gris étirés, sans éclat miroir.",
+    "usages": [
+      "Cuisine",
+      "Robinetterie",
+      "Plinthes"
+    ],
+    "pbr": {
+      "metalness": 1,
+      "roughness": 0.32,
+      "anisotropy": 0.85,
+      "normalScale": 0.25
+    },
+    "tileMeters": 0.12,
+    "textures": {
+      "kind": "procedural",
+      "generator": "brosse"
+    },
+    "compare": [
+      "chrome-poli",
+      "aluminium"
+    ]
+  },
+  {
+    "id": "chrome-poli",
+    "name": "Chrome poli",
+    "category": "Métal",
+    "finish": "Poli miroir",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#D6D8DA",
+    "description": "Dépôt de chrome sur laiton, poli miroir : reflets nets et froids, entretien facile.",
+    "usages": [
+      "Robinetterie",
+      "Poignées",
+      "Accessoires de bain"
+    ],
+    "pbr": {
+      "metalness": 1,
+      "roughness": 0.05,
+      "normalScale": 0.05
+    },
+    "tileMeters": 0.12,
+    "textures": {
+      "kind": "procedural",
+      "generator": "poli"
+    },
+    "compare": [
+      "laiton-brosse",
+      "noir-mat"
+    ],
+    "showroom": "sr:quincaillerie:pastille:chrome:poli"
+  },
+  {
+    "id": "aluminium",
+    "name": "Aluminium anodisé",
+    "category": "Métal",
+    "finish": "Anodisé mat",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#C8C9CB",
+    "description": "Aluminium sablé puis anodisé : gris doux, reflet diffus.",
+    "usages": [
+      "Menuiseries",
+      "Luminaires"
+    ],
+    "pbr": {
+      "metalness": 1,
+      "roughness": 0.5,
+      "normalScale": 0.3
+    },
+    "tileMeters": 0.12,
+    "textures": {
+      "kind": "procedural",
+      "generator": "poudre"
+    },
+    "compare": [
+      "inox-brosse"
+    ]
+  },
+  {
+    "id": "noir-mat",
+    "name": "Noir mat",
+    "category": "Métal",
+    "finish": "Laquage poudre mat",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#1E1E20",
+    "description": "Acier ou laiton laqué époxy noir, toucher velouté et grain très fin, sans reflet métallique.",
+    "usages": [
+      "Robinetterie",
+      "Poignées",
+      "Luminaires",
+      "Verrières"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.62,
+      "clearcoat": 0.1,
+      "clearcoatRoughness": 0.6,
+      "normalScale": 0.35
+    },
+    "tileMeters": 0.12,
+    "textures": {
+      "kind": "procedural",
+      "generator": "poudre"
+    },
+    "compare": [
+      "laiton-brosse",
+      "chrome-poli"
+    ],
+    "showroom": "sr:quincaillerie:pastille:noir:mat"
+  },
+  {
+    "id": "verre-clair",
+    "name": "Verre clair",
+    "category": "Verre",
+    "finish": "Transparent",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#F4F7F6",
+    "description": "Verre extra-clair : transparence nette, reflets francs.",
+    "usages": [
+      "Plateaux",
+      "Vitrines",
+      "Luminaires"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.02,
+      "transmission": 1,
+      "ior": 1.5,
+      "thickness": 0.008,
+      "normalScale": 0
+    },
+    "tileMeters": 1,
+    "textures": {
+      "kind": "procedural",
+      "generator": "poli"
+    },
+    "compare": [
+      "verre-fume",
+      "verre-depoli"
+    ]
+  },
+  {
+    "id": "verre-fume",
+    "name": "Verre fumé",
+    "category": "Verre",
+    "finish": "Teinté gris-bronze",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#5A5550",
+    "description": "Verre teinté dans la masse, transparence sombre et chaude.",
+    "usages": [
+      "Tables",
+      "Portes de buffet"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.04,
+      "transmission": 0.85,
+      "ior": 1.5,
+      "thickness": 0.008,
+      "normalScale": 0
+    },
+    "tileMeters": 1,
+    "textures": {
+      "kind": "procedural",
+      "generator": "poli"
+    },
+    "compare": [
+      "verre-clair"
+    ]
+  },
+  {
+    "id": "verre-depoli",
+    "name": "Verre dépoli",
+    "category": "Verre",
+    "finish": "Sablé",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#EEF1F0",
+    "description": "Verre sablé : lumière diffuse, silhouettes floutées.",
+    "usages": [
+      "Cloisons",
+      "Luminaires",
+      "Douches"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.45,
+      "transmission": 0.9,
+      "ior": 1.5,
+      "thickness": 0.008,
+      "normalScale": 0
+    },
+    "tileMeters": 1,
+    "textures": {
+      "kind": "procedural",
+      "generator": "poudre"
+    },
+    "compare": [
+      "verre-clair"
+    ]
+  },
+  {
+    "id": "lin-lave",
+    "name": "Lin lavé",
+    "category": "Textile",
+    "finish": "Lavé, froissé",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#D8CDBB",
+    "description": "Lin épais lavé : fils irréguliers, froissé naturel.",
+    "usages": [
+      "Rideaux",
+      "Housses",
+      "Coussins"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.92,
+      "sheen": 0.4,
+      "sheenRoughness": 0.7,
+      "sheenColor": "#ffffff",
+      "normalScale": 0.8,
+      "tint": true,
+      "textureContrast": 0.9
+    },
+    "tileMeters": 0.4,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "linen"
+      ],
+      "fallbackDir": "/textures/m-lin"
+    },
+    "compare": [
+      "coton",
+      "boucle"
+    ]
+  },
+  {
+    "id": "coton",
+    "name": "Coton",
+    "category": "Textile",
+    "finish": "Toile serrée",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#E9E2D3",
+    "description": "Toile de coton à armure toile, régulière et mate.",
+    "usages": [
+      "Housses",
+      "Coussins"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.9,
+      "sheen": 0.3,
+      "sheenRoughness": 0.7,
+      "sheenColor": "#ffffff",
+      "normalScale": 0.6,
+      "tint": true,
+      "textureContrast": 0.9
+    },
+    "tileMeters": 0.3,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "cotton",
+        "fabric"
+      ],
+      "fallbackDir": "/textures/tx-coton"
+    },
+    "compare": [
+      "lin-lave"
+    ]
   },
   {
     "id": "velours-foret",
@@ -251,7 +992,8 @@
       "sheenRoughness": 0.35,
       "sheenColor": "#9FBFAF",
       "normalScale": 0.5,
-      "tint": true
+      "tint": true,
+      "textureContrast": 0.9
     },
     "tileMeters": 0.5,
     "textures": {
@@ -266,33 +1008,243 @@
     "showroom": "sr:tissu:velours:vert-foret"
   },
   {
-    "id": "parquet-chevron",
-    "name": "Parquet chêne point de Hongrie",
-    "category": "Bois",
-    "finish": "Huilé naturel",
+    "id": "boucle",
+    "name": "Bouclé",
+    "category": "Textile",
+    "finish": "Bouclette laine",
     "manufacturer": null,
     "reference": null,
-    "baseColor": "#A87B4F",
-    "description": "Lames de chêne posées en chevrons, teinte miel, veinage et nœuds discrets.",
+    "baseColor": "#EEE7DA",
+    "description": "Laine bouclette : boucles serrées qui captent la lumière, toucher moelleux.",
+    "usages": [
+      "Canapés",
+      "Fauteuils",
+      "Poufs"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.95,
+      "sheen": 0.7,
+      "sheenRoughness": 0.8,
+      "sheenColor": "#ffffff",
+      "normalScale": 1.6,
+      "tint": true,
+      "textureContrast": 0.9
+    },
+    "tileMeters": 0.3,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "boucle",
+        "teddy",
+        "wool"
+      ],
+      "fallbackDir": "/textures/tx-bouclette"
+    },
+    "compare": [
+      "velours-foret",
+      "laine"
+    ]
+  },
+  {
+    "id": "laine",
+    "name": "Laine tissée",
+    "category": "Textile",
+    "finish": "Chevrons",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#CFC6B6",
+    "description": "Laine tissée en chevrons, fibres visibles.",
+    "usages": [
+      "Tapis",
+      "Plaids",
+      "Fauteuils"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.93,
+      "sheen": 0.5,
+      "sheenRoughness": 0.8,
+      "sheenColor": "#ffffff",
+      "normalScale": 1.1,
+      "tint": true,
+      "textureContrast": 0.9
+    },
+    "tileMeters": 0.3,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "wool",
+        "herringbone fabric"
+      ],
+      "fallbackDir": "/textures/tx-laine"
+    },
+    "compare": [
+      "boucle",
+      "lin-lave"
+    ]
+  },
+  {
+    "id": "cuir-pleine-fleur",
+    "name": "Cuir pleine fleur",
+    "category": "Textile",
+    "finish": "Ciré",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#8A5434",
+    "description": "Cuir pleine fleur au grain naturel, légèrement ciré.",
+    "usages": [
+      "Fauteuils",
+      "Poignées",
+      "Assises"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.5,
+      "clearcoat": 0.2,
+      "clearcoatRoughness": 0.4,
+      "normalScale": 0.8
+    },
+    "tileMeters": 0.4,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "leather"
+      ],
+      "fallbackDir": "/textures/tx-cuir"
+    },
+    "compare": [
+      "velours-foret"
+    ]
+  },
+  {
+    "id": "zellige-emeraude",
+    "name": "Zellige artisanal émeraude",
+    "category": "Céramique",
+    "finish": "Émail brillant, bords irréguliers",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#1E6B55",
+    "description": "Terre cuite émaillée et taillée à la main : chaque carreau a sa nuance, son relief et sa brillance.",
+    "usages": [
+      "Crédence",
+      "Douche",
+      "Habillage de cheminée"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.18,
+      "clearcoat": 1,
+      "clearcoatRoughness": 0.08,
+      "normalScale": 1
+    },
+    "tileMeters": 0.4,
+    "textures": {
+      "kind": "showroom",
+      "ref": "sr:zellige:emeraude:carre10:brillant:clair"
+    },
+    "compare": [
+      "marbre-calacatta",
+      "travertin"
+    ],
+    "showroom": "sr:zellige:emeraude:carre10:brillant:clair"
+  },
+  {
+    "id": "faience-blanche",
+    "name": "Faïence blanche",
+    "category": "Céramique",
+    "finish": "Émail brillant",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#F3F2EE",
+    "description": "Carreaux métro émaillés blancs, joints fins.",
+    "usages": [
+      "Crédences",
+      "Salles de bain"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.15,
+      "clearcoat": 0.8,
+      "clearcoatRoughness": 0.08,
+      "normalScale": 0.8
+    },
+    "tileMeters": 0.6,
+    "textures": {
+      "kind": "showroom",
+      "ref": "sr:faience:blanc:metro:brillant:clair"
+    },
+    "compare": [
+      "zellige-emeraude"
+    ],
+    "showroom": "sr:faience:blanc:metro:brillant:clair"
+  },
+  {
+    "id": "terre-cuite",
+    "name": "Tomette terre cuite",
+    "category": "Sol",
+    "finish": "Cirée",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#B35A3B",
+    "description": "Terre cuite cirée, nuances de cuisson.",
     "usages": [
       "Sols"
     ],
     "pbr": {
       "metalness": 0,
-      "roughness": 0.5,
-      "clearcoat": 0.15,
+      "roughness": 0.6,
+      "clearcoat": 0.2,
       "clearcoatRoughness": 0.4,
-      "normalScale": 0.7
+      "normalScale": 0.8
     },
-    "tileMeters": 2,
+    "tileMeters": 1,
     "textures": {
       "kind": "photo",
-      "assetId": "herringbone_parquet",
-      "fallbackDir": "/textures/m-chene"
+      "search": [
+        "terracotta tiles",
+        "terracotta"
+      ],
+      "fallbackDir": "/textures/m-gres"
     },
     "compare": [
-      "chene-naturel",
-      "travertin"
+      "parquet-chevron"
+    ]
+  },
+  {
+    "id": "tapis-laine",
+    "name": "Tapis en laine",
+    "category": "Sol",
+    "finish": "Velours de laine",
+    "manufacturer": null,
+    "reference": null,
+    "baseColor": "#E6DCCB",
+    "description": "Laine épaisse nouée, poil dense.",
+    "usages": [
+      "Tapis"
+    ],
+    "pbr": {
+      "metalness": 0,
+      "roughness": 0.95,
+      "sheen": 0.6,
+      "sheenRoughness": 0.8,
+      "sheenColor": "#ffffff",
+      "normalScale": 1.2,
+      "tint": true,
+      "textureContrast": 0.9
+    },
+    "tileMeters": 0.5,
+    "textures": {
+      "kind": "photo",
+      "search": [
+        "wool",
+        "carpet",
+        "rug"
+      ],
+      "fallbackDir": "/textures/tx-laine"
+    },
+    "compare": [
+      "boucle"
     ]
   }
 ]

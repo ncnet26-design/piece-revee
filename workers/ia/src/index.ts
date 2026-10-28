@@ -13,6 +13,7 @@ import { isAllowedOrigin, ALLOWED_ORIGINS, MAX_BODY, type Ctx, type Env } from "
 import { buildPrompt } from "./prompts";
 import { isDataUrl, parseJobBody } from "./validate";
 import { chooseProvider, gemini, PROVIDERS, ProviderError, type ImgIn, type ProviderRequest } from "./providers";
+import { analyse } from "./analyse";
 import { estimate, loadInput, loadJob, overLimit, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
 
 const toImg = (s: string): ImgIn => { const m = /^data:(image\/\w+);base64,(.+)$/.exec(s)!; return { mime: m[1]!, b64: m[2]! }; };
@@ -21,7 +22,7 @@ const pub = (j: Job, base: string) => ({ ...j, ref: undefined, visitor: undefine
 /** Lance (ou relance) l'appel au fournisseur et met la fiche à jour. */
 async function run(env: Env, job: Job, input: JobInput): Promise<Job> {
   const provider = PROVIDERS.find((p) => p.id === job.provider)!;
-  const req: ProviderRequest = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor };
+  const req: ProviderRequest = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, mask: input.mask, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor };
   job.attempts += 1; job.status = "en_cours"; job.error = undefined; job.ref = undefined; job.updatedAt = new Date().toISOString();
   try {
     const r = await provider.submit(req, env);
@@ -81,9 +82,24 @@ export default {
       if (refusal) return json({ erreur: refusal }, 429);
       const now = new Date().toISOString();
       const job: Job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
-      const input: JobInput = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, materials: b.materials, products: b.products }), photo: b.photo ? toImg(b.photo) : undefined, references: b.references.map(toImg) };
+      const input: JobInput = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : undefined, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : undefined };
       await Promise.all([saveInput(env, job.id, input), reserve(env, visitor, ipHash, cost)]);
       return json(pub(await run(env, job, input), base), 201);
+    }
+
+    if (request.method === "POST" && path === "/v2/analyse") {
+      const b = await request.json().catch(() => null) as { image?: unknown; visiteur?: unknown } | null;
+      if (!b || !isDataUrl(b.image) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Image manquante." }, 400);
+      const visitor = await sha(`v|${b.visiteur}`), cost = 0.01;
+      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
+      if (refusal) return json({ erreur: refusal }, 429);
+      try {
+        const objects = await analyse(env, toImg(b.image));
+        await settle(env, visitor, ipHash, cost);
+        return json({ objects });
+      } catch (e) {
+        return json({ erreur: e instanceof ProviderError ? e.message : "Analyse impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
+      }
     }
 
     const m = /^\/v2\/jobs\/([0-9a-f-]{36})(\/retry)?$/.exec(path);

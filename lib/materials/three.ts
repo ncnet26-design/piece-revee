@@ -61,12 +61,38 @@ export function proceduralMaps(kind: "brosse" | "poli" | "poudre", size = 1024):
 }
 const procCache = new Map<string, ReturnType<typeof proceduralMaps>>();
 
+/** Version désaturée de la photo, centrée sur le blanc moyen, nuances multipliées par k (cache par image). */
+const neutralCache = new Map<string, THREE.Texture>();
+function neutralize(tex: THREE.Texture, k: number): THREE.Texture {
+  const img = tex.image as (CanvasImageSource & { width: number; height: number; src?: string }) | undefined;
+  if (!img) return tex.clone();
+  const key = `${img.src ?? tex.uuid}|${k}`;
+  const hit = neutralCache.get(key); if (hit) return hit.clone();
+  const size = Math.min(2048, img.width);
+  const c = document.createElement("canvas"); c.width = c.height = size;
+  const x = c.getContext("2d", { willReadFrequently: true })!; x.drawImage(img, 0, 0, size, size);
+  const im = x.getImageData(0, 0, size, size), d = im.data;
+  let sum = 0; for (let i = 0; i < d.length; i += 4) sum += 0.2126 * d[i]! + 0.7152 * d[i + 1]! + 0.0722 * d[i + 2]!;
+  const avg = sum / (d.length / 4);
+  for (let i = 0; i < d.length; i += 4) {
+    const l = 0.2126 * d[i]! + 0.7152 * d[i + 1]! + 0.0722 * d[i + 2]!;
+    const v = Math.max(0, Math.min(255, 235 + (l - avg) * k));
+    d[i] = d[i + 1] = d[i + 2] = v;
+  }
+  x.putImageData(im, 0, 0);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  neutralCache.set(key, t);
+  return t.clone();
+}
+
 export interface BuildOpts {
   /** Longueur réelle (m) couverte par une unité de coordonnée de texture de la géométrie cible. */
   metersPerUv?: number;
   anisotropy?: number;
   /** Appareil modeste : textures 1K au lieu de 2K. */
   light?: boolean;
+  /** Relief géométrique réel (m) pour les gros plans, sur une géométrie assez subdivisée. */
+  displacement?: number;
 }
 
 /** Construit le matériau (asynchrone : chargement des cartes). */
@@ -77,6 +103,7 @@ export async function buildMaterial(m: Material, o: BuildOpts = {}): Promise<THR
     clearcoat: p.clearcoat ?? 0, clearcoatRoughness: p.clearcoatRoughness ?? 0,
     sheen: p.sheen ?? 0, sheenRoughness: p.sheenRoughness ?? 0.5, sheenColor: new THREE.Color(p.sheenColor ?? "#ffffff"),
     anisotropy: p.anisotropy ?? 0,
+    transmission: p.transmission ?? 0, ior: p.ior ?? 1.5, thickness: p.thickness ?? 0,
   });
   mat.name = `pr:${m.id}`;
   const rep = (o.metersPerUv ?? 1) / m.tileMeters;
@@ -106,6 +133,7 @@ export async function buildMaterial(m: Material, o: BuildOpts = {}): Promise<THR
   if (!dir) return mat;
   const file = (k: "basecolor" | "normal" | "roughness" | "ao" | "metallic") => (hd ? hd.maps[k] : ({ basecolor: "diff.webp", normal: "nor.webp", roughness: "rough.webp" } as Record<string, string | undefined>)[k]);
   const url = (f: string | undefined) => (f ? `${dir}/${f}` : undefined);
+  const disp = o.displacement && hd?.maps.displacement ? loadTex(`${dir}/${hd.maps.displacement}`, false) : Promise.resolve(null);
   const [base, nor, rough, ao, metal] = await Promise.all([
     url(file("basecolor")) ? loadTex(url(file("basecolor"))!, true) : null,
     url(file("normal")) ? loadTex(url(file("normal"))!, false) : null,
@@ -117,11 +145,16 @@ export async function buildMaterial(m: Material, o: BuildOpts = {}): Promise<THR
   if (base) {
     mat.map = own(base);
     // Teinte : la photo donne le relief et les nuances, la couleur vient de la fiche.
-    if (p.tint) mat.color.set(m.baseColor).multiplyScalar(2.2); else mat.color.set("#ffffff");
+    if (p.tint) {
+      // Matière teintée : la photo est désaturée et ses nuances adoucies, la couleur vient entièrement de la fiche.
+      mat.map = neutralize(base, p.textureContrast ?? 0.5); mat.color.set(m.baseColor);
+    } else mat.color.set("#ffffff");
   }
   mat.normalMap = own(nor); mat.roughnessMap = own(rough); mat.aoMap = own(ao); mat.metalnessMap = own(metal);
-  if (mat.roughnessMap) mat.roughness = 1;
-  [mat.map, mat.normalMap, mat.roughnessMap, mat.aoMap, mat.metalnessMap].forEach(setRep);
+  const d = await disp;
+  if (d) { mat.displacementMap = own(d); mat.displacementScale = o.displacement!; mat.displacementBias = -o.displacement! / 2; }
+  if (mat.roughnessMap) mat.roughness = p.roughnessScale ?? 1;
+  [mat.map, mat.normalMap, mat.roughnessMap, mat.aoMap, mat.metalnessMap, mat.displacementMap].forEach(setRep);
   mat.normalScale.set(ns, ns);
   mat.needsUpdate = true;
   return mat;

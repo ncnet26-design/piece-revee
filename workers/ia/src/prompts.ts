@@ -25,7 +25,7 @@ const PHOTO = [
   "No text, no logo, no watermark, no people, no distorted furniture, no duplicated objects.",
 ].join(" ");
 
-export function buildPrompt(p: { mode: Mode; brief: string; keep?: string[]; keepFree?: string; references?: number; materials?: string[]; products?: string[] }): string {
+export function buildPrompt(p: { mode: Mode; brief: string; keep?: string[]; keepFree?: string; references?: number; materials?: string[]; products?: string[]; onlyZone?: { label: string; x: number; y: number; w: number; h: number } }): string {
   const lines: string[] = [];
   if (p.mode === "transform") {
     lines.push(
@@ -41,6 +41,10 @@ export function buildPrompt(p: { mode: Mode; brief: string; keep?: string[]; kee
     lines.push("- change only finishes, colours, furniture, textiles, lighting and decor that the brief asks for.");
   } else {
     lines.push("Create one photorealistic interior photograph of a single room, designed by an award-winning interior architect.");
+  }
+  if (p.onlyZone) {
+    const z = p.onlyZone;
+    lines.push(`LOCAL EDIT ONLY: change exclusively the object "${z.label}" located in the region from ${Math.round(z.x)}% to ${Math.round(z.x + z.w)}% horizontally and ${Math.round(z.y)}% to ${Math.round(z.y + z.h)}% vertically. Every other pixel of the image — other furniture, rug, walls, floor, lighting, camera — must stay identical.`);
   }
   if (p.references) lines.push(`Images ${p.mode === "transform" ? 2 : 1} to ${p.references + (p.mode === "transform" ? 1 : 0)} are references (materials, finishes or products): reproduce their colour, texture and finish faithfully, do not copy their room.`);
   if (p.materials?.length) lines.push(`Materials to use (exact finishes): ${p.materials.join("; ")}.`);

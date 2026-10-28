@@ -9,6 +9,8 @@ import data from "@/content/data/products.json";
 const Src = z.string().url();
 export const CATEGORIES = { canape: "Canapés", fauteuil: "Fauteuils", "table-basse": "Tables basses", lampadaire: "Lampadaires", poignee: "Poignées", chaise: "Chaises", "table-manger": "Tables à manger", rangement: "Rangements", luminaire: "Luminaires", deco: "Décoration", "salle-de-bain": "Salle de bain", robinetterie: "Robinetterie", lit: "Lits", tapis: "Tapis" } as const;
 export type Category = keyof typeof CATEGORIES;
+/** Nom d'un seul objet de la catégorie. */
+export const CATEGORY_ONE: Record<Category, string> = { canape: "Canapé", fauteuil: "Fauteuil", "table-basse": "Table basse", lampadaire: "Lampadaire", poignee: "Poignée", chaise: "Chaise", "table-manger": "Table à manger", rangement: "Rangement", luminaire: "Luminaire", deco: "Objet déco", "salle-de-bain": "Meuble de salle de bain", robinetterie: "Robinet", lit: "Lit", tapis: "Tapis" };
 export const TIERS = { economique: "Économique", intermediaire: "Intermédiaire", premium: "Premium" } as const;
 
 export const ProductSchema = z.object({
@@ -31,6 +33,8 @@ export const ProductSchema = z.object({
   style: z.array(z.string()), silhouette: z.array(z.string()),
   materialId: z.string().nullable(),
   demo: z.boolean(),
+  /** Pays de la boutique où le prix a été relevé (FR, EU, UK, US) : indique où l'offre s'applique. */
+  market: z.enum(["FR", "EU", "UK", "US", "INT"]),
   note: z.string().nullable(),
   verification: z.object({ method: z.string(), at: z.string(), sources: z.array(Src) }),
 });

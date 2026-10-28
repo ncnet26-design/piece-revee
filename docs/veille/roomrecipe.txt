@@ -1,0 +1,181 @@
+URL: https://www.roomrecipe.app/
+HTTP: 200 OK
+Récupéré le : 2026-10-28T19:44:30.700Z
+Longueur HTML : 57381
+
+description: Upload a room photo. AI detects the style, finds matching products on the market, and builds a budget-ready shopping list. Try free.
+og:title: RoomRecipe — Turn Any Room Photo Into a Shopping List
+og:description: Upload a room photo. AI detects the style, finds matching products on the market, and builds a budget-ready shopping list. Try free.
+
+Liens utiles :
+pricing.html
+https://apps.apple.com/us/app/roomrecipe-shop-any-room/id6780038114
+https://roomrecipe.app/pricing.html
+terms.html
+
+Texte visible :
+RoomRecipe — Turn Any Room Photo Into a Shopping List 
+Skip to content 
+RoomRecipe . 
+Home 
+How it works 
+Examples 
+Pricing 
+Blog 
+For business 
+EN 
+TR 
+Log in 
+ Sign up 
+EN 
+TR 
+Log in 
+ Sign up 
+AI-powered room shopping 
+Turn any room photo into a shopping list. 
+Upload a photo of a room you love. RoomRecipe finds every piece in it as a real product you can buy, with prices and store links, then shows it in your own space. 
+Upload a photo 
+See how it works 
+First 2 analyses free · No download required 
+ 3 products found in this photo 
+ Navy sofa $1,890 
+ Find this piece 
+ Lounge chair $649 
+ Find this piece 
+ Walnut coffee table $479 
+ Find this piece 
+ Illustrative matches · USD 
+How it works 
+From one photo to products you can buy. 
+Upload or create a room, get the real products in it, then see them in your own space. 
+ my-bedroom.jpg 
+ “Warm modern, green velvet, oak” AI-generated 
+ Analyzing… 6 pieces found 
+ Upload photo 
+ Create with AI 
+ 01 Upload or create a room 
+Upload a photo you love, or let our AI create a room in your style. We analyze every piece in it. 
+ 02 Get matching products 
+Each piece is matched to real products you can buy, with prices and store links. 
+ Before After 
+ 03 See it in your room 
+Place the products you pick into a photo of your own room before you buy. 
+From inspiration to real products 
+One photo. A complete product list. 
+RoomRecipe identifies the pieces in a room and brings the matching products together in one clear shopping experience. 
+ Lounge chair 
+ Sofa 
+ Coffee table 
+ Area rug 
+ Wall art 
+ Room intelligence 
+ Select a piece to make it yours 
+Products found 5 pieces · USD 
+Use + to add a piece to your list. 
+ 0 pieces selected Illustrative total · USD $0 
+ Try it with your own photo 
+An interactive example. Products and prices are illustrative. 
+ Luna Sofa · $1,899 Miro Chair · $649 Luma Table · $349 Aster Lamp · $429 Nimbus Rug · $399 
+ Before After 
+Tap a product to see it in the room 
+ Luna Sofa $1,899 
+ Miro Chair $649 
+ Luma Table $349 
+ Aster Lamp $429 
+ Nimbus Rug $399 
+See it in your space 
+See the real products in your own room. 
+Pick products you like, upload a photo of your room, and RoomRecipe places them in it, so you can see how everything works together before you buy. 
+ 01 
+Pick your products 
+Choose pieces from any room you analyzed. 
+ 02 
+Upload your room 
+A clear photo of the space you want to update. 
+ 03 
+See it before you buy 
+AI places your picks in your photo. Swap pieces until it feels right. 
+ Try it in your room 
+Why RoomRecipe 
+Not just something similar. The whole room. 
+Google Lens 
+ Limitation: One object at a time 
+ Limitation: No prices or alternatives 
+ Limitation: Can&#x27;t read a full room 
+ Limitation: No shopping list 
+Pinterest 
+ Limitation: Shows similar-looking images 
+ Limitation: Finding the product is on you 
+ Limitation: No prices 
+ Limitation: No shopping list 
+RoomRecipe 
+ Included: Reads the whole room in one photo 
+ Included: Real products with prices + store links 
+ Included: See them in your own room 
+ Included: One list, one total 
+ Try it free 
+One connected experience 
+Save the room. Find the pieces. Make it yours. 
+Move from inspiration to real products and your own space. 
+Discover 
+Start with a room or style you love. 
+ Dome Pendant $189 Plum Dining Table $629 Olive Dining Chair $349 
+Find 
+Explore real products from the room. 
+Visualize 
+Bring your selections into your own room. 
+Download from 
+Start free. Pay only when you&#x27;re ready. 
+First 2 analyses are free. After that, plans start at $2.99/month. 
+ Start free 
+ See full pricing 
+Need to know 
+Frequently asked questions. 
+Everything you need to know before finding products and trying them in your space. 
+ Still have a question? Contact us → 
+ How does RoomRecipe find products? + 
+RoomRecipe analyzes the furniture and décor visible in a room image and looks for matching products from online retailers. Results help you explore the style, materials and pieces that make up the room. 
+ Can I use any inspiration photo? + 
+You can use a room photo, a screenshot, or inspiration you&#x27;ve saved. JPEG, PNG and WebP are supported. Clear, well-lit photos with visible furniture give the best results. 
+ Can I see products in my own room? + 
+Yes. Select the products you want to try and add a photo of your own room to create a visual preview. Use it to explore the look; check product measurements before ordering. 
+ Are the products connected to real stores? + 
+Product results in RoomRecipe include links to online retailers so you can review current pricing, availability and details directly with the store. 
+ Can I save the rooms and products I like? + 
+Keep your inspiration and product choices together in RoomRecipe. In this interactive example, the heart buttons save your favorite pieces in this browser. 
+ Is RoomRecipe available on iOS and Android? + 
+Yes. RoomRecipe is available on the App Store and Google Play. You can also get started in your web browser. 
+ What counts as one analysis? + 
+One room photo = one analysis. RoomRecipe identifies the pieces in it and returns a product list with prices and store links. 
+ What happens after my free analyses? + 
+After your 2 free analyses you can move to a monthly plan from $2.99/month. Extra visualization credits start at $0.79. No credit card is needed to start. 
+ How long does an analysis take? + 
+Most analyses are ready in under 2 minutes. Busy times or very detailed rooms can take a little longer. 
+ What happens to my photos? + 
+Your photos are stored securely in your RoomRecipe account so you can come back to your rooms and results. They are never shared with or sold to third parties. 
+Ready when you are 
+A room you love is closer than you think. 
+Start with a photo, find the pieces and see the complete look in your own space. 
+ Try it on the web 
+or get the app 
+Available on iOS and Android. 
+RoomRecipe . 
+See it. Find it. Make it yours. 
+Explore 
+How it works 
+Examples 
+Pricing 
+Blog 
+Company 
+For business 
+Support 
+Contact 
+Legal 
+Privacy policy 
+Terms of service 
+ © 2026 RoomRecipe. All rights reserved. 
+EN 
+TR 
+We use cookies to improve your experience and analyse site usage. 
+Decline 
+Accept

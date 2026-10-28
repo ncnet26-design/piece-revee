@@ -15,7 +15,7 @@ export interface Job {
   error?: { message: string; retryable: boolean; detail?: string };
   costUsd: number; visitor: string; ipHash: string;
 }
-export interface JobInput { prompt: string; photo?: ImgIn; references: ImgIn[] }
+export interface JobInput { prompt: string; photo?: ImgIn; references: ImgIn[]; mask?: ImgIn }
 
 const DAY = 86400;
 export const today = () => new Date().toISOString().slice(0, 10);

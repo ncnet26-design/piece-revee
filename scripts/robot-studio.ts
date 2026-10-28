@@ -48,7 +48,11 @@ async function pbr() {
         if (hit) { id = hit[0]; break; }
       }
     }
-    if (!id || !list[id]) { console.log(`✗ ${m.id} : aucune texture`); continue; }
+    if (!id || !list[id]) {
+      const ok = await ambient(m.id, m.textures.search ?? [], out);
+      if (!ok) console.log(`✗ ${m.id} : aucune texture (Poly Haven, ambientCG)`);
+      continue;
+    }
     const files = await (await get(`https://api.polyhaven.com/files/${id}`)).json() as Record<string, Record<string, Record<string, { url: string }>>>;
     const key = (re: RegExp) => Object.keys(files).find((k) => re.test(k));
     const want: Array<[string, RegExp]> = [["basecolor", /^diff/i], ["normal", /^nor_gl$/i], ["roughness", /^rough$/i], ["ao", /^ao$/i], ["displacement", /^disp/i], ["metallic", /^metal/i]];
@@ -68,6 +72,35 @@ async function pbr() {
     await sleep(300);
   }
   writeFileSync("content/data/materials-pbr.json", `${JSON.stringify(out, null, 2)}\n`);
+}
+
+/** Repli ambientCG (CC0) : archive 2K-JPG, cartes Color / NormalGL / Roughness / AmbientOcclusion / Displacement / Metalness. */
+async function ambient(id: string, terms: string[], out: Record<string, unknown>): Promise<boolean> {
+  const { execFileSync } = await import("node:child_process");
+  for (const term of terms) {
+    const r = await get(`https://ambientcg.com/api/v2/full_json?type=Material&q=${encodeURIComponent(term)}&limit=5&sort=Popular&include=downloadData`);
+    const j = await r.json().catch(() => null) as { foundAssets?: Array<{ assetId: string; displayName?: string; downloadFolders?: { default?: { downloadFiletypeCategories?: { zip?: { downloads?: Array<{ attribute: string; fullDownloadPath: string }> } } } } }> } | null;
+    if (!j?.foundAssets) { console.log(`  ambientCG « ${term} » : réponse inattendue (${r.status}) ${JSON.stringify(j)?.slice(0, 200)}`); continue; }
+    for (const a of j.foundAssets) {
+      const dl = a.downloadFolders?.default?.downloadFiletypeCategories?.zip?.downloads?.find((d) => d.attribute === "2K-JPG");
+      if (!dl) continue;
+      const z = await get(dl.fullDownloadPath); if (!z.ok) continue;
+      const tmp = `/tmp/acg-${a.assetId}`; mkdirSync(tmp, { recursive: true });
+      writeFileSync(`${tmp}.zip`, Buffer.from(await z.arrayBuffer()));
+      execFileSync("unzip", ["-o", "-q", `${tmp}.zip`, "-d", tmp]);
+      const files = (await import("node:fs")).readdirSync(tmp);
+      const pick = (re: RegExp) => files.find((f) => re.test(f));
+      const want: Array<[string, RegExp]> = [["basecolor", /_Color\.jpg$/i], ["normal", /_NormalGL\.jpg$/i], ["roughness", /_Roughness\.jpg$/i], ["ao", /_AmbientOcclusion\.jpg$/i], ["displacement", /_Displacement\.jpg$/i], ["metallic", /_Metalness\.jpg$/i]];
+      const dir = `public/materiaux/${id}`; mkdirSync(dir, { recursive: true });
+      const maps: Record<string, string> = {};
+      for (const [name, re] of want) { const f = pick(re); if (!f) continue; await sharp(`${tmp}/${f}`).resize(2048, 2048, { fit: "cover" }).webp({ quality: name === "basecolor" ? 86 : 90 }).toFile(`${dir}/${name}.webp`); maps[name] = `${name}.webp`; }
+      if (!maps.basecolor) continue;
+      out[id] = { assetId: a.assetId, name: a.displayName ?? a.assetId, url: `https://ambientcg.com/view?id=${a.assetId}`, authors: ["ambientCG (Lennart Demes)"], license: "CC0 1.0", resolution: 2048, dir: `/materiaux/${id}`, maps };
+      console.log(`✓ ${id} ← ambientCG ${a.assetId} (${Object.keys(maps).join(", ")})`);
+      return true;
+    }
+  }
+  return false;
 }
 
 /* ——— Images d'inspiration de la pièce témoin ——— */

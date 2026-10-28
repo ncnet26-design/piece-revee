@@ -14,7 +14,29 @@ export interface ObjectFeatures {
   /** Produit commercial vérifié correspondant exactement au modèle 3D (cas A), sinon null (cas B). */
   productId: string | null;
 }
-export interface Filters { maxPrice?: number | null; tiers?: Array<keyof typeof TIERS>; style?: string | null; maxWidth?: number | null; color?: string | null }
+export interface Filters { maxPrice?: number | null; tiers?: Array<keyof typeof TIERS>; style?: string | null; maxWidth?: number | null; color?: string | null; material?: string | null; brand?: string | null; market?: "FR" | "EU" | null }
+/** En dessous de ce score, un produit n'est pas assez ressemblant pour être proposé. */
+export const MIN_SCORE = 45;
+/** Matières visuellement proches (score partiel) : une imitation travertin ressemble à du travertin, sans en être. */
+const AFFINITY: Record<string, Record<string, number>> = {
+  travertin: { "travertin-effet": 0.7, pierre: 0.8, marbre: 0.5, ciment: 0.4 },
+  "travertin-effet": { travertin: 0.7, pierre: 0.5 },
+  pierre: { travertin: 0.8, marbre: 0.7, "travertin-effet": 0.5, ciment: 0.4 },
+  marbre: { pierre: 0.7, travertin: 0.5 },
+  velours: { boucle: 0.4 }, boucle: { velours: 0.4, laine: 0.6 }, laine: { boucle: 0.6 },
+  laiton: { metal: 0.5 }, metal: { laiton: 0.5 },
+  bois: {},
+};
+function materialMatch(want: string[], have: string[]): { score: number; label: string[] } {
+  if (!want.length) return { score: 0.5, label: [] };
+  let total = 0; const label: string[] = [];
+  for (const w of want) {
+    let best = have.includes(w) ? 1 : 0, hit = have.includes(w) ? w : "";
+    for (const h of have) { const a = AFFINITY[w]?.[h] ?? 0; if (a > best) { best = a; hit = `${h.replace("-effet", " (effet)")}`; } }
+    total += best; if (hit) label.push(hit);
+  }
+  return { score: total / want.length, label: [...new Set(label)] };
+}
 export interface Match { product: Product; score: number; exact: boolean; reasons: string[] }
 
 /** Catégories voisines : un lampadaire peut remplacer un autre luminaire, etc. */
@@ -38,13 +60,14 @@ export function scoreProduct(o: ObjectFeatures, p: Product): Match | null {
   let s = 0;
   const sil = overlap(o.silhouette, p.silhouette);
   s += Math.min(1, sil.length / Math.max(1, Math.min(2, o.silhouette.length))) * 30;
+  if (!sil.length && o.silhouette.length) reasons.push("Silhouette différente");
   if (sil.length) reasons.push(`Silhouette : ${sil.join(", ").replace(/-/g, " ")}`);
   const st = overlap(o.style, p.style);
-  s += Math.min(1, st.length) * 20;
+  s += Math.min(1, st.length) * 15;
   if (st.length) reasons.push(`Style ${st.join(", ").replace(/-/g, " ")}`);
-  const mats = overlap(o.materials, p.materials);
-  s += Math.min(1, mats.length / Math.max(1, Math.min(2, o.materials.length))) * 20;
-  if (mats.length) reasons.push(`Matière : ${mats.join(", ")}`);
+  const mm = materialMatch(o.materials, p.materials);
+  s += mm.score * 25;
+  if (mm.label.length) reasons.push(`Matière : ${mm.label.join(", ")}`);
   const cd = Math.min(...o.colors.flatMap((c) => p.colors.map((pc) => colorDistance(c, pc.hex))), 765);
   const colorScore = Math.max(0, 1 - cd / 300);
   s += colorScore * 20;
@@ -61,16 +84,24 @@ export function scoreProduct(o: ObjectFeatures, p: Product): Match | null {
   return { product: p, score: Math.round(s), exact, reasons };
 }
 
-export function findSimilar(o: ObjectFeatures, f: Filters = {}, catalog: Product[] = PRODUCTS): Match[] {
+export function findSimilar(o: ObjectFeatures, f: Filters = {}, catalog: Product[] = PRODUCTS, minScore = MIN_SCORE): Match[] {
   return catalog
     .map((p) => scoreProduct(o, p))
-    .filter((m): m is Match => m !== null)
+    .filter((m): m is Match => m !== null && (m.exact || m.score >= minScore))
     .filter((m) => m.exact || ((f.maxPrice == null || (priceEur(m.product) ?? 0) <= f.maxPrice)
       && (!f.tiers?.length || f.tiers.includes(m.product.tier))
       && (!f.style || m.product.style.includes(f.style))
       && (f.maxWidth == null || (m.product.dimensions?.w ?? 0) <= f.maxWidth)
-      && (!f.color || m.product.colors.some((c) => colorDistance(c.hex, f.color!) < 160))))
+      && (!f.color || m.product.colors.some((c) => colorDistance(c.hex, f.color!) < 160))
+      && (!f.material || m.product.materials.some((x) => x === f.material || (AFFINITY[f.material!]?.[x] ?? 0) >= 0.7))
+      && (!f.brand || m.product.brand === f.brand)
+      && (!f.market || (f.market === "FR" ? m.product.market === "FR" : ["FR", "EU"].includes(m.product.market)))))
     .sort((a, b) => Number(b.exact) - Number(a.exact) || b.score - a.score);
+}
+
+/** Fusionne les traits demandés (« plus sculptural », « en velours ») avec ceux de l'objet : ils priment. */
+export function withWants(o: ObjectFeatures, w: { silhouette: string[]; style: string[]; materials: string[]; colors: Array<{ hex: string }> }): ObjectFeatures {
+  return { ...o, silhouette: w.silhouette.length ? w.silhouette : o.silhouette, style: w.style.length ? w.style : o.style, materials: w.materials.length ? w.materials : o.materials, colors: w.colors.length ? w.colors.map((c) => c.hex) : o.colors };
 }
 
 /** Meilleure proposition par gamme (économique, intermédiaire, premium). */

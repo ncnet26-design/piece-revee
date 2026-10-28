@@ -1,6 +1,7 @@
 "use client";
 import { useSyncExternalStore } from "react";
 import type { StudioScene } from "./scene";
+import type { AiObject } from "./showcase";
 
 /**
  * Projet du Studio, enregistré sur l'appareil : le brief, les versions (propositions IA et états de la scène 3D),
@@ -27,6 +28,9 @@ export interface Version {
   scene?: StudioScene;
   instruction?: string;
   provider?: string;
+  /** Meubles identifiés dans l'image (zones cliquables). */
+  objects?: AiObject[];
+  width?: number; height?: number;
 }
 export interface ListItem { productId: string; qty: number; forObject?: string }
 export interface Project { v: 1; title: string; brief: Brief; versions: Version[]; list: ListItem[] }

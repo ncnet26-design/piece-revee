@@ -1,0 +1,409 @@
+URL: https://decorviz.ai/api-docs/
+HTTP: 200 OK
+Récupéré le : 2026-10-28T19:44:39.951Z
+Longueur HTML : 43682
+
+description: DecorViz API reference: generate photorealistic previews of furniture and decor products inside real customer room photos. Authentication, endpoints, errors, and code samples.
+
+Liens utiles :
+https://decorviz.ai/api-docs/
+https://fonts.googleapis.com
+https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap
+#openapi
+openapi.yaml
+
+Texte visible :
+DecorViz API Documentation 
+ DecorViz API 
+v1 &middot; base: decorviz.ai/api 
+ Start here 
+Introduction 
+Authentication 
+Quickstart 
+ Endpoints 
+ POST partner-generate 
+ GET partner-status 
+ GET partner-usage 
+ Reference 
+Polling guide 
+Categories 
+Image requirements 
+Error codes 
+Rate limits 
+Accuracy promise 
+OpenAPI spec 
+ DecorViz API v1 
+Put any product in any room. One API call. 
+The DecorViz API generates photorealistic previews of furniture and decor products inside real
+ customer room photos. You send a room photo and a product image; we return a composited result hosted on a
+ stable URL. 
+The flow is asynchronous: you queue a generation, then poll for the result. Typical completion time is 10 to
+ 30 seconds. Failed generations never consume your balance; refunds are automatic. 
+ Getting access. API keys are issued by the DecorViz team. Contact 
+ [email&#160;protected] to receive your sandbox and live keys.
+Authentication 
+Every request carries your API key as a Bearer token. Live keys start with dv_live_ , sandbox keys with dv_sandbox_ . 
+ http 
+Copy 
+Authorization: Bearer dv_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx 
+ Keep keys server-side. Never embed an API key in a browser, mobile app, or public repository.
+ Call the DecorViz API from your backend only. If a key leaks, contact us and we revoke and reissue it.
+ Send a User-Agent header. Identify your backend with a custom User-Agent, for example
+ YourCompany-Backend/1.0 . Requests using default script user agents (such as
+ Python-urllib ) may be rejected by our edge protection with HTTP 403.
+Quickstart 
+Add your API key to your backend environment as DECORVIZ_API_KEY . 
+POST the room photo and product image to partner-generate . You receive a
+ generation id immediately. 
+Poll partner-status every 2 seconds until status 
+ is completed , then show image_url in your UI. 
+curl 
+Node.js 
+Python 
+PHP 
+ shell 
+Copy 
+curl -X POST https://decorviz.ai/api/partner-generate \
+ -H "Authorization: Bearer $DECORVIZ_API_KEY" \
+ -H "Content-Type: application/json" \
+ -d '{
+ "request_id": "order-9143-preview-1",
+ "room_image": "data:image/jpeg;base64,/9j/4AAQ...",
+ "product_image_url": "https://cdn.example.com/products/sofa-1234.jpg",
+ "product_title": "Henley 3-Seater Sofa, Charcoal",
+ "product_scale_details": "Width 220 cm, depth 95 cm",
+ "category": "sofa"
+ }' 
+ # 202 Accepted 
+ # {"id":"5e2f64f0-...","status":"pending","created_at":"2026-06-11T10:00:00Z"} 
+curl "https://decorviz.ai/api/partner-status?id=5e2f64f0-..." \
+ -H "Authorization: Bearer $DECORVIZ_API_KEY" 
+ node.js 
+Copy 
+ const BASE = "https://decorviz.ai/api" ;
+ const KEY = process.env.DECORVIZ_API_KEY;
+ async function generatePreview (roomBase64, productUrl, title, scale) {
+ const res = await fetch( `${BASE}/partner-generate` , {
+ method: "POST" ,
+ headers: { Authorization: `Bearer ${KEY}` , "Content-Type" : "application/json" },
+ body: JSON.stringify({
+ request_id: crypto.randomUUID(),
+ room_image: roomBase64,
+ product_image_url: productUrl,
+ product_title: title,
+ product_scale_details: scale,
+ category: "sofa" ,
+ }),
+ });
+ const { id } = await res.json();
+ // Poll every 2 seconds, up to 2 minutes 
+ for ( let i = 0; i &lt; 60; i++) {
+ await new Promise((r) =&gt; setTimeout(r, 2000));
+ const poll = await fetch( `${BASE}/partner-status?id=${id}` , {
+ headers: { Authorization: `Bearer ${KEY}` },
+ });
+ const gen = await poll.json();
+ if (gen.status === "completed" ) return gen.image_url;
+ if (gen.status === "failed" ) throw new Error(gen.error_code);
+ }
+ throw new Error( "TIMEOUT" );
+} 
+ python 
+Copy 
+ import os, time, uuid, requests
+BASE = "https://decorviz.ai/api" 
+HEADERS = { "Authorization" : f"Bearer {os.environ['DECORVIZ_API_KEY']}" }
+ def generate_preview (room_base64, product_url, title, scale):
+ res = requests.post( f"{BASE}/partner-generate" , headers=HEADERS, json={
+ "request_id" : str(uuid.uuid4()),
+ "room_image" : room_base64,
+ "product_image_url" : product_url,
+ "product_title" : title,
+ "product_scale_details" : scale,
+ "category" : "sofa" ,
+ })
+ res.raise_for_status()
+ gen_id = res.json()[ "id" ]
+ for _ in range(60): # poll every 2 s, up to 2 minutes 
+ time.sleep(2)
+ gen = requests.get( f"{BASE}/partner-status" ,
+ params={ "id" : gen_id}, headers=HEADERS).json()
+ if gen[ "status" ] == "completed" :
+ return gen[ "image_url" ]
+ if gen[ "status" ] == "failed" :
+ raise RuntimeError(gen[ "error_code" ])
+ raise TimeoutError 
+ php 
+Copy 
+ function decorvizRequest ($method, $path, $body = null) {
+ $ch = curl_init( "https://decorviz.ai/api" . $path);
+ curl_setopt_array($ch, [
+ CURLOPT_RETURNTRANSFER =&gt; true,
+ CURLOPT_CUSTOMREQUEST =&gt; $method,
+ CURLOPT_HTTPHEADER =&gt; [
+ "Authorization: Bearer " . getenv( "DECORVIZ_API_KEY" ),
+ "Content-Type: application/json" ,
+ ],
+ CURLOPT_POSTFIELDS =&gt; $body ? json_encode($body) : null,
+ ]);
+ $out = json_decode(curl_exec($ch), true);
+ curl_close($ch);
+ return $out;
+}
+$gen = decorvizRequest( "POST" , "/partner-generate" , [
+ "request_id" =&gt; bin2hex(random_bytes(12)),
+ "room_image" =&gt; $roomBase64,
+ "product_image_url" =&gt; $productUrl,
+ "product_title" =&gt; "Henley 3-Seater Sofa" ,
+ "category" =&gt; "sofa" ,
+]);
+ for ($i = 0; $i &lt; 60; $i++) { // poll every 2 s 
+ sleep(2);
+ $poll = decorvizRequest( "GET" , "/partner-status?id=" . $gen[ "id" ]);
+ if ($poll[ "status" ] === "completed" ) { $imageUrl = $poll[ "image_url" ]; break ; }
+ if ($poll[ "status" ] === "failed" ) { throw new Exception($poll[ "error_code" ]); }
+} 
+Queue a generation 
+ POST https://decorviz.ai/api/partner-generate 
+Validates your input, reserves one generation from your balance, and queues the job. Responds immediately
+ with 202 Accepted and a generation id . If the
+ generation later fails, the reserved generation is refunded automatically. 
+Request body 
+ Field 
+ Description 
+ request_id 
+ REQUIRED 
+ Your idempotency key, unique per generation, max 128 chars. Sending the same request_id 
+ twice returns the original generation and never charges twice. Use your internal order or session id. 
+ room_image 
+ REQUIRED 
+ Customer room photo as a base64 data URL ( data:image/jpeg;base64,... ) or raw base64. JPEG,
+ PNG, or WebP, max 7 MB. 
+ product_image 
+ ONE OF 
+ Product photo as base64. Provide this or product_image_url . 
+ product_image_url 
+ ONE OF 
+ Public HTTPS URL of the product photo. We fetch it server-side with security checks (2 redirects max, 7
+ MB max, must be a real JPEG, PNG, or WebP). 
+ product_title 
+ RECOMMENDED 
+ Product name, max 300 chars. Improves identification and blending quality. 
+ product_scale_details 
+ RECOMMENDED 
+ Dimensions as plain text, max 800 chars, for example "Width 220 cm, depth 95 cm" . The
+ single biggest lever for realistic sizing. 
+ prompt 
+ OPTIONAL 
+ Placement instructions, max 800 chars, for example "Place the sofa near the window" . Added
+ to the product context of the generation. Core placement and realism rules remain DecorViz-controlled.
+ category 
+ RECOMMENDED 
+ Category id from the 
+documented list . Selects a placement profile tuned for
+ that product type. Unknown values fall back to a generic profile. 
+ product_url 
+ OPTIONAL 
+ Product page URL, stored for your reference and support requests. 
+ webhook_url 
+ RESERVED 
+ Accepted and stored, but webhook delivery is not yet active. Use polling. 
+Response: 202 Accepted 
+ json 
+Copy 
+{
+ "id" : "5e2f64f0-7a31-4f7e-9d2c-1b8a2f6c0e44" ,
+ "status" : "pending" ,
+ "created_at" : "2026-06-11T10:00:00Z" 
+} 
+A duplicate request_id returns 200 with the original
+ generation and "duplicate": true . 
+Poll generation status 
+ GET https://decorviz.ai/api/partner-status?id={generation_id} 
+Returns the current state of a generation. Poll no faster than once every 2 seconds. 
+Response: completed 
+ json 
+Copy 
+{
+ "id" : "5e2f64f0-7a31-4f7e-9d2c-1b8a2f6c0e44" ,
+ "status" : "completed" ,
+ "image_url" : "https://&lt;bucket&gt;.s3.&lt;region&gt;.amazonaws.com/.../5e2f64f0-....jpeg" ,
+ "thumbnail_url" : "https://&lt;bucket&gt;.s3.&lt;region&gt;.amazonaws.com/.../5e2f64f0-..._thumb.jpeg" ,
+ "created_at" : "2026-06-11T10:00:00Z" ,
+ "completed_at" : "2026-06-11T10:00:21Z" ,
+ "generations_used" : 1 
+} 
+Response: failed 
+ json 
+Copy 
+{
+ "id" : "5e2f64f0-7a31-4f7e-9d2c-1b8a2f6c0e44" ,
+ "status" : "failed" ,
+ "error_code" : "MODEL_TIMEOUT" ,
+ "error_message" : "Generation timed out. Please try again. Credits refunded." ,
+ "generations_used" : 0 
+} 
+About image_url 
+The URL is stable and does not expire while hosted. Default hosting period is 90 days; re-host on your own
+ CDN if you need the image longer. 
+The URL is unguessable but unauthenticated: anyone holding the exact URL can view the image. Treat it like
+ a share link. 
+Usage and balance 
+ GET https://decorviz.ai/api/partner-usage?from=2026-06-01&to=2026-06-30 
+Returns your remaining balance and daily generation counts. Both parameters are optional and default to the
+ last 30 days. Maximum range: 366 days. All figures are in generations. 
+ json 
+Copy 
+{
+ "balance_generations" : 742 ,
+ "from" : "2026-06-01" ,
+ "to" : "2026-06-30" ,
+ "totals" : { "generations" : 258 , "completed" : 252 , "failed" : 6 , "in_flight" : 0 },
+ "days" : [
+ { "date" : "2026-06-01" , "generations" : 31 , "completed" : 30 , "failed" : 1 , "in_flight" : 0 }
+ ]
+} 
+Polling guide 
+Poll every 2 seconds . Faster polling triggers rate limiting without making results arrive
+ sooner. 
+Typical completion: 10 to 30 seconds . Plan your UI for up to 120
+ seconds ; after that we time out the job ourselves and refund it. 
+Statuses move pending &rarr; processing &rarr;
+ completed or failed . Both end states are final. 
+On failed , the generation is refunded. Retry with a new request_id ; retrying with the same one returns the same failed generation. 
+Categories 
+Passing a category selects a placement profile tuned for that product type (floor
+ placement, wall placement, scale behavior). Use the closest match; when nothing fits, omit the field. 
+ id 
+ Covers 
+ sofa 
+ Sofas, sectionals, armchairs, ottomans, benches, seating 
+ table 
+ Tables, desks, coffee tables, nightstands, consoles 
+ bed 
+ Beds, mattresses, bed frames, headboards 
+ rug 
+ Rugs, carpets, runners, mats 
+ floor_lamp 
+ Floor lamps 
+ table_lamp 
+ Table and desk lamps 
+ pendant 
+ Pendant and ceiling lights, chandeliers 
+ sconce 
+ Wall-mounted lights 
+ wall_art 
+ Framed art, prints, mirrors, wall decor 
+ wallpaper 
+ Wallpaper and murals 
+ storage 
+ Bookcases, cabinets, dressers, shelving units 
+ wall_shelf 
+ Wall-mounted shelves 
+ curtain 
+ Curtains and drapes 
+ bedding 
+ Duvets, comforters, quilts, sheets, pillows 
+ plant 
+ Plants and planters 
+ decor 
+ Vases, sculptures, decorative objects 
+Image requirements 
+ Rule 
+ Value 
+ Formats 
+ JPEG , PNG , WebP 
+ Max size 
+ 7 MB per image 
+ Recommended max dimension 
+ 4096 px 
+ Product URL fetch 
+ HTTPS recommended, max 2 redirects, content verified by file signature 
+What produces the best results 
+ Room photos: well-lit, straight-on or slightly angled, with visible floor space and some
+ reference objects (door, window, existing furniture). Phone photos work well. 
+ Product photos: natural perspective shots outperform perfectly isolated white-background
+ cutouts. If you have lifestyle shots of the product, prefer them. 
+ Always send dimensions in product_scale_details . It is the
+ difference between a sofa that looks right and one that looks toy-sized. 
+ Privacy: we strip EXIF metadata (GPS location, device identifiers) from uploaded photos
+ before processing and storage. 
+Error codes 
+Errors share one shape. The code is stable and safe to branch on; the message is for humans and may change. 
+ json 
+Copy 
+{ "status" : "error" , "code" : "INSUFFICIENT_CREDITS" , "message" : "..." } 
+ Code 
+ HTTP 
+ Meaning 
+ MISSING_FIELDS 
+ 400 
+ A required field is missing or malformed. 
+ INVALID_IMAGE 
+ 400 
+ Image too large, wrong format, or unreadable. 
+ UNSAFE_URL 
+ 400 
+ product_image_url failed security validation. 
+ INVALID_WEBHOOK_URL 
+ 400 
+ webhook_url is not a valid HTTPS URL. 
+ INVALID_API_KEY 
+ 401 
+ Key missing, malformed, or revoked. 
+ INSUFFICIENT_CREDITS 
+ 402 
+ Balance empty. Top up to continue. 
+ ACCOUNT_SUSPENDED 
+ 403 
+ Account deactivated. Contact support. 
+ NOT_FOUND 
+ 404 
+ Generation id unknown for this account. 
+ RATE_LIMIT_EXCEEDED 
+ 429 
+ Too many requests in the window. Back off and retry. 
+ CONCURRENCY_LIMIT_EXCEEDED 
+ 429 
+ Too many generations in flight. Wait for one to finish. 
+ DAILY_CAP_EXCEEDED 
+ 429 
+ Contracted daily cap reached. 
+ MODEL_TIMEOUT 
+ &ndash; 
+ Generation timed out or service busy. Refunded. Retry with a new request_id. 
+ MODEL_REJECTED 
+ &ndash; 
+ Image declined by the AI safety filter. Refunded. Try a different image. 
+ INTERNAL_ERROR 
+ 500 
+ Unexpected error on our side. Refunded if a generation was charged. 
+ MODEL_TIMEOUT and MODEL_REJECTED appear as error_code on failed generations
+ rather than as HTTP errors. 
+Rate limits 
+ Limit 
+ Default 
+ partner-generate 
+ 60 requests / minute 
+ partner-status 
+ 300 requests / minute 
+ partner-usage 
+ 60 requests / minute 
+ Concurrent generations in flight 
+ 5 
+ Generation timeout 
+ 120 seconds, then auto-fail and refund 
+Defaults fit most integrations. Higher limits are available by agreement; contact us with your volume
+ forecast. 
+What the API promises, and what it does not 
+DecorViz generates visually realistic previews : correct style, lighting, perspective, and
+ believable proportions, especially when you supply product_scale_details . 
+DecorViz does not promise dimensional accuracy or measurement correctness. The output
+ answers "will this look right in my room?", not "will this fit within 2 centimeters?". If your product
+ communicates exact measurements to end users, keep that functionality separate from the generated preview and
+ make the distinction clear in your UI. 
+OpenAPI specification 
+The machine-readable contract for code generation and API tooling: 
+Download openapi.yaml 
+ DecorViz API v1 &middot; questions: 
+[email&#160;protected]

@@ -1,5 +1,66 @@
 [
  {
+  "id": "robinet-laiton",
+  "model": "proc:robinet",
+  "kind": "procedural",
+  "name": "Mitigeur bec haut en laiton brossé",
+  "category": "robinetterie",
+  "style": [
+   "contemporain",
+   "design-iconique"
+  ],
+  "colors": [
+   {
+    "name": "Laiton",
+    "hex": "#C9A564"
+   }
+  ],
+  "materials": [
+   "laiton"
+  ],
+  "silhouette": [
+   "bec-haut",
+   "levier"
+  ],
+  "features": [
+   "Bec courbé Ø 22 mm",
+   "Levier latéral"
+  ],
+  "productId": null
+ },
+ {
+  "id": "table-basse-galet-travertin",
+  "model": "proc:table-galet",
+  "kind": "procedural",
+  "name": "Table basse galet en travertin",
+  "category": "table-basse",
+  "style": [
+   "contemporain",
+   "organique",
+   "minimal"
+  ],
+  "colors": [
+   {
+    "name": "Beige travertin",
+    "hex": "#DCCBAE"
+   }
+  ],
+  "materials": [
+   "travertin"
+  ],
+  "silhouette": [
+   "organique",
+   "basse",
+   "massive"
+  ],
+  "features": [
+   "Taillée d'un bloc",
+   "Arêtes arrondies",
+   "≈ 110 × 75 × 32 cm"
+  ],
+  "productId": null
+ },
+ {
   "id": "canape-glam-velours",
   "model": "wf_glam_velvet_sofa",
   "kind": "glb",

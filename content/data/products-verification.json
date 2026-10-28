@@ -1,0 +1,241 @@
+{
+  "ikea-vimle-3p-djuparp-vert": {
+    "checkedAt": "2026-10-28T19:48:03.630Z",
+    "http": 200,
+    "finalUrl": "https://www.ikea.com/fr/fr/cat/produits-products/",
+    "title": "Tous nos produits - IKEA",
+    "product": null
+  },
+  "lr-topim-canape-velours-3p": {
+    "checkedAt": "2026-10-28T19:48:05.381Z",
+    "http": 403,
+    "finalUrl": "https://www.laredoute.fr/ppdp/prod-500809592.aspx",
+    "title": null,
+    "product": null
+  },
+  "gubi-pacha-sofa-4": {
+    "checkedAt": "2026-10-28T19:48:09.501Z",
+    "http": 404,
+    "finalUrl": "https://gubi.com/en/fr/products/pacha-sofa-4-seater-with-armrests",
+    "title": null,
+    "product": null
+  },
+  "ikea-vimle-fauteuil-djuparp-vert": {
+    "checkedAt": "2026-10-28T19:48:11.888Z",
+    "http": 200,
+    "finalUrl": "https://www.ikea.com/fr/fr/cat/produits-products/",
+    "title": "Tous nos produits - IKEA",
+    "product": null
+  },
+  "ikea-strandmon-tommaboda-beige": {
+    "checkedAt": "2026-10-28T19:48:14.999Z",
+    "http": 200,
+    "finalUrl": "https://www.ikea.com/fr/fr/p/strandmon-fauteuil-a-oreilles-tommaboda-beige-profond-50613163/",
+    "title": "STRANDMON fauteuil à oreilles, Tommaboda beige profond  - IKEA",
+    "product": {
+      "name": "STRANDMON Fauteuil à oreilles - Tommaboda beige profond",
+      "sku": "506.131.63",
+      "mpn": "506.131.63",
+      "brand": "IKEA",
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "https://www.ikea.com/fr/fr/images/products/strandmon-fauteuil-a-oreilles-tommaboda-beige-profond__1478943_pe999900_s5.jpg",
+        "height": "2000px",
+        "width": "2000px"
+      },
+      "price": "349",
+      "currency": "EUR",
+      "availability": "https://schema.org/InStock"
+    }
+  },
+  "lr-leone-fauteuil-velours": {
+    "checkedAt": "2026-10-28T19:48:16.744Z",
+    "http": 403,
+    "finalUrl": "https://www.laredoute.fr/ppdp/prod-528977282.aspx",
+    "title": null,
+    "product": null
+  },
+  "gubi-pacha-lounge-chair": {
+    "checkedAt": "2026-10-28T19:48:21.618Z",
+    "http": 200,
+    "finalUrl": "https://gubi.com/en/us/products/pacha-lounge-chair",
+    "title": "GUBI Pacha Lounge Chair",
+    "product": {
+      "name": "GUBI Pacha Lounge Chair",
+      "sku": null,
+      "mpn": null,
+      "brand": "GUBI",
+      "image": null,
+      "price": null,
+      "currency": null,
+      "availability": null
+    }
+  },
+  "ikea-borgeby-bouleau-70": {
+    "checkedAt": "2026-10-28T19:48:24.806Z",
+    "http": 200,
+    "finalUrl": "https://www.ikea.com/fr/fr/p/borgeby-table-basse-plaque-bouleau-70389356/",
+    "title": "BORGEBY Table basse, plaqué bouleau, 70 cm  - IKEA",
+    "product": {
+      "name": "BORGEBY Table basse - plaqué bouleau 70 cm",
+      "sku": "703.893.56",
+      "mpn": "703.893.56",
+      "brand": "IKEA",
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "https://www.ikea.com/fr/fr/images/products/borgeby-table-basse-plaque-bouleau__0987623_pe817609_s5.jpg",
+        "height": "2000px",
+        "width": "2000px"
+      },
+      "price": "99.95",
+      "currency": "EUR",
+      "availability": "https://schema.org/InStock"
+    }
+  },
+  "ikea-stockholm-2025-chene-verre": {
+    "checkedAt": "2026-10-28T19:48:28.157Z",
+    "http": 200,
+    "finalUrl": "https://www.ikea.com/fr/fr/p/stockholm-2025-table-basse-plaque-chene-verre-20586552/",
+    "title": "STOCKHOLM 2025 table basse, plaqué chêne verre  - IKEA",
+    "product": {
+      "name": "STOCKHOLM 2025 Table basse - plaqué chêne verre",
+      "sku": "205.865.52",
+      "mpn": "205.865.52",
+      "brand": "IKEA",
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "https://www.ikea.com/fr/fr/images/products/stockholm-2025-table-basse-plaque-chene-verre__1362696_pe955296_s5.jpg",
+        "height": "2000px",
+        "width": "2000px"
+      },
+      "price": "249",
+      "currency": "EUR",
+      "availability": "https://schema.org/InStock"
+    }
+  },
+  "ampm-guimel-travertin": {
+    "checkedAt": "2026-10-28T19:48:29.766Z",
+    "http": 403,
+    "finalUrl": "https://www.laredoute.fr/ppdp/prod-602053824.aspx",
+    "title": null,
+    "product": null
+  },
+  "gubi-epic-coffee-table-round": {
+    "checkedAt": "2026-10-28T19:48:37.306Z",
+    "http": 200,
+    "finalUrl": "https://gubi.com/en/us/products/epic-coffee-table-round?variant=10042375",
+    "title": "GUBI Epic Coffee Table, Round",
+    "product": {
+      "name": "GUBI Epic Coffee Table, Round",
+      "sku": null,
+      "mpn": null,
+      "brand": "GUBI",
+      "image": null,
+      "price": null,
+      "currency": null,
+      "availability": null
+    }
+  },
+  "ikea-akterspring-lampadaire": {
+    "checkedAt": "2026-10-28T19:48:40.372Z",
+    "http": 200,
+    "finalUrl": "https://www.ikea.com/fr/fr/p/akterspring-lampadaire-opalin-verre-laitonne-30614314/",
+    "title": "AKTERSPRING lampadaire, opalin verre/laitonné, 162 cm  - IKEA",
+    "product": {
+      "name": "AKTERSPRING Lampadaire - opalin verre/laitonné 162 cm",
+      "sku": "306.143.14",
+      "mpn": "306.143.14",
+      "brand": "IKEA",
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "https://www.ikea.com/fr/fr/images/products/akterspring-lampadaire-opalin-verre-laitonne__1531221_pe1015569_s5.jpg",
+        "height": "2000px",
+        "width": "2000px"
+      },
+      "price": "39.99",
+      "currency": "EUR",
+      "availability": "https://schema.org/InStock"
+    }
+  },
+  "lr-moricio-lampadaire": {
+    "checkedAt": "2026-10-28T19:48:42.027Z",
+    "http": 403,
+    "finalUrl": "https://www.laredoute.fr/ppdp/prod-513626540.aspx",
+    "title": null,
+    "product": null
+  },
+  "flos-ic-lights-f1-laiton": {
+    "checkedAt": "2026-10-28T19:48:44.777Z",
+    "http": 200,
+    "finalUrl": "https://flos.com/en/wo/ic-lights-floor/M-ic-lights-floor.html",
+    "title": "IC Lights F1 Floor Lamp | Flos Official Shop",
+    "product": {
+      "name": "IC Lights F1",
+      "sku": "FL08257162497",
+      "mpn": null,
+      "brand": null,
+      "image": "https://flos.com/on/demandware.static/-/Sites-FLOS-master/default/dw2fd686a1/images/packshot/DECORATIVE/DECORATIVE_FLOOR_IC-LIGHTS/FU317359/Flos-Pim-Image-Luminaire-Floor-IC_Lights-F1-Brass.jpg",
+      "price": "1115.00",
+      "currency": "USD",
+      "availability": "https://schema.org/InStock"
+    }
+  },
+  "ikea-eneryda-laiton-112": {
+    "checkedAt": "2026-10-28T19:48:48.665Z",
+    "http": 200,
+    "finalUrl": "https://www.ikea.com/fr/fr/p/eneryda-poignee-couleur-laiton-30610858/",
+    "title": "ENERYDA poignée, couleur laiton, 112 mm  - IKEA",
+    "product": {
+      "name": "ENERYDA Poignée - couleur laiton 112 mm",
+      "sku": "306.108.58",
+      "mpn": "306.108.58",
+      "brand": "IKEA",
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "https://www.ikea.com/fr/fr/images/products/eneryda-poignee-couleur-laiton__1427449_pe980246_s5.jpg",
+        "height": "2000px",
+        "width": "2000px"
+      },
+      "price": "9",
+      "currency": "EUR",
+      "availability": "https://schema.org/InStock"
+    }
+  },
+  "ikea-bagganas-laiton-143": {
+    "checkedAt": "2026-10-28T19:48:51.988Z",
+    "http": 200,
+    "finalUrl": "https://www.ikea.com/fr/fr/p/bagganaes-poignee-couleur-laiton-00338407/",
+    "title": "BAGGANÄS poignée, couleur laiton, 143 mm  - IKEA",
+    "product": {
+      "name": "BAGGANÄS Poignée - couleur laiton 143 mm",
+      "sku": "003.384.07",
+      "mpn": "003.384.07",
+      "brand": "IKEA",
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "https://www.ikea.com/fr/fr/images/products/bagganaes-poignee-couleur-laiton__0754229_pe747828_s5.jpg",
+        "height": "2000px",
+        "width": "2000px"
+      },
+      "price": "8",
+      "currency": "EUR",
+      "availability": "https://schema.org/InStock"
+    }
+  },
+  "buster-punch-pull-bar-linear-laiton": {
+    "checkedAt": "2026-10-28T19:48:55.094Z",
+    "http": 200,
+    "finalUrl": "https://uk.busterandpunch.com/products/pull-bar-linear",
+    "title": "PULL BAR / LINEAR",
+    "product": {
+      "name": "PULL BAR / LINEAR",
+      "sku": null,
+      "mpn": null,
+      "brand": "Buster and Punch ROW",
+      "image": null,
+      "price": null,
+      "currency": null,
+      "availability": null
+    }
+  }
+}

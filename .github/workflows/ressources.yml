@@ -13,7 +13,7 @@ on:
       inspirations: { description: "Photos d'inspiration candidates (planches-contact à trier)", type: boolean, default: false }
       inspirations_ia: { description: "Photos d'inspiration créées par IA (gratuit via FLUX ; Gemini si le secret GEMINI_API_KEY existe)", type: boolean, default: false }
       inspirations_choix: { description: "Télécharger les photos d'inspiration choisies (content/data/inspiration-picks.json)", type: boolean, default: false }
-      studio: { description: "Studio : veille concurrents, textures PBR 2K, image de la pièce témoin, vérification des fiches produits", type: boolean, default: false }
+      studio: { description: "Studio : textures PBR 2K (Poly Haven, ambientCG) et vérification des fiches produits", type: boolean, default: false }
 
 permissions:
   contents: write
@@ -67,7 +67,7 @@ jobs:
         timeout-minutes: 40
         run: |
           mkdir -p .robot
-          node --experimental-strip-types scripts/robot-studio.ts --veille --pbr --image --produits 2>&1 | tee .robot/studio.log
+          node --experimental-strip-types scripts/robot-studio.ts --pbr --produits 2>&1 | tee .robot/studio.log
       - name: Textures photographiques
         if: ${{ inputs.textures }}
         continue-on-error: true

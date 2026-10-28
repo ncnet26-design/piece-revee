@@ -54,12 +54,14 @@ export class StudioEngine {
   private ray = new THREE.Raycaster();
   private floorMat: THREE.Material | null = null;
 
-  constructor(private host: HTMLElement, scene: StudioScene, private ev: StudioEvents, private quality: "haute" | "standard" = "haute") {
+  constructor(private host: HTMLElement, scene: StudioScene, private ev: StudioEvents, private quality: "haute" | "standard" = "haute", private opts: { baseline?: boolean } = {}) {
     this.state = structuredClone(scene);
     this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: true });
     const gl = this.renderer.getContext(), dbg = gl.getExtension("WEBGL_debug_renderer_info");
     this.soft = /swiftshader|llvmpipe|software/i.test(String(dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : ""));
     if (this.soft) this.quality = "standard";
+    // Mode « avant » : l'ancien pipeline (couleurs unies, pas d'éclairage d'intérieur ni d'occlusion), pour mesurer le progrès.
+    if (opts.baseline) this.quality = "standard";
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.soft ? 1 : this.quality === "haute" ? 2 : 1.5));
     this.renderer.toneMapping = THREE.NeutralToneMapping; this.renderer.toneMappingExposure = 1.05;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -87,7 +89,7 @@ export class StudioEngine {
     this.setupLights();
     this.setupComposer();
     this.buildRoom();
-    void this.loadEnvironment();
+    if (!opts.baseline) void this.loadEnvironment();
     void this.syncObjects();
 
     cv.addEventListener("pointerdown", this.onDown);
@@ -124,7 +126,7 @@ export class StudioEngine {
     if (this.soft) return;
     const c = new EffectComposer(this.renderer);
     c.addPass(new RenderPass(this.scene, this.camera));
-    if (this.quality === "haute") {
+    if (this.quality === "haute" && !this.opts.baseline) {
       const ao = new GTAOPass(this.scene, this.camera, 512, 512);
       ao.blendIntensity = 0.85;
       ao.updateGtaoMaterial({ radius: 0.35, distanceExponent: 1.5, thickness: 1.2, scale: 1 });
@@ -170,16 +172,22 @@ export class StudioEngine {
     floor.receiveShadow = true; floor.userData.room = "sol"; floor.name = "sol";
     this.room.add(floor);
     const fm = materialById(this.state.room.floor);
-    if (fm) void buildMaterial(fm, { metersPerUv: w, light: this.quality !== "haute", anisotropy: this.renderer.capabilities.getMaxAnisotropy() }).then((m) => {
+    if (fm && !this.opts.baseline) void buildMaterial(fm, { metersPerUv: w, light: this.quality !== "haute", anisotropy: this.renderer.capabilities.getMaxAnisotropy() }).then((m) => {
       // UV du plan : 0..1 sur la largeur → répétition à l'échelle réelle.
       [m.map, m.normalMap, m.roughnessMap].forEach((t) => t?.repeat.set(w / fm.tileMeters, d / fm.tileMeters));
       this.floorMat?.dispose(); this.floorMat = m; floor.material = m; this.dirty = true;
     });
     const wallMat = new THREE.MeshStandardMaterial({ color: wall, roughness: 0.92 });
     wallMat.name = "mur";
-    const mkWall = (len: number, pos: THREE.Vector3, rotY: number) => {
+    const finish = (side: string) => (this.state.room.wallFinishes as Record<string, string> | undefined)?.[side] ?? this.state.room.wallFinish ?? "peinture-mate";
+    const mkWall = (len: number, pos: THREE.Vector3, rotY: number, side: string) => {
       const g = new THREE.PlaneGeometry(len, h); const m = new THREE.Mesh(g, wallMat);
-      m.position.copy(pos); m.rotation.y = rotY; m.receiveShadow = true; m.userData.room = "mur"; this.room.add(m);
+      m.position.copy(pos); m.rotation.y = rotY; m.receiveShadow = true; m.userData.room = "mur"; m.userData.side = side; this.room.add(m);
+      const fm = materialById(finish(side));
+      if (fm && !this.opts.baseline) void buildMaterial({ ...fm, baseColor: wall }, { metersPerUv: 1, light: this.quality !== "haute", anisotropy: this.renderer.capabilities.getMaxAnisotropy() }).then((mat) => {
+        [mat.map, mat.normalMap, mat.roughnessMap, mat.aoMap].forEach((t) => t?.repeat.set(len / fm.tileMeters, h / fm.tileMeters));
+        mat.name = "mur"; m.material = mat; this.dirty = true;
+      });
       // Plinthe et corniche moulurée.
       const base = new THREE.Mesh(new THREE.BoxGeometry(len, 0.12, 0.018), new THREE.MeshStandardMaterial({ color: "#F4F1EA", roughness: 0.6 }));
       base.position.set(0, -h / 2 + 0.06, 0.009); m.add(base);
@@ -187,10 +195,10 @@ export class StudioEngine {
       crown.position.set(0, h / 2 - 0.045, 0.025); m.add(crown);
       return m;
     };
-    const back = mkWall(w, new THREE.Vector3(0, h / 2, -d / 2), 0);
-    mkWall(w, new THREE.Vector3(0, h / 2, d / 2), Math.PI);
-    mkWall(d, new THREE.Vector3(-w / 2, h / 2, 0), Math.PI / 2);
-    mkWall(d, new THREE.Vector3(w / 2, h / 2, 0), -Math.PI / 2);
+    const back = mkWall(w, new THREE.Vector3(0, h / 2, -d / 2), 0, "fond");
+    mkWall(w, new THREE.Vector3(0, h / 2, d / 2), Math.PI, "avant");
+    mkWall(d, new THREE.Vector3(-w / 2, h / 2, 0), Math.PI / 2, "gauche");
+    mkWall(d, new THREE.Vector3(w / 2, h / 2, 0), -Math.PI / 2, "droite");
     // Deux grandes portes-fenêtres sur le mur du fond (lumière du jour).
     const glass = new THREE.MeshBasicMaterial({ color: new THREE.Color("#EAF1F6").multiplyScalar(1.35) });
     const frameMat = new THREE.MeshStandardMaterial({ color: "#F6F4EF", roughness: 0.5 });
@@ -210,7 +218,7 @@ export class StudioEngine {
   }
   setWallColor(hex: string) {
     this.state.room.wall = hex;
-    this.room.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh && (m.material as THREE.Material).name === "mur") (m.material as THREE.MeshStandardMaterial).color.set(hex); });
+    this.scene.remove(this.room); this.buildRoom();
     this.dirty = true; this.emit();
   }
   setFloor(materialId: string) { this.state.room.floor = materialId; this.scene.remove(this.room); this.buildRoom(); this.emit(); }
@@ -284,7 +292,9 @@ export class StudioEngine {
   private async procedural(def: Furniture): Promise<THREE.Object3D> {
     const g = new THREE.Group();
     const light = this.quality !== "haute", aniso = this.renderer.capabilities.getMaxAnisotropy();
-    const brass = await buildMaterial(materialById("laiton-brosse")!, { metersPerUv: 0.2, light, anisotropy: aniso });
+    const flat = (id: string) => { const m = materialById(id)!; return new THREE.MeshStandardMaterial({ color: m.baseColor, roughness: m.pbr.roughness, metalness: m.pbr.metalness }); };
+    const mat = async (id: string, metersPerUv: number, extra: Partial<import("@/lib/materials/three").BuildOpts> = {}) => (this.opts.baseline ? flat(id) : buildMaterial(materialById(id)!, { metersPerUv, light, anisotropy: aniso, ...extra }));
+    const brass = await mat("laiton-brosse", 0.2);
     brass.name = "Métal";
     if (def.model === "proc:lampadaire") {
       const base = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.16, 0.025, 64), brass); base.position.y = 0.0125;
@@ -303,6 +313,32 @@ export class StudioEngine {
       knurl.name = "Métal"; bar.material = knurl;
       for (const x of [-0.08, 0.08]) { const post = new THREE.Mesh(new THREE.CylinderGeometry(0.0045, 0.0045, 0.03, 20), brass); post.rotation.x = Math.PI / 2; post.position.set(x, 0, 0.015); g.add(post); }
       g.add(bar);
+    } else if (def.model === "proc:table-galet") {
+      // Table basse sculpturale : un galet de travertin taillé d'un bloc, arêtes réellement arrondies (biseau géométrique).
+      const shape = new THREE.Shape();
+      const N = 96;
+      for (let i = 0; i <= N; i++) {
+        const a = (i / N) * Math.PI * 2;
+        const r = 1 + 0.06 * Math.sin(3 * a + 0.6) + 0.035 * Math.cos(5 * a + 1.3);
+        const x = Math.cos(a) * 0.5 * r, y = Math.sin(a) * 0.33 * r;
+        if (i === 0) shape.moveTo(x, y); else shape.lineTo(x, y);
+      }
+      const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.24, bevelEnabled: true, bevelThickness: 0.04, bevelSize: 0.035, bevelSegments: 10, curveSegments: 96 });
+      geo.rotateX(-Math.PI / 2); geo.computeBoundingBox();
+      geo.translate(0, -geo.boundingBox!.min.y, 0);
+      const stone = await mat("travertin", 1);
+      stone.name = "Pierre";
+      const top = new THREE.Mesh(geo, stone);
+      g.add(top);
+    } else if (def.model === "proc:robinet") {
+      // Mitigeur bec haut en laiton brossé : corps, bec courbé (tube), levier.
+      const body = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.026, 0.16, 48), brass); body.position.y = 0.08;
+      const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0.15, 0), new THREE.Vector3(0, 0.27, 0), new THREE.Vector3(0.02, 0.32, 0), new THREE.Vector3(0.09, 0.33, 0), new THREE.Vector3(0.15, 0.3, 0), new THREE.Vector3(0.17, 0.25, 0)]);
+      const spout = new THREE.Mesh(new THREE.TubeGeometry(curve, 96, 0.011, 32, false), brass);
+      const tip = new THREE.Mesh(new THREE.CylinderGeometry(0.013, 0.012, 0.02, 32), brass); tip.position.set(0.17, 0.245, 0);
+      const lever = new THREE.Mesh(new THREE.CylinderGeometry(0.005, 0.006, 0.09, 24), brass); lever.rotation.z = -1.2; lever.position.set(-0.04, 0.135, 0);
+      const base = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.032, 0.01, 48), brass); base.position.y = 0.005;
+      g.add(body, spout, tip, lever, base);
     } else if (def.model === "proc:tapis") {
       const wool = new THREE.MeshPhysicalMaterial({ color: "#E6DCCB", roughness: 0.95, sheen: 0.6, sheenRoughness: 0.8, sheenColor: new THREE.Color("#ffffff") });
       wool.name = "Tissu";
@@ -327,6 +363,7 @@ export class StudioEngine {
   private async applyMaterial(l: Live, slot: string, materialId: string) {
     const meshes = l.slots.get(slot); const m = materialById(materialId);
     if (!meshes || !m) return;
+    if (this.opts.baseline) { const flat = new THREE.MeshStandardMaterial({ color: m.baseColor, roughness: m.pbr.roughness, metalness: m.pbr.metalness }); flat.name = slot; meshes.forEach((x) => { x.material = flat; }); this.dirty = true; return; }
     const size = new THREE.Box3().setFromObject(l.root).getSize(new THREE.Vector3());
     const mat = await buildMaterial(m, { metersPerUv: Math.max(0.3, Math.max(size.x, size.z)), light: this.quality !== "haute", anisotropy: this.renderer.capabilities.getMaxAnisotropy() });
     mat.name = slot;
@@ -487,6 +524,22 @@ export class StudioEngine {
     c.getContext("2d")!.drawImage(src, 0, 0, c.width, c.height);
     if (this.outline) this.outline.selectedObjects = keep; helper.visible = vis; this.dirty = true;
     return c.toDataURL("image/jpeg", 0.9);
+  }
+  /** Rendu final haute qualité (lancer de rayons) de la vue actuelle, sans contour ni poignées d'édition. */
+  async finalRender(o: import("./final-render").FinalOptions) {
+    const { pathTrace } = await import("./final-render");
+    const keep = this.outline?.selectedObjects ?? []; if (this.outline) this.outline.selectedObjects = [];
+    const helper = this.transform.getHelper(); const vis = helper.visible; helper.visible = false;
+    const wasRunning = !this.disposed;
+    try { return await pathTrace(this.scene, this.camera, o); }
+    finally { if (this.outline) this.outline.selectedObjects = keep; helper.visible = vis; if (wasRunning) this.dirty = true; }
+  }
+  /** Caméras prédéfinies (vue générale et gros plans). */
+  view(name: string, views: Record<string, { pos: [number, number, number]; target: [number, number, number]; fov?: number }>) {
+    const v = views[name]; if (!v) return;
+    this.camera.position.set(...v.pos); this.controls.target.set(...v.target);
+    if (v.fov) { this.camera.fov = v.fov; this.camera.updateProjectionMatrix(); }
+    this.controls.update(); this.dirty = true;
   }
   dispose() {
     this.disposed = true; cancelAnimationFrame(this.raf); this.ro.disconnect();

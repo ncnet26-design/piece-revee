@@ -1,0 +1,356 @@
+URL: https://www.easyroomai.com/developers
+HTTP: 200 OK
+Récupéré le : 2026-10-28T19:44:38.056Z
+Longueur HTML : 144244
+
+description: REST API for AI room redesign, virtual staging, 360° panorama staging, exterior design, furniture removal and region edits. Async tasks, URL or base64 input, one Bearer key. Included with Ultra.
+og:title: Interior Design API for Developers – Easy Room AI
+og:description: REST API for AI room redesign, virtual staging, 360° panorama staging, exterior design, furniture removal and region edits. Async tasks, URL or base64 input, one Bearer key. Included with Ultra.
+
+Liens utiles :
+https://www.easyroomai.com/developers
+/developers
+/settings?tab=api
+/developers/openapi.json
+/pricing
+#pricing
+/terms
+
+Texte visible :
+Interior Design API for Developers – Easy Room AI 
+ Easy Room AI 
+ Home 
+ AI Room Design 
+ AI Exterior Design 
+ AI Virtual Staging 
+ 360° Virtual Staging New 
+ AI Furniture Removal New 
+ AI Room Editor New 
+ Explore Designs 
+ API for Developers 
+ Help & Support 
+ Settings 
+Upgrade to Premium 
+Unlock unlimited designs, high-resolution downloads and more. 
+Upgrade Now 
+ Sign In Get started free 
+ Easy Room AI 
+Sign In 
+Developers 
+The EasyRoomAI API 
+Redesign rooms, stage listings, build 360° panoramas, restyle exteriors, remove furniture and edit a region of a photo — from your own code. One Bearer key, JSON in and out, and results by polling. 
+Get an API key 
+OpenAPI (JSON) 
+The API is included with the 
+Ultra plan ($99.90/month, 10,000 credits — about 1,000 standard images) . Credits are shared with the web tools. 
+Quickstart 
+Authentication 
+How it works 
+Create a generation 
+Generation types 
+Images and masks 
+Get a generation 
+Credits and pricing 
+Limits 
+Idempotency 
+Errors 
+Changelog 
+Quickstart 
+Create a key in 
+Settings → API , export it as EASYROOMAI_API_KEY , then create a task and poll it. 
+curl 
+ # 1. Create a task (returns 202 and an id)
+curl https://www.easyroomai.com/api/v1/generations \
+ -H &quot;Authorization: Bearer $EASYROOMAI_API_KEY&quot; \
+ -H &quot;Content-Type: application/json&quot; \
+ -H &quot;Idempotency-Key: $(uuidgen)&quot; \
+ -d &#x27;{
+ &quot;type&quot;: &quot;redesign&quot;,
+ &quot;image&quot;: {
+ &quot;url&quot;: &quot;https://example.com/my-living-room.jpg&quot;
+ },
+ &quot;style&quot;: &quot;japandi&quot;,
+ &quot;room_type&quot;: &quot;living_room&quot;
+ }&#x27;
+# 2. Poll until status is &quot;succeeded&quot; or &quot;failed&quot;
+curl https://www.easyroomai.com/api/v1/generations/gen_… \
+ -H &quot;Authorization: Bearer $EASYROOMAI_API_KEY&quot; 
+Node.js 18+ (ESM) 
+ import { randomUUID } from &quot;node:crypto&quot;;
+const API = &quot;https://www.easyroomai.com/api/v1&quot;;
+const headers = {
+ Authorization: `Bearer ${process.env.EASYROOMAI_API_KEY}`,
+ &quot;Content-Type&quot;: &quot;application/json&quot;,
+};
+async function call(path, options = {}) {
+ const res = await fetch(`${API}${path}`, {
+ ...options,
+ headers: { ...headers, ...options.headers },
+ });
+ const body = await res.json();
+ if (!res.ok) {
+ const { code, message, request_id } = body.error;
+ throw new Error(`${code}: ${message} (${request_id})`);
+ }
+ return body;
+}
+// 1. Create the task. The Idempotency-Key makes a retry safe.
+const created = await call(&quot;/generations&quot;, {
+ method: &quot;POST&quot;,
+ headers: { &quot;Idempotency-Key&quot;: randomUUID() },
+ body: JSON.stringify({
+ &quot;type&quot;: &quot;redesign&quot;,
+ &quot;image&quot;: {
+ &quot;url&quot;: &quot;https://example.com/my-living-room.jpg&quot;
+ },
+ &quot;style&quot;: &quot;japandi&quot;,
+ &quot;room_type&quot;: &quot;living_room&quot;
+ }),
+});
+// 2. Poll until it finishes.
+let generation = created;
+while (generation.status === &quot;pending&quot;) {
+ await new Promise((resolve) =&gt; setTimeout(resolve, 4000));
+ generation = await call(`/generations/${created.id}`);
+}
+console.log(generation.status, generation.output?.url); 
+Python 3 
+ import os
+import time
+import uuid
+import requests
+API = &quot;https://www.easyroomai.com/api/v1&quot;
+HEADERS = {&quot;Authorization&quot;: f&quot;Bearer {os.environ[&#x27;EASYROOMAI_API_KEY&#x27;]}&quot;}
+def call(method, path, **kwargs):
+ res = requests.request(method, API + path, headers={**HEADERS, **kwargs.pop(&quot;headers&quot;, {})}, **kwargs)
+ body = res.json()
+ if not res.ok:
+ err = body[&quot;error&quot;]
+ raise RuntimeError(f&quot;{err[&#x27;code&#x27;]}: {err[&#x27;message&#x27;]} ({err[&#x27;request_id&#x27;]})&quot;)
+ return body
+# 1. Create the task. The Idempotency-Key makes a retry safe.
+created = call(
+ &quot;POST&quot;,
+ &quot;/generations&quot;,
+ headers={&quot;Idempotency-Key&quot;: str(uuid.uuid4())},
+ json={
+ &quot;type&quot;: &quot;redesign&quot;,
+ &quot;image&quot;: {
+ &quot;url&quot;: &quot;https://example.com/my-living-room.jpg&quot;
+ },
+ &quot;style&quot;: &quot;japandi&quot;,
+ &quot;room_type&quot;: &quot;living_room&quot;
+ },
+)
+# 2. Poll until it finishes.
+generation = created
+while generation[&quot;status&quot;] == &quot;pending&quot;:
+ time.sleep(4)
+ generation = call(&quot;GET&quot;, f&quot;/generations/{created[&#x27;id&#x27;]}&quot;)
+print(generation[&quot;status&quot;], generation.get(&quot;output&quot;, {}).get(&quot;url&quot;)) 
+A create call returns 202 straight away with the task id . The result URL appears on the task once status is succeeded . 
+Authentication 
+Base URL: https://www.easyroomai.com/api/v1 . Send your key on every request: 
+ Authorization: Bearer rai_live_… 
+A key is shown once, when you create it. We store only a hash, so a lost key cannot be recovered — revoke it and create another. 
+You can have up to 5 active keys, for example one per environment. Revoking a key takes effect immediately. 
+Keep keys on your server. The API does not allow browser (CORS) calls, so a key in front-end code is a leaked key. 
+If your Ultra subscription lapses the keys stop working ( 403 subscription_required ) and resume when it is active again. 
+How it works 
+ POST /generations checks your request, charges the credits and starts the task. You get 202 and an id like gen_… . 
+ GET /generations/ {id} returns pending , then succeeded with output.url , or failed . 
+Most tasks finish in a minute or two; 360° panoramas can take longer. Poll every 3–5 seconds. A task that is still pending after an hour is marked failed and refunded automatically. There are no webhooks yet. 
+Create a generation 
+ POST /generations with a JSON body. Every request has a type ; the other fields depend on it (see below). Fields we do not recognise are rejected with 400 rather than ignored, so a typo never silently changes what you are charged for. 
+ Field Description type Required. One of redesign, staging, panorama360, exterior, furniture_removal, region_edit. image The photo — see Images and masks. prompt Optional extra direction, up to 500 characters. metadata Optional object of your own (up to 512 bytes). Echoed back on every read — handy for your order or listing id. 
+Valid style , room_type and subject ids come from GET /pricing , so you never have to hard-code them. 
+Generation types 
+Room redesign · redesign · 10 credits 
+Re-style an existing interior photo in one of our design styles. 
+ Required: image , style , room_type Optional: prompt , aspect_ratio , metadata ( aspect_ratio : 1:1, 3:2, 2:3, 4:3, 3:4, 16:9 or 9:16) 
+Get the valid style and room_type ids from GET /v1/pricing . 
+Example body 
+ {
+ &quot;type&quot;: &quot;redesign&quot;,
+ &quot;image&quot;: {
+ &quot;url&quot;: &quot;https://example.com/photos/living-room.jpg&quot;
+ },
+ &quot;style&quot;: &quot;japandi&quot;,
+ &quot;room_type&quot;: &quot;living_room&quot;,
+ &quot;aspect_ratio&quot;: &quot;3:2&quot;
+} 
+Virtual staging · staging · 15 credits 
+Furnish an empty room with a staging preset. 
+ Required: image , style , room_type Optional: prompt , aspect_ratio , metadata ( aspect_ratio : 1:1, 3:2, 2:3, 4:3, 3:4, 16:9 or 9:16) 
+ style is a staging preset id and room_type a staging room type id — a different list from redesign. Both are in GET /v1/pricing . 
+Example body 
+ {
+ &quot;type&quot;: &quot;staging&quot;,
+ &quot;image&quot;: {
+ &quot;url&quot;: &quot;https://example.com/photos/living-room.jpg&quot;
+ },
+ &quot;style&quot;: &quot;modern_neutral&quot;,
+ &quot;room_type&quot;: &quot;living_room&quot;
+} 
+360° panorama staging · panorama360 · 38 credits 
+Stage a full 360° panorama and keep it a valid panorama. 
+ Required: image , style , room_type Optional: prompt , metadata 
+ image must be an equirectangular panorama with a 2:1 aspect ratio. Anything else is rejected with invalid_image ( reason: not_equirectangular ). 
+The result is a 2048×1024 panorama. Only the standard quality tier is available through the API. 
+Example body 
+ {
+ &quot;type&quot;: &quot;panorama360&quot;,
+ &quot;image&quot;: {
+ &quot;url&quot;: &quot;https://example.com/photos/panorama.jpg&quot;
+ },
+ &quot;style&quot;: &quot;modern_neutral&quot;,
+ &quot;room_type&quot;: &quot;living_room&quot;
+} 
+Exterior design · exterior · 10 credits 
+Restyle the outside of a building or garden. 
+ Required: image , style , subject Optional: prompt , metadata 
+ subject says what is in the photo — the facade, the front yard, the backyard or a patio/deck. The valid ids are in GET /v1/pricing . 
+Example body 
+ {
+ &quot;type&quot;: &quot;exterior&quot;,
+ &quot;image&quot;: {
+ &quot;url&quot;: &quot;https://example.com/photos/living-room.jpg&quot;
+ },
+ &quot;style&quot;: &quot;modern_farmhouse&quot;,
+ &quot;subject&quot;: &quot;facade&quot;
+} 
+Furniture removal · furniture_removal · 10 credits 
+Empty a room automatically, or remove only what you paint over. 
+ Required: image , mode , mask (when mode is &quot;brush&quot;) Optional: floor_material , prompt , metadata 
+ mode: &quot;auto_empty&quot; removes everything and takes no mask. mode: &quot;brush&quot; removes only the masked area and requires mask . 
+ floor_material (up to 100 characters) describes the floor to reveal. Leave it out and the floor is continued to match what is visible. 
+Example body 
+ {
+ &quot;type&quot;: &quot;furniture_removal&quot;,
+ &quot;image&quot;: {
+ &quot;url&quot;: &quot;https://example.com/photos/living-room.jpg&quot;
+ },
+ &quot;mode&quot;: &quot;brush&quot;,
+ &quot;mask&quot;: {
+ &quot;base64&quot;: &quot;iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB&quot;
+ }
+} 
+Region edit · region_edit · 10 credits 
+Change a masked area of a photo. The mask tells the model where to edit; the result is the model’s own rendering of the whole image. 
+ Required: mask , image or source_generation_id , prompt or reference_image Optional: reference_image , metadata 
+Send image , or continue an earlier edit by passing its id as source_generation_id (it must be one of your own finished region_edit results). 
+Describe the change in prompt (up to 400 characters), provide a reference_image , or both. 
+The model re-renders the whole image, so fine details outside the mask can differ slightly from your original, and the result can be a different pixel size than the photo you sent. 
+Example body 
+ {
+ &quot;type&quot;: &quot;region_edit&quot;,
+ &quot;image&quot;: {
+ &quot;url&quot;: &quot;https://example.com/photos/living-room.jpg&quot;
+ },
+ &quot;mask&quot;: {
+ &quot;base64&quot;: &quot;iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB&quot;
+ },
+ &quot;prompt&quot;: &quot;Replace the sofa with a green velvet sofa&quot;
+} 
+Images and masks 
+Give either { &quot;url&quot;: &quot;https://…&quot; } or { &quot;base64&quot;: &quot;…&quot; } (plain base64 or a data: URI), never both. 
+JPEG, PNG or WebP, up to 15 MB, 40 megapixels, shortest side at least 256 px. Animated images are rejected. 
+URLs must be public https on port 443. We fetch them from our servers, follow at most 3 redirects, and give up after 10 seconds. Private, loopback and link-local addresses are refused. 
+The request body is limited to about 22 MB, so a single image plus a mask fits as base64. 
+Masks 
+PNG with the same aspect ratio as the image (3% tolerance). It does not have to be the same pixel size. 
+Transparent pixels (alpha below 128) mark the area to change; opaque pixels mark the area to keep. 
+A fully opaque mask selects nothing and is rejected with empty_mask . 
+Image failures come back as 400 invalid_image with a details.reason such as unsupported_format , too_large , too_small , too_many_pixels , animated , blocked_address , unreachable or not_equirectangular . 
+Get a generation 
+ GET /generations/ {id} returns the task. You can only read your own tasks; anything else is a 404 . 
+Succeeded 
+ {
+ &quot;id&quot;: &quot;gen_3f2b8c1e-9d4a-4e6b-8f10-a1b2c3d4e5f6&quot;,
+ &quot;type&quot;: &quot;redesign&quot;,
+ &quot;status&quot;: &quot;succeeded&quot;,
+ &quot;credits_charged&quot;: 10,
+ &quot;created_at&quot;: &quot;2026-10-09T12:00:00.000Z&quot;,
+ &quot;completed_at&quot;: &quot;2026-10-09T12:01:05.000Z&quot;,
+ &quot;metadata&quot;: { &quot;listing&quot;: &quot;A-1042&quot; },
+ &quot;output&quot;: { &quot;url&quot;: &quot;https://cdn.easyroomai.com/…&quot; }
+} 
+Failed 
+ {
+ &quot;id&quot;: &quot;gen_…&quot;,
+ &quot;status&quot;: &quot;failed&quot;,
+ &quot;error&quot;: { &quot;code&quot;: &quot;generation_failed&quot;, &quot;message&quot;: &quot;The image could not be generated.&quot; },
+ &quot;refunded&quot;: true
+} 
+ GET /generations?limit=20&cursor=… lists your API tasks, newest first, as { data, has_more, next_cursor } (limit 1–50). GET /credits returns your balance. 
+Credits and pricing 
+API requests spend the same credit balance as the web tools, at API rates. Credits are charged when the task is created and returned automatically if it fails or times out. 
+ Type Credits redesign 10 staging 15 panorama360 38 exterior 10 furniture_removal 10 region_edit 10 
+Only the standard quality tier is available through the API. GET /pricing returns this table, the accepted options and the limits as JSON. 
+Limits 
+ Limit Value Tasks running at once 3 per account (429 too_many_inflight) Create requests 30 per minute per account Read requests 120 per minute per account Invalid API keys Repeated failures from one address are throttled for a minute Request body about 22 MB Active keys 5 
+Every response carries X-RateLimit-Limit , X-RateLimit-Remaining and X-RateLimit-Reset ; a 429 or 503 includes Retry-After . Each response also has an X-Request-Id — quote it if you contact support. The platform can briefly refuse new tasks when it is at capacity ( 503 capacity_exceeded ); you are not charged. 
+Idempotency 
+Send an Idempotency-Key header (1–64 characters of letters, digits, _ - : . ) on create calls so a network retry never double-charges. 
+Same key and same body: you get the original task back with 200 and Idempotent-Replayed: true . 
+Same key, different body: 422 idempotency_key_reuse . 
+Same key while the first call is still being created: 409 request_in_progress — retry shortly. 
+A call that failed on our side ( 502 ) does not hold the key, so retrying with it really retries. 
+Keys are remembered for 24 hours. 
+Errors 
+Every error has the same shape: 
+ {
+ &quot;error&quot;: {
+ &quot;code&quot;: &quot;insufficient_credits&quot;,
+ &quot;message&quot;: &quot;Not enough credits.&quot;,
+ &quot;request_id&quot;: &quot;req_9f8e7d6c5b4a3210&quot;,
+ &quot;details&quot;: { &quot;required&quot;: 10, &quot;available&quot;: 4 }
+ }
+} 
+ Status Code Meaning 400 invalid_request The body is malformed or a field is missing, unknown or out of range. details.field names it. Also used for 413 (body too large) and 415 (not JSON). 400 invalid_image An image could not be used. details.reason says why. 400 invalid_mask The mask could not be used (wrong aspect ratio, not a PNG, …). 400 empty_mask The mask selects nothing. 401 invalid_api_key The key is missing, malformed, unknown or revoked. 402 insufficient_credits Not enough credits. details.required and details.available say by how much. 403 subscription_required The key is fine, but its owner does not have an active Ultra subscription. 404 not_found No such generation for this account. 409 request_in_progress A request with that Idempotency-Key is still being created. Retry in a moment. 422 idempotency_key_reuse That Idempotency-Key was already used with a different request body. 429 rate_limited Too many requests. Wait Retry-After seconds. 429 too_many_inflight You already have 3 tasks running. Wait for one to finish. 500 internal_error Something went wrong on our side. Quote the request_id if you contact support. 502 upstream_error Our image provider could not take the task. You were not charged; retrying is safe. 503 capacity_exceeded The platform is at capacity. Retry after Retry-After seconds; you were not charged. 503 api_disabled The API is temporarily switched off. Retry later. 
+Changelog 
+ 2026-10 — v1: six generation types, polling, idempotency, credits and pricing endpoints. 
+Use of the API is covered by our 
+Terms of Service (section 14, API access). Questions or a use case we should know about? Write to 
+ [email&#160;protected] . 
+ Easy Room AI 
+Transform any room with AI. Upload a photo or sketch and get professional interior design renderings in seconds. 
+Support: [email&#160;protected] 
+Product 
+AI Room Redesign 
+AI Exterior Design 
+AI Virtual Staging 
+AI Furniture Removal 
+AI Room Editor 
+AI 360° Virtual Staging 
+Try Free Demo 
+Style Quiz 
+Pricing 
+API for Developers 
+Resources 
+Free Tools 
+360° Panorama Viewer 
+Design Ideas 
+Use Cases 
+Blog 
+Compare 
+vs Interior AI 
+vs RoomGPT 
+vs ideal.house 
+vs HomeDesigns.AI 
+vs Paintit.AI 
+vs Roomsgpt.io 
+vs BoxBrownie 
+vs Collov AI 
+vs ApplyDesign 
+vs Virtual Staging AI 
+Company 
+Privacy Policy 
+Terms of Service 
+Contact Us 
+© 2026 Easy Room AI . All rights reserved. 
+ Home 
+ Room 
+ Exterior 
+ Explore 
+ Profile

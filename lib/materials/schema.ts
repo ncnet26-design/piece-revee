@@ -11,7 +11,7 @@ export const Hex = z.string().regex(/^#[0-9A-Fa-f]{6}$/);
 export const MaterialSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
   name: z.string().min(2),
-  category: z.enum(["Métal", "Céramique", "Pierre", "Bois", "Textile", "Peinture", "Verre"]),
+  category: z.enum(["Bois", "Pierre", "Peinture", "Enduit", "Métal", "Verre", "Textile", "Céramique", "Sol"]),
   finish: z.string().min(2),
   manufacturer: z.object({ name: z.string(), url: z.string().url(), verifiedAt: z.string() }).nullable(),
   reference: z.string().nullable(),
@@ -23,8 +23,13 @@ export const MaterialSchema = z.object({
     clearcoat: z.number().min(0).max(1).optional(), clearcoatRoughness: z.number().min(0).max(1).optional(),
     sheen: z.number().min(0).max(1).optional(), sheenRoughness: z.number().min(0).max(1).optional(), sheenColor: Hex.optional(),
     anisotropy: z.number().min(0).max(1).optional(), normalScale: z.number().min(0).max(3).optional(),
+    transmission: z.number().min(0).max(1).optional(), ior: z.number().min(1).max(2.5).optional(), thickness: z.number().min(0).optional(),
     /** La texture photographiée sert de relief ; la couleur vient de baseColor. */
     tint: z.boolean().optional(),
+    /** Pour les matières teintées : force des nuances de la photo (0 = uni, 1 = photo d'origine). */
+    textureContrast: z.number().min(0).max(1).optional(),
+    /** Multiplie la carte de rugosité photographiée (> 1 = plus mat). */
+    roughnessScale: z.number().min(0.2).max(3).optional(),
   }),
   /** Largeur réelle couverte par une répétition de la texture (m). */
   tileMeters: z.number().positive(),

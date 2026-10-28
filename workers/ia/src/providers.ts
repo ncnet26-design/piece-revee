@@ -8,7 +8,7 @@ import { OPENAI_TOKEN_USD } from "./config";
 import type { Mode } from "./prompts";
 
 export type ImgIn = { mime: string; b64: string };
-export interface ProviderRequest { mode: Mode; prompt: string; photo?: ImgIn; references: ImgIn[]; width: number; height: number; quality: Quality; visitor: string }
+export interface ProviderRequest { mode: Mode; prompt: string; photo?: ImgIn; mask?: ImgIn; references: ImgIn[]; width: number; height: number; quality: Quality; visitor: string }
 export type Done = { state: "done"; image: Uint8Array; mime: string; costUsd?: number };
 export type Submit = Done | { state: "pending"; ref: string };
 export type Poll = Done | { state: "pending" } | { state: "error"; message: string; retryable: boolean };
@@ -102,6 +102,8 @@ export const openai: Provider = {
       if (fidelity.input_fidelity) form.append("input_fidelity", fidelity.input_fidelity);
       const field = images.length > 1 ? "image[]" : "image";
       images.forEach((im, i) => form.append(field, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i + 1}.${im.mime.split("/")[1]}`));
+      // Masque : seules ses zones transparentes sont modifiées (édition localisée).
+      if (req.mask) form.append("mask", new Blob([b64ToBytes(req.mask.b64)], { type: "image/png" }), "masque.png");
       r = await fetchRetry("https://api.openai.com/v1/images/edits", { method: "POST", headers: auth, body: form });
     }
     if (!r.ok) await failure(r, "OpenAI");

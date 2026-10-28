@@ -69,6 +69,10 @@ function buildPrompt(p) {
   } else {
     lines.push("Create one photorealistic interior photograph of a single room, designed by an award-winning interior architect.");
   }
+  if (p.onlyZone) {
+    const z = p.onlyZone;
+    lines.push(`LOCAL EDIT ONLY: change exclusively the object "${z.label}" located in the region from ${Math.round(z.x)}% to ${Math.round(z.x + z.w)}% horizontally and ${Math.round(z.y)}% to ${Math.round(z.y + z.h)}% vertically. Every other pixel of the image \u2014 other furniture, rug, walls, floor, lighting, camera \u2014 must stay identical.`);
+  }
   if (p.references) lines.push(`Images ${p.mode === "transform" ? 2 : 1} to ${p.references + (p.mode === "transform" ? 1 : 0)} are references (materials, finishes or products): reproduce their colour, texture and finish faithfully, do not copy their room.`);
   if (p.materials?.length) lines.push(`Materials to use (exact finishes): ${p.materials.join("; ")}.`);
   if (p.products?.length) lines.push(`Design pieces to show, faithful to their real shape: ${p.products.join("; ")}.`);
@@ -95,7 +99,13 @@ function parseJobBody(raw) {
   if (b.mode === "transform" && !b.photo) return null;
   const refs = Array.isArray(b.references) ? b.references : [];
   if (refs.length > 6 || !refs.every(isDataUrl)) return null;
+  if (b.mask !== void 0 && !(isDataUrl(b.mask) && b.mask.startsWith("data:image/png"))) return null;
+  const z = b.onlyZone;
+  const pct = (v) => typeof v === "number" && v >= 0 && v <= 100;
+  const onlyZone = z && typeof z.label === "string" && pct(z.x) && pct(z.y) && pct(z.w) && pct(z.h) ? { label: str(z.label, 80), x: z.x, y: z.y, w: z.w, h: z.h } : void 0;
   return {
+    mask: b.mask,
+    onlyZone,
     mode: b.mode,
     brief,
     photo: b.photo,
@@ -196,6 +206,7 @@ var openai = {
       if (fidelity.input_fidelity) form.append("input_fidelity", fidelity.input_fidelity);
       const field = images.length > 1 ? "image[]" : "image";
       images.forEach((im, i) => form.append(field, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i + 1}.${im.mime.split("/")[1]}`));
+      if (req.mask) form.append("mask", new Blob([b64ToBytes(req.mask.b64)], { type: "image/png" }), "masque.png");
       r = await fetchRetry("https://api.openai.com/v1/images/edits", { method: "POST", headers: auth, body: form });
     }
     if (!r.ok) await failure(r, "OpenAI");
@@ -306,6 +317,71 @@ function chooseProvider(env, wanted) {
   return ok.find((p) => p.id === wanted) ?? ok.find((p) => p.id === env.IA_FOURNISSEUR) ?? ok[0] ?? null;
 }
 
+// workers/ia/src/analyse.ts
+var CATS = ["canape", "fauteuil", "table-basse", "lampadaire", "luminaire", "rangement", "poignee", "chaise", "table-manger", "deco", "tapis", "lit", "salle-de-bain", "robinetterie"];
+var SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["objects"],
+  properties: { objects: { type: "array", items: {
+    type: "object",
+    additionalProperties: false,
+    required: ["type", "label", "shape", "materials", "colors", "style", "width_cm", "depth_cm", "height_cm", "x", "y", "w", "h"],
+    properties: {
+      type: { type: "string", enum: CATS },
+      label: { type: "string" },
+      shape: { type: "array", items: { type: "string" } },
+      materials: { type: "array", items: { type: "string" } },
+      colors: { type: "array", items: { type: "object", additionalProperties: false, required: ["name", "hex"], properties: { name: { type: "string" }, hex: { type: "string" } } } },
+      style: { type: "array", items: { type: "string" } },
+      width_cm: { type: "number" },
+      depth_cm: { type: "number" },
+      height_cm: { type: "number" },
+      x: { type: "number" },
+      y: { type: "number" },
+      w: { type: "number" },
+      h: { type: "number" }
+    }
+  } } }
+};
+var INSTRUCTIONS = [
+  "You are an interior architect. List every clearly visible piece of furniture, lighting, rug and decor object in this interior image (max 10).",
+  "For each: type (one of the enum), a short French label (e.g. \xAB Table basse sculpturale en travertin \xBB), shape tags in French kebab-case among: organique, arrondi, ronde, ovale, carree, basse, tres-bas, massive, droit, enveloppant, pieds-fins, pieds-bois, pieds-metal, globe, tige-fine, barre, capitonne, cannele, multi-bras;",
+  "materials in French among: travertin, marbre, pierre, bois, velours, boucle, lin, laine, cuir, laiton, metal, verre, ceramique, terre-cuite, ciment;",
+  "1-2 dominant colors (French name + hex), style tags in French (contemporain, minimal, organique, classique, vintage, art-deco, scandinave, seventies, design-iconique),",
+  "estimated real dimensions in cm, and the bounding box in percent of the image (x, y = top-left corner, w, h). Never name a brand."
+].join(" ");
+async function analyse(env, image) {
+  if (!env.OPENAI_API_KEY) throw new ProviderError("L'analyse automatique n\xE9cessite la cl\xE9 OpenAI (non configur\xE9e).", false);
+  const r = await fetchRetry("https://api.openai.com/v1/responses", {
+    method: "POST",
+    headers: { authorization: `Bearer ${env.OPENAI_API_KEY}`, "content-type": "application/json" },
+    body: JSON.stringify({
+      model: env.OPENAI_RESPONSES_MODEL || "gpt-5.4-mini",
+      store: false,
+      input: [{ role: "user", content: [{ type: "input_text", text: INSTRUCTIONS }, { type: "input_image", image_url: `data:${image.mime};base64,${image.b64}`, detail: "high" }] }],
+      text: { format: { type: "json_schema", name: "meubles", schema: SCHEMA, strict: true } }
+    })
+  });
+  if (!r.ok) throw new ProviderError("L'analyse de l'image a \xE9chou\xE9.", r.status >= 500, `HTTP ${r.status}`);
+  const j = await r.json();
+  const txt = j.output?.flatMap((o) => o.type === "message" ? o.content ?? [] : []).find((c) => c.type === "output_text")?.text;
+  const parsed = txt ? JSON.parse(txt) : { objects: [] };
+  const clamp = (v) => Math.max(0, Math.min(100, Number(v) || 0));
+  return parsed.objects.map((o, i) => ({
+    id: `${String(o.type)}_${String(i + 1).padStart(3, "0")}`,
+    type: o.type,
+    label: o.label,
+    design_source: "ai_detected",
+    shape: o.shape,
+    materials: o.materials,
+    colors: o.colors.filter((c) => /^#[0-9a-f]{6}$/i.test(c.hex)),
+    style: o.style,
+    estimated_dimensions_cm: { width: o.width_cm, depth: o.depth_cm, height: o.height_cm },
+    zone: { x: clamp(o.x), y: clamp(o.y), w: clamp(o.w), h: clamp(o.h) }
+  }));
+}
+
 // workers/ia/src/jobs.ts
 var DAY = 86400;
 var today = () => (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
@@ -370,7 +446,7 @@ var toImg = (s) => {
 var pub = (j, base) => ({ ...j, ref: void 0, visitor: void 0, ipHash: void 0, error: j.error ? { message: j.error.message, retryable: j.error.retryable } : void 0, imageUrl: j.image ? `${base}/v2/images/${j.id}` : null });
 async function run(env, job, input) {
   const provider = PROVIDERS.find((p) => p.id === job.provider);
-  const req = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor };
+  const req = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, mask: input.mask, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor };
   job.attempts += 1;
   job.status = "en_cours";
   job.error = void 0;
@@ -434,9 +510,23 @@ var index_default = {
       if (refusal) return json({ erreur: refusal }, 429);
       const now = (/* @__PURE__ */ new Date()).toISOString();
       const job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
-      const input = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, materials: b.materials, products: b.products }), photo: b.photo ? toImg(b.photo) : void 0, references: b.references.map(toImg) };
+      const input = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : void 0, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : void 0 };
       await Promise.all([saveInput(env, job.id, input), reserve(env, visitor, ipHash, cost)]);
       return json(pub(await run(env, job, input), base), 201);
+    }
+    if (request.method === "POST" && path === "/v2/analyse") {
+      const b = await request.json().catch(() => null);
+      if (!b || !isDataUrl(b.image) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Image manquante." }, 400);
+      const visitor = await sha(`v|${b.visiteur}`), cost = 0.01;
+      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
+      if (refusal) return json({ erreur: refusal }, 429);
+      try {
+        const objects = await analyse(env, toImg(b.image));
+        await settle(env, visitor, ipHash, cost);
+        return json({ objects });
+      } catch (e) {
+        return json({ erreur: e instanceof ProviderError ? e.message : "Analyse impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
+      }
     }
     const m = /^\/v2\/jobs\/([0-9a-f-]{36})(\/retry)?$/.exec(path);
     if (m) {

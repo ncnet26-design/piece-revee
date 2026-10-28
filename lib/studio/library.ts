@@ -28,7 +28,7 @@ export type Furniture = z.infer<typeof FurnitureSchema> & {
 type ModelEntry = { id: string; file: string; url: string; authors: string[]; license: string; dims?: { w: number; d: number; h: number } };
 const MODELS = models as ModelEntry[];
 /** Dimensions des objets calculés (m). */
-const PROC_DIMS: Record<string, { w: number; d: number; h: number }> = { "proc:lampadaire": { w: 0.34, d: 0.34, h: 1.4 }, "proc:poignee": { w: 0.18, d: 0.035, h: 0.022 }, "proc:tapis": { w: 2.4, d: 1.7, h: 0.012 } };
+const PROC_DIMS: Record<string, { w: number; d: number; h: number }> = { "proc:table-galet": { w: 1.1, d: 0.75, h: 0.32 }, "proc:robinet": { w: 0.2, d: 0.06, h: 0.33 }, "proc:lampadaire": { w: 0.34, d: 0.34, h: 1.4 }, "proc:poignee": { w: 0.18, d: 0.035, h: 0.022 }, "proc:tapis": { w: 2.4, d: 1.7, h: 0.012 } };
 
 export const FURNITURE: Furniture[] = z.array(FurnitureSchema).parse(data).map((f) => {
   const m = MODELS.find((x) => x.id === f.model);

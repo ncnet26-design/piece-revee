@@ -1,1 +1,77 @@
-{}
+{
+  "marbre-calacatta": {
+    "assetId": "marble_01",
+    "name": "Marble 01",
+    "url": "https://polyhaven.com/a/marble_01",
+    "authors": [
+      "Rob Tuytel"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/marbre-calacatta",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "chene-naturel": {
+    "assetId": "oak_veneer_01",
+    "name": "Oak Veneer 01",
+    "url": "https://polyhaven.com/a/oak_veneer_01",
+    "authors": [
+      "Jenelle van Heerden"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/chene-naturel",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  },
+  "velours-foret": {
+    "assetId": "velour_velvet",
+    "name": "Velour Velvet",
+    "url": "https://polyhaven.com/a/velour_velvet",
+    "authors": [
+      "colormass",
+      "Rico Cilliers"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/velours-foret",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp",
+      "metallic": "metallic.webp"
+    }
+  },
+  "parquet-chevron": {
+    "assetId": "herringbone_parquet",
+    "name": "Herringbone Parquet",
+    "url": "https://polyhaven.com/a/herringbone_parquet",
+    "authors": [
+      "Jenelle van Heerden",
+      "Sergej Majboroda"
+    ],
+    "license": "CC0 1.0",
+    "resolution": 2048,
+    "dir": "/materiaux/parquet-chevron",
+    "maps": {
+      "basecolor": "basecolor.webp",
+      "normal": "normal.webp",
+      "roughness": "roughness.webp",
+      "ao": "ao.webp",
+      "displacement": "displacement.webp"
+    }
+  }
+}

@@ -5,7 +5,7 @@ const DATA_URL = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/;
 export const isDataUrl = (v: unknown): v is string => typeof v === "string" && v.length <= 9_000_000 && DATA_URL.test(v);
 const QUALITIES = ["brouillon", "standard", "premium"] as const;
 const FOURNISSEURS = ["openai", "gemini", "fal", "replicate"] as const;
-export interface JobBody { mode: "generate" | "transform"; brief: string; photo?: string; references: string[]; keep: string[]; keepFree?: string; materials: string[]; products: string[]; quality: (typeof QUALITIES)[number]; width: number; height: number; visiteur: string; fournisseur?: (typeof FOURNISSEURS)[number] }
+export interface JobBody { mask?: string; onlyZone?: { label: string; x: number; y: number; w: number; h: number }; mode: "generate" | "transform"; brief: string; photo?: string; references: string[]; keep: string[]; keepFree?: string; materials: string[]; products: string[]; quality: (typeof QUALITIES)[number]; width: number; height: number; visiteur: string; fournisseur?: (typeof FOURNISSEURS)[number] }
 /** Validation de la demande (sans dépendance, pour garder le service léger). */
 export function parseJobBody(raw: unknown): JobBody | null {
   if (!raw || typeof raw !== "object") return null;
@@ -21,7 +21,12 @@ export function parseJobBody(raw: unknown): JobBody | null {
   if (b.mode === "transform" && !b.photo) return null;
   const refs = Array.isArray(b.references) ? b.references : [];
   if (refs.length > 6 || !refs.every(isDataUrl)) return null;
+  if (b.mask !== undefined && !(isDataUrl(b.mask) && (b.mask as string).startsWith("data:image/png"))) return null;
+  const z = b.onlyZone as Record<string, unknown> | undefined;
+  const pct = (v: unknown) => typeof v === "number" && v >= 0 && v <= 100;
+  const onlyZone = z && typeof z.label === "string" && pct(z.x) && pct(z.y) && pct(z.w) && pct(z.h) ? { label: str(z.label, 80), x: z.x as number, y: z.y as number, w: z.w as number, h: z.h as number } : undefined;
   return {
+    mask: b.mask as string | undefined, onlyZone,
     mode: b.mode, brief, photo: b.photo as string | undefined, references: refs as string[],
     keep: strs(b.keep, 12, 20).filter((k) => k in KEEP), keepFree: str(b.keepFree, 300) || undefined,
     materials: strs(b.materials, 10, 160), products: strs(b.products, 6, 160),
