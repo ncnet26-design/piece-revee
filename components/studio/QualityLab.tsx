@@ -30,7 +30,10 @@ export default function QualityLab() {
     void (async () => {
       const { StudioEngine } = await import("@/lib/studio/engine");
       if (!alive) return;
-      const e = new StudioEngine(el, structuredClone(QA_SCENE), {
+      // ?sans=uid1,uid2 : retire des objets (vue de présentation sans les éléments de contrôle).
+      const sans = (q.get("sans") ?? "").split(",").filter(Boolean);
+      const scene = structuredClone(QA_SCENE); scene.objects = scene.objects.filter((o) => !sans.includes(o.uid));
+      const e = new StudioEngine(el, scene, {
         onSelect: () => {}, onChange: () => {},
         onLoading: (n) => {
           if (n > 0 || !alive) return;

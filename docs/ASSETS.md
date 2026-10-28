@@ -4,7 +4,7 @@ Généré par `node scripts/inventaire-assets.mjs` le 2026-10-28. Ne pas modifie
 
 | Groupe | Fichiers | Poids | Utilisés | Non référencés |
 |---|---:|---:|---:|---:|
-| Visuels éditoriaux | 52 | 5.1 Mo | 52 | 0 |
+| Visuels éditoriaux | 53 | 5.2 Mo | 53 | 0 |
 | Photographies d'architecture | 12 | 1.4 Mo | 12 | 0 |
 | Matières PBR 2K | 17 | 65.4 Mo | 17 | 0 |
 | Textures 1K (planche, showroom) | 41 | 22.9 Mo | 41 | 0 |
@@ -67,6 +67,7 @@ Généré par `node scripts/inventaire-assets.mjs` le 2026-10-28. Ne pas modifie
 | `/editorial/planches/scandinave-haut-de-gamme.webp` | Planche de style (banque, accueil) | 1600×1200 | 105 Ko | Composé par scripts/editorial-assets.mjs à partir des textures CC0 | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
 | `/editorial/planches/terrasse.webp` | Planche de style (banque, accueil) | 1600×1200 | 146 Ko | Composé par scripts/editorial-assets.mjs à partir des textures CC0 | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
 | `/editorial/rendus/noyer.webp` | Rendu 3D de la scène de contrôle (accueil) | 1152×648 | 99 Ko | Capture du moteur 3D Pièce Rêvée | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
+| `/editorial/rendus/salon-boucle-noyer.webp` | Rendu 3D de la scène de contrôle (accueil) | 1152×649 | 76 Ko | Capture du moteur 3D Pièce Rêvée | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
 | `/editorial/rendus/table-travertin.webp` | Rendu 3D de la scène de contrôle (accueil) | 1152×648 | 102 Ko | Capture du moteur 3D Pièce Rêvée | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
 | `/editorial/rendus/variante-a.webp` | Rendu 3D de la scène de contrôle (accueil) | 1152×648 | 75 Ko | Capture du moteur 3D Pièce Rêvée | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
 | `/editorial/rendus/variante-b.webp` | Rendu 3D de la scène de contrôle (accueil) | 1152×648 | 51 Ko | Capture du moteur 3D Pièce Rêvée | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |

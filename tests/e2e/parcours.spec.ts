@@ -253,7 +253,7 @@ test("planche 3D : ajouter, modifier, retirer, fiche matériaux et partage", asy
   await sel.getByRole("button", { name: "Galet" }).click();
   await expect(sel.getByRole("button", { name: "Galet" })).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator('section[aria-labelledby="fiche"] > ul > li')).toHaveCount(before + 1);
-  await expect(page.locator('section[aria-labelledby="fiche"] > ul').getByRole("link", { name: /IKEA/ }).first()).toHaveAttribute("href", /ikea\.com/);
+  await expect(page.locator('section[aria-labelledby="fiche"] > ul').getByRole("link", { name: /IKEA/, includeHidden: true }).first()).toHaveAttribute("href", /ikea\.com/);
   // Peinture, puis retrait.
   await page.getByRole("tab", { name: "Peintures" }).click();
   await page.getByRole("button", { name: /Sauge/ }).click();
@@ -310,8 +310,8 @@ test("transformer : photo et trois inspirations donnent planche, références et
   await expect(page.getByText("Ajoutez d'abord une photo de votre pièce.")).toBeVisible({ timeout: 20_000 });
   const img = "public/visuels/hero-3d.webp";
   await page.getByLabel("Choisir la photo de votre pièce").setInputFiles(img);
-  await page.getByLabel("Choisir l'inspiration 1").setInputFiles("public/visuels/planche-sombre.webp");
-  await page.getByLabel("Choisir l'inspiration 2").setInputFiles("public/visuels/etude.webp");
+  await page.getByLabel("Choisir l'inspiration 1").setInputFiles("public/editorial/planches/japandi.webp");
+  await page.getByLabel("Choisir l'inspiration 2").setInputFiles("public/inspirations/villas-16.webp");
   await page.getByRole("button", { name: "Créer mon projet" }).click();
   await expect(page.getByText(/Ajoutez trois inspirations/)).toBeVisible({ timeout: 20_000 });
   await page.getByLabel("Choisir l'inspiration 3").setInputFiles("public/visuels/visite-3d.webp");

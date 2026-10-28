@@ -1,0 +1,1 @@
+../.claude/skills/editorial-image-curation/SKILL.md

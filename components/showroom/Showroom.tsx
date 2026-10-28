@@ -52,9 +52,9 @@ export default function Showroom() {
   return (
     <div className="showroom">
       <header className="pb-10 pt-6 sm:pt-10">
-        <span className="eyebrow">Showroom</span>
+        <span className="eyebrow">Matières</span>
         <h1 className="mt-3 max-w-[18ch] text-[clamp(44px,6.4vw,92px)] leading-[.95]">Chaque matière, <em>dans toutes ses nuances</em></h1>
-        <p className="mt-5 max-w-[60ch] text-[17px] text-muted">{FAMILIES.length} familles et {VARIANT_COUNT.toLocaleString("fr-FR")} déclinaisons : teintes, formats, finitions et joints. Composez, comparez en 3D, ajoutez à votre planche, puis retrouvez-les chez les enseignes.</p>
+        <p className="mt-5 max-w-[60ch] text-[17px] text-muted">{FAMILIES.length} familles et {VARIANT_COUNT.toLocaleString("fr-FR")} déclinaisons : teintes, formats, finitions et joints. Composez, comparez en 3D, puis ajoutez-les à votre planche.</p>
       </header>
 
       <nav aria-label="Familles de matières" className="sticky top-[70px] z-20 -mx-4 border-y border-line bg-[var(--bg)]/92 px-4 py-3 backdrop-blur-md">

@@ -37,9 +37,9 @@ export function Camille() {
   const openGuide = () => { if (!guide) return; dismiss(guide.key); setLoaded(true); setOpen(true); setRequest({ id: Date.now(), context: { step: guide.key } }); };
   return (
     <>
-      <button type="button" className="btn btn-primary fixed z-26 hidden shadow-[0_10px_30px_rgba(20,30,80,.28)] lg:inline-flex" style={{ right: "max(20px, calc(env(safe-area-inset-right, 0px) + 20px))", bottom: "calc(24px + env(safe-area-inset-bottom, 0px))", padding: "13px 20px 13px 14px" }}
+      <button type="button" className="btn fixed z-26 hidden bg-surface/95 shadow-[0_8px_24px_-12px_rgba(27,26,23,.35)] backdrop-blur lg:inline-flex" style={{ right: "max(20px, calc(env(safe-area-inset-right, 0px) + 20px))", bottom: "calc(24px + env(safe-area-inset-bottom, 0px))", padding: "9px 16px 9px 10px" }}
         onClick={() => { setLoaded(true); setOpen(true); setRequest({ id: Date.now(), context: guide ? { step: guide.key } : {} }); if (guide) dismiss(guide.key); }} onMouseEnter={() => setLoaded(true)} onFocus={() => setLoaded(true)}>
-        <CamilleAvatar size={30} className="-my-1 ring-2 ring-white/40" /> Demander à Camille
+        <CamilleAvatar size={26} className="-my-1" /> Demander à Camille
       </button>
       {bubble && guide && bubble === guide.key && !open && (
         <section aria-label="Conseil de Camille" className="camille-bubble fixed z-26 w-[min(360px,calc(100vw-24px))] rounded-[22px] border border-line bg-surface p-4 shadow-[0_24px_60px_-20px_rgba(0,0,0,.35)]"

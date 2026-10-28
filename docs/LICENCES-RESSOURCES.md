@@ -7,7 +7,7 @@ Généré par `node scripts/inventaire-assets.mjs`. Détail fichier par fichier 
 | Licence | Fichiers |
 |---|---:|
 | CC0 1.0 | 119 |
-| Création Pièce Rêvée ; textures sources CC0 1.0 | 52 |
+| Création Pièce Rêvée ; textures sources CC0 1.0 | 53 |
 | CC BY-SA 4.0 | 10 |
 | CC BY 4.0 | 7 |
 | Création Pièce Rêvée | 4 |

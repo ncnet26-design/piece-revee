@@ -10,7 +10,7 @@ test("studio : une image importée, un meuble désigné, des alternatives réell
   await page.locator('input[type="file"]').first().setInputFiles("public/inspirations/villas-14.webp");
   await expect(page.getByRole("button", { name: "Désigner un meuble" })).toBeVisible({ timeout: 15_000 });
   await page.getByRole("button", { name: "Désigner un meuble" }).click();
-  await page.locator('img[alt="villas-14"]').click({ position: { x: 200, y: 200 } });
+  await page.locator('img[alt="villas-14"]').last().click({ position: { x: 200, y: 200 } });
   await page.getByRole("button", { name: "Table basse", exact: true }).click();
   await page.getByRole("button", { name: "travertin", exact: true }).click();
   await page.getByRole("button", { name: "Organique", exact: true }).click();
@@ -92,4 +92,18 @@ test("studio : accessibilité (axe)", async ({ page }) => {
   await page.getByRole("button", { name: "Créer", exact: true }).click();
   const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).exclude("canvas").analyze();
   expect(r.violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
+});
+
+test("studio : le salon d'exemple s'ouvre avec des meubles originaux cliquables", async ({ page }) => {
+  await page.goto("/studio/?etape=explorer");
+  await expect(page.getByText("Rendu 3D", { exact: true })).toBeVisible({ timeout: 15_000 });
+  await page.getByRole("button", { name: /Table basse galet en travertin/ }).click();
+  const panel = page.getByRole("complementary", { name: "Table basse galet en travertin" });
+  await expect(panel.getByText("Création originale · Pièce Rêvée")).toBeVisible();
+  await expect(panel.getByText(/alternatives ressemblantes/)).toBeVisible();
+  await expect(panel.getByRole("link", { name: /Voir la fiche/ }).first()).toHaveAttribute("target", "_blank");
+  // Aucun rangement vérifié : on le dit, on n'invente rien.
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: /Buffet cannelé en noyer/ }).click();
+  await expect(page.getByRole("complementary", { name: "Buffet cannelé en noyer" }).getByText(/ne contient pas encore/)).toBeVisible();
 });

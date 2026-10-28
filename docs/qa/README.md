@@ -9,6 +9,7 @@ Captures pleine page, réduites en WebP, aux trois tailles de référence :
 |---|---|
 | `avant/` | Le site avant la refonte « studio premium » (octobre 2026). |
 | `apres/` | Le site après la refonte. |
+| `comparatif/` | Avant à gauche, après à droite, même page et même taille (`node scripts/qa-comparatif.mjs`). |
 
 ## Refaire les captures
 1. `pnpm build`

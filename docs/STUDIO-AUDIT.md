@@ -132,3 +132,48 @@ Plafonds intégrés : 30 images/jour, 6 par visiteur, 15 $/mois au total et 1,50
 - Les meubles 3D sont des modèles génériques ; aucun ne correspond à un produit commercial vérifié (cas « produit exact » prévu mais vide).
 - Le rendu par lancer de rayons dépend de la carte graphique de l'utilisateur ; sur téléphone, préférer 1920 × 1080.
 - Électricité, plomberie, travaux et extérieurs : non commencés (volontairement, voir l'ordre ci-dessus).
+
+---
+
+## 8. Refonte « studio premium » : audit des modules et décisions
+
+**Constat de départ.** Les captures sont dans `docs/qa/avant/`.
+- L'accueil avait :
+  - des sections vides qui attendaient une animation ;
+  - des illustrations 3D « jeu » ;
+  - un mur de logos d'enseignes, qui donnait une impression de dropshipping.
+- La galerie mélangeait des châteaux, des maisons génériques et des cartes « Générer une photo » à moitié vides.
+- Six entrées de menu se recouvraient.
+
+| Module | Rôle constaté | Décision | Où |
+|---|---|---|---|
+| **Studio** | Créer, explorer une image, 3D, comparateur, liste | **Gardé, espace principal.** Il s'ouvre sur un salon 3D original dont les meubles sont cliquables. On peut y entrer directement par une étape (`?etape=creer`, `3d`, `liste`, `explorer`). | `/studio/` |
+| **Inspirations** (ancienne galerie) | Photos hétérogènes | **Refait** en banque structurée : 12 styles, 11 espaces et 13 matières, avec recherche, filtres, favoris et « Créer un projet avec ce style ». | `/galerie/` |
+| **Matières** (ancien Showroom) | Familles et déclinaisons de matières | **Gardé, renommé** « Matières » dans la navigation. Les liens vers les enseignes sont repliés. | `/showroom/` |
+| **Planches** | Planche 3D de matières exportable | **Gardée.** Les liens vers les enseignes sont repliés sous « Chercher chez un revendeur ». | `/planche/` |
+| **Transformer** | Photo et inspirations vers une image | **Fusionné dans le Studio** (Créer avec une photo). La page reste, avec le bandeau « Première version », et n'est plus accessible que par le pied de page. | `/transformer/` |
+| **Concept** | Texte vers une image et une fiche | **Redondant avec Studio › Créer.** Même traitement : bandeau et pied de page. | `/concept/` |
+| **Visite 3D** | Appartement procédural générique | **Pas présentée comme complète.** Renommée « Maquette d'appartement 3D », avec un bandeau honnête. Elle est retirée du menu principal. | `/visite-3d/` |
+
+**Navigation.**
+- Ordinateur : 4 entrées (Studio, Inspirations, Matières, Planches) et une action « Commencer un projet ».
+- Mobile : la barre d'onglets reprend les mêmes entrées, plus Camille.
+
+**Visuels.**
+- Retirés :
+  - les meubles « plastique » et « jeu » (Chesterfield, chaise de bureau, consoles et tables ornementées, lustre) ;
+  - 5 anciens visuels inutilisés ;
+  - 9 composants morts.
+- Ajoutés :
+  - 28 gros plans de matières et 20 planches de style, composés à partir de textures CC0 ;
+  - des photographies d'architecture créditées (Villa Tugendhat, CC BY-SA 4.0) ;
+  - des rendus 3D honnêtement légendés.
+- Inventaire : `docs/ASSETS.md` et `docs/LICENCES-RESSOURCES.md`.
+
+**Direction artistique.** Elle est décrite dans `docs/DESIGN-SYSTEM.md` et dans les compétences `premium-art-direction`, `frontend-design` et `visual-quality-assurance`.
+
+**Encore imparfait.**
+- Le rendu 3D en temps réel reste un aperçu ; le rendu final par lancer de rayons demande le GPU de l'utilisateur.
+- Aucune image éditoriale générée par IA n'a été faite : il faut l'accord du propriétaire et sa clé. Les consignes sont prêtes dans le champ `prompt` de chaque inspiration.
+- Pexels et Unsplash demandent une clé gratuite à créer. BlendKit demande un compte.
+- Marbre Calacatta : le robot a trouvé « Marble 012 » (ambientCG, CC0), mais c'est un marbre gris-bleu marbré, pas un Calacatta. Il n'est pas intégré, et un aplat sobre reste en place.

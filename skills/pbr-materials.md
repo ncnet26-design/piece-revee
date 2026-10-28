@@ -1,0 +1,1 @@
+../.claude/skills/pbr-materials/SKILL.md

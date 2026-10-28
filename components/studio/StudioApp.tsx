@@ -57,7 +57,7 @@ export default function StudioApp() {
     else {
       // Pièce témoin : on en fait une version du projet pour garder les repères ajoutés.
       const s = SHOWCASE.find((x) => x.id === image.id)!;
-      const v: Version = { id: uid(), createdAt: new Date().toISOString(), label: s.title, kind: "ia", imageUrl: s.image.src, provider: s.generator, width: s.image.width, height: s.image.height, objects };
+      const v: Version = { id: uid(), createdAt: new Date().toISOString(), label: s.title, kind: s.generator === "rendu 3D" ? "scene" : "ia", imageUrl: s.image.src, provider: s.generator, width: s.image.width, height: s.image.height, objects };
       updateProject((p) => ({ ...p, versions: [v, ...p.versions] })); setCurrent(v.id);
     }
   };

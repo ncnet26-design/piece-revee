@@ -130,7 +130,7 @@ export function Explorer({ image, intent, onObjects, onNewVersion, inList, onAdd
       {busy && <p role="status" className="studio-progress mt-2 text-[12.5px]">{busy}</p>}
       {error && <p role="alert" className="mt-2 rounded-xl bg-[#FBEDE6] px-3 py-2 text-[12.5px] text-[#8A3B17]">{error}</p>}
 
-      <Panel open={Boolean(active)} kicker={active?.design_source === "ai_generated" ? "Création originale · IA" : active?.design_source === "ai_detected" ? "Repéré par l'analyse" : "Repéré par vous"} title={active?.label ?? ""} onClose={() => setSel(null)}>
+      <Panel open={Boolean(active)} kicker={active?.design_source === "ai_generated" ? "Création originale · IA" : active?.design_source === "studio_designed" ? "Création originale · Pièce Rêvée" : active?.design_source === "ai_detected" ? "Repéré par l'analyse" : "Repéré par vous"} title={active?.label ?? ""} onClose={() => setSel(null)}>
         {active && features && (<>
           <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[13px]">
             <dt className="text-muted">Type</dt><dd>{CATEGORY_ONE[active.type]}</dd>

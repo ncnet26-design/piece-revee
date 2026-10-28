@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "salon-boucle-noyer",
+    "title": "Salon bouclé et noyer",
+    "brief": "Salon contemporain : canapé organique en bouclé crème, table basse galet en travertin, buffet cannelé en noyer, parquet en chevrons, murs à la chaux.",
+    "image": { "src": "/editorial/rendus/salon-boucle-noyer.webp", "width": 1152, "height": 649 },
+    "generator": "rendu 3D",
+    "objects": [
+      {
+        "id": "canape_001", "type": "canape", "label": "Canapé organique en bouclé", "design_source": "studio_designed",
+        "shape": ["organique", "arrondi", "bas"], "materials": ["boucle"], "colors": [{ "name": "Crème", "hex": "#EFE5D3" }],
+        "style": ["contemporain", "organique"], "estimated_dimensions_cm": { "width": 250, "depth": 110, "height": 75 },
+        "zone": { "x": 0, "y": 33, "w": 43, "h": 46 },
+        "description": "Assise courbe, dossier enveloppant, pieds fuselés noirs à embouts laiton."
+      },
+      {
+        "id": "table-basse_001", "type": "table-basse", "label": "Table basse galet en travertin", "design_source": "studio_designed",
+        "shape": ["organique", "basse", "massive"], "materials": ["travertin", "pierre"], "colors": [{ "name": "Travertin", "hex": "#E3D2B4" }],
+        "style": ["minimal", "mineral", "organique"], "estimated_dimensions_cm": { "width": 110, "depth": 75, "height": 32 },
+        "zone": { "x": 29, "y": 62, "w": 26, "h": 36 },
+        "description": "Bloc de travertin adouci, contour de galet, arêtes biseautées."
+      },
+      {
+        "id": "rangement_001", "type": "rangement", "label": "Buffet cannelé en noyer", "design_source": "studio_designed",
+        "shape": ["droit", "pieds-fins"], "materials": ["bois", "laiton"], "colors": [{ "name": "Noyer", "hex": "#8A6446" }],
+        "style": ["contemporain", "seventies"], "estimated_dimensions_cm": { "width": 200, "depth": 45, "height": 75 },
+        "zone": { "x": 51, "y": 33, "w": 45, "h": 35 },
+        "description": "Façades cannelées, poignée barre en laiton, pieds fins."
+      }
+    ]
+  }
+]

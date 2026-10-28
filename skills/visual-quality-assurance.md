@@ -1,0 +1,1 @@
+../.claude/skills/visual-quality-assurance/SKILL.md

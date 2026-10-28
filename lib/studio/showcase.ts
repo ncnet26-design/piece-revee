@@ -12,7 +12,7 @@ export const AiObjectSchema = z.object({
   id: z.string(),
   type: z.enum(Object.keys(CATEGORIES) as [Category, ...Category[]]),
   label: z.string(),
-  design_source: z.enum(["ai_generated", "user_marked", "ai_detected"]),
+  design_source: z.enum(["ai_generated", "user_marked", "ai_detected", "studio_designed"]),
   shape: z.array(z.string()),
   materials: z.array(z.string()),
   colors: z.array(z.object({ name: z.string(), hex: z.string().regex(/^#[0-9A-Fa-f]{6}$/) })),
