@@ -1,0 +1,212 @@
+[
+ {
+  "id": "chambre-perles",
+  "collection": "chambres",
+  "title": "Chambre aux moulures perlées",
+  "prompt": "Master bedroom, sculpted wall with vertical rows of bead mouldings painted dusty blue, a wavy cream bouclé headboard, a curved leopard-pattern wallpaper inlay between blue and terracotta plaster wall panels, pleated linen pendant, mushroom table lamp, striped bench with an amber glass sphere leg, cream rug with black square border, dark herringbone oak floor, soft morning sunlight with leaf shadows"
+ },
+ {
+  "id": "chambre-terracotta",
+  "collection": "chambres",
+  "title": "Chambre terre et lin",
+  "prompt": "Bedroom with curved arched niche in terracotta tadelakt plaster, low oak platform bed with stonewashed linen bedding in sand and rust tones, sculptural travertine side tables, rice paper floor lamp, wool rug with organic pattern, warm late afternoon light"
+ },
+ {
+  "id": "chambre-velours",
+  "collection": "chambres",
+  "title": "Suite velours et noyer",
+  "prompt": "Luxurious bedroom suite, full-height walnut fluted wall panels with hidden LED strips, tall channel-tufted olive green velvet headboard, brushed brass wall sconces, silk rug, oversized ceramic vase with dried branches, cinematic soft light"
+ },
+ {
+  "id": "salon-haussmann-art",
+  "collection": "haussmann",
+  "title": "Haussmannien et art contemporain",
+  "prompt": "Parisian Haussmann living room with ornate ceiling cornices and wall mouldings painted warm greige, large colourful contemporary figurative painting, two oversized metal mesh pendant lights, curved off-white bouclé sofa, marble coffee table on sphere legs, green patterned armchair, round black and white striped rug, herringbone floor, minimalist brass wall sconces"
+ },
+ {
+  "id": "salon-haussmann-vert",
+  "collection": "haussmann",
+  "title": "Salon haussmannien vert sauge",
+  "prompt": "Haussmann apartment salon, sage green walls with white plaster mouldings, marble fireplace, Point de Hongrie parquet, sculptural cream sofa, burl wood coffee table, vintage Italian floor lamp, abstract art, tall windows with sheer curtains, editorial magazine photo"
+ },
+ {
+  "id": "salle-a-manger-haussmann",
+  "collection": "haussmann",
+  "title": "Salle à manger moulurée",
+  "prompt": "Haussmann dining room with elaborate ceiling rosette and mouldings, long oval travertine dining table, curved terracotta velvet chairs, sculptural glass chandelier, large abstract canvas, herringbone floor, evening warm light"
+ },
+ {
+  "id": "salon-bulles",
+  "collection": "salons",
+  "title": "Salon olive et bulles opalines",
+  "prompt": "Living room with oak fluted wall panels and warm LED lines, curved olive green tufted sectional sofa, white bouclé swivel armchair, cluster chandelier of opal glass globes, sculptural floor lamp with pleated metal discs, glass coffee table on green ribbon base, polished steel fluted side table, abstract rug, light wood floor, gallery wall with wavy gold frame"
+ },
+ {
+  "id": "salon-travertin",
+  "collection": "salons",
+  "title": "Salon minéral travertin",
+  "prompt": "Minimalist living room, travertine fireplace wall, low modular sofa in oatmeal wool, sculptural travertine coffee table, rattan lounge chair, linen curtains, large olive tree in terracotta pot, soft diffused light, calm warm palette"
+ },
+ {
+  "id": "salon-bordeaux",
+  "collection": "salons",
+  "title": "Salon bordeaux et laiton",
+  "prompt": "Elegant living room in deep burgundy lacquered walls, cream curved sofa, brass and onyx side tables, smoked glass coffee table, mid-century lounge chair in cognac leather, globe pendant cluster, patterned wool rug, dramatic evening light"
+ },
+ {
+  "id": "salon-bleu",
+  "collection": "salons",
+  "title": "Salon bleu nuit géométrique",
+  "prompt": "Contemporary living room with navy blue velvet sofa, walnut herringbone floor, geometric black and white marble inlay, knurled brass details, caned lounge chair, blue plaster walls, sculptural white pendant, art books, editorial photo"
+ },
+ {
+  "id": "cuisine-marbre",
+  "collection": "cuisines",
+  "title": "Cuisine marbre et noyer cannelé",
+  "prompt": "Luxury kitchen with a monolithic Calacatta Viola marble island, fluted walnut cabinetry, brushed brass tap and handles, sculptural pendant lights, plaster hood, warm minimalist, natural light"
+ },
+ {
+  "id": "cuisine-verte",
+  "collection": "cuisines",
+  "title": "Cuisine zellige émeraude",
+  "prompt": "Kitchen with emerald green zellige tile backsplash, light oak cabinets with brass knobs, travertine countertops, open shelves with ceramics, rattan stools, linen roman blind, bright morning light"
+ },
+ {
+  "id": "cuisine-beton",
+  "collection": "cuisines",
+  "title": "Cuisine béton ciré et chêne fumé",
+  "prompt": "Architect kitchen in polished microcement and smoked oak, long island with integrated sink, black steel shelving, Japanese ceramic pendants, terrazzo floor, soft side light"
+ },
+ {
+  "id": "bain-travertin",
+  "collection": "bains",
+  "title": "Salle de bain travertin",
+  "prompt": "Spa-like bathroom entirely in honed travertine, sculptural freestanding stone bathtub, brushed brass taps, arched niche with candles, linen curtain, warm daylight, serene and luxurious"
+ },
+ {
+  "id": "bain-rose",
+  "collection": "bains",
+  "title": "Salle de bain rose et laiton",
+  "prompt": "Bathroom with blush pink zellige walls, Rosa Portogallo marble vanity, round mirror with brass frame, knurled brass taps, terrazzo floor, small olive tree, soft light"
+ },
+ {
+  "id": "bain-vert",
+  "collection": "bains",
+  "title": "Salle de bain marbre vert",
+  "prompt": "Elegant bathroom with Verde Alpi marble walls and floating vanity, fluted glass shower screen, brushed nickel fixtures, warm wood stool, soft indirect lighting"
+ },
+ {
+  "id": "villa-sejour",
+  "collection": "villas",
+  "title": "Séjour de villa sur la mer",
+  "prompt": "Contemporary Mediterranean villa living room, floor-to-ceiling windows framing the sea, lime-washed walls, curved built-in sofa in natural linen, raw oak beams, sculptural ceramic vases, jute rug, golden hour light, no swimming pool"
+ },
+ {
+  "id": "villa-salle-a-manger",
+  "collection": "villas",
+  "title": "Villa, salle à manger en pierre",
+  "prompt": "Architect villa dining room with stone walls, long solid oak table, woven rope chairs, oversized paper lantern pendant, view to olive trees through large glazing, warm minimal palette"
+ },
+ {
+  "id": "villa-bibliotheque",
+  "collection": "villas",
+  "title": "Villa, bibliothèque en noyer",
+  "prompt": "Modern villa library with floor-to-ceiling walnut shelving, rolling brass ladder, deep leather armchair, travertine side table, large window to garden, soft afternoon light"
+ },
+ {
+  "id": "design-loft",
+  "collection": "design",
+  "title": "Appartement de designer, béton et velours",
+  "prompt": "Designer apartment with exposed concrete ceiling, curved terracotta velvet sofa, chrome tubular chair, sculptural stone coffee table, large abstract artwork, oak floor, statement globe lamp, editorial interior photography"
+ },
+ {
+  "id": "design-entree",
+  "collection": "design",
+  "title": "Entrée sculpturale",
+  "prompt": "Entrance hall with sculpted curved plaster walls in warm white, travertine console, round mirror, sculptural vase with dried branches, terrazzo floor, dramatic soft light"
+ },
+ {
+  "id": "design-bureau",
+  "collection": "design",
+  "title": "Bureau d'architecte",
+  "prompt": "Home office of an interior architect, cherry wood desk, Bauhaus chair, pinboard with fabric samples and drawings, linen curtains, green banker lamp, built-in shelves, calm natural light"
+ },
+ {
+  "id": "hotel-bar-velours",
+  "collection": "hotels",
+  "title": "Bar d’hôtel parisien, velours et laiton",
+  "prompt": "Intimate Parisian luxury hotel bar, curved bar counter in fluted walnut with brass foot rail, deep emerald velvet banquettes, smoked mirror walls, Art Deco wall lights, marble bar top with cocktails, warm amber evening light"
+ },
+ {
+  "id": "hotel-suite-paris",
+  "collection": "hotels",
+  "title": "Suite d’hôtel rive gauche",
+  "prompt": "Boutique hotel suite in Paris Left Bank, Haussmann mouldings, sculptural four-poster bed in light oak, terracotta linen, travertine bath visible through glass partition, contemporary art, view of zinc rooftops through French windows"
+ },
+ {
+  "id": "hotel-lobby",
+  "collection": "hotels",
+  "title": "Lobby d’hôtel minéral",
+  "prompt": "Boutique hotel lobby with monumental travertine reception desk, curved plaster walls, oversized paper pendant lights, cognac leather lounge chairs, olive trees in stone planters, soft daylight, high-end design"
+ },
+ {
+  "id": "hotel-riviera",
+  "collection": "hotels",
+  "title": "Hôtel de la Riviera, salon d’été",
+  "prompt": "Riviera hotel lounge with striped awning light, rattan and cane armchairs with sky blue cushions, terrazzo floor, lime-washed arches, ceramic lamps, sea glimpse, Mediterranean summer elegance"
+ },
+ {
+  "id": "bar-cave",
+  "collection": "bars",
+  "title": "Bar à vin voûté",
+  "prompt": "Wine bar in a vaulted stone cellar, long oak counter, bottle wall in black steel, terracotta velvet stools, candle light, warm moody atmosphere, editorial photography"
+ },
+ {
+  "id": "restaurant-arches",
+  "collection": "bars",
+  "title": "Restaurant aux arches de chaux",
+  "prompt": "Mediterranean restaurant with lime-washed arches, banquettes in sand linen, round travertine tables, woven rattan pendant lights, terracotta floor tiles, olive branches, golden hour"
+ },
+ {
+  "id": "restaurant-art-deco",
+  "collection": "bars",
+  "title": "Brasserie Art déco revisitée",
+  "prompt": "Contemporary Art Deco brasserie, burgundy leather booths, geometric marble mosaic floor, brass globe pendants, mirrored walls with bevelled edges, palm plants, evening glow"
+ },
+ {
+  "id": "restaurant-japandi",
+  "collection": "bars",
+  "title": "Restaurant japandi",
+  "prompt": "Japandi restaurant interior, slatted oak ceiling, paper lanterns, low tables in dark walnut, linen curtains, stone floor, calm minimal atmosphere, soft natural light"
+ },
+ {
+  "id": "club-mediterranee",
+  "collection": "clubs",
+  "title": "Club méditerranéen à la tombée du jour",
+  "prompt": "Mediterranean cliffside beach club lounge at sunset, white sculpted plaster built-in sofas with linen cushions, woven parasols, rattan pendant lamps, sandstone terraces, candles, sea view, bohemian luxury, no swimming pool"
+ },
+ {
+  "id": "club-lounge",
+  "collection": "clubs",
+  "title": "Lounge feutré, velours et onyx",
+  "prompt": "Exclusive members club lounge, backlit onyx bar, curved rust velvet sofas, smoked oak floor, sculptural brass chandelier, dark green lacquered walls, cinematic moody lighting"
+ },
+ {
+  "id": "club-rooftop",
+  "collection": "clubs",
+  "title": "Rooftop bar sous les étoiles",
+  "prompt": "Rooftop bar on a Parisian building at dusk, rattan lounge chairs, terracotta planters with olive trees, string lights, stone bar counter, Eiffel tower silhouette in the far distance, warm glow"
+ },
+ {
+  "id": "haussmann-chambre",
+  "collection": "haussmann",
+  "title": "Chambre haussmannienne contemporaine",
+  "prompt": "Haussmann bedroom with white mouldings and marble fireplace, upholstered headboard in sage velvet, contemporary pendant, herringbone floor, linen bedding, abstract art, morning light through tall windows"
+ },
+ {
+  "id": "villa-chambre",
+  "collection": "villas",
+  "title": "Villa, chambre sur les pins",
+  "prompt": "Villa bedroom with floor-to-ceiling windows framing pine trees and sea, lime plaster walls, low oak bed, natural linen, woven pendant, travertine bench, serene golden light"
+ }
+]

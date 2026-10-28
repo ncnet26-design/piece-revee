@@ -166,7 +166,7 @@ export const TEMPLATES: Array<{ id: string; name: string; text: string; board: (
     id: "mediterranee", name: "Terre cuite et tadelakt", text: "Tomettes, enduit ocre et teck huilé.",
     board: () => ({ v: 1, title: "Terre cuite et tadelakt", bg: "#F7F6F2", items: [
       it("m-tadelakt", 0.04, -0.12, -6, 1.5), it("m-tomette", -0.26, -0.05, 9, 1.5), it("m-teck", -0.04, 0.19, 84, 1.1), it("m-lin", 0.3, 0.12, -8, 1.15),
-      it("m-terrazzo", 0.3, -0.17, 0, 1.15, "rond"), it("#C0714F", -0.44, 0.2, -10, 1.1), it("Lantern_01", 0.47, 0.0, 0, 1.2),
+      it("m-terrazzo", 0.3, -0.17, 0, 1.15, "rond"), it("#C0714F", -0.44, 0.2, -10, 1.1), it("brass_candleholders", 0.47, 0.0, 0, 1.2),
     ] }),
   },
   {

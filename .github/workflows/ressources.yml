@@ -11,6 +11,7 @@ on:
       catalogue: { description: "Inventaire illustré des textures Poly Haven (pour choisir)", type: boolean, default: false }
       choix: { description: "Télécharger les textures choisies (content/data/texture-picks.json)", type: boolean, default: false }
       inspirations: { description: "Photos d'inspiration candidates (planches-contact à trier)", type: boolean, default: false }
+      inspirations_ia: { description: "Photos d'inspiration créées par IA (gratuit via FLUX ; Gemini si le secret GEMINI_API_KEY existe)", type: boolean, default: false }
       inspirations_choix: { description: "Télécharger les photos d'inspiration choisies (content/data/inspiration-picks.json)", type: boolean, default: false }
 
 permissions:
@@ -43,6 +44,15 @@ jobs:
         run: |
           mkdir -p .robot
           node --experimental-strip-types scripts/inspirations.ts --candidats 2>&1 | tee -a .robot/inspirations.log
+      - name: Photos d'inspiration créées par IA
+        if: ${{ inputs.inspirations_ia }}
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          MAX_IMAGES: "40"
+        run: |
+          mkdir -p .robot
+          node --experimental-strip-types scripts/ai-inspirations.ts 2>&1 | tee -a .robot/inspirations-ia.log
       - name: Photos d'inspiration choisies
         if: ${{ inputs.inspirations_choix }}
         continue-on-error: true

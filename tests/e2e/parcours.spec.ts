@@ -461,12 +461,12 @@ test("inspirations : photo d'ambiance par collection, puis moodboard (service si
   const img = `data:image/webp;base64,${fs.readFileSync("public/visuels/hero-3d.webp").toString("base64")}`;
   await page.route("https://piece-revee-ia.ewanesteves26.workers.dev/concept", (route) => route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ image: img, restant: 4 }) }));
   await page.goto("/galerie/");
-  await page.getByRole("group", { name: "Collections" }).getByRole("button", { name: "Villas d'architecte" }).click();
+  await page.getByRole("group", { name: "Collections" }).getByRole("button", { name: "Villas", exact: true }).click();
   await page.getByRole("button", { name: "Générer une photo" }).click();
-  await page.getByRole("button", { name: /^Villas d'architecte :/ }).first().click();
+  await page.getByRole("button", { name: /^Villas :/ }).first().click();
   await page.getByRole("dialog").getByRole("button", { name: "Créer un moodboard" }).click();
   await expect(page).toHaveURL(/planche/, { timeout: 30_000 });
-  await expect(page.getByRole("textbox", { name: "Titre de la planche" })).toHaveValue("Villas d'architecte", { timeout: 30_000 });
+  await expect(page.getByRole("textbox", { name: "Titre de la planche" })).toHaveValue("Villas", { timeout: 30_000 });
 });
 
 test("showroom : teinte sur mesure (matières sans limite)", async ({ page }) => {

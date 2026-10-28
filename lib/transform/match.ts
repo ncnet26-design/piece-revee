@@ -108,9 +108,9 @@ export function chooseReferences(palette: string[], room: Room, style: StyleThem
     Chambre: ["Ottoman_01", "potted_plant_01", "modern_ceiling_lamp_01"],
     Cuisine: ["round_wooden_table_01", "GreenChair_01", "potted_plant_04"],
     "Salle de bain": ["ornate_mirror_01", "potted_plant_04"],
-    "Salle à manger": ["wooden_table_02", "GreenChair_01", "Chandelier_03"],
+    "Salle à manger": ["gallinera_table", "gallinera_chair", "Chandelier_02"],
     Bureau: ["modern_arm_chair_01", "book_encyclopedia_set_01", "potted_plant_04"],
-    Entrée: ["ClassicConsole_01", "ornate_mirror_01", "Lantern_01"],
+    Entrée: ["ClassicConsole_01", "ornate_mirror_01", "brass_vase_03"],
   };
   for (const id of OBJ[room]) if (libModel(id)) add(id, /lamp|chandelier|lantern/i.test(id) ? "Lumière" : /plant/i.test(id) ? "Végétal" : "Mobilier", /lamp|chandelier|lantern/i.test(id) ? "Luminaires" : /plant|book|mirror|lantern/i.test(id) ? "Décoration" : "Mobilier");
   return picks;

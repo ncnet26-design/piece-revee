@@ -48,7 +48,7 @@ export function HomeTools() {
               <Cursor className="left-[52%] top-[56%]" />
             </div>
             <div className="grid grid-cols-1 gap-1 border-l border-[#EEE] bg-[#FAFAFA] p-1.5">
-              {["Chandelier_01", "Lantern_01", "Ottoman_01", "potted_plant_04"].map((id) => <img key={id} src={`/models/thumbs/${id}.webp`} alt="" className="aspect-square w-full rounded-[6px] bg-white object-contain p-1" loading="lazy" />)}
+              {["mid_century_lounge_chair", "modern_ceiling_lamp_01", "ceramic_vase_04", "potted_plant_04"].map((id) => <img key={id} src={`/models/thumbs/${id}.webp`} alt="" className="aspect-square w-full rounded-[6px] bg-white object-contain p-1" loading="lazy" />)}
             </div>
           </div>
         </div>

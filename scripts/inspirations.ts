@@ -21,7 +21,6 @@ export const COLLECTIONS: Array<{ id: string; label: string; queries: string[] }
   { id: "cuisines", label: "Cuisines d'exception", queries: ["luxury kitchen marble", "modern kitchen island interior", "designer kitchen"] },
   { id: "bains", label: "Salles de bain", queries: ["luxury bathroom marble", "spa bathroom interior", "freestanding bathtub interior"] },
   { id: "lofts", label: "Lofts et ateliers", queries: ["loft interior design", "industrial loft living room"] },
-  { id: "chateaux", label: "Châteaux et demeures", queries: ["chateau interior salon", "french chateau grand salon"] },
   { id: "exterieurs", label: "Terrasses et jardins", queries: ["rooftop terrace design", "villa garden pool", "mediterranean garden terrace"] },
 ];
 
@@ -32,7 +31,7 @@ async function openverse(q: string, collection: string): Promise<Omit<Cand, "n">
   return j.results.filter((p) => ["cc0", "pdm", "by", "by-sa"].includes(p.license) && p.url.startsWith("https://") && (p.width ?? 0) >= 1400)
     .map((p) => ({ collection, url: p.url, thumb: p.thumbnail, width: p.width ?? 0, height: p.height ?? 0, title: p.title, author: p.creator ?? "Auteur inconnu", authorUrl: p.creator_url, source: `Openverse (${p.source})`, sourceUrl: p.foreign_landing_url, license: p.license === "pdm" ? "Domaine public" : `CC ${p.license.toUpperCase()} ${p.license_version}` }));
 }
-async function commons(q: string, collection: string): Promise<Omit<Cand, "n">[]> {
+export async function commons(q: string, collection: string): Promise<Omit<Cand, "n">[]> {
   const r = await get(`https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrnamespace=6&gsrlimit=30&gsrsearch=${encodeURIComponent(q)}&prop=imageinfo&iiprop=url|size|extmetadata&iiurlwidth=1600`);
   if (!r.ok) return [];
   const j = await r.json() as { query?: { pages: Record<string, { title: string; imageinfo?: Array<{ url: string; thumburl: string; width: number; height: number; descriptionurl: string; extmetadata: Record<string, { value: string }> }> }> } };
@@ -66,7 +65,8 @@ if (process.argv.includes("--candidats")) {
   const all: Cand[] = [];
   for (const c of COLLECTIONS) {
     for (const q of c.queries) {
-      const found = [...await pexels(q, c.id), ...await unsplash(q, c.id), ...await openverse(q, c.id), ...await commons(q, c.id)];
+      // Wikimedia Commons est écarté : ses résultats sont trop éloignés d'un site d'architecture d'intérieur.
+      const found = [...await pexels(q, c.id), ...await unsplash(q, c.id), ...await openverse(q, c.id)];
       for (const p of found) if (!all.some((x) => x.url === p.url)) all.push({ ...p, n: all.length + 1 });
       await new Promise((r) => setTimeout(r, 700));
     }

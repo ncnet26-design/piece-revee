@@ -18,7 +18,7 @@ import { VARIANT_COUNT, familyById } from "@/lib/showroom/catalog";
 const DESIGN_OBJECTS = familyById.get("objets")!.axes.reduce((n, a) => n * a.options.length, 1);
 import { LIBRARY_MODELS, frenchName } from "@/lib/home3d/library";
 
-const SHOWCASE = ["sofa_02", "ArmChair_01", "Ottoman_01", "Chandelier_01", "ClassicConsole_01", "potted_plant_04", "Lantern_01", "marble_bust_01"]
+const SHOWCASE = ["mid_century_lounge_chair", "modern_arm_chair_01", "gallinera_chair", "modern_ceiling_lamp_01", "Chandelier_01", "marble_bust_01", "ceramic_vase_04", "brass_vase_03"]
   .map((id) => LIBRARY_MODELS.find((m) => m.id === id)!).filter(Boolean);
 
 export const metadata = meta({ title: "Pièce Rêvée · Votre intérieur rêvé, réellement faisable", description: "Visitez et transformez votre logement en 3D, avec de vraies matières et de vrais meubles à acheter. Architecture d'intérieur et paysage pour tous.", path: "/" });

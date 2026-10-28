@@ -46,7 +46,7 @@ const UP_KEY = "pr_planche_photos";
 type Tab = "showroom" | "matieres" | "peintures" | "objets" | "photos";
 const FAMILIES: Array<Material["family"] | "Toutes"> = ["Toutes", "Bois", "Pierre", "Terre", "Textile", "Fibre", "Métal", "Composite", "Verre", "Extérieur"];
 const SHAPE_LABEL: Record<Shape, string> = { carre: "Carreau", rond: "Galet", lame: "Lame", drape: "Tissu", nuancier: "Nuancier", objet: "Objet", photo: "Photo", etiquette: "Étiquette", goutte: "Goutte", piece: "Échantillon", dechire: "Déchiré" };
-const MODELS = LIBRARY_MODELS.filter((m) => !/street_lamp|picnic|CoffeeCart|GothicBed/i.test(m.id));
+const MODELS = LIBRARY_MODELS;
 
 /** Recherche d'achat et rayons adaptés à un élément de la planche. */
 function shopFor(ref: string): { q: string; kinds: RetailerKind[] } {
