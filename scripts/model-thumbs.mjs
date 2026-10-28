@@ -4,7 +4,7 @@
  */
 import { readFileSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { build } from "esbuild";
-import { chromium } from "playwright";
+import { chromium } from "@playwright/test";
 
 await build({ entryPoints: ["scripts/thumbs-entry.ts"], bundle: true, format: "iife", outfile: "out/_thumbs.js", logLevel: "error" });
 const models = JSON.parse(readFileSync("content/data/models.json", "utf8")).filter((m) => !existsSync(`public/models/thumbs/${m.id}.webp`));

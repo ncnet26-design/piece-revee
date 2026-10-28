@@ -117,13 +117,15 @@ async function fetchTextures() {
 const MODEL_CATEGORIES = ["furniture", "seating", "table", "tables", "lighting", "decorative", "decor", "decorations", "plants", "shelving", "storage", "appliances", "electronics", "containers", "tableware", "kitchen", "bathroom", "office", "props"];
 /** Hors intérieur (rue, chantier, armes, véhicules, nourriture…) : écartés. */
 const MODEL_EXCLUDE = /(^|[\s_-])(street|lamp_?post|traffic|hydrant|dumpster|trash|bin|barrel|crate|pallet|industrial|military|weapon|gun|rifle|sword|car|truck|vehicle|bike|bicycle|tractor|rock|rocks|boulder|tree|stump|log|logs|food|fruit|bread|pizza|burger|meat|skull|bone|bones|tombstone|grave|fence|scaffold|construction|tool|tools|wrench|hammer|saw|drill|cone|sign|mailbox|gas|tank)(?=$|[\s_\d-])/i;
+/** Objets écartés à la relecture (hors décoration intérieure) : jamais retéléchargés. */
+const EXCLUS = new Set<string>(existsSync("content/data/models-exclus.json") ? JSON.parse((await import("node:fs")).readFileSync("content/data/models-exclus.json", "utf8")) : []);
 const MAX_MODELS = Number(process.env.MAX_MODELS ?? 320);
 const MAX_GLB = Number(process.env.MAX_GLB ?? 3_500_000);
 
 async function fetchModels() {
   const list = await json<Record<string, Asset>>(`${API}/assets?type=models`);
   const picks = Object.entries(list)
-    .filter(([id, a]) => a.categories.some((c) => MODEL_CATEGORIES.includes(c.toLowerCase())) && !MODEL_EXCLUDE.test(`${id} ${a.name} ${a.tags.join(" ")}`))
+    .filter(([id, a]) => a.categories.some((c) => MODEL_CATEGORIES.includes(c.toLowerCase())) && !MODEL_EXCLUDE.test(`${id} ${a.name} ${a.tags.join(" ")}`) && !EXCLUS.has(id) && !/fire_ext|garden_hose|telephone_wall|spacecraft/.test(id))
     .sort((p, q) => q[1].download_count - p[1].download_count)
     .slice(0, MAX_MODELS);
   type Entry = { id: string; name: string; categories: string[]; tags: string[]; file: string; url: string; authors: string[]; license: string; dims?: unknown };
