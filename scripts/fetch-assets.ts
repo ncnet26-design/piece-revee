@@ -114,13 +114,16 @@ async function fetchTextures() {
 }
 
 /* ——— 2. Modèles 3D ——— */
-const MODEL_CATEGORIES = ["furniture", "seating", "table", "tables", "lighting", "decorative", "decor", "plants", "shelving", "storage", "appliances"];
-const MAX_MODELS = Number(process.env.MAX_MODELS ?? 60);
+const MODEL_CATEGORIES = ["furniture", "seating", "table", "tables", "lighting", "decorative", "decor", "decorations", "plants", "shelving", "storage", "appliances", "electronics", "containers", "tableware", "kitchen", "bathroom", "office", "props"];
+/** Hors intérieur (rue, chantier, armes, véhicules, nourriture…) : écartés. */
+const MODEL_EXCLUDE = /(^|[\s_-])(street|lamp_?post|traffic|hydrant|dumpster|trash|bin|barrel|crate|pallet|industrial|military|weapon|gun|rifle|sword|car|truck|vehicle|bike|bicycle|tractor|rock|rocks|boulder|tree|stump|log|logs|food|fruit|bread|pizza|burger|meat|skull|bone|bones|tombstone|grave|fence|scaffold|construction|tool|tools|wrench|hammer|saw|drill|cone|sign|mailbox|gas|tank)(?=$|[\s_\d-])/i;
+const MAX_MODELS = Number(process.env.MAX_MODELS ?? 320);
+const MAX_GLB = Number(process.env.MAX_GLB ?? 3_500_000);
 
 async function fetchModels() {
   const list = await json<Record<string, Asset>>(`${API}/assets?type=models`);
   const picks = Object.entries(list)
-    .filter(([, a]) => a.categories.some((c) => MODEL_CATEGORIES.includes(c.toLowerCase())))
+    .filter(([id, a]) => a.categories.some((c) => MODEL_CATEGORIES.includes(c.toLowerCase())) && !MODEL_EXCLUDE.test(`${id} ${a.name} ${a.tags.join(" ")}`))
     .sort((p, q) => q[1].download_count - p[1].download_count)
     .slice(0, MAX_MODELS);
   const manifest: Array<{ id: string; name: string; categories: string[]; tags: string[]; file: string; url: string; authors: string[]; license: string }> = [];
@@ -141,7 +144,7 @@ async function fetchModels() {
       mkdirSync("public/models", { recursive: true });
       execFileSync("node_modules/.bin/gltf-transform", ["optimize", main, out, "--texture-compress", "webp", "--texture-size", "1024", "--compress", "false"], { stdio: "ignore", timeout: 180_000 });
       rmSync(dir, { recursive: true, force: true });
-      if (statSync(out).size > 6_000_000) { rmSync(out); console.log(`✗ ${id} : trop lourd pour le web`); continue; }
+      if (statSync(out).size > MAX_GLB) { rmSync(out); console.log(`✗ ${id} : trop lourd pour le web`); continue; }
       manifest.push({ id, name: a.name, categories: a.categories, tags: a.tags, file: `/models/${id}.glb`, url: `https://polyhaven.com/a/${id}`, authors: Object.keys(a.authors), license: "CC0 1.0" });
       writeFileSync("content/data/models.json", `${JSON.stringify(manifest, null, 2)}\n`);
       console.log(`✓ ${a.name}`);
