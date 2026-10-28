@@ -245,12 +245,12 @@ export default function Visite3D() {
       {/* Barre du haut : pièces et mode */}
       <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col gap-2 p-2.5 sm:p-3">
         <div className="pointer-events-auto flex items-center gap-2">
-          <h1 className="m-0 rounded-full bg-surface/90 px-3.5 py-1 font-display text-[19px] shadow-sm">Visite 3D</h1>
+          <h1 className="m-0 whitespace-nowrap rounded-full bg-surface/90 px-3 py-1 font-display text-[16px] shadow-sm sm:px-3.5 sm:text-[19px]">Visite 3D</h1>
           <div role="group" aria-label="Mode d'affichage" className="flex rounded-full border border-line bg-surface p-0.5 shadow-sm">
-            <button type="button" className="chip border-0" aria-pressed={mode === "visite"} onClick={() => switchMode("visite")}>Visite</button>
-            <button type="button" className="chip border-0" aria-pressed={mode === "plan"} onClick={() => switchMode("plan")}>Vue d'ensemble</button>
+            <button type="button" className="chip whitespace-nowrap border-0" aria-pressed={mode === "visite"} onClick={() => switchMode("visite")}>Visite</button>
+            <button type="button" className="chip whitespace-nowrap border-0" aria-label="Vue d'ensemble" aria-pressed={mode === "plan"} onClick={() => switchMode("plan")}><span className="sm:hidden">Ensemble</span><span className="hidden sm:inline">Vue d'ensemble</span></button>
           </div>
-          <button type="button" className="btn btn-sm btn-dark shadow-sm" onClick={() => { close(); setPlanOpen(true); }} disabled={!state}>Mon plan</button>
+          <button type="button" className="btn btn-sm btn-dark whitespace-nowrap shadow-sm" onClick={() => { close(); setPlanOpen(true); }} disabled={!state}>Mon plan</button>
         </div>
         <nav aria-label="Pièces" className="pointer-events-auto -mx-2.5 flex gap-1.5 overflow-x-auto px-2.5 pb-1 [scrollbar-width:none]">
           {(state?.layout.rooms ?? []).map((r) => <button key={r.id} type="button" className="chip flex-none shadow-sm" aria-current={room === r.id && mode === "visite" ? "page" : undefined} onClick={() => go(r.id)}>{r.name}</button>)}

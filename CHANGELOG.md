@@ -1,5 +1,12 @@
 # Journal des modifications
 
+## 0.7.0 — 28 octobre 2026
+
+- Nouveau style : fonds blancs, typographie sans empattement (Onest) en gras, grandes cartes arrondies.
+- Accueil : trois outils (Transformer une pièce, Créer une planche, Générer un concept) et des présentations de projet avec matière vedette.
+- « Générer un concept » (/concept/) : une phrase → image d'ambiance par IA → palette, style et jusqu'à 10 matières du showroom classées par rôle, fiche HD téléchargeable, ouverture dans la planche.
+- Visite 3D sur mobile : la barre du haut tient sur une ligne (les boutons ne se chevauchent plus).
+
 ## 0.6.0 — 27 octobre 2026
 
 - **Showroom** (`/showroom/`) : 12 familles et plus de 3 000 déclinaisons — zelliges (17 teintes, 7 formats, 2 émaux, 4 joints),

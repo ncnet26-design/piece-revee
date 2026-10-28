@@ -13,6 +13,7 @@ const NAV = [
   { href: "/showroom/", label: "Showroom" },
   { href: "/planche/", label: "Planche 3D" },
   { href: "/transformer/", label: "Transformer" },
+  { href: "/concept/", label: "Concept" },
   { href: "/visite-3d/", label: "Visite 3D" },
   { href: "/galerie/", label: "Inspirations" },
   { href: "/tarifs/", label: "Tarifs" },
@@ -130,7 +131,7 @@ export function CookieBanner() {
 
 export function Footer() {
   const cols = [
-    { title: "Créer", links: [["Showroom", "/showroom/"], ["Planche de matières 3D", "/planche/"], ["Transformer mon espace", "/transformer/"], ["Visite 3D", "/visite-3d/"], ["Mon projet", "/projet/"], ["Inspirations", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
+    { title: "Créer", links: [["Showroom", "/showroom/"], ["Planche de matières 3D", "/planche/"], ["Transformer mon espace", "/transformer/"], ["Générer un concept", "/concept/"], ["Visite 3D", "/visite-3d/"], ["Mon projet", "/projet/"], ["Inspirations", "/galerie/"], ["Trouver mon style", "/quiz/"], ["Ma maison", "/maison/"], ["Tarifs", "/tarifs/"]] },
     { title: "Explorer", links: [["Tout explorer", "/explorer/"], ["Matériauthèque", "/matieres/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
     { title: "Informations", links: [["Mentions légales", "/legal/mentions-legales/"], ["CGU", "/legal/cgu/"], ["CGV", "/legal/cgv/"], ["Confidentialité", "/legal/confidentialite/"], ["Cookies", "/legal/cookies/"], ["Liens affiliés", "/legal/affiliation/"]] },
   ];

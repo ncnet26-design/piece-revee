@@ -10,6 +10,8 @@ import { COLLECTIONS, bestLandscape, byCollection } from "@/lib/photos";
 import { REAL_TEXTURES } from "@/lib/textures";
 import { RETAILERS } from "@/lib/retailers";
 import { meta } from "@/lib/seo";
+import { HomeTools } from "@/components/HomeTools";
+import { Presentations } from "@/components/Presentations";
 import { LIBRARY_MODELS, frenchName } from "@/lib/home3d/library";
 
 const SHOWCASE = ["sofa_02", "ArmChair_01", "Ottoman_01", "Chandelier_01", "ClassicConsole_01", "potted_plant_04", "Lantern_01", "marble_bust_01"]
@@ -28,26 +30,16 @@ export default function Home() {
   return (
     <>
       {/* ——— Ouverture ——— */}
-      <section className="grid items-center gap-10 pt-6 sm:pt-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
-        <div>
-          <span className="eyebrow">Architecture d'intérieur et paysage pour tous</span>
-          <h1 className="mt-4 max-w-[13ch] text-[clamp(48px,7vw,104px)] leading-[.94]">Votre intérieur rêvé, <em>réellement</em> faisable.</h1>
-          <p className="mt-6 max-w-[48ch] text-[17px] text-muted sm:text-lg">Composez vos ambiances avec de vraies matières en 3D, visitez votre logement pièce par pièce, puis retrouvez chaque élément chez les enseignes que vous connaissez.</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link className="btn btn-lg btn-primary" href="/planche/">Créer ma planche</Link>
-            <Link className="btn btn-lg" href="/transformer/">Transformer mon espace</Link>
-          </div>
-          <p className="mt-6 text-[13.5px] text-muted">Gratuit, sans compte · {Object.keys(REAL_TEXTURES).length} matières photographiées · {LIBRARY_MODELS.length} objets 3D</p>
+      <section className="pb-12 pt-8 text-center sm:pt-16">
+        <h1 className="mx-auto max-w-[18ch] text-[clamp(44px,6.6vw,96px)] leading-[.98]">Votre intérieur rêvé, <em>réellement faisable.</em></h1>
+        <p className="mx-auto mt-6 max-w-[56ch] text-[17px] text-muted sm:text-[19px]">Transformez une photo de votre pièce, composez des planches de vraies matières en 3D, générez des concepts éditoriaux, puis retrouvez chaque référence chez les enseignes.</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Link className="btn btn-lg btn-primary" href="/transformer/">Transformer ma pièce</Link>
+          <Link className="btn btn-lg" href="/showroom/">Explorer le showroom</Link>
         </div>
-        <div className="relative">
-          <Link href="/planche/" className="block overflow-hidden rounded-[var(--r-l)] bg-[#F4EFE6] shadow-[var(--shadow)]" aria-label="Ouvrir la planche de matières 3D">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/visuels/planche-hero.webp" width={1600} height={1200} alt="Planche de matières en 3D : travertin, parquet en point de Hongrie, lin, jute, béton et nuanciers de peinture" className="h-auto w-full" fetchPriority="high" />
-          </Link>
-          <span aria-hidden="true" className="absolute -left-3 bottom-8 hidden rounded-full bg-[var(--surface)] px-4 py-2 text-[13px] shadow-lg sm:block"><b>Travertin</b> · texture photographiée</span>
-          <span aria-hidden="true" className="absolute -right-2 top-6 hidden rounded-full bg-[var(--accent)] px-4 py-2 text-[13px] text-[var(--bg)] shadow-lg sm:block">Où l'acheter : IKEA, Castorama…</span>
-        </div>
+        <p className="mt-5 text-[13.5px] text-muted">Gratuit, sans compte · {Object.keys(REAL_TEXTURES).length + 13} matières photographiées · {LIBRARY_MODELS.length} objets 3D · 3 000 déclinaisons</p>
       </section>
+      <HomeTools />
 
       {/* ——— Enseignes ——— */}
       <section className="mt-16 border-y border-line py-6" aria-label="Enseignes vers lesquelles mènent nos liens">
@@ -63,24 +55,10 @@ export default function Home() {
         <p className="mt-5 font-display text-[clamp(30px,4.2vw,54px)] leading-[1.12]">Du plan à la dernière poignée de porte, <em className="text-bronze">chaque choix</em> se voit avant d'être fait, et s'achète pour de vrai.</p>
       </section>
 
-      {/* ——— Trois façons ——— */}
-      <section className="section grid gap-5 md:grid-cols-3" aria-label="Ce que vous pouvez faire">
-        {[
-          { href: "/showroom/", img: "/visuels/showroom.webp", kicker: "01 · Showroom", title: "Toutes les nuances", text: "Zelliges, marbres, parquets, peintures, tissus : près de 3 000 déclinaisons à comparer en 3D." },
-          { href: "/planche/", img: "/visuels/planche-sombre.webp", kicker: "02 · Planche 3D", title: "Composez avec du vrai", text: "Vos échantillons posés en 3D, éclairés comme en atelier, superposés, annotés, exportés en HD." },
-          { href: "/transformer/", img: "/visuels/transformer.webp", kicker: "03 · Transformer", title: "Votre projet, en film", text: "Une photo, trois inspirations : planche projet HD, vidéo, références à acheter et budget par poste." },
-        ].map((f) => (
-          <Link key={f.href} href={f.href} className="group relative block overflow-hidden rounded-[var(--r-l)] bg-[#161512] text-white no-underline" style={{ aspectRatio: "4 / 5" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={f.img} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.04]" />
-            <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-            <span className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-6">
-              <span className="font-ui text-[11.5px] font-semibold uppercase tracking-[.2em] text-[#E9DCC6]">{f.kicker}</span>
-              <span className="font-display text-[32px] leading-[1.05]">{f.title}</span>
-              <span className="text-[14.5px] text-white/80">{f.text}</span>
-            </span>
-          </Link>
-        ))}
+      {/* ——— Présentations ——— */}
+      <section className="section" aria-labelledby="h-pres">
+        <div className="vhead"><div><h2 id="h-pres" className="h2">Des présentations <em>prêtes à partager.</em></h2><p>Chaque projet devient une planche éditoriale : l'image de la pièce, la matière vedette et toutes les références assorties.</p></div><Link className="btn" href="/concept/">Générer un concept</Link></div>
+        <Presentations />
       </section>
 
       {/* ——— Matières ——— */}

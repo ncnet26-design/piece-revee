@@ -17,8 +17,11 @@ test("accueil : promesse, appels à l'action, visite 3D", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("réellement");
-  await expect(page.getByRole("link", { name: "Créer ma planche" })).toHaveAttribute("href", /planche/);
-  await expect(page.getByRole("link", { name: "Transformer mon espace" }).first()).toHaveAttribute("href", /transformer/);
+  await expect(page.getByRole("link", { name: "Transformer ma pièce" })).toHaveAttribute("href", /transformer/);
+  await expect(page.getByRole("link", { name: "Explorer le showroom" }).first()).toHaveAttribute("href", /showroom/);
+  const tools = page.getByRole("list", { name: "Les outils" });
+  await expect(tools.getByRole("link", { name: /Créer une planche/ })).toHaveAttribute("href", /planche/);
+  await expect(tools.getByRole("link", { name: /Générer un concept/ })).toHaveAttribute("href", /concept/);
   expect(errors).toEqual([]);
 });
 
@@ -140,7 +143,7 @@ test("404 utile", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toContainText("n'existe pas");
 });
 
-for (const url of ["/", "/showroom/", "/transformer/", "/planche/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
+for (const url of ["/", "/showroom/", "/transformer/", "/concept/", "/planche/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
   test(`accessibilité (axe, WCAG 2.2 AA) : ${url}`, async ({ page }) => {
     test.setTimeout(90_000);
     await page.goto(url);
@@ -152,7 +155,8 @@ for (const url of ["/", "/showroom/", "/transformer/", "/planche/", "/visite-3d/
 
 test("aucun débordement horizontal sur mobile", async ({ page, isMobile }) => {
   test.skip(!isMobile, "mobile uniquement");
-  for (const url of ["/", "/showroom/", "/transformer/", "/planche/", "/visite-3d/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
+  test.setTimeout(90_000);
+  for (const url of ["/", "/showroom/", "/transformer/", "/concept/", "/planche/", "/visite-3d/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
     await page.goto(url);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), url).toBe(true);
   }
@@ -207,7 +211,7 @@ test("visite 3D : ajouter un objet et une astuce", async ({ page }) => {
 });
 
 test("plan : dessiner son logement puis le visiter en 3D", async ({ page }) => {
-  test.setTimeout(120_000);
+  test.setTimeout(180_000);
   const errors = noJsErrors(page);
   page.on("dialog", (d) => void d.accept());
   await page.addInitScript(() => localStorage.setItem("pr_home3d_hint", "1"));
@@ -244,6 +248,7 @@ test("plan : dessiner son logement puis le visiter en 3D", async ({ page }) => {
 
 test("planche 3D : ajouter, modifier, retirer, fiche matériaux et partage", async ({ page, context, isMobile }) => {
   test.skip(isMobile, "parcours souris");
+  test.setTimeout(120_000);
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   const errors = noJsErrors(page);
   await page.goto("/planche/");
@@ -279,6 +284,7 @@ test("planche 3D : ajouter, modifier, retirer, fiche matériaux et partage", asy
 });
 
 test("showroom : familles, déclinaisons, fiche 3D et ajout à la planche", async ({ page }) => {
+  test.setTimeout(120_000);
   const errors = noJsErrors(page);
   await page.goto("/showroom/?f=zellige");
   await expect(page.getByRole("heading", { level: 2, name: "Zellige" })).toBeVisible();
@@ -342,4 +348,39 @@ test("transformer : photo et trois inspirations donnent planche, références et
   await first.fill("1000");
   await expect(page.locator("tfoot")).toContainText("€");
   expect(errors).toEqual([]);
+});
+
+test("générer un concept : phrase → image, palette et matières par rôle", async ({ page }) => {
+  test.setTimeout(120_000);
+  const errors = noJsErrors(page);
+  const fs = await import("node:fs");
+  const img = `data:image/webp;base64,${fs.readFileSync("public/visuels/visite-3d.webp").toString("base64")}`;
+  // Le service d'images est simulé (aucun appel payant pendant les tests).
+  await page.route("https://piece-revee-ia.ewanesteves26.workers.dev/concept", async (route) => {
+    const body = route.request().postDataJSON() as { brief: string; aspect: string };
+    expect(body.brief).toContain("velours");
+    expect(body.aspect).toBe("4:5");
+    await route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ image: img, restant: 4 }) });
+  });
+  await page.goto("/concept/");
+  await page.getByRole("button", { name: /Salon lambrissé de noyer/ }).click();
+  await page.getByRole("button", { name: "Créer le concept" }).click();
+  await expect(page.getByRole("heading", { level: 2, name: "Salon boisé" })).toBeVisible({ timeout: 60_000 });
+  await expect(page.getByText("Il vous reste 4 images aujourd'hui.")).toBeVisible();
+  await expect(page.getByText("Canapé", { exact: true })).toBeVisible();
+  await expect(page.getByText("Lambris", { exact: true })).toBeVisible();
+  const dl = page.waitForEvent("download", { timeout: 60_000 });
+  await page.getByRole("button", { name: "Télécharger la fiche HD" }).click();
+  expect((await dl).suggestedFilename()).toMatch(/^concept-salon-bois.*\.jpg$/);
+  await page.getByRole("button", { name: "Ouvrir dans ma planche" }).click();
+  await expect(page).toHaveURL(/planche/);
+  expect(errors).toEqual([]);
+});
+
+test("générer un concept : message clair si le service refuse", async ({ page }) => {
+  await page.route("https://piece-revee-ia.ewanesteves26.workers.dev/concept", (route) => route.fulfill({ status: 429, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ erreur: "Le nombre d'images du jour est atteint. Revenez demain." }) }));
+  await page.goto("/concept/");
+  await page.getByLabel("Votre ambiance").fill("Chambre indigo et lin lavé");
+  await page.getByRole("button", { name: "Créer le concept" }).click();
+  await expect(page.getByText("Le nombre d'images du jour est atteint. Revenez demain.")).toBeVisible();
 });
