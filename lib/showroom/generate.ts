@@ -4,11 +4,11 @@
  * Chaque déclinaison donne trois cartes raccordables (couleur, relief, rugosité) et ses paramètres de rendu,
  * à partir de textures photographiées (Poly Haven, CC0) quand elles existent, sinon d'une génération procédurale.
  */
-import { parseVariant, opt, type Variant } from "./catalog";
+import { familyById, parseVariant, opt, type Opt, type Variant } from "./catalog";
 import { textureUrl } from "@/lib/textures";
 import { showroomTexture } from "./textures";
 
-export interface SurfaceParams { metalness: number; sheen: number; sheenRoughness: number; clearcoat: number; clearcoatRoughness: number; normalStrength: number; transmission?: number; anisotropy?: number }
+export interface SurfaceParams { metalness: number; sheen: number; sheenRoughness: number; clearcoat: number; clearcoatRoughness: number; normalStrength: number; transmission?: number; anisotropy?: number; /** Surface ajourée (cannage) : la couche alpha de la couleur découpe les trous. */ cutout?: boolean }
 export interface Surface {
   size: number;
   /** Côté réel (m) couvert par une répétition de la texture. */
@@ -444,6 +444,9 @@ async function genWood(v: Variant, size: number): Promise<Surface> {
   if (pose === "anglaise" || pose === "larges") {
     const pw = pose === "larges" ? 0.22 : 0.14, rows = 6; per = pw * rows;
     for (let j = 0; j < rows; j++) { let x = R() * per; const end = x + per; while (x < end - 0.05) { const l = Math.min(end - x, (pose === "larges" ? 0.9 : 0.5) + R() * (pose === "larges" ? 0.8 : 0.6)); rect(x, j * pw, l, pw, 0); x += l; } }
+  } else if (pose === "plaque") {
+    // Placage d'un seul tenant (bois cannelé) : le fil court sur toute la longueur, sans joint.
+    per = 0.6; rect(0, 0, per, per, 0);
   } else if (pose === "batons") {
     const a = 0.42, b = 0.07; per = 2 * a;
     for (const s of herringbone(a, b)) { const p0 = s.poly![0]!, p2 = s.poly![2]!; rect(p0[0], p0[1], p2[0] - p0[0], p2[1] - p0[1], s.alt ? Math.PI / 2 : 0); }
@@ -474,8 +477,9 @@ async function genWood(v: Variant, size: number): Promise<Surface> {
       cx.drawImage(gc, -offx * gs / srcM * scale - gs * scale, -offy * gs / srcM * scale - gs * scale, gs * scale * 3, gs * scale * 3);
       cx.restore();
       cx.save(); path(); cx.globalCompositeOperation = "multiply"; cx.fillStyle = css([255 * tint, 255 * tint, 255 * tint]); cx.fill(); cx.restore();
-      cx.save(); path(); cx.strokeStyle = "rgba(25,15,8,.55)"; cx.lineWidth = Math.max(1, size / 700); cx.stroke(); cx.restore();
-      mx.beginPath(); pl.pts.forEach(([a, b], i) => (i ? mx.lineTo((a + ox) * k, (b + oy) * k) : mx.moveTo((a + ox) * k, (b + oy) * k))); mx.closePath(); mx.fillStyle = "#fff"; mx.fill(); mx.strokeStyle = "#000"; mx.lineWidth = Math.max(1, size / 600); mx.stroke();
+      if (pose !== "plaque") { cx.save(); path(); cx.strokeStyle = "rgba(25,15,8,.55)"; cx.lineWidth = Math.max(1, size / 700); cx.stroke(); cx.restore(); }
+      mx.beginPath(); pl.pts.forEach(([a, b], i) => (i ? mx.lineTo((a + ox) * k, (b + oy) * k) : mx.moveTo((a + ox) * k, (b + oy) * k))); mx.closePath(); mx.fillStyle = "#fff"; mx.fill();
+      if (pose !== "plaque") { mx.strokeStyle = "#000"; mx.lineWidth = Math.max(1, size / 600); mx.stroke(); }
     }
   });
   const col = cx.getImageData(0, 0, size, size).data, mk = mx.getImageData(0, 0, size, size).data;
@@ -588,7 +592,14 @@ async function genLeather(v: Variant, size: number): Promise<Surface> {
   for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
     const i = y * size + x, u = x / size, w = y / size, cl = fbm(u, w, 4, 5, seed);
     let k = 1, h = 0.5, r = 0.5;
-    if (type === "tresse") {
+    if (type === "croco") {
+      // Écailles de crocodile : rangées de plaques bombées, irrégulières, séparées de sillons.
+      const rows = 9, ry = w * rows, row = Math.floor(ry), fy = ry - row, ncol = 4 + Math.floor(h2(row, 0, seed) * 3);
+      const rx = u * ncol + h2(row, 1, seed) * 0.8 + Math.sin(w * 18 + row) * 0.06, col = Math.floor(rx), fx = rx - col;
+      const edge = Math.min(fx, 1 - fx) * 2.4, edgeY = Math.min(fy, 1 - fy) * 1.6, d = Math.min(edge, edgeY);
+      const dome = smooth(0, 0.35, d), groove = 1 - smooth(0, 0.08, d);
+      k = 0.6 + dome * 0.5 - groove * 0.35 + (h2(col, row, seed + 5) - 0.5) * 0.12; h = dome; r = 0.28 + groove * 0.4;
+    } else if (type === "tresse") {
       const s = 10, a = u * s, b = w * s, ia = Math.floor(a), ib = Math.floor(b), over = (ia + ib) % 2 === 0;
       const t = over ? a - ia : b - ib, prof = Math.sin(Math.PI * t);
       k = 0.62 + 0.42 * prof + (over ? 0.04 : -0.04); h = prof * 0.9; r = 0.5 - prof * 0.1;
@@ -604,7 +615,305 @@ async function genLeather(v: Variant, size: number): Promise<Surface> {
     color[i * 4] = base[0] * k; color[i * 4 + 1] = base[1] * k; color[i * 4 + 2] = base[2] * k; color[i * 4 + 3] = 255;
     height[i] = h; rough[i] = clamp01(r + (cl - 0.5) * 0.1);
   }
-  return { size, period: type === "tresse" ? 0.12 : 0.3, color, height, rough, params: P({ normalStrength: type === "tresse" ? 3 : type === "nubuck" ? 0.8 : 2.8, sheen: type === "nubuck" ? 0.5 : 0, sheenRoughness: 0.5, clearcoat: type === "vieilli" ? 0.25 : 0 }) };
+  return { size, period: type === "tresse" ? 0.12 : type === "croco" ? 0.25 : 0.3, color, height, rough, params: P({ normalStrength: type === "tresse" ? 3 : type === "nubuck" ? 0.8 : type === "croco" ? 3.4 : 2.8, sheen: type === "nubuck" ? 0.5 : 0, sheenRoughness: 0.5, clearcoat: type === "vieilli" ? 0.25 : type === "croco" ? 0.7 : 0, clearcoatRoughness: 0.15 }) };
+}
+
+
+/* ——— Familles construites sur d'autres générateurs ——— */
+const fake = (fid: string, opts: Opt[]): Variant => { const family = familyById.get(fid)!; return { family, opts, ref: `sr:${fid}:${opts.map((x) => x.id).join(":")}` }; };
+/** Bois cannelé : un placage d'un seul tenant de l'essence choisie (le relief vient de la géométrie). */
+function genFluted(v: Variant, size: number) {
+  return genWood(fake("parquet", [opt(v, "essence")!, { id: "plaque", label: "" }, opt(v, "finition")!]), size);
+}
+/** Quincaillerie : le métal et sa finition (la forme vient de la géométrie). */
+function genHardware(v: Variant, size: number) {
+  return genMetal(fake("metal", [opt(v, "metal")!, opt(v, "finition")!]), size);
+}
+
+/** Objets de design : la matière choisie, empruntée aux familles du showroom (le volume vient de la géométrie). */
+const OBJECT_MATS: Record<string, string> = {
+  "ceramique-craie": "sr:peinture:blanc-craie:brillant", "ceramique-sauge": "sr:peinture:sauge:brillant", "ceramique-terracotta": "sr:peinture:terracotta:brillant", "ceramique-cobalt": "sr:peinture:cobalt:brillant",
+  "ceramique-noire": "sr:peinture:noir-vigne:brillant", "ceramique-rose": "sr:peinture:rose-the:brillant", gres: "sr:enduit:argile:sable:brosse", travertin: "sr:marbre:travertin:adouci",
+  "marbre-blanc": "sr:marbre:calacatta:poli", "marbre-vert": "sr:marbre:verde:poli", noyer: "sr:cannele:noyer:joncs:huile", chene: "sr:cannele:chene:joncs:huile",
+  laiton: "sr:metal:laiton:poli", "acier-noir": "sr:metal:acier-noir:brosse",
+};
+async function genObject(v: Variant, size: number): Promise<Surface | null> {
+  const m = opt(v, "matiere")!.id;
+  if (m === "verre-fume") {
+    const n = size * size, color = new Uint8ClampedArray(n * 4), height = new Float32Array(n), rough = new Float32Array(n).fill(0.04);
+    for (let i = 0; i < n; i++) { color[i * 4] = 74; color[i * 4 + 1] = 69; color[i * 4 + 2] = 64; color[i * 4 + 3] = 255; height[i] = 0.5; }
+    return { size, period: 1, color, height, rough, params: P({ transmission: 0.82, normalStrength: 0 }) };
+  }
+  return generateSurface(OBJECT_MATS[m] ?? "sr:peinture:blanc-craie:satin", size);
+}
+
+
+/** Finitions communes (luminaires, interrupteurs) : métaux et peintures du showroom. */
+export const FINISH_REFS: Record<string, string> = {
+  laiton: "sr:metal:laiton:brosse", noir: "sr:peinture:noir-vigne:mat", blanc: "sr:peinture:blanc-pur:mat", chrome: "sr:metal:chrome:poli",
+  bronze: "sr:metal:bronze:brosse", porcelaine: "sr:peinture:blanc-pur:brillant", inox: "sr:metal:inox:brosse",
+};
+
+/* ——— Tapis ——— */
+function genRug(v: Variant, size: number): Surface {
+  const seed = hashStr(v.ref), R = rng(seed), motif = opt(v, "motif")!.id, base = hex(opt(v, "couleur")!.hex!), n = size * size;
+  const light = (base[0] + base[1] + base[2]) / 3 > 170, ink: RGB = light ? [52, 46, 42] : mixc(base, [236, 230, 218], 0.75);
+  const cream: RGB = [236, 230, 218];
+  const blobs = Array.from({ length: 9 }, () => ({ x: 0.15 + R() * 0.7, y: 0.15 + R() * 0.7, r: 0.08 + R() * 0.12, k: R() > 0.5 ? 1.18 : 0.8 }));
+  const color = new Uint8ClampedArray(n * 4), height = new Float32Array(n), rough = new Float32Array(n).fill(0.96);
+  for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+    const i = y * size + x, u = x / size, w = y / size;
+    const tuft = h2(x, y, seed) * 0.5 + vnoise(u * 260, w * 260, 260, seed + 1) * 0.5, heather = fbm(u, w, 8, 4, seed + 2);
+    let c: RGB = base, carve = 0;
+    if (motif === "raye") { const band = Math.floor(w * 18) % 4; c = band === 0 ? ink : band === 2 ? mixc(base, ink, 0.25) : base; }
+    else if (motif === "berbere") {
+      c = light ? cream : base;
+      const du = Math.abs(((u * 4 + w * 6) % 2) - 1), dv = Math.abs(((u * 4 - w * 6 + 10) % 2) - 1);
+      const line = Math.min(Math.abs(du - 0.5), Math.abs(dv - 0.5));
+      if (line < 0.045 && u > 0.08 && u < 0.92 && w > 0.06 && w < 0.94) { c = light ? ink : cream; carve = 0.3; }
+    } else if (motif === "borde") {
+      const d = Math.min(u, 1 - u, w, 1 - w);
+      if (d < 0.06) c = mixc(base, ink, 0.55); else if (d > 0.085 && d < 0.095) { c = mixc(base, ink, 0.45); carve = 0.4; }
+    } else if (motif === "tufte") {
+      for (const b of blobs) { const d = Math.hypot(u - b.x, (w - b.y) * 0.8) - b.r; if (d < 0) { c = mul(base, b.k); } if (Math.abs(d) < 0.006) carve = 0.6; }
+    }
+    const k = 0.84 + tuft * 0.24 + (heather - 0.5) * 0.1 - carve * 0.25;
+    color[i * 4] = c[0] * k; color[i * 4 + 1] = c[1] * k; color[i * 4 + 2] = c[2] * k; color[i * 4 + 3] = 255;
+    height[i] = clamp01(tuft * 0.8 + 0.2 - carve);
+  }
+  return { size, period: 1, color, height, rough, params: P({ normalStrength: 1.4, sheen: 0.7, sheenRoughness: 0.55 }) };
+}
+
+/* ——— Tableaux ——— */
+function genArt(v: Variant, size: number): Surface {
+  const seed = hashStr(v.ref), R = rng(seed), comp = opt(v, "composition")!.id, [bg, c1, c2, c3] = opt(v, "palette")!.colors! as [string, string, string, string], n = size * size;
+  const [, x] = canvas(size);
+  // Repère de l'œuvre : 1 de large, 1,4 de haut (format 50 × 70 cm).
+  x.save(); x.scale(size, size / 1.4); x.fillStyle = bg; x.fillRect(0, 0, 1, 1.4);
+  if (comp === "champs") {
+    x.filter = `blur(${Math.max(1, size / 260)}px)`;
+    x.fillStyle = c1; x.fillRect(0.1, 0.1, 0.8, 0.62); x.fillStyle = c3; x.fillRect(0.1, 0.78, 0.8, 0.22); x.fillStyle = c2; x.fillRect(0.1, 1.06, 0.8, 0.24);
+    x.filter = "none";
+  } else if (comp === "arches") {
+    const arch = (cx: number, by: number, w: number, h: number, col: string) => { x.fillStyle = col; x.beginPath(); x.moveTo(cx - w / 2, by); x.lineTo(cx - w / 2, by - h + w / 2); x.arc(cx, by - h + w / 2, w / 2, Math.PI, 0); x.lineTo(cx + w / 2, by); x.closePath(); x.fill(); };
+    arch(0.5, 1.22, 0.62, 0.95, c1); arch(0.5, 1.22, 0.42, 0.72, c3); arch(0.5, 1.22, 0.22, 0.45, c2);
+    x.fillStyle = c2; x.beginPath(); x.arc(0.72, 0.22, 0.07, 0, Math.PI * 2); x.fill();
+  } else if (comp === "ligne") {
+    x.strokeStyle = c2 === bg ? c1 : c1; x.lineWidth = 0.008; x.lineCap = "round"; x.lineJoin = "round";
+    x.beginPath(); let px = 0.2, py = 0.3; x.moveTo(px, py);
+    for (let i = 0; i < 9; i++) { const nx = 0.15 + R() * 0.7, ny = 0.2 + R() * 1.0; x.bezierCurveTo(px + (R() - 0.5) * 0.6, py + (R() - 0.5) * 0.5, nx + (R() - 0.5) * 0.6, ny + (R() - 0.5) * 0.5, nx, ny); px = nx; py = ny; }
+    x.stroke(); x.fillStyle = c3; x.globalAlpha = 0.85; x.beginPath(); x.arc(0.62, 0.55, 0.12, 0, Math.PI * 2); x.fill(); x.globalAlpha = 1;
+  } else if (comp === "organique") {
+    for (const [col, cx, cy, r] of [[c1, 0.38, 0.5, 0.26], [c3, 0.66, 0.9, 0.22], [c2, 0.42, 1.08, 0.12]] as Array<[string, number, number, number]>) {
+      x.fillStyle = col; x.beginPath();
+      for (let a = 0; a <= 24; a++) { const t = (a / 24) * Math.PI * 2, rr = r * (1 + 0.18 * Math.sin(3 * t + R() * 0.4) + 0.08 * Math.cos(5 * t)); const X = cx + Math.cos(t) * rr, Y = cy + Math.sin(t) * rr * 1.1; if (a) x.lineTo(X, Y); else x.moveTo(X, Y); }
+      x.closePath(); x.fill();
+    }
+  } else if (comp === "soleil") {
+    x.fillStyle = c3; x.fillRect(0, 0.86, 1, 0.54); x.fillStyle = c2; x.fillRect(0, 1.08, 1, 0.32);
+    x.fillStyle = c1; x.beginPath(); x.arc(0.5, 0.86, 0.26, Math.PI, 0); x.closePath(); x.fill();
+  } else {
+    x.fillStyle = c1; x.fillRect(0.08, 0.08, 0.84, 1.24);
+  }
+  x.restore();
+  const col = x.getImageData(0, 0, size, size).data;
+  const color = new Uint8ClampedArray(n * 4), height = new Float32Array(n), rough = new Float32Array(n);
+  const impasto = comp === "texture" ? 1 : 0.35;
+  for (let y = 0; y < size; y++) for (let xx = 0; xx < size; xx++) {
+    const i = y * size + xx, u = xx / size, w = y / size;
+    // Toile de lin et touches de pinceau.
+    const weave = (Math.abs(Math.sin(Math.PI * u * 220)) + Math.abs(Math.sin(Math.PI * w * 220 / 1.4))) * 0.5;
+    const brush = vnoise(u * 18, w * 90, 18, seed + 3) * 0.6 + vnoise(u * 60, w * 12, 60, seed + 4) * 0.4;
+    const k = 0.97 + (brush - 0.5) * 0.06 * (1 + impasto);
+    color[i * 4] = col[i * 4]! * k; color[i * 4 + 1] = col[i * 4 + 1]! * k; color[i * 4 + 2] = col[i * 4 + 2]! * k; color[i * 4 + 3] = 255;
+    height[i] = weave * 0.06 + brush * impasto * 0.6; rough[i] = 0.82 - brush * 0.12;
+  }
+  return { size, period: 1, color, height, rough, params: P({ normalStrength: comp === "texture" ? 2.6 : 1.1 }) };
+}
+
+
+/* ——— Mosaïques de marbre ——— */
+function genMosaic(v: Variant, size: number): Surface {
+  const seed = hashStr(v.ref), motif = opt(v, "motif")!.id, cols = opt(v, "palette")!.colors!.map(hex) as [RGB, RGB, RGB], brass = opt(v, "palette")!.id === "laiton", n = size * size;
+  const [, x] = canvas(size); x.fillStyle = "rgb(255,0,0)"; x.fillRect(0, 0, size, size);
+  // Carte d'identifiants : rouge = pièce (0, 1, 2), 255 = joint ; vert = numéro de pièce (variation de veinage).
+  let piece = 0;
+  const fill = (pts: Array<[number, number]>, idx: number) => { piece = (piece + 37) % 250; x.fillStyle = `rgb(${idx},${piece},0)`; x.beginPath(); pts.forEach(([a, b], i) => (i ? x.lineTo(a * size, b * size) : x.moveTo(a * size, b * size))); x.closePath(); x.fill(); x.strokeStyle = "rgb(255,0,0)"; x.lineWidth = Math.max(1.5, size / 380); x.stroke(); };
+  const wrap = (fn: (ox: number, oy: number) => void) => { for (const ox of [-1, 0, 1]) for (const oy of [-1, 0, 1]) fn(ox, oy); };
+  if (motif === "triangles") {
+    const c = 1 / 3, b = c * 0.13;
+    for (let j = 0; j < 3; j++) for (let i = 0; i < 3; i++) {
+      const x0 = i * c, y0 = j * c, x1 = x0 + c, y1 = y0 + c, ix0 = x0 + b, iy0 = y0 + b, ix1 = x1 - b, iy1 = y1 - b;
+      fill([[x0, y0], [x1, y0], [ix1, iy0], [ix0, iy0]], 2); fill([[x1, y0], [x1, y1], [ix1, iy1], [ix1, iy0]], 2);
+      fill([[x1, y1], [x0, y1], [ix0, iy1], [ix1, iy1]], 2); fill([[x0, y1], [x0, y0], [ix0, iy0], [ix0, iy1]], 2);
+      fill([[ix0, iy0], [ix1, iy0], [ix1, iy1]], 0); fill([[ix0, iy0], [ix1, iy1], [ix0, iy1]], 1);
+    }
+  } else if (motif === "hexagones") {
+    const r = 1 / 12, w = Math.sqrt(3) * r;
+    wrap((ox, oy) => { for (let j = -1; j < 9; j++) for (let i = -1; i < 8; i++) {
+      const cx = (i + (j % 2 ? 0.5 : 0)) * (1 / 7) + ox, cy = j * 1.5 * r * (8 / 8) + oy, k = (1 / 7) / w;
+      const hx = (rr: number) => Array.from({ length: 6 }, (_, a) => [cx + Math.cos(Math.PI / 6 + (a * Math.PI) / 3) * rr * k, cy + Math.sin(Math.PI / 6 + (a * Math.PI) / 3) * rr] as [number, number]);
+      fill(hx(r), 0);
+      if ((i + j * 2) % 3 === 0) { fill(hx(r * 0.62), 2); fill(hx(r * 0.42), 0); }
+    } });
+  } else if (motif === "chevrons") {
+    const a = 0.25, bb = a / 3;
+    for (let j = -2; j < 10; j++) for (let i = -1; i < 6; i++) {
+      const x0 = i * 2 * bb, y0 = j * bb * 2 + i * 0;
+      fill([[x0, y0], [x0 + bb, y0 + bb], [x0 + bb, y0 + bb + a * 0.6], [x0, y0 + a * 0.6]], (i + j) % 3 === 0 ? 1 : 0);
+      fill([[x0 + bb, y0 + bb], [x0 + 2 * bb, y0], [x0 + 2 * bb, y0 + a * 0.6], [x0 + bb, y0 + bb + a * 0.6]], (i + j) % 3 === 1 ? 2 : 0);
+    }
+  } else if (motif === "ecailles") {
+    const r = 1 / 8;
+    wrap((ox, oy) => { for (let j = 0; j < 9; j++) for (let i = -1; i < 9; i++) {
+      const cx = (i + (j % 2 ? 0.5 : 0)) * (2 * r) / 2 * 2 / 2 + ox, cy = j * r * 0.92 + oy;
+      piece = (piece + 37) % 250; x.fillStyle = `rgb(${(i + j) % 4 === 0 ? 1 : (i * 3 + j) % 5 === 0 ? 2 : 0},${piece},0)`;
+      x.beginPath(); x.arc(cx * size, cy * size, r * size, 0, Math.PI); x.closePath(); x.fill(); x.strokeStyle = "rgb(255,0,0)"; x.lineWidth = Math.max(1.5, size / 380); x.stroke();
+    } });
+  } else {
+    const c = 1 / 6;
+    wrap((ox, oy) => { for (let j = -1; j < 8; j++) for (let i = -1; i < 8; i++) { const cx = i * c + (j % 2 ? c / 2 : 0) + ox, cy = j * c / 2 + oy; fill([[cx, cy - c / 2], [cx + c / 2, cy], [cx, cy + c / 2], [cx - c / 2, cy]], (i + j) % 2 ? 1 : 0); } });
+  }
+  const id = x.getImageData(0, 0, size, size).data, grout: RGB = [222, 218, 210];
+  const color = new Uint8ClampedArray(n * 4), height = new Float32Array(n), rough = new Float32Array(n);
+  for (let y = 0; y < size; y++) for (let xx = 0; xx < size; xx++) {
+    const i = y * size + xx, u = xx / size, w = y / size, idx = id[i * 4]!, pc = id[i * 4 + 1]!;
+    if (idx > 2) { color[i * 4] = grout[0]; color[i * 4 + 1] = grout[1]; color[i * 4 + 2] = grout[2]; color[i * 4 + 3] = 255; height[i] = 0.1; rough[i] = 0.9; continue; }
+    const base = cols[idx]!, metal = brass && idx === 2;
+    // Veinage du marbre : chaque pièce a son propre fil (décalé selon son numéro).
+    const t = fbm(u * 1.3 + pc * 0.013, w * 1.3, 4, 5, seed + pc), vein = Math.pow(1 - Math.abs(Math.sin((u * 2.2 + w * 1.1 + t * 3.2 + pc * 0.07) * Math.PI)), 26);
+    const lightBase = (base[0] + base[1] + base[2]) / 3 > 140;
+    let c: RGB = metal ? mul(base, 0.9 + (vnoise(u * 4, w * 300, 4, seed) - 0.5) * 0.08) : mixc(base, lightBase ? [150, 150, 148] : [236, 234, 228], vein * (lightBase ? 0.55 : 0.7));
+    c = mul(c, 0.97 + (t - 0.5) * 0.08);
+    color[i * 4] = c[0]; color[i * 4 + 1] = c[1]; color[i * 4 + 2] = c[2]; color[i * 4 + 3] = 255;
+    height[i] = 0.55 + t * 0.04; rough[i] = metal ? 0.3 : 0.14 + vein * 0.1;
+  }
+  return { size, period: 0.3, color, height, rough, params: P({ normalStrength: 1.6, clearcoat: 0.5, clearcoatRoughness: 0.08 }) };
+}
+
+/* ——— Papiers peints ——— */
+function genWallpaper(v: Variant, size: number): Surface {
+  const seed = hashStr(v.ref), R = rng(seed), motif = opt(v, "motif")!.id, [bgHex, inkHex] = opt(v, "coloris")!.colors! as [string, string], n = size * size;
+  const per = motif === "feuillage" ? 0.64 : motif === "rayures" ? 0.16 : motif === "arches" || motif === "eventails" ? 0.24 : 0.2;
+  const [, x] = canvas(size), [, m] = canvas(size), k = size / per;
+  x.fillStyle = bgHex; x.fillRect(0, 0, size, size); m.fillStyle = "#000"; m.fillRect(0, 0, size, size);
+  const ink = hex(inkHex), bg = hex(bgHex);
+  const both = (draw: (c: CanvasRenderingContext2D, fill: string) => void) => { draw(x, inkHex); draw(m, "#fff"); };
+  // Chaque motif est dessiné 9 fois décalé d'une période : il se raccorde sans couture.
+  const wrap = (fn: (c: CanvasRenderingContext2D, fill: string, ox: number, oy: number) => void) => both((c, f) => { for (const ox of [-size, 0, size]) for (const oy of [-size, 0, size]) fn(c, f, ox, oy); });
+  if (motif === "feuillage") {
+    const leaves = Array.from({ length: 16 }, () => ({ x: R() * size, y: R() * size, a: R() * Math.PI * 2, l: (0.16 + R() * 0.12) * k, w: 0.28 + R() * 0.14, t: 0.75 + R() * 0.25 }));
+    wrap((c, f, ox, oy) => {
+      for (const L of leaves) {
+        c.save(); c.translate(L.x + ox, L.y + oy); c.rotate(L.a);
+        const l = L.l, w = l * L.w;
+        c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(l * 0.25, -w, l * 0.7, -w * 0.9, l, 0); c.bezierCurveTo(l * 0.7, w * 0.9, l * 0.25, w, 0, 0); c.closePath();
+        c.globalAlpha = f === "#fff" ? 1 : L.t; c.fillStyle = f; c.fill();
+        // Nervures en réserve : la couleur du fond transparaît.
+        c.globalAlpha = 1; c.strokeStyle = f === "#fff" ? "#000" : bgHex; c.lineWidth = Math.max(1, l * 0.018);
+        c.beginPath(); c.moveTo(l * 0.04, 0); c.lineTo(l * 0.96, 0); c.stroke();
+        for (let i = 1; i < 7; i++) { const t = i / 7; c.beginPath(); c.moveTo(l * t, 0); c.quadraticCurveTo(l * (t + 0.06), -w * 0.4, l * (t + 0.12), -w * 0.62 * Math.sin(Math.PI * Math.min(1, t + 0.1))); c.moveTo(l * t, 0); c.quadraticCurveTo(l * (t + 0.06), w * 0.4, l * (t + 0.12), w * 0.62 * Math.sin(Math.PI * Math.min(1, t + 0.1))); c.stroke(); }
+        c.restore();
+      }
+    });
+  } else if (motif === "rayures") {
+    both((c, f) => { c.fillStyle = f; c.fillRect(0, 0, size * 0.32, size); c.fillRect(size * 0.44, 0, size * 0.04, size); c.fillRect(size * 0.6, 0, size * 0.04, size); });
+  } else if (motif === "chevrons") {
+    both((c, f) => { c.strokeStyle = f; c.lineWidth = size * 0.07; c.lineJoin = "miter"; for (let j = -1; j < 5; j++) { const y = j * size / 4; c.beginPath(); for (let i = 0; i <= 4; i++) c.lineTo(i * size / 4, y + (i % 2 ? size / 8 : 0)); c.stroke(); } });
+  } else if (motif === "pois") {
+    wrap((c, f, ox, oy) => { c.fillStyle = f; for (let j = 0; j < 4; j++) for (let i = 0; i < 4; i++) { c.beginPath(); c.arc(ox + (i + (j % 2) * 0.5) * size / 4, oy + (j + 0.5) * size / 4, size * 0.028, 0, Math.PI * 2); c.fill(); } });
+  } else if (motif === "arches") {
+    wrap((c, f, ox, oy) => { c.strokeStyle = f; c.lineWidth = size * 0.022; for (let j = 0; j < 2; j++) for (let i = 0; i < 2; i++) { const cx = ox + (i + (j % 2) * 0.5 + 0.25) * size / 2, by = oy + (j + 0.85) * size / 2, w = size * 0.17, h = size * 0.34; for (const s of [1, 0.66]) { c.beginPath(); c.moveTo(cx - w * s, by); c.lineTo(cx - w * s, by - h * s + w * s); c.arc(cx, by - h * s + w * s, w * s, Math.PI, 0); c.lineTo(cx + w * s, by); c.stroke(); } } });
+  } else if (motif === "eventails") {
+    wrap((c, f, ox, oy) => { for (let j = 0; j < 3; j++) for (let i = -1; i < 3; i++) { const cx = ox + (i + (j % 2) * 0.5 + 0.5) * size / 2, cy = oy + (j + 1) * size / 3, r = size / 4; c.fillStyle = f; c.beginPath(); c.moveTo(cx, cy); c.arc(cx, cy, r, Math.PI, 0); c.closePath(); c.fill(); c.strokeStyle = f === "#fff" ? "#000" : bgHex; c.lineWidth = Math.max(1, size * 0.008); for (let a = 1; a < 9; a++) { const t = Math.PI + (a / 9) * Math.PI; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx + Math.cos(t) * r, cy + Math.sin(t) * r); c.stroke(); } c.beginPath(); c.arc(cx, cy, r * 0.82, Math.PI, 0); c.stroke(); } });
+  } else if (motif === "treillage") {
+    both((c, f) => { c.strokeStyle = f; c.lineWidth = size * 0.018; for (let i = -4; i <= 4; i++) { c.beginPath(); c.moveTo(i * size / 4, 0); c.lineTo(i * size / 4 + size, size); c.stroke(); c.beginPath(); c.moveTo(i * size / 4 + size, 0); c.lineTo(i * size / 4, size); c.stroke(); } });
+  }
+  const col = x.getImageData(0, 0, size, size).data, mk = m.getImageData(0, 0, size, size).data;
+  const color = new Uint8ClampedArray(n * 4), height = new Float32Array(n), rough = new Float32Array(n);
+  const gold = inkHex === "#C49A52" || inkHex === "#C9B07E";
+  for (let y = 0; y < size; y++) for (let xx = 0; xx < size; xx++) {
+    const i = y * size + xx, u = xx / size, w = y / size;
+    // Papier intissé : fibres fines et léger grain d'impression.
+    const fiber = vnoise(u * 220, w * 220, 220, seed) * 0.6 + h2(xx, y, seed) * 0.4, inked = mk[i * 4]! / 255;
+    let c: RGB = [col[i * 4]!, col[i * 4 + 1]!, col[i * 4 + 2]!];
+    if (motif === "uni") { const weave = Math.abs(Math.sin(Math.PI * u * 140)) * 0.5 + Math.abs(Math.sin(Math.PI * w * 140)) * 0.5; c = mixc(bg, ink, 0.12 + weave * 0.1); }
+    const kk = 0.96 + fiber * 0.07;
+    color[i * 4] = c[0] * kk; color[i * 4 + 1] = c[1] * kk; color[i * 4 + 2] = c[2] * kk; color[i * 4 + 3] = 255;
+    height[i] = fiber * 0.35 + inked * 0.25;
+    rough[i] = clamp01(0.86 - inked * (gold ? 0.5 : 0.12));
+  }
+  return { size, period: per, color, height, rough, params: P({ normalStrength: 0.7, clearcoat: gold ? 0.35 : 0, clearcoatRoughness: 0.35 }) };
+}
+
+/* ——— Moquettes ——— */
+async function genCarpet(v: Variant, size: number): Promise<Surface> {
+  const seed = hashStr(v.ref), type = opt(v, "type")!.id, base = hex(opt(v, "couleur")!.hex!), n = size * size;
+  const color = new Uint8ClampedArray(n * 4), height = new Float32Array(n), rough = new Float32Array(n);
+  const per = type === "velours" ? 0.06 : type === "sisal" ? 0.12 : 0.1;
+  const sisalBase: RGB = [199, 172, 128];
+  for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+    const i = y * size + x, u = x / size, w = y / size;
+    let h = 0.5, k = 1, c = base;
+    if (type === "bouclee" || type === "berbere") {
+      // Rangs de boucles décalés : chaque boucle est un petit arceau de fil.
+      const rows = type === "berbere" ? 18 : 24, cols = rows, ry = w * rows, row = Math.floor(ry), rx = u * cols + (row % 2) * 0.5, col = Math.floor(rx);
+      const fx = rx - col - 0.5, fy = ry - row - 0.5, d = Math.hypot(fx * 1.25, fy * 0.95);
+      const loop = Math.max(0, 1 - d * 2.1), ring = Math.exp(-(((d - 0.28) / 0.12) ** 2));
+      h = loop * 0.55 + ring * 0.45; k = 0.55 + h * 0.6;
+      const yarn = h2(col % cols, row % rows, seed);
+      if (type === "berbere") { const fleck = yarn > 0.82 ? 0.55 : yarn < 0.14 ? 1.35 : 1; c = mul(base, fleck); }
+      k *= 0.94 + yarn * 0.12;
+      k *= 0.92 + vnoise(u * 300, w * 300, 300, seed + 1) * 0.16;
+    } else if (type === "velours") {
+      // Velours ras : des millions de brins coupés, plus une ombre douce d'écrasement.
+      const tuft = h2(x, y, seed) * 0.55 + vnoise(u * 200, w * 200, 200, seed + 2) * 0.45, crush = fbm(u, w, 3, 4, seed + 3);
+      h = tuft * 0.7 + crush * 0.3; k = 0.8 + tuft * 0.32 + (crush - 0.5) * 0.18;
+    } else {
+      // Sisal tissé en panier : bandes de fils alternées.
+      const s = 12, a = u * s, b = w * s, ia = Math.floor(a), ib = Math.floor(b), over = (ia + ib) % 2 === 0;
+      const t = over ? (b * 4) % 1 : (a * 4) % 1, prof = Math.sin(Math.PI * t);
+      h = prof * 0.8 + (over ? 0.1 : 0); k = 0.62 + prof * 0.45;
+      const fib = vnoise(over ? a * 2 : a * 40, over ? b * 40 : b * 2, 40 * s, seed) ;
+      k *= 0.85 + fib * 0.3;
+      c = mixc(sisalBase, base, 0.45);
+    }
+    color[i * 4] = c[0] * k; color[i * 4 + 1] = c[1] * k; color[i * 4 + 2] = c[2] * k; color[i * 4 + 3] = 255;
+    height[i] = clamp01(h); rough[i] = 0.95;
+  }
+  return { size, period: per, color, height, rough, params: P({ normalStrength: type === "velours" ? 1.2 : 3.2, sheen: type === "velours" ? 0.9 : 0.4, sheenRoughness: 0.5 }) };
+}
+
+/* ——— Cannage et rotin ——— */
+function genCane(v: Variant, size: number): Surface {
+  const seed = hashStr(v.ref), type = opt(v, "tressage")!.id, base = hex(opt(v, "teinte")!.hex!), n = size * size;
+  const color = new Uint8ClampedArray(n * 4), height = new Float32Array(n), rough = new Float32Array(n);
+  const cells = type === "tresse" ? 8 : 4, per = type === "tresse" ? 0.12 : 0.056;
+  // Brin : profil arrondi (1 au centre, 0 au bord) d'une bande de demi-largeur hw autour d'une droite.
+  const band = (d: number, hw: number) => (Math.abs(d) < hw ? Math.sqrt(1 - (d / hw) ** 2) : 0);
+  const fr = (t: number) => t - Math.floor(t);
+  for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+    const i = y * size + x, u = (x / size) * cells, w = (y / size) * cells;
+    let h = 0, along = 0, under = 0;
+    if (type === "tresse") {
+      // Rotin plein : nattes larges qui passent dessus/dessous.
+      const ia = Math.floor(u), ib = Math.floor(w), over = (ia + ib) % 2 === 0, t = over ? fr(w * 3) : fr(u * 3);
+      h = 0.25 + 0.75 * Math.sin(Math.PI * t); along = over ? u : w; under = over ? 0 : 0.12;
+    } else {
+      // Cannage : brins doublés horizontaux et verticaux, puis diagonales qui passent dans les nœuds.
+      const fu = fr(u) - 0.5, fw = fr(w) - 0.5, hw = 0.075, gap = 0.085;
+      const vert = Math.max(band(fu - gap, hw), band(fu + gap, hw)), hori = Math.max(band(fw - gap, hw), band(fw + gap, hw));
+      let diag = 0;
+      if (type === "octogonal") { const d1 = fr(u - w + 0.5) - 0.5, d2 = fr(u + w + 0.5) - 0.5; diag = Math.max(band(d1 * Math.SQRT1_2, 0.07), band(d2 * Math.SQRT1_2, 0.07)); }
+      h = Math.max(vert * 0.9, hori * 0.8, diag); along = diag >= Math.max(vert, hori) ? u + w : vert > hori ? w : u;
+      under = diag > 0 && diag >= Math.max(vert, hori) ? 0 : vert > hori ? 0.05 : 0.1;
+    }
+    const fib = vnoise(along * 30, (u - w) * 2, 30 * cells, seed) * 0.5 + h2(x, y, seed) * 0.1;
+    const k = (0.72 + h * 0.35 + (fib - 0.3) * 0.25) * (1 - under);
+    color[i * 4] = base[0] * k; color[i * 4 + 1] = base[1] * k; color[i * 4 + 2] = base[2] * k; color[i * 4 + 3] = h > 0.04 ? 255 : 0;
+    height[i] = h; rough[i] = clamp01(0.42 - h * 0.12 + fib * 0.1);
+  }
+  return { size, period: per, color, height, rough, params: P({ normalStrength: 2.2, clearcoat: 0.25, clearcoatRoughness: 0.35, cutout: type !== "tresse" }) };
 }
 
 /* ——— Métaux ——— */
@@ -641,6 +950,18 @@ export async function generateSurface(ref: string, size = 512): Promise<Surface 
     case "fabric": return genFabric(v, size);
     case "leather": return genLeather(v, size);
     case "metal": return genMetal(v, size);
+    case "fluted": return genFluted(v, size);
+    case "hardware": return genHardware(v, size);
+    case "wallpaper": return genWallpaper(v, size);
+    case "carpet": return genCarpet(v, size);
+    case "cane": return genCane(v, size);
+    case "object": return genObject(v, size);
+    case "lighting": case "electric": return generateSurface(FINISH_REFS[opt(v, "finition")!.id] ?? FINISH_REFS.laiton!, size);
+    case "sofa": return generateSurface(`sr:tissu:${opt(v, "tissu")!.id}:${opt(v, "couleur")!.id}`, size);
+    case "rug": return genRug(v, size);
+    case "art": return genArt(v, size);
+    case "mosaic": return genMosaic(v, size);
+    case "styling": return generateSurface(`sr:peinture:${({ rouge: "garance", rose: "vieux-rose", blanc: "blanc-casse", sable: "biscuit", vert: "sauge", ocre: "ocre-dore", noir: "noir-brun" } as Record<string, string>)[opt(v, "nuance")!.id] ?? "biscuit"}:${opt(v, "objet")!.id === "tasse" ? "brillant" : "satin"}`, size);
   }
 }
 

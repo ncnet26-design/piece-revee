@@ -12,6 +12,11 @@ import { RETAILERS } from "@/lib/retailers";
 import { meta } from "@/lib/seo";
 import { HomeTools } from "@/components/HomeTools";
 import { Presentations } from "@/components/Presentations";
+import { HomeBoard } from "@/components/HomeBoard";
+import { MaterialsMarquee, RevealOnScroll } from "@/components/Motion";
+import { VARIANT_COUNT, familyById } from "@/lib/showroom/catalog";
+
+const DESIGN_OBJECTS = familyById.get("objets")!.axes.reduce((n, a) => n * a.options.length, 1);
 import { LIBRARY_MODELS, frenchName } from "@/lib/home3d/library";
 
 const SHOWCASE = ["sofa_02", "ArmChair_01", "Ottoman_01", "Chandelier_01", "ClassicConsole_01", "potted_plant_04", "Lantern_01", "marble_bust_01"]
@@ -37,9 +42,12 @@ export default function Home() {
           <Link className="btn btn-lg btn-primary" href="/transformer/">Transformer ma pièce</Link>
           <Link className="btn btn-lg" href="/showroom/">Explorer le showroom</Link>
         </div>
-        <p className="mt-5 text-[13.5px] text-muted">Gratuit, sans compte · {Object.keys(REAL_TEXTURES).length + 13} matières photographiées · {LIBRARY_MODELS.length} objets 3D · 3 000 déclinaisons</p>
+        <p className="mt-5 text-[13.5px] text-muted">Gratuit, sans compte · {Object.keys(REAL_TEXTURES).length + 13} matières photographiées · {LIBRARY_MODELS.length + DESIGN_OBJECTS} objets 3D · {VARIANT_COUNT.toLocaleString("fr-FR")} déclinaisons</p>
       </section>
+      <RevealOnScroll />
       <HomeTools />
+      <MaterialsMarquee />
+      <div data-reveal><HomeBoard /></div>
 
       {/* ——— Enseignes ——— */}
       <section className="mt-16 border-y border-line py-6" aria-label="Enseignes vers lesquelles mènent nos liens">
@@ -52,17 +60,17 @@ export default function Home() {
       {/* ——— Promesse ——— */}
       <section className="mx-auto mt-24 max-w-[980px] text-center sm:mt-32">
         <span className="eyebrow">Pièce Rêvée</span>
-        <p className="mt-5 font-display text-[clamp(30px,4.2vw,54px)] leading-[1.12]">Du plan à la dernière poignée de porte, <em className="text-bronze">chaque choix</em> se voit avant d'être fait, et s'achète pour de vrai.</p>
+        <p className="mt-5 font-display text-[clamp(30px,4.2vw,54px)] leading-[1.12]">Du plan à la dernière poignée de porte, <em className="text-muted">chaque choix</em> se voit avant d'être fait, et s'achète pour de vrai.</p>
       </section>
 
       {/* ——— Présentations ——— */}
-      <section className="section" aria-labelledby="h-pres">
+      <section data-reveal className="section" aria-labelledby="h-pres">
         <div className="vhead"><div><h2 id="h-pres" className="h2">Des présentations <em>prêtes à partager.</em></h2><p>Chaque projet devient une planche éditoriale : l'image de la pièce, la matière vedette et toutes les références assorties.</p></div><Link className="btn" href="/concept/">Générer un concept</Link></div>
         <Presentations />
       </section>
 
       {/* ——— Matières ——— */}
-      <section className="section">
+      <section data-reveal className="section">
         <div className="vhead"><div><span className="eyebrow">Matériauthèque</span><h2 className="h2 mt-2">Des matières <em>vraies</em>, pas des imitations</h2><p>{MATERIALS.length} matières documentées : origine, usages, entretien, pose, prix indicatif et alternative économique.</p></div><Link className="btn" href="/matieres/">Toutes les matières</Link></div>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {FEATURED.map((m) => (
@@ -78,7 +86,7 @@ export default function Home() {
       </section>
 
       {/* ——— Bibliothèque 3D ——— */}
-      <section className="section">
+      <section data-reveal className="section">
         <div className="vhead"><div><span className="eyebrow">Bibliothèque 3D</span><h2 className="h2 mt-2">Des objets <em>photographiés</em>, pas dessinés</h2><p>{LIBRARY_MODELS.length} meubles et objets numérisés en 3D (licence libre) à poser sur vos planches et dans votre visite.</p></div><Link className="btn" href="/planche/">Les essayer</Link></div>
         <ul className="m-0 grid list-none grid-cols-3 gap-3 p-0 sm:grid-cols-4 lg:grid-cols-8">
           {SHOWCASE.map((m) => (
@@ -120,13 +128,13 @@ export default function Home() {
       </section>
 
       {/* ——— Galerie par style ——— */}
-      <section className="section">
+      <section data-reveal className="section">
         <div className="vhead"><div><span className="eyebrow">Galerie</span><h2 className="h2 mt-2">Reconnaissez <em>votre</em> style</h2><p>{STYLES.length} styles d'intérieur et de jardin, expliqués simplement et applicables à votre pièce.</p></div><Link className="btn" href="/quiz/">Faire le quiz</Link></div>
         <HomeInspirations />
       </section>
 
       {/* ——— Comment ça marche ——— */}
-      <section className="section">
+      <section data-reveal className="section">
         <span className="eyebrow">Comment ça marche</span>
         <div className="mt-6 grid gap-10 md:grid-cols-3">
           {[["Dessinez", "Vos pièces aux vraies mesures, vos portes et fenêtres, ou partez d'un modèle : studio, deux-pièces, maison avec jardin."],

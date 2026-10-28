@@ -1,5 +1,19 @@
 # Journal des modifications
 
+## 0.8.0 — 28 octobre 2026
+
+- **Showroom : 31 familles**, avec une référence Pièce Rêvée pour chaque déclinaison (« PR-QUI-02·01·01 ») et une **teinte sur mesure** sur tous les axes de couleur (matières sans limite) :
+  bois cannelé et tasseaux, cannage et rotin, papiers peints, moquettes, mosaïques de marbre, quincaillerie (barre moletée, boutons, coquille demi-lune, béquille, mitigeur, pastille de finition),
+  interrupteurs et prises, luminaires et LED (lumière 2700 à 4000 K), canapés et assises, tapis, tableaux, objets de design (15 formes × 15 matières), objets de stylisme (tulipe, branche, feuille, tasse, cuillère, galet).
+- Échantillons en vrai volume : goutte de peinture laquée, tissus à bords crantés ou déchirés, cuir embossé croco, résine ambre.
+- **Planche** : composer une planche à partir d'une image, quatre modèles éditoriaux, tirages façon polaroïd, zoom molette et pincement jusqu'au grain, déplacement du fond, ombres longues ;
+  **appliquer ma planche à la photo de ma pièce** et **photo réaliste (IA)** de la planche ou d'un échantillon (route /photo du service d'images).
+- **Inspirations** : « Créer un moodboard » et « Générer une photo d'ambiance » sur chaque inspiration.
+- **Camille**, designer d'intérieur virtuelle : avatar illustré, conseil adapté à chaque étape du site, clairement présentée comme une IA.
+- Maisons de référence (marques de niche, sans partenariat) reliées aux familles du showroom.
+- Nouveau logo ; accueil animé (planche vivante, bandeau de matières, apparitions au défilement).
+- Plan : importer le plan de son logement comme calque, à l'échelle.
+
 ## 0.7.0 — 28 octobre 2026
 
 - Nouveau style : fonds blancs, typographie sans empattement (Onest) en gras, grandes cartes arrondies.

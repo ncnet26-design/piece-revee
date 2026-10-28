@@ -41,3 +41,7 @@ export async function redesignRoom(photo: string, inspirations: string[], brief:
 }
 /** Une image d'ambiance à partir d'un texte. */
 export const conceptImage = (brief: string, aspect = "4:3") => call("/concept", { brief, aspect });
+/** Rendu 3D (planche ou échantillon) → photographie de studio réaliste, même composition. */
+export async function photoreal(render: string, brief: string, aspect: string): Promise<IaResult> {
+  return call("/photo", { image: await shrink(render, 1600, 0.88), brief, aspect });
+}

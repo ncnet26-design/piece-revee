@@ -6,8 +6,9 @@ import { useHydrated, useLocal } from "@/lib/use-local";
 import { useFavorites } from "@/lib/favorites";
 import { KEYS, local } from "@/lib/storage";
 import { openCamille } from "@/lib/camille-bus";
+import { CamilleAvatar } from "./CamilleAvatar";
 import { POSTHOG_KEY } from "@/lib/site";
-import { IconChat, IconGrid, IconHeart, IconHouse, IconPhoto, IconSwatches, IconTheme, IconUser } from "./icons";
+import { IconGrid, IconHeart, IconHouse, IconPhoto, IconSwatches, IconTheme, IconUser } from "./icons";
 
 const NAV = [
   { href: "/showroom/", label: "Showroom" },
@@ -36,11 +37,21 @@ export function ThemeToggle() {
 }
 
 /** Logotype : monogramme et nom en serif. */
+/** Marque : une arche (l'architecture), une goutte (la couleur) et un carreau (la matière) qui se superposent. */
+export function LogoMark({ className = "h-9 w-9" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 40 40" className={`flex-none ${className}`} style={{ isolation: "isolate" }}>
+      <path d="M5 37V17.5a10.5 10.5 0 0 1 21 0V37z" fill="#C0714F" />
+      <circle cx="27.5" cy="12.5" r="8.5" fill="#8FA38A" style={{ mixBlendMode: "multiply" }} />
+      <rect x="20" y="24" width="15" height="13" rx="2.2" fill="#D9C3A0" style={{ mixBlendMode: "multiply" }} />
+    </svg>
+  );
+}
 export function Logo({ className = "", onDark = false }: { className?: string; onDark?: boolean }) {
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
-      <i aria-hidden="true" className={`grid h-8 w-8 flex-none place-items-center rounded-full font-display text-[17px] not-italic leading-none ${onDark ? "bg-[#F2EEE6] text-[#161512]" : "bg-ink text-bg"}`}>P</i>
-      <span className="font-display text-[25px] leading-none tracking-[-.01em]">Pièce <em className={onDark ? "text-[#D2AE7E]" : "text-bronze"}>Rêvée</em></span>
+      <LogoMark />
+      <span className={`font-ui text-[23px] font-[650] leading-none tracking-[-.035em] ${onDark ? "text-[#F2EEE6]" : ""}`}>Pièce<span className="font-[400]"> Rêvée</span></span>
     </span>
   );
 }
@@ -90,7 +101,7 @@ export function TabBar() {
           </Link>
         ))}
         <button type="button" onClick={() => openCamille()} className="flex cursor-pointer flex-col items-center gap-0.5 border-0 bg-transparent py-1 text-[11px] font-medium text-muted">
-          <IconChat width={22} height={22} />Camille
+          <CamilleAvatar size={24} />Camille
         </button>
       </div>
     </nav>

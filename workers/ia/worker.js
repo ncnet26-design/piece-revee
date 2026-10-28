@@ -10,6 +10,7 @@
  *   GET  /            → état du service (ne coûte rien)
  *   POST /redesign    → { photo, inspirations?, brief, aspect? } : la pièce de la photo, réaménagée
  *   POST /concept     → { brief, aspect? }                         : une image d'ambiance à partir d'un texte
+ *   POST /photo       → { image, brief?, aspect? }                 : rendu 3D d'une planche ou d'un échantillon → photo de studio réaliste
  * Réponse : { image: "data:image/jpeg;base64,…", restant: n }
  */
 
@@ -47,7 +48,7 @@ export default {
       const used = env.QUOTA ? Number(await env.QUOTA.get(`total:${day}`)) || 0 : null;
       return json({ ok: true, service: "Pièce Rêvée · images IA", cle: Boolean(env.GEMINI_API_KEY), compteur: Boolean(env.QUOTA), utilisees_aujourdhui: used, plafond_jour: DAILY_TOTAL });
     }
-    if (request.method !== "POST" || !["/redesign", "/concept"].includes(url.pathname)) return json({ erreur: "Adresse inconnue." }, 404);
+    if (request.method !== "POST" || !["/redesign", "/concept", "/photo"].includes(url.pathname)) return json({ erreur: "Adresse inconnue." }, 404);
     if (!allowed) return json({ erreur: "Ce service n'accepte que les demandes du site Pièce Rêvée." }, 403);
     if (!env.GEMINI_API_KEY) return json({ erreur: "Le service n'est pas encore configuré (clé manquante)." }, 503);
     if (!env.QUOTA) return json({ erreur: "Le service n'est pas encore configuré (compteur manquant)." }, 503);
@@ -62,7 +63,7 @@ export default {
 
     let body;
     try { body = await request.json(); } catch { return json({ erreur: "Demande illisible." }, 400); }
-    const brief = clean(body.brief, 1200);
+    const brief = clean(body.brief, 1200) || (url.pathname === "/photo" ? "Planche de matières." : "");
     if (!brief) return json({ erreur: "Décrivez le projet." }, 400);
     const aspect = ASPECTS.includes(body.aspect) ? body.aspect : "4:3";
 
@@ -75,6 +76,11 @@ export default {
       input.push(photo);
       const insp = Array.isArray(body.inspirations) ? body.inspirations.slice(0, 3).map(image).filter(Boolean) : [];
       insp.forEach((im, i) => { input.push({ type: "text", text: `Inspiration ${i + 1}: use only for mood, palette and materials. Do not copy its room.` }); input.push(im); });
+    } else if (url.pathname === "/photo") {
+      const render = image(body.image);
+      if (!render) return json({ erreur: "Image de la planche manquante." }, 400);
+      input.push({ type: "text", text: photoPrompt(brief) });
+      input.push(render);
     } else {
       input.push({ type: "text", text: conceptPrompt(brief) });
     }
@@ -142,5 +148,17 @@ function conceptPrompt(brief) {
     brief,
     "Natural daylight, believable proportions, true-to-life materials (wood grain, stone veining, fabric weave),",
     "calm editorial composition, no text, no watermark, no people.",
+  ].join("\n");
+}
+function photoPrompt(brief) {
+  return [
+    "This image is a 3D render of an interior designer's flat-lay material board (or a single material sample).",
+    "Turn it into a photorealistic studio photograph of the very same physical samples.",
+    "Keep EXACTLY the same layout, positions, overlaps, shapes, sizes, colours and camera angle. Do not add, remove or move any object.",
+    "Give every sample its real-world material detail at macro level: wood grain and pores, stone veining and polish, fabric weave and pinked edges,",
+    "brushed or knurled metal with soft reflections, glossy wet paint, paper fibres, ceramic glaze.",
+    "Soft natural window daylight from the upper right, long gentle shadows, white textured paper background, high-end editorial look, no text, no watermark.",
+    "Details (written in French):",
+    brief,
   ].join("\n");
 }

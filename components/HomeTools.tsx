@@ -27,10 +27,10 @@ export function HomeTools() {
           <img src="/visuels/hero-3d.webp" alt="" className="h-full w-full rounded-[18px] object-cover shadow-[0_20px_40px_-20px_rgba(0,0,0,.45)]" loading="lazy" />
           <span className="absolute left-[18%] top-[52%] h-[16%] w-[62%] rounded-[6px] border-2 border-dashed border-white bg-[#8B6CFF]/30" />
           <img src="/textures/m-travertin/diff.webp" alt="" className="absolute -left-[12%] top-[6%] h-[24%] w-[30%] rotate-[-10deg] rounded-[10px] border-4 border-white object-cover shadow-xl" loading="lazy" />
-          <Pill className="-left-[16%] top-[34%]">Changer le sol pour cette matière</Pill>
+          <Pill className="floaty -left-[16%] top-[34%]">Changer le sol pour cette matière</Pill>
           <Cursor className="left-[26%] top-[46%]" />
           <span className="absolute -right-[10%] bottom-[16%] grid h-[24%] w-[30%] rotate-[6deg] place-items-center rounded-[10px] border-4 border-white bg-[#F2F0EC] shadow-xl"><img src="/models/thumbs/ArmChair_01.webp" alt="" className="h-[86%] w-[86%] object-contain" loading="lazy" /></span>
-          <Pill className="-right-[6%] bottom-[4%]">Remplacer par ce fauteuil</Pill>
+          <Pill className="floaty-2 -right-[6%] bottom-[4%]">Remplacer par ce fauteuil</Pill>
         </div>
       ),
     },

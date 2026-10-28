@@ -10,7 +10,7 @@ const noJsErrors = (page: import("@playwright/test").Page) => {
 
 test.beforeEach(async ({ page }) => {
   // Choix de cookies déjà fait : le bandeau ne masque pas les éléments testés.
-  await page.addInitScript(() => localStorage.setItem("pr_consent", JSON.stringify({ analytics: false, at: "2026-10-26", version: 1 })));
+  await page.addInitScript(() => { localStorage.setItem("pr_consent", JSON.stringify({ analytics: false, at: "2026-10-26", version: 1 })); localStorage.setItem("pr_camille_guide", "off"); });
 });
 
 test("accueil : promesse, appels à l'action, visite 3D", async ({ page }) => {
@@ -99,7 +99,7 @@ test("étude complète en démonstration : création, progression, onglets, guid
 test("Camille répond avec ses sources, et renvoie vers un pro pour la structure", async ({ page, isMobile }) => {
   await page.goto("/");
   await page.getByRole("button", { name: isMobile ? "Camille" : "Demander à Camille", exact: true }).click();
-  const drawer = page.getByRole("complementary", { name: "Camille, assistante IA" });
+  const drawer = page.getByRole("complementary", { name: "Camille, designer d'intérieur virtuelle" });
   await drawer.getByLabel("Votre message").fill("Puis-je abattre un mur porteur dans mon salon ?");
   await drawer.getByRole("button", { name: "Envoyer" }).click();
   await expect(drawer.getByText(/architecte ou un bureau d'études/).first()).toBeVisible();
@@ -383,4 +383,106 @@ test("générer un concept : message clair si le service refuse", async ({ page 
   await page.getByLabel("Votre ambiance").fill("Chambre indigo et lin lavé");
   await page.getByRole("button", { name: "Créer le concept" }).click();
   await expect(page.getByText("Le nombre d'images du jour est atteint. Revenez demain.")).toBeVisible();
+});
+
+test("Camille : se présente avec son avatar et guide selon l'étape", async ({ page }) => {
+  await page.addInitScript(() => localStorage.removeItem("pr_camille_guide"));
+  await page.goto("/showroom/");
+  const bubble = page.getByRole("region", { name: "Conseil de Camille" });
+  await expect(bubble).toContainText("Choisissez une famille", { timeout: 25_000 });
+  await expect(bubble).toContainText("designer d'intérieur virtuelle");
+  await bubble.getByRole("button", { name: "Me guider" }).click();
+  const drawer = page.getByRole("complementary", { name: "Camille, designer d'intérieur virtuelle" });
+  await expect(drawer).toContainText("Je suis une intelligence artificielle");
+  await expect(drawer.getByRole("button", { name: "Quel zellige pour une cuisine lumineuse ?" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await page.reload();
+  await page.waitForTimeout(2500);
+  await expect(page.getByRole("region", { name: "Conseil de Camille" })).toHaveCount(0);
+});
+
+test("showroom : nouvelles familles, référence et maisons de niche", async ({ page }) => {
+  test.setTimeout(120_000);
+  const errors = noJsErrors(page);
+  await page.goto("/showroom/?f=quincaillerie");
+  await expect(page.getByRole("heading", { level: 2, name: "Quincaillerie" })).toBeVisible();
+  await page.getByRole("button", { name: /^Bouton moleté/ }).click();
+  const dlg = page.getByRole("dialog", { name: /Bouton moleté/ });
+  await expect(dlg).toContainText(/Réf\. PR-QUI-02·01·01/);
+  await expect(dlg.getByRole("link", { name: /Buster \+ Punch/ })).toHaveAttribute("href", /google\.com\/search/);
+  await page.keyboard.press("Escape");
+  await page.goto("/showroom/?f=objets");
+  await expect(page.getByRole("heading", { level: 2, name: "Objets de design" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Vase amphore/ })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("planche : appliquer mes matières à la photo de ma pièce (service simulé)", async ({ page, isMobile }) => {
+  test.skip(isMobile, "parcours bureau");
+  test.setTimeout(120_000);
+  const errors = noJsErrors(page);
+  await page.route("https://piece-revee-ia.ewanesteves26.workers.dev/redesign", async (route) => {
+    const body = route.request().postDataJSON() as { photo: string; inspirations: string[]; brief: string };
+    expect(body.brief).toContain("Appliquer la planche de matières");
+    expect(body.inspirations).toHaveLength(1);
+    await route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ image: body.photo, restant: 3 }) });
+  });
+  await page.goto("/planche/");
+  await expect(page.getByText("Préparation de la planche")).toHaveCount(0, { timeout: 30000 });
+  await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/visuels/visite-3d.webp");
+  await page.getByRole("button", { name: "Appliquer mes matières" }).click();
+  await expect(page.getByRole("link", { name: "Télécharger le rendu" })).toBeVisible({ timeout: 60_000 });
+  await expect(page.getByText("Il vous reste 3 rendus aujourd'hui.")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("plan : importer le plan de son logement comme calque", async ({ page, isMobile }) => {
+  test.skip(isMobile, "parcours bureau");
+  test.setTimeout(150_000);
+  await page.addInitScript(() => localStorage.setItem("pr_home3d_hint", "1"));
+  await page.goto("/visite-3d/");
+  await expect(page.getByText("Chargement de la 3D")).toBeHidden({ timeout: 30_000 });
+  await page.getByRole("button", { name: "Mon plan" }).click();
+  const dlg = page.getByRole("dialog", { name: "Plan de mon logement" });
+  await dlg.getByLabel("Importer mon plan").setInputFiles("public/visuels/planche-hero.webp");
+  await expect(dlg.getByRole("heading", { name: "Calque de mon plan" })).toBeVisible({ timeout: 20_000 });
+  await expect(dlg.getByText(/Plan importé/)).toBeVisible();
+  await dlg.getByRole("button", { name: "Retirer le calque" }).click();
+  await expect(dlg.getByRole("heading", { name: "Calque de mon plan" })).toHaveCount(0);
+});
+
+test("planche : composer une planche à partir d'une image", async ({ page, isMobile }) => {
+  test.skip(isMobile, "parcours bureau");
+  test.setTimeout(120_000);
+  const errors = noJsErrors(page);
+  await page.goto("/planche/");
+  await expect(page.getByText("Préparation de la planche")).toHaveCount(0, { timeout: 30000 });
+  await page.getByLabel("À partir d'une image").setInputFiles("public/visuels/hero-3d.webp");
+  await expect(page.getByRole("textbox", { name: "Titre de la planche" })).toHaveValue("Ma planche inspirée", { timeout: 20_000 });
+  const fiche = page.locator('section[aria-labelledby="fiche"]');
+  await expect(fiche).toContainText("Réf. PR-PEI-");
+  await expect(fiche).toContainText("Réf. PR-QUI-");
+  // Les modèles « curated » sont proposés.
+  await page.getByRole("button", { name: "Modèles" }).click();
+  await page.getByRole("dialog").getByRole("button", { name: /Vert terrazzo/ }).click();
+  await expect(page.getByRole("textbox", { name: "Titre de la planche" })).toHaveValue("Vert terrazzo");
+  expect(errors).toEqual([]);
+});
+
+test("inspirations : transformer une inspiration en moodboard", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto("/galerie/");
+  await page.locator(".grid-cards article h3 button").first().click();
+  const dlg = page.locator("dialog[open]");
+  await expect(dlg.getByRole("button", { name: "Générer une photo d'ambiance" })).toBeVisible();
+  await dlg.getByRole("button", { name: "Créer un moodboard" }).click();
+  await expect(page).toHaveURL(/planche/, { timeout: 30_000 });
+  await expect(page.getByText("Préparation de la planche")).toHaveCount(0, { timeout: 30000 });
+});
+
+test("showroom : teinte sur mesure (matières sans limite)", async ({ page }) => {
+  await page.goto("/showroom/?f=peinture&v=sr%3Apeinture%3Ax-6b3e7a%3Asatin");
+  const dlg = page.getByRole("dialog");
+  await expect(dlg).toContainText("Teinte sur mesure #6B3E7A");
+  await expect(dlg).toContainText(/Réf\. PR-PEI-6B3E7A·03/);
 });

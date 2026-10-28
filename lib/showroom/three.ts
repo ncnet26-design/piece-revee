@@ -22,6 +22,8 @@ export async function showroomMaterial(ref: string, metersPerUv: number, opts: {
     clearcoat: p.clearcoat, clearcoatRoughness: p.clearcoatRoughness,
     sheen: p.sheen, sheenRoughness: p.sheenRoughness, anisotropy: p.anisotropy ?? 0, anisotropyRotation: 0, sheenColor: new THREE.Color("#ffffff").multiplyScalar(p.sheen ? 0.6 : 0),
   });
+  if (p.transmission) { mat.transmission = p.transmission; mat.thickness = 0.006; mat.ior = 1.5; mat.roughness = 0.05; mat.roughnessMap = null; }
+  if (p.cutout) { mat.alphaTest = 0.5; mat.side = THREE.DoubleSide; }
   if (!opts.light) {
     mat.normalMap = tex(c.normal, false);
     if (s.normalUrl) {

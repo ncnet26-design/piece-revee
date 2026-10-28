@@ -28,6 +28,24 @@ export default function PlanEditor({ layout, items, onApply, onCancel }: { layou
   const [view, setView] = useState({ cx: 6, cz: 3, ppm: 40 });
   const [size, setSize] = useState({ w: 800, h: 500 });
   const [addKind, setAddKind] = useState<RoomKind>("chambre");
+  // Calque : le plan de l'utilisateur (photo, capture ou scan), à décalquer à l'échelle réelle.
+  const [trace, setTraceState] = useState<{ url: string; ratio: number; w: number; x: number; z: number; op: number } | null>(() => {
+    try { const r = typeof window !== "undefined" ? localStorage.getItem("pr_plan_calque") : null; return r ? JSON.parse(r) : null; } catch { return null; }
+  });
+  const [traceMsg, setTraceMsg] = useState<string | null>(null);
+  const setTrace = (t: typeof trace) => { setTraceState(t); try { if (t) localStorage.setItem("pr_plan_calque", JSON.stringify(t)); else localStorage.removeItem("pr_plan_calque"); } catch { setTraceMsg("Le calque ne sera pas conservé après fermeture (mémoire pleine)."); } };
+  const importPlan = async (f: File | undefined) => {
+    if (!f) return;
+    if (f.type === "application/pdf") { setTraceMsg("Pour un PDF, faites une capture d'écran de la page du plan (ou exportez-la en image), puis importez cette image."); return; }
+    if (!f.type.startsWith("image/")) { setTraceMsg("Importez une image du plan (JPEG, PNG ou WebP)."); return; }
+    const url = await new Promise<string>((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result)); fr.onerror = rej; fr.readAsDataURL(f); });
+    const img = new Image(); img.src = url; await img.decode();
+    const k = Math.min(1, 2000 / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement("canvas");
+    c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k); c.getContext("2d")!.drawImage(img, 0, 0, c.width, c.height);
+    const b = deriveStructure(workRef.current.layout).bbox;
+    setTrace({ url: c.toDataURL("image/jpeg", 0.85), ratio: c.height / c.width, w: Math.max(4, Math.round((b.x1 - b.x0 + 1) * 10) / 10), x: b.x0 - 0.5, z: b.z0 - 0.5, op: 0.55 });
+    setTraceMsg("Plan importé. Réglez sa largeur réelle (mesurez un mur connu), puis dessinez vos pièces par-dessus.");
+  };
   const box = useRef<HTMLDivElement>(null);
   const drag = useRef<Drag | null>(null);
   const pointers = useRef(new Map<number, { x: number; y: number }>());
@@ -260,6 +278,10 @@ export default function PlanEditor({ layout, items, onApply, onCancel }: { layou
           <button type="button" className="btn btn-sm flex-none px-2.5" aria-label="Dézoomer" onClick={() => setView((v) => ({ ...v, ppm: Math.max(8, v.ppm / 1.25) }))}>−</button>
           <button type="button" className="btn btn-sm flex-none px-2.5" aria-label="Zoomer" onClick={() => setView((v) => ({ ...v, ppm: Math.min(160, v.ppm * 1.25) }))}>+</button>
           <button type="button" className="btn btn-sm flex-none" onClick={() => fit()}>Ajuster</button>
+          <label className="btn btn-sm flex-none cursor-pointer">
+            <input type="file" accept="image/*,application/pdf" className="sr-only" onChange={(e) => { void importPlan(e.target.files?.[0]); e.target.value = ""; }} />
+            Importer mon plan
+          </label>
         </div>
       </div>
 
@@ -272,6 +294,7 @@ export default function PlanEditor({ layout, items, onApply, onCancel }: { layou
               <pattern id="g1" width="1" height="1" patternUnits="userSpaceOnUse"><path d="M1 0H0V1" fill="none" stroke="#DDDCD3" strokeWidth={px(1)} /></pattern>
             </defs>
             <rect x={vx} y={vz} width={vw} height={vh} fill="url(#g1)" />
+            {trace && <image href={trace.url} x={trace.x} y={trace.z} width={trace.w} height={trace.w * trace.ratio} opacity={trace.op} preserveAspectRatio="none" pointerEvents="none" />}
             {L.rooms.map((r) => {
               const active = sel?.kind === "room" && sel.id === r.id, W = r.x1 - r.x0, D = r.z1 - r.z0;
               return (
@@ -387,7 +410,7 @@ export default function PlanEditor({ layout, items, onApply, onCancel }: { layou
             <div className="flex flex-col gap-2.5 text-[13.5px]">
               <h3 className="text-[15px] font-semibold">Dessinez votre logement</h3>
               <ol className="ml-4 list-decimal space-y-1 text-muted">
-                <li>Partez d'un modèle ou ajoutez vos pièces une à une.</li>
+                <li>Importez votre plan (photo, capture ou scan) pour le décalquer, ou partez d'un modèle.</li>
                 <li>Saisissez les vraies mesures (largeur, profondeur) ou tirez les poignées.</li>
                 <li>Collez les pièces entre elles : les cloisons se créent toutes seules.</li>
                 <li>Ajoutez portes et fenêtres, puis « Meubler automatiquement ».</li>
@@ -398,6 +421,21 @@ export default function PlanEditor({ layout, items, onApply, onCancel }: { layou
               <button type="button" className="btn btn-sm w-fit" onClick={() => commit((w) => ({ ...w, items: furnishAll(w.layout) }))}>Meubler tout le logement</button>
             </div>
           )}
+          {trace && (
+            <div className="mt-3 flex flex-col gap-2 border-t border-line pt-3">
+              <h3 className="text-[14px] font-semibold">Calque de mon plan</h3>
+              <div className="grid grid-cols-2 gap-2">
+                <Num label="Largeur réelle (m)" value={trace.w} min={1} onChange={(v) => setTrace({ ...trace, w: Math.max(1, Math.min(80, v)) })} />
+                <label className="flex flex-col gap-1 text-[12px] text-muted">Opacité
+                  <input type="range" min={0.1} max={1} step={0.05} value={trace.op} onChange={(e) => setTrace({ ...trace, op: Number(e.target.value) })} />
+                </label>
+                <Num label="Décalage gauche (m)" value={Math.round(trace.x * 100) / 100} onChange={(v) => setTrace({ ...trace, x: v })} />
+                <Num label="Décalage haut (m)" value={Math.round(trace.z * 100) / 100} onChange={(v) => setTrace({ ...trace, z: v })} />
+              </div>
+              <button type="button" className="btn btn-sm w-fit" onClick={() => setTrace(null)}>Retirer le calque</button>
+            </div>
+          )}
+          {traceMsg && <p role="status" className="mt-2 text-[12.5px] text-muted">{traceMsg}</p>}
           {warnings.length > 0 && <ul className="notice mt-3 text-[12.5px]">{warnings.map((w) => <li key={w}>{w}</li>)}</ul>}
           <p className="mt-3 text-[11.5px] text-muted">Mesures indicatives : vérifiez toujours sur place avant tous travaux ou achats. Pour les murs porteurs, consultez un professionnel.</p>
         </aside>

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { studioEnvironment } from "./studio";
 import { parseVariant } from "./catalog";
-import { bodyColor, sampleGeometry, sampleSize } from "./geometry";
+import { buildSample, disposeSample, naturalShape, sampleSize } from "./objects";
 import { showroomMaterial } from "./three";
 
 /**
@@ -31,26 +31,23 @@ class Studio {
     const ground = new THREE.Mesh(new THREE.PlaneGeometry(3, 3), new THREE.ShadowMaterial({ opacity: 0.2 }));
     ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; this.scene.add(ground);
   }
+  obj: THREE.Object3D | null = null;
   async shoot(ref: string, out: HTMLCanvasElement, texSize: number): Promise<boolean> {
     const v = parseVariant(ref); if (!v) return false;
-    const size = sampleSize(v.family.gen);
-    const mat = await showroomMaterial(ref, size, { size: texSize, anisotropy: this.renderer.capabilities.getMaxAnisotropy() });
-    if (!mat) return false;
-    const { geo, y } = sampleGeometry(v.family.gen, size);
-    if (v.family.gen === "fabric") mat.side = THREE.DoubleSide;
-    if (this.mesh) { this.scene.remove(this.mesh); this.mesh.geometry.dispose(); }
-    const body = bodyColor(v), side = body ? new THREE.MeshStandardMaterial({ color: body, roughness: 0.85 }) : null;
-    this.mesh = new THREE.Mesh(geo, side ? [side, side, mat, side, side, side] : mat); this.mesh.position.y = y; this.mesh.castShadow = true; this.mesh.receiveShadow = true;
-    this.scene.add(this.mesh);
-    // Cadrage : l'échantillon entier, avec une marge, vu de trois quarts plongeant.
-    const d = size * 2.8; this.cam.position.set(0, d * 0.8, d * 0.6); this.cam.lookAt(0, 0, size * 0.03);
+    const size = sampleSize(v.family.gen), aniso = this.renderer.capabilities.getMaxAnisotropy();
+    let failed = false;
+    const built = await buildSample(ref, naturalShape(v.family.gen), async (m, other) => { const mat = await showroomMaterial(other ?? ref, m, { size: texSize, anisotropy: aniso }); if (!mat) failed = true; return mat ?? new THREE.MeshStandardMaterial(); }, size);
+    if (!built || failed) { if (built) disposeSample(built.obj); return false; }
+    if (this.obj) { this.scene.remove(this.obj); disposeSample(this.obj); }
+    this.obj = built.obj; this.scene.add(this.obj);
+    // Cadrage : l'objet entier, avec une marge, vu de trois quarts plongeant.
+    const box = new THREE.Box3().setFromObject(this.obj), c = box.getCenter(new THREE.Vector3()), rad = box.getBoundingSphere(new THREE.Sphere()).radius;
+    const d = (rad / Math.sin(THREE.MathUtils.degToRad(this.cam.fov / 2))) * 1.08;
+    this.cam.position.set(c.x, c.y + d * 0.8, c.z + d * 0.6); this.cam.lookAt(c.x, c.y, c.z);
     const w = out.width, h = out.height;
     this.renderer.setSize(w, h, false); this.cam.aspect = w / h; this.cam.updateProjectionMatrix();
     this.renderer.render(this.scene, this.cam);
     const ctx = out.getContext("2d")!; ctx.clearRect(0, 0, w, h); ctx.drawImage(this.renderer.domElement, 0, 0, w, h);
-    // Libère la mémoire graphique de cet échantillon.
-    for (const t of [mat.map, mat.normalMap, mat.roughnessMap]) t?.dispose();
-    mat.dispose(); side?.dispose();
     return true;
   }
 }

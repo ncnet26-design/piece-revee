@@ -16,7 +16,7 @@ export function SampleViewer({ refId, label }: { refId: string; label: string })
       const THREE = await import("three");
       const { OrbitControls } = await import("three/examples/jsm/controls/OrbitControls.js");
       const { studioEnvironment } = await import("@/lib/showroom/studio");
-      const { bodyColor, sampleGeometry, sampleSize } = await import("@/lib/showroom/geometry");
+      const { buildSample, disposeSample, naturalShape, sampleSize } = await import("@/lib/showroom/objects");
       const { showroomMaterial } = await import("@/lib/showroom/three");
       if (!alive) return;
       let renderer: THREE_NS.WebGLRenderer;
@@ -37,7 +37,7 @@ export function SampleViewer({ refId, label }: { refId: string; label: string })
       const ground = new THREE.Mesh(new THREE.PlaneGeometry(4, 4), new THREE.ShadowMaterial({ opacity: 0.18 })); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
       const cam = new THREE.PerspectiveCamera(30, 1, 0.01, 10); cam.position.set(0.22, 0.34, 0.42);
       const ctl = new OrbitControls(cam, cv); ctl.enableDamping = true; ctl.enablePan = false; ctl.maxPolarAngle = 1.45; ctl.target.set(0, 0.006, 0); ctl.autoRotate = true; ctl.autoRotateSpeed = 0.6;
-      let mesh: THREE_NS.Mesh | null = null, raf = 0;
+      let mesh: THREE_NS.Object3D | null = null, raf = 0, token = 0;
       const resize = () => { const w = host.clientWidth || 1, h = host.clientHeight || 1; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
       const ro = new ResizeObserver(resize); ro.observe(host); resize();
       const loop = () => { raf = requestAnimationFrame(loop); ctl.update(); renderer.render(scene, cam); };
@@ -45,15 +45,13 @@ export function SampleViewer({ refId, label }: { refId: string; label: string })
       const setRef = async (ref: string) => {
         const v = parseVariant(ref); if (!v) return;
         setState("chargement");
-        const size = sampleSize(v.family.gen);
-        const mat = await showroomMaterial(ref, size, { size: soft ? 1024 : 2048, anisotropy: renderer.capabilities.getMaxAnisotropy(), light: false });
-        if (!alive || !mat) return;
-        const { geo, y } = sampleGeometry(v.family.gen, size);
-        const body = bodyColor(v), side = body ? new THREE.MeshStandardMaterial({ color: body, roughness: 0.85 }) : null;
-        if (v.family.gen === "fabric") mat.side = THREE.DoubleSide;
-        if (mesh) { scene.remove(mesh); mesh.geometry.dispose(); for (const old of ([] as THREE_NS.Material[]).concat(mesh.material)) { const o = old as THREE_NS.MeshPhysicalMaterial; for (const t of [o.map, o.normalMap, o.roughnessMap]) t?.dispose(); o.dispose(); } }
-        mesh = new THREE.Mesh(geo, side ? [side, side, mat, side, side, side] : mat); mesh.position.y = y;
-        const d = size * 2.6; cam.position.set(d * 0.35, d * 0.75, d * 0.6); ctl.minDistance = size * 1.1; ctl.maxDistance = size * 4.5; mesh.castShadow = true; mesh.receiveShadow = true; scene.add(mesh);
+        const size = sampleSize(v.family.gen), my = ++token;
+        const built = await buildSample(ref, naturalShape(v.family.gen), async (m, other) => (await showroomMaterial(other ?? ref, m, { size: soft ? 1024 : 2048, anisotropy: renderer.capabilities.getMaxAnisotropy(), light: false })) ?? new THREE.MeshStandardMaterial(), size);
+        if (!alive || !built || my !== token) { if (built) disposeSample(built.obj); return; }
+        if (mesh) { scene.remove(mesh); disposeSample(mesh); }
+        mesh = built.obj; scene.add(mesh);
+        const box = new THREE.Box3().setFromObject(mesh), r = Math.max(box.max.x - box.min.x, box.max.z - box.min.z);
+        const d = r * 2.6; cam.position.set(d * 0.35, d * 0.75, d * 0.6); ctl.target.set(0, (box.max.y - box.min.y) * 0.35, 0); ctl.minDistance = r * 1.1; ctl.maxDistance = r * 4.5;
         setState("pret");
       };
       api.current = { setRef, dispose: () => { cancelAnimationFrame(raf); ro.disconnect(); ctl.dispose(); renderer.dispose(); cv.remove(); } };

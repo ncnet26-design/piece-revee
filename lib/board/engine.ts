@@ -9,7 +9,7 @@ import { instantiate } from "@/lib/home3d/models";
 import { libModel } from "@/lib/home3d/library";
 import { BOARD_D, BOARD_W, type Board, type BoardItem } from "./state";
 import { parseVariant } from "@/lib/showroom/catalog";
-import { bodyColor } from "@/lib/showroom/geometry";
+import { buildSample, type SampleShape } from "@/lib/showroom/objects";
 import { showroomMaterial } from "@/lib/showroom/three";
 
 export interface BoardEvents {
@@ -62,7 +62,16 @@ export class BoardEngine {
   private bg = "";
   private view: View = "perspective";
   private zoom = 1;
+  /** Point visé (panoramique quand on zoome sur un détail). */
+  private pan = new THREE.Vector2(0, 0);
+  private panDrag: { x: number; z: number } | null = null;
+  private touches = new Map<number, { x: number; y: number }>();
+  private pinch: { d: number; zoom: number } | null = null;
   private disposed = false;
+  /** Vitrine (page d'accueil) : les échantillons tombent un à un sur la planche, la caméra respire doucement. */
+  private showcase = false;
+  private paused = false;
+  private born = new Map<string, number>();
   private ro: ResizeObserver;
   readonly software: boolean;
 
@@ -90,9 +99,10 @@ export class BoardEngine {
 
     // Lumière d'atelier : une grande fenêtre en haut à gauche, ombres douces.
     this.sun = new THREE.DirectionalLight("#FFF6EA", 2.4);
-    this.sun.position.set(-0.9, 2.2, -0.7);
+    // Soleil bas venant de l'arrière droit : ombres longues et douces, comme une planche photographiée près d'une fenêtre.
+    this.sun.position.set(1.5, 1.55, -1.1);
     this.sun.castShadow = true;
-    const sc = this.sun.shadow.camera; sc.left = -0.8; sc.right = 0.8; sc.top = 0.6; sc.bottom = -0.6; sc.near = 0.5; sc.far = 4;
+    const sc = this.sun.shadow.camera; sc.left = -1; sc.right = 1; sc.top = 0.8; sc.bottom = -0.8; sc.near = 0.3; sc.far = 5;
     this.sun.shadow.mapSize.set(this.software ? 1024 : 2048, this.software ? 1024 : 2048);
     this.sun.shadow.radius = 6; this.sun.shadow.blurSamples = 16; this.sun.shadow.bias = -0.0004; this.sun.shadow.normalBias = 0.002;
     this.scene.add(this.sun, new THREE.HemisphereLight("#FFFFFF", "#D9D2C4", 0.5));
@@ -109,11 +119,16 @@ export class BoardEngine {
     cv.addEventListener("pointermove", this.onMoveEv);
     cv.addEventListener("pointerup", this.onUp);
     cv.addEventListener("pointercancel", this.onUp);
+    cv.addEventListener("wheel", this.onWheel, { passive: false });
     cv.addEventListener("dragover", (e) => e.preventDefault());
     cv.addEventListener("drop", this.onDrop);
     this.ro = new ResizeObserver(() => this.resize()); this.ro.observe(host);
     this.resize();
-    const loop = () => { this.raf = requestAnimationFrame(loop); if (this.dirty) { this.dirty = false; this.renderer.render(this.scene, this.camera); } };
+    const loop = () => {
+      this.raf = requestAnimationFrame(loop);
+      if (this.showcase && !this.paused) this.tick(performance.now());
+      if (this.dirty) { this.dirty = false; this.renderer.render(this.scene, this.camera); }
+    };
     loop();
   }
 
@@ -130,12 +145,41 @@ export class BoardEngine {
     // Cadre la planche entière quel que soit le format de l'écran.
     const fit = Math.max(BOARD_W / this.camera.aspect, BOARD_D) * 0.5 / Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
     const d = fit * 0.94 / this.zoom;
-    if (this.view === "dessus") { this.camera.position.set(0, d, 0.0001); this.camera.lookAt(0, 0, 0); }
-    else { const a = THREE.MathUtils.degToRad(52); this.camera.position.set(0, Math.sin(a) * d * 1.08, Math.cos(a) * d * 1.08); this.camera.lookAt(0, 0, 0.03); }
+    const px = this.pan.x, pz = this.pan.y;
+    if (this.view === "dessus") { this.camera.position.set(px, d, pz + 0.0001); this.camera.lookAt(px, 0, pz); }
+    else { const a = THREE.MathUtils.degToRad(52); this.camera.position.set(px, Math.sin(a) * d * 1.08, pz + Math.cos(a) * d * 1.08); this.camera.lookAt(px, 0, pz + 0.03 / this.zoom); }
     this.camera.updateProjectionMatrix(); this.dirty = true;
   }
   setView(v: View) { this.view = v; this.placeCamera(); }
-  setZoom(z: number) { this.zoom = Math.min(2.5, Math.max(0.8, z)); this.placeCamera(); }
+  /** Active la vitrine animée (sans interaction). */
+  enableShowcase() { this.showcase = true; this.renderer.domElement.style.pointerEvents = "none"; }
+  setPaused(p: boolean) { this.paused = p; if (!p) this.dirty = true; }
+  private tick(now: number) {
+    // Caméra : léger balancement (quelques degrés), comme filmée à l'épaule.
+    const t = now / 1000, fit = Math.max(BOARD_W / this.camera.aspect, BOARD_D) * 0.5 / Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
+    const d = fit * 0.98, el = THREE.MathUtils.degToRad(56 + Math.sin(t * 0.23) * 4), az = Math.sin(t * 0.17) * 0.16;
+    this.camera.position.set(Math.sin(az) * Math.cos(el) * d, Math.sin(el) * d, Math.cos(az) * Math.cos(el) * d); this.camera.lookAt(0, 0, 0.02);
+    // Chute amortie des échantillons qui viennent d'arriver.
+    for (const [id, t0] of this.born) {
+      const o = this.objects.get(id); if (!o) continue;
+      const k = Math.min(1, (now - t0) / 900), e = 1 - Math.pow(1 - k, 3), bounce = Math.sin(k * Math.PI) * 0.004 * (1 - k);
+      o.obj.position.y = (o.obj.userData.baseY as number ?? 0) + (1 - e) * 0.22 + bounce;
+      o.obj.rotation.z = (1 - e) * 0.25;
+      if (k >= 1) { this.born.delete(id); o.obj.rotation.z = 0; o.obj.position.y = o.obj.userData.baseY as number ?? 0; }
+    }
+    this.dirty = true;
+  }
+  setZoom(z: number) { this.zoom = Math.min(6, Math.max(0.8, z)); if (this.zoom <= 1) this.pan.set(0, 0); this.clampPan(); this.placeCamera(); }
+  get zoomLevel() { return this.zoom; }
+  private clampPan() { const k = Math.max(0, 1 - 1 / this.zoom); this.pan.set(THREE.MathUtils.clamp(this.pan.x, -BOARD_W / 2 * k, BOARD_W / 2 * k), THREE.MathUtils.clamp(this.pan.y, -BOARD_D / 2 * k, BOARD_D / 2 * k)); }
+  /** Zoom vers un point de l'écran (molette, pincement) : le point visé reste sous le curseur. */
+  private zoomAt(clientX: number, clientY: number, factor: number) {
+    this.pick({ clientX, clientY }); const p = this.boardPoint();
+    const old = this.zoom, next = Math.min(6, Math.max(0.8, old * factor));
+    if (p && next !== old) { const t = 1 - old / next; this.pan.set(this.pan.x + (p.x - this.pan.x) * t, this.pan.y + (p.z - this.pan.y) * t); }
+    this.setZoom(next);
+  }
+  private onWheel = (e: WheelEvent) => { if (this.showcase) return; e.preventDefault(); this.zoomAt(e.clientX, e.clientY, Math.exp(-e.deltaY * 0.0016)); };
 
   /* ——— Matériaux ——— */
   private tex(url: string, color: boolean): Promise<THREE.Texture> {
@@ -255,46 +299,27 @@ export class BoardEngine {
     }
     const variant = it.ref.startsWith("sr:") ? parseVariant(it.ref) : null;
     if (variant) {
-      const gen = variant.family.gen, body = bodyColor(variant);
-      if (it.shape === "nuancier") {
-        const card = new THREE.Mesh(new RoundedBoxGeometry(SIZE.chipW, 0.002, SIZE.chipD, 2, 0.001), this.plain("#FAF8F3", 0.7));
-        card.position.y = 0.001;
-        const sw = new THREE.Mesh(new THREE.PlaneGeometry(SIZE.chipW - 0.008, SIZE.chipD * 0.72), await this.srMat(it.ref, SIZE.chipW));
-        sw.rotation.x = -Math.PI / 2; sw.position.set(0, 0.00205, -SIZE.chipD * 0.1);
-        g.add(card, sw); cast(g);
-        return { obj: g, h: 0.0022 };
+      const built = await buildSample(it.ref, it.shape as SampleShape, (m, other) => this.srMat(other ?? it.ref, m));
+      if (!built) throw new Error("variante inconnue");
+      g.add(built.obj);
+      if (["object", "lighting", "sofa", "rug", "art"].includes(variant.family.gen)) {
+        // Objets et meubles en miniature sur la planche, comme les modèles 3D de la bibliothèque.
+        const size = new THREE.Box3().setFromObject(built.obj).getSize(new THREE.Vector3()), k = Math.min(1, SIZE.objet / Math.max(size.x, size.z, size.y * 0.8, 0.01));
+        built.obj.scale.setScalar(k);
+        return { obj: g, h: built.h * k };
       }
-      if (it.shape === "drape") {
-        const mat = await this.srMat(it.ref, SIZE.drape) as THREE.MeshPhysicalMaterial; mat.side = THREE.DoubleSide;
-        g.add(new THREE.Mesh(drapeGeometry(SIZE.drape), mat)); cast(g);
-        return { obj: g, h: 0.008 };
-      }
-      const th = gen === "paint" || gen === "leather" ? 0.004 : gen === "metal" ? 0.005 : gen === "fabric" ? 0.003 : gen === "wood" ? 0.016 : 0.013;
-      const side = body ? this.plain(body, 0.85) : null;
-      if (it.shape === "rond") {
-        const top = await this.srMat(it.ref, SIZE.rond * 2);
-        const mesh = new THREE.Mesh(new THREE.CylinderGeometry(SIZE.rond, SIZE.rond, th, 72, 1), [side ?? top, top, side ?? top]);
-        mesh.position.y = th / 2; g.add(mesh); cast(g);
-        return { obj: g, h: th };
-      }
-      const [w, d] = it.shape === "lame" ? [SIZE.lameL, SIZE.lameW] : [SIZE.carre, SIZE.carre];
-      const geo = new RoundedBoxGeometry(w, th, d, 3, Math.min(0.0025, th / 3));
-      const uv = geo.attributes.uv as THREE.BufferAttribute, pos = geo.attributes.position as THREE.BufferAttribute;
-      for (let i = 0; i < uv.count; i++) uv.setXY(i, (pos.getX(i) + w / 2) / 0.2, (pos.getZ(i) + d / 2) / 0.2);
-      const top = await this.srMat(it.ref, 0.2);
-      const mesh = new THREE.Mesh(geo, side ? [side, side, top, side, side, side] : top);
-      mesh.position.y = th / 2; g.add(mesh); cast(g);
-      return { obj: g, h: th };
+      return { obj: g, h: built.h };
     }
     if (it.shape === "photo") {
-      const url = uploads.get(it.ref);
+      // Tirage façon polaroïd : marges fines, bandeau du bas plus large, papier légèrement brillant.
+      const url = it.ref.startsWith("vis-") ? `/visuels/${it.ref.slice(4)}.webp` : uploads.get(it.ref);
       const t = url ? await this.tex(url, true) : null;
       const ar = t ? (t.image as HTMLImageElement).width / (t.image as HTMLImageElement).height : 1.33;
-      const w = SIZE.photo, d = w / ar, b = 0.008;
-      const paper = new THREE.Mesh(new THREE.BoxGeometry(w + b * 2, 0.0015, d + b * 2), new THREE.MeshStandardMaterial({ color: "#FBFAF7", roughness: 0.6 }));
-      paper.position.y = 0.00075;
-      const img = new THREE.Mesh(new THREE.PlaneGeometry(w, d), new THREE.MeshStandardMaterial({ map: t, roughness: 0.45 }));
-      img.rotation.x = -Math.PI / 2; img.position.y = 0.0016;
+      const w = SIZE.photo, d = w / ar, b = 0.009, bottom = 0.036;
+      const paper = new THREE.Mesh(new RoundedBoxGeometry(w + b * 2, 0.0016, d + b + bottom, 2, 0.0006), new THREE.MeshPhysicalMaterial({ color: "#FBFAF6", roughness: 0.5, clearcoat: 0.3, clearcoatRoughness: 0.4 }));
+      paper.position.set(0, 0.0008, (bottom - b) / 2);
+      const img = new THREE.Mesh(new THREE.PlaneGeometry(w, d), new THREE.MeshPhysicalMaterial({ map: t, roughness: 0.32, clearcoat: 0.6, clearcoatRoughness: 0.15 }));
+      img.rotation.x = -Math.PI / 2; img.position.y = 0.0017;
       g.add(paper, img); cast(g);
       return { obj: g, h: 0.002 };
     }
@@ -354,6 +379,7 @@ export class BoardEngine {
         const old = this.objects.get(it.id); if (old) this.root.remove(old.obj);
         built.obj.userData.itemId = it.id;
         this.objects.set(it.id, { key, obj: built.obj, h: built.h });
+        if (this.showcase) this.born.set(it.id, performance.now());
         this.root.add(built.obj);
       } catch { /* modèle indisponible : l'élément est ignoré à l'affichage */ }
     }));
@@ -373,7 +399,7 @@ export class BoardEngine {
       let y = 0;
       for (const p of placed) if (p.box.min.x < box.max.x && p.box.max.x > box.min.x && p.box.min.z < box.max.z && p.box.max.z > box.min.z) y = Math.max(y, p.top);
       if (this.drag?.id === it.id) y += 0.012;
-      o.obj.position.y = y;
+      o.obj.position.y = y; o.obj.userData.baseY = y;
       placed.push({ box, top: y + (o.h * (it.shape === "objet" ? 0.25 : 1)) * it.s });
     }
     this.updateRing(); this.dirty = true;
@@ -398,18 +424,38 @@ export class BoardEngine {
     return this.ray.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0, 1, 0), 0), p) ? p : null;
   }
   private onDown = (e: PointerEvent) => {
+    this.touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (this.touches.size === 2) {
+      const [a, b] = [...this.touches.values()] as [{ x: number; y: number }, { x: number; y: number }];
+      this.pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), zoom: this.zoom }; this.drag = null; this.panDrag = null; return;
+    }
     this.pick(e);
     const hits = this.ray.intersectObjects(this.root.children, true);
     let id: string | null = null;
     for (const h of hits) { let o: THREE.Object3D | null = h.object; while (o && !o.userData.itemId) o = o.parent; if (o) { id = o.userData.itemId as string; break; } }
     this.events.onSelect(id); this.select(id);
-    if (!id) return;
+    if (!id) {
+      // Fond de planche : faire glisser déplace la vue quand on a zoomé.
+      if (this.zoom > 1) { const p = this.boardPoint(); if (p) { this.panDrag = { x: p.x, z: p.z }; this.renderer.domElement.setPointerCapture(e.pointerId); } }
+      return;
+    }
     const it = this.items.find((i) => i.id === id), p = this.boardPoint();
     if (!it || !p) return;
     this.drag = { id, dx: it.x - p.x, dz: it.z - p.z, moved: false };
     this.renderer.domElement.setPointerCapture(e.pointerId);
   };
   private onMoveEv = (e: PointerEvent) => {
+    if (this.touches.has(e.pointerId)) this.touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (this.pinch && this.touches.size === 2) {
+      const [a, b] = [...this.touches.values()] as [{ x: number; y: number }, { x: number; y: number }];
+      const d = Math.hypot(a.x - b.x, a.y - b.y); this.zoomAt((a.x + b.x) / 2, (a.y + b.y) / 2, (this.pinch.zoom * d / this.pinch.d) / this.zoom); return;
+    }
+    if (this.panDrag) {
+      this.pick(e); const p = this.boardPoint(); if (!p) return;
+      this.pan.set(this.pan.x - (p.x - this.panDrag.x), this.pan.y - (p.z - this.panDrag.z)); this.clampPan(); this.placeCamera();
+      this.pick(e); const q = this.boardPoint(); if (q) this.panDrag = { x: q.x, z: q.z };
+      return;
+    }
     if (!this.drag) return;
     this.pick(e); const p = this.boardPoint(); if (!p) return;
     const it = this.items.find((i) => i.id === this.drag!.id); if (!it) return;
@@ -417,7 +463,10 @@ export class BoardEngine {
     it.z = Math.min(BOARD_D / 2, Math.max(-BOARD_D / 2, p.z + this.drag.dz));
     this.drag.moved = true; this.layout();
   };
-  private onUp = () => {
+  private onUp = (e?: PointerEvent) => {
+    if (e) this.touches.delete(e.pointerId);
+    if (this.touches.size < 2) this.pinch = null;
+    this.panDrag = null;
     const d = this.drag; this.drag = null;
     if (d?.moved) { const it = this.items.find((i) => i.id === d.id); if (it) this.events.onMove(d.id, it.x, it.z); }
     this.layout();

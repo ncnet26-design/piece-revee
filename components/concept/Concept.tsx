@@ -61,9 +61,16 @@ export default function Concept() {
     setSheet("idle");
   };
 
-  const openBoard = () => {
+  const openBoard = async () => {
     if (!res) return;
-    try { localStorage.setItem("pr_planche", JSON.stringify({ v: 1, title: res.card.title, bg: "#EFEBE3", items: composeBoard(res.card.picks) })); } catch { /* stockage plein */ }
+    try {
+      // Planche façon architecte : l'image du concept en tirage, et ses matières autour.
+      const m = await import("@/lib/board/fromImage");
+      const { board, photoId, dataUrl } = await m.boardFromImage(res.image, res.card.title);
+      m.storeBoardWithPhoto(board, photoId, dataUrl);
+    } catch {
+      try { localStorage.setItem("pr_planche", JSON.stringify({ v: 1, title: res.card.title, bg: "#EFEBE3", items: composeBoard(res.card.picks) })); } catch { /* stockage plein */ }
+    }
     router.push("/planche/");
   };
   useEffect(() => { if (msg) document.getElementById("concept-msg")?.focus(); }, [msg]);
@@ -128,7 +135,7 @@ export default function Concept() {
 
           <div className="mt-10 flex flex-wrap gap-2 border-t border-line pt-6">
             <button type="button" className="btn btn-primary" onClick={() => void download()} disabled={sheet === "busy"}>{sheet === "busy" ? <><span className="spinner" /> Préparation…</> : "Télécharger la fiche HD"}</button>
-            <button type="button" className="btn" onClick={openBoard}>Ouvrir dans ma planche</button>
+            <button type="button" className="btn" onClick={() => void openBoard()}>Ouvrir dans ma planche</button>
             <button type="button" className="btn" onClick={() => void create()} disabled={busy}>{busy ? "Création…" : "Autre proposition"}</button>
           </div>
           {left && <p className="mt-3 text-[13px] text-muted">{left}</p>}

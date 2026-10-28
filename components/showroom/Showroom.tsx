@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { materialById } from "@/content/lookup";
-import { FAMILIES, GROUPS, PAINT_FAMILIES, VARIANT_COUNT, familyById, makeRef, parseVariant, variantName, variantShop, withOption, type Family, type Opt } from "@/lib/showroom/catalog";
+import { FAMILIES, GROUPS, PAINT_FAMILIES, VARIANT_COUNT, familyById, makeRef, parseVariant, variantName, variantShop, withOption, type Family, type Opt, variantCode, isColorAxis, customId } from "@/lib/showroom/catalog";
 import { addToStoredBoard } from "@/lib/board/state";
 import { sampleSize } from "@/lib/showroom/geometry";
 import { ShopLinks } from "../ShopLinks";
+import { Maisons } from "../Maisons";
 import { IconClose } from "../icons";
 import { Swatch } from "./Swatch";
 
@@ -131,6 +132,17 @@ export default function Showroom() {
 function Detail({ refId, onChange, onClose, onAdd }: { refId: string; onChange: (r: string) => void; onClose: () => void; onAdd: (r: string) => void }) {
   const v = parseVariant(refId)!;
   const name = variantName(v), shop = variantShop(v), mat = v.family.materialId ? materialById.get(v.family.materialId) : undefined;
+  const viewerBox = useRef<HTMLDivElement>(null);
+  const [ai, setAi] = useState<{ busy: boolean; image: string | null; msg: string | null; ref: string } | null>(null);
+  if (ai && ai.ref !== refId && !ai.busy) setAi(null);
+  /** L'échantillon 3D, photographié pour de vrai par IA (même angle, même matière). */
+  const makePhoto = async () => {
+    const cv = viewerBox.current?.querySelector("canvas"); if (!cv) return;
+    setAi({ busy: true, image: null, msg: null, ref: refId });
+    const { photoreal } = await import("@/lib/ia");
+    const r = await photoreal(cv.toDataURL("image/jpeg", 0.92), `Un seul échantillon : ${name}.`, "1:1");
+    setAi({ busy: false, image: r.ok ? r.image : null, msg: r.ok ? null : r.message, ref: refId });
+  };
   useEffect(() => {
     const k = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", k); document.body.style.overflow = "hidden";
@@ -140,7 +152,19 @@ function Detail({ refId, onChange, onClose, onAdd }: { refId: string; onChange: 
     <div className="fixed inset-0 z-50 flex justify-end bg-black/45 backdrop-blur-[2px]" role="dialog" aria-modal="true" aria-label={name} onClick={onClose}>
       <div className="flex h-full w-full max-w-[1040px] flex-col overflow-y-auto bg-[var(--bg)] shadow-2xl lg:flex-row" onClick={(e) => e.stopPropagation()}>
         <div className="relative aspect-square w-full shrink-0 bg-[radial-gradient(circle_at_40%_35%,#FBF8F2,#E6E0D5)] lg:aspect-auto lg:h-full lg:w-[54%]">
-          <SampleViewer refId={refId} label={`Échantillon en 3D : ${name}. Faites glisser pour le tourner.`} />
+          <div ref={viewerBox} className="h-full w-full"><SampleViewer refId={refId} label={`Échantillon en 3D : ${name}. Faites glisser pour le tourner.`} /></div>
+          {ai?.image && (
+            <div className="absolute inset-0 bg-[var(--bg)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={ai.image} alt={`Photo réaliste créée par IA : ${name}`} className="h-full w-full object-cover" />
+              <span className="absolute left-4 top-14 rounded-full bg-white/80 px-3 py-1 text-[11.5px] text-ink/80 backdrop-blur">Photo créée par IA</span>
+            </div>
+          )}
+          <div className="absolute bottom-4 right-4 flex gap-2">
+            {ai?.image && <><a className="btn btn-sm btn-light" href={ai.image} download={`${name.toLowerCase().replace(/[^a-z0-9]+/gi, "-")}.jpg`}>Télécharger</a><button type="button" className="btn btn-sm btn-light" onClick={() => setAi(null)}>Revenir à la 3D</button></>}
+            {!ai?.image && <button type="button" className="btn btn-sm btn-light" onClick={() => void makePhoto()} disabled={ai?.busy}>{ai?.busy ? <><span className="spinner" /> Photo en cours…</> : "Photo réaliste (IA)"}</button>}
+          </div>
+          {ai?.msg && <p role="status" className="absolute bottom-16 right-4 max-w-[70%] rounded-[12px] bg-white/90 px-3 py-2 text-[12.5px] text-ink shadow">{ai.msg}</p>}
           <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-white/70 px-3 py-1 text-[11.5px] uppercase tracking-[.14em] text-ink/70 backdrop-blur">Échantillon {Math.round(sampleSize(v.family.gen) * 100)} × {Math.round(sampleSize(v.family.gen) * 100)} cm</span>
         </div>
         <div className="flex flex-1 flex-col gap-5 p-6 sm:p-8">
@@ -149,6 +173,7 @@ function Detail({ refId, onChange, onClose, onAdd }: { refId: string; onChange: 
               <span className="eyebrow">{v.family.name}</span>
               <h2 className="mt-2 text-[clamp(28px,3vw,40px)] leading-[1.02]">{variantName(v, true)}</h2>
               <p className="mt-1 text-[14px] text-muted">{name.split(" · ").slice(1).join(" · ")}</p>
+              <p className="mt-1 font-mono text-[11.5px] tracking-[.04em] text-muted">Réf. {variantCode(v)}</p>
             </div>
             <button type="button" className="btn btn-sm btn-ghost" aria-label="Fermer" onClick={onClose}><IconClose width={18} height={18} /></button>
           </div>
@@ -163,6 +188,12 @@ function Detail({ refId, onChange, onClose, onAdd }: { refId: string; onChange: 
                       className={`h-7 w-7 rounded-full ring-offset-2 ring-offset-[var(--bg)] transition ${on ? "ring-2 ring-[var(--accent)]" : "ring-1 ring-black/10 hover:scale-110"}`} style={{ background: o.hex }} />
                     : <button key={o.id} type="button" aria-pressed={on} onClick={() => onChange(withOption(refId, a.id, o.id))} className={`chip text-[13px] ${on ? "chip-on" : ""}`}>{o.label}</button>;
                 })}
+                {isColorAxis(a) && (
+                  <label className={`relative grid h-7 w-7 cursor-pointer place-items-center rounded-full ring-offset-2 ring-offset-[var(--bg)] ${v.opts[i]!.id.startsWith("x-") ? "ring-2 ring-[var(--accent)]" : "ring-1 ring-black/10"}`} style={{ background: "conic-gradient(#e66 0 16%,#ec6 0 33%,#6c6 0 50%,#6ce 0 66%,#66e 0 83%,#e6e 0)" }} title="Teinte sur mesure">
+                    <span className="sr-only">Teinte sur mesure ({a.label.toLowerCase()})</span>
+                    <input type="color" className="absolute inset-0 h-full w-full cursor-pointer opacity-0" value={v.opts[i]!.hex ?? "#cccccc"} onChange={(e) => onChange(withOption(refId, a.id, customId(e.target.value)))} />
+                  </label>
+                )}
               </div>
             </div>
           ))}
@@ -172,6 +203,7 @@ function Detail({ refId, onChange, onClose, onAdd }: { refId: string; onChange: 
           </div>
           {mat && <p className="text-[13.5px] text-muted">Prix indicatif : <b className="font-medium text-ink">{mat.priceRange}</b>. Entretien : {mat.care}</p>}
           {shop.q && <div className="border-t border-line pt-5"><ShopLinks query={shop.q} kinds={shop.kinds} max={4} /></div>}
+          <Maisons family={v.family.id} compact />
           <p className="text-[11.5px] text-muted">Rendu généré à partir de textures photographiées (Poly Haven, CC0) et de relevés de teintes : les couleurs réelles varient selon les lots et l'éclairage. Demandez un échantillon avant de commander.</p>
         </div>
       </div>

@@ -7,7 +7,7 @@ import type { RetailerKind } from "@/lib/retailers";
  */
 export interface Opt { id: string; label: string; hex?: string; colors?: string[] }
 export interface Axis { id: string; label: string; options: Opt[] }
-export type Generator = "tile" | "cement" | "marble" | "terrazzo" | "wood" | "paint" | "plaster" | "fabric" | "leather" | "metal";
+export type Generator = "tile" | "cement" | "marble" | "terrazzo" | "wood" | "paint" | "plaster" | "fabric" | "leather" | "metal" | "fluted" | "hardware" | "wallpaper" | "carpet" | "cane" | "object" | "lighting" | "electric" | "sofa" | "rug" | "art" | "mosaic" | "styling";
 export interface Family {
   id: string;
   name: string;
@@ -15,7 +15,9 @@ export interface Family {
   shop: string;
   kinds: RetailerKind[];
   gen: Generator;
-  group: "Carrelages" | "Pierres" | "Bois" | "Murs" | "Textiles" | "Métaux";
+  group: "Carrelages" | "Pierres" | "Bois" | "Murs" | "Textiles" | "Métaux" | "Objets";
+  /** Code court de la référence (« ZEL » → PR-ZEL-…). */
+  code: string;
   intro: string;
   /** Fiche de la matériauthèque liée (prix indicatif, entretien, pose). */
   materialId?: string;
@@ -55,7 +57,7 @@ const PLASTER_COLORS: Opt[] = [
 
 export const FAMILIES: Family[] = [
   {
-    id: "zellige", name: "Zellige", shop: "zellige", kinds: ["bricolage", "deco"], gen: "tile", group: "Carrelages", materialId: "m-zellige",
+    id: "zellige", code: "ZEL", name: "Zellige", shop: "zellige", kinds: ["bricolage", "deco"], gen: "tile", group: "Carrelages", materialId: "m-zellige",
     intro: "Carreaux de terre émaillée façonnés à la main : chaque pièce a sa nuance, son relief et ses bords irréguliers.",
     axes: [
       { id: "teinte", label: "Teinte", options: [o("blanc", "Blanc naturel", "#EDE8DC"), o("blanc-casse", "Blanc cassé", "#E3DBC9"), o("gris-perle", "Gris perle", "#C9C8C2"), o("noir", "Noir", "#1E1F1F"), o("emeraude", "Vert émeraude", "#1E6B55"), o("sapin", "Vert sapin", "#234A3A"), o("vert-eau", "Vert d'eau", "#A9C9BE"), o("olive", "Vert olive", "#6E7344"), o("majorelle", "Bleu Majorelle", "#2E46A8"), o("bleu-nuit", "Bleu nuit", "#1C2B4A"), o("bleu-ciel", "Bleu ciel", "#8DB6CF"), o("turquoise", "Turquoise", "#2F8C8A"), o("terracotta", "Terracotta", "#B35A3B"), o("rose", "Rose poudré", "#D8A79A"), o("ocre", "Ocre jaune", "#C99A3E"), o("miel", "Miel", "#C98F45"), o("brique", "Rouge brique", "#8E3A2C")] },
@@ -65,7 +67,7 @@ export const FAMILIES: Family[] = [
     ],
   },
   {
-    id: "faience", name: "Faïence et métro", shop: "faïence", kinds: ["bricolage", "deco"], gen: "tile", group: "Carrelages", materialId: "m-metro",
+    id: "faience", code: "FAI", name: "Faïence et métro", shop: "faïence", kinds: ["bricolage", "deco"], gen: "tile", group: "Carrelages", materialId: "m-metro",
     intro: "Carreaux émaillés réguliers, plats ou biseautés, pour la cuisine et la salle de bain.",
     axes: [
       { id: "teinte", label: "Teinte", options: [o("blanc", "Blanc", "#F3F2EE"), o("blanc-casse", "Blanc cassé", "#EAE5DA"), o("creme", "Crème", "#E9DFC8"), o("gris-clair", "Gris clair", "#CFD0CC"), o("anthracite", "Anthracite", "#45484A"), o("noir", "Noir", "#1E1F21"), o("sauge", "Vert sauge", "#9FAE96"), o("bouteille", "Vert bouteille", "#24443A"), o("vert-eau", "Vert d'eau", "#B8D1C8"), o("canard", "Bleu canard", "#24545C"), o("bleu-nuit", "Bleu nuit", "#233150"), o("rose", "Rose poudré", "#DDB3A6"), o("terracotta", "Terracotta", "#B8674A"), o("moutarde", "Moutarde", "#C99A2E")] },
@@ -75,7 +77,7 @@ export const FAMILIES: Family[] = [
     ],
   },
   {
-    id: "tomette", name: "Tomettes et terre cuite", shop: "tomette", kinds: ["bricolage"], gen: "tile", group: "Carrelages", materialId: "m-tomette",
+    id: "tomette", code: "TOM", name: "Tomettes et terre cuite", shop: "tomette", kinds: ["bricolage"], gen: "tile", group: "Carrelages", materialId: "m-tomette",
     intro: "Terre cuite de Provence ou de Bourgogne, hexagonale ou carrée, qui se patine avec les années.",
     axes: [
       { id: "teinte", label: "Teinte", options: [o("rouge", "Rouge", "#B5603E"), o("rose", "Rose", "#C98468"), o("nuancee", "Nuancée", "#B9714F"), o("ocre", "Ocre", "#C9924F"), o("blanchie", "Blanchie", "#D9BFA5")] },
@@ -85,7 +87,7 @@ export const FAMILIES: Family[] = [
     ],
   },
   {
-    id: "ciment", name: "Carreaux de ciment", shop: "carreau ciment", kinds: ["bricolage", "deco"], gen: "cement", group: "Carrelages", materialId: "m-ciment",
+    id: "ciment", code: "CIM", name: "Carreaux de ciment", shop: "carreau ciment", kinds: ["bricolage", "deco"], gen: "cement", group: "Carrelages", materialId: "m-ciment",
     intro: "Motifs coulés dans la masse, mats et veloutés : le charme des sols de 1900.",
     axes: [
       { id: "motif", label: "Motif", options: [o("etoile", "Étoile"), o("rosace", "Rosace"), o("losange", "Losange"), o("sablier", "Sablier"), o("arabesque", "Arabesque"), o("ecaille", "Écailles"), o("damier", "Damier"), o("uni", "Uni")] },
@@ -93,16 +95,24 @@ export const FAMILIES: Family[] = [
     ],
   },
   {
-    id: "terrazzo", name: "Terrazzo", shop: "terrazzo", kinds: ["bricolage", "deco"], gen: "terrazzo", group: "Carrelages", materialId: "m-terrazzo",
+    id: "mosaique", code: "MOS", name: "Mosaïques de marbre", shop: "mosaïque marbre", kinds: ["bricolage", "deco"], gen: "mosaic", group: "Carrelages",
+    intro: "Triangles cerclés de vert, hexagones à cabochons, chevrons et écailles : des mosaïques de marbre assemblées pièce à pièce.",
+    axes: [
+      { id: "motif", label: "Motif", options: [o("triangles", "Triangles cerclés"), o("hexagones", "Hexagones à cabochons"), o("chevrons", "Chevrons"), o("ecailles", "Écailles"), o("damier", "Damier en diagonale")] },
+      { id: "palette", label: "Marbres", options: [pal("vert-noir", "Blanc, noir et vert", ["#F1EFEA", "#1C1C1D", "#1F4A3A"]), pal("laiton", "Blanc, travertin et laiton", ["#F1EFEA", "#D9C3A0", "#B88A45"]), pal("rose", "Blanc, rose et terre", ["#F1EFEA", "#D8A99A", "#9C4A36"]), pal("bleu", "Blanc, bleu et gris", ["#F1EFEA", "#24345A", "#9AA3A8"])] },
+    ],
+  },
+  {
+    id: "terrazzo", code: "TER", name: "Terrazzo", shop: "terrazzo", kinds: ["bricolage", "deco"], gen: "terrazzo", group: "Carrelages", materialId: "m-terrazzo",
     intro: "Éclats de marbre pris dans un liant, poncés et polis : vénitien à l'origine, graphique aujourd'hui.",
     axes: [
-      { id: "fond", label: "Fond", options: [o("blanc", "Blanc", "#ECE7DE"), o("sable", "Sable", "#E0D3BC"), o("gris", "Gris", "#B9B7B1"), o("rose", "Rose", "#E6C9BE"), o("sauge", "Vert sauge", "#B9C2AE"), o("terracotta", "Terracotta", "#C98668"), o("noir", "Noir", "#2B2B2A")] },
+      { id: "fond", label: "Fond", options: [o("blanc", "Blanc", "#ECE7DE"), o("sable", "Sable", "#E0D3BC"), o("gris", "Gris", "#B9B7B1"), o("rose", "Rose", "#E6C9BE"), o("sauge", "Vert sauge", "#B9C2AE"), o("terracotta", "Terracotta", "#C98668"), o("noir", "Noir", "#2B2B2A"), o("ambre", "Résine ambre", "#C9A26A")] },
       { id: "eclats", label: "Éclats", options: [o("fins", "Fins"), o("moyens", "Moyens"), o("gros", "Gros")] },
       { id: "palette", label: "Couleur des éclats", options: [pal("multi", "Multicolore", ["#B6553A", "#3E5B4C", "#C9B08A", "#2C2C2C", "#D9C9B0"]), pal("ton", "Ton sur ton", []), pal("nb", "Noir et blanc", ["#1F1F1F", "#F2F0EB", "#8E8E8A"]), pal("terre", "Terres", ["#B5603E", "#C9924F", "#7A4A33", "#E3CBB0"])] },
     ],
   },
   {
-    id: "marbre", name: "Marbres et pierres", shop: "marbre", kinds: ["bricolage", "deco"], gen: "marble", group: "Pierres", materialId: "m-carrare",
+    id: "marbre", code: "PIE", name: "Marbres et pierres", shop: "marbre", kinds: ["bricolage", "deco"], gen: "marble", group: "Pierres", materialId: "m-carrare",
     intro: "Des grands marbres italiens aux pierres de Bourgogne, polis, adoucis ou vieillis.",
     axes: [
       { id: "pierre", label: "Pierre", options: [pal("carrare", "Marbre de Carrare", ["#EDEDEA", "#8E9396"]), pal("calacatta", "Calacatta", ["#F3F1EC", "#A08A66"]), pal("viola", "Calacatta Viola", ["#F1ECE8", "#7E4352"]), pal("nero", "Nero Marquina", ["#1C1C1D", "#E4E2DE"]), pal("verde", "Vert des Alpes", ["#1F3B30", "#D7E2DA"]), pal("rosa", "Rose du Portugal", ["#E7CFC4", "#B98577"]), pal("emperador", "Emperador", ["#5A4334", "#D9C2A2"]), pal("travertin", "Travertin", ["#E1D1B5", "#B49C78"]), pal("bourgogne", "Pierre de Bourgogne", ["#E2D8C3", "#BFB295"]), pal("ardoise", "Ardoise", ["#3F4448", "#5C6367"])] },
@@ -110,7 +120,7 @@ export const FAMILIES: Family[] = [
     ],
   },
   {
-    id: "parquet", name: "Parquets", shop: "parquet", kinds: ["bricolage"], gen: "wood", group: "Bois", materialId: "m-chene",
+    id: "parquet", code: "PAR", name: "Parquets", shop: "parquet", kinds: ["bricolage"], gen: "wood", group: "Bois", materialId: "m-chene",
     intro: "Essences, poses et finitions : des lames à l'anglaise au point de Hongrie.",
     axes: [
       { id: "essence", label: "Essence", options: [pal("chene", "Chêne naturel", ["#8A6239", "#D6B07A"]), pal("chene-clair", "Chêne blanchi", ["#B3A086", "#ECE2D1"]), pal("chene-miel", "Chêne miel", ["#86592F", "#D9A866"]), pal("chene-fume", "Chêne fumé", ["#3B2A1E", "#7E5E44"]), pal("noyer", "Noyer", ["#3D2A1F", "#8A6448"]), pal("teck", "Teck", ["#6B4524", "#B57F4A"]), pal("frene", "Frêne", ["#B5A184", "#EFE4CF"]), pal("pin", "Pin", ["#B98B55", "#ECD3A4"])] },
@@ -119,7 +129,7 @@ export const FAMILIES: Family[] = [
     ],
   },
   {
-    id: "peinture", name: "Peintures", shop: "peinture", kinds: ["bricolage", "deco"], gen: "paint", group: "Murs", materialId: "m-chaux",
+    id: "peinture", code: "PEI", name: "Peintures", shop: "peinture", kinds: ["bricolage", "deco"], gen: "paint", group: "Murs", materialId: "m-chaux",
     intro: `${PAINT_SHADES.length} teintes, de mat profond à brillant laqué. Demandez toujours un échantillon réel avant de peindre.`,
     axes: [
       { id: "teinte", label: "Teinte", options: PAINT_SHADES },
@@ -127,7 +137,7 @@ export const FAMILIES: Family[] = [
     ],
   },
   {
-    id: "enduit", name: "Enduits décoratifs", shop: "enduit décoratif", kinds: ["bricolage"], gen: "plaster", group: "Murs", materialId: "m-tadelakt",
+    id: "enduit", code: "END", name: "Enduits décoratifs", shop: "enduit décoratif", kinds: ["bricolage"], gen: "plaster", group: "Murs", materialId: "m-tadelakt",
     intro: "Chaux, tadelakt, béton ciré, stuc : des murs et des sols minéraux, nuancés à la main.",
     axes: [
       { id: "type", label: "Enduit", options: [o("chaux", "Badigeon de chaux"), o("tadelakt", "Tadelakt"), o("beton-cire", "Béton ciré"), o("microciment", "Microciment"), o("stuc", "Stuc vénitien"), o("argile", "Enduit d'argile")] },
@@ -136,7 +146,7 @@ export const FAMILIES: Family[] = [
     ],
   },
   {
-    id: "tissu", name: "Tissus", shop: "tissu", kinds: ["deco", "meuble"], gen: "fabric", group: "Textiles", materialId: "m-lin",
+    id: "tissu", code: "TIS", name: "Tissus", shop: "tissu", kinds: ["deco", "meuble"], gen: "fabric", group: "Textiles", materialId: "m-lin",
     intro: "Lin, coton, velours, bouclette, laine : de vraies trames photographiées, dans vingt-quatre couleurs.",
     axes: [
       { id: "matiere", label: "Tissu", options: [o("lin", "Lin lavé"), o("coton", "Coton"), o("velours", "Velours"), o("cotele", "Velours côtelé"), o("bouclette", "Bouclette"), o("laine", "Laine à chevrons"), o("chine", "Laine chinée"), o("jute", "Toile de jute")] },
@@ -144,25 +154,128 @@ export const FAMILIES: Family[] = [
     ],
   },
   {
-    id: "cuir", name: "Cuirs", shop: "cuir", kinds: ["deco", "meuble"], gen: "leather", group: "Textiles", materialId: "m-cuir",
+    id: "cuir", code: "CUI", name: "Cuirs", shop: "cuir", kinds: ["deco", "meuble"], gen: "leather", group: "Textiles", materialId: "m-cuir",
     intro: "Pleine fleur, vieilli, nubuck ou tressé, pour l'assise, la poignée, le détail.",
     axes: [
-      { id: "type", label: "Cuir", options: [o("pleine-fleur", "Pleine fleur"), o("vieilli", "Vieilli"), o("nubuck", "Nubuck"), o("tresse", "Tressé")] },
+      { id: "type", label: "Cuir", options: [o("pleine-fleur", "Pleine fleur"), o("vieilli", "Vieilli"), o("nubuck", "Nubuck"), o("tresse", "Tressé"), o("croco", "Embossé croco")] },
       { id: "couleur", label: "Couleur", options: [o("cognac", "Cognac", "#8A5434"), o("naturel", "Naturel", "#C49A6C"), o("camel", "Camel", "#A8743F"), o("chocolat", "Chocolat", "#4E3626"), o("noir", "Noir", "#1E1B19"), o("bordeaux", "Bordeaux", "#5E2328"), o("olive", "Olive", "#4F5236"), o("gris", "Gris", "#6E6A66"), o("blanc-casse", "Blanc cassé", "#E2DACB")] },
     ],
   },
   {
-    id: "metal", name: "Métaux", shop: "", kinds: ["bricolage", "deco"], gen: "metal", group: "Métaux", materialId: "m-laiton",
+    id: "metal", code: "MET", name: "Métaux", shop: "", kinds: ["bricolage", "deco"], gen: "metal", group: "Métaux", materialId: "m-laiton",
     intro: "Laiton, bronze, cuivre, inox, acier noirci : poignées, robinetterie, luminaires, pieds de meubles.",
     axes: [
       { id: "metal", label: "Métal", options: [o("laiton", "Laiton", "#C49A52"), o("bronze", "Bronze", "#8C6239"), o("cuivre", "Cuivre", "#B87333"), o("inox", "Inox", "#B9BCBC"), o("chrome", "Chrome", "#D5D8DA"), o("zinc", "Zinc", "#9DA3A6"), o("acier-noir", "Acier noirci", "#2A2C2E")] },
       { id: "finition", label: "Finition", options: [o("brosse", "Brossé"), o("poli", "Poli"), o("vieilli", "Vieilli patiné")] },
     ],
   },
+  {
+    id: "cannele", code: "CAN", name: "Bois cannelé et tasseaux", shop: "panneau bois cannelé", kinds: ["bricolage", "deco"], gen: "fluted", group: "Bois",
+    intro: "Panneaux à joncs, cannelures creusées ou tasseaux sur feutre : le relief du bois massif pour les murs, façades et têtes de lit.",
+    axes: [
+      { id: "essence", label: "Essence", options: [pal("chene", "Chêne naturel", ["#8A6239", "#D6B07A"]), pal("chene-clair", "Chêne blanchi", ["#B3A086", "#ECE2D1"]), pal("chene-fume", "Chêne fumé", ["#3B2A1E", "#7E5E44"]), pal("noyer", "Noyer", ["#3D2A1F", "#8A6448"]), pal("frene", "Frêne", ["#B5A184", "#EFE4CF"]), pal("teinte-noir", "Chêne teinté noir", ["#1C1A18", "#3E3731"])] },
+      { id: "profil", label: "Profil", options: [o("joncs", "Joncs demi-ronds 20 mm"), o("joncs-fins", "Joncs fins 12 mm"), o("cannelures", "Cannelures creusées"), o("tasseaux", "Tasseaux sur feutre")] },
+      { id: "finition", label: "Finition", options: [o("huile", "Huilé mat"), o("vitrifie", "Vernis satiné"), o("brut", "Brut brossé")] },
+    ],
+  },
+  {
+    id: "cannage", code: "CNG", name: "Cannage et rotin", shop: "cannage rotin", kinds: ["deco", "meuble"], gen: "cane", group: "Bois",
+    intro: "Le cannage à maille octogonale des chaises bistrot, la maille carrée et le rotin tressé, pour les portes de buffet et les assises.",
+    axes: [
+      { id: "tressage", label: "Tressage", options: [o("octogonal", "Cannage traditionnel (maille octogonale)"), o("carre", "Maille carrée"), o("tresse", "Rotin tressé plein")] },
+      { id: "teinte", label: "Teinte", options: [o("naturel", "Naturel", "#D6B47E"), o("miel", "Miel", "#B98340"), o("blanchi", "Blanchi", "#E4D8C2"), o("tabac", "Tabac", "#7E5230"), o("noir", "Noir", "#26221F")] },
+    ],
+  },
+  {
+    id: "papier-peint", code: "PAP", name: "Papiers peints", shop: "papier peint", kinds: ["bricolage", "deco"], gen: "wallpaper", group: "Murs",
+    intro: "Grandes feuilles, rayures, arches, éventails Art déco : des motifs imprimés sur papier intissé, dans neuf harmonies.",
+    axes: [
+      { id: "motif", label: "Motif", options: [o("feuillage", "Grandes feuilles"), o("rayures", "Rayures"), o("chevrons", "Chevrons"), o("pois", "Pois"), o("arches", "Arches"), o("eventails", "Éventails Art déco"), o("treillage", "Treillage"), o("uni", "Uni toilé")] },
+      { id: "coloris", label: "Coloris", options: [pal("peche", "Pêche et corail", ["#F1D3C4", "#D98468"]), pal("sauge", "Sauge", ["#E0E4D6", "#7E9479"]), pal("bleu", "Bleu de Delft", ["#E8ECEF", "#34507A"]), pal("terracotta", "Terracotta", ["#F0E2D2", "#B5603E"]), pal("rose", "Vieux rose", ["#F3E0D9", "#B97E7A"]), pal("moutarde", "Moutarde", ["#F2E6C8", "#B98A33"]), pal("creme", "Crème et lin", ["#F2ECE1", "#B5A386"]), pal("vert-foret", "Vert forêt et or", ["#22392F", "#C9B07E"]), pal("noir-or", "Noir et or", ["#23252A", "#C49A52"])] },
+    ],
+  },
+  {
+    id: "moquette", code: "MOQ", name: "Moquettes et tapis", shop: "moquette", kinds: ["bricolage", "deco"], gen: "carpet", group: "Textiles",
+    intro: "Bouclée, velours ras, berbère chiné ou sisal : des fibres épaisses, à voir à l'échelle d'une dalle.",
+    axes: [
+      { id: "type", label: "Fibre", options: [o("bouclee", "Bouclée"), o("velours", "Velours ras"), o("berbere", "Berbère chiné"), o("sisal", "Sisal tissé")] },
+      { id: "couleur", label: "Couleur", options: FABRIC_COLORS.filter((c) => !["blanc", "noir", "lavande", "moutarde"].includes(c.id)) },
+    ],
+  },
+  {
+    id: "quincaillerie", code: "QUI", name: "Quincaillerie", shop: "poignée", kinds: ["bricolage", "deco"], gen: "hardware", group: "Métaux",
+    intro: "Barres moletées, boutons, poignées coquille, béquilles sur rosace : la quincaillerie en volume, dans six métaux et trois finitions.",
+    axes: [
+      { id: "modele", label: "Modèle", options: [o("barre-moletee", "Barre moletée sur rosaces"), o("bouton-molete", "Bouton moleté"), o("bouton-rond", "Bouton rond"), o("poignee-t", "Poignée en T"), o("coquille", "Poignée coquille"), o("bequille", "Béquille sur rosace"), o("anneau", "Anneau tombant"), o("bouton-strie", "Bouton strié en spirale"), o("robinet", "Mitigeur de cuisine col carré"), o("pastille", "Pastille de finition")] },
+      { id: "metal", label: "Métal", options: [o("laiton", "Laiton", "#C49A52"), o("bronze", "Bronze", "#8C6239"), o("cuivre", "Cuivre", "#B87333"), o("inox", "Inox", "#B9BCBC"), o("chrome", "Chrome", "#D5D8DA"), o("acier-noir", "Acier noirci", "#2A2C2E")] },
+      { id: "finition", label: "Finition", options: [o("brosse", "Brossé"), o("poli", "Poli"), o("vieilli", "Vieilli patiné")] },
+    ],
+  },
+  {
+    id: "luminaires", code: "LUM", name: "Luminaires et LED", shop: "luminaire", kinds: ["deco", "bricolage"], gen: "lighting", group: "Objets",
+    intro: "Lustres, suspensions, appliques, spots, rubans LED et lampadaires, allumés dans la teinte de lumière choisie.",
+    axes: [
+      { id: "forme", label: "Luminaire", options: [o("lustre-spoutnik", "Lustre Spoutnik"), o("lustre-anneaux", "Lustre à anneaux"), o("suspension-globe", "Suspension globe opaline"), o("suspension-cloche", "Suspension cloche"), o("applique-demi-lune", "Applique demi-lune"), o("applique-bras", "Applique à bras"), o("spot-encastre", "Spot encastré"), o("rail-spots", "Rail de spots"), o("ruban-led", "Ruban LED en profilé"), o("lampadaire-arc", "Lampadaire arc"), o("lampe-plissee", "Lampe à poser plissée")] },
+      { id: "finition", label: "Finition", options: [o("laiton", "Laiton brossé", "#C49A52"), o("noir", "Noir mat", "#232323"), o("blanc", "Blanc mat", "#EEEDEA"), o("chrome", "Chrome", "#D5D8DA"), o("bronze", "Bronze", "#8C6239")] },
+      { id: "lumiere", label: "Lumière", options: [o("2700", "Blanc chaud 2700 K", "#FFD39A"), o("3000", "Blanc doux 3000 K", "#FFE2BE"), o("4000", "Blanc neutre 4000 K", "#FFF3E6")] },
+    ],
+  },
+  {
+    id: "electricite", code: "ELE", name: "Interrupteurs et prises", shop: "interrupteur", kinds: ["bricolage"], gen: "electric", group: "Métaux",
+    intro: "Interrupteurs à bascule, poussoirs, variateurs, prises simples, doubles et USB-C : la finition qui accompagne la quincaillerie.",
+    axes: [
+      { id: "modele", label: "Modèle", options: [o("bascule", "Interrupteur à bascule"), o("poussoir", "Interrupteur à poussoir"), o("variateur", "Variateur rotatif"), o("double", "Double interrupteur"), o("prise", "Prise de courant"), o("prise-double", "Prise double"), o("prise-usb", "Prise et USB-C")] },
+      { id: "finition", label: "Finition", options: [o("laiton", "Laiton brossé", "#C49A52"), o("porcelaine", "Porcelaine blanche", "#F4F2EE"), o("noir", "Noir mat", "#232323"), o("chrome", "Chrome", "#D5D8DA"), o("bronze", "Bronze", "#8C6239"), o("inox", "Inox brossé", "#B9BCBC")] },
+    ],
+  },
+  {
+    id: "assises", code: "ASS", name: "Canapés et assises", shop: "canapé", kinds: ["meuble", "deco"], gen: "sofa", group: "Textiles",
+    intro: "Canapé droit, canapé courbe, fauteuil, banquette et pouf, habillés de chacun de nos tissus.",
+    axes: [
+      { id: "modele", label: "Modèle", options: [o("canape-droit", "Canapé droit 3 places"), o("canape-courbe", "Canapé courbe"), o("fauteuil", "Fauteuil enveloppant"), o("banquette", "Banquette"), o("pouf", "Pouf rond")] },
+      { id: "tissu", label: "Tissu", options: [o("velours", "Velours"), o("bouclette", "Bouclette"), o("lin", "Lin lavé"), o("cotele", "Velours côtelé")] },
+      { id: "couleur", label: "Couleur", options: FABRIC_COLORS },
+    ],
+  },
+  {
+    id: "tapis", code: "TAP", name: "Tapis", shop: "tapis", kinds: ["deco"], gen: "rug", group: "Textiles",
+    intro: "Tapis rectangulaires, ronds et de passage, unis, rayés, berbères, bordés ou tuftés, à la bonne échelle sous vos meubles.",
+    axes: [
+      { id: "forme", label: "Format", options: [o("rectangle", "200 × 300 cm"), o("rond", "Rond Ø 200 cm"), o("passage", "Passage 80 × 240 cm")] },
+      { id: "motif", label: "Motif", options: [o("uni", "Uni"), o("raye", "Rayé"), o("berbere", "Losanges berbères"), o("borde", "Bordure contrastée"), o("tufte", "Formes tuftées")] },
+      { id: "couleur", label: "Couleur", options: FABRIC_COLORS.filter((c) => ["ecru", "sable", "lin", "camel", "terracotta", "rouille", "olive", "sauge", "bleu-nuit", "gris-clair", "anthracite", "rose-poudre"].includes(c.id)) },
+    ],
+  },
+  {
+    id: "tableaux", code: "ART", name: "Tableaux et œuvres", shop: "tableau abstrait", kinds: ["deco"], gen: "art", group: "Objets",
+    intro: "Compositions abstraites originales, peintes pour Pièce Rêvée, encadrées de chêne, de noir ou de laiton, ou sur toile.",
+    axes: [
+      { id: "composition", label: "Composition", options: [o("champs", "Champs colorés"), o("arches", "Arches"), o("ligne", "Ligne continue"), o("organique", "Formes organiques"), o("soleil", "Soleil couchant"), o("texture", "Monochrome texturé")] },
+      { id: "palette", label: "Palette", options: [pal("terre", "Terres", ["#EFE6D8", "#C0714F", "#8A5B36", "#D9B88F"]), pal("sauge", "Sauge et sable", ["#EEEBE2", "#9DAA8C", "#D6C3A3", "#5E6B4F"]), pal("bleu", "Bleus", ["#ECEDEC", "#34507A", "#A9B2C9", "#1D2A44"]), pal("noir-blanc", "Noir et blanc", ["#F1EFEA", "#1E1E1E", "#8E8E8A", "#D6D3CC"]), pal("rose", "Rose et ocre", ["#F3E6DF", "#D9A08E", "#C99A45", "#8E4A55"])] },
+      { id: "cadre", label: "Cadre", options: [o("chene", "Cadre chêne"), o("noir", "Cadre noir"), o("laiton", "Cadre laiton"), o("toile", "Toile sans cadre")] },
+    ],
+  },
+  {
+    id: "stylisme", code: "STY", name: "Objets de stylisme", shop: "fleurs séchées", kinds: ["deco"], gen: "styling", group: "Objets",
+    intro: "Branches, fleurs et feuilles séchées, tasse en grès, cuillère en laiton, galet : les touches vivantes qui font respirer une planche.",
+    axes: [
+      { id: "objet", label: "Objet", options: [o("tulipe", "Tulipe séchée"), o("branche", "Branche de bois flotté"), o("feuille", "Feuille d'arum séchée"), o("eucalyptus", "Brin d'eucalyptus"), o("tasse", "Tasse en grès"), o("cuillere", "Cuillère en laiton"), o("galet", "Galet poli")] },
+      { id: "nuance", label: "Nuance", options: [o("rouge", "Rouge garance", "#A8343A"), o("rose", "Vieux rose", "#C98A86"), o("blanc", "Blanc cassé", "#EAE3D4"), o("sable", "Sable", "#CDB28A"), o("vert", "Vert sauge", "#8FA07A"), o("ocre", "Ocre", "#C99A45"), o("noir", "Noir", "#2A2826")] },
+    ],
+  },
+  {
+    id: "objets", code: "OBJ", name: "Objets de design", shop: "", kinds: ["deco", "meuble"], gen: "object", group: "Objets",
+    intro: "Vases, lampes, guéridons, tabourets, miroirs, sculptures : quinze formes d'éditeur dans quinze matières, en volume et à l'échelle.",
+    axes: [
+      { id: "forme", label: "Forme", options: [o("vase-amphore", "Vase amphore"), o("vase-boule", "Vase boule"), o("vase-cylindre", "Vase cylindre"), o("soliflore", "Soliflore"), o("coupe", "Coupe sur pied"), o("bougeoir", "Bougeoir"), o("lampe-champignon", "Lampe champignon"), o("lampe-globe", "Lampe globe"), o("gueridon", "Guéridon"), o("table-tambour", "Table basse tambour"), o("tabouret", "Tabouret tripode"), o("miroir-arche", "Miroir arche"), o("jardiniere", "Jardinière et buis"), o("plateau", "Plateau ovale"), o("sculpture", "Sculpture empilée")] },
+      { id: "matiere", label: "Matière", options: [o("ceramique-craie", "Céramique blanc craie", "#ECE8DF"), o("ceramique-sauge", "Céramique sauge", "#9DAA8C"), o("ceramique-terracotta", "Céramique terracotta", "#C0714F"), o("ceramique-cobalt", "Céramique bleu cobalt", "#2C4A8C"), o("ceramique-noire", "Céramique noire", "#2A2A28"), o("ceramique-rose", "Céramique rose thé", "#E3C1B4"), o("gres", "Grès brut", "#C9B08E"), o("travertin", "Travertin", "#E1D1B5"), o("marbre-blanc", "Marbre Calacatta", "#F3F1EC"), o("marbre-vert", "Marbre vert des Alpes", "#1F3B30"), o("noyer", "Noyer massif", "#5B4030"), o("chene", "Chêne massif", "#B98E5E"), o("laiton", "Laiton poli", "#C49A52"), o("acier-noir", "Acier noirci", "#2A2C2E"), o("verre-fume", "Verre fumé", "#4A4540")] },
+    ],
+  },
+
 ];
 
 export const familyById = new Map(FAMILIES.map((f) => [f.id, f]));
-export const GROUPS = ["Carrelages", "Pierres", "Bois", "Murs", "Textiles", "Métaux"] as const;
+export const GROUPS = ["Carrelages", "Pierres", "Bois", "Murs", "Textiles", "Métaux", "Objets"] as const;
 
 export interface Variant { family: Family; opts: Opt[]; ref: string }
 
@@ -172,15 +285,22 @@ export function parseVariant(ref: string): Variant | null {
   const [, fid, ...rest] = ref.split(":");
   const family = familyById.get(fid ?? "");
   if (!family) return null;
-  const opts = family.axes.map((a, i) => a.options.find((x) => x.id === rest[i]) ?? a.options[0]!);
+  const opts = family.axes.map((a, i) => a.options.find((x) => x.id === rest[i]) ?? customOpt(a, rest[i]) ?? a.options[0]!);
   return { family, opts, ref: makeRef(family, opts) };
+}
+/** Teinte sur mesure (« x-c0714f ») : possible sur tout axe de couleurs, pour des matières sans limite de teinte. */
+export const isColorAxis = (a: Axis) => a.options.filter((x) => x.hex).length >= a.options.length * 0.8 && a.options.length >= 4;
+export const customId = (hex: string) => `x-${hex.replace("#", "").toLowerCase()}`;
+function customOpt(a: Axis, id: string | undefined): Opt | null {
+  const m = /^x-([0-9a-f]{6})$/i.exec(id ?? "");
+  return m && isColorAxis(a) ? { id: `x-${m[1]!.toLowerCase()}`, label: `Teinte sur mesure #${m[1]!.toUpperCase()}`, hex: `#${m[1]!.toLowerCase()}` } : null;
 }
 export const makeRef = (f: Family, opts: Opt[]) => `sr:${f.id}:${opts.map((x) => x.id).join(":")}`;
 export const isVariant = (ref: string) => ref.startsWith("sr:") && parseVariant(ref) !== null;
 export function withOption(ref: string, axisId: string, optId: string): string {
   const v = parseVariant(ref); if (!v) return ref;
   const i = v.family.axes.findIndex((a) => a.id === axisId); if (i < 0) return ref;
-  const opt = v.family.axes[i]!.options.find((x) => x.id === optId); if (!opt) return ref;
+  const opt = v.family.axes[i]!.options.find((x) => x.id === optId) ?? customOpt(v.family.axes[i]!, optId); if (!opt) return ref;
   const opts = [...v.opts]; opts[i] = opt;
   return makeRef(v.family, opts);
 }
@@ -204,6 +324,19 @@ export function variantName(v: Variant, short = false): string {
       case "tissu": return [`${opt(v, "matiere")!.label} ${L("couleur")}`, []];
       case "cuir": return [`Cuir ${L("type")} ${L("couleur")}`, []];
       case "metal": return [`${opt(v, "metal")!.label} ${L("finition")}`, []];
+      case "cannele": return [`Bois cannelé ${L("essence")}`, [L("profil"), L("finition")]];
+      case "cannage": return [`${opt(v, "tressage")!.id === "tresse" ? "Rotin tressé" : "Cannage"} ${L("teinte")}`, [opt(v, "tressage")!.id === "tresse" ? "" : L("tressage")]];
+      case "papier-peint": return [`Papier peint ${L("motif")}`, [L("coloris")]];
+      case "moquette": return [`Moquette ${L("type")} ${L("couleur")}`, []];
+      case "luminaires": return [`${opt(v, "forme")!.label} ${L("finition")}`, [L("lumiere")]];
+      case "electricite": return [`${opt(v, "modele")!.label} ${L("finition")}`, []];
+      case "assises": return [`${opt(v, "modele")!.label} ${L("tissu")} ${L("couleur")}`, []];
+      case "stylisme": return [`${opt(v, "objet")!.label}`, [L("nuance")]];
+      case "mosaique": return [`Mosaïque ${L("motif")}`, [L("palette")]];
+      case "tapis": return [`Tapis ${L("motif")} ${L("couleur")}`, [L("forme")]];
+      case "tableaux": return [`${opt(v, "composition")!.label}, ${L("palette")}`, [L("cadre")]];
+      case "objets": return [`${opt(v, "forme")!.label} ${L("matiere")}`, []];
+      case "quincaillerie": return [`${opt(v, "modele")!.label} ${L("metal")}`, [L("finition")]];
       default: return [v.family.name, v.opts.map((x) => lo(x.label))];
     }
   })();
@@ -231,8 +364,15 @@ export function variantHex(v: Variant): string {
   const c = v.opts.find((x) => x.hex)?.hex;
   if (v.family.id === "terrazzo") return v.opts[0]!.hex!;
   if (v.family.id === "ciment") return v.opts[1]!.colors![1]!;
-  if (v.family.id === "marbre" || v.family.id === "parquet") return v.opts[0]!.colors![v.family.id === "parquet" ? 1 : 0]!;
+  if (v.family.id === "marbre" || v.family.id === "parquet" || v.family.id === "cannele") return v.opts[0]!.colors![v.family.id === "marbre" ? 0 : 1]!;
+  if (v.family.id === "papier-peint") return v.opts[1]!.colors![0]!;
+  if (v.family.id === "quincaillerie") return v.opts[1]!.hex!;
   return c ?? "#cccccc";
+}
+
+/** Référence Pièce Rêvée de la déclinaison, stable et lisible : « PR-ZEL-05·06·01·04 ». */
+export function variantCode(v: Variant): string {
+  return `PR-${v.family.code}-${v.opts.map((x, i) => (x.id.startsWith("x-") ? x.id.slice(2).toUpperCase() : String(v.family.axes[i]!.options.indexOf(x) + 1).padStart(2, "0"))).join("·")}`;
 }
 
 /** Nombre total de déclinaisons possibles (affiché sur le showroom). */

@@ -40,6 +40,41 @@ export function Gallery() {
   const item = GALLERY.find((g) => g.id === openId);
   const st = item ? styleById.get(item.styleId) : undefined;
   const look = item ? searchCatalogDemo(st?.name ?? "") : null;
+  const [busy, setBusy] = useState(false);
+  const [genBusy, setGenBusy] = useState(false);
+  const [genMsg, setGenMsg] = useState<string | null>(null);
+  const [generated, setGenerated] = useState<Record<string, string>>({});
+
+  /** L'inspiration devient une planche : depuis sa photo (ou l'image créée), sinon depuis la palette du style. */
+  const toBoard = async () => {
+    if (!item || !st) return;
+    setBusy(true);
+    try {
+      const m = await import("@/lib/board/fromImage");
+      const src = generated[item.id] ?? item.photo?.url ?? item.photo?.thumbUrl;
+      if (src) {
+        const { board, photoId, dataUrl } = await m.boardFromImage(src, item.title);
+        m.storeBoardWithPhoto(board, photoId, dataUrl);
+      } else {
+        try { localStorage.setItem("pr_planche", JSON.stringify(m.composeFromPalette(st.palette, null, item.title))); } catch { /* stockage plein */ }
+      }
+      router.push("/planche/");
+    } catch {
+      const m = await import("@/lib/board/fromImage");
+      try { localStorage.setItem("pr_planche", JSON.stringify(m.composeFromPalette(st.palette, null, item.title))); } catch { /* stockage plein */ }
+      router.push("/planche/");
+    }
+  };
+  /** Photo d'ambiance de cette inspiration, créée par IA (dans la limite d'images du jour). */
+  const generate = async () => {
+    if (!item || !st) return;
+    setGenBusy(true); setGenMsg(null);
+    const { conceptImage } = await import("@/lib/ia");
+    const r = await conceptImage(`${item.space}, style ${st.name} : ${st.summary}. Palette : ${st.palette.join(", ")}. ${st.keys.slice(0, 3).join(". ")}.`, "4:3");
+    if (r.ok) { setGenerated((g) => ({ ...g, [item.id]: r.image })); setGenMsg(r.left > 0 ? `Il vous reste ${r.left} image${r.left > 1 ? "s" : ""} aujourd'hui.` : "C'était votre dernière image du jour."); }
+    else setGenMsg(r.message);
+    setGenBusy(false);
+  };
 
   return (
     <>
@@ -68,7 +103,10 @@ export function Gallery() {
         {item && st && (
           <div className="relative grid md:grid-cols-[1.15fr_1fr]">
             <button type="button" className="btn btn-sm absolute right-2.5 top-2.5 z-10" onClick={() => setOpenId(null)} aria-label="Fermer"><IconClose width={16} height={16} /></button>
-            <div className="min-h-64 bg-soft [&>*]:h-full [&>*]:w-full [&>*]:object-cover"><GalleryVisual item={item} width={800} height={600} /></div>
+            <div className="min-h-64 bg-soft [&>*]:h-full [&>*]:w-full [&>*]:object-cover">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              {generated[item.id] ? <img src={generated[item.id]} alt={`Photo d'ambiance créée par IA : ${item.title}`} /> : <GalleryVisual item={item} width={800} height={600} />}
+            </div>
             <div className="flex flex-col gap-3.5 p-6">
               <span className="eyebrow">{st.name} · {item.space}</span>
               <h2 id="g-title" className="text-3xl">{item.title}</h2>
@@ -78,12 +116,16 @@ export function Gallery() {
               <div className="flex flex-wrap gap-1.5">
                 <Link className="btn btn-primary" href={`/projet/nouveau/?style=${st.id}&space=${encodeURIComponent(item.space)}`}>Je veux ça chez moi</Link>
                 <FavButton id={item.id} name={item.title} variant="button" />
+                <button type="button" className="btn btn-sm btn-primary" onClick={() => void toBoard()} disabled={busy}>{busy ? "Composition…" : "Créer un moodboard"}</button>
+                <button type="button" className="btn btn-sm" onClick={() => void generate()} disabled={genBusy}>{genBusy ? <><span className="spinner" /> Image en cours…</> : "Générer une photo d'ambiance"}</button>
                 <button type="button" className="btn btn-sm" onClick={() => { setOpenId(null); openCamille(`Comment recréer l'ambiance « ${item.title} » chez moi ?`); }}>Demander à Camille</button>
                 <Link className="btn btn-sm" href={`/styles/${st.slug}/`}>Tout sur ce style</Link>
               </div>
               <div className="notice"><b>Acheter le look.</b> {look?.status === "suggestion"
                 ? <>Le catalogue des enseignes partenaires n'est pas encore branché. En attendant, des recherches sont proposées sur les sites officiels, sans prix inventé.</>
                 : <>Produits similaires du catalogue.</>}</div>
+              {genMsg && <p role="status" className="text-[13px] text-muted">{genMsg}</p>}
+              {generated[item.id] && <p className="text-[12px] text-muted">Image créée par IA, à titre d'inspiration.</p>}
               {item.photo && <p className="credit">Photo : <a href={item.photo.authorUrl ?? item.photo.sourceUrl} target="_blank" rel="noopener noreferrer">{item.photo.author}</a> sur <a href={item.photo.sourceUrl} target="_blank" rel="noopener noreferrer">{item.photo.source}</a> · {item.photo.license}</p>}
             </div>
           </div>

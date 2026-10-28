@@ -2,12 +2,13 @@ import { materialById } from "@/content/lookup";
 import { libModel } from "@/lib/home3d/library";
 import { COLORS } from "@/lib/home3d/plan";
 import { parseVariant, variantName } from "@/lib/showroom/catalog";
+import { shapesForGen } from "@/lib/showroom/objects";
 
 /**
  * Planche de matières 3D : de vrais échantillons (bois, pierre, tissu, peinture), des objets 3D et des photos
  * posés sur un fond, éclairés comme sur une table d'atelier. Coordonnées en mètres, origine au centre de la planche.
  */
-export type Shape = "carre" | "rond" | "lame" | "drape" | "nuancier" | "objet" | "photo" | "etiquette";
+export type Shape = "carre" | "rond" | "lame" | "drape" | "nuancier" | "objet" | "photo" | "etiquette" | "goutte" | "piece" | "dechire";
 export interface BoardItem {
   id: string;
   /** Matière (« m-chene »), teinte (« #D8C9B4 »), modèle 3D (« Ottoman_01 ») ou photo importée (« up-… »). */
@@ -39,22 +40,14 @@ export function shapesFor(ref: string): Shape[] {
   if (ref.startsWith("t:")) return ["etiquette"];
   if (ref.startsWith("#")) return ["nuancier", "carre", "rond"];
   const v = parseVariant(ref);
-  if (v) {
-    switch (v.family.gen) {
-      case "paint": return ["nuancier", "carre", "rond"];
-      case "fabric": case "leather": return ["drape", "carre", "rond"];
-      case "wood": return ["carre", "lame", "rond"];
-      case "metal": return ["rond", "carre", "lame"];
-      default: return ["carre", "rond", "lame"];
-    }
-  }
+  if (v) return shapesForGen(v.family.gen);
   const m = materialById.get(ref);
   if (m) {
     if (m.family === "Textile" || (m.family === "Fibre" && m.texture !== "cane")) return ["drape", "carre", "rond"];
     if (m.family === "Bois" || m.texture === "planks") return ["lame", "carre", "rond"];
     return ["carre", "rond", "lame"];
   }
-  return ref.startsWith("up-") ? ["photo"] : ["objet"];
+  return ref.startsWith("up-") || ref.startsWith("vis-") ? ["photo"] : ["objet"];
 }
 export const defaultShape = (ref: string): Shape => shapesFor(ref)[0]!;
 
@@ -67,12 +60,15 @@ export function itemName(ref: string): string {
   if (ref.startsWith("#")) { const c = COLORS.find((x) => x.hex.toLowerCase() === ref.toLowerCase()); return c ? `Peinture ${c.name.toLowerCase()}` : `Peinture ${ref.toUpperCase()}`; }
   const m = materialById.get(ref); if (m) return m.name;
   if (ref.startsWith("up-")) return "Photo importée";
+  if (ref.startsWith("vis-")) return "Photo d'ambiance";
   return libModel(ref)?.name.replace(/_/g, " ") ?? ref;
 }
 
 const ID = /^[\w-]{1,60}$/;
+/** Photos d'ambiance du site utilisables sur une planche (rendus 3D maison). */
+export const VISUELS = new Set(["vis-hero-3d", "vis-visite-3d", "vis-cuisine-3d", "vis-planche-hero"]);
 const HEX = /^#[0-9a-fA-F]{6}$/;
-const SHAPES: Shape[] = ["carre", "rond", "lame", "drape", "nuancier", "objet", "photo", "etiquette"];
+const SHAPES: Shape[] = ["carre", "rond", "lame", "drape", "nuancier", "objet", "photo", "etiquette", "goutte", "piece", "dechire"];
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
 /** Valide une planche venue du stockage local ou d'un lien partagé (rien n'est exécuté, tout est borné). */
@@ -92,7 +88,7 @@ export function parseBoard(raw: unknown): Board | null {
     }
     const variant = ref.startsWith("sr:") ? parseVariant(ref) : null;
     if (!(HEX.test(ref) || ID.test(ref) || variant) || !SHAPES.includes(shape)) continue;
-    if (!HEX.test(ref) && !variant && !ref.startsWith("up-") && !materialById.get(ref) && !libModel(ref)) continue;
+    if (!HEX.test(ref) && !variant && !ref.startsWith("up-") && !VISUELS.has(ref) && !materialById.get(ref) && !libModel(ref)) continue;
     const n = (k: string, d: number) => (typeof it[k] === "number" && Number.isFinite(it[k]) ? (it[k] as number) : d);
     items.push({ id: ID.test(String(it.id)) ? String(it.id) : uid(), ref: variant ? variant.ref : ref, shape, x: clamp(n("x", 0), -BOARD_W / 2, BOARD_W / 2), z: clamp(n("z", 0), -BOARD_D / 2, BOARD_D / 2), rot: n("rot", 0) % 360, s: clamp(n("s", 1), SCALE_MIN, SCALE_MAX) });
   }
@@ -115,6 +111,50 @@ const it = (ref: string, x: number, z: number, rot = 0, s = 1, shape?: Shape): B
 
 /** Planches de départ : uniquement des matières, teintes et modèles réellement présents sur le site. */
 export const TEMPLATES: Array<{ id: string; name: string; text: string; board: () => Board }> = [
+  {
+    id: "rose-tulipe", name: "Rose tulipe", text: "Chambre poudrée : velours vieux rose, feuillage, cuir chocolat et tulipe séchée.",
+    board: () => ({ v: 1, title: "Rose tulipe", bg: "#F2F0EC", items: [
+      it("sr:parquet:chene-clair:larges:huile", -0.02, 0.06, 90, 1.5, "lame"), it("sr:marbre:travertin:adouci", 0.12, -0.17, 0, 1.25, "carre"),
+      it("sr:papier-peint:feuillage:rose", -0.12, 0.2, 0, 1.25, "dechire"), it("vis-visite-3d", -0.35, -0.12, -2, 1.55, "photo"),
+      it("sr:tissu:velours:vieux-rose", 0.06, -0.02, 0, 1.0, "drape"), it("sr:tissu:lin:rose-poudre", 0.36, -0.1, 4, 1.0, "drape"),
+      it("sr:tissu:bouclette:taupe", 0.42, 0.13, -6, 0.9, "drape"), it("sr:cuir:pleine-fleur:chocolat", -0.02, 0.24, 0, 0.8, "carre"),
+      it("sr:quincaillerie:pastille:cuivre:brosse", 0.25, 0.08, 0, 1.6, "piece"), it("sr:peinture:rose-pale:brillant", 0.12, 0.12, 0, 1.5, "goutte"),
+      it("sr:stylisme:tulipe:rouge", 0.04, 0.02, 25, 1.35, "piece"),
+    ] }),
+  },
+  {
+    id: "vert-terrazzo", name: "Vert terrazzo", text: "Salle à manger : marbre vert, velours forêt, noyer cannelé et laiton.",
+    board: () => ({ v: 1, title: "Vert terrazzo", bg: "#F2F0EC", items: [
+      it("sr:cannele:noyer:joncs-fins:huile", 0.0, -0.22, 90, 1.1, "piece"), it("sr:marbre:verde:poli", 0.08, 0.0, 0, 1.45, "carre"),
+      it("sr:terrazzo:sable:gros:terre", 0.3, 0.16, 0, 1.3, "carre"), it("sr:terrazzo:noir:moyens:terre", -0.18, 0.22, 0, 1.1, "carre"),
+      it("vis-cuisine-3d", -0.36, 0.0, 2, 1.4, "photo"), it("sr:tissu:velours:vert-foret", 0.36, -0.14, -4, 1.0, "drape"),
+      it("sr:enduit:chaux:lin:nuage", -0.2, -0.16, 0, 0.95, "carre"), it("sr:zellige:vert-eau:carre10:brillant:assorti", -0.1, 0.06, 0, 0.75, "carre"),
+      it("sr:peinture:olive:brillant", -0.2, -0.14, 0, 1.5, "goutte"), it("sr:quincaillerie:pastille:laiton:brosse", -0.1, 0.07, 0, 1.6, "piece"),
+      it("sr:stylisme:cuillere:sable", -0.12, -0.3, 0, 1.4, "piece"), it("sr:stylisme:feuille:sable", 0.06, 0.04, 20, 1.2, "piece"),
+    ] }),
+  },
+  {
+    id: "villa-minerale", name: "Villa minérale", text: "Béton, chêne, lin sable et rotin tressé, une branche et une tasse en grès.",
+    board: () => ({ v: 1, title: "Villa minérale", bg: "#F2F0EC", items: [
+      it("sr:enduit:beton-cire:gris-clair:lisse", -0.1, 0.16, 0, 1.4, "carre"), it("sr:parquet:chene:larges:huile", 0.1, -0.02, 90, 1.45, "lame"),
+      it("vis-hero-3d", -0.33, -0.13, -1, 1.5, "photo"), it("sr:tissu:lin:sable", 0.22, -0.2, 0, 1.0, "drape"),
+      it("sr:tissu:laine:anthracite", 0.42, -0.06, 0, 0.95, "drape"), it("sr:cannage:tresse:naturel", -0.36, 0.18, 0, 0.8, "piece"),
+      it("sr:terrazzo:gris:fins:ton", 0.2, 0.2, 0, 1.0, "carre"), it("sr:peinture:blanc-casse:brillant", 0.06, -0.08, 0, 1.6, "goutte"),
+      it("sr:quincaillerie:pastille:acier-noir:brosse", 0.3, 0.27, 0, 1.6, "piece"), it("sr:stylisme:tasse:sable", 0.24, 0.08, 0, 1.3, "piece"),
+      it("sr:stylisme:branche:sable", -0.04, 0.0, 80, 1.35, "piece"),
+    ] }),
+  },
+  {
+    id: "bleu-geometrique", name: "Bleu géométrique", text: "Noyer en point de Hongrie, velours bleu nuit, mosaïque graphique et laiton moleté.",
+    board: () => ({ v: 1, title: "Bleu géométrique", bg: "#F2F0EC", items: [
+      it("sr:parquet:noyer:hongrie:huile", 0.18, 0.02, 0, 1.6, "carre"), it("sr:cuir:vieilli:chocolat", -0.05, -0.12, 0, 1.3, "carre"),
+      it("sr:tissu:velours:bleu-nuit", -0.08, 0.06, 0, 1.1, "drape"), it("sr:mosaique:triangles:bleu", 0.2, 0.25, 0, 1.1, "carre"),
+      it("vis-planche-hero", 0.28, -0.2, 3, 1.3, "photo"), it("sr:tissu:chine:bleu-gris", -0.3, 0.2, 6, 0.95, "drape"),
+      it("sr:tissu:cotele:canard", 0.35, 0.05, -4, 0.9, "drape"), it("sr:marbre:carrare:poli", -0.2, -0.18, 0, 0.75, "carre"),
+      it("sr:quincaillerie:barre-moletee:laiton:brosse", 0.24, -0.04, 0, 1.4, "piece"), it("sr:quincaillerie:pastille:bronze:brosse", -0.05, -0.02, 0, 1.6, "piece"),
+      it("sr:stylisme:branche:sable", -0.15, 0.0, 60, 1.3, "piece"),
+    ] }),
+  },
   {
     id: "atelier", name: "Chêne, lin et travertin", text: "Douceur naturelle, tons sable et bois blond.",
     board: () => ({ v: 1, title: "Chêne, lin et travertin", bg: "#EFEBE3", items: [

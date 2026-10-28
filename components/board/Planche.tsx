@@ -19,13 +19,33 @@ import { MaterialSwatch } from "../Visual";
 import { ShopLinks } from "../ShopLinks";
 import { IconClose } from "../icons";
 import { Swatch } from "../showroom/Swatch";
-import { FAMILIES as SR_FAMILIES, familyById, makeRef, parseVariant, variantName, variantShop, withOption } from "@/lib/showroom/catalog";
+import { FAMILIES as SR_FAMILIES, familyById, makeRef, parseVariant, variantCode, variantName, variantShop, withOption, isColorAxis, customId } from "@/lib/showroom/catalog";
+import { nearestAspect, photoreal, redesignRoom } from "@/lib/ia";
+import { BeforeAfter } from "../BeforeAfter";
+
+/** Où poser chaque matière dans la pièce (consigne pour le rendu). */
+function placeOf(ref: string): string {
+  const v = parseVariant(ref);
+  const gen = v?.family.gen ?? (materialById.get(ref)?.family === "Textile" ? "fabric" : ref.startsWith("#") ? "paint" : "");
+  switch (gen) {
+    case "paint": case "plaster": return "murs";
+    case "wallpaper": return "un pan de mur";
+    case "fluted": return "un pan de mur ou la tête de lit";
+    case "wood": case "tile": case "cement": case "terrazzo": case "carpet": return "sol";
+    case "marble": return "plan, table ou sol";
+    case "fabric": return "canapé, rideaux ou coussins";
+    case "leather": return "assises";
+    case "metal": case "hardware": return "poignées, robinetterie et luminaires";
+    case "cane": return "portes de meuble ou assises";
+    default: return libModel(ref) ? "mobilier" : "détails";
+  }
+}
 
 const KEY = "pr_planche";
 const UP_KEY = "pr_planche_photos";
 type Tab = "showroom" | "matieres" | "peintures" | "objets" | "photos";
 const FAMILIES: Array<Material["family"] | "Toutes"> = ["Toutes", "Bois", "Pierre", "Terre", "Textile", "Fibre", "Métal", "Composite", "Verre", "Extérieur"];
-const SHAPE_LABEL: Record<Shape, string> = { carre: "Carreau", rond: "Galet", lame: "Lame", drape: "Tissu", nuancier: "Nuancier", objet: "Objet", photo: "Photo", etiquette: "Étiquette" };
+const SHAPE_LABEL: Record<Shape, string> = { carre: "Carreau", rond: "Galet", lame: "Lame", drape: "Tissu", nuancier: "Nuancier", objet: "Objet", photo: "Photo", etiquette: "Étiquette", goutte: "Goutte", piece: "Échantillon", dechire: "Déchiré" };
 const MODELS = LIBRARY_MODELS.filter((m) => !/street_lamp|picnic|CoffeeCart|GothicBed/i.test(m.id));
 
 /** Recherche d'achat et rayons adaptés à un élément de la planche. */
@@ -47,6 +67,8 @@ function shopFor(ref: string): { q: string; kinds: RetailerKind[] } {
 
 function Thumb({ refId, className = "" }: { refId: string; className?: string }) {
   if (refId.startsWith("sr:")) return <Swatch key={refId} refId={refId} label="Aperçu de l'échantillon" size={120} className={className} />;
+  // eslint-disable-next-line @next/next/no-img-element
+  if (refId.startsWith("vis-")) return <img src={`/visuels/${refId.slice(4)}.webp`} alt="" loading="lazy" className={`object-cover ${className}`} />;
   if (refId.startsWith("t:")) return <span className={`grid place-items-center bg-[#FBF8F1] font-display text-[22px] text-ink ${className}`} aria-hidden="true">Aa</span>;
   if (refId.startsWith("#")) return <span className={`block ${className}`} style={{ background: refId }} aria-hidden="true" />;
   const m = materialById.get(refId);
@@ -78,6 +100,11 @@ export default function Planche() {
   const [ready, setReady] = useState(false);
   const [toast, setToast] = useState("");
   const [render, setRender] = useState<string | null>(null);
+  const [room, setRoom] = useState<string | null>(null);
+  const [photo, setPhoto] = useState<{ render: string; image: string | null; busy: boolean; msg: string | null } | null>(null);
+  const [applied, setApplied] = useState<string | null>(null);
+  const [applyBusy, setApplyBusy] = useState(false);
+  const [applyMsg, setApplyMsg] = useState<string | null>(null);
   const [templates, setTemplates] = useState(false);
 
   const say = useCallback((t: string) => { setToast(t); window.setTimeout(() => setToast(""), 3200); }, []);
@@ -139,6 +166,17 @@ export default function Planche() {
     say("Calcul de l'image haute définition…");
     window.setTimeout(() => { try { setRender(e.exportImage(e.software ? 1800 : 3200)); } catch { say("L'image n'a pas pu être calculée sur cet appareil."); } }, 50);
   };
+  /** Photo réaliste par IA : la planche 3D devient une vraie photographie de studio, même composition. */
+  const makePhoto = async () => {
+    const e = engine.current; if (!e || !board) return;
+    let render = "";
+    try { render = e.exportImage(e.software ? 1400 : 1800); } catch { say("L'image n'a pas pu être calculée sur cet appareil."); return; }
+    setPhoto({ render, image: null, busy: true, msg: null });
+    const img = new Image(); img.src = render; await img.decode();
+    const names = [...new Set(board.items.filter((i) => !i.ref.startsWith("up-") && !i.ref.startsWith("vis-") && !i.ref.startsWith("t:")).map((i) => itemName(i.ref)))].slice(0, 16);
+    const r = await photoreal(render, `Planche « ${board.title} » : ${names.join(", ")}.`, nearestAspect(img.naturalWidth, img.naturalHeight));
+    setPhoto({ render, image: r.ok ? r.image : null, busy: false, msg: r.ok ? (r.left > 0 ? `Il vous reste ${r.left} image${r.left > 1 ? "s" : ""} aujourd'hui.` : "C'était votre dernière image du jour.") : r.message });
+  };
   const share = async () => {
     if (!board) return;
     const url = `${window.location.origin}/planche/#p=${encodeBoard(board)}`;
@@ -158,13 +196,47 @@ export default function Planche() {
     try { localStorage.setItem(UP_KEY, JSON.stringify([...trimmed])); } catch { say("Mémoire de l'appareil pleine : la photo ne sera pas conservée après fermeture."); }
   };
 
+  /** Une image (photo du client, inspiration) devient une planche complète, composée dans ses couleurs. */
+  const fromImage = async (f: File | undefined) => {
+    if (!f) return;
+    const r = await preparePhoto(f, 2048);
+    if (!r.ok) { say(r.message); return; }
+    say("Composition de la planche à partir de votre image…");
+    try {
+      const { boardFromImage } = await import("@/lib/board/fromImage");
+      const { board: b, photoId, dataUrl } = await boardFromImage(r.photo.dataUrl, "Ma planche inspirée");
+      const next = new Map([...uploads, [photoId, dataUrl] as [string, string]].slice(-8));
+      setUploads(next);
+      try { localStorage.setItem(UP_KEY, JSON.stringify([...next])); } catch { /* mémoire pleine */ }
+      setBoard(b); setSel(null); say("Planche composée : ajustez, remplacez, ajoutez.");
+    } catch { say("L'image n'a pas pu être lue. Essayez avec une autre photo."); }
+  };
+  const pickRoom = async (f: File | undefined) => {
+    if (!f) return;
+    const r = await preparePhoto(f, 2048);
+    if (!r.ok) { setApplyMsg(r.message); return; }
+    setRoom(r.photo.dataUrl); setApplied(null); setApplyMsg(null);
+  };
+  const applyToRoom = async () => {
+    const e = engine.current; if (!e || !room || !board) return;
+    setApplyBusy(true); setApplyMsg(null);
+    let boardImg = "";
+    try { boardImg = e.exportImage(1400); } catch { /* sans image de planche : la liste suffit */ }
+    const items = [...new Map(board.items.filter((i) => !i.ref.startsWith("up-") && !i.ref.startsWith("t:")).map((i) => [i.ref, i])).values()];
+    const brief = [`Appliquer la planche de matières « ${board.title} » à cette pièce, en gardant sa structure.`, ...items.map((i) => `${itemName(i.ref)} : ${placeOf(i.ref)}.`), "Rendu photoréaliste, lumière naturelle."].join("\n").slice(0, 1200);
+    const r = await redesignRoom(room, boardImg ? [boardImg] : [], brief);
+    if (r.ok) { setApplied(r.image); setApplyMsg(r.left > 0 ? `Il vous reste ${r.left} rendu${r.left > 1 ? "s" : ""} aujourd'hui.` : "C'était votre dernier rendu du jour."); }
+    else setApplyMsg(r.message);
+    setApplyBusy(false);
+  };
+
   const mats = useMemo(() => {
     const n = q.trim().toLowerCase();
     return MATERIALS.filter((m) => (family === "Toutes" || m.family === family) && (!n || `${m.name} ${m.family} ${m.origin}`.toLowerCase().includes(n)))
       .sort((a, b) => Number(!!realTexture(b.id)) - Number(!!realTexture(a.id)));
   }, [q, family]);
   const current = board?.items.find((i) => i.id === sel);
-  const sheet = useMemo(() => [...new Map((board?.items ?? []).filter((i) => !i.ref.startsWith("up-") && !i.ref.startsWith("t:")).map((i) => [i.ref, i])).values()], [board]);
+  const sheet = useMemo(() => [...new Map((board?.items ?? []).filter((i) => !i.ref.startsWith("up-") && !i.ref.startsWith("vis-") && !i.ref.startsWith("t:")).map((i) => [i.ref, i])).values()], [board]);
 
   const tile = (ref: string, label: string, sub?: string) => (
     <li key={ref}>
@@ -193,9 +265,14 @@ export default function Planche() {
               <button key={v} type="button" aria-pressed={view === v} className={`btn btn-sm ${view === v ? "btn-primary" : ""}`} onClick={() => { setView(v); engine.current?.setView(v); }}>{v === "dessus" ? "Vue de dessus" : "Perspective"}</button>
             ))}
           </div>
+          <label className="btn btn-sm cursor-pointer">
+            <input type="file" accept="image/*" className="sr-only" onChange={(e) => { void fromImage(e.target.files?.[0]); e.target.value = ""; }} />
+            À partir d'une image
+          </label>
           <button type="button" className="btn btn-sm" onClick={() => setTemplates(true)}>Modèles</button>
           <button type="button" className="btn btn-sm" onClick={() => void share()}>Partager</button>
-          <button type="button" className="btn btn-sm btn-primary" onClick={exportHD} disabled={!ready}>Exporter en HD</button>
+          <button type="button" className="btn btn-sm" onClick={exportHD} disabled={!ready}>Exporter en HD</button>
+          <button type="button" className="btn btn-sm btn-primary" onClick={() => void makePhoto()} disabled={!ready || !!photo?.busy}>{photo?.busy ? <><span className="spinner" /> Photo en cours…</> : "Photo réaliste (IA)"}</button>
         </div>
       </div>
 
@@ -258,7 +335,8 @@ export default function Planche() {
             {!ready && <p className="absolute inset-0 grid place-items-center text-[14px] text-muted">Préparation de la planche…</p>}
             {ready && board && board.items.length === 0 && <p className="pointer-events-none absolute inset-0 grid place-items-center p-6 text-center text-[15px] text-muted">Glissez ici des matières, des peintures ou des objets depuis la bibliothèque.</p>}
             <div className="absolute bottom-3 left-3 flex gap-1">
-              <button type="button" className="btn btn-sm btn-light" aria-label="Zoom avant" onClick={() => engine.current?.setZoom(1.25)}>+</button>
+              <button type="button" className="btn btn-sm btn-light" aria-label="Zoom arrière" onClick={() => { const e = engine.current; if (e) e.setZoom(e.zoomLevel / 1.4); }}>−</button>
+              <button type="button" className="btn btn-sm btn-light" aria-label="Zoom avant" onClick={() => { const e = engine.current; if (e) e.setZoom(e.zoomLevel * 1.4); }}>+</button>
               <button type="button" className="btn btn-sm btn-light" aria-label="Vue entière" onClick={() => engine.current?.setZoom(1)}>⤢</button>
             </div>
             {toast && <p role="status" className="absolute left-1/2 top-3 -translate-x-1/2 rounded-full bg-black/75 px-4 py-1.5 text-[13px] text-white">{toast}</p>}
@@ -283,7 +361,14 @@ export default function Planche() {
                       <label key={a.id} className="min-w-0">{a.label}
                         <select className="input mt-0.5 w-full px-2 py-1 text-[12.5px]" value={v.opts[i]!.id} onChange={(e) => update(current.id, { ref: withOption(current.ref, a.id, e.target.value) })}>
                           {a.options.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
+                          {v.opts[i]!.id.startsWith("x-") && <option value={v.opts[i]!.id}>{v.opts[i]!.label}</option>}
                         </select>
+                        {isColorAxis(a) && (
+                          <span className="mt-1 flex items-center gap-1.5 text-[11.5px] text-muted">
+                            <input type="color" aria-label={`${a.label} sur mesure`} className="h-6 w-8 cursor-pointer rounded border border-line bg-transparent p-0" value={v.opts[i]!.hex ?? "#cccccc"} onChange={(e) => update(current.id, { ref: withOption(current.ref, a.id, customId(e.target.value)) })} />
+                            Sur mesure
+                          </span>
+                        )}
                       </label>
                     ))}
                   </div>
@@ -321,9 +406,37 @@ export default function Planche() {
               <button type="button" className="btn btn-sm" onClick={() => openCamille(`Voici ma planche de matières « ${board?.title} » : ${sheet.map((i) => itemName(i.ref)).join(", ")}. Ces matières vont-elles bien ensemble, et dans quelle pièce les utiliser ?`)}>Avis de Camille</button>
             </span>
           </div>
-          <p className="mt-2 text-[12.5px] text-muted">Glissez un échantillon pour le déplacer ; posez-le sur un autre pour les superposer. Touche R : rotation, Suppr : retirer.</p>
+          <p className="mt-2 text-[12.5px] text-muted">Glissez un échantillon pour le déplacer ; posez-le sur un autre pour les superposer. Molette ou pincement pour zoomer jusqu'au grain de la matière, glisser le fond pour se déplacer. Touche R : rotation, Suppr : retirer.</p>
         </div>
       </div>
+
+      {/* Appliquer la planche à une photo de la pièce */}
+      <section className="mt-12 grid gap-6 rounded-[28px] bg-surface p-5 shadow-[0_1px_2px_rgba(0,0,0,.04),0_24px_48px_-28px_rgba(0,0,0,.2)] sm:p-8 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)]" aria-labelledby="appliquer">
+        <div>
+          <span className="eyebrow">Ma planche, chez moi</span>
+          <h2 id="appliquer" className="mt-1 text-[clamp(1.6rem,3vw,2.2rem)]">Appliquer ma planche <em>à ma pièce</em></h2>
+          <p className="mt-3 text-[15px] text-muted">Envoyez une photo de votre pièce : elle est réaménagée avec les matières de votre planche (murs, sol, textiles, métaux), en gardant ses volumes et ses fenêtres.</p>
+          <label className="btn mt-5 cursor-pointer">
+            <input type="file" accept="image/*" className="sr-only" onChange={(e) => void pickRoom(e.target.files?.[0])} />
+            {room ? "Changer de photo" : "Choisir la photo de ma pièce"}
+          </label>
+          <button type="button" className="btn btn-primary ml-2 mt-5" onClick={() => void applyToRoom()} disabled={!room || !sheet.length || applyBusy || !ready}>
+            {applyBusy ? <><span className="spinner" /> Rendu en cours (20 à 40 s)…</> : "Appliquer mes matières"}
+          </button>
+          {!sheet.length && <p className="mt-3 text-[13px] text-muted">Ajoutez d'abord des matières à votre planche.</p>}
+          {applyMsg && <p role="status" className="mt-3 text-[13px] text-muted">{applyMsg}</p>}
+          <p className="mt-4 text-[12px] text-muted">Rendu créé par intelligence artificielle, à titre d'inspiration. Votre photo n'est envoyée au service d'images qu'à ce moment-là.</p>
+        </div>
+        <div>
+          {/* eslint-disable @next/next/no-img-element */}
+          {room && applied
+            ? <><BeforeAfter before={<img src={room} alt="Votre pièce, avant" />} after={<img src={applied} alt="Votre pièce avec les matières de la planche" />} labelAfter="Avec ma planche" />
+              <a className="btn btn-sm btn-primary mt-3" href={applied} download="ma-piece-avec-ma-planche.jpg">Télécharger le rendu</a></>
+            : room ? <img src={room} alt="Votre pièce" className="aspect-[4/3] w-full rounded-[18px] object-cover" />
+              : <div className="grid aspect-[4/3] w-full place-items-center rounded-[18px] border border-dashed border-line text-center text-[14px] text-muted">Votre photo apparaîtra ici</div>}
+          {/* eslint-enable @next/next/no-img-element */}
+        </div>
+      </section>
 
       {/* Fiche matériaux */}
       {sheet.length > 0 && (
@@ -341,7 +454,7 @@ export default function Planche() {
                   <div className="min-w-0 flex-1">
                     <h3 className="font-ui text-[15.5px] font-semibold">{lm ? frenchName(lm) : itemName(i.ref)}</h3>
                     <p className="text-[13px] text-muted">
-                      {v ? <>Showroom · {v.family.name}</> : m ? <>{m.family} · {m.origin}</> : lm ? <>Modèle 3D {lm.authors.join(", ")} · <a className="underline" href={lm.url} target="_blank" rel="noopener noreferrer">Poly Haven</a> (CC0)</> : <>Teinte {i.ref.toUpperCase()}</>}
+                      {v ? <>Showroom · {v.family.name} · Réf. {variantCode(v)}</> : m ? <>{m.family} · {m.origin}</> : lm ? <>Modèle 3D {lm.authors.join(", ")} · <a className="underline" href={lm.url} target="_blank" rel="noopener noreferrer">Poly Haven</a> (CC0)</> : <>Teinte {i.ref.toUpperCase()}</>}
                     </p>
                     {m && <p className="mt-1 text-[13px]">{m.priceRange} · <Link className="underline" href={`/matieres/${m.slug}/`}>fiche complète</Link></p>}
                     {rt && <p className="mt-0.5 text-[11.5px] text-muted">Texture : {rt.name}, {rt.authors.join(", ")} (Poly Haven, CC0)</p>}
@@ -367,6 +480,24 @@ export default function Planche() {
               ); })}
               <li><button type="button" className="panel grid h-full w-full place-items-center p-3 text-center hover:shadow-md" onClick={() => { setBoard(emptyBoard()); setSel(null); setTemplates(false); }}><b className="text-[14px]">Planche vierge</b></button></li>
             </ul>
+          </div>
+        </div>
+      )}
+
+      {photo && (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-black/75 p-4" role="dialog" aria-modal="true" aria-label="Photo réaliste de la planche">
+          <div className="w-full max-w-5xl rounded-[var(--r-l)] bg-[var(--bg)] p-3">
+            {/* eslint-disable @next/next/no-img-element */}
+            {photo.image
+              ? <BeforeAfter before={<img src={photo.render} alt="Planche en 3D" />} after={<img src={photo.image} alt={`Photo réaliste de la planche « ${board?.title} »`} />} labelAfter="Photo IA" ratio="3 / 2" />
+              : <div className="relative"><img src={photo.render} alt="Planche en 3D" className="max-h-[70vh] w-full rounded-[12px] object-contain opacity-70" />{photo.busy && <span className="absolute inset-0 grid place-items-center text-[15px] font-medium"><span><span className="spinner" /> Photographie en cours (20 à 40 s)…</span></span>}</div>}
+            {/* eslint-enable @next/next/no-img-element */}
+            {photo.msg && <p role="status" className="mt-2 text-[13px] text-muted">{photo.msg}</p>}
+            <div className="mt-3 flex flex-wrap justify-end gap-2">
+              {photo.image && <a className="btn btn-sm btn-primary" href={photo.image} download={`planche-photo-${(board?.title ?? "piece-revee").toLowerCase().replace(/[^a-z0-9]+/g, "-")}.jpg`}>Télécharger la photo</a>}
+              <button type="button" className="btn btn-sm" onClick={() => setPhoto(null)} disabled={photo.busy}>Fermer</button>
+            </div>
+            <p className="mt-2 text-[11.5px] text-muted">Photo créée par intelligence artificielle à partir de votre planche 3D, à titre d'illustration.</p>
           </div>
         </div>
       )}
