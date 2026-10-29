@@ -5,7 +5,7 @@ name: Service IA (Cloudflare Worker piece-revee-ia)
 on:
   workflow_dispatch:
     inputs:
-      action: { description: "verifier ou deployer", required: true, default: verifier, type: choice, options: [verifier, deployer, modeles, test-recherche] }
+      action: { description: "verifier ou deployer", required: true, default: verifier, type: choice, options: [verifier, deployer, modeles, test-recherche, diag-recherche] }
       requete: { description: "Requête pour test-recherche", required: false, default: "table basse ovale en travertin", type: string }
 
 permissions:
@@ -66,6 +66,17 @@ jobs:
           exec > >(tee -a rapport.txt) 2>&1
           jq -n --arg q "$REQ" '{query: $q, label: $q, visiteur: "robot-test-recherche"}' > req.json
           curl -sS --max-time 90 -X POST -H "Origin: https://odd-bar-c583.ewanesteves26.workers.dev" -H "Content-Type: application/json" --data @req.json "https://$WORKER.ewanesteves26.workers.dev/v2/recherche" | jq '{erreur, requetes, suggestions: (.suggestions != null), produits: [.produits[]? | {title, merchant, price, source, url}]}'
+      - name: Diagnostic de la recherche Google via Gemini (un appel)
+        if: ${{ inputs.action == 'diag-recherche' }}
+        env: { GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}", REQ: "${{ inputs.requete }}" }
+        run: |
+          exec > >(tee -a rapport.txt) 2>&1
+          for M in gemini-3.8-flash gemini-2.5-flash; do
+            echo "=== $M"
+            jq -n --arg q "Find 5 products currently for sale online in France matching: $REQ. Give product page URLs." '{contents:[{role:"user",parts:[{text:$q}]}], tools:[{google_search:{}}]}' > d.json
+            curl -sS --max-time 90 -H "x-goog-api-key: $GEMINI_API_KEY" -H "content-type: application/json" --data @d.json "https://generativelanguage.googleapis.com/v1beta/models/$M:generateContent" > r.json
+            jq '{error: .error.message, finish: .candidates[0].finishReason, text: (.candidates[0].content.parts // [] | map(.text // "") | join("") | .[0:600]), metaKeys: (.candidates[0].groundingMetadata // {} | keys), queries: .candidates[0].groundingMetadata.webSearchQueries, chunks: [.candidates[0].groundingMetadata.groundingChunks[]?.web | {title, uri: (.uri[0:90])}][0:6], usage: .usageMetadata}' r.json
+          done
       - name: Publier le rapport (branche robot/service-ia)
         if: ${{ always() }}
         run: |
