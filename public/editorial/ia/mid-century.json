@@ -1,0 +1,34 @@
+{
+  "id": "mid-century",
+  "usage": "Banque d'inspiration : style mid-century",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:16:27.557Z",
+  "prompt_sha256": "a6d2e8fbd937fd3bfb305208b3cef8cd6de896c2b19ebfd0c2fb8b9d7eb50be1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "images": 1,
+  "status": "completed",
+  "usage_tokens": {
+    "total_tokens": 3507,
+    "total_input_tokens": 162,
+    "input_tokens_by_modality": [
+      {
+        "modality": "text",
+        "tokens": 162
+      }
+    ],
+    "total_cached_tokens": 0,
+    "total_output_tokens": 2119,
+    "output_tokens_by_modality": [
+      {
+        "modality": "image",
+        "tokens": 1680
+      }
+    ],
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 1226,
+    "initial_input_tokens": 278
+  },
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}

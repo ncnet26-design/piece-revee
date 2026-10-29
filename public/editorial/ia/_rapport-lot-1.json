@@ -1,0 +1,228 @@
+{
+  "id": "lot-1",
+  "date": "2026-10-29T09:19:47.129Z",
+  "results": [
+    {
+      "id": "parisien-contemporain",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "haussmannien-renove",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "scandinave-haut-de-gamme",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "brutalisme-raffine",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "minimalisme-chaleureux",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "art-deco-contemporain",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "mediterraneen-contemporain",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "mid-century",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "campagne-elegante",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "luxe-discret",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "contemporain-sculptural",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "salon",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "cuisine",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "salle-de-bain",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "chambre",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "entree",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "salle-a-manger",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "bureau",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "dressing",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "terrasse",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "jardin",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "facade",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-chene",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-noyer",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-travertin",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-pierre",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-marbre",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-enduit",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-peinture",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-laiton",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-velours",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-lin",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-boucle",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-verre",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "matiere-ceramique",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "accueil-table",
+      "ok": true,
+      "images": 1,
+      "error": null
+    },
+    {
+      "id": "salon-boucle-noyer",
+      "ok": true,
+      "images": 1,
+      "error": null
+    }
+  ]
+}
