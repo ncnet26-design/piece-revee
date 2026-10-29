@@ -1,0 +1,39 @@
+name: Image IA validée (payante)
+
+# Lancé uniquement après accord explicite du propriétaire, pour une commande précise de content/ia/commandes/.
+# Un seul appel payant, sans nouvelle tentative. Le résultat arrive dans la branche robot/images-ia-<commande>.
+on:
+  workflow_dispatch:
+    inputs:
+      commande: { description: "Identifiant de la commande (content/ia/commandes/<id>.json)", required: true, type: string }
+      confirmation: { description: "Début de l'empreinte SHA-256 de la consigne approuvée (12 caractères ou plus)", required: true, type: string }
+
+permissions:
+  contents: write
+
+concurrency: { group: images-ia, cancel-in-progress: false }
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Générer l'image (un seul appel)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          COMMANDE: ${{ inputs.commande }}
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: node scripts/ia-image.mjs "$COMMANDE" "$CONFIRMATION"
+      - name: Publier dans la branche robot/images-ia-<commande>
+        env:
+          COMMANDE: ${{ inputs.commande }}
+        run: |
+          git config user.name "robot-images"
+          git config user.email "robot@users.noreply.github.com"
+          git checkout -B "robot/images-ia-$COMMANDE"
+          git add public/editorial/ia
+          git commit -m "Image IA : $COMMANDE" || exit 0
+          git push -f origin "robot/images-ia-$COMMANDE"

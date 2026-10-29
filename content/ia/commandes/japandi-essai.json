@@ -1,0 +1,11 @@
+{
+  "id": "japandi-essai",
+  "usage": "Banque d'inspiration : style Japandi (image d'essai)",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "An editorial interior photograph of a Japandi living room in a quiet European apartment, shot at eye level from about 1.2 metres with a 28 mm lens and perfectly straight verticals. A low smoked-oak bench and a low round smoked-oak coffee table with softly rounded edges sit on a pale wool rug; two washed-linen floor cushions in oatmeal tones, one handmade terracotta vase holding a single dry branch, a small dark slate tray. Walls are hand-finished lime plaster in warm off-white with visible trowel texture; the floor is wide smoked-oak boards. Soft late-morning daylight enters from a tall window on the left, filtered by a linen curtain, giving long gentle shadows and clear contact shadows under the furniture; a paper lantern hangs unlit. Calm, generous negative space, few objects, natural materials rendered with true texture, neutral-warm colour balance, no blown highlights, the quiet realism of an architecture magazine photograph.\nLOCKS: original furniture only, no brand, no logo, no text, no people, no artwork with writing."
+}
