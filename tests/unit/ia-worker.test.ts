@@ -231,3 +231,11 @@ describe("recherche de produits sur internet", () => {
     expect(sent.tools).toEqual([{ google_search: {} }]);
   });
 });
+
+describe("titre depuis l'adresse", () => {
+  it("rend lisible l'adresse d'une page produit", async () => {
+    const { slugTitle } = await import("@/workers/ia/src/recherche");
+    expect(slugTitle("https://www.drawer.fr/table-basse-ovale-effet-travertin-119x60cm-sam.html")).toBe("Table basse ovale effet travertin 119x60cm sam");
+    expect(slugTitle("https://www.laredoute.fr/ppdp/prod-602053824.aspx")).toBe("");
+  });
+});

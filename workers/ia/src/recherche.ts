@@ -29,6 +29,16 @@ const PROMPT = (q: string, label: string, pays: string) => [
 const host = (u: string) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return ""; } };
 const clean = (s: unknown, n: number) => (typeof s === "string" ? s.replace(/\s+/g, " ").trim().slice(0, n) : "");
 
+/** Titre lisible tiré de l'adresse d'une page produit (quand la page ne peut pas être lue). */
+export function slugTitle(u: string): string {
+  try {
+    const seg = new URL(u).pathname.split("/").filter(Boolean).map((x) => decodeURIComponent(x).replace(/\.(html?|php|aspx)$/i, "")).filter((x) => /[a-z]{3,}-[a-z]{3,}/i.test(x)).pop();
+    if (!seg) return "";
+    const t = seg.replace(/[-_]+/g, " ").replace(/\b(prod|p|ref|sku)?\s?\d{4,}\b/gi, "").replace(/\s+/g, " ").trim();
+    return t.length > 6 ? t.charAt(0).toUpperCase() + t.slice(1, 120) : "";
+  } catch { return ""; }
+}
+
 /** Adresse finale d'un lien de la recherche Google (redirection). */
 async function resolve(u: string): Promise<string> {
   if (!/grounding-api-redirect/.test(u)) return u;
@@ -63,6 +73,7 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   try { listed = (JSON.parse(txt.slice(txt.indexOf('{"products"'), txt.lastIndexOf("}") + 1)) as { products?: typeof listed }).products ?? []; } catch { /* réponse libre */ }
   // Liens écrits dans le texte (si le bloc JSON manque), avec le texte du lien comme titre.
   for (const m of txt.matchAll(/\[([^\]]{3,160})\]\((https:\/\/[^\s)]+)\)/g)) listed.push({ title: m[1], url: m[2], merchant: "" });
+  for (const m of txt.matchAll(/https:\/\/[^\s)"'<>\]]+/g)) if (!listed.some((p) => p.url === m[0])) listed.push({ title: "", url: m[0], merchant: "" });
 
   // Seules les pages réellement trouvées par la recherche Google sont gardées (liens de redirection de Google suivis jusqu'à la page).
   const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w): w is { uri: string; title?: string } => typeof w?.uri === "string");
@@ -81,9 +92,10 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   const now = new Date().toISOString();
   const produits = (await Promise.all(unique.map(async (p): Promise<Trouve | null> => {
     const d = await inspect(p.url);
-    if (!d && !p.title) return null; // page ni lisible ni décrite : rien à montrer
+    const title = d?.name || p.title || slugTitle(p.url);
+    if (!title) return null; // page ni lisible ni décrite : rien à montrer
     return {
-      title: d?.name || p.title, url: p.url, merchant: p.merchant || host(p.url),
+      title, url: p.url, merchant: p.merchant || host(p.url),
       price: d?.price ?? null, currency: d?.price ? d.currency ?? "EUR" : null, availability: d?.availability ?? null, brand: d?.brand ?? null,
       checkedAt: d ? now : null, source: d ? "page" : "recherche",
     };

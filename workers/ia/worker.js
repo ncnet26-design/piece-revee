@@ -523,6 +523,16 @@ var host = (u) => {
   }
 };
 var clean2 = (s, n2) => typeof s === "string" ? s.replace(/\s+/g, " ").trim().slice(0, n2) : "";
+function slugTitle(u) {
+  try {
+    const seg = new URL(u).pathname.split("/").filter(Boolean).map((x) => decodeURIComponent(x).replace(/\.(html?|php|aspx)$/i, "")).filter((x) => /[a-z]{3,}-[a-z]{3,}/i.test(x)).pop();
+    if (!seg) return "";
+    const t = seg.replace(/[-_]+/g, " ").replace(/\b(prod|p|ref|sku)?\s?\d{4,}\b/gi, "").replace(/\s+/g, " ").trim();
+    return t.length > 6 ? t.charAt(0).toUpperCase() + t.slice(1, 120) : "";
+  } catch {
+    return "";
+  }
+}
 async function resolve(u) {
   if (!/grounding-api-redirect/.test(u)) return u;
   try {
@@ -561,6 +571,7 @@ async function rechercher(env, q, label, pays = "FR") {
   } catch {
   }
   for (const m of txt.matchAll(/\[([^\]]{3,160})\]\((https:\/\/[^\s)]+)\)/g)) listed.push({ title: m[1], url: m[2], merchant: "" });
+  for (const m of txt.matchAll(/https:\/\/[^\s)"'<>\]]+/g)) if (!listed.some((p) => p.url === m[0])) listed.push({ title: "", url: m[0], merchant: "" });
   const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w) => typeof w?.uri === "string");
   const isRedirect = (u) => /grounding-api-redirect/.test(u);
   const viaModel = listed.map((p) => ({ url: clean2(p.url, 1200), title: clean2(p.title, 160), merchant: clean2(p.merchant, 60) })).filter((p) => /^https?:\/\//.test(p.url));
@@ -588,9 +599,10 @@ async function rechercher(env, q, label, pays = "FR") {
   const now = (/* @__PURE__ */ new Date()).toISOString();
   const produits = (await Promise.all(unique.map(async (p) => {
     const d = await inspect(p.url);
-    if (!d && !p.title) return null;
+    const title = d?.name || p.title || slugTitle(p.url);
+    if (!title) return null;
     return {
-      title: d?.name || p.title,
+      title,
       url: p.url,
       merchant: p.merchant || host(p.url),
       price: d?.price ?? null,
