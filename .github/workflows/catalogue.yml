@@ -1,0 +1,48 @@
+name: Catalogue de produits (robot)
+
+# Chaque nuit : le robot visite de nouvelles pages produits des enseignes et revérifie les plus anciennes,
+# puis publie le catalogue (public/catalogue) sur le site. Peut aussi se lancer à la main.
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+    inputs:
+      pages: { description: "Pages visitées par enseigne", required: false, default: "150", type: string }
+      enseignes: { description: "Enseignes (vide = toutes), ex. ikea,laredoute", required: false, default: "", type: string }
+
+permissions:
+  contents: write
+
+concurrency: { group: catalogue, cancel-in-progress: false }
+
+jobs:
+  catalogue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Robot catalogue
+        env:
+          PAGES: ${{ inputs.pages || '150' }}
+          ENSEIGNES: ${{ inputs.enseignes || '' }}
+        run: |
+          mkdir -p .robot
+          ARGS="--pages $PAGES --minutes 42"
+          [ -n "$ENSEIGNES" ] && ARGS="$ARGS --enseignes $ENSEIGNES"
+          node --experimental-strip-types scripts/robot-catalogue.ts $ARGS 2>&1 | tee .robot/catalogue.txt
+      - name: Publier le catalogue
+        run: |
+          git config user.name "robot-catalogue"
+          git config user.email "robot@users.noreply.github.com"
+          git add public/catalogue content/data/catalogue-etat.json
+          git commit -m "Catalogue : mise à jour automatique ($(date -u +%F))" || exit 0
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
+      - name: Rapport (branche robot/catalogue)
+        if: ${{ always() }}
+        run: |
+          git checkout -B robot/catalogue
+          git add -f .robot/catalogue.txt
+          git commit -m "Rapport du robot catalogue" || exit 0
+          git push -f origin robot/catalogue

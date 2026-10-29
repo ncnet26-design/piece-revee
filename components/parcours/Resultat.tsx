@@ -10,6 +10,7 @@ import { Comparator } from "@/components/studio/Comparator";
 import { Panel } from "@/components/studio/Panel";
 import { ShopLinks } from "@/components/ShopLinks";
 import { EnLigne } from "./EnLigne";
+import { Catalogue } from "./Catalogue";
 import { BeforeAfter } from "@/components/BeforeAfter";
 
 type Sel = { kind: "objet"; o: AiObject } | { kind: "surface"; s: Surface } | { kind: "couleur"; hex: string; x: number; y: number };
@@ -90,6 +91,7 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
         {sel?.kind === "objet" && (<>
           {sel.o.description && <p className="mt-2 text-[13px] text-muted">{sel.o.description}</p>}
           <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={sel.o.label} />
+          <Catalogue type={sel.o.type} label={sel.o.label} query={sel.o.query || sel.o.label} />
           <details className="group mt-5 border-t border-line pt-4">
             <summary className="cursor-pointer list-none text-[14px] font-semibold">Dans notre sélection vérifiée<span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
             <Comparator key={sel.o.id} features={featuresOf(sel.o)} objectName={sel.o.label} inList={inList} onAdd={(p) => onAdd(p, sel.o.id)} />
@@ -133,6 +135,7 @@ function Teinte({ hex, name, kind, material, finish }: { hex?: string; name?: st
         </div>
       )}
       <EnLigne query={q} label={name || paint.name} />
+      <Catalogue type={kind === "sol" ? "sol" : kind === "rideaux" ? "rideau" : "peinture"} label={name || paint.name} query={q} />
       <div>
         <p className="eyebrow">Chercher aussi chez</p>
         <div className="mt-2"><ShopLinks query={q} kinds={kinds} max={4} title="" /></div>
