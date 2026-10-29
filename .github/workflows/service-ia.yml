@@ -1,0 +1,51 @@
+name: Service IA (Cloudflare Worker piece-revee-ia)
+
+# « verifier » : contrôle la clé et l'état du service, sans rien modifier.
+# « deployer » : met en ligne workers/ia/worker.js en conservant les réglages existants (clés secrètes, KV QUOTA, R2, variables).
+on:
+  workflow_dispatch:
+    inputs:
+      action: { description: "verifier ou deployer", required: true, default: verifier, type: choice, options: [verifier, deployer] }
+
+permissions:
+  contents: read
+
+env:
+  CF_ACCOUNT: f8d17f2edfe8ee1b22e66bc4c0bf364b
+  WORKER: piece-revee-ia
+
+jobs:
+  service:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérifier la clé Cloudflare
+        env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}" }
+        run: |
+          test -n "$CF_TOKEN" || { echo "Secret CLOUDFLARE_API_TOKEN absent"; exit 1; }
+          curl -sS -H "Authorization: Bearer $CF_TOKEN" https://api.cloudflare.com/client/v4/user/tokens/verify | jq '{success, status: .result.status, errors}'
+      - name: État du service (noms des réglages, jamais leurs valeurs)
+        env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}" }
+        run: |
+          echo "Workers du compte :"
+          curl -sS -H "Authorization: Bearer $CF_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/scripts" | jq -r '.success, (.errors|tostring), (.result // [] | .[].id)'
+          echo "Réglages de $WORKER :"
+          curl -sS -H "Authorization: Bearer $CF_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/scripts/$WORKER/settings" | jq '{success, errors, compatibility_date: .result.compatibility_date, bindings: [.result.bindings[]? | {name, type}]}'
+          echo "Sous-domaine workers.dev :"
+          curl -sS -H "Authorization: Bearer $CF_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/subdomain" | jq '{success, subdomain: .result.subdomain}'
+          echo "Réponse publique actuelle :"
+          curl -sS --max-time 20 "https://$WORKER.ewanesteves26.workers.dev/" | head -c 600; echo
+      - name: Mettre en ligne (réglages conservés)
+        if: ${{ inputs.action == 'deployer' }}
+        env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}" }
+        run: |
+          COMPAT=$(curl -sS -H "Authorization: Bearer $CF_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/scripts/$WORKER/settings" | jq -r '.result.compatibility_date // "2025-01-01"')
+          jq -n --arg c "$COMPAT" '{main_module: "worker.js", compatibility_date: $c, keep_bindings: ["kv_namespace", "r2_bucket", "secret_text", "plain_text", "secret_key"]}' > metadata.json
+          curl -sS -X PUT -H "Authorization: Bearer $CF_TOKEN" \
+            -F "metadata=@metadata.json;type=application/json" \
+            -F "worker.js=@workers/ia/worker.js;type=application/javascript+module" \
+            "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/scripts/$WORKER" | jq '{success, errors, bindings: [.result.bindings[]? | {name, type}]}'
+          sleep 8
+          echo "Réponse publique après mise en ligne :"
+          curl -sS --max-time 20 "https://$WORKER.ewanesteves26.workers.dev/" | head -c 600; echo
