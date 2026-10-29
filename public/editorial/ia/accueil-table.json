@@ -1,0 +1,13 @@
+{
+  "id": "accueil-table",
+  "usage": "Accueil : table basse en travertin",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:19:45.378Z",
+  "prompt_sha256": "ece08fa18c4d1072cca5142c3abc38125c403b420ac9884449ade07f12e469cf",
+  "aspect_ratio": "3:2",
+  "image_size": "2K",
+  "images": 1,
+  "status": "completed",
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}

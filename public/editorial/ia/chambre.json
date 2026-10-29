@@ -1,0 +1,13 @@
+{
+  "id": "chambre",
+  "usage": "Banque d'inspiration : espace chambre",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:17:19.654Z",
+  "prompt_sha256": "bf10df5930f789d60c0da1ff0ab469c12451e460702fc44650fff14ac6f6a2da",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "images": 1,
+  "status": "completed",
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}

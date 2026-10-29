@@ -1,0 +1,13 @@
+{
+  "id": "salon",
+  "usage": "Banque d'inspiration : espace salon",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:16:59.322Z",
+  "prompt_sha256": "086214e844b2417a81b1aa87b5dda708f0364bad59128de3118008ad80765d72",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "images": 1,
+  "status": "completed",
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}

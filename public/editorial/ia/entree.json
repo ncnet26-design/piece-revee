@@ -1,0 +1,13 @@
+{
+  "id": "entree",
+  "usage": "Banque d'inspiration : espace entree",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:17:26.099Z",
+  "prompt_sha256": "01cb1e91058ce39e51828265cd913b4566c39e2344cbb49ab457277a16048c4e",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "images": 1,
+  "status": "completed",
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}

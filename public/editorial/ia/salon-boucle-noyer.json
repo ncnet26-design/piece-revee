@@ -1,0 +1,13 @@
+{
+  "id": "salon-boucle-noyer",
+  "usage": "Accueil (avant/après) et salon d'exemple du Studio",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:19:47.129Z",
+  "prompt_sha256": "dfacadb7dda515c519056ed718d2534d5872d1dafd3c247c8eec6bb3fc886282",
+  "aspect_ratio": "16:9",
+  "image_size": "2K",
+  "images": 1,
+  "status": "completed",
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}

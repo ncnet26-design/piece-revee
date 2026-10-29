@@ -1,0 +1,13 @@
+{
+  "id": "jardin",
+  "usage": "Banque d'inspiration : espace extérieur jardin",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:18:01.639Z",
+  "prompt_sha256": "75382690f50d82f3c8e1c9b65fb46eaa0f05f5ed2247e0aa1cf66577db15dfe9",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "images": 1,
+  "status": "completed",
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}

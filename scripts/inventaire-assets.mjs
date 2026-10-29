@@ -44,7 +44,7 @@ for (const f of walk("public/editorial").filter((f) => IMG.has(extname(f)))) {
   add({ group: "Visuels éditoriaux", path: rel, file: f,
     role: sub === "matieres" ? "Gros plan de matière (banque, accueil)" : sub === "planches" ? "Planche de style (banque, accueil)" : sub === "ia" ? "Image éditoriale générée par IA" : "Rendu 3D de la scène de contrôle (accueil)",
     source: sub === "rendus" ? "Capture du moteur 3D Pièce Rêvée" : sub === "ia" ? "Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID)" : "Composé par scripts/editorial-assets.mjs à partir des textures CC0",
-    license: sub === "ia" ? "Création Pièce Rêvée (image générée par IA, étiquetée)" : "Création Pièce Rêvée ; textures sources CC0 1.0", used: used([rel, `/editorial/${sub}/`, basename(f, extname(f)).replace(/-640$/, "")]) });
+    license: sub === "ia" ? "Création Pièce Rêvée (image générée par IA, étiquetée)" : "Création Pièce Rêvée ; textures sources CC0 1.0", used: used([rel, sub === "matieres" || sub === "planches" ? `/editorial/${sub}/` : rel, basename(f, extname(f)).replace(/-640$/, "")]) });
 }
 // 2. Photographies d'architecture (Wikimedia Commons).
 for (const f of walk("public/inspirations")) {

@@ -28,16 +28,17 @@
       "parisien-contemporain"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/parisien-contemporain.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/parisien-contemporain.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Contemporary Parisian living room in a Haussmann apartment, white plaster mouldings, oak herringbone floor, curved cream boucle sofa, honed Calacatta marble side table, brushed brass details, soft daylight from tall French windows.",
-    "brief": "Parisien contemporain. Le volume haussmannien allégé : murs clairs, parquet chevron, mobilier aux courbes souples et touches de laiton."
+    "brief": "Parisien contemporain. Le volume haussmannien allégé : murs clairs, parquet chevron, mobilier aux courbes souples et touches de laiton.",
+    "planche": "/editorial/planches/parisien-contemporain.webp"
   },
   {
     "id": "haussmannien-renove",
@@ -67,16 +68,17 @@
       "haussmannien-renove"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/haussmannien-renove.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/haussmannien-renove.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Renovated Haussmann salon, original marble fireplace, repainted wall panelling, forest green velvet armchair, oak herringbone parquet, brass wall lights, morning light.",
-    "brief": "Haussmannien rénové. Cheminée en marbre, boiseries repeintes, velours profond et laiton : le décor d'origine assumé, la couleur en plus."
+    "brief": "Haussmannien rénové. Cheminée en marbre, boiseries repeintes, velours profond et laiton : le décor d'origine assumé, la couleur en plus.",
+    "planche": "/editorial/planches/haussmannien-renove.webp"
   },
   {
     "id": "minimalisme-chaleureux",
@@ -106,16 +108,17 @@
       "minimalisme-chaleureux"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/minimalisme-chaleureux.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/minimalisme-chaleureux.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Warm minimalist bedroom, lime plaster walls, light oak platform bed, washed linen bedding, travertine bedside table, low afternoon sun, very few objects.",
-    "brief": "Minimalisme chaleureux. Des surfaces calmes et texturées : enduit à la chaux, chêne clair, lin lavé, pierre adoucie. La lumière fait le décor."
+    "brief": "Minimalisme chaleureux. Des surfaces calmes et texturées : enduit à la chaux, chêne clair, lin lavé, pierre adoucie. La lumière fait le décor.",
+    "planche": "/editorial/planches/minimalisme-chaleureux.webp"
   },
   {
     "id": "scandinave-haut-de-gamme",
@@ -146,16 +149,17 @@
       "scandinave-haut-de-gamme"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/scandinave-haut-de-gamme.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/scandinave-haut-de-gamme.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "High-end Scandinavian dining room, oiled light wood table and chairs, thick wool rug, white plaster walls, pale stone floor, soft overcast daylight.",
-    "brief": "Scandinave haut de gamme. Bois huilé, laine bouclée, plâtre blanc et pierre claire : la simplicité nordique avec des matières plus nobles."
+    "brief": "Scandinave haut de gamme. Bois huilé, laine bouclée, plâtre blanc et pierre claire : la simplicité nordique avec des matières plus nobles.",
+    "planche": "/editorial/planches/scandinave-haut-de-gamme.webp"
   },
   {
     "id": "japandi",
@@ -226,16 +230,17 @@
       "brutalisme-raffine"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/brutalisme-raffine.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/brutalisme-raffine.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Refined brutalist living room, raw plaster and dark stone walls, walnut built-in shelving, sculptural cream boucle armchair, terrazzo floor, dramatic side light.",
-    "brief": "Brutalisme raffiné. Pierre sombre, plâtre brut et noyer : la puissance du béton tempérée par des textiles moelleux."
+    "brief": "Brutalisme raffiné. Pierre sombre, plâtre brut et noyer : la puissance du béton tempérée par des textiles moelleux.",
+    "planche": "/editorial/planches/brutalisme-raffine.webp"
   },
   {
     "id": "mid-century",
@@ -265,16 +270,17 @@
       "mid-century"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/mid-century.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/mid-century.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Mid-century modern living room, walnut sideboard, forest green velvet sofa with tapered legs, terrazzo floor, brass floor lamp, warm late afternoon light.",
-    "brief": "Mid-century modern. Les années 1950 et 1960 : noyer verni, velours vert, terrazzo et laiton, lignes fines et pieds fuselés."
+    "brief": "Mid-century modern. Les années 1950 et 1960 : noyer verni, velours vert, terrazzo et laiton, lignes fines et pieds fuselés.",
+    "planche": "/editorial/planches/mid-century.webp"
   },
   {
     "id": "art-deco-contemporain",
@@ -305,16 +311,17 @@
       "art-deco-contemporain"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/art-deco-contemporain.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/art-deco-contemporain.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Contemporary Art Deco dining room, Calacatta marble table, deep green lacquered walls, fluted walnut sideboard, brass geometric pendant, velvet chairs.",
-    "brief": "Art déco contemporain. Marbre veiné, laque profonde, laiton et velours : la géométrie Art déco, dans une version épurée."
+    "brief": "Art déco contemporain. Marbre veiné, laque profonde, laiton et velours : la géométrie Art déco, dans une version épurée.",
+    "planche": "/editorial/planches/art-deco-contemporain.webp"
   },
   {
     "id": "mediterraneen-contemporain",
@@ -345,16 +352,17 @@
       "mediterraneen-contemporain"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/mediterraneen-contemporain.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/mediterraneen-contemporain.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Contemporary Mediterranean living room, tadelakt walls with soft arches, terracotta tile floor, linen sofa, natural stone bench, strong sunlight and deep shadows.",
-    "brief": "Méditerranéen contemporain. Tadelakt, tomettes, lin et pierre : la douceur du Sud dans des volumes simples et lumineux."
+    "brief": "Méditerranéen contemporain. Tadelakt, tomettes, lin et pierre : la douceur du Sud dans des volumes simples et lumineux.",
+    "planche": "/editorial/planches/mediterraneen-contemporain.webp"
   },
   {
     "id": "campagne-elegante",
@@ -385,16 +393,17 @@
       "campagne-elegante"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/campagne-elegante.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/campagne-elegante.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Elegant country house kitchen, smoked oak cabinets, limestone worktop, terracotta floor, linen curtains, white plaster walls, soft morning light.",
-    "brief": "Maison de campagne élégante. Chêne fumé, pierre, lin et terre cuite : la maison de famille, sans l'accumulation."
+    "brief": "Maison de campagne élégante. Chêne fumé, pierre, lin et terre cuite : la maison de famille, sans l'accumulation.",
+    "planche": "/editorial/planches/campagne-elegante.webp"
   },
   {
     "id": "luxe-discret",
@@ -425,16 +434,17 @@
       "luxe-discret"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/luxe-discret.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/luxe-discret.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Quiet luxury living room, travertine coffee table, walnut wall panelling, cream boucle sofa, brushed bronze details, muted palette, soft diffused daylight.",
-    "brief": "Luxe discret. Travertin, noyer, bouclé et bronze brossé : des matières rares dans une palette très retenue."
+    "brief": "Luxe discret. Travertin, noyer, bouclé et bronze brossé : des matières rares dans une palette très retenue.",
+    "planche": "/editorial/planches/luxe-discret.webp"
   },
   {
     "id": "contemporain-sculptural",
@@ -464,16 +474,17 @@
       "contemporain-sculptural"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/contemporain-sculptural.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/contemporain-sculptural.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Sculptural contemporary living room, organic travertine coffee table carved from one block, curved cream boucle sofa, lime plaster walls, brass floor lamp, gallery-like composition.",
-    "brief": "Contemporain sculptural. Formes organiques, pierre massive, bouclé et laiton : chaque pièce a la présence d'une œuvre."
+    "brief": "Contemporain sculptural. Formes organiques, pierre massive, bouclé et laiton : chaque pièce a la présence d'une œuvre.",
+    "planche": "/editorial/planches/contemporain-sculptural.webp"
   },
   {
     "id": "salon",
@@ -501,13 +512,13 @@
       "contemporain-sculptural"
     ],
     "image": {
-      "kind": "photo",
-      "src": "/inspirations/villas-14.webp",
-      "width": 1467,
-      "height": 1100,
-      "credit": "Mike Duchstein · Wikimedia Commons",
-      "license": "CC BY-SA 4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Villa_Tugendhat_Haus_house_Brno_Br%C3%BCnn_Bauhaus_classic_living_room_MD284.jpg"
+      "kind": "ia",
+      "src": "/editorial/ia/salon.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
+      "sourceUrl": null
     },
     "prompt": "",
     "brief": "Salons. Circulation de 80 à 90 cm, table basse aux deux tiers du canapé, trois couches de lumière."
@@ -538,13 +549,13 @@
       "minimalisme-chaleureux"
     ],
     "image": {
-      "kind": "photo",
-      "src": "/inspirations/cuisines-68.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/cuisine.webp",
       "width": 1600,
-      "height": 801,
-      "credit": "Rikayon · Wikimedia Commons",
-      "license": "CC BY-SA 4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shimizu_Kitchen_Design.jpg"
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
+      "sourceUrl": null
     },
     "prompt": "",
     "brief": "Cuisines. Plans en pierre, façades en bois, crédence lavable : le triangle évier, cuisson, froid avant tout."
@@ -575,16 +586,17 @@
       "art-deco-contemporain"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/salle-de-bain.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/salle-de-bain.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Serene bathroom, tadelakt walls, terrazzo floor, freestanding stone washbasin, brushed brass wall-mounted tap, soft window light.",
-    "brief": "Salles de bains. Tadelakt, terrazzo, robinetterie brossée : des matières qui supportent l'eau et vieillissent bien."
+    "brief": "Salles de bains. Tadelakt, terrazzo, robinetterie brossée : des matières qui supportent l'eau et vieillissent bien.",
+    "planche": "/editorial/planches/salle-de-bain.webp"
   },
   {
     "id": "chambre",
@@ -612,16 +624,17 @@
       "japandi"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/chambre.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/chambre.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Calm bedroom, lime plaster walls, washed linen bedding, oak bed, boucle bench, bedside wall lights, evening light.",
-    "brief": "Chambres. Textiles naturels, lumière tamisée, tête de lit généreuse et 60 cm de passage autour du lit."
+    "brief": "Chambres. Textiles naturels, lumière tamisée, tête de lit généreuse et 60 cm de passage autour du lit.",
+    "planche": "/editorial/planches/chambre.webp"
   },
   {
     "id": "entree",
@@ -649,16 +662,17 @@
       "contemporain-sculptural"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/entree.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/entree.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Elegant entrance hall, travertine console, walnut bench, round mirror, plaster walls, sculptural brass wall light.",
-    "brief": "Entrées. Un banc, un miroir, une console et une lumière d'accent : peu d'éléments, très bien choisis."
+    "brief": "Entrées. Un banc, un miroir, une console et une lumière d'accent : peu d'éléments, très bien choisis.",
+    "planche": "/editorial/planches/entree.webp"
   },
   {
     "id": "salle-a-manger",
@@ -686,16 +700,17 @@
       "mid-century"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/salle-a-manger.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/salle-a-manger.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Dining room, marble oval table, walnut chairs with velvet seats, low brass pendant, plaster walls, evening ambience.",
-    "brief": "Salles à manger. Compter 60 cm par convive et 90 cm derrière les chaises ; une suspension à 75 cm au-dessus du plateau."
+    "brief": "Salles à manger. Compter 60 cm par convive et 90 cm derrière les chaises ; une suspension à 75 cm au-dessus du plateau.",
+    "planche": "/editorial/planches/salle-a-manger.webp"
   },
   {
     "id": "bureau",
@@ -723,13 +738,13 @@
       "brutalisme-raffine"
     ],
     "image": {
-      "kind": "photo",
-      "src": "/inspirations/villas-16.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/bureau.webp",
       "width": 1600,
-      "height": 937,
-      "credit": "Mike Duchstein · Wikimedia Commons",
-      "license": "CC BY-SA 4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Villa_Tugendhat_Haus_house_Brno_Br%C3%BCnn_Bauhaus_classic_library_MD284.jpg"
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
+      "sourceUrl": null
     },
     "prompt": "",
     "brief": "Bureaux. Lumière naturelle de côté, rangements fermés, une matière chaude sous la main."
@@ -759,16 +774,17 @@
       "luxe-discret"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/dressing.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/dressing.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Walk-in dressing room, oak cabinetry with integrated lighting, full-height mirror, boucle ottoman, brass handles.",
-    "brief": "Dressings. Façades en bois, éclairage intégré, miroir pleine hauteur et assise pour se chausser."
+    "brief": "Dressings. Façades en bois, éclairage intégré, miroir pleine hauteur et assise pour se chausser.",
+    "planche": "/editorial/planches/dressing.webp"
   },
   {
     "id": "terrasse",
@@ -795,16 +811,17 @@
       "mediterraneen-contemporain"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/terrasse.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/terrasse.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Mediterranean terrace, terracotta floor, natural stone bench, linen shade sail, olive trees in pots, golden hour light.",
-    "brief": "Terrasses. Sol en pierre ou terre cuite, ombrage, mobilier résistant, végétaux en pots adaptés à l'exposition."
+    "brief": "Terrasses. Sol en pierre ou terre cuite, ombrage, mobilier résistant, végétaux en pots adaptés à l'exposition.",
+    "planche": "/editorial/planches/terrasse.webp"
   },
   {
     "id": "jardin",
@@ -831,16 +848,17 @@
       "campagne-elegante"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/jardin.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/jardin.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Contemporary garden, natural stone path, layered planting of grasses and perennials, oak bench, low garden lights at dusk.",
-    "brief": "Jardins. Allées en pierre, massifs selon l'exposition, éclairage bas ; penser entretien et besoins en eau."
+    "brief": "Jardins. Allées en pierre, massifs selon l'exposition, éclairage bas ; penser entretien et besoins en eau.",
+    "planche": "/editorial/planches/jardin.webp"
   },
   {
     "id": "facade",
@@ -868,16 +886,17 @@
       "campagne-elegante"
     ],
     "image": {
-      "kind": "planche",
-      "src": "/editorial/planches/facade.webp",
+      "kind": "ia",
+      "src": "/editorial/ia/facade.webp",
       "width": 1600,
-      "height": 1200,
-      "credit": "Composition Pièce Rêvée · textures Poly Haven et ambientCG",
-      "license": "CC0 (textures) · composition originale",
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "Renovated house facade, lime render, natural stone base, smoked oak shutters, dark metal window frames, soft daylight.",
-    "brief": "Façades. Enduit, pierre, bois et menuiseries : la couleur se choisit avec le paysage et les règles locales d'urbanisme."
+    "brief": "Façades. Enduit, pierre, bois et menuiseries : la couleur se choisit avec le paysage et les règles locales d'urbanisme.",
+    "planche": "/editorial/planches/facade.webp"
   },
   {
     "id": "matiere-chene",
@@ -895,12 +914,12 @@
       "minimalisme-chaleureux"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/chene-naturel.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-chene.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -922,12 +941,12 @@
       "luxe-discret"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/noyer-verni.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-noyer.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -949,12 +968,12 @@
       "mediterraneen-contemporain"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/pierre-naturelle.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-pierre.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -976,12 +995,12 @@
       "luxe-discret"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/travertin.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-travertin.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -1003,12 +1022,12 @@
       "haussmannien-renove"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/marbre-calacatta.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-marbre.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -1030,12 +1049,12 @@
       "japandi"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/enduit-chaux.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-enduit.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -1056,12 +1075,12 @@
       "parisien-contemporain"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/peinture-mate.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-peinture.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -1083,12 +1102,12 @@
       "art-deco-contemporain"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/laiton-brosse.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-laiton.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -1110,12 +1129,12 @@
       "japandi"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/lin-lave.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-lin.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -1137,12 +1156,12 @@
       "haussmannien-renove"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/velours-foret.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-velours.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -1164,12 +1183,12 @@
       "luxe-discret"
     ],
     "image": {
-      "kind": "matiere",
-      "src": "/editorial/matieres/boucle.webp",
-      "width": 1200,
-      "height": 1200,
-      "credit": "Texture Poly Haven ou ambientCG",
-      "license": "CC0",
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-boucle.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
       "sourceUrl": null
     },
     "prompt": "",
@@ -1195,7 +1214,15 @@
     "styles": [
       "art-deco-contemporain"
     ],
-    "image": null,
+    "image": {
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-verre.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
+      "sourceUrl": null
+    },
     "prompt": "",
     "brief": "Une pièce mettant en valeur le verre."
   },
@@ -1221,7 +1248,15 @@
     "styles": [
       "mediterraneen-contemporain"
     ],
-    "image": null,
+    "image": {
+      "kind": "ia",
+      "src": "/editorial/ia/matiere-ceramique.webp",
+      "width": 1600,
+      "height": 1195,
+      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+      "license": "Création Pièce Rêvée",
+      "sourceUrl": null
+    },
     "prompt": "",
     "brief": "Une pièce mettant en valeur la céramique."
   }

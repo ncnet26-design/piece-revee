@@ -7,12 +7,12 @@ Généré par `node scripts/inventaire-assets.mjs`. Détail fichier par fichier 
 | Licence | Fichiers |
 |---|---:|
 | CC0 1.0 | 119 |
-| Création Pièce Rêvée ; textures sources CC0 1.0 | 53 |
+| Création Pièce Rêvée (image générée par IA, étiquetée) | 76 |
+| Création Pièce Rêvée ; textures sources CC0 1.0 | 50 |
 | CC BY-SA 4.0 | 10 |
 | CC BY 4.0 | 7 |
 | Création Pièce Rêvée | 4 |
 | CC BY 4.0 (crédit obligatoire) | 3 |
-| Création Pièce Rêvée (image générée par IA, étiquetée) | 2 |
 
 ## Sources autorisées et obligations
 

@@ -75,7 +75,7 @@ export function InspirationBank() {
         <ul className="mt-8 grid list-none grid-cols-1 gap-x-6 gap-y-12 p-0 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((e) => (
             <li key={e.id} className="group">
-              <button type="button" onClick={() => setOpen(e)} className="block w-full border-0 bg-transparent p-0 text-left" aria-label={`${e.title} : voir le détail`}>
+              <button type="button" onClick={() => setOpen(e)} className="block w-full border-0 bg-transparent p-0 text-left" aria-label={`${e.title} : voir le détail${e.image?.kind === "ia" ? " · Image générée par IA" : ""}`}>
                 <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-[10px] bg-soft">
                   {e.image ? (
                     // eslint-disable-next-line @next/next/no-img-element

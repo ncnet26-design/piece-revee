@@ -9,7 +9,8 @@ export const metadata = meta({ title: "Pièce Rêvée · Studio d'architecture i
 
 type Entry = { id: string; type: string; title: string; subtitle: string; image: { src: string } | null; palette: string[] };
 const STYLES = ["contemporain-sculptural", "japandi", "haussmannien-renove"].map((id) => (bank as Entry[]).find((e) => e.id === id)!);
-const MATIERES = ["travertin", "noyer-verni", "boucle", "enduit-chaux", "laiton-brosse", "velours-foret"].map((id) => materialById(id)!);
+const MATIERES = ([["travertin", "travertin"], ["noyer-verni", "noyer"], ["boucle", "boucle"], ["enduit-chaux", "enduit"], ["laiton-brosse", "laiton"], ["velours-foret", "velours"]] as const)
+  .map(([id, photo]) => ({ ...materialById(id)!, photo: `/editorial/ia/matiere-${photo}-640.webp` }));
 const ALTERNATIVES = ["drawer-oris-effet-travertin", "kave-drasi-ronde-90", "gubi-epic-coffee-table-round"].map((id) => productById(id)!);
 const TIER: Record<string, string> = { economique: "Économique", intermediaire: "Intermédiaire", premium: "Premium" };
 
@@ -57,9 +58,9 @@ export default function Home() {
       <section aria-labelledby="h-achat" className="grid items-center gap-10 py-24 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
         <figure className="relative m-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/editorial/rendus/table-travertin.webp" alt="Table basse galet en travertin dans la pièce témoin du Studio" loading="lazy" className="aspect-[16/11] w-full rounded-[10px] object-cover" />
-          <span aria-hidden className="absolute left-[46%] top-[52%] grid size-7 place-items-center rounded-full bg-white/95 shadow-[0_0_0_7px_rgba(255,255,255,.3)]"><span className="size-2.5 rounded-full bg-ink" /></span>
-          <figcaption className="mt-3 text-[12px] text-muted">Rendu 3D du Studio · table basse dessinée par Pièce Rêvée</figcaption>
+          <img src="/editorial/ia/accueil-table.webp" alt="Table basse galet en travertin devant un canapé bouclé" loading="lazy" className="aspect-[3/2] w-full rounded-[10px] object-cover" />
+          <span aria-hidden className="absolute left-[44%] top-[56%] grid size-7 place-items-center rounded-full bg-white/95 shadow-[0_0_0_7px_rgba(255,255,255,.3)]"><span className="size-2.5 rounded-full bg-ink" /></span>
+          <figcaption className="mt-3 text-[12px] text-muted">Image générée par IA · table basse dessinée par Pièce Rêvée</figcaption>
         </figure>
         <div>
           <p className="eyebrow">Du rendu à l'achat</p>
@@ -118,20 +119,20 @@ export default function Home() {
       {/* ——— Matières ——— */}
       <section aria-labelledby="h-matieres" className="py-20">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <div><p className="eyebrow">Matières</p><h2 id="h-matieres" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Photographiées, <em>pas imitées.</em></h2></div>
+          <div><p className="eyebrow">Matières</p><h2 id="h-matieres" className="mt-4 text-[clamp(36px,4.4vw,60px)]">De vraies matières, <em>à la bonne échelle.</em></h2></div>
           <Link href="/showroom/" className="btn">La matériauthèque</Link>
         </div>
         <ul className="mt-12 grid list-none grid-cols-2 gap-x-5 gap-y-8 p-0 sm:grid-cols-3 lg:grid-cols-6">
           {MATIERES.map((m) => (
             <li key={m.id}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/editorial/matieres/${m.id}.webp`} alt={m.name} loading="lazy" className="aspect-square w-full rounded-[8px] object-cover" />
+              <img src={m.photo} alt={m.name} loading="lazy" className="aspect-square w-full rounded-[8px] object-cover" />
               <p className="mt-3 text-[14px] font-medium">{m.name}</p>
               <p className="text-[12.5px] text-muted">{m.finish}</p>
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-[12px] text-muted">Textures Poly Haven et ambientCG (CC0). Métaux : textures calculées.</p>
+        <p className="mt-6 text-[12px] text-muted">Images générées par IA. Dans la scène 3D, les matières utilisent des textures photographiées (Poly Haven, ambientCG, CC0).</p>
       </section>
 
       {/* ——— Références ——— */}

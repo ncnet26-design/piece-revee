@@ -1,0 +1,13 @@
+{
+  "id": "bureau",
+  "usage": "Banque d'inspiration : espace bureau",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:17:38.474Z",
+  "prompt_sha256": "9d7a59eb568185a615ca1bbd87c9fcd45df43f4aedb1d081f5010f066b71cca9",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "images": 1,
+  "status": "completed",
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}

@@ -96,10 +96,10 @@ test("studio : accessibilité (axe)", async ({ page }) => {
 
 test("studio : le salon d'exemple s'ouvre avec des meubles originaux cliquables", async ({ page }) => {
   await page.goto("/studio/?etape=explorer");
-  await expect(page.getByText("Rendu 3D", { exact: true })).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByText(/Rendu créé par IA/)).toBeVisible({ timeout: 15_000 });
   await page.getByRole("button", { name: /Table basse galet en travertin/ }).click();
   const panel = page.getByRole("complementary", { name: "Table basse galet en travertin" });
-  await expect(panel.getByText("Création originale · Pièce Rêvée")).toBeVisible();
+  await expect(panel.getByText("Création originale · IA")).toBeVisible();
   await expect(panel.getByText(/alternatives ressemblantes/)).toBeVisible();
   await expect(panel.getByRole("link", { name: /Voir la fiche/ }).first()).toHaveAttribute("target", "_blank");
   // Aucun rangement vérifié : on le dit, on n'invente rien.

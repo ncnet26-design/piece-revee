@@ -1,0 +1,13 @@
+{
+  "id": "salle-de-bain",
+  "usage": "Banque d'inspiration : espace salle-de-bain",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:17:07.495Z",
+  "prompt_sha256": "d35dd81d44a2b83f8d4e7910b3c8eb605a0ac2df59b1c9372226f15fa7bb79b9",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "images": 1,
+  "status": "completed",
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}
