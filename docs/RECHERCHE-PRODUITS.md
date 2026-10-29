@@ -34,6 +34,16 @@ En touchant un élément, le client voit trois sources de produits réels.
   - `content/data/catalogue-etat.json`, pour l'état et le rapport par enseigne ;
   - le rapport de chaque passage est dans la branche `robot/catalogue`.
 
+### État au 29 octobre 2026
+- **2 221 produits** relevés : Habitat 604, Westwing 478, Selency 448, IKEA 376, Castorama 220, Sklum 95.
+- **Croissance prévue** : environ 1 500 à 2 000 produits par nuit, jusqu'à 4 000 pages suivies par enseigne.
+- **Enseignes qui refusent les robots** ou ne publient pas de plan de site lisible, et que le robot ne visite donc pas :
+  - BUT et Leroy Merlin (refus 403) ;
+  - La Redoute, Conforama, Alinéa, ManoMano, Made in Design et Kave Home (plan de site refusé) ;
+  - Maisons du Monde (plan de site absent) ;
+  - Amazon (aucun plan de site public).
+- Ces enseignes restent couvertes par la recherche sur internet, ou le seront par leurs flux d'affiliation.
+
 ## 3. Notre sélection vérifiée
 
 Il s'agit des 22 produits vérifiés à la main (`content/data/products.json`), classés par ressemblance et par gamme, avec leurs sources.
