@@ -15,7 +15,7 @@ const sha = (s) => createHash("sha256").update(s).digest("hex");
 const load = (c) => JSON.parse(readFileSync(`content/ia/commandes/${c}.json`, "utf8"));
 const lotFile = `content/ia/lots/${id}.json`;
 const cmds = existsSync(lotFile) ? JSON.parse(readFileSync(lotFile, "utf8")).commandes.map(load) : [load(id)];
-const expected = cmds.length === 1 && !existsSync(lotFile) ? sha(cmds[0].prompt.trim()) : sha(cmds.map((c) => sha(c.prompt.trim())).join(""));
+const expected = cmds.length === 1 && !existsSync(lotFile) ? sha(cmds[0].prompt.trim() + (cmds[0].reference ? sha(readFileSync(cmds[0].reference.path).toString("base64")) : "")) : sha(cmds.map((c) => sha(c.prompt.trim())).join(""));
 if (!confirmation || confirmation.length < 12 || !expected.startsWith(confirmation)) {
   console.error(`Confirmation refusée : empreinte attendue ${expected.slice(0, 12)}. Rien n'a été envoyé.`);
   process.exit(2);
@@ -28,7 +28,7 @@ async function one(cmd) {
   const ps = sha(cmd.prompt.trim());
   const payload = {
     model: cmd.model,
-    input: [{ type: "text", text: cmd.prompt.trim() }],
+    input: [{ type: "text", text: cmd.prompt.trim() }, ...(cmd.reference ? [{ type: "image", mime_type: cmd.reference.mime_type, data: readFileSync(cmd.reference.path).toString("base64") }] : [])],
     response_format: { type: "image", mime_type: "image/jpeg", aspect_ratio: cmd.aspect_ratio, image_size: cmd.image_size },
     store: false,
     generation_config: { thinking_level: cmd.thinking_level },

@@ -1,0 +1,16 @@
+{
+  "id": "salon-velours-chene",
+  "usage": "Accueil : avant/après (version velours vert et chêne fumé)",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "16:9",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "reference": {
+    "path": "content/ia/references/salon-boucle-noyer.jpg",
+    "mime_type": "image/jpeg",
+    "nom": "salon bouclé et noyer (image IA du lot 1, propriété du projet)"
+  },
+  "prompt": "Edit this photograph of a living room. Change only two things: the curved sofa is now upholstered in deep forest-green velvet with a soft sheen instead of cream bouclé, and the fluted sideboard is now smoked oak, darker and cooler than walnut, with the same fluting and the same brass handle. Keep everything else exactly as it is: camera position, framing and perspective, the room, walls, windows and daylight, the travertine coffee table and the objects on it, the rug, the herringbone floor, the objects on the sideboard, and all shadows consistent with the new materials.\nLOCKS: same composition and geometry, no added objects, no logo, no text, no people."
+}
