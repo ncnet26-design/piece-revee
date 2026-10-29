@@ -8,7 +8,7 @@ on:
       action: { description: "verifier ou deployer", required: true, default: verifier, type: choice, options: [verifier, deployer] }
 
 permissions:
-  contents: read
+  contents: write
 
 env:
   CF_ACCOUNT: f8d17f2edfe8ee1b22e66bc4c0bf364b
@@ -23,11 +23,13 @@ jobs:
       - name: Vérifier la clé Cloudflare
         env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}" }
         run: |
+          exec > >(tee -a rapport.txt) 2>&1
           test -n "$CF_TOKEN" || { echo "Secret CLOUDFLARE_API_TOKEN absent"; exit 1; }
           curl -sS -H "Authorization: Bearer $CF_TOKEN" https://api.cloudflare.com/client/v4/user/tokens/verify | jq '{success, status: .result.status, errors}'
       - name: État du service (noms des réglages, jamais leurs valeurs)
         env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}" }
         run: |
+          exec > >(tee -a rapport.txt) 2>&1
           echo "Workers du compte :"
           curl -sS -H "Authorization: Bearer $CF_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/scripts" | jq -r '.success, (.errors|tostring), (.result // [] | .[].id)'
           echo "Réglages de $WORKER :"
@@ -40,6 +42,7 @@ jobs:
         if: ${{ inputs.action == 'deployer' }}
         env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}" }
         run: |
+          exec > >(tee -a rapport.txt) 2>&1
           COMPAT=$(curl -sS -H "Authorization: Bearer $CF_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/scripts/$WORKER/settings" | jq -r '.result.compatibility_date // "2025-01-01"')
           jq -n --arg c "$COMPAT" '{main_module: "worker.js", compatibility_date: $c, keep_bindings: ["kv_namespace", "r2_bucket", "secret_text", "plain_text", "secret_key"]}' > metadata.json
           curl -sS -X PUT -H "Authorization: Bearer $CF_TOKEN" \
@@ -49,3 +52,13 @@ jobs:
           sleep 8
           echo "Réponse publique après mise en ligne :"
           curl -sS --max-time 20 "https://$WORKER.ewanesteves26.workers.dev/" | head -c 600; echo
+      - name: Publier le rapport (branche robot/service-ia)
+        if: ${{ always() }}
+        run: |
+          mkdir -p .robot && mv rapport.txt .robot/service-ia.txt 2>/dev/null || echo "pas de rapport" > .robot/service-ia.txt
+          git config user.name "robot-service"
+          git config user.email "robot@users.noreply.github.com"
+          git checkout -B robot/service-ia
+          git add -f .robot/service-ia.txt
+          git commit -m "Rapport du service IA (${{ inputs.action }})" || exit 0
+          git push -f origin robot/service-ia
