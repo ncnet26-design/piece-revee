@@ -5,7 +5,8 @@ name: Service IA (Cloudflare Worker piece-revee-ia)
 on:
   workflow_dispatch:
     inputs:
-      action: { description: "verifier ou deployer", required: true, default: verifier, type: choice, options: [verifier, deployer, modeles] }
+      action: { description: "verifier ou deployer", required: true, default: verifier, type: choice, options: [verifier, deployer, modeles, test-recherche] }
+      requete: { description: "Requête pour test-recherche", required: false, default: "table basse ovale en travertin", type: string }
 
 permissions:
   contents: write
@@ -58,6 +59,13 @@ jobs:
         run: |
           exec > >(tee -a rapport.txt) 2>&1
           curl -sS -H "x-goog-api-key: $GEMINI_API_KEY" "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200" | jq -r '.models[] | select(.supportedGenerationMethods | index("generateContent")) | "\(.name)\t\(.displayName)\t\(.inputTokenLimit)"'
+      - name: Test réel d'une recherche de produits (une seule)
+        if: ${{ inputs.action == 'test-recherche' }}
+        env: { REQ: "${{ inputs.requete }}" }
+        run: |
+          exec > >(tee -a rapport.txt) 2>&1
+          jq -n --arg q "$REQ" '{query: $q, label: $q, visiteur: "robot-test-recherche"}' > req.json
+          curl -sS --max-time 90 -X POST -H "Origin: https://odd-bar-c583.ewanesteves26.workers.dev" -H "Content-Type: application/json" --data @req.json "https://$WORKER.ewanesteves26.workers.dev/v2/recherche" | jq '{erreur, requetes, suggestions: (.suggestions != null), produits: [.produits[]? | {title, merchant, price, source, url}]}'
       - name: Publier le rapport (branche robot/service-ia)
         if: ${{ always() }}
         run: |
