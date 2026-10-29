@@ -5,6 +5,7 @@
  *   POST /v2/jobs                 { mode, brief, photo?, references?, inspirations?, keep?, keepFree?, materials?, products?, quality?, width?, height?, visiteur, fournisseur? }
  *   POST /v2/moodboard            { inspirations: dataURL[], matieres: {id,name}[], visiteur } → style, palette, matières, objets, consigne
  *   POST /v2/analyse              { image, visiteur } → objets et surfaces avec leur zone
+ *   POST /v2/recherche            { query, label, visiteur } → produits en vente trouvés sur internet (prix relevés sur les pages)
  *   GET  /v2/jobs/:id             état de la tâche (interroge le fournisseur si besoin)
  *   POST /v2/jobs/:id/retry       nouvelle tentative avec les mêmes données
  *   GET  /v2/images/:id           l'image produite
@@ -16,6 +17,7 @@ import { buildPrompt } from "./prompts";
 import { isDataUrl, parseJobBody } from "./validate";
 import { chooseProvider, gemini, PROVIDERS, ProviderError, type ImgIn, type ProviderRequest } from "./providers";
 import { analyse, moodboard } from "./analyse";
+import { rechercher } from "./recherche";
 import { estimate, loadInput, loadJob, overLimit, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
 
 const toImg = (s: string): ImgIn => { const m = /^data:(image\/\w+);base64,(.+)$/.exec(s)!; return { mime: m[1]!, b64: m[2]! }; };
@@ -120,6 +122,23 @@ export default {
         return json(r);
       } catch (e) {
         return json({ erreur: e instanceof ProviderError ? e.message : "Moodboard impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
+      }
+    }
+
+    if (request.method === "POST" && path === "/v2/recherche") {
+      const b = await request.json().catch(() => null) as { query?: unknown; label?: unknown; visiteur?: unknown; pays?: unknown } | null;
+      const q = typeof b?.query === "string" ? b.query.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 160) : "";
+      if (!b || q.length < 3 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Recherche incomplète." }, 400);
+      const label = typeof b.label === "string" ? b.label.trim().slice(0, 100) : q;
+      const visitor = await sha(`v|${b.visiteur}`), cost = 0.03;
+      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
+      if (refusal) return json({ erreur: refusal }, 429);
+      try {
+        const r = await rechercher(env, q, label, b.pays === "EU" ? "EU" : "FR");
+        await settle(env, visitor, ipHash, cost);
+        return json(r);
+      } catch (e) {
+        return json({ erreur: e instanceof ProviderError ? e.message : "Recherche impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
     }
 

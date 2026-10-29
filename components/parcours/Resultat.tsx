@@ -9,6 +9,7 @@ import { hit, lensUrl, nearestMaterials, nearestPaint, sampleColor, surfaceQuery
 import { Comparator } from "@/components/studio/Comparator";
 import { Panel } from "@/components/studio/Panel";
 import { ShopLinks } from "@/components/ShopLinks";
+import { EnLigne } from "./EnLigne";
 import { BeforeAfter } from "@/components/BeforeAfter";
 
 type Sel = { kind: "objet"; o: AiObject } | { kind: "surface"; s: Surface } | { kind: "couleur"; hex: string; x: number; y: number };
@@ -88,7 +89,11 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
       <Panel open={Boolean(sel)} kicker={kicker} title={title} onClose={() => setSel(null)}>
         {sel?.kind === "objet" && (<>
           {sel.o.description && <p className="mt-2 text-[13px] text-muted">{sel.o.description}</p>}
-          <Comparator key={sel.o.id} features={featuresOf(sel.o)} objectName={sel.o.label} inList={inList} onAdd={(p) => onAdd(p, sel.o.id)} />
+          <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={sel.o.label} />
+          <details className="group mt-5 border-t border-line pt-4">
+            <summary className="cursor-pointer list-none text-[14px] font-semibold">Dans notre sélection vérifiée<span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
+            <Comparator key={sel.o.id} features={featuresOf(sel.o)} objectName={sel.o.label} inList={inList} onAdd={(p) => onAdd(p, sel.o.id)} />
+          </details>
           <Lens image={image} />
         </>)}
         {sel?.kind === "surface" && <Teinte hex={sel.s.colors[0]?.hex} name={sel.s.colors[0]?.name} kind={sel.s.kind} material={sel.s.material} finish={sel.s.finish} />}
@@ -127,8 +132,9 @@ function Teinte({ hex, name, kind, material, finish }: { hex?: string; name?: st
           </ul>
         </div>
       )}
+      <EnLigne query={q} label={name || paint.name} />
       <div>
-        <p className="eyebrow">Où la trouver</p>
+        <p className="eyebrow">Chercher aussi chez</p>
         <div className="mt-2"><ShopLinks query={q} kinds={kinds} max={4} title="" /></div>
       </div>
     </div>

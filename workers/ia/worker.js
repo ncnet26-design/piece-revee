@@ -329,10 +329,11 @@ var STYLES = "contemporain, minimal, organique, classique, vintage, art-deco, sc
 var TEXT_MODEL = "gemini-3.8-flash";
 var PIECE = [
   "You are an interior architect. Look at this interior image and return JSON only, no prose.",
-  `"objects": every clearly visible piece of furniture, lighting, rug and decor object (max 12). For each: "type" (one of: ${CATS.join(", ")}),`,
+  `"objects": EVERY visible item a client could buy, even small ones (max 30): furniture, lighting, rugs, cushions, throws, vases, ceramics, books, frames and art, mirrors, plants and pots, candles, trays, handles, taps. For each: "type" (one of: ${CATS.join(", ")}; use deco for small decor, luminaire for any lamp or pendant),`,
   `"label" (short French name, e.g. \xAB Table basse sculpturale en travertin \xBB), "shape" (French tags among: ${SHAPES}), "materials" (French among: ${MATS}),`,
   `"colors" (1-2 dominant colors: {"name" in French, "hex"}), "style" (French among: ${STYLES}), "width_cm", "depth_cm", "height_cm" (estimated real size),`,
-  `"box_2d": [ymin, xmin, ymax, xmax] normalised 0-1000.`,
+  `"query_fr": a precise French shopping search query for this exact item (type, material, colour, shape, approximate size, e.g. \xAB vase en gr\xE8s beige mat 30 cm \xBB),`,
+  `"box_2d": [ymin, xmin, ymax, xmax] normalised 0-1000, tight around the item.`,
   `"surfaces": the main room surfaces (max 6). For each: "kind" (one of: ${SURFACES.join(", ")}), "label" (French, e.g. \xAB Mur en enduit \xE0 la chaux \xBB),`,
   `"colors" (1-2: {"name" in French, "hex"} of the surface itself, not of objects in front), "material" (French, e.g. peinture mate, enduit, parquet ch\xEAne, carrelage, lin),`,
   `"finish" (French: mat, satin\xE9, brillant, brut, cir\xE9\u2026), "box_2d" as above covering the visible part of the surface.`,
@@ -386,6 +387,7 @@ async function analyse(env, image) {
         type: o.type,
         label: String(o.label ?? "").slice(0, 80),
         design_source: "ai_detected",
+        query: String(o.query_fr ?? o.label ?? "").slice(0, 120),
         shape: strs(o.shape),
         materials: strs(o.materials),
         colors: colors(o.colors),
@@ -471,6 +473,119 @@ async function analyseOpenAI(env, image) {
     estimated_dimensions_cm: { width: o.width_cm, depth: o.depth_cm, height: o.height_cm },
     zone: { x: clamp(o.x), y: clamp(o.y), w: clamp(o.w), h: clamp(o.h) }
   }));
+}
+
+// workers/ia/src/recherche.ts
+var PROMPT = (q, label, pays) => [
+  `Find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
+  `Search the web. Prefer online shops that deliver to ${pays === "FR" ? "France" : "Europe"} (any shop: marketplaces, furniture and decor retailers, DIY stores, design brands), with a range of prices from affordable to premium.`,
+  "Only return direct product pages (one product per page), never category pages, blogs or search pages.",
+  'Answer with JSON only: {"products":[{"title":"","url":"","merchant":""}]}. Never invent a URL: use only pages found by the search.'
+].join("\n");
+var host = (u) => {
+  try {
+    return new URL(u).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+};
+var clean = (s, n2) => typeof s === "string" ? s.replace(/\s+/g, " ").trim().slice(0, n2) : "";
+function parseProduct(html) {
+  const blocks = [...html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].map((m) => m[1]);
+  const all = [];
+  const walk = (v) => {
+    if (Array.isArray(v)) v.forEach(walk);
+    else if (v && typeof v === "object") {
+      const o = v;
+      all.push(o);
+      if (o["@graph"]) walk(o["@graph"]);
+    }
+  };
+  for (const b of blocks) {
+    try {
+      walk(JSON.parse(b.trim()));
+    } catch {
+    }
+  }
+  const p = all.find((o) => {
+    const t = o["@type"];
+    return t === "Product" || Array.isArray(t) && t.includes("Product");
+  });
+  if (!p) return null;
+  const offers = Array.isArray(p.offers) ? p.offers[0] : p.offers;
+  const agg = offers && (offers["@type"] === "AggregateOffer" ? offers : void 0);
+  const raw = offers?.price ?? agg?.lowPrice ?? offers?.priceSpecification?.price;
+  const price = raw !== void 0 && Number.isFinite(Number(String(raw).replace(",", "."))) ? Number(String(raw).replace(",", ".")) : null;
+  const brand = typeof p.brand === "string" ? p.brand : clean(p.brand?.name, 60) || null;
+  const av = clean(offers?.availability, 80).replace(/^https?:\/\/schema\.org\//, "") || null;
+  return { name: clean(p.name, 160), brand, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av };
+}
+async function resolve(u) {
+  if (!/grounding-api-redirect/.test(u)) return u;
+  try {
+    const r = await fetch(u, { method: "HEAD", redirect: "manual", signal: AbortSignal.timeout(5e3) });
+    return r.headers.get("location") || u;
+  } catch {
+    return u;
+  }
+}
+async function inspect(url) {
+  try {
+    const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 (compatible; PieceReveeBot/1.0; +https://odd-bar-c583.ewanesteves26.workers.dev)", accept: "text/html", "accept-language": "fr-FR,fr;q=0.9" }, redirect: "follow", signal: AbortSignal.timeout(7e3) });
+    if (!r.ok || !(r.headers.get("content-type") ?? "").includes("html")) return null;
+    const html = (await r.text()).slice(0, 15e5);
+    return parseProduct(html);
+  } catch {
+    return null;
+  }
+}
+async function rechercher(env, q, label, pays = "FR") {
+  if (!env.GEMINI_API_KEY) throw new ProviderError("La recherche sur internet n'est pas configur\xE9e (cl\xE9 manquante).", false);
+  const model = env.GEMINI_SEARCH_MODEL || env.GEMINI_TEXT_MODEL || TEXT_MODEL;
+  const r = await fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }], generationConfig: { temperature: 0.1 } })
+  });
+  if (!r.ok) throw new ProviderError("La recherche sur internet a \xE9chou\xE9.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
+  const j = await r.json();
+  const c = j.candidates?.[0];
+  const meta = c?.groundingMetadata;
+  const txt = c?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
+  let listed = [];
+  try {
+    listed = JSON.parse(txt.slice(txt.indexOf("{"), txt.lastIndexOf("}") + 1)).products ?? [];
+  } catch {
+  }
+  const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w) => typeof w?.uri === "string");
+  const resolved = await Promise.all(chunks.slice(0, 12).map(async (w) => ({ url: await resolve(w.uri), title: w.title ?? "" })));
+  const domains = new Set(resolved.map((w) => host(w.url)).concat(chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))).filter(Boolean));
+  const fromModel = listed.map((p) => ({ url: clean(p.url, 600), title: clean(p.title, 160), merchant: clean(p.merchant, 60) })).filter((p) => /^https:\/\//.test(p.url) && domains.has(host(p.url)));
+  const candidates = [...fromModel, ...resolved.filter((w) => /^https:\/\//.test(w.url) && !/grounding-api-redirect/.test(w.url)).map((w) => ({ url: w.url, title: "", merchant: "" }))];
+  const seen = /* @__PURE__ */ new Set(), unique = candidates.filter((p) => {
+    const k = p.url.split("#")[0].split("?")[0];
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  }).slice(0, 10);
+  const now = (/* @__PURE__ */ new Date()).toISOString();
+  const produits = (await Promise.all(unique.map(async (p) => {
+    const d = await inspect(p.url);
+    if (!d && !p.title) return null;
+    return {
+      title: d?.name || p.title,
+      url: p.url,
+      merchant: p.merchant || host(p.url),
+      price: d?.price ?? null,
+      currency: d?.price ? d.currency ?? "EUR" : null,
+      availability: d?.availability ?? null,
+      brand: d?.brand ?? null,
+      checkedAt: d ? now : null,
+      source: d ? "page" : "recherche"
+    };
+  }))).filter((x) => x !== null && x.title.length > 2);
+  produits.sort((a, b) => a.source === b.source ? (a.price ?? 1e9) - (b.price ?? 1e9) : a.source === "page" ? -1 : 1);
+  return { produits: produits.slice(0, 8), suggestions: meta?.searchEntryPoint?.renderedContent ?? null, requetes: (meta?.webSearchQueries ?? []).slice(0, 5) };
 }
 
 // workers/ia/src/jobs.ts
@@ -636,6 +751,22 @@ var index_default = {
         return json({ erreur: e instanceof ProviderError ? e.message : "Moodboard impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
     }
+    if (request.method === "POST" && path === "/v2/recherche") {
+      const b = await request.json().catch(() => null);
+      const q = typeof b?.query === "string" ? b.query.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 160) : "";
+      if (!b || q.length < 3 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Recherche incompl\xE8te." }, 400);
+      const label = typeof b.label === "string" ? b.label.trim().slice(0, 100) : q;
+      const visitor = await sha(`v|${b.visiteur}`), cost = 0.03;
+      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
+      if (refusal) return json({ erreur: refusal }, 429);
+      try {
+        const r = await rechercher(env, q, label, b.pays === "EU" ? "EU" : "FR");
+        await settle(env, visitor, ipHash, cost);
+        return json(r);
+      } catch (e) {
+        return json({ erreur: e instanceof ProviderError ? e.message : "Recherche impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
+      }
+    }
     const m = /^\/v2\/jobs\/([0-9a-f-]{36})(\/retry)?$/.exec(path);
     if (m) {
       const job = await loadJob(env, m[1]);
@@ -688,9 +819,9 @@ async function legacy(request, env, path, ip, json) {
   if (mine >= LEGACY_VISITOR) return json({ erreur: `Vous avez utilis\xE9 vos ${LEGACY_VISITOR} images du jour. Revenez demain.` }, 429);
   const body = await request.json().catch(() => null);
   if (!body) return json({ erreur: "Demande illisible." }, 400);
-  const clean = (s, max) => typeof s === "string" ? s.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, max) : "";
+  const clean2 = (s, max) => typeof s === "string" ? s.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, max) : "";
   const image = (s) => isDataUrl(s) ? toImg(s) : null;
-  const brief = clean(body.brief, 1200) || (path === "/photo" ? "Planche de mati\xE8res." : "");
+  const brief = clean2(body.brief, 1200) || (path === "/photo" ? "Planche de mati\xE8res." : "");
   if (!brief) return json({ erreur: "D\xE9crivez le projet." }, 400);
   const aspect = ASPECTS.includes(String(body.aspect)) ? String(body.aspect) : "4:3";
   const [aw, ah] = aspect.split(":").map(Number);

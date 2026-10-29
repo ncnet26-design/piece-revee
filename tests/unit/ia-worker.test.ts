@@ -196,3 +196,38 @@ describe("analyse et moodboard (Gemini)", () => {
     expect(p).not.toContain("are references (materials");
   });
 });
+
+describe("recherche de produits sur internet", () => {
+  let env: Env & { QUOTA: ReturnType<typeof memoryKV> };
+  const fetchMock = vi.fn();
+  beforeEach(() => { env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g-test" }; vi.stubGlobal("fetch", fetchMock); fetchMock.mockReset(); _setPause(async () => {}); });
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("lit les données produit publiées par le vendeur (schema.org)", async () => {
+    const { parseProduct } = await import("@/workers/ia/src/recherche");
+    const html = `<html><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList"},{"@type":"Product","name":"Vase en grès beige","brand":{"@type":"Brand","name":"Atelier"},"offers":{"@type":"Offer","price":"39,90","priceCurrency":"EUR","availability":"https://schema.org/InStock"}}]}</script></html>`;
+    expect(parseProduct(html)).toEqual({ name: "Vase en grès beige", brand: "Atelier", price: 39.9, currency: "EUR", availability: "InStock" });
+    expect(parseProduct("<html>pas de produit</html>")).toBeNull();
+  });
+
+  it("ne garde que les pages trouvées par la recherche Google et n'affiche un prix que s'il est relevé sur la page", async () => {
+    fetchMock.mockImplementation(async (url: string) => {
+      if (url.includes("generativelanguage")) return new Response(JSON.stringify({ candidates: [{
+        content: { parts: [{ text: '```json\n{"products":[{"title":"Vase grès","url":"https://boutique-a.fr/vase-gres","merchant":"Boutique A"},{"title":"Lien inventé","url":"https://site-invente.com/x","merchant":"?"},{"title":"Vase sans données","url":"https://boutique-b.fr/vase","merchant":"Boutique B"}]}\n```' }] },
+        groundingMetadata: { groundingChunks: [{ web: { uri: "https://boutique-a.fr/vase-gres", title: "boutique-a.fr" } }, { web: { uri: "https://boutique-b.fr/vase", title: "boutique-b.fr" } }], searchEntryPoint: { renderedContent: "<div>suggestions</div>" }, webSearchQueries: ["vase grès beige"] },
+      }] }), { status: 200 });
+      if (url.includes("boutique-a.fr")) return new Response(`<script type="application/ld+json">{"@type":"Product","name":"Vase en grès beige mat","offers":{"price":45,"priceCurrency":"EUR"}}</script>`, { status: 200, headers: { "content-type": "text/html" } });
+      if (url.includes("boutique-b.fr")) return new Response("<html></html>", { status: 200, headers: { "content-type": "text/html" } });
+      return new Response("", { status: 404 });
+    });
+    const r = await call(env, "/v2/recherche", { method: "POST", body: JSON.stringify({ query: "vase en grès beige mat", label: "Vase", visiteur: "visiteur-test-01" }) });
+    expect(r.status).toBe(200);
+    const d = await r.json() as { produits: Array<{ url: string; price: number | null; source: string }>; suggestions: string; requetes: string[] };
+    expect(d.produits.map((p) => p.url)).toEqual(["https://boutique-a.fr/vase-gres", "https://boutique-b.fr/vase"]);
+    expect(d.produits[0]).toMatchObject({ price: 45, source: "page" });
+    expect(d.produits[1]).toMatchObject({ price: null, source: "recherche" });
+    expect(d.suggestions).toBe("<div>suggestions</div>");
+    const sent = JSON.parse(String((fetchMock.mock.calls.find((c) => String(c[0]).includes("generativelanguage"))![1] as RequestInit).body));
+    expect(sent.tools).toEqual([{ google_search: {} }]);
+  });
+});

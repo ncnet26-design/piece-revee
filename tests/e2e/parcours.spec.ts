@@ -3,8 +3,10 @@ import AxeBuilder from "@axe-core/playwright";
 
 const noJsErrors = (page: import("@playwright/test").Page) => {
   const errors: string[] = [];
-  page.on("pageerror", (e) => errors.push(e.message));
-  page.on("console", (m) => { if (m.type() === "error" && !m.text().includes("404") && !/ERR_TUNNEL|ERR_NAME_NOT_RESOLVED|ERR_CONNECTION/.test(m.text())) errors.push(m.text()); });
+  // Le cadre isolé des suggestions Google refuse les scripts d'initialisation des tests : ce n'est pas une erreur du site.
+  const sandbox = (t: string) => /sandboxed|about:srcdoc/.test(t);
+  page.on("pageerror", (e) => { if (!sandbox(e.message)) errors.push(e.message); });
+  page.on("console", (m) => { if (m.type() === "error" && !sandbox(m.text()) && !m.text().includes("404") && !/ERR_TUNNEL|ERR_NAME_NOT_RESOLVED|ERR_CONNECTION/.test(m.text())) errors.push(m.text()); });
   return errors;
 };
 
@@ -318,9 +320,17 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
     await r.fulfill({ status: 201, contentType: "application/json", headers: H, body: JSON.stringify({ id: "22222222-2222-4222-8222-222222222222", status: "terminee", mode: "transform", provider: "gemini", model: "nano", quality: "premium", brief: "x", keep: [], width: 1600, height: 893, createdAt: now, updatedAt: now, attempts: 1, costUsd: 0.06, imageUrl: "http://localhost:4173/editorial/ia/salon-boucle-noyer.webp" }) });
   });
   await page.route("**/v2/analyse", (r) => r.fulfill({ status: 200, contentType: "application/json", headers: H, body: JSON.stringify({
-    objects: [{ id: "table-basse_001", type: "table-basse", label: "Table basse galet en travertin", design_source: "ai_detected", shape: ["organique", "basse"], materials: ["travertin"], colors: [{ name: "Travertin", hex: "#E3D2B4" }], style: ["minimal"], estimated_dimensions_cm: { width: 110, depth: 70, height: 32 }, zone: { x: 47, y: 71, w: 25, h: 18 } }],
+    objects: [{ id: "table-basse_001", type: "table-basse", label: "Table basse galet en travertin", query: "table basse galet travertin", design_source: "ai_detected", shape: ["organique", "basse"], materials: ["travertin"], colors: [{ name: "Travertin", hex: "#E3D2B4" }], style: ["minimal"], estimated_dimensions_cm: { width: 110, depth: 70, height: 32 }, zone: { x: 47, y: 71, w: 25, h: 18 } }],
     surfaces: [{ id: "mur_1", kind: "mur", label: "Mur à la chaux", colors: [{ name: "Blanc chaud", hex: "#EEE8DD" }], material: "enduit à la chaux", finish: "mat", zone: { x: 20, y: 0, w: 80, h: 50 } }],
   }) }));
+  const recherches: string[] = [];
+  await page.route("**/v2/recherche", async (r) => {
+    const q = (r.request().postDataJSON() as { query: string }).query; recherches.push(q);
+    await r.fulfill({ status: 200, contentType: "application/json", headers: H, body: JSON.stringify({
+      produits: [{ title: "Table basse ovale en travertin", url: "https://boutique-exemple.fr/table-travertin", merchant: "boutique-exemple.fr", price: 489, currency: "EUR", availability: "InStock", brand: null, checkedAt: new Date().toISOString(), source: "page" },
+        { title: "Table basse pierre naturelle", url: "https://autre-boutique.fr/table", merchant: "autre-boutique.fr", price: null, currency: null, availability: null, brand: null, checkedAt: null, source: "recherche" }],
+      suggestions: "<div>table basse travertin</div>", requetes: ["table basse travertin"] }) });
+  });
   await page.goto("/transformer/");
   await expect(page.getByRole("button", { name: "Créer mon moodboard" })).toBeDisabled();
   await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/inspirations/villas-16.webp");
@@ -339,8 +349,14 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   // Un meuble : des produits réels ressemblants, avec leur lien.
   await page.getByRole("button", { name: /Table basse galet en travertin : voir les modèles ressemblants/ }).click();
   const meuble = page.getByRole("complementary", { name: "Table basse galet en travertin" });
+  await expect(meuble.getByText("Table basse ovale en travertin")).toBeVisible();
+  await expect(meuble.getByText("489 €")).toBeVisible();
+  await expect(meuble.getByRole("link", { name: /Voir chez boutique-exemple\.fr/ })).toHaveAttribute("href", "https://boutique-exemple.fr/table-travertin");
+  await expect(meuble.getByText("Prix sur le site")).toBeVisible();
+  await expect(meuble.getByTitle("Suggestions de recherche Google")).toBeVisible();
+  expect(recherches).toContain("table basse galet travertin");
+  await meuble.getByText("Dans notre sélection vérifiée").click();
   await expect(meuble.getByText(/alternatives ressemblantes/)).toBeVisible();
-  await expect(meuble.getByRole("link", { name: /Voir la fiche/ }).first()).toHaveAttribute("target", "_blank");
   await page.keyboard.press("Escape");
   // Une surface : sa teinte, des matières proches et où la trouver.
   await page.getByRole("button", { name: "Mur à la chaux" }).click();

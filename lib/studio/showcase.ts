@@ -20,6 +20,8 @@ export const AiObjectSchema = z.object({
   estimated_dimensions_cm: z.object({ width: z.number(), depth: z.number(), height: z.number() }).nullable(),
   zone: z.object({ x: z.number(), y: z.number(), w: z.number(), h: z.number() }),
   description: z.string().optional(),
+  /** Requête de recherche en ligne proposée par l'analyse. */
+  query: z.string().optional(),
 });
 export type AiObject = z.infer<typeof AiObjectSchema>;
 export const RenderSchema = z.object({

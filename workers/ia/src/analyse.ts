@@ -17,10 +17,11 @@ export const TEXT_MODEL = "gemini-3.8-flash";
 
 const PIECE = [
   "You are an interior architect. Look at this interior image and return JSON only, no prose.",
-  `"objects": every clearly visible piece of furniture, lighting, rug and decor object (max 12). For each: "type" (one of: ${CATS.join(", ")}),`,
+  `"objects": EVERY visible item a client could buy, even small ones (max 30): furniture, lighting, rugs, cushions, throws, vases, ceramics, books, frames and art, mirrors, plants and pots, candles, trays, handles, taps. For each: "type" (one of: ${CATS.join(", ")}; use deco for small decor, luminaire for any lamp or pendant),`,
   `"label" (short French name, e.g. « Table basse sculpturale en travertin »), "shape" (French tags among: ${SHAPES}), "materials" (French among: ${MATS}),`,
   `"colors" (1-2 dominant colors: {"name" in French, "hex"}), "style" (French among: ${STYLES}), "width_cm", "depth_cm", "height_cm" (estimated real size),`,
-  `"box_2d": [ymin, xmin, ymax, xmax] normalised 0-1000.`,
+  `"query_fr": a precise French shopping search query for this exact item (type, material, colour, shape, approximate size, e.g. « vase en grès beige mat 30 cm »),`,
+  `"box_2d": [ymin, xmin, ymax, xmax] normalised 0-1000, tight around the item.`,
   `"surfaces": the main room surfaces (max 6). For each: "kind" (one of: ${SURFACES.join(", ")}), "label" (French, e.g. « Mur en enduit à la chaux »),`,
   `"colors" (1-2: {"name" in French, "hex"} of the surface itself, not of objects in front), "material" (French, e.g. peinture mate, enduit, parquet chêne, carrelage, lin),`,
   `"finish" (French: mat, satiné, brillant, brut, ciré…), "box_2d" as above covering the visible part of the surface.`,
@@ -72,7 +73,7 @@ export async function analyse(env: Env, image: ImgIn): Promise<{ objects: unknow
     const objects = arr(j.objects).filter((o) => CATS.includes(String(o.type))).flatMap((o, i) => {
       const zone = boxToZone(o.box_2d); if (!zone) return [];
       return [{
-        id: `${String(o.type)}_${String(i + 1).padStart(3, "0")}`, type: o.type, label: String(o.label ?? "").slice(0, 80), design_source: "ai_detected",
+        id: `${String(o.type)}_${String(i + 1).padStart(3, "0")}`, type: o.type, label: String(o.label ?? "").slice(0, 80), design_source: "ai_detected", query: String(o.query_fr ?? o.label ?? "").slice(0, 120),
         shape: strs(o.shape), materials: strs(o.materials), colors: colors(o.colors), style: strs(o.style),
         estimated_dimensions_cm: Number(o.width_cm) > 0 ? { width: Number(o.width_cm), depth: Number(o.depth_cm) || 0, height: Number(o.height_cm) || 0 } : null, zone,
       }];

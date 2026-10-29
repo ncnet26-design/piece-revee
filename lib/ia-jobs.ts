@@ -84,6 +84,19 @@ export async function moodboardFrom(inspirations: string[], catalog: Array<{ id:
   return call<Moodboard>("/v2/moodboard", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ inspirations: imgs, matieres: catalog, visiteur: visitorId() }) });
 }
 
+/** Produit en vente trouvé sur internet ; le prix n'est présent que s'il a été relevé sur la page du vendeur. */
+export interface Trouve { title: string; url: string; merchant: string; price: number | null; currency: string | null; availability: string | null; brand: string | null; checkedAt: string | null; source: "page" | "recherche" }
+export interface RechercheEnLigne { produits: Trouve[]; suggestions: string | null; requetes: string[] }
+const found = new Map<string, RechercheEnLigne>();
+/** Recherche de produits en vente sur internet (mémorisée pendant la visite, pour ne pas payer deux fois la même recherche). */
+export async function searchOnline(query: string, label: string): Promise<Result<RechercheEnLigne>> {
+  const k = query.toLowerCase();
+  const hit = found.get(k); if (hit) return { ok: true, value: hit };
+  const r = await call<RechercheEnLigne>("/v2/recherche", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query, label, visiteur: visitorId() }) });
+  if (r.ok) found.set(k, r.value);
+  return r;
+}
+
 /** Suit la tâche jusqu'à la fin (intervalle croissant de 2 à 6 s, 8 minutes au plus). */
 export async function waitForJob(job: IaJob, onUpdate: (j: IaJob) => void, signal?: AbortSignal): Promise<IaJob> {
   let cur = job, delay = 2000;

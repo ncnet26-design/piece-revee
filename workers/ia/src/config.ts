@@ -15,6 +15,8 @@ export interface Env {
   OPENAI_RESPONSES_MODEL?: string;
   /** Modèle Gemini d'analyse (moodboard, repérage des objets). */
   GEMINI_TEXT_MODEL?: string;
+  /** Modèle Gemini de la recherche de produits sur internet (recherche Google). */
+  GEMINI_SEARCH_MODEL?: string;
   FAL_MODEL_EDIT?: string;
   FAL_MODEL_TEXT?: string;
   REPLICATE_MODEL?: string;
