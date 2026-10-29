@@ -14,9 +14,13 @@ export function parseProduct(html: string): ProduitPage | null {
     else if (v && typeof v === "object") { const o = v as Record<string, unknown>; all.push(o); if (o["@graph"]) walk(o["@graph"]); }
   };
   for (const b of blocks) { try { walk(JSON.parse(b.trim())); } catch { /* bloc illisible */ } }
-  const p = all.find((o) => { const t = o["@type"]; return t === "Product" || (Array.isArray(t) && t.includes("Product")); });
+  const isProduct = (o: Record<string, unknown>) => { const t = o["@type"]; return ["Product", "ProductGroup", "IndividualProduct"].some((k) => t === k || (Array.isArray(t) && t.includes(k))); };
+  for (const o of [...all]) if (o.mainEntity && typeof o.mainEntity === "object") walk(o.mainEntity);
+  const p = all.find(isProduct) ?? metaProduct(html);
   if (!p) return null;
-  const offers = (Array.isArray(p.offers) ? p.offers[0] : p.offers) as Record<string, unknown> | undefined;
+  const variant = Array.isArray(p.hasVariant) ? (p.hasVariant[0] as Record<string, unknown>) : undefined;
+  const rawOffers = p.offers ?? variant?.offers;
+  const offers = (Array.isArray(rawOffers) ? rawOffers[0] : rawOffers) as Record<string, unknown> | undefined;
   const agg = offers && (offers["@type"] === "AggregateOffer" ? offers : undefined);
   const raw = offers?.price ?? agg?.lowPrice ?? (offers?.priceSpecification as Record<string, unknown> | undefined)?.price;
   const price = raw !== undefined && Number.isFinite(Number(String(raw).replace(",", "."))) ? Number(String(raw).replace(",", ".")) : null;
@@ -25,3 +29,12 @@ export function parseProduct(html: string): ProduitPage | null {
   return { name: clean(p.name, 160), brand, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av };
 }
 
+
+/** Repli : balises Open Graph produit (og:title, product:price:amount) quand la page n'a pas de JSON-LD. */
+function metaProduct(html: string): Record<string, unknown> | null {
+  const meta = (prop: string) => new RegExp(`<meta[^>]+(?:property|name)=["']${prop}["'][^>]+content=["']([^"']+)["']`, "i").exec(html)?.[1]
+    ?? new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']${prop}["']`, "i").exec(html)?.[1];
+  const type = meta("og:type"), price = meta("product:price:amount") ?? meta("og:price:amount");
+  if (!price || (type && !/product/i.test(type))) return null;
+  return { "@type": "Product", name: meta("og:title") ?? "", brand: meta("product:brand") ?? undefined, offers: { price, priceCurrency: meta("product:price:currency") ?? meta("og:price:currency") ?? "EUR", availability: meta("product:availability") ?? undefined } };
+}

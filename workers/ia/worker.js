@@ -494,18 +494,28 @@ function parseProduct(html) {
     } catch {
     }
   }
-  const p = all.find((o) => {
+  const isProduct = (o) => {
     const t = o["@type"];
-    return t === "Product" || Array.isArray(t) && t.includes("Product");
-  });
+    return ["Product", "ProductGroup", "IndividualProduct"].some((k) => t === k || Array.isArray(t) && t.includes(k));
+  };
+  for (const o of [...all]) if (o.mainEntity && typeof o.mainEntity === "object") walk(o.mainEntity);
+  const p = all.find(isProduct) ?? metaProduct(html);
   if (!p) return null;
-  const offers = Array.isArray(p.offers) ? p.offers[0] : p.offers;
+  const variant = Array.isArray(p.hasVariant) ? p.hasVariant[0] : void 0;
+  const rawOffers = p.offers ?? variant?.offers;
+  const offers = Array.isArray(rawOffers) ? rawOffers[0] : rawOffers;
   const agg = offers && (offers["@type"] === "AggregateOffer" ? offers : void 0);
   const raw = offers?.price ?? agg?.lowPrice ?? offers?.priceSpecification?.price;
   const price = raw !== void 0 && Number.isFinite(Number(String(raw).replace(",", "."))) ? Number(String(raw).replace(",", ".")) : null;
   const brand = typeof p.brand === "string" ? p.brand : clean(p.brand?.name, 60) || null;
   const av = clean(offers?.availability, 80).replace(/^https?:\/\/schema\.org\//, "") || null;
   return { name: clean(p.name, 160), brand, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av };
+}
+function metaProduct(html) {
+  const meta = (prop) => new RegExp(`<meta[^>]+(?:property|name)=["']${prop}["'][^>]+content=["']([^"']+)["']`, "i").exec(html)?.[1] ?? new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']${prop}["']`, "i").exec(html)?.[1];
+  const type = meta("og:type"), price = meta("product:price:amount") ?? meta("og:price:amount");
+  if (!price || type && !/product/i.test(type)) return null;
+  return { "@type": "Product", name: meta("og:title") ?? "", brand: meta("product:brand") ?? void 0, offers: { price, priceCurrency: meta("product:price:currency") ?? meta("og:price:currency") ?? "EUR", availability: meta("product:availability") ?? void 0 } };
 }
 
 // workers/ia/src/recherche.ts

@@ -45,7 +45,12 @@ const ENSEIGNES: Array<{ id: string; nom: string; site: string; produit?: RegExp
   { id: "amazon", nom: "Amazon", site: "https://www.amazon.fr" },
 ];
 /** Mots qui signalent un article de maison dans l'adresse d'une page (pour ne pas parcourir tout un catalogue généraliste). */
-const MAISON = /canape|sofa|fauteuil|chaise|tabouret|table|buffet|commode|etagere|bibliotheque|armoire|console|enfilade|lit-|tete-de-lit|lampe|luminaire|suspension|applique|lampadaire|lustre|tapis|coussin|plaid|rideau|voilage|vase|miroir|cadre|bougeoir|jardiniere|cache-pot|pouf|banc|meuble|peinture|parquet|carrelage|robinet|mitigeur|vasque|poignee|decoration|deco/i;
+const MAISON = /canape|sofa|fauteuil|chaise|tabouret|table|buffet|commode|etagere|bibliotheque|armoire|console|enfilade|[-/]lit[-/]|tete-de-lit|lampe|luminaire|suspension|applique|lampadaire|lustre|tapis|coussin|plaid|rideau|voilage|vase|miroir|cadre|bougeoir|jardiniere|cache-pot|pouf|banc|meuble|peinture|parquet|carrelage|robinet|mitigeur|vasque|poignee/i;
+/** Articles hors sujet (cuisine, outillage, électroménager…). */
+const HORS = /couteau|filtre|casserole|poele|batterie|perceuse|tournevis|visseuse|pneu|outil|lave-|refrigerateur|frigo|aspirateur|tondeuse|cartouche|ampoule-led-e|piece-detachee|accessoire-hotte|tableau-electrique|disjoncteur/i;
+/** Adresse qui ressemble à une page produit (et pas à une page de rayon). */
+const PAGE_PRODUIT = /\/(p|pdp|produit|produits|product|products|prod|ppdp|article|item)\/|\d{5,}|-p\d+|\.html?$/i;
+const RAYON = /\/(c|cat|categorie|category|categories|collections?|brands?|marques?|inspirations?|idees|guide|blog|vos-projets)\//i;
 
 interface Etat { maj: string; enseignes: Record<string, { robots: "ok" | "interdit" | "injoignable"; delai: number; sitemaps: number; urls: Record<string, string>; rapport: string }> }
 const ETAT_F = "content/data/catalogue-etat.json";
@@ -102,8 +107,10 @@ async function sitemapUrls(start: string[], allowed: (p: string) => boolean, max
     const r = await get(sm, 40_000); if (!r || r.status >= 400) continue;
     const locs = [...r.body.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]!.replace(/&amp;/g, "&"));
     if (/<sitemapindex/i.test(r.body)) {
-      const ranked = locs.sort((a, b) => Number(/produ|product|pdp|article|item/i.test(b)) - Number(/produ|product|pdp|article|item/i.test(a)));
-      queue.push(...ranked.slice(0, 60));
+      // Plans de site français et de produits d'abord ; ceux des autres pays sont écartés.
+      const score = (u: string) => (/fr[-_]fr|[/_-]fr[/_.-]|france/i.test(u) ? 3 : 0) + (/prod|product|produit|pdp|article|item|sku/i.test(u) ? 2 : 0)
+        - (/[/_-](de|en|es|it|nl|pt|pl|se|dk|no|fi|cz|hu|ro|gr|jp|cn|kr|us|gb|ca|au|ch|be|at)[-_][a-z]{2}\b/i.test(u) && !/fr[-_]fr|fr[-_]be|fr[-_]ch/i.test(u) ? 5 : 0);
+      queue.push(...locs.filter((u) => score(u) >= 0).sort((a, b) => score(b) - score(a)).slice(0, 15));
     } else for (const u of locs) { try { if (allowed(new URL(u).pathname)) out.add(u); } catch { /* */ } }
     await sleep(1000);
   }
@@ -117,6 +124,7 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
   const R = rb.status === 200 ? robots(rb.body) : { allowed: () => true, delay: null, sitemaps: [], everything: false };
   if (R.everything) { st.robots = "interdit"; st.rapport = "robots.txt interdit l'exploration : enseigne ignorée."; return; }
   st.robots = "ok"; st.delai = Math.max(2, Math.min(15, R.delay ?? 2));
+  for (const u of Object.keys(st.urls)) if (RAYON.test(u) || HORS.test(u) || !(e.produit ? e.produit.test(u) : PAGE_PRODUIT.test(u))) delete st.urls[u];
   const start = R.sitemaps.length ? R.sitemaps : [`${e.site}/sitemap.xml`];
   // Découverte des nouvelles adresses (au plus une fois par semaine par enseigne).
   const known = Object.keys(st.urls).length, stale = !st.sitemaps || Date.now() - Date.parse(etat.maj || "2000-01-01") > 6 * 86400_000 || known < 50;
@@ -125,16 +133,19 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
     st.sitemaps = maps;
     for (const u of urls) {
       if (Object.keys(st.urls).length >= MAX_URLS) break;
-      if ((!e.produit || e.produit.test(u)) && MAISON.test(u) && !(u in st.urls)) st.urls[u] = "";
+      if ((e.produit ? e.produit.test(u) : PAGE_PRODUIT.test(u)) && !RAYON.test(u) && MAISON.test(u) && !HORS.test(u) && !(u in st.urls)) st.urls[u] = "";
     }
   }
   // Pages à visiter : jamais vues d'abord, puis les plus anciennes.
-  const todo = Object.entries(st.urls).sort((a, b) => (a[1] || "").localeCompare(b[1] || "")).slice(0, PAGES).map(([u]) => u);
-  let vus = 0, gardes = 0, retires = 0;
+  const todo = Object.entries(st.urls).map(([u, d]) => [u, d || "", Math.random()] as const).sort((a, b) => a[1].localeCompare(b[1]) || a[2] - b[2]).slice(0, PAGES).map(([u]) => u);
+  let vus = 0, gardes = 0, retires = 0, sansFiche = 0;
+  const statuts: Record<string, number> = {};
   for (const u of todo) {
     if (Date.now() > END) break;
     try { if (!R.allowed(new URL(u).pathname)) { delete st.urls[u]; continue; } } catch { continue; }
     const r = await get(u); vus++;
+    statuts[r ? String(r.status) : "erreur"] = (statuts[r ? String(r.status) : "erreur"] ?? 0) + 1;
+    if (vus >= 10 && (statuts["403"] ?? 0) + (statuts["429"] ?? 0) >= 8) break; // refus répétés : on arrête poliment
     const today = new Date().toISOString().slice(0, 10);
     if (!r || r.status === 404 || r.status === 410) { delete st.urls[u]; if (catalogue.delete(u)) retires++; await sleep(st.delai * 1000); continue; }
     st.urls[u] = today;
@@ -143,10 +154,12 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
     if (d && f && d.name) {
       catalogue.set(u, { n: d.name, b: d.brand, m: e.nom, u, p: d.price, c: d.price ? d.currency ?? "EUR" : null, a: d.availability, d: today, f });
       gardes++;
-    } else if (catalogue.delete(u)) retires++;
+    } else { if (r.status < 400) sansFiche++; if (catalogue.delete(u)) retires++; }
     await sleep(st.delai * 1000);
   }
-  st.rapport = `${Object.keys(st.urls).length} pages produits connues ; ${vus} visitées ce soir ; ${gardes} produits relevés ; ${retires} retirés.`;
+  st.rapport = `${Object.keys(st.urls).length} pages produits connues ; ${vus} visitées ; ${gardes} produits relevés ; ${sansFiche} pages sans fiche produit lisible ; ${retires} retirés ; réponses ${JSON.stringify(statuts)}${statuts["403"] || statuts["429"] ? " (l'enseigne bloque les robots : on n'insiste pas)" : ""}.`;
+  // Une enseigne qui refuse (403/429) n'est plus visitée pendant une semaine.
+  if ((statuts["403"] ?? 0) + (statuts["429"] ?? 0) > vus / 2) st.robots = "interdit";
 }
 
 if (process.argv[1]?.endsWith("robot-catalogue.ts")) await main();

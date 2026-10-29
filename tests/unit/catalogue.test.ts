@@ -35,3 +35,12 @@ describe("robot catalogue", () => {
     expect(chercher(list, "lampe")).toEqual([]);
   });
 });
+
+describe("lecture des fiches produit", () => {
+  it("lit ProductGroup avec variantes, mainEntity et balises Open Graph", async () => {
+    const { parseProduct } = await import("@/workers/ia/src/produit");
+    expect(parseProduct(`<script type="application/ld+json">{"@type":"ProductGroup","name":"Canapé Lola","hasVariant":[{"@type":"Product","offers":{"price":"899.00","priceCurrency":"EUR"}}]}</script>`)).toMatchObject({ name: "Canapé Lola", price: 899 });
+    expect(parseProduct(`<script type="application/ld+json">{"@type":"WebPage","mainEntity":{"@type":"Product","name":"Lampe Arc","offers":{"price":129,"priceCurrency":"EUR"}}}</script>`)).toMatchObject({ name: "Lampe Arc", price: 129 });
+    expect(parseProduct(`<meta property="og:type" content="product"><meta property="og:title" content="Vase grès"><meta property="product:price:amount" content="24.90"><meta property="product:price:currency" content="EUR">`)).toMatchObject({ name: "Vase grès", price: 24.9, currency: "EUR" });
+  });
+});
