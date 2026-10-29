@@ -1,0 +1,11 @@
+{
+  "id": "scandinave-haut-de-gamme",
+  "usage": "Banque d'inspiration : style scandinave-haut-de-gamme",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A high-end Scandinavian dining room: a solid oiled light-oak table with six spindle-back chairs in the same wood, a thick undyed wool rug, white plaster walls, a pale limestone floor, a simple opal glass pendant, a ceramic bowl of green apples, soft overcast northern daylight from a large window.\nEditorial interior photograph for an architecture and design magazine, shot at eye level from about 1.2 metres with a 28 mm lens and perfectly straight verticals. Natural daylight with soft shadows and clear contact shadows under the furniture, true material texture, neutral-warm colour balance, no blown highlights, calm composition with generous negative space, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

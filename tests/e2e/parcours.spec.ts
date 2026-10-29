@@ -466,7 +466,7 @@ test("inspirations : filtrer, garder en favori, lancer un projet avec un style",
   await page.getByRole("button", { name: "Japandi : voir le détail" }).click();
   const d = page.getByRole("dialog", { name: "Japandi" });
   await expect(d.getByText("Chêne fumé")).toBeVisible();
-  await expect(d.getByText(/CC0/)).toBeVisible();
+  await expect(d.getByText(/Image générée par IA/).first()).toBeVisible();
   await d.getByRole("button", { name: "Créer un projet avec ce style" }).click();
   await expect(page).toHaveURL(/studio\/\?etape=creer/);
   await expect(page.getByRole("textbox", { name: "Décrivez la pièce que vous imaginez" })).toHaveValue(/Japandi/);

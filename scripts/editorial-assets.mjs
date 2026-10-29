@@ -69,7 +69,7 @@ for (const id of used) {
 // 2. Planches : composition fixe et calme (grand fond, deux moyens, un petit, palette).
 const W = 1600, H = 1200, PAPER = { r: 241, g: 237, b: 230 };
 const SLOTS = [[110, 120, 760, 900], [760, 170, 560, 560], [930, 640, 420, 420], [600, 760, 300, 300], [1250, 120, 240, 240]];
-for (const b of bank.filter((x) => x.image?.kind === "planche")) {
+for (const b of bank.filter((x) => x.image?.kind === "planche" || x.planche)) {
   const layers = [];
   for (const [i, id] of b.materials.slice(0, SLOTS.length).entries()) {
     const [x, y, w, h] = SLOTS[i];
@@ -81,7 +81,7 @@ for (const b of bank.filter((x) => x.image?.kind === "planche")) {
   b.palette.slice(0, 5).forEach((c, i) => {
     layers.push({ input: Buffer.from(`<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="28" fill="${c}" stroke="rgba(0,0,0,.08)"/></svg>`), left: 120 + i * 78, top: 1060 });
   });
-  await sharp({ create: { width: W, height: H, channels: 3, background: PAPER } }).composite(layers).webp({ quality: 82 }).toFile(`public/editorial/planches/${b.id}.webp`);
+  await sharp({ create: { width: W, height: H, channels: 3, background: PAPER } }).composite(layers).webp({ quality: 82 }).toFile((b.planche ?? b.image.src).replace(/^\//, "public/"));
   console.log("✓ planche", b.id);
 }
 writeFileSync("public/editorial/LICENCES.txt", "Visuels composés pour Pièce Rêvée à partir de textures CC0 (Poly Haven, ambientCG ; voir content/data/materials-pbr.json). Métaux : textures calculées.\n");

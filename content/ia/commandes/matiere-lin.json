@@ -1,0 +1,11 @@
+{
+  "id": "matiere-lin",
+  "usage": "Banque d'inspiration : matière matiere-lin",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "Washed linen: soft folds of washed linen fabric in oatmeal and sand with natural creases.\nEditorial still-life photograph for an interior design magazine, 85 mm lens, close framing where the material fills most of the frame, soft raking daylight from the side that reveals the texture, natural depth of field, true colour, no blown highlights.\nLOCKS: no brand, no logo, no label, no text, no people."
+}

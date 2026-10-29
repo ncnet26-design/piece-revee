@@ -1,0 +1,11 @@
+{
+  "id": "salon-boucle-noyer",
+  "usage": "Accueil (avant/après) et salon d'exemple du Studio",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "16:9",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A contemporary living room seen from the front: a curved organic cream bouclé sofa with slim black legs on the left, a pebble-shaped honed travertine coffee table in the centre on a pale wool rug, a long fluted walnut sideboard with a slim brass handle against the back wall on the right, oak herringbone floor, warm white plaster walls, tall windows with soft daylight.\nEditorial interior photograph for an architecture and design magazine, shot at eye level from about 1.2 metres with a 28 mm lens and perfectly straight verticals. Natural daylight with soft shadows and clear contact shadows under the furniture, true material texture, neutral-warm colour balance, no blown highlights, calm composition with generous negative space, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

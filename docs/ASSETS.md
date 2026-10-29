@@ -1,10 +1,10 @@
 # Inventaire des ressources visuelles
 
-Généré par `node scripts/inventaire-assets.mjs` le 2026-10-28. Ne pas modifier à la main.
+Généré par `node scripts/inventaire-assets.mjs` le 2026-10-29. Ne pas modifier à la main.
 
 | Groupe | Fichiers | Poids | Utilisés | Non référencés |
 |---|---:|---:|---:|---:|
-| Visuels éditoriaux | 53 | 5.2 Mo | 53 | 0 |
+| Visuels éditoriaux | 55 | 5.4 Mo | 55 | 0 |
 | Photographies d'architecture | 12 | 1.4 Mo | 12 | 0 |
 | Matières PBR 2K | 17 | 65.4 Mo | 17 | 0 |
 | Textures 1K (planche, showroom) | 41 | 22.9 Mo | 41 | 0 |
@@ -18,6 +18,8 @@ Généré par `node scripts/inventaire-assets.mjs` le 2026-10-28. Ne pas modifie
 
 | Chemin | Rôle | Résolution | Poids | Provenance | Licence | Utilisé |
 |---|---|---|---:|---|---|:-:|
+| `/editorial/ia/japandi-essai-640.webp` | Image éditoriale générée par IA | 640×478 | 24 Ko | Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID) | Création Pièce Rêvée (image générée par IA, étiquetée) | oui |
+| `/editorial/ia/japandi-essai.webp` | Image éditoriale générée par IA | 1600×1195 | 156 Ko | Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID) | Création Pièce Rêvée (image générée par IA, étiquetée) | oui |
 | `/editorial/matieres/bois-huile.webp` | Gros plan de matière (banque, accueil) | 1200×1200 | 85 Ko | Composé par scripts/editorial-assets.mjs à partir des textures CC0 | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
 | `/editorial/matieres/boucle.webp` | Gros plan de matière (banque, accueil) | 1200×1200 | 57 Ko | Composé par scripts/editorial-assets.mjs à partir des textures CC0 | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
 | `/editorial/matieres/bronze-brosse.webp` | Gros plan de matière (banque, accueil) | 1200×1200 | 13 Ko | Composé par scripts/editorial-assets.mjs à partir des textures CC0 | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |

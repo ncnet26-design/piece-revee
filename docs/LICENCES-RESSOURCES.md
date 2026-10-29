@@ -12,6 +12,7 @@ Généré par `node scripts/inventaire-assets.mjs`. Détail fichier par fichier 
 | CC BY 4.0 | 7 |
 | Création Pièce Rêvée | 4 |
 | CC BY 4.0 (crédit obligatoire) | 3 |
+| Création Pièce Rêvée (image générée par IA, étiquetée) | 2 |
 
 ## Sources autorisées et obligations
 
@@ -29,4 +30,4 @@ Généré par `node scripts/inventaire-assets.mjs`. Détail fichier par fichier 
 - Aucune image sans auteur, source et licence connus. Une ressource dont la licence est inconnue est retirée.
 - Pas d'image de marque, de logo d'enseigne ni de photo de produit reprise d'un site marchand : les fiches produits renvoient vers le site du vendeur.
 - Les visuels composés par Pièce Rêvée restent marqués comme tels ; ils ne sont jamais présentés comme des photographies de projets réels.
-- Les images générées par IA, quand elles existeront, seront étiquetées « Image générée » avec le fournisseur et la date.
+- Les images générées par IA sont étiquetées « Image générée par IA » avec le fournisseur et la date ; leurs consignes sont conservées dans content/ia/commandes/.

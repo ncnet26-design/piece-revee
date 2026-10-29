@@ -42,9 +42,9 @@ for (const f of walk("public/editorial").filter((f) => IMG.has(extname(f)))) {
   const sub = basename(dirname(f));
   const rel = "/" + relative("public", f);
   add({ group: "Visuels éditoriaux", path: rel, file: f,
-    role: sub === "matieres" ? "Gros plan de matière (banque, accueil)" : sub === "planches" ? "Planche de style (banque, accueil)" : "Rendu 3D de la scène de contrôle (accueil)",
-    source: sub === "rendus" ? "Capture du moteur 3D Pièce Rêvée" : "Composé par scripts/editorial-assets.mjs à partir des textures CC0",
-    license: "Création Pièce Rêvée ; textures sources CC0 1.0", used: used([rel, `/editorial/${sub}/`]) });
+    role: sub === "matieres" ? "Gros plan de matière (banque, accueil)" : sub === "planches" ? "Planche de style (banque, accueil)" : sub === "ia" ? "Image éditoriale générée par IA" : "Rendu 3D de la scène de contrôle (accueil)",
+    source: sub === "rendus" ? "Capture du moteur 3D Pièce Rêvée" : sub === "ia" ? "Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID)" : "Composé par scripts/editorial-assets.mjs à partir des textures CC0",
+    license: sub === "ia" ? "Création Pièce Rêvée (image générée par IA, étiquetée)" : "Création Pièce Rêvée ; textures sources CC0 1.0", used: used([rel, `/editorial/${sub}/`, basename(f, extname(f)).replace(/-640$/, "")]) });
 }
 // 2. Photographies d'architecture (Wikimedia Commons).
 for (const f of walk("public/inspirations")) {
@@ -129,7 +129,7 @@ reg += `
 - Aucune image sans auteur, source et licence connus. Une ressource dont la licence est inconnue est retirée.
 - Pas d'image de marque, de logo d'enseigne ni de photo de produit reprise d'un site marchand : les fiches produits renvoient vers le site du vendeur.
 - Les visuels composés par Pièce Rêvée restent marqués comme tels ; ils ne sont jamais présentés comme des photographies de projets réels.
-- Les images générées par IA, quand elles existeront, seront étiquetées « Image générée » avec le fournisseur et la date.
+- Les images générées par IA sont étiquetées « Image générée par IA » avec le fournisseur et la date ; leurs consignes sont conservées dans content/ia/commandes/.
 `;
 writeFileSync("docs/LICENCES-RESSOURCES.md", reg);
 console.log(`${rows.length} ressources ; non référencées : ${rows.filter((r) => !r.used).length}`);

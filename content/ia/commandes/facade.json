@@ -1,0 +1,11 @@
+{
+  "id": "facade",
+  "usage": "Banque d'inspiration : espace extérieur facade",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A renovated European house facade photographed straight-on: smooth lime render, a natural stone base, smoked-oak shutters, slim dark metal windows, a gravel forecourt with planting, soft morning light.\nEditorial architecture photograph for a design magazine, eye-level viewpoint with a 28 mm lens and perfectly straight verticals, natural light, true material texture, balanced exposure with no blown highlights, calm composition, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

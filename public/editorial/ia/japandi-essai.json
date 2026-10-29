@@ -1,0 +1,12 @@
+{
+  "id": "japandi-essai",
+  "usage": "Banque d'inspiration : style Japandi (image d'essai)",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:03:56.064Z",
+  "prompt_sha256": "539dd5d1574fd378d2124146bab7eae6a34a3b0d39fbdb29326f77bd6bdd7218",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "images": 1,
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}

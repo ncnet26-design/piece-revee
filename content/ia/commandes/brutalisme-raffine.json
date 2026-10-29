@@ -1,0 +1,11 @@
+{
+  "id": "brutalisme-raffine",
+  "usage": "Banque d'inspiration : style brutalisme-raffine",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A refined brutalist living room: a board-formed concrete ceiling, raw lime plaster and dark basalt stone walls, floor-to-ceiling walnut built-in shelving holding a few ceramics and books, a sculptural cream bouclé armchair, a polished terrazzo floor with stone chips, dramatic low side light carving deep shadows.\nEditorial interior photograph for an architecture and design magazine, shot at eye level from about 1.2 metres with a 28 mm lens and perfectly straight verticals. Natural daylight with soft shadows and clear contact shadows under the furniture, true material texture, neutral-warm colour balance, no blown highlights, calm composition with generous negative space, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

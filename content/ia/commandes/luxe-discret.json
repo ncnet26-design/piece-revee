@@ -1,0 +1,11 @@
+{
+  "id": "luxe-discret",
+  "usage": "Banque d'inspiration : style luxe-discret",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A quiet-luxury living room: walnut wall panelling with fine vertical grooves, a low cream bouclé sofa, a rectangular honed travertine coffee table, a brushed bronze side table, a muted palette of cream, taupe and walnut, a single large stoneware vase, soft diffused daylight through sheer curtains.\nEditorial interior photograph for an architecture and design magazine, shot at eye level from about 1.2 metres with a 28 mm lens and perfectly straight verticals. Natural daylight with soft shadows and clear contact shadows under the furniture, true material texture, neutral-warm colour balance, no blown highlights, calm composition with generous negative space, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

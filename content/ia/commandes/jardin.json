@@ -1,0 +1,11 @@
+{
+  "id": "jardin",
+  "usage": "Banque d'inspiration : espace extérieur jardin",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A contemporary garden: a natural stone path through layered planting of ornamental grasses and perennials, an oak bench, a low dry-stone wall, a multi-stem tree, soft evening light.\nEditorial architecture photograph for a design magazine, eye-level viewpoint with a 28 mm lens and perfectly straight verticals, natural light, true material texture, balanced exposure with no blown highlights, calm composition, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}
