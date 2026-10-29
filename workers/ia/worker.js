@@ -548,7 +548,7 @@ async function rechercher(env, q, label, pays = "FR") {
   const r = await fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST",
     headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }], generationConfig: { thinkingConfig: { thinkingLevel: "low" } } })
+    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }] })
   });
   if (!r.ok) throw new ProviderError("La recherche sur internet a \xE9chou\xE9.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
   const j = await r.json();
@@ -562,10 +562,23 @@ async function rechercher(env, q, label, pays = "FR") {
   }
   for (const m of txt.matchAll(/\[([^\]]{3,160})\]\((https:\/\/[^\s)]+)\)/g)) listed.push({ title: m[1], url: m[2], merchant: "" });
   const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w) => typeof w?.uri === "string");
-  const resolved = await Promise.all(chunks.slice(0, 12).map(async (w) => ({ url: await resolve(w.uri), title: w.title ?? "" })));
-  const domains = new Set(resolved.map((w) => host(w.url)).concat(chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))).filter(Boolean));
-  const fromModel = listed.map((p) => ({ url: clean2(p.url, 600), title: clean2(p.title, 160), merchant: clean2(p.merchant, 60) })).filter((p) => /^https:\/\//.test(p.url) && domains.has(host(p.url)));
-  const candidates = [...fromModel, ...resolved.filter((w) => /^https:\/\//.test(w.url) && !/grounding-api-redirect/.test(w.url)).map((w) => ({ url: w.url, title: "", merchant: "" }))];
+  const isRedirect = (u) => /grounding-api-redirect/.test(u);
+  const viaModel = listed.map((p) => ({ url: clean2(p.url, 1200), title: clean2(p.title, 160), merchant: clean2(p.merchant, 60) })).filter((p) => /^https?:\/\//.test(p.url));
+  const toResolve = [...viaModel.filter((p) => isRedirect(p.url)), ...chunks.map((w) => ({ url: w.uri, title: "", merchant: "" }))].slice(0, 14);
+  const resolved = await Promise.all(toResolve.map(async (p) => ({ ...p, url: await resolve(p.url) })));
+  const domains = new Set([...resolved.map((w) => host(w.url)), ...chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))].filter(Boolean));
+  const direct = viaModel.filter((p) => !isRedirect(p.url) && domains.has(host(p.url)));
+  const isPage = (u) => {
+    try {
+      const x = new URL(u);
+      return x.protocol === "https:" && x.pathname.length > 1 && !/\.(jpe?g|png|webp|gif|avif|svg|pdf)$/i.test(x.pathname) && !/\/(cdn|wp-content\/uploads|media\/catalog)\//i.test(x.pathname);
+    } catch {
+      return false;
+    }
+  };
+  const key = (u) => u.split("#")[0].split("?")[0];
+  const named = new Map([...resolved, ...direct].filter((p) => p.title).map((p) => [key(p.url), p]));
+  const candidates = [...resolved, ...direct].filter((p) => !isRedirect(p.url) && isPage(p.url)).map((p) => ({ ...p, title: p.title || named.get(key(p.url))?.title || "", merchant: p.merchant || named.get(key(p.url))?.merchant || "" }));
   const seen = /* @__PURE__ */ new Set(), unique = candidates.filter((p) => {
     const k = p.url.split("#")[0].split("?")[0];
     if (seen.has(k)) return false;

@@ -52,7 +52,7 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   const model = env.GEMINI_SEARCH_MODEL || env.GEMINI_TEXT_MODEL || TEXT_MODEL;
   const r = await fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }], generationConfig: { thinkingConfig: { thinkingLevel: "low" } } }),
+    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }] }),
   });
   if (!r.ok) throw new ProviderError("La recherche sur internet a échoué.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
   const j = await r.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> }; groundingMetadata?: { groundingChunks?: Array<{ web?: { uri?: string; title?: string } }>; searchEntryPoint?: { renderedContent?: string }; webSearchQueries?: string[] } }> };
@@ -64,13 +64,18 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   // Liens écrits dans le texte (si le bloc JSON manque), avec le texte du lien comme titre.
   for (const m of txt.matchAll(/\[([^\]]{3,160})\]\((https:\/\/[^\s)]+)\)/g)) listed.push({ title: m[1], url: m[2], merchant: "" });
 
-  // Seules les pages réellement trouvées par la recherche Google sont gardées.
+  // Seules les pages réellement trouvées par la recherche Google sont gardées (liens de redirection de Google suivis jusqu'à la page).
   const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w): w is { uri: string; title?: string } => typeof w?.uri === "string");
-  const resolved = await Promise.all(chunks.slice(0, 12).map(async (w) => ({ url: await resolve(w.uri), title: w.title ?? "" })));
-  const domains = new Set(resolved.map((w) => host(w.url)).concat(chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))).filter(Boolean));
-  const fromModel = listed.map((p) => ({ url: clean(p.url, 600), title: clean(p.title, 160), merchant: clean(p.merchant, 60) }))
-    .filter((p) => /^https:\/\//.test(p.url) && domains.has(host(p.url)));
-  const candidates = [...fromModel, ...resolved.filter((w) => /^https:\/\//.test(w.url) && !/grounding-api-redirect/.test(w.url)).map((w) => ({ url: w.url, title: "", merchant: "" }))];
+  const isRedirect = (u: string) => /grounding-api-redirect/.test(u);
+  const viaModel = listed.map((p) => ({ url: clean(p.url, 1200), title: clean(p.title, 160), merchant: clean(p.merchant, 60) })).filter((p) => /^https?:\/\//.test(p.url));
+  const toResolve = [...viaModel.filter((p) => isRedirect(p.url)), ...chunks.map((w) => ({ url: w.uri, title: "", merchant: "" }))].slice(0, 14);
+  const resolved = await Promise.all(toResolve.map(async (p) => ({ ...p, url: await resolve(p.url) })));
+  const domains = new Set([...resolved.map((w) => host(w.url)), ...chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))].filter(Boolean));
+  const direct = viaModel.filter((p) => !isRedirect(p.url) && domains.has(host(p.url)));
+  const isPage = (u: string) => { try { const x = new URL(u); return x.protocol === "https:" && x.pathname.length > 1 && !/\.(jpe?g|png|webp|gif|avif|svg|pdf)$/i.test(x.pathname) && !/\/(cdn|wp-content\/uploads|media\/catalog)\//i.test(x.pathname); } catch { return false; } };
+  const key = (u: string) => u.split("#")[0]!.split("?")[0]!;
+  const named = new Map([...resolved, ...direct].filter((p) => p.title).map((p) => [key(p.url), p] as const));
+  const candidates = [...resolved, ...direct].filter((p) => !isRedirect(p.url) && isPage(p.url)).map((p) => ({ ...p, title: p.title || named.get(key(p.url))?.title || "", merchant: p.merchant || named.get(key(p.url))?.merchant || "" }));
   const seen = new Set<string>(), unique = candidates.filter((p) => { const k = p.url.split("#")[0]!.split("?")[0]!; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 10);
 
   const now = new Date().toISOString();
