@@ -71,12 +71,25 @@ jobs:
         env: { GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}", REQ: "${{ inputs.requete }}" }
         run: |
           exec > >(tee -a rapport.txt) 2>&1
-          for M in gemini-3.8-flash gemini-2.5-flash; do
-            echo "=== $M"
-            jq -n --arg q "Find 5 products currently for sale online in France matching: $REQ. Give product page URLs." '{contents:[{role:"user",parts:[{text:$q}]}], tools:[{google_search:{}}]}' > d.json
-            curl -sS --max-time 90 -H "x-goog-api-key: $GEMINI_API_KEY" -H "content-type: application/json" --data @d.json "https://generativelanguage.googleapis.com/v1beta/models/$M:generateContent" > r.json
-            jq '{error: .error.message, finish: .candidates[0].finishReason, text: (.candidates[0].content.parts // [] | map(.text // "") | join("") | .[0:600]), metaKeys: (.candidates[0].groundingMetadata // {} | keys), queries: .candidates[0].groundingMetadata.webSearchQueries, chunks: [.candidates[0].groundingMetadata.groundingChunks[]?.web | {title, uri: (.uri[0:90])}][0:6], usage: .usageMetadata}' r.json
+          node -e '
+            const q = process.env.REQ;
+            const prompt = [
+              `Use Google Search now (at most 2 searches) to find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${q}". Shopping query (French): "${q}".`,
+              "Prefer online shops that deliver to France (marketplaces, furniture and decor retailers, DIY stores, design brands), with a range of prices from affordable to premium.",
+              "Only list direct product pages (one product per page), never category pages, blogs or search pages. Never invent a URL: only pages you found with the search.",
+              "Finish your answer with a JSON block: {\"products\":[{\"title\":\"\",\"url\":\"\",\"merchant\":\"\"}]}.",
+            ].join("\n");
+            for (const [name, gc] of [["low", { thinkingConfig: { thinkingLevel: "low" } }], ["sans", undefined]]) {
+              require("fs").writeFileSync(`d-${name}.json`, JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }], tools: [{ google_search: {} }], ...(gc ? { generationConfig: gc } : {}) }));
+            }'
+          for V in low sans; do
+            echo "=== réglage $V"
+            curl -sS --max-time 120 -H "x-goog-api-key: $GEMINI_API_KEY" -H "content-type: application/json" --data @d-$V.json "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent" > r.json
+            jq '{error: .error.message, finish: .candidates[0].finishReason, text: (.candidates[0].content.parts // [] | map(.text // "") | join("") | .[-900:]), queries: .candidates[0].groundingMetadata.webSearchQueries, nchunks: (.candidates[0].groundingMetadata.groundingChunks // [] | length), usage: .usageMetadata.thoughtsTokenCount}' r.json
           done
+          echo "=== redirection d'un lien"
+          U=$(jq -r '.candidates[0].groundingMetadata.groundingChunks[0].web.uri // empty' r.json)
+          [ -n "$U" ] && curl -sS -o /dev/null -w "%{http_code} %{redirect_url}\n" -I "$U"
       - name: Publier le rapport (branche robot/service-ia)
         if: ${{ always() }}
         run: |
