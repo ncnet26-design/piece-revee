@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { searchOnline, type RechercheEnLigne, type Trouve } from "@/lib/ia-jobs";
+import { toggleExternal, useProject } from "@/lib/studio/project";
 
 const AV: Record<string, string> = { InStock: "En stock", OutOfStock: "Épuisé", PreOrder: "Précommande", BackOrder: "Sur commande", LimitedAvailability: "Stock limité", OnlineOnly: "En ligne uniquement" };
 const fmt = (p: Trouve) => (p.price === null ? null : `${p.price.toLocaleString("fr-FR", { minimumFractionDigits: p.price % 1 ? 2 : 0, maximumFractionDigits: 2 })} ${p.currency === "EUR" || !p.currency ? "€" : p.currency}`);
@@ -18,7 +19,9 @@ function gamme(p: Trouve, all: Trouve[]): string | null {
  * Le prix affiché est celui relevé sur la page du vendeur ; sinon « prix sur le site ».
  * Les suggestions de recherche Google sont affichées telles quelles, comme l'exigent les règles de Google.
  */
-export function EnLigne({ query, label }: { query: string; label: string }) {
+export function EnLigne({ query, label, forObject }: { query: string; label: string; forObject?: string }) {
+  const project = useProject();
+  const inList = (u: string) => project.list.some((x) => x.productId === u);
   const [state, setState] = useState<{ q: string; data: RechercheEnLigne | null; error: string | null } | null>(null);
   useEffect(() => {
     let alive = true;
@@ -51,7 +54,10 @@ export function EnLigne({ query, label }: { query: string; label: string }) {
                 {g && <span className="h-fit shrink-0 rounded-full bg-soft px-2 py-0.5 text-[11px] font-semibold">{g}</span>}
               </div>
               <p className="mt-1 text-[10.5px] text-muted">{p.checkedAt ? `Prix relevé sur la page le ${new Date(p.checkedAt).toLocaleString("fr-FR", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })}` : "Page trouvée par la recherche ; prix non relevé"}</p>
-              <a className="btn btn-primary mt-2 !min-h-0 !px-3 !py-1.5 text-[12px]" href={p.url} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.merchant}<span className="sr-only"> (nouvel onglet)</span></a>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                <a className="btn btn-primary !min-h-0 !px-3 !py-1.5 text-[12px]" href={p.url} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.merchant}<span className="sr-only"> (nouvel onglet)</span></a>
+                <button type="button" className="btn !min-h-0 !px-3 !py-1.5 text-[12px]" aria-pressed={inList(p.url)} onClick={() => toggleExternal({ title: p.title, url: p.url, merchant: p.merchant, price: p.price, currency: p.currency, checkedAt: p.checkedAt, source: "internet" }, forObject)}>{inList(p.url) ? "✓ Dans ma pièce" : "Ajouter à ma pièce"}</button>
+              </div>
             </li>); })}
         </ul>
       )}

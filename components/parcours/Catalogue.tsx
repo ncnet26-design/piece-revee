@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { chercher, familleDe, FAMILLES, type ProduitCatalogue } from "@/lib/catalogue";
+import { toggleExternal, useProject } from "@/lib/studio/project";
 
 const files = new Map<string, Promise<ProduitCatalogue[]>>();
 const load = (f: string) => {
@@ -10,7 +11,9 @@ const load = (f: string) => {
 const AV: Record<string, string> = { InStock: "En stock", OutOfStock: "Épuisé", PreOrder: "Précommande", BackOrder: "Sur commande", LimitedAvailability: "Stock limité" };
 
 /** Produits ressemblants dans le catalogue tenu à jour chaque nuit par le robot (prix et disponibilité relevés sur les pages des enseignes). */
-export function Catalogue({ type, label, query }: { type: string; label: string; query: string }) {
+export function Catalogue({ type, label, query, forObject }: { type: string; label: string; query: string; forObject?: string }) {
+  const project = useProject();
+  const inList = (u: string) => project.list.some((x) => x.productId === u);
   const f = familleDe(type, label);
   const [res, setRes] = useState<{ key: string; list: Array<ProduitCatalogue & { score: number }>; total: number } | null>(null);
   const key = `${f}|${query}`;
@@ -35,7 +38,10 @@ export function Catalogue({ type, label, query }: { type: string; label: string;
               <p className="text-[13.5px] font-medium leading-snug">{p.n}</p>
               <p className="mt-0.5 text-[13px] font-semibold tabular-nums">{p.p !== null ? `${p.p.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} ${p.c === "EUR" || !p.c ? "€" : p.c}` : <span className="font-normal text-muted">Prix sur le site</span>}{p.a && AV[p.a] ? <span className="ml-2 font-normal text-muted">· {AV[p.a]}</span> : null}</p>
               <p className="mt-1 text-[10.5px] text-muted">Relevé sur la page de l'enseigne le {new Date(p.d).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })} · ressemblance {p.score} %</p>
-              <a className="btn mt-2 !min-h-0 !px-3 !py-1.5 text-[12px]" href={p.u} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.m}<span className="sr-only"> (nouvel onglet)</span></a>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                <a className="btn !min-h-0 !px-3 !py-1.5 text-[12px]" href={p.u} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.m}<span className="sr-only"> (nouvel onglet)</span></a>
+                <button type="button" className="btn !min-h-0 !px-3 !py-1.5 text-[12px]" aria-pressed={inList(p.u)} onClick={() => toggleExternal({ title: p.n, url: p.u, merchant: p.m, price: p.p, currency: p.c, checkedAt: p.d, source: "catalogue" }, forObject)}>{inList(p.u) ? "✓ Dans ma pièce" : "Ajouter à ma pièce"}</button>
+              </div>
             </li>
           ))}
         </ul>

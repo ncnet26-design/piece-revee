@@ -354,6 +354,9 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   await expect(meuble.getByRole("link", { name: /Voir chez boutique-exemple\.fr/ })).toHaveAttribute("href", "https://boutique-exemple.fr/table-travertin");
   await expect(meuble.getByText("Prix sur le site")).toBeVisible();
   await expect(meuble.getByTitle("Suggestions de recherche Google")).toBeVisible();
+  await meuble.getByRole("button", { name: "Ajouter à ma pièce" }).first().click();
+  await expect(meuble.getByRole("button", { name: "✓ Dans ma pièce" })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("link", { name: /Ma pièce composée : 1 article · 489 €/ })).toBeVisible();
   expect(recherches).toContain("table basse galet travertin");
   await meuble.getByText("Dans notre sélection vérifiée").click();
   await expect(meuble.getByText(/alternatives ressemblantes/)).toBeVisible();
@@ -369,6 +372,10 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   const box = (await page.getByTestId("piece-transformee").boundingBox())!;
   await page.getByTestId("piece-transformee").click({ position: { x: box.width * 0.05, y: box.height * 0.9 } });
   await expect(page.getByRole("complementary", { name: /^Couleur / })).toBeVisible();
+  // La liste d'achats reprend le produit trouvé en ligne, avec son lien.
+  await page.goto("/studio/?etape=liste");
+  await expect(page.getByText("Table basse ovale en travertin", { exact: true })).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByRole("link", { name: /Acheter Table basse ovale en travertin/ })).toHaveAttribute("href", "https://boutique-exemple.fr/table-travertin");
   expect(errors).toEqual([]);
 });
 

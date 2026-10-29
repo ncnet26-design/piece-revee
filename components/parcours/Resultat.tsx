@@ -26,7 +26,7 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
   const img = useRef<HTMLImageElement>(null);
   const project = useProject();
   const inList = useCallback((id: string) => project.list.some((x) => x.productId === id), [project.list]);
-  const total = project.list.reduce((s, x) => s + (productById(x.productId)?.price?.amount ?? 0) * x.qty, 0);
+  const total = project.list.reduce((s, x) => s + (productById(x.productId)?.price?.amount ?? x.external?.price ?? 0) * x.qty, 0);
 
   const onAdd = (p: Product, forObject: string) => updateProject((x) => ({
     ...x, list: x.list.some((y) => y.productId === p.id) ? x.list.filter((y) => y.productId !== p.id) : [...x.list, { productId: p.id, qty: 1, forObject }],
@@ -84,14 +84,14 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
         </div>
       )}
       {project.list.length > 0 && (
-        <p className="mt-4 text-[13px]"><a className="underline" href="/studio/?etape=liste">Ma liste d'achats : {project.list.length} article{project.list.length > 1 ? "s" : ""}{total ? ` · ${total.toLocaleString("fr-FR")} € relevés` : ""}</a></p>
+        <p className="mt-4 text-[13px]"><a className="underline" href="/studio/?etape=liste">Ma pièce composée : {project.list.length} article{project.list.length > 1 ? "s" : ""}{total ? ` · ${total.toLocaleString("fr-FR")} € de prix relevés` : ""} — voir ma liste d'achats</a></p>
       )}
 
       <Panel open={Boolean(sel)} kicker={kicker} title={title} onClose={() => setSel(null)}>
         {sel?.kind === "objet" && (<>
           {sel.o.description && <p className="mt-2 text-[13px] text-muted">{sel.o.description}</p>}
-          <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={sel.o.label} />
-          <Catalogue type={sel.o.type} label={sel.o.label} query={sel.o.query || sel.o.label} />
+          <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={sel.o.label} forObject={sel.o.id} />
+          <Catalogue type={sel.o.type} label={sel.o.label} query={sel.o.query || sel.o.label} forObject={sel.o.id} />
           <details className="group mt-5 border-t border-line pt-4">
             <summary className="cursor-pointer list-none text-[14px] font-semibold">Dans notre sélection vérifiée<span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
             <Comparator key={sel.o.id} features={featuresOf(sel.o)} objectName={sel.o.label} inList={inList} onAdd={(p) => onAdd(p, sel.o.id)} />

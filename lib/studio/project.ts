@@ -34,7 +34,9 @@ export interface Version {
   objects?: AiObject[];
   width?: number; height?: number;
 }
-export interface ListItem { productId: string; qty: number; forObject?: string }
+/** Article de la liste : produit de notre sélection (productId) ou produit trouvé en ligne / dans le catalogue (external, productId = adresse). */
+export interface ExternalItem { title: string; url: string; merchant: string; price: number | null; currency: string | null; checkedAt: string | null; source: "internet" | "catalogue" }
+export interface ListItem { productId: string; qty: number; forObject?: string; external?: ExternalItem }
 export interface Project { v: 1; title: string; brief: Brief; versions: Version[]; list: ListItem[] }
 
 export const EMPTY_BRIEF: Brief = { room: null, style: null, palette: [], budget: null, keep: ["fenetres", "portes", "murs", "plafond"], keepFree: "", notes: "", photo: null, inspirations: [] };
@@ -61,6 +63,10 @@ export const updateProject = (f: (p: Project) => Project) => saveProject(f(read(
 export function useProject(): Project {
   return useSyncExternalStore((l) => { listeners.add(l); return () => listeners.delete(l); }, read, fresh);
 }
+/** Ajoute ou retire de la liste un produit trouvé en ligne ou dans le catalogue. */
+export const toggleExternal = (e: ExternalItem, forObject?: string) => updateProject((p) => ({
+  ...p, list: p.list.some((x) => x.productId === e.url) ? p.list.filter((x) => x.productId !== e.url) : [...p.list, { productId: e.url, qty: 1, forObject, external: e }],
+}));
 export const uid = () => Math.random().toString(36).slice(2, 10);
 
 /* ——— Partage ——— */
