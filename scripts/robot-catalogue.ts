@@ -100,12 +100,16 @@ export function robots(txt: string) {
 }
 
 /** Adresses de pages produits trouvées dans les plans de site (index de plans parcourus en priorité sur les produits). */
-async function sitemapUrls(start: string[], allowed: (p: string) => boolean, max = 20_000): Promise<{ urls: string[]; maps: number }> {
-  const queue = [...start], out = new Set<string>(); let maps = 0;
+async function sitemapUrls(start: string[], allowed: (p: string) => boolean, max = 20_000): Promise<{ urls: string[]; maps: number; diag: string }> {
+  const queue = [...start], out = new Set<string>(); let maps = 0, locsTotal = 0;
+  const statuts: Record<string, number> = {}; const lus: string[] = [];
   while (queue.length && maps < 40 && out.size < max && Date.now() < END) {
     const sm = queue.shift()!; maps++;
-    const r = await get(sm, 40_000); if (!r || r.status >= 400) continue;
-    const locs = [...r.body.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]!.replace(/&amp;/g, "&"));
+    const r = await get(sm, 60_000);
+    statuts[r ? String(r.status) : "erreur"] = (statuts[r ? String(r.status) : "erreur"] ?? 0) + 1;
+    if (!r || r.status >= 400) continue;
+    const locs = [...r.body.matchAll(/<loc>\s*(?:<!\[CDATA\[)?\s*([^<\s\]]+)\s*(?:\]\]>)?\s*<\/loc>/g)].map((m) => m[1]!.replace(/&amp;/g, "&"));
+    locsTotal += locs.length; if (lus.length < 4) lus.push(`${sm.replace(/^https?:\/\/[^/]+/, "")} (${locs.length})`);
     if (/<sitemapindex/i.test(r.body)) {
       // Plans de site français et de produits d'abord ; ceux des autres pays sont écartés.
       const score = (u: string) => (/fr[-_]fr|[/_-]fr[/_.-]|france/i.test(u) ? 3 : 0) + (/prod|product|produit|pdp|article|item|sku/i.test(u) ? 2 : 0)
@@ -114,7 +118,7 @@ async function sitemapUrls(start: string[], allowed: (p: string) => boolean, max
     } else for (const u of locs) { try { if (allowed(new URL(u).pathname)) out.add(u); } catch { /* */ } }
     await sleep(1000);
   }
-  return { urls: [...out], maps };
+  return { urls: [...out], maps, diag: `plans de site ${maps} ${JSON.stringify(statuts)}, adresses ${locsTotal}, exemples ${lus.join(", ")}` };
 }
 
 async function enseigne(e: (typeof ENSEIGNES)[number]) {
@@ -127,10 +131,11 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
   for (const u of Object.keys(st.urls)) if (RAYON.test(u) || HORS.test(u) || !(e.produit ? e.produit.test(u) : PAGE_PRODUIT.test(u))) delete st.urls[u];
   const start = R.sitemaps.length ? R.sitemaps : [`${e.site}/sitemap.xml`];
   // Découverte des nouvelles adresses (au plus une fois par semaine par enseigne).
+  let decouverte = "";
   const known = Object.keys(st.urls).length, stale = !st.sitemaps || Date.now() - Date.parse(etat.maj || "2000-01-01") > 6 * 86400_000 || known < 50;
   if (stale) {
-    const { urls, maps } = await sitemapUrls(start, R.allowed);
-    st.sitemaps = maps;
+    const { urls, maps, diag } = await sitemapUrls(start, R.allowed);
+    st.sitemaps = maps; decouverte = `${diag} ; ${urls.length} autorisées`;
     for (const u of urls) {
       if (Object.keys(st.urls).length >= MAX_URLS) break;
       if ((e.produit ? e.produit.test(u) : PAGE_PRODUIT.test(u)) && !RAYON.test(u) && MAISON.test(u) && !HORS.test(u) && !(u in st.urls)) st.urls[u] = "";
@@ -157,7 +162,7 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
     } else { if (r.status < 400) sansFiche++; if (catalogue.delete(u)) retires++; }
     await sleep(st.delai * 1000);
   }
-  st.rapport = `${Object.keys(st.urls).length} pages produits connues ; ${vus} visitées ; ${gardes} produits relevés ; ${sansFiche} pages sans fiche produit lisible ; ${retires} retirés ; réponses ${JSON.stringify(statuts)}${statuts["403"] || statuts["429"] ? " (l'enseigne bloque les robots : on n'insiste pas)" : ""}.`;
+  st.rapport = `${decouverte ? `[${decouverte}] ` : ""}${Object.keys(st.urls).length} pages produits connues ; ${vus} visitées ; ${gardes} produits relevés ; ${sansFiche} pages sans fiche produit lisible ; ${retires} retirés ; réponses ${JSON.stringify(statuts)}${statuts["403"] || statuts["429"] ? " (l'enseigne bloque les robots : on n'insiste pas)" : ""}.`;
   // Une enseigne qui refuse (403/429) n'est plus visitée pendant une semaine.
   if ((statuts["403"] ?? 0) + (statuts["429"] ?? 0) > vus / 2) st.robots = "interdit";
 }
