@@ -34,7 +34,7 @@ export function slugTitle(u: string): string {
   try {
     const seg = new URL(u).pathname.split("/").filter(Boolean).map((x) => decodeURIComponent(x).replace(/\.(html?|php|aspx)$/i, "")).filter((x) => /[a-z]{3,}-[a-z]{3,}/i.test(x)).pop();
     if (!seg) return "";
-    const t = seg.replace(/[-_]+/g, " ").replace(/\b(prod|p|ref|sku)?\s?\d{4,}\b/gi, "").replace(/\s+/g, " ").trim();
+    const t = seg.replace(/[-_]+/g, " ").split(" ").filter((w) => !/^(prod|produit|product|p|ref\w*|sku)$/i.test(w) && !/^(ref|sku|prod)?[a-z]?\d{5,}$/i.test(w)).join(" ").trim();
     return t.length > 6 ? t.charAt(0).toUpperCase() + t.slice(1, 120) : "";
   } catch { return ""; }
 }

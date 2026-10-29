@@ -239,3 +239,9 @@ describe("titre depuis l'adresse", () => {
     expect(slugTitle("https://www.laredoute.fr/ppdp/prod-602053824.aspx")).toBe("");
   });
 });
+describe("titre depuis l'adresse (références)", () => {
+  it("retire les références techniques", async () => {
+    const { slugTitle } = await import("@/workers/ia/src/recherche");
+    expect(slugTitle("https://www.madeindesign.com/prod-vase-isold-ceramique-beige-o-12-5-x-h-22-cm-bloomingville-refm114455401.html")).toBe("Vase isold ceramique beige o 12 5 x h 22 cm bloomingville");
+  });
+});
