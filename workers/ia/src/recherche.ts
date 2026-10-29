@@ -20,10 +20,10 @@ export interface Trouve {
 export interface Recherche { produits: Trouve[]; suggestions: string | null; requetes: string[] }
 
 const PROMPT = (q: string, label: string, pays: string) => [
-  `Find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
-  `Search the web. Prefer online shops that deliver to ${pays === "FR" ? "France" : "Europe"} (any shop: marketplaces, furniture and decor retailers, DIY stores, design brands), with a range of prices from affordable to premium.`,
-  "Only return direct product pages (one product per page), never category pages, blogs or search pages.",
-  'Answer with JSON only: {"products":[{"title":"","url":"","merchant":""}]}. Never invent a URL: use only pages found by the search.',
+  `Use Google Search now (at most 2 searches) to find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
+  `Prefer online shops that deliver to ${pays === "FR" ? "France" : "Europe"} (marketplaces, furniture and decor retailers, DIY stores, design brands), with a range of prices from affordable to premium.`,
+  "Only list direct product pages (one product per page), never category pages, blogs or search pages. Never invent a URL: only pages you found with the search.",
+  'Finish your answer with a JSON block: {"products":[{"title":"","url":"","merchant":""}]}.',
 ].join("\n");
 
 const host = (u: string) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return ""; } };
@@ -52,7 +52,7 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   const model = env.GEMINI_SEARCH_MODEL || env.GEMINI_TEXT_MODEL || TEXT_MODEL;
   const r = await fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }], generationConfig: { temperature: 0.1 } }),
+    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }], generationConfig: { thinkingConfig: { thinkingLevel: "low" } } }),
   });
   if (!r.ok) throw new ProviderError("La recherche sur internet a échoué.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
   const j = await r.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> }; groundingMetadata?: { groundingChunks?: Array<{ web?: { uri?: string; title?: string } }>; searchEntryPoint?: { renderedContent?: string }; webSearchQueries?: string[] } }> };
@@ -60,7 +60,9 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   const meta = c?.groundingMetadata;
   const txt = c?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
   let listed: Array<{ title?: unknown; url?: unknown; merchant?: unknown }> = [];
-  try { listed = (JSON.parse(txt.slice(txt.indexOf("{"), txt.lastIndexOf("}") + 1)) as { products?: typeof listed }).products ?? []; } catch { /* réponse libre */ }
+  try { listed = (JSON.parse(txt.slice(txt.indexOf('{"products"'), txt.lastIndexOf("}") + 1)) as { products?: typeof listed }).products ?? []; } catch { /* réponse libre */ }
+  // Liens écrits dans le texte (si le bloc JSON manque), avec le texte du lien comme titre.
+  for (const m of txt.matchAll(/\[([^\]]{3,160})\]\((https:\/\/[^\s)]+)\)/g)) listed.push({ title: m[1], url: m[2], merchant: "" });
 
   // Seules les pages réellement trouvées par la recherche Google sont gardées.
   const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w): w is { uri: string; title?: string } => typeof w?.uri === "string");

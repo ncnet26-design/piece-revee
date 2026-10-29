@@ -475,20 +475,7 @@ async function analyseOpenAI(env, image) {
   }));
 }
 
-// workers/ia/src/recherche.ts
-var PROMPT = (q, label, pays) => [
-  `Find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
-  `Search the web. Prefer online shops that deliver to ${pays === "FR" ? "France" : "Europe"} (any shop: marketplaces, furniture and decor retailers, DIY stores, design brands), with a range of prices from affordable to premium.`,
-  "Only return direct product pages (one product per page), never category pages, blogs or search pages.",
-  'Answer with JSON only: {"products":[{"title":"","url":"","merchant":""}]}. Never invent a URL: use only pages found by the search.'
-].join("\n");
-var host = (u) => {
-  try {
-    return new URL(u).hostname.replace(/^www\./, "");
-  } catch {
-    return "";
-  }
-};
+// workers/ia/src/produit.ts
 var clean = (s, n2) => typeof s === "string" ? s.replace(/\s+/g, " ").trim().slice(0, n2) : "";
 function parseProduct(html) {
   const blocks = [...html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].map((m) => m[1]);
@@ -520,6 +507,22 @@ function parseProduct(html) {
   const av = clean(offers?.availability, 80).replace(/^https?:\/\/schema\.org\//, "") || null;
   return { name: clean(p.name, 160), brand, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av };
 }
+
+// workers/ia/src/recherche.ts
+var PROMPT = (q, label, pays) => [
+  `Use Google Search now (at most 2 searches) to find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
+  `Prefer online shops that deliver to ${pays === "FR" ? "France" : "Europe"} (marketplaces, furniture and decor retailers, DIY stores, design brands), with a range of prices from affordable to premium.`,
+  "Only list direct product pages (one product per page), never category pages, blogs or search pages. Never invent a URL: only pages you found with the search.",
+  'Finish your answer with a JSON block: {"products":[{"title":"","url":"","merchant":""}]}.'
+].join("\n");
+var host = (u) => {
+  try {
+    return new URL(u).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+};
+var clean2 = (s, n2) => typeof s === "string" ? s.replace(/\s+/g, " ").trim().slice(0, n2) : "";
 async function resolve(u) {
   if (!/grounding-api-redirect/.test(u)) return u;
   try {
@@ -545,7 +548,7 @@ async function rechercher(env, q, label, pays = "FR") {
   const r = await fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST",
     headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }], generationConfig: { temperature: 0.1 } })
+    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }], generationConfig: { thinkingConfig: { thinkingLevel: "low" } } })
   });
   if (!r.ok) throw new ProviderError("La recherche sur internet a \xE9chou\xE9.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
   const j = await r.json();
@@ -554,13 +557,14 @@ async function rechercher(env, q, label, pays = "FR") {
   const txt = c?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
   let listed = [];
   try {
-    listed = JSON.parse(txt.slice(txt.indexOf("{"), txt.lastIndexOf("}") + 1)).products ?? [];
+    listed = JSON.parse(txt.slice(txt.indexOf('{"products"'), txt.lastIndexOf("}") + 1)).products ?? [];
   } catch {
   }
+  for (const m of txt.matchAll(/\[([^\]]{3,160})\]\((https:\/\/[^\s)]+)\)/g)) listed.push({ title: m[1], url: m[2], merchant: "" });
   const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w) => typeof w?.uri === "string");
   const resolved = await Promise.all(chunks.slice(0, 12).map(async (w) => ({ url: await resolve(w.uri), title: w.title ?? "" })));
   const domains = new Set(resolved.map((w) => host(w.url)).concat(chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))).filter(Boolean));
-  const fromModel = listed.map((p) => ({ url: clean(p.url, 600), title: clean(p.title, 160), merchant: clean(p.merchant, 60) })).filter((p) => /^https:\/\//.test(p.url) && domains.has(host(p.url)));
+  const fromModel = listed.map((p) => ({ url: clean2(p.url, 600), title: clean2(p.title, 160), merchant: clean2(p.merchant, 60) })).filter((p) => /^https:\/\//.test(p.url) && domains.has(host(p.url)));
   const candidates = [...fromModel, ...resolved.filter((w) => /^https:\/\//.test(w.url) && !/grounding-api-redirect/.test(w.url)).map((w) => ({ url: w.url, title: "", merchant: "" }))];
   const seen = /* @__PURE__ */ new Set(), unique = candidates.filter((p) => {
     const k = p.url.split("#")[0].split("?")[0];
@@ -819,9 +823,9 @@ async function legacy(request, env, path, ip, json) {
   if (mine >= LEGACY_VISITOR) return json({ erreur: `Vous avez utilis\xE9 vos ${LEGACY_VISITOR} images du jour. Revenez demain.` }, 429);
   const body = await request.json().catch(() => null);
   if (!body) return json({ erreur: "Demande illisible." }, 400);
-  const clean2 = (s, max) => typeof s === "string" ? s.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, max) : "";
+  const clean3 = (s, max) => typeof s === "string" ? s.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, max) : "";
   const image = (s) => isDataUrl(s) ? toImg(s) : null;
-  const brief = clean2(body.brief, 1200) || (path === "/photo" ? "Planche de mati\xE8res." : "");
+  const brief = clean3(body.brief, 1200) || (path === "/photo" ? "Planche de mati\xE8res." : "");
   if (!brief) return json({ erreur: "D\xE9crivez le projet." }, 400);
   const aspect = ASPECTS.includes(String(body.aspect)) ? String(body.aspect) : "4:3";
   const [aw, ah] = aspect.split(":").map(Number);
