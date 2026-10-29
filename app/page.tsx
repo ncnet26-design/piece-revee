@@ -103,16 +103,16 @@ export default function Home() {
         <div>
           <p className="eyebrow">Personnaliser</p>
           <h2 id="h-perso" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Même pièce, <em>autre caractère.</em></h2>
-          <p className="mt-6 max-w-[40ch] text-[15px] text-muted">Bouclé et noyer, ou velours vert et chêne fumé : dans la scène 3D, chaque objet change de matière sans toucher au reste.</p>
+          <p className="mt-6 max-w-[40ch] text-[15px] text-muted">Bouclé et noyer, ou velours vert et chêne fumé : on change une matière, le reste de la pièce ne bouge pas. Dans le Studio, la scène 3D fait de même pour chaque objet.</p>
           <Link href="/studio/?etape=3d" className="btn mt-8">Ouvrir la scène 3D</Link>
         </div>
         <div>
           {/* eslint-disable @next/next/no-img-element */}
-          <BeforeAfter ratio="16 / 11" labelBefore="Bouclé et noyer" labelAfter="Velours et chêne fumé"
-            before={<img src="/editorial/rendus/variante-a.webp" alt="Pièce témoin : canapé bouclé, buffet en noyer" loading="lazy" />}
-            after={<img src="/editorial/rendus/variante-b.webp" alt="Pièce témoin : canapé en velours vert, buffet en chêne fumé" loading="lazy" />} />
+          <BeforeAfter ratio="16 / 9" labelBefore="Bouclé et noyer" labelAfter="Velours et chêne fumé"
+            before={<img src="/editorial/ia/salon-boucle-noyer.webp" alt="Salon : canapé bouclé crème, buffet cannelé en noyer" loading="lazy" />}
+            after={<img src="/editorial/ia/salon-velours-chene.webp" alt="Même salon : canapé en velours vert, buffet en chêne fumé" loading="lazy" />} />
           {/* eslint-enable @next/next/no-img-element */}
-          <p className="mt-3 text-[12px] text-muted">Rendus 3D temps réel du Studio, sans retouche.</p>
+          <p className="mt-3 text-[12px] text-muted">Images générées par IA : même pièce, seules deux matières changent.</p>
         </div>
       </section>
 

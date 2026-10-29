@@ -4,7 +4,7 @@ Généré par `node scripts/inventaire-assets.mjs` le 2026-10-29. Ne pas modifie
 
 | Groupe | Fichiers | Poids | Utilisés | Non référencés |
 |---|---:|---:|---:|---:|
-| Visuels éditoriaux | 126 | 12.6 Mo | 126 | 0 |
+| Visuels éditoriaux | 126 | 12.5 Mo | 126 | 0 |
 | Photographies d'architecture | 12 | 1.4 Mo | 12 | 0 |
 | Matières PBR 2K | 17 | 65.4 Mo | 17 | 0 |
 | Textures 1K (planche, showroom) | 41 | 22.9 Mo | 41 | 0 |
@@ -89,6 +89,8 @@ Généré par `node scripts/inventaire-assets.mjs` le 2026-10-29. Ne pas modifie
 | `/editorial/ia/salon-640.webp` | Image éditoriale générée par IA | 640×478 | 26 Ko | Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID) | Création Pièce Rêvée (image générée par IA, étiquetée) | oui |
 | `/editorial/ia/salon-boucle-noyer-640.webp` | Image éditoriale générée par IA | 640×357 | 12 Ko | Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID) | Création Pièce Rêvée (image générée par IA, étiquetée) | oui |
 | `/editorial/ia/salon-boucle-noyer.webp` | Image éditoriale générée par IA | 1600×893 | 103 Ko | Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID) | Création Pièce Rêvée (image générée par IA, étiquetée) | oui |
+| `/editorial/ia/salon-velours-chene-640.webp` | Image éditoriale générée par IA | 640×357 | 12 Ko | Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID) | Création Pièce Rêvée (image générée par IA, étiquetée) | oui |
+| `/editorial/ia/salon-velours-chene.webp` | Image éditoriale générée par IA | 1600×893 | 84 Ko | Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID) | Création Pièce Rêvée (image générée par IA, étiquetée) | oui |
 | `/editorial/ia/salon.webp` | Image éditoriale générée par IA | 1600×1195 | 173 Ko | Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID) | Création Pièce Rêvée (image générée par IA, étiquetée) | oui |
 | `/editorial/ia/scandinave-haut-de-gamme-640.webp` | Image éditoriale générée par IA | 640×478 | 29 Ko | Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID) | Création Pièce Rêvée (image générée par IA, étiquetée) | oui |
 | `/editorial/ia/scandinave-haut-de-gamme.webp` | Image éditoriale générée par IA | 1600×1195 | 167 Ko | Google Nano Banana 2.1, consigne dans content/ia/commandes/ (filigrane SynthID) | Création Pièce Rêvée (image générée par IA, étiquetée) | oui |
@@ -142,8 +144,6 @@ Généré par `node scripts/inventaire-assets.mjs` le 2026-10-29. Ne pas modifie
 | `/editorial/planches/salle-de-bain.webp` | Planche de style (banque, accueil) | 1600×1200 | 148 Ko | Composé par scripts/editorial-assets.mjs à partir des textures CC0 | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
 | `/editorial/planches/scandinave-haut-de-gamme.webp` | Planche de style (banque, accueil) | 1600×1200 | 105 Ko | Composé par scripts/editorial-assets.mjs à partir des textures CC0 | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
 | `/editorial/planches/terrasse.webp` | Planche de style (banque, accueil) | 1600×1200 | 146 Ko | Composé par scripts/editorial-assets.mjs à partir des textures CC0 | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
-| `/editorial/rendus/variante-a.webp` | Rendu 3D de la scène de contrôle (accueil) | 1152×648 | 75 Ko | Capture du moteur 3D Pièce Rêvée | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
-| `/editorial/rendus/variante-b.webp` | Rendu 3D de la scène de contrôle (accueil) | 1152×648 | 51 Ko | Capture du moteur 3D Pièce Rêvée | Création Pièce Rêvée ; textures sources CC0 1.0 | oui |
 
 ## Photographies d'architecture
 
