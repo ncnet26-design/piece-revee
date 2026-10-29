@@ -112,7 +112,7 @@ async function sitemapUrls(start: string[], allowed: (p: string) => boolean, max
     locsTotal += locs.length; if (lus.length < 4) lus.push(`${sm.replace(/^https?:\/\/[^/]+/, "")} (${locs.length})`);
     if (/<sitemapindex/i.test(r.body)) {
       // Plans de site français et de produits d'abord ; ceux des autres pays sont écartés.
-      const score = (u: string) => (/fr[-_]fr|[/_-]fr[/_.-]|france/i.test(u) ? 3 : 0) + (/prod|product|produit|pdp|article|item|sku/i.test(u) ? 2 : 0)
+      const score = (u: string) => (/fr[-_]fr/i.test(u) ? 5 : /[/_-]fr[/_.-]|france/i.test(u) && !/fr[-_](ch|be|ca|lu)/i.test(u) ? 3 : 0) - (/fr[-_](ch|be|ca|lu)/i.test(u) ? 4 : 0) + (/prod|product|produit|pdp|article|item|sku/i.test(u) ? 2 : 0)
         - (/[/_-](de|en|es|it|nl|pt|pl|se|dk|no|fi|cz|hu|ro|gr|jp|cn|kr|us|gb|ca|au|ch|be|at)[-_][a-z]{2}\b/i.test(u) && !/fr[-_]fr|fr[-_]be|fr[-_]ch/i.test(u) ? 5 : 0);
       queue.push(...locs.filter((u) => score(u) >= 0).sort((a, b) => score(b) - score(a)).slice(0, 15));
     } else for (const u of locs) { try { if (allowed(new URL(u).pathname)) out.add(u); } catch { /* */ } }
