@@ -1,16 +1,19 @@
-import Transformer from "@/components/transform/Transformer";
+import { Parcours } from "@/components/parcours/Parcours";
 import { meta } from "@/lib/seo";
-import { LegacyNotice } from "@/components/LegacyNotice";
 
 export const metadata = meta({
-  title: "Transformer mon espace : une photo, trois inspirations, votre projet en image et en vidéo",
-  description: "Déposez une photo de votre pièce et trois inspirations : palette, matières, objets réels, planche projet en haute définition, film en motion design, liste d'achats et budget par poste.",
+  title: "Transformer ma pièce avec mes inspirations",
+  description: "Une photo de votre pièce, vos inspirations Pinterest ou magazine : votre moodboard, votre pièce transformée, et chaque meuble, couleur ou matière cliquable avec des liens pour l'acheter.",
   path: "/transformer/",
 });
 
 export default function Page() {
-  return (<>
-    <LegacyNotice>Première version de la transformation de photo (planche et film). La transformation se fait désormais dans le Studio, avec comparaison avant/après et meubles cliquables.</LegacyNotice>
-    <Transformer />
-  </>);
+  return (
+    <div className="wrap py-10 sm:py-14">
+      <p className="eyebrow">Transformer ma pièce</p>
+      <h1 className="mt-3 max-w-[18ch] text-[clamp(40px,5.6vw,76px)]">Vos inspirations, <em>chez vous.</em></h1>
+      <p className="mt-4 max-w-[58ch] text-[16px] text-muted">Photographiez votre pièce, ajoutez ce qui vous inspire. Nous composons votre moodboard, transformons votre pièce dans cet esprit, et chaque meuble, couleur ou matière devient cliquable pour le retrouver en vente.</p>
+      <div className="mt-10"><Parcours /></div>
+    </div>
+  );
 }

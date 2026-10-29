@@ -12,10 +12,10 @@ import { IconGrid, IconHeart, IconHouse, IconPhoto, IconSwatches, IconTheme, Ico
 
 /** Quatre destinations : créer (Studio), choisir un style (Inspirations), choisir les matières, composer la planche. */
 const NAV = [
-  { href: "/studio/", label: "Studio" },
+  { href: "/transformer/", label: "Transformer ma pièce" },
   { href: "/galerie/", label: "Inspirations" },
+  { href: "/studio/", label: "Studio 3D" },
   { href: "/showroom/", label: "Matières" },
-  { href: "/planche/", label: "Planches" },
 ];
 const EXPLORE = ["/explorer/", "/matieres/", "/accords/", "/mobilier/", "/lieux/", "/plantes/", "/guides/", "/styles/"];
 
@@ -75,7 +75,7 @@ export function Header() {
         </Link>
         <ThemeToggle />
         <Link href="/compte/" className="btn btn-sm btn-ghost border-transparent px-2.5" aria-label="Mon compte"><IconUser width={17} height={17} /></Link>
-        <Link href="/studio/?etape=creer" className="btn btn-primary hidden md:inline-flex">Commencer un projet</Link>
+        <Link href="/transformer/" className="btn btn-primary hidden md:inline-flex">Commencer</Link>
       </div>
     </header>
   );
@@ -84,10 +84,10 @@ export function Header() {
 export function TabBar() {
   const path = usePathname() ?? "/";
   const items = [
-    { href: "/studio/", label: "Studio", Icon: IconHouse, active: path.startsWith("/studio") || path.startsWith("/transformer") || path.startsWith("/concept") || path.startsWith("/visite-3d") },
+    { href: "/transformer/", label: "Transformer", Icon: IconSwatches, active: path.startsWith("/transformer") },
     { href: "/galerie/", label: "Inspirations", Icon: IconPhoto, active: path.startsWith("/galerie") },
+    { href: "/studio/", label: "Studio 3D", Icon: IconHouse, active: path.startsWith("/studio") || path.startsWith("/concept") || path.startsWith("/visite-3d") || path.startsWith("/planche") },
     { href: "/showroom/", label: "Matières", Icon: IconGrid, active: path.startsWith("/showroom") || EXPLORE.some((p) => path.startsWith(p)) },
-    { href: "/planche/", label: "Planches", Icon: IconSwatches, active: path.startsWith("/planche") },
   ];
   return (
     <nav aria-label="Navigation mobile" className="fixed inset-x-0 bottom-0 z-25 border-t border-line bg-surface lg:hidden"
@@ -141,7 +141,7 @@ export function CookieBanner() {
 export function Footer() {
   const cols = [
     { title: "Créer", links: [["Studio", "/studio/"], ["Inspirations", "/galerie/"], ["Matières", "/showroom/"], ["Planches", "/planche/"], ["Trouver mon style", "/quiz/"], ["Tarifs", "/tarifs/"]] },
-    { title: "Autres outils", links: [["Transformer (première version)", "/transformer/"], ["Concept éditorial", "/concept/"], ["Maquette d'appartement 3D", "/visite-3d/"], ["Mon projet d'étude", "/projet/"], ["Ma maison", "/maison/"]] },
+    { title: "Autres outils", links: [["Planches de matières", "/planche/"], ["Concept éditorial", "/concept/"], ["Maquette d'appartement 3D", "/visite-3d/"], ["Mon projet d'étude", "/projet/"], ["Ma maison", "/maison/"]] },
     { title: "Explorer", links: [["Tout explorer", "/explorer/"], ["Matériauthèque", "/matieres/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
     { title: "Informations", links: [["Mentions légales", "/legal/mentions-legales/"], ["CGU", "/legal/cgu/"], ["CGV", "/legal/cgv/"], ["Confidentialité", "/legal/confidentialite/"], ["Cookies", "/legal/cookies/"], ["Liens affiliés", "/legal/affiliation/"]] },
   ];

@@ -17,10 +17,10 @@ test("accueil : promesse, accès direct au Studio, sections éditoriales", async
   const errors = noJsErrors(page);
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("dessiné");
-  await expect(page.getByRole("link", { name: "Commencer un projet" }).first()).toHaveAttribute("href", /studio\/\?etape=creer/);
+  await expect(page.getByRole("link", { name: "Transformer ma pièce" }).first()).toHaveAttribute("href", "/transformer/");
   const mobile = (page.viewportSize()?.width ?? 1200) < 1024;
-  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Studio", "Inspirations", "Matières", "Planches"]);
-  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Studio", "Inspirations", "Matières", "Planches"]);
+  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Studio 3D", "Matières"]);
+  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Studio 3D", "Matières"]);
   await expect(page.getByRole("heading", { name: /trois façons de l'avoir/ })).toBeVisible();
   await expect(page.getByText(/Prix relevés sur les sites des enseignes/)).toBeVisible();
   await expect(page.getByRole("slider", { name: /Bouclé et noyer/ })).toBeVisible();
@@ -301,41 +301,58 @@ test("showroom : familles, déclinaisons, fiche 3D et ajout à la planche", asyn
   expect(errors).toEqual([]);
 });
 
-test("transformer : photo et trois inspirations donnent planche, références et budget", async ({ page, isMobile }) => {
-  test.skip(isMobile, "parcours long, vérifié sur ordinateur");
-  test.setTimeout(240_000);
+test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une pièce transformée entièrement cliquable", async ({ page }) => {
+  test.setTimeout(120_000);
   const errors = noJsErrors(page);
-  await page.goto("/transformer/");
-  await page.getByRole("button", { name: "Créer mon projet" }).click();
-  await expect(page.getByText("Ajoutez d'abord une photo de votre pièce.")).toBeVisible({ timeout: 20_000 });
-  const img = "public/visuels/hero-3d.webp";
-  await page.getByLabel("Choisir la photo de votre pièce").setInputFiles(img);
-  await page.getByLabel("Choisir l'inspiration 1").setInputFiles("public/editorial/planches/japandi.webp");
-  await page.getByLabel("Choisir l'inspiration 2").setInputFiles("public/inspirations/villas-16.webp");
-  await page.getByRole("button", { name: "Créer mon projet" }).click();
-  await expect(page.getByText(/Ajoutez trois inspirations/)).toBeVisible({ timeout: 20_000 });
-  await page.getByLabel("Choisir l'inspiration 3").setInputFiles("public/visuels/visite-3d.webp");
-  await page.getByRole("button", { name: "Cuisine" }).click();
-  await page.getByRole("button", { name: "Créer mon projet" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Cuisine", { timeout: 200_000 });
-  await expect(page.getByRole("img", { name: /Planche projet/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Télécharger l'image HD" })).toHaveAttribute("href", /^data:image\/jpeg/);
-  await expect(page.getByRole("heading", { name: /références/ })).toBeVisible();
-  // Rendu photoréaliste : le service d'images est simulé (aucun appel payant pendant les tests).
-  await page.route("https://piece-revee-ia.ewanesteves26.workers.dev/redesign", async (route) => {
-    const body = route.request().postDataJSON() as { photo: string; inspirations: string[]; brief: string };
-    expect(body.photo).toMatch(/^data:image\/jpeg;base64,/);
-    expect(body.inspirations).toHaveLength(3);
-    expect(body.brief).toContain("Pièce : Cuisine");
-    await route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ image: body.photo, restant: 5 }) });
+  const H = { "Access-Control-Allow-Origin": "*" };
+  let jobBody: { photo?: string; references?: string[]; inspirations?: boolean; mode?: string; brief?: string } = {};
+  // Service d'images simulé : aucun appel payant pendant les tests.
+  await page.route("**/v2/moodboard", (r) => r.fulfill({ status: 200, contentType: "application/json", headers: H, body: JSON.stringify({
+    style: "Japandi chaleureux", summary: "Bois fumé, lin et lumière douce.", palette: [{ name: "Lin", hex: "#E6DCCB" }, { name: "Chêne fumé", hex: "#5C4636" }],
+    materials: ["chene-fume", "lin-lave"], objects: [{ type: "table-basse", label: "Table basse ronde en chêne", materials: ["bois"], colors: [], shape: ["ronde"] }],
+    brief_fr: "Salon apaisé.", brief_en: "Calm japandi living room.",
+  }) }));
+  await page.route("**/v2/jobs", async (r) => {
+    jobBody = r.request().postDataJSON();
+    const now = new Date().toISOString();
+    await r.fulfill({ status: 201, contentType: "application/json", headers: H, body: JSON.stringify({ id: "22222222-2222-4222-8222-222222222222", status: "terminee", mode: "transform", provider: "gemini", model: "nano", quality: "premium", brief: "x", keep: [], width: 1600, height: 893, createdAt: now, updatedAt: now, attempts: 1, costUsd: 0.06, imageUrl: "http://localhost:4173/editorial/ia/salon-boucle-noyer.webp" }) });
   });
-  await page.getByRole("button", { name: "Créer le rendu de ma pièce" }).click();
-  await expect(page.getByRole("link", { name: "Télécharger le rendu" })).toBeVisible({ timeout: 60_000 });
-  await expect(page.getByText("Il vous reste 5 rendus aujourd'hui.")).toBeVisible();
-  // Budget : modifier un poste met à jour le total.
-  const first = page.getByLabel(/^Mon budget :/).first();
-  await first.fill("1000");
-  await expect(page.locator("tfoot")).toContainText("€");
+  await page.route("**/v2/analyse", (r) => r.fulfill({ status: 200, contentType: "application/json", headers: H, body: JSON.stringify({
+    objects: [{ id: "table-basse_001", type: "table-basse", label: "Table basse galet en travertin", design_source: "ai_detected", shape: ["organique", "basse"], materials: ["travertin"], colors: [{ name: "Travertin", hex: "#E3D2B4" }], style: ["minimal"], estimated_dimensions_cm: { width: 110, depth: 70, height: 32 }, zone: { x: 47, y: 71, w: 25, h: 18 } }],
+    surfaces: [{ id: "mur_1", kind: "mur", label: "Mur à la chaux", colors: [{ name: "Blanc chaud", hex: "#EEE8DD" }], material: "enduit à la chaux", finish: "mat", zone: { x: 20, y: 0, w: 80, h: 50 } }],
+  }) }));
+  await page.goto("/transformer/");
+  await expect(page.getByRole("button", { name: "Créer mon moodboard" })).toBeDisabled();
+  await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/inspirations/villas-16.webp");
+  await page.getByLabel("Ajouter des inspirations").setInputFiles(["public/editorial/ia/japandi-essai.webp", "public/editorial/ia/matiere-lin.webp"]);
+  await expect(page.getByRole("img", { name: "Inspiration 2" })).toBeVisible();
+  await page.getByRole("button", { name: "Créer mon moodboard" }).click();
+  await expect(page.getByRole("heading", { name: "Japandi chaleureux" })).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByText("Chêne fumé").first()).toBeVisible();
+  await expect(page.getByText("Table basse ronde en chêne")).toBeVisible();
+  await page.getByRole("button", { name: "Transformer ma pièce" }).click();
+  await expect(page.getByTestId("piece-transformee")).toBeVisible({ timeout: 30_000 });
+  expect(jobBody).toMatchObject({ mode: "transform", inspirations: true });
+  expect(jobBody.references).toHaveLength(2);
+  expect(jobBody.photo).toMatch(/^data:image\/jpeg;base64,/);
+  expect(jobBody.brief).toContain("Calm japandi living room.");
+  // Un meuble : des produits réels ressemblants, avec leur lien.
+  await page.getByRole("button", { name: /Table basse galet en travertin : voir les modèles ressemblants/ }).click();
+  const meuble = page.getByRole("complementary", { name: "Table basse galet en travertin" });
+  await expect(meuble.getByText(/alternatives ressemblantes/)).toBeVisible();
+  await expect(meuble.getByRole("link", { name: /Voir la fiche/ }).first()).toHaveAttribute("target", "_blank");
+  await page.keyboard.press("Escape");
+  // Une surface : sa teinte, des matières proches et où la trouver.
+  await page.getByRole("button", { name: "Mur à la chaux" }).click();
+  const mur = page.getByRole("complementary", { name: "Mur à la chaux" });
+  await expect(mur.getByText(/teinte approchante/)).toBeVisible();
+  await expect(mur.getByText("Matières proches")).toBeVisible();
+  await expect(mur.getByRole("link").first()).toHaveAttribute("target", "_blank");
+  await page.keyboard.press("Escape");
+  // N'importe où ailleurs : la couleur du point.
+  const box = (await page.getByTestId("piece-transformee").boundingBox())!;
+  await page.getByTestId("piece-transformee").click({ position: { x: box.width * 0.05, y: box.height * 0.9 } });
+  await expect(page.getByRole("complementary", { name: /^Couleur / })).toBeVisible();
   expect(errors).toEqual([]);
 });
 

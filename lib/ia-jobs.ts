@@ -13,6 +13,8 @@ export interface IaJob {
 }
 export interface JobRequest {
   mode: "generate" | "transform"; brief: string; photo?: string; references?: string[];
+  /** Les références sont les inspirations du client (style à transposer), pas des matières à copier. */
+  inspirations?: boolean;
   keep?: string[]; keepFree?: string; materials?: string[]; products?: string[];
   quality?: Quality; width?: number; height?: number; fournisseur?: string;
   /** Édition localisée : masque PNG (zones transparentes = à modifier) et zone décrite. */
@@ -68,9 +70,18 @@ export async function maskFor(src: string, z: { x: number; y: number; w: number;
   x.clearRect(px(Math.max(0, z.x - margin), c.width), px(Math.max(0, z.y - margin), c.height), px(Math.min(100, z.w + 2 * margin), c.width), px(Math.min(100, z.h + 2 * margin), c.height));
   return { image: img, mask: c.toDataURL("image/png") };
 }
-/** Meubles visibles d'une image (zones et traits visuels), par le service d'analyse. */
+/** Surface d'une pièce repérée par l'analyse (mur, sol, rideaux…), zone en % de l'image. */
+export interface Surface { id: string; kind: string; label: string; colors: Array<{ name: string; hex: string }>; material: string; finish: string; zone: { x: number; y: number; w: number; h: number } }
+/** Meubles et surfaces visibles d'une image (zones et traits visuels), par le service d'analyse. */
 export async function analyseImage(src: string) {
-  return call<{ objects: unknown[] }>("/v2/analyse", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ image: await shrink(src, 1536, 0.88), visiteur: visitorId() }) });
+  return call<{ objects: unknown[]; surfaces?: Surface[] }>("/v2/analyse", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ image: await shrink(src, 1536, 0.88), visiteur: visitorId() }) });
+}
+
+/** Moodboard des inspirations du client : style, palette, matières (identifiants du catalogue), objets clés et consigne. */
+export interface Moodboard { style: string; summary: string; palette: Array<{ name: string; hex: string }>; materials: string[]; objects: Array<{ type: string; label: string; materials: string[]; colors: Array<{ name: string; hex: string }>; shape: string[] }>; brief_fr: string; brief_en: string }
+export async function moodboardFrom(inspirations: string[], catalog: Array<{ id: string; name: string }>) {
+  const imgs = await Promise.all(inspirations.slice(0, 6).map((s) => shrink(s, 1024, 0.85)));
+  return call<Moodboard>("/v2/moodboard", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ inspirations: imgs, matieres: catalog, visiteur: visitorId() }) });
 }
 
 /** Suit la tâche jusqu'à la fin (intervalle croissant de 2 à 6 s, 8 minutes au plus). */

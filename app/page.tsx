@@ -23,9 +23,9 @@ export default function Home() {
         <div className="lg:pb-6">
           <p className="eyebrow">Studio d'architecture intérieure</p>
           <h1 className="mt-5 text-[clamp(48px,7vw,104px)] leading-[.96]">L'intérieur, dessiné <em>avant d'être construit.</em></h1>
-          <p className="mt-7 max-w-[44ch] text-[17px] leading-relaxed text-muted">Imaginez la pièce, choisissez de vraies matières, manipulez-la en 3D, puis trouvez où acheter chaque meuble.</p>
+          <p className="mt-7 max-w-[44ch] text-[17px] leading-relaxed text-muted">Photographiez votre pièce, ajoutez vos inspirations : nous la transformons dans cet esprit, et chaque meuble, couleur ou matière devient cliquable pour l'acheter.</p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="/studio/?etape=creer" className="btn btn-primary btn-lg">Commencer un projet</Link>
+            <Link href="/transformer/" className="btn btn-primary btn-lg">Transformer ma pièce</Link>
             <Link href="/galerie/" className="btn btn-lg btn-ghost">Trouver mon style</Link>
           </div>
         </div>
@@ -41,9 +41,9 @@ export default function Home() {
         <h2 id="h-gestes" className="sr-only">Comment ça marche</h2>
         <ol className="grid list-none gap-10 p-0 md:grid-cols-3">
           {[
-            ["01", "Imaginer", "Partez d'une photo de votre pièce, d'une image qui vous inspire ou d'un style. Rien à remplir d'autre."],
-            ["02", "Matérialiser", "Travertin, noyer, bouclé, enduit à la chaux : de vraies matières photographiées, en 3D, à la bonne échelle."],
-            ["03", "Sourcer", "Touchez un meuble : des modèles ressemblants vendus aujourd'hui, à trois niveaux de prix, avec leur source."],
+            ["01", "Votre pièce", "Une photo de la pièce telle qu'elle est, et vos inspirations : Pinterest, Instagram, magazine, capture d'écran."],
+            ["02", "Votre moodboard", "Style, palette, matières et pièces clés tirés de vos inspirations, puis votre pièce transformée dans cet esprit."],
+            ["03", "Tout est cliquable", "Touchez un meuble, un mur, un sol : des modèles et des teintes réels, à trois niveaux de prix, avec leurs liens."],
           ].map(([n, t, d]) => (
             <li key={n}>
               <p className="font-display text-[44px] leading-none text-bronze">{n}</p>
@@ -154,7 +154,7 @@ export default function Home() {
       <section className="border-t border-line py-24 text-center">
         <h2 className="mx-auto max-w-[16ch] text-[clamp(40px,5.6vw,80px)]">Votre pièce, <em>en vrai.</em></h2>
         <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <Link href="/studio/?etape=creer" className="btn btn-primary btn-lg">Commencer un projet</Link>
+          <Link href="/transformer/" className="btn btn-primary btn-lg">Transformer ma pièce</Link>
           <Link href="/showroom/" className="btn btn-lg btn-ghost">Voir les matières</Link>
         </div>
       </section>
