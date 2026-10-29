@@ -13,6 +13,8 @@ export interface Env {
   /** "images" (appel direct, synchrone) ou "background" (tâche asynchrone côté OpenAI). */
   OPENAI_MODE?: string;
   OPENAI_RESPONSES_MODEL?: string;
+  /** Modèle Gemini d'analyse (moodboard, repérage des objets). */
+  GEMINI_TEXT_MODEL?: string;
   FAL_MODEL_EDIT?: string;
   FAL_MODEL_TEXT?: string;
   REPLICATE_MODEL?: string;
@@ -63,7 +65,7 @@ export type Quality = "brouillon" | "standard" | "premium";
  */
 export const PRICE_ESTIMATE: Record<string, Record<Quality, number>> = {
   openai: { brouillon: 0.02, standard: 0.06, premium: 0.2 },
-  gemini: { brouillon: 0.04, standard: 0.04, premium: 0.14 },
+  gemini: { brouillon: 0.04, standard: 0.04, premium: 0.06 },
   fal: { brouillon: 0.04, standard: 0.04, premium: 0.08 },
   replicate: { brouillon: 0.04, standard: 0.04, premium: 0.08 },
 };

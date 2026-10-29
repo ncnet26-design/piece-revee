@@ -25,7 +25,7 @@ const PHOTO = [
   "No text, no logo, no watermark, no people, no distorted furniture, no duplicated objects.",
 ].join(" ");
 
-export function buildPrompt(p: { mode: Mode; brief: string; keep?: string[]; keepFree?: string; references?: number; materials?: string[]; products?: string[]; onlyZone?: { label: string; x: number; y: number; w: number; h: number } }): string {
+export function buildPrompt(p: { mode: Mode; brief: string; keep?: string[]; keepFree?: string; references?: number; inspirations?: boolean; materials?: string[]; products?: string[]; onlyZone?: { label: string; x: number; y: number; w: number; h: number } }): string {
   const lines: string[] = [];
   if (p.mode === "transform") {
     lines.push(
@@ -46,7 +46,9 @@ export function buildPrompt(p: { mode: Mode; brief: string; keep?: string[]; kee
     const z = p.onlyZone;
     lines.push(`LOCAL EDIT ONLY: change exclusively the object "${z.label}" located in the region from ${Math.round(z.x)}% to ${Math.round(z.x + z.w)}% horizontally and ${Math.round(z.y)}% to ${Math.round(z.y + z.h)}% vertically. Every other pixel of the image — other furniture, rug, walls, floor, lighting, camera — must stay identical.`);
   }
-  if (p.references) lines.push(`Images ${p.mode === "transform" ? 2 : 1} to ${p.references + (p.mode === "transform" ? 1 : 0)} are references (materials, finishes or products): reproduce their colour, texture and finish faithfully, do not copy their room.`);
+  const first = p.mode === "transform" ? 2 : 1, last = (p.references ?? 0) + first - 1;
+  if (p.references && p.inspirations) lines.push(`Image${p.references > 1 ? `s ${first} to ${last} are` : ` ${first} is`} the client's inspiration${p.references > 1 ? "s" : ""} (Pinterest, magazines). Bring their style, colour palette, materials, furniture shapes, textiles, lighting and mood into the client's room, adapted to its real geometry and scale. Do not copy their architecture, windows, layout or camera.`);
+  else if (p.references) lines.push(`Images ${first} to ${last} are references (materials, finishes or products): reproduce their colour, texture and finish faithfully, do not copy their room.`);
   if (p.materials?.length) lines.push(`Materials to use (exact finishes): ${p.materials.join("; ")}.`);
   if (p.products?.length) lines.push(`Design pieces to show, faithful to their real shape: ${p.products.join("; ")}.`);
   lines.push(`Brief (written in French): ${p.brief}`, PHOTO);

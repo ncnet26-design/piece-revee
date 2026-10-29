@@ -2,7 +2,9 @@
  * Pièce Rêvée · service d'images IA (Cloudflare Worker « piece-revee-ia »).
  *
  * Routes v2 (tâches) :
- *   POST /v2/jobs                 { mode, brief, photo?, references?, keep?, keepFree?, materials?, products?, quality?, width?, height?, visiteur, fournisseur? }
+ *   POST /v2/jobs                 { mode, brief, photo?, references?, inspirations?, keep?, keepFree?, materials?, products?, quality?, width?, height?, visiteur, fournisseur? }
+ *   POST /v2/moodboard            { inspirations: dataURL[], matieres: {id,name}[], visiteur } → style, palette, matières, objets, consigne
+ *   POST /v2/analyse              { image, visiteur } → objets et surfaces avec leur zone
  *   GET  /v2/jobs/:id             état de la tâche (interroge le fournisseur si besoin)
  *   POST /v2/jobs/:id/retry       nouvelle tentative avec les mêmes données
  *   GET  /v2/images/:id           l'image produite
@@ -13,7 +15,7 @@ import { isAllowedOrigin, ALLOWED_ORIGINS, MAX_BODY, type Ctx, type Env } from "
 import { buildPrompt } from "./prompts";
 import { isDataUrl, parseJobBody } from "./validate";
 import { chooseProvider, gemini, PROVIDERS, ProviderError, type ImgIn, type ProviderRequest } from "./providers";
-import { analyse } from "./analyse";
+import { analyse, moodboard } from "./analyse";
 import { estimate, loadInput, loadJob, overLimit, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
 
 const toImg = (s: string): ImgIn => { const m = /^data:(image\/\w+);base64,(.+)$/.exec(s)!; return { mime: m[1]!, b64: m[2]! }; };
@@ -82,7 +84,7 @@ export default {
       if (refusal) return json({ erreur: refusal }, 429);
       const now = new Date().toISOString();
       const job: Job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
-      const input: JobInput = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : undefined, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : undefined };
+      const input: JobInput = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : undefined, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : undefined };
       await Promise.all([saveInput(env, job.id, input), reserve(env, visitor, ipHash, cost)]);
       return json(pub(await run(env, job, input), base), 201);
     }
@@ -94,11 +96,30 @@ export default {
       const refusal = overLimit(await usage(env, visitor, ipHash), cost);
       if (refusal) return json({ erreur: refusal }, 429);
       try {
-        const objects = await analyse(env, toImg(b.image));
+        const r = await analyse(env, toImg(b.image));
         await settle(env, visitor, ipHash, cost);
-        return json({ objects });
+        return json(r);
       } catch (e) {
         return json({ erreur: e instanceof ProviderError ? e.message : "Analyse impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
+      }
+    }
+
+    if (request.method === "POST" && path === "/v2/moodboard") {
+      if (Number(request.headers.get("Content-Length") || 0) > MAX_BODY) return json({ erreur: "Images trop lourdes." }, 413);
+      const b = await request.json().catch(() => null) as { inspirations?: unknown; matieres?: unknown; visiteur?: unknown } | null;
+      const imgs = Array.isArray(b?.inspirations) ? b.inspirations.slice(0, 6) : [];
+      if (!b || !imgs.length || !imgs.every(isDataUrl) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Ajoutez au moins une image d'inspiration." }, 400);
+      const catalog = (Array.isArray(b.matieres) ? b.matieres : []).filter((m): m is { id: string; name: string } => !!m && typeof (m as { id?: unknown }).id === "string" && typeof (m as { name?: unknown }).name === "string")
+        .slice(0, 80).map((m) => ({ id: m.id.slice(0, 40), name: m.name.slice(0, 60) }));
+      const visitor = await sha(`v|${b.visiteur}`), cost = 0.01;
+      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
+      if (refusal) return json({ erreur: refusal }, 429);
+      try {
+        const r = await moodboard(env, (imgs as string[]).map(toImg), catalog);
+        await settle(env, visitor, ipHash, cost);
+        return json(r);
+      } catch (e) {
+        return json({ erreur: e instanceof ProviderError ? e.message : "Moodboard impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
     }
 

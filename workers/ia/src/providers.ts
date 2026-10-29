@@ -136,7 +136,7 @@ export const gemini: Provider = {
   async submit(req, env) {
     const input: unknown[] = [{ type: "text", text: req.prompt }];
     if (req.photo) input.push({ type: "image", mime_type: req.photo.mime, data: req.photo.b64 });
-    req.references.slice(0, 4).forEach((im) => input.push({ type: "image", mime_type: im.mime, data: im.b64 }));
+    req.references.slice(0, 6).forEach((im) => input.push({ type: "image", mime_type: im.mime, data: im.b64 }));
     const r = await fetchRetry("https://generativelanguage.googleapis.com/v1beta/interactions", {
       method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY! },
       body: JSON.stringify({ model: GEMINI_MODEL, input, response_format: { type: "image", mime_type: "image/jpeg", aspect_ratio: nearestRatio(req.width, req.height), image_size: req.quality === "premium" ? "2K" : "1K" }, generation_config: { thinking_level: "minimal" }, store: false }),

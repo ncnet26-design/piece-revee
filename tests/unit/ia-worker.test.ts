@@ -143,3 +143,56 @@ describe("choix du fournisseur et formats", () => {
     expect(p).toContain("Images 2 to 3 are references");
   });
 });
+
+describe("analyse et moodboard (Gemini)", () => {
+  let env: Env & { QUOTA: ReturnType<typeof memoryKV> };
+  const fetchMock = vi.fn();
+  beforeEach(() => { env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g-test" }; vi.stubGlobal("fetch", fetchMock); fetchMock.mockReset(); _setPause(async () => {}); });
+  afterEach(() => vi.unstubAllGlobals());
+  const gem = (o: unknown) => new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: JSON.stringify(o) }] } }] }), { status: 200 });
+
+  it("repère objets et surfaces, convertit les zones et ignore ce qui est invalide", async () => {
+    fetchMock.mockResolvedValueOnce(gem({
+      objects: [
+        { type: "canape", label: "Canapé courbe en bouclé", shape: ["arrondi"], materials: ["boucle"], colors: [{ name: "Crème", hex: "#efe5d3" }], style: ["organique"], width_cm: 220, depth_cm: 95, height_cm: 75, box_2d: [500, 100, 900, 450] },
+        { type: "fusee", label: "Inconnu", box_2d: [0, 0, 10, 10] },
+        { type: "tapis", label: "Tapis", box_2d: [900, 900, 100, 100] },
+      ],
+      surfaces: [{ kind: "mur", label: "Mur à la chaux", colors: [{ name: "Blanc chaud", hex: "#EEE8DD" }, { name: "faux", hex: "beige" }], material: "enduit", finish: "mat", box_2d: [0, 0, 600, 1000] }],
+    }));
+    const r = await call(env, "/v2/analyse", { method: "POST", body: JSON.stringify({ image: PNG, visiteur: "visiteur-test-01" }) });
+    expect(r.status).toBe(200);
+    const d = await r.json() as { objects: Array<{ type: string; zone: object; colors: Array<{ hex: string }> }>; surfaces: Array<{ kind: string; zone: object; colors: unknown[] }> };
+    expect(d.objects).toHaveLength(1);
+    expect(d.objects[0]).toMatchObject({ type: "canape", zone: { x: 10, y: 50, w: 35, h: 40 }, colors: [{ hex: "#EFE5D3" }] });
+    expect(d.surfaces).toEqual([expect.objectContaining({ kind: "mur", zone: { x: 0, y: 0, w: 100, h: 60 } })]);
+    expect(d.surfaces[0]!.colors).toHaveLength(1);
+    const [url, init] = fetchMock.mock.calls[0]!;
+    expect(String(url)).toContain("models/gemini-3.8-flash:generateContent");
+    expect((init as RequestInit).headers).toMatchObject({ "x-goog-api-key": "g-test" });
+  });
+
+  it("compose un moodboard à partir des inspirations, sans matière hors catalogue", async () => {
+    fetchMock.mockResolvedValueOnce(gem({ style: "Japandi chaleureux", summary: "Calme et naturel.", palette: [{ name: "Lin", hex: "#E6DCCB" }], materials: ["chene-fume", "inventee"], objects: [{ type: "table-basse", label: "Table basse ronde en chêne", materials: ["bois"], colors: [], shape: ["ronde"] }], brief_fr: "Salon apaisé.", brief_en: "Calm living room." }));
+    const r = await call(env, "/v2/moodboard", { method: "POST", body: JSON.stringify({ inspirations: [PNG, PNG], matieres: [{ id: "chene-fume", name: "Chêne fumé" }], visiteur: "visiteur-test-01" }) });
+    expect(r.status).toBe(200);
+    const d = await r.json() as { style: string; materials: string[]; objects: unknown[]; brief_en: string };
+    expect(d).toMatchObject({ style: "Japandi chaleureux", materials: ["chene-fume"], brief_en: "Calm living room." });
+    const sent = JSON.parse(String((fetchMock.mock.calls[0]![1] as RequestInit).body));
+    expect(sent.contents[0].parts.filter((p: object) => "inline_data" in p)).toHaveLength(2);
+    expect(sent.contents[0].parts[0].text).toContain("chene-fume: Chêne fumé");
+  });
+
+  it("refuse un moodboard sans image", async () => {
+    const r = await call(env, "/v2/moodboard", { method: "POST", body: JSON.stringify({ inspirations: [], visiteur: "visiteur-test-01" }) });
+    expect(r.status).toBe(400);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("la consigne de transformation traite les références comme des inspirations", () => {
+    const p = buildPrompt({ mode: "transform", brief: "Salon japandi", references: 3, inspirations: true });
+    expect(p).toContain("Images 2 to 4 are the client's inspirations");
+    expect(p).toContain("Do not copy their architecture");
+    expect(p).not.toContain("are references (materials");
+  });
+});
