@@ -1,0 +1,17 @@
+{
+ "updatedAt": "2026-10-29T12:08:28.117Z",
+ "total": 83,
+ "familles": {
+  "canape": 48,
+  "fauteuil": 7,
+  "chaise": 3,
+  "rangement": 3,
+  "luminaire": 2,
+  "tapis": 6,
+  "lit": 5,
+  "deco": 9
+ },
+ "vendeurs": {
+  "Habitat": 83
+ }
+}
