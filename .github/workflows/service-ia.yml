@@ -5,7 +5,7 @@ name: Service IA (Cloudflare Worker piece-revee-ia)
 on:
   workflow_dispatch:
     inputs:
-      action: { description: "verifier ou deployer", required: true, default: verifier, type: choice, options: [verifier, deployer] }
+      action: { description: "verifier ou deployer", required: true, default: verifier, type: choice, options: [verifier, deployer, modeles] }
 
 permissions:
   contents: write
@@ -52,6 +52,12 @@ jobs:
           sleep 8
           echo "Réponse publique après mise en ligne :"
           curl -sS --max-time 20 "https://$WORKER.ewanesteves26.workers.dev/" | head -c 600; echo
+      - name: Modèles Gemini disponibles (liste gratuite, aucun appel payant)
+        if: ${{ inputs.action == 'modeles' }}
+        env: { GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}" }
+        run: |
+          exec > >(tee -a rapport.txt) 2>&1
+          curl -sS -H "x-goog-api-key: $GEMINI_API_KEY" "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200" | jq -r '.models[] | select(.supportedGenerationMethods | index("generateContent")) | "\(.name)\t\(.displayName)\t\(.inputTokenLimit)"'
       - name: Publier le rapport (branche robot/service-ia)
         if: ${{ always() }}
         run: |
