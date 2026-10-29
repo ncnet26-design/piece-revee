@@ -17,7 +17,7 @@ export interface Trouve {
   price: number | null; currency: string | null; availability: string | null; brand: string | null;
   checkedAt: string | null; source: "page" | "recherche";
 }
-export interface Recherche { produits: Trouve[]; suggestions: string | null; requetes: string[] }
+export interface Recherche { produits: Trouve[]; suggestions: string | null; requetes: string[]; etapes?: Record<string, unknown> }
 
 const PROMPT = (q: string, label: string, pays: string) => [
   `Use Google Search now (at most 2 searches) to find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
@@ -90,5 +90,7 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   }))).filter((x): x is Trouve => x !== null && x.title.length > 2);
   // Pages produits vérifiées d'abord, puis du moins cher au plus cher.
   produits.sort((a, b) => (a.source === b.source ? (a.price ?? 1e9) - (b.price ?? 1e9) : a.source === "page" ? -1 : 1));
-  return { produits: produits.slice(0, 8), suggestions: meta?.searchEntryPoint?.renderedContent ?? null, requetes: (meta?.webSearchQueries ?? []).slice(0, 5) };
+  // Compteurs (aucune donnée personnelle) : aident à comprendre une recherche vide.
+  const etapes = { listes: listed.length, sources: chunks.length, redirections: resolved.filter((p) => !isRedirect(p.url)).length, candidats: unique.length, pagesLues: produits.filter((p) => p.source === "page").length, exemples: unique.slice(0, 3).map((p) => host(p.url)) };
+  return { produits: produits.slice(0, 8), suggestions: meta?.searchEntryPoint?.renderedContent ?? null, requetes: (meta?.webSearchQueries ?? []).slice(0, 5), etapes };
 }
