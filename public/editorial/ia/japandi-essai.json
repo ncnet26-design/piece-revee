@@ -1,0 +1,33 @@
+{
+  "id": "japandi-essai",
+  "usage": "Banque d'inspiration : style Japandi (image d'essai)",
+  "generator": "Google gemini-nano-banana-2.1",
+  "date": "2026-10-29T09:03:56.064Z",
+  "prompt_sha256": "539dd5d1574fd378d2124146bab7eae6a34a3b0d39fbdb29326f77bd6bdd7218",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "images": 1,
+  "usage_tokens": {
+    "total_tokens": 3216,
+    "total_input_tokens": 218,
+    "input_tokens_by_modality": [
+      {
+        "modality": "text",
+        "tokens": 218
+      }
+    ],
+    "total_cached_tokens": 0,
+    "total_output_tokens": 2068,
+    "output_tokens_by_modality": [
+      {
+        "modality": "image",
+        "tokens": 1680
+      }
+    ],
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 930,
+    "initial_input_tokens": 334
+  },
+  "label": "Image générée par IA",
+  "synthid": "Filigrane invisible SynthID ajouté par Google"
+}
