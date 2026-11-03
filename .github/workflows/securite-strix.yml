@@ -1,0 +1,36 @@
+name: Sécurité (Strix, à la main)
+
+# Test de sécurité par IA du CODE du projet uniquement (jamais d'adresse web tierce).
+# Se lance seulement à la main : onglet Actions → « Sécurité (Strix, à la main) » → Run workflow.
+# Pré-requis : secrets GitHub STRIX_LLM (ex. « openrouter/… ») et LLM_API_KEY, définis par le propriétaire.
+# Chaque analyse consomme la clé d'IA du propriétaire (payant chez le fournisseur choisi).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency: { group: strix, cancel-in-progress: false }
+
+jobs:
+  strix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérifier les clés
+        env: { STRIX_LLM: "${{ secrets.STRIX_LLM }}", LLM_API_KEY: "${{ secrets.LLM_API_KEY }}" }
+        run: |
+          test -n "$STRIX_LLM" || { echo "Secret STRIX_LLM absent : rien n'est lancé."; exit 1; }
+          test -n "$LLM_API_KEY" || { echo "Secret LLM_API_KEY absent : rien n'est lancé."; exit 1; }
+      - name: Installer Strix (version fixée)
+        run: |
+          curl -sSL https://raw.githubusercontent.com/usestrix/strix/v1.7.0/scripts/install.sh -o install-strix.sh
+          VERSION=1.7.0 bash install-strix.sh
+      - name: Analyser le code du projet (cible locale uniquement)
+        env: { STRIX_LLM: "${{ secrets.STRIX_LLM }}", LLM_API_KEY: "${{ secrets.LLM_API_KEY }}" }
+        run: strix -n --target ./
+      - name: Conserver le rapport
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with: { name: rapport-strix, path: strix_runs/, if-no-files-found: ignore, retention-days: 30 }
