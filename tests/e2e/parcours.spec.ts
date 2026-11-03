@@ -21,10 +21,12 @@ test("accueil : promesse, accès direct au Studio, sections éditoriales", async
   await expect(page.getByRole("heading", { level: 1 })).toContainText("dessiné");
   await expect(page.getByRole("link", { name: "Transformer ma pièce" }).first()).toHaveAttribute("href", "/transformer/");
   const mobile = (page.viewportSize()?.width ?? 1200) < 1024;
-  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Studio 3D", "Matières"]);
-  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Studio 3D", "Matières"]);
-  await expect(page.getByRole("heading", { name: /trois façons de l'avoir/ })).toBeVisible();
-  await expect(page.getByText(/Prix relevés sur les sites des enseignes/)).toBeVisible();
+  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Boutique", "Studio 3D"]);
+  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Boutique", "Matières", "Studio 3D"]);
+  await expect(page.getByRole("heading", { name: /trouvez-la en vente/ })).toBeVisible();
+  await page.getByRole("button", { name: /Table basse en travertin : voir les produits ressemblants/ }).click();
+  await expect(page.getByRole("link", { name: /travertin/i }).first()).toHaveAttribute("target", "_blank");
+  await expect(page.getByText(/Prix relevés sur les sites des enseignes/).first()).toBeVisible();
   await expect(page.getByRole("slider", { name: /Bouclé et noyer/ })).toBeVisible();
   expect(errors).toEqual([]);
 });
@@ -133,7 +135,7 @@ test("404 utile", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toContainText("n'existe pas");
 });
 
-for (const url of ["/", "/showroom/", "/transformer/", "/concept/", "/planche/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
+for (const url of ["/", "/boutique/", "/showroom/", "/transformer/", "/concept/", "/planche/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
   test(`accessibilité (axe, WCAG 2.2 AA) : ${url}`, async ({ page }) => {
     test.setTimeout(90_000);
     await page.goto(url);
@@ -146,7 +148,7 @@ for (const url of ["/", "/showroom/", "/transformer/", "/concept/", "/planche/",
 test("aucun débordement horizontal sur mobile", async ({ page, isMobile }) => {
   test.skip(!isMobile, "mobile uniquement");
   test.setTimeout(90_000);
-  for (const url of ["/", "/showroom/", "/transformer/", "/concept/", "/planche/", "/visite-3d/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
+    for (const url of ["/", "/boutique/", "/showroom/", "/transformer/", "/concept/", "/planche/", "/visite-3d/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
     await page.goto(url);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), url).toBe(true);
   }
@@ -521,4 +523,19 @@ test("showroom : teinte sur mesure (matières sans limite)", async ({ page }) =>
   const dlg = page.getByRole("dialog");
   await expect(dlg).toContainText("Teinte sur mesure #6B3E7A");
   await expect(dlg).toContainText(/Réf\. PR-PEI-6B3E7A·03/);
+});
+
+test("boutique : familles, recherche, filtres et ajout à ma pièce", async ({ page }) => {
+  const errors = noJsErrors(page);
+  await page.goto("/boutique/");
+  await expect(page.getByText(/produits réels de \d+ enseignes/)).toBeVisible({ timeout: 20_000 });
+  await page.getByRole("textbox", { name: "Rechercher un produit" }).fill("table basse travertin");
+  await expect(page.getByText(/^\d[\d\s ]* produits?$/)).toBeVisible();
+  const first = page.getByRole("link", { name: /^Acheter chez / }).first();
+  await expect(first).toHaveAttribute("target", "_blank");
+  await page.getByRole("button", { name: "Ajouter à ma pièce" }).first().click();
+  await expect(page.getByRole("button", { name: "✓ Dans ma pièce" }).first()).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: /^Canapés/ }).click();
+  await expect(page.getByRole("button", { name: /^Canapés/ })).toHaveAttribute("aria-pressed", "true");
+  expect(errors).toEqual([]);
 });

@@ -74,6 +74,8 @@
   .font-serif { font-family: var(--f-serif); font-weight: 400; letter-spacing: 0; }
   .wrap { max-width: 1320px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
   .prose-w { max-width: 68ch; }
+  /* Pleine largeur depuis un conteneur centré (image d'ouverture). */
+  .bleed { width: 100vw; margin-left: calc(50% - 50vw); }
   .eyebrow { font-family: var(--f-ui); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
   .muted { color: var(--muted); }
   .mono { font-family: var(--f-mono); font-size: 12px; }

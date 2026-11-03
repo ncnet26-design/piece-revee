@@ -14,8 +14,9 @@ import { IconGrid, IconHeart, IconHouse, IconPhoto, IconSwatches, IconTheme, Ico
 const NAV = [
   { href: "/transformer/", label: "Transformer ma pièce" },
   { href: "/galerie/", label: "Inspirations" },
-  { href: "/studio/", label: "Studio 3D" },
+  { href: "/boutique/", label: "Boutique" },
   { href: "/showroom/", label: "Matières" },
+  { href: "/studio/", label: "Studio 3D" },
 ];
 const EXPLORE = ["/explorer/", "/matieres/", "/accords/", "/mobilier/", "/lieux/", "/plantes/", "/guides/", "/styles/"];
 
@@ -86,8 +87,8 @@ export function TabBar() {
   const items = [
     { href: "/transformer/", label: "Transformer", Icon: IconSwatches, active: path.startsWith("/transformer") },
     { href: "/galerie/", label: "Inspirations", Icon: IconPhoto, active: path.startsWith("/galerie") },
+    { href: "/boutique/", label: "Boutique", Icon: IconGrid, active: path.startsWith("/boutique") || path.startsWith("/showroom") || EXPLORE.some((p) => path.startsWith(p)) },
     { href: "/studio/", label: "Studio 3D", Icon: IconHouse, active: path.startsWith("/studio") || path.startsWith("/concept") || path.startsWith("/visite-3d") || path.startsWith("/planche") },
-    { href: "/showroom/", label: "Matières", Icon: IconGrid, active: path.startsWith("/showroom") || EXPLORE.some((p) => path.startsWith(p)) },
   ];
   return (
     <nav aria-label="Navigation mobile" className="fixed inset-x-0 bottom-0 z-25 border-t border-line bg-surface lg:hidden"
@@ -140,7 +141,7 @@ export function CookieBanner() {
 
 export function Footer() {
   const cols = [
-    { title: "Créer", links: [["Studio", "/studio/"], ["Inspirations", "/galerie/"], ["Matières", "/showroom/"], ["Planches", "/planche/"], ["Trouver mon style", "/quiz/"], ["Tarifs", "/tarifs/"]] },
+    { title: "Créer", links: [["Transformer ma pièce", "/transformer/"], ["Inspirations", "/galerie/"], ["Boutique", "/boutique/"], ["Matières", "/showroom/"], ["Studio 3D", "/studio/"], ["Trouver mon style", "/quiz/"], ["Tarifs", "/tarifs/"]] },
     { title: "Autres outils", links: [["Planches de matières", "/planche/"], ["Concept éditorial", "/concept/"], ["Maquette d'appartement 3D", "/visite-3d/"], ["Mon projet d'étude", "/projet/"], ["Ma maison", "/maison/"]] },
     { title: "Explorer", links: [["Tout explorer", "/explorer/"], ["Matériauthèque", "/matieres/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
     { title: "Informations", links: [["Mentions légales", "/legal/mentions-legales/"], ["CGU", "/legal/cgu/"], ["CGV", "/legal/cgv/"], ["Confidentialité", "/legal/confidentialite/"], ["Cookies", "/legal/cookies/"], ["Liens affiliés", "/legal/affiliation/"]] },

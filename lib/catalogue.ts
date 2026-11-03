@@ -41,8 +41,13 @@ const RULES: Array<[Famille, RegExp]> = [
   ["rangement", /\b(buffet|commode|etagere|bibliotheque|armoire|meuble tv|console|enfilade|vaisselier|caisson|chiffonnier|vitrine|desserte|dressers?|sideboards?|credenzas?|bookcases?|bookshelf|shelves|cabinets?|nightstands?|media console)\b/],
   ["deco", /\b(vase|coussin|housse de coussin|plaid|miroir|cadre|affiche|bougeoir|bougie|plante|cache pot|pot|jardiniere|corbeille|panier|plateau|sculpture|horloge|nappe|bol|carafe|photophore|statue|objet|pillows?|throws?|vases?|mirrors?|planters?|candles?|candleholders?|trays?|baskets?|bowls?)\b/],
 ];
+/** Accessoires et consommables : pas des pièces qu'on choisit pour composer une pièce. */
+const ACCESSOIRE = /\b(anneaux?|tringles?|embouts?|supports?|fixations?|crochets?|visserie|vis|chevilles?|kit|kits|recharges?|ampoules?|piles?|cables?|rallonge|housse de protection|pieds? de rechange|patins?|joints?|adaptateur|entretoise|equerres?|rail|rails|glissiere|charniere|serre cable|echantillon|nuancier|testeur|lot de \d+ (anneaux|crochets))\b/;
+export const estAccessoire = (name: string) => ACCESSOIRE.test(` ${norm(name)} `);
+
 export function famille(name: string): Famille | null {
   const t = ` ${norm(name)} `;
+  if (ACCESSOIRE.test(t)) return null;
   for (const [f, re] of RULES) if (re.test(t)) return f;
   return null;
 }
@@ -50,14 +55,25 @@ export function famille(name: string): Famille | null {
 const STOP = new Set(["de", "du", "des", "la", "le", "les", "en", "et", "a", "au", "aux", "avec", "pour", "un", "une", "cm", "x", "l", "d", "sur"]);
 export const tokens = (s: string) => norm(s).split(" ").filter((w) => w.length > 1 && !STOP.has(w));
 
-/** Classement par ressemblance de description (mots communs, mots rares valant plus), puis prix relevé. */
+/** Matières : un produit d'une autre matière n'est pas « ressemblant » (une table en acacia ne remplace pas une table en travertin). */
+const MATIERES: Record<string, string[]> = {
+  travertin: ["travertin", "travertine"], marbre: ["marbre", "marble"], pierre: ["pierre", "stone", "travertin", "marbre"], bois: ["bois", "wood", "chene", "noyer", "oak", "walnut", "teck", "acacia", "frene", "hetre"],
+  chene: ["chene", "oak"], noyer: ["noyer", "walnut"], boucle: ["boucle", "bouclette", "boucle"], velours: ["velours", "velvet"], lin: ["lin", "linen"],
+  laiton: ["laiton", "brass", "dore"], verre: ["verre", "glass"], ceramique: ["ceramique", "ceramic", "gres", "stoneware", "terre"], gres: ["gres", "stoneware", "ceramique"],
+  cuir: ["cuir", "leather"], rotin: ["rotin", "rattan", "cannage", "osier"], laine: ["laine", "wool"], metal: ["metal", "acier", "fer", "steel"], beton: ["beton", "concrete"],
+};
+/** Classement par ressemblance de description (mots communs, matière exigée si elle est demandée), puis prix relevé. */
 export function chercher(list: ProduitCatalogue[], query: string, n = 6): Array<ProduitCatalogue & { score: number }> {
   const q = [...new Set(tokens(query))];
   if (!q.length) return [];
+  const mats = q.filter((w) => w in MATIERES);
   return list.map((p) => {
     const t = new Set(tokens(`${p.n} ${p.b ?? ""}`));
-    const hits = q.filter((w) => t.has(w) || [...t].some((x) => x.length > 4 && (x.startsWith(w) || w.startsWith(x))));
-    return { ...p, score: Math.round((100 * hits.length) / q.length) };
+    const has = (w: string) => t.has(w) || [...t].some((x) => x.length > 4 && (x.startsWith(w) || w.startsWith(x)));
+    const hits = q.filter(has);
+    let score = Math.round((100 * hits.length) / q.length);
+    if (mats.length && !mats.some((m) => MATIERES[m]!.some(has))) score = Math.round(score * 0.4);
+    return { ...p, score };
   }).filter((p) => p.score >= 34).sort((a, b) => b.score - a.score || (a.p ?? 1e9) - (b.p ?? 1e9)).slice(0, n);
 }
 
@@ -65,4 +81,15 @@ export function chercher(list: ProduitCatalogue[], query: string, n = 6): Array<
 export function familleDe(type: string, label = ""): Famille | null {
   if (type in FAMILLES) return type as Famille;
   return famille(`${type} ${label}`);
+}
+
+/** Ordre « sélection » : familles et enseignes alternées, stable d'un jour à l'autre (pas de classement payé). */
+export function selection<T extends ProduitCatalogue & { f?: string }>(list: T[]): T[] {
+  const h = (s: string) => { let x = 2166136261; for (let i = 0; i < s.length; i++) x = Math.imul(x ^ s.charCodeAt(i), 16777619); return x >>> 0; };
+  const groups = new Map<string, T[]>();
+  for (const p of list) { const k = `${p.f ?? ""}|${p.m}`; (groups.get(k) ?? groups.set(k, []).get(k)!).push(p); }
+  const gs = [...groups.values()].map((g) => g.sort((a, b) => Number(b.p !== null) - Number(a.p !== null) || h(a.u) - h(b.u))).sort((a, b) => h(a[0]!.u) - h(b[0]!.u));
+  const out: T[] = [];
+  for (let i = 0; out.length < list.length; i++) for (const g of gs) if (g[i]) out.push(g[i]!);
+  return out;
 }

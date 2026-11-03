@@ -1,39 +1,64 @@
 import Link from "next/link";
 import bank from "@/content/data/inspiration-bank.json";
 import { BeforeAfter } from "@/components/BeforeAfter";
-import { productById } from "@/lib/products/schema";
+import { ShopTheLook } from "@/components/ShopTheLook";
 import { materialById } from "@/lib/materials/schema";
 import { meta } from "@/lib/seo";
 
-export const metadata = meta({ title: "Pièce Rêvée · Studio d'architecture intérieure", description: "Imaginez la pièce, choisissez de vraies matières, manipulez-la en 3D et trouvez où acheter chaque meuble.", path: "/" });
+export const metadata = meta({ title: "Pièce Rêvée · Studio d'architecture intérieure", description: "Photographiez votre pièce, ajoutez vos inspirations : votre pièce transformée, et chaque meuble, couleur ou matière cliquable pour l'acheter.", path: "/" });
 
 type Entry = { id: string; type: string; title: string; subtitle: string; image: { src: string } | null; palette: string[] };
 const STYLES = ["contemporain-sculptural", "japandi", "haussmannien-renove"].map((id) => (bank as Entry[]).find((e) => e.id === id)!);
 const MATIERES = ([["travertin", "travertin"], ["noyer-verni", "noyer"], ["boucle", "boucle"], ["enduit-chaux", "enduit"], ["laiton-brosse", "laiton"], ["velours-foret", "velours"]] as const)
   .map(([id, photo]) => ({ ...materialById(id)!, photo: `/editorial/ia/matiere-${photo}-640.webp` }));
-const ALTERNATIVES = ["drawer-oris-effet-travertin", "kave-drasi-ronde-90", "gubi-epic-coffee-table-round"].map((id) => productById(id)!);
-const TIER: Record<string, string> = { economique: "Économique", intermediaire: "Intermédiaire", premium: "Premium" };
+const PORTES: Array<[string, string, string, string]> = [
+  ["/transformer/", "Transformer ma pièce", "Votre photo, vos inspirations, votre pièce transformée.", "/editorial/ia/salon-velours-chene-640.webp"],
+  ["/galerie/", "Inspirations", "Douze styles, onze espaces, treize matières.", "/editorial/ia/japandi-essai-640.webp"],
+  ["/boutique/", "La boutique", "Des milliers de pièces réelles, relevées chaque nuit.", "/editorial/ia/luxe-discret-640.webp"],
+  ["/showroom/", "Matières", "Bois, pierres, enduits, tissus, dans toutes leurs nuances.", "/editorial/ia/matiere-travertin-640.webp"],
+];
 
 /** Accueil : une proposition claire, des images d'abord, chaque section mène à une action réelle. */
 export default function Home() {
   return (
     <>
-      {/* ——— Ouverture ——— */}
-      <section className="grid items-end gap-10 pb-16 pt-6 lg:grid-cols-[1fr_1.15fr] lg:gap-16 lg:pt-12">
-        <div className="lg:pb-6">
-          <p className="eyebrow">Studio d'architecture intérieure</p>
-          <h1 className="mt-5 text-[clamp(48px,7vw,104px)] leading-[.96]">L'intérieur, dessiné <em>avant d'être construit.</em></h1>
-          <p className="mt-7 max-w-[44ch] text-[17px] leading-relaxed text-muted">Photographiez votre pièce, ajoutez vos inspirations : nous la transformons dans cet esprit, et chaque meuble, couleur ou matière devient cliquable pour l'acheter.</p>
+      {/* ——— Ouverture : image plein cadre ——— */}
+      <section className="bleed relative -mt-7 overflow-hidden bg-[#141712] text-white">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/editorial/ia/art-deco-contemporain-2400.webp" alt="Salle à manger : murs laqués vert bouteille, table en marbre, chaises en velours rouille" className="absolute inset-0 size-full object-cover opacity-90" fetchPriority="high" />
+        <div aria-hidden className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,14,11,.82)_0%,rgba(12,14,11,.45)_45%,rgba(12,14,11,.05)_75%)]" />
+        <div className="wrap relative flex min-h-[min(86vh,880px)] flex-col justify-end pb-14 pt-32 sm:pb-20">
+          <p className="text-[11.5px] font-semibold uppercase tracking-[.22em] text-white/75">Studio d'architecture intérieure</p>
+          <h1 className="mt-5 max-w-[13ch] text-[clamp(52px,8vw,124px)] leading-[.92] text-white">L'intérieur, dessiné <em className="text-white/70">avant d'être construit.</em></h1>
+          <p className="mt-7 max-w-[46ch] text-[17px] leading-relaxed text-white/80">Photographiez votre pièce, ajoutez vos inspirations : nous la transformons dans cet esprit, et chaque meuble, couleur ou matière devient cliquable pour l'acheter.</p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="/transformer/" className="btn btn-primary btn-lg">Transformer ma pièce</Link>
-            <Link href="/galerie/" className="btn btn-lg btn-ghost">Trouver mon style</Link>
+            <Link href="/transformer/" className="btn btn-light btn-lg">Transformer ma pièce</Link>
+            <Link href="/boutique/" className="btn btn-lg border-white/40 bg-transparent text-white hover:border-white">Ouvrir la boutique</Link>
           </div>
+          <p className="mt-10 text-[11px] text-white/55">Image générée par IA</p>
         </div>
-        <figure className="relative m-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/inspirations/villas-15.webp" alt="Mur d'onyx et chaise longue dans la villa Tugendhat (Mies van der Rohe, 1930)" className="aspect-[4/5] w-full rounded-[10px] object-cover sm:aspect-[5/4] lg:aspect-[4/5]" fetchPriority="high" />
-          <figcaption className="mt-3 flex justify-between gap-4 text-[12px] text-muted"><span>Villa Tugendhat, Brno — Mies van der Rohe, 1930</span><span>Photo Mike Duchstein · CC BY-SA 4.0</span></figcaption>
-        </figure>
+      </section>
+
+      {/* ——— Quatre portes d'entrée ——— */}
+      <section aria-labelledby="h-portes" className="py-16 sm:py-20">
+        <h2 id="h-portes" className="sr-only">Par où commencer</h2>
+        <ul className="grid list-none gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4">
+          {PORTES.map(([href, t, d, img]) => (
+            <li key={href}>
+              <Link href={href} className="group block no-underline">
+                <span className="block overflow-hidden rounded-[6px] bg-soft">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={img} alt="" loading="lazy" className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
+                </span>
+                <span className="mt-4 flex items-baseline justify-between gap-3">
+                  <span className="font-display text-[26px] leading-tight text-ink">{t}</span>
+                  <span aria-hidden className="text-muted transition group-hover:translate-x-1 group-hover:text-ink">→</span>
+                </span>
+                <span className="mt-1 block text-[14px] text-muted">{d}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* ——— Trois gestes ——— */}
@@ -54,28 +79,13 @@ export default function Home() {
         </ol>
       </section>
 
-      {/* ——— Du rendu à l'achat ——— */}
-      <section aria-labelledby="h-achat" className="grid items-center gap-10 py-24 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
-        <figure className="relative m-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/editorial/ia/accueil-table.webp" alt="Table basse galet en travertin devant un canapé bouclé" loading="lazy" className="aspect-[3/2] w-full rounded-[10px] object-cover" />
-          <span aria-hidden className="absolute left-[44%] top-[56%] grid size-7 place-items-center rounded-full bg-white/95 shadow-[0_0_0_7px_rgba(255,255,255,.3)]"><span className="size-2.5 rounded-full bg-ink" /></span>
-          <figcaption className="mt-3 text-[12px] text-muted">Image générée par IA · table basse dessinée par Pièce Rêvée</figcaption>
-        </figure>
-        <div>
-          <p className="eyebrow">Du rendu à l'achat</p>
-          <h2 id="h-achat" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Un meuble dessiné, <em>trois façons de l'avoir.</em></h2>
-          <ul className="mt-8 list-none divide-y divide-line border-y border-line p-0">
-            {ALTERNATIVES.map((p) => (
-              <li key={p.id} className="flex items-baseline justify-between gap-4 py-4">
-                <span><span className="block text-[11px] font-semibold uppercase tracking-[.14em] text-muted">{TIER[p.tier]} · {p.brand}</span><span className="text-[15px]">{p.name}</span></span>
-                <span className="shrink-0 text-[15px] font-medium tabular-nums">{p.price?.text.replace(/ \(.*\)/, "")}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-3 text-[12px] text-muted">Prix relevés sur les sites des enseignes le 28 octobre 2026. Aucune marque ne paie pour être classée.</p>
-          <Link href="/studio/?etape=3d" className="btn btn-primary mt-8">Essayer dans la pièce 3D</Link>
+      {/* ——— Shop the look ——— */}
+      <section aria-labelledby="h-achat" className="py-24">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+          <div><p className="eyebrow">Du rendu à l'achat</p><h2 id="h-achat" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Touchez une pièce, <em>trouvez-la en vente.</em></h2></div>
+          <p className="max-w-[40ch] text-[14px] text-muted">Chaque élément de l'image renvoie à des produits réels de la boutique, avec leur prix relevé et le lien pour l'acheter.</p>
         </div>
+        <ShopTheLook />
       </section>
 
       {/* ——— Styles ——— */}

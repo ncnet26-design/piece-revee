@@ -44,3 +44,24 @@ describe("lecture des fiches produit", () => {
     expect(parseProduct(`<meta property="og:type" content="product"><meta property="og:title" content="Vase grès"><meta property="product:price:amount" content="24.90"><meta property="product:price:currency" content="EUR">`)).toMatchObject({ name: "Vase grès", price: 24.9, currency: "EUR" });
   });
 });
+
+describe("tri et accessoires", () => {
+  it("écarte les accessoires et alterne familles et enseignes", async () => {
+    const { famille, estAccessoire, selection } = await import("@/lib/catalogue");
+    expect(famille("10 anneaux clip pour barre à rideau Anafi")).toBeNull();
+    expect(estAccessoire("Tringle à rideau extensible")).toBe(true);
+    expect(estAccessoire("Rideau en lin lavé")).toBe(false);
+    const P = (n: string, m: string, f: string) => ({ n, b: null, m, u: `https://x/${n}`, p: 10, c: "EUR", a: null, d: "2026-11-01", f });
+    const s = selection([P("a", "A", "canape"), P("b", "A", "canape"), P("c", "B", "deco"), P("d", "B", "deco")]);
+    expect(new Set(s.slice(0, 2).map((x) => x.f))).toEqual(new Set(["canape", "deco"]));
+  });
+});
+
+describe("matière exigée", () => {
+  it("ne propose pas une table en acacia pour une table en travertin", async () => {
+    const { chercher } = await import("@/lib/catalogue");
+    const P = (n: string) => ({ n, b: null, m: "B", u: `https://x/${n}`, p: 100, c: "EUR", a: null, d: "2026-11-01" });
+    const r = chercher([P("Table basse ovale 100x60 cm en bois d'acacia"), P("Table basse ovale en travertin")], "table basse travertin ovale");
+    expect(r.map((x) => x.n)).toEqual(["Table basse ovale en travertin"]);
+  });
+});
