@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { chercher, familleDe, FAMILLES, type ProduitCatalogue } from "@/lib/catalogue";
 import { toggleExternal, useProject } from "@/lib/studio/project";
+import { ProduitImage } from "@/components/ProduitImage";
 
 const files = new Map<string, Promise<ProduitCatalogue[]>>();
 const load = (f: string) => {
@@ -33,7 +34,9 @@ export function Catalogue({ type, label, query, forObject }: { type: string; lab
       {res.list.length === 0 ? <p className="mt-2 text-[12.5px] text-muted">Rien d'assez ressemblant parmi les produits suivis.</p> : (
         <ul className="mt-3 grid list-none gap-2 p-0">
           {res.list.map((p) => (
-            <li key={p.u} className="rounded-[12px] border border-line bg-white p-3">
+            <li key={p.u} className="flex gap-3 rounded-[2px] border border-line bg-white p-3">
+              <ProduitImage src={p.i} alt="" merchant={p.m} className="w-20 shrink-0 self-start" />
+              <div className="min-w-0 flex-1">
               <p className="text-[10.5px] font-semibold uppercase tracking-[.1em] text-muted">{p.m}{p.b && p.b !== p.m ? ` · ${p.b}` : ""}</p>
               <p className="text-[13.5px] font-medium leading-snug">{p.n}</p>
               <p className="mt-0.5 text-[13px] font-semibold tabular-nums">{p.p !== null ? `${p.p.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} ${p.c === "EUR" || !p.c ? "€" : p.c}` : <span className="font-normal text-muted">Prix sur le site</span>}{p.a && AV[p.a] ? <span className="ml-2 font-normal text-muted">· {AV[p.a]}</span> : null}</p>
@@ -41,6 +44,7 @@ export function Catalogue({ type, label, query, forObject }: { type: string; lab
               <div className="mt-2 flex flex-wrap gap-1.5">
                 <a className="btn !min-h-0 !px-3 !py-1.5 text-[12px]" href={p.u} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.m}<span className="sr-only"> (nouvel onglet)</span></a>
                 <button type="button" className="btn !min-h-0 !px-3 !py-1.5 text-[12px]" aria-pressed={inList(p.u)} onClick={() => toggleExternal({ title: p.n, url: p.u, merchant: p.m, price: p.p, currency: p.c, checkedAt: p.d, source: "catalogue" }, forObject)}>{inList(p.u) ? "✓ Dans ma pièce" : "Ajouter à ma pièce"}</button>
+              </div>
               </div>
             </li>
           ))}

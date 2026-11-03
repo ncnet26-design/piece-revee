@@ -21,7 +21,7 @@ Une base de produits réels, à tous les prix, qu'on peut filtrer par budget, pi
 | `styles` | contemporain, wabi-sabi | déduits des matières et formes (`signatures-styles`) ; indiqués « déduit » |
 | `dimensions`, `matiere`, `couleur` | 120 × 60 × 32 cm, travertin, beige | flux ou page, si publiés |
 | `lien` | adresse de la fiche | page ou flux |
-| `image` | adresse fournie par le **flux d'affiliation** uniquement | flux |
+| `image` (`i`) | adresse de l'image publiée par l'enseigne (JSON-LD `image` ou `og:image`), **affichée depuis son site, jamais copiée ni stockée** ; ou image fournie par un flux d'affiliation | page ou flux |
 | `maj`, `zone` | 2026-11-03, FR / EU / US | robot |
 
 ## Sources
@@ -34,7 +34,7 @@ Une base de produits réels, à tous les prix, qu'on peut filtrer par budget, pi
 3. **Sélection vérifiée** à la main (`content/data/products.json`).
 
 ## Règles
-- On ne copie jamais les photos des enseignes depuis leurs pages : seulement les images fournies par les flux, dans le respect de leurs conditions.
+- On ne copie jamais les photos des enseignes : on affiche l'image qu'elles publient depuis leur propre serveur (lien direct, sans transmettre l'adresse de notre page), toujours accompagnée du lien vers la fiche. Une enseigne qui bloque cet affichage voit son image remplacée par un fond neutre. Les flux d'affiliation restent la source préférée quand ils existent.
 - Un prix est toujours affiché avec sa date de relevé. Sans prix relevé, on affiche « prix sur le site ».
 - Aucun classement payé. Le tri par défaut alterne les familles et les enseignes.
 - Les accessoires et consommables sont exclus (`estAccessoire`).

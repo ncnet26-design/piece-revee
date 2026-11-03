@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { searchOnline, type RechercheEnLigne, type Trouve } from "@/lib/ia-jobs";
 import { toggleExternal, useProject } from "@/lib/studio/project";
+import { ProduitImage } from "@/components/ProduitImage";
 
 const AV: Record<string, string> = { InStock: "En stock", OutOfStock: "Épuisé", PreOrder: "Précommande", BackOrder: "Sur commande", LimitedAvailability: "Stock limité", OnlineOnly: "En ligne uniquement" };
 const fmt = (p: Trouve) => (p.price === null ? null : `${p.price.toLocaleString("fr-FR", { minimumFractionDigits: p.price % 1 ? 2 : 0, maximumFractionDigits: 2 })} ${p.currency === "EUR" || !p.currency ? "€" : p.currency}`);
@@ -44,8 +45,9 @@ export function EnLigne({ query, label, forObject }: { query: string; label: str
       {list.length > 0 && (
         <ul className="mt-3 grid list-none gap-2 p-0">
           {list.map((p) => { const g = gamme(p, list), price = fmt(p); return (
-            <li key={p.url} className="rounded-[12px] border border-line bg-white p-3">
+            <li key={p.url} className="rounded-[2px] border border-line bg-white p-3">
               <div className="flex items-start justify-between gap-3">
+                {p.image ? <ProduitImage src={p.image} alt="" merchant={p.merchant} className="w-20 shrink-0" /> : null}
                 <div className="min-w-0">
                   <p className="text-[10.5px] font-semibold uppercase tracking-[.1em] text-muted">{p.merchant}{p.brand && !p.merchant.toLowerCase().includes(p.brand.toLowerCase()) ? ` · ${p.brand}` : ""}</p>
                   <p className="text-[13.5px] font-medium leading-snug">{p.title}</p>

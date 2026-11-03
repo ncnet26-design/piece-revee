@@ -16,6 +16,8 @@ export interface Trouve {
   title: string; url: string; merchant: string;
   price: number | null; currency: string | null; availability: string | null; brand: string | null;
   checkedAt: string | null; source: "page" | "recherche";
+  /** Image publiée par le vendeur (adresse seulement, affichée depuis son site). */
+  image: string | null;
 }
 export interface Recherche { produits: Trouve[]; suggestions: string | null; requetes: string[]; etapes?: Record<string, unknown> }
 
@@ -98,6 +100,7 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
       title, url: p.url, merchant: p.merchant || host(p.url),
       price: d?.price ?? null, currency: d?.price ? d.currency ?? "EUR" : null, availability: d?.availability ?? null, brand: d?.brand ?? null,
       checkedAt: d ? now : null, source: d ? "page" : "recherche",
+      image: (() => { try { const x = d?.image ? new URL(d.image, p.url) : null; return x && x.protocol === "https:" ? x.href : null; } catch { return null; } })(),
     };
   }))).filter((x): x is Trouve => x !== null && x.title.length > 2);
   // Pages produits vérifiées d'abord, puis du moins cher au plus cher.

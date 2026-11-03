@@ -206,7 +206,9 @@ describe("recherche de produits sur internet", () => {
   it("lit les données produit publiées par le vendeur (schema.org)", async () => {
     const { parseProduct } = await import("@/workers/ia/src/recherche");
     const html = `<html><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList"},{"@type":"Product","name":"Vase en grès beige","brand":{"@type":"Brand","name":"Atelier"},"offers":{"@type":"Offer","price":"39,90","priceCurrency":"EUR","availability":"https://schema.org/InStock"}}]}</script></html>`;
-    expect(parseProduct(html)).toEqual({ name: "Vase en grès beige", brand: "Atelier", price: 39.9, currency: "EUR", availability: "InStock" });
+    expect(parseProduct(html)).toEqual({ name: "Vase en grès beige", brand: "Atelier", price: 39.9, currency: "EUR", availability: "InStock", image: null });
+    expect(parseProduct(`<meta property="og:image" content="https://cdn.b.fr/v.jpg"><script type="application/ld+json">{"@type":"Product","name":"Vase","image":["/img/v1.jpg"],"offers":{"price":10}}</script>`)?.image).toBe("/img/v1.jpg");
+    expect(parseProduct(`<meta property="og:image" content="https://cdn.b.fr/v.jpg"><script type="application/ld+json">{"@type":"Product","name":"Vase","offers":{"price":10}}</script>`)?.image).toBe("https://cdn.b.fr/v.jpg");
     expect(parseProduct("<html>pas de produit</html>")).toBeNull();
   });
 

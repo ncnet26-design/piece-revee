@@ -16,6 +16,7 @@ export interface ProduitCatalogue {
   /** nom */ n: string; /** marque */ b: string | null; /** vendeur */ m: string; /** adresse */ u: string;
   /** prix */ p: number | null; /** devise */ c: string | null; /** disponibilité */ a: string | null; /** relevé le (AAAA-MM-JJ) */ d: string;
   /** zone de vente : France, Europe ou États-Unis */ z?: "FR" | "EU" | "US";
+  /** adresse de l'image publiée par l'enseigne (affichée depuis son site, jamais copiée) */ i?: string | null;
 }
 export interface IndexCatalogue { updatedAt: string; total: number; familles: Partial<Record<Famille, number>>; vendeurs: Record<string, number> }
 

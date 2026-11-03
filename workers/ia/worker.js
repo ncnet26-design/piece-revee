@@ -509,7 +509,18 @@ function parseProduct(html) {
   const price = raw !== void 0 && Number.isFinite(Number(String(raw).replace(",", "."))) ? Number(String(raw).replace(",", ".")) : null;
   const brand = typeof p.brand === "string" ? p.brand : clean(p.brand?.name, 60) || null;
   const av = clean(offers?.availability, 80).replace(/^https?:\/\/schema\.org\//, "") || null;
-  return { name: clean(p.name, 160), brand, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av };
+  const pickImg = (v) => {
+    if (typeof v === "string") return v;
+    if (Array.isArray(v)) return pickImg(v[0]);
+    if (v && typeof v === "object") {
+      const o = v;
+      return pickImg(o.contentUrl ?? o.url);
+    }
+    return null;
+  };
+  const og = /<meta[^>]+(?:property|name)=["']og:image(?::secure_url)?["'][^>]+content=["']([^"']+)["']/i.exec(html)?.[1] ?? /<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']og:image["']/i.exec(html)?.[1] ?? null;
+  const image = (pickImg(p.image ?? variant?.image) ?? og)?.replace(/&amp;/g, "&").trim() || null;
+  return { name: clean(p.name, 160), brand, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av, image: image && image.length < 1e3 ? image : null };
 }
 function metaProduct(html) {
   const meta = (prop) => new RegExp(`<meta[^>]+(?:property|name)=["']${prop}["'][^>]+content=["']([^"']+)["']`, "i").exec(html)?.[1] ?? new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']${prop}["']`, "i").exec(html)?.[1];
@@ -620,7 +631,15 @@ async function rechercher(env, q, label, pays = "FR") {
       availability: d?.availability ?? null,
       brand: d?.brand ?? null,
       checkedAt: d ? now : null,
-      source: d ? "page" : "recherche"
+      source: d ? "page" : "recherche",
+      image: (() => {
+        try {
+          const x = d?.image ? new URL(d.image, p.url) : null;
+          return x && x.protocol === "https:" ? x.href : null;
+        } catch {
+          return null;
+        }
+      })()
     };
   }))).filter((x) => x !== null && x.title.length > 2);
   produits.sort((a, b) => a.source === b.source ? (a.price ?? 1e9) - (b.price ?? 1e9) : a.source === "page" ? -1 : 1);

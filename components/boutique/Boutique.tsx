@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { chercher, estAccessoire, FAMILLES, norm, selection, type Famille, type IndexCatalogue, type ProduitCatalogue } from "@/lib/catalogue";
 import { toggleExternal, useProject } from "@/lib/studio/project";
+import { ProduitImage } from "@/components/ProduitImage";
 
 /** Image d'ambiance de chaque famille (images éditoriales du site, générées par IA et étiquetées). */
 export const COUVERTURES: Partial<Record<Famille, string>> = {
@@ -65,11 +66,11 @@ export function Boutique() {
     if (q.trim().length > 1) l = chercher(l, q, 5000) as P[];
     if (tri === "prix-asc") l = [...l].sort((a, b) => (a.p ?? 1e9) - (b.p ?? 1e9));
     if (tri === "prix-desc") l = [...l].sort((a, b) => (b.p ?? -1) - (a.p ?? -1));
-    if (tri === "pertinence" && !q.trim()) l = selection(l);
+    if (tri === "pertinence" && !q.trim()) l = selection(l).sort((a, b) => Number(Boolean(b.i)) - Number(Boolean(a.i)));
     return l;
   }, [items, zone, vendeur, max, stock, q, tri]);
 
-  if (index === null) return <p className="mt-10 text-muted">Chargement du catalogue…</p>;
+  if (index === null) return <div className="mt-10 min-h-[80vh]" aria-busy="true"><p className="text-muted">Chargement du catalogue…</p></div>;
   const total = index.total;
 
   return (
@@ -100,15 +101,18 @@ export function Boutique() {
       </div>
 
       {items !== null && list.length === 0 && <p className="mt-16 text-center text-muted">Aucun produit ne correspond. Essayez une autre recherche ou retirez un filtre.</p>}
-      <ul className="mt-6 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <ul className="mt-8 grid min-h-[60vh] list-none grid-cols-2 gap-x-4 gap-y-10 p-0 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {list.slice(0, n).map((p) => (
-          <li key={p.u} className="flex flex-col rounded-[14px] border border-line bg-surface p-4 transition hover:border-ink/40">
-            <div className="flex items-start justify-between gap-2">
+          <li key={p.u} className="group flex flex-col">
+            <a href={p.u} target="_blank" rel="noopener noreferrer nofollow" className="block no-underline" tabIndex={-1} aria-hidden>
+              <ProduitImage src={p.i} alt="" merchant={p.m} />
+            </a>
+            <div className="mt-3 flex items-start justify-between gap-2">
               <p className="text-[10.5px] font-semibold uppercase tracking-[.12em] text-muted">{p.m}{p.b && norm(p.b) !== norm(p.m) ? ` · ${p.b}` : ""}</p>
               {(p.z ?? "FR") !== "FR" && <span className="rounded-full bg-soft px-2 py-0.5 text-[10.5px] text-muted">{ZONES[p.z ?? "FR"]}</span>}
             </div>
-            <p className="mt-1.5 font-display text-[21px] leading-[1.15]">{p.n}</p>
-            <p className="mt-auto pt-3 text-[15px] font-semibold tabular-nums">{prix(p) ?? <span className="text-[13px] font-normal text-muted">Prix sur le site</span>}{p.a && AV[p.a] ? <span className="ml-2 text-[12px] font-normal text-muted">{AV[p.a]}</span> : null}</p>
+            <p className="mt-1 line-clamp-2 text-[14.5px] leading-snug">{p.n}</p>
+            <p className="mt-1.5 text-[15px] font-semibold tabular-nums">{prix(p) ?? <span className="text-[13px] font-normal text-muted">Prix sur le site</span>}{p.a && AV[p.a] ? <span className="ml-2 text-[12px] font-normal text-muted">{AV[p.a]}</span> : null}</p>
             <p className="text-[10.5px] text-muted">{FAMILLES[p.f]} · relevé le {new Date(p.d).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}</p>
             <div className="mt-3 flex flex-wrap gap-1.5">
               <a className="btn btn-primary !min-h-0 !px-3 !py-1.5 text-[12px]" href={p.u} target="_blank" rel="noopener noreferrer nofollow">Acheter chez {p.m}<span className="sr-only"> : {p.n} (nouvel onglet)</span></a>

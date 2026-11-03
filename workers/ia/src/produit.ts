@@ -5,7 +5,7 @@
 const clean = (s: unknown, n: number) => (typeof s === "string" ? s.replace(/\s+/g, " ").trim().slice(0, n) : "");
 
 /** Données produit publiées par le vendeur (JSON-LD schema.org), si la page en contient. */
-export interface ProduitPage { name: string; brand: string | null; price: number | null; currency: string | null; availability: string | null }
+export interface ProduitPage { name: string; brand: string | null; price: number | null; currency: string | null; availability: string | null; image: string | null }
 export function parseProduct(html: string): ProduitPage | null {
   const blocks = [...html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].map((m) => m[1]!);
   const all: Array<Record<string, unknown>> = [];
@@ -26,7 +26,16 @@ export function parseProduct(html: string): ProduitPage | null {
   const price = raw !== undefined && Number.isFinite(Number(String(raw).replace(",", "."))) ? Number(String(raw).replace(",", ".")) : null;
   const brand = typeof p.brand === "string" ? p.brand : clean((p.brand as Record<string, unknown> | undefined)?.name, 60) || null;
   const av = clean(offers?.availability, 80).replace(/^https?:\/\/schema\.org\//, "") || null;
-  return { name: clean(p.name, 160), brand, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av };
+  // Image publiée par le vendeur (JSON-LD image, sinon og:image) : adresse seulement, l'image n'est jamais copiée.
+  const pickImg = (v: unknown): string | null => {
+    if (typeof v === "string") return v;
+    if (Array.isArray(v)) return pickImg(v[0]);
+    if (v && typeof v === "object") { const o = v as Record<string, unknown>; return pickImg(o.contentUrl ?? o.url); }
+    return null;
+  };
+  const og = /<meta[^>]+(?:property|name)=["']og:image(?::secure_url)?["'][^>]+content=["']([^"']+)["']/i.exec(html)?.[1] ?? /<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']og:image["']/i.exec(html)?.[1] ?? null;
+  const image = (pickImg(p.image ?? variant?.image) ?? og)?.replace(/&amp;/g, "&").trim() || null;
+  return { name: clean(p.name, 160), brand, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av, image: image && image.length < 1000 ? image : null };
 }
 
 

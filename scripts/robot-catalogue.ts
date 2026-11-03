@@ -71,6 +71,29 @@ const ENSEIGNES: Array<{ id: string; nom: string; site: string; produit?: RegExp
   { id: "burrow", nom: "Burrow", site: "https://burrow.com", zone: "US" },
   { id: "rejuvenation", nom: "Rejuvenation", site: "https://www.rejuvenation.com", zone: "US" },
   { id: "dwr", nom: "Design Within Reach", site: "https://www.dwr.com", zone: "US" },
+  // France et Europe (suite) : enseignes de maison très fréquentées.
+  { id: "jysk", nom: "JYSK", site: "https://jysk.fr" },
+  { id: "sostrenegrene", nom: "Søstrene Grene", site: "https://sostrenegrene.com", produit: /\/fr-fr\//, zone: "EU" },
+  { id: "hema", nom: "HEMA", site: "https://www.hema.com", produit: /\/fr-fr\//, zone: "EU" },
+  { id: "flamant", nom: "Flamant", site: "https://www.flamant.com", zone: "EU" },
+  { id: "comptoirdefamille", nom: "Comptoir de Famille", site: "https://www.comptoir-de-famille.com" },
+  { id: "sarahlavoine", nom: "Maison Sarah Lavoine", site: "https://www.maisonsarahlavoine.com" },
+  { id: "fleux", nom: "Fleux", site: "https://www.fleux.com" },
+  { id: "caravane", nom: "Caravane", site: "https://www.caravane.fr" },
+  { id: "tediber", nom: "Tediber", site: "https://www.tediber.com" },
+  { id: "lapeyre", nom: "Lapeyre", site: "https://www.lapeyre.fr" },
+  { id: "bricodepot", nom: "Brico Dépôt", site: "https://www.bricodepot.fr" },
+  { id: "cdiscount", nom: "Cdiscount", site: "https://www.cdiscount.com" },
+  { id: "pomax", nom: "Pomax", site: "https://www.pomax.com", zone: "EU" },
+  { id: "bloomingville", nom: "Bloomingville", site: "https://www.bloomingville.com", zone: "EU" },
+  { id: "vitra", nom: "Vitra", site: "https://www.vitra.com", produit: /\/fr-fr\//, zone: "EU" },
+  { id: "gubi", nom: "GUBI", site: "https://gubi.com", zone: "EU" },
+  { id: "normann", nom: "Normann Copenhagen", site: "https://www.normann-copenhagen.com", zone: "EU" },
+  { id: "audo", nom: "Audo Copenhagen", site: "https://audocph.com", zone: "EU" },
+  { id: "andtradition", nom: "&Tradition", site: "https://www.andtradition.com", zone: "EU" },
+  { id: "kartell", nom: "Kartell", site: "https://www.kartell.com", zone: "EU" },
+  { id: "hkliving", nom: "HKliving", site: "https://hkliving.com", zone: "EU" },
+  { id: "madam-stoltz", nom: "Madam Stoltz", site: "https://madamstoltz.dk", zone: "EU" },
 ];
 /** Mots qui signalent un article de maison dans l'adresse d'une page (pour ne pas parcourir tout un catalogue généraliste). */
 const MAISON = /armchair|accent-chair|lounge|sectional|dining|coffee-table|side-table|nightstand|dresser|sideboard|credenza|bookcase|shelf|cabinet|pendant|sconce|chandelier|floor-lamp|lamp|rug|pillow|throw|mirror|planter|candle|bench|ottoman|headboard|bed-|curtain|drape|faucet|hardware|canape|sofa|fauteuil|chaise|tabouret|table|buffet|commode|etagere|bibliotheque|armoire|console|enfilade|[-/]lit[-/]|tete-de-lit|lampe|luminaire|suspension|applique|lampadaire|lustre|tapis|coussin|plaid|rideau|voilage|vase|miroir|cadre|bougeoir|jardiniere|cache-pot|pouf|banc|meuble|peinture|parquet|carrelage|robinet|mitigeur|vasque|poignee/i;
@@ -185,7 +208,8 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
     const d = r.status < 400 ? parseProduct(r.body) : null;
     const f = d ? famille(`${d.name} ${u}`) : null;
     if (d && f && d.name) {
-      catalogue.set(u, { n: d.name, b: d.brand, m: e.nom, u, p: d.price, c: d.price ? d.currency ?? (e.zone === "US" ? "USD" : "EUR") : null, a: d.availability, d: today, f, z: e.zone ?? "FR" });
+      const img = (() => { try { const x = d.image ? new URL(d.image, u) : null; return x && x.protocol === "https:" ? x.href : null; } catch { return null; } })();
+      catalogue.set(u, { n: d.name, b: d.brand, m: e.nom, u, p: d.price, c: d.price ? d.currency ?? (e.zone === "US" ? "USD" : "EUR") : null, a: d.availability, d: today, f, z: e.zone ?? "FR", i: img });
       gardes++;
     } else { if (r.status < 400) sansFiche++; if (catalogue.delete(u)) retires++; }
     await sleep(st.delai * 1000);
@@ -205,7 +229,7 @@ etat.maj = new Date().toISOString();
 writeFileSync(ETAT_F, `${JSON.stringify(etat)}\n`);
 const index: IndexCatalogue = { updatedAt: etat.maj, total: catalogue.size, familles: {}, vendeurs: {} };
 for (const f of Object.keys(FAMILLES) as Famille[]) {
-  const list = [...catalogue.values()].filter((p) => p.f === f).map((p) => ({ n: p.n, b: p.b, m: p.m, u: p.u, p: p.p, c: p.c, a: p.a, d: p.d, z: p.z ?? "FR" })).sort((a, b) => a.n.localeCompare(b.n));
+  const list = [...catalogue.values()].filter((p) => p.f === f).map((p) => ({ n: p.n, b: p.b, m: p.m, u: p.u, p: p.p, c: p.c, a: p.a, d: p.d, z: p.z ?? "FR", i: p.i ?? null })).sort((a, b) => a.n.localeCompare(b.n));
   writeFileSync(`${CAT_DIR}/${f}.json`, JSON.stringify(list));
   if (list.length) index.familles[f] = list.length;
 }
