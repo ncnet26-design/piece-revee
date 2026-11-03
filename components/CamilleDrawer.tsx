@@ -100,7 +100,7 @@ export default function CamilleDrawer({ open, onClose, request }: { open: boolea
           <label htmlFor="camille-input" className="sr-only">Votre message</label>
           <textarea id="camille-input" ref={inputRef} rows={1} value={draft} onChange={(e) => setDraft(e.target.value)} maxLength={4000}
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void send(draft); } }}
-            placeholder="Une question sur votre intérieur ou votre jardin…" className="input max-h-36 min-h-11 rounded-[22px]" />
+            placeholder="Une question sur votre intérieur ou votre jardin…" className="input max-h-36 min-h-11 rounded-[2px]" />
           <button type="submit" className="btn btn-primary h-11 w-11 flex-none rounded-full p-0" aria-label="Envoyer" disabled={busy || !draft.trim()}><IconSend width={18} height={18} /></button>
         </form>
       </aside>

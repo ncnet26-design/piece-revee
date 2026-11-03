@@ -4,6 +4,7 @@ import { BeforeAfter } from "@/components/BeforeAfter";
 import { ShopTheLook } from "@/components/ShopTheLook";
 import { materialById } from "@/lib/materials/schema";
 import { meta } from "@/lib/seo";
+import { Photo } from "@/components/Photo";
 
 export const metadata = meta({ title: "Pièce Rêvée · Studio d'architecture intérieure", description: "Photographiez votre pièce, ajoutez vos inspirations : votre pièce transformée, et chaque meuble, couleur ou matière cliquable pour l'acheter.", path: "/" });
 
@@ -24,8 +25,7 @@ export default function Home() {
     <>
       {/* ——— Ouverture : image plein cadre ——— */}
       <section className="bleed relative -mt-7 overflow-hidden bg-[#141712] text-white">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/editorial/ia/art-deco-contemporain-2400.webp" alt="Salle à manger : murs laqués vert bouteille, table en marbre, chaises en velours rouille" className="absolute inset-0 size-full object-cover opacity-90" fetchPriority="high" />
+        <Photo src="/editorial/ia/art-deco-contemporain.webp" priority alt="Salle à manger : murs laqués vert bouteille, table en marbre, chaises en velours rouille" className="absolute inset-0 size-full object-cover opacity-90" />
         <div aria-hidden className="absolute inset-0 bg-[linear-gradient(0deg,rgba(12,14,11,.9)_0%,rgba(12,14,11,.62)_55%,rgba(12,14,11,.3)_100%)] sm:bg-[linear-gradient(90deg,rgba(12,14,11,.82)_0%,rgba(12,14,11,.45)_45%,rgba(12,14,11,.05)_75%)]" />
         <div className="wrap relative flex min-h-[min(86vh,880px)] flex-col justify-end pb-14 pt-32 sm:pb-20">
           <p className="text-[11.5px] font-semibold uppercase tracking-[.22em] text-white/75">Studio d'architecture intérieure</p>
@@ -46,9 +46,8 @@ export default function Home() {
           {PORTES.map(([href, t, d, img]) => (
             <li key={href}>
               <Link href={href} className="group block no-underline">
-                <span className="block overflow-hidden rounded-[6px] bg-soft">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={img} alt="" loading="lazy" className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
+                <span className="block overflow-hidden bg-soft">
+                  <Photo src={img} alt="" sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
                 </span>
                 <span className="mt-4 flex items-baseline justify-between gap-3">
                   <span className="font-display text-[26px] leading-tight text-ink">{t}</span>
@@ -98,8 +97,7 @@ export default function Home() {
           {STYLES.map((s) => (
             <li key={s.id}>
               <Link href="/galerie/" className="group block no-underline">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.image!.src} alt={`Planche de matières : ${s.title}`} loading="lazy" className="aspect-[4/3] w-full rounded-[10px] object-cover transition duration-700 group-hover:scale-[1.015]" />
+                <span className="block overflow-hidden"><Photo src={s.image!.src} alt={`${s.title} : pièce type du style`} sizes="(min-width:768px) 33vw, 100vw" className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-[1.015]" /></span>
                 <p className="mt-4 text-[11px] font-semibold uppercase tracking-[.16em] text-muted">{s.subtitle}</p>
                 <h3 className="mt-1 font-display text-[28px] font-normal">{s.title}</h3>
               </Link>
@@ -117,11 +115,9 @@ export default function Home() {
           <Link href="/studio/?etape=3d" className="btn mt-8">Ouvrir la scène 3D</Link>
         </div>
         <div>
-          {/* eslint-disable @next/next/no-img-element */}
           <BeforeAfter ratio="16 / 9" labelBefore="Bouclé et noyer" labelAfter="Velours et chêne fumé"
-            before={<img src="/editorial/ia/salon-boucle-noyer.webp" alt="Salon : canapé bouclé crème, buffet cannelé en noyer" loading="lazy" />}
-            after={<img src="/editorial/ia/salon-velours-chene.webp" alt="Même salon : canapé en velours vert, buffet en chêne fumé" loading="lazy" />} />
-          {/* eslint-enable @next/next/no-img-element */}
+            before={<Photo src="/editorial/ia/salon-boucle-noyer.webp" sizes="(min-width:1024px) 60vw, 100vw" alt="Salon : canapé bouclé crème, buffet cannelé en noyer" />}
+            after={<Photo src="/editorial/ia/salon-velours-chene.webp" sizes="(min-width:1024px) 60vw, 100vw" alt="Même salon : canapé en velours vert, buffet en chêne fumé" />} />
           <p className="mt-3 text-[12px] text-muted">Images générées par IA : même pièce, seules deux matières changent.</p>
         </div>
       </section>
@@ -135,8 +131,7 @@ export default function Home() {
         <ul className="mt-12 grid list-none grid-cols-2 gap-x-5 gap-y-8 p-0 sm:grid-cols-3 lg:grid-cols-6">
           {MATIERES.map((m) => (
             <li key={m.id}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={m.photo} alt={m.name} loading="lazy" className="aspect-square w-full rounded-[8px] object-cover" />
+              <Photo src={m.photo} alt={m.name} sizes="(min-width:1024px) 16vw, (min-width:640px) 33vw, 50vw" className="aspect-square w-full object-cover" />
               <p className="mt-3 text-[14px] font-medium">{m.name}</p>
               <p className="text-[12.5px] text-muted">{m.finish}</p>
             </li>
@@ -152,8 +147,7 @@ export default function Home() {
         <div className="mt-12 grid gap-6 md:grid-cols-[1.4fr_1fr]">
           {([["villas-14", "Le séjour vitré"], ["villas-16", "La bibliothèque"]] as const).map(([id, t]) => (
             <figure key={id} className="m-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/inspirations/${id}.webp`} alt={`Villa Tugendhat : ${t.toLowerCase()}`} loading="lazy" className="aspect-[4/3] w-full rounded-[10px] object-cover" />
+              <Photo src={`/inspirations/${id}.webp`} alt={`Villa Tugendhat : ${t.toLowerCase()}`} sizes="(min-width:768px) 55vw, 100vw" className="aspect-[4/3] w-full object-cover" />
               <figcaption className="mt-3 flex justify-between gap-4 text-[12px] text-muted"><span>Villa Tugendhat — {t}</span><span>Mike Duchstein · CC BY-SA 4.0</span></figcaption>
             </figure>
           ))}

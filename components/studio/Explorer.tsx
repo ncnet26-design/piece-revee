@@ -87,7 +87,7 @@ export function Explorer({ image, intent, onObjects, onNewVersion, inList, onAdd
 
   return (
     <div className="relative">
-      <div ref={box} onClick={onImageClick} className={`relative overflow-hidden rounded-[14px] bg-[#E9E6E0] ${markMode ? "cursor-crosshair" : ""}`} style={{ aspectRatio: `${image.width} / ${image.height}` }}>
+      <div ref={box} onClick={onImageClick} className={`relative overflow-hidden rounded-[2px] bg-[#E9E6E0] ${markMode ? "cursor-crosshair" : ""}`} style={{ aspectRatio: `${image.width} / ${image.height}` }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={image.src} alt={image.title} className="absolute inset-0 size-full object-cover" crossOrigin="anonymous" />
         {image.objects.map((o, i) => {
@@ -103,7 +103,7 @@ export function Explorer({ image, intent, onObjects, onNewVersion, inList, onAdd
           );
         })}
         {marking && (
-          <div className="absolute z-10 w-[min(300px,90%)] -translate-x-1/2 rounded-2xl bg-white p-3 text-[12px] shadow-xl" style={{ left: `${Math.min(75, Math.max(25, marking.x))}%`, top: `${Math.min(55, marking.y)}%` }} onClick={(e) => e.stopPropagation()}>
+          <div className="absolute z-10 w-[min(300px,90%)] -translate-x-1/2 rounded-[2px] bg-white p-3 text-[12px] shadow-xl" style={{ left: `${Math.min(75, Math.max(25, marking.x))}%`, top: `${Math.min(55, marking.y)}%` }} onClick={(e) => e.stopPropagation()}>
             {!marking.type ? (<>
               <p className="mb-2 font-medium">Quel meuble avez-vous touché ?</p>
               <div className="flex flex-wrap gap-1.5">{MARKABLE.map((c) => <button key={c} type="button" className="rounded-full border border-line px-2.5 py-1 hover:border-ink/40" onClick={() => setMarking({ ...marking, type: c })}>{CATEGORY_ONE[c]}</button>)}</div>
@@ -128,7 +128,7 @@ export function Explorer({ image, intent, onObjects, onNewVersion, inList, onAdd
         <button type="button" className="btn !min-h-0 !px-3 !py-1.5 text-[12px]" onClick={() => void autoDetect()} disabled={Boolean(busy)}>Identifier automatiquement</button>
       </div>
       {busy && <p role="status" className="studio-progress mt-2 text-[12.5px]">{busy}</p>}
-      {error && <p role="alert" className="mt-2 rounded-xl bg-[#FBEDE6] px-3 py-2 text-[12.5px] text-[#8A3B17]">{error}</p>}
+      {error && <p role="alert" className="mt-2 rounded-[2px] bg-[#FBEDE6] px-3 py-2 text-[12.5px] text-[#8A3B17]">{error}</p>}
 
       <Panel open={Boolean(active)} kicker={active?.design_source === "ai_generated" ? "Création originale · IA" : active?.design_source === "studio_designed" ? "Création originale · Pièce Rêvée" : active?.design_source === "ai_detected" ? "Repéré par l'analyse" : "Repéré par vous"} title={active?.label ?? ""} onClose={() => setSel(null)}>
         {active && features && (<>
@@ -140,7 +140,7 @@ export function Explorer({ image, intent, onObjects, onNewVersion, inList, onAdd
             {active.estimated_dimensions_cm && <><dt className="text-muted">Dimensions</dt><dd>≈ {active.estimated_dimensions_cm.width} × {active.estimated_dimensions_cm.depth} × {active.estimated_dimensions_cm.height} cm <span className="text-muted">(estimées)</span></dd></>}
           </dl>
           {active.description && <p className="mt-3 text-[13px] leading-relaxed text-[#4A4A50]">{active.description}</p>}
-          {intent && target?.id === active.id && intent.summary.length > 0 && <p className="mt-3 rounded-xl bg-[#EEF0EA] px-3 py-2 text-[12px]">Votre demande : {intent.summary.join(" · ")}</p>}
+          {intent && target?.id === active.id && intent.summary.length > 0 && <p className="mt-3 rounded-[2px] bg-[#EEF0EA] px-3 py-2 text-[12px]">Votre demande : {intent.summary.join(" · ")}</p>}
           <Comparator key={`${active.id}|${JSON.stringify(preset)}`} features={features} objectName={CATEGORY_ONE[active.type]} preset={preset} inList={inList} onAdd={(p) => onAdd(p, active.id)} onReplace={(p) => void tryInRoom(p)} />
         </>)}
       </Panel>

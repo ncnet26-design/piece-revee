@@ -286,7 +286,7 @@ export default function Visite3D() {
 
       {/* Panneau contextuel */}
       {sheetOpen && state && (
-        <aside aria-label="Réglages" className="absolute inset-x-0 bottom-0 max-h-[62%] overflow-y-auto rounded-t-[20px] border-t border-line bg-surface p-4 shadow-2xl sm:inset-x-auto sm:bottom-3 sm:right-3 sm:top-3 sm:max-h-none sm:w-[360px] sm:rounded-[18px] sm:border">
+        <aside aria-label="Réglages" className="absolute inset-x-0 bottom-0 max-h-[62%] overflow-y-auto rounded-t-[20px] border-t border-line bg-surface p-4 shadow-2xl sm:inset-x-auto sm:bottom-3 sm:right-3 sm:top-3 sm:max-h-none sm:w-[360px] sm:rounded-[2px] sm:border">
           <button type="button" className="btn btn-sm btn-ghost absolute right-2 top-2" aria-label="Fermer le panneau" onClick={close}><IconClose width={16} height={16} /></button>
           {selItem && <ItemEditor it={selItem} size={itemDims(selItem)} roomName={roomAt(selItem.x, selItem.z)?.name ?? ""}
             onPatch={(p) => patchItem(selItem.id, p)} onRemove={() => removeItem(selItem.id)} onDuplicate={() => duplicate(selItem)} />}
@@ -305,11 +305,11 @@ export default function Visite3D() {
             <div>
               <h2 className="pr-8 text-lg">Astuces : {currentRoom.name.toLowerCase()}</h2>
               <ul className="mt-3 flex flex-col gap-3">
-                {ROOM_TIPS[currentRoom.kind].map((t) => <li key={t.title} className="rounded-xl bg-soft p-3"><b className="text-[14px]">{t.title}</b><p className="mt-1 text-[13.5px] text-muted">{t.text}{t.link && <> <Link href={t.link.href}>{t.link.label}</Link></>}</p></li>)}
+                {ROOM_TIPS[currentRoom.kind].map((t) => <li key={t.title} className="rounded-[2px] bg-soft p-3"><b className="text-[14px]">{t.title}</b><p className="mt-1 text-[13.5px] text-muted">{t.text}{t.link && <> <Link href={t.link.href}>{t.link.label}</Link></>}</p></li>)}
               </ul>
               <h3 className="mt-5 text-[15px] font-semibold">Vos astuces</h3>
               {state.notes.length === 0 ? <p className="mt-1 text-[13.5px] text-muted">Aucune pour l'instant. Partagez la vôtre : un rangement malin, une couleur qui marche, une erreur à éviter.</p> : (
-                <ul className="mt-2 flex flex-col gap-2">{state.notes.map((n) => <li key={n.id}><button type="button" className="w-full cursor-pointer rounded-xl border border-line bg-surface p-2.5 text-left text-[13.5px]" onClick={() => { go(n.roomId); engine.current?.select({ kind: "note", id: n.id }); }}><span className="text-muted">{roomOf(n.roomId)?.name} · </span>{n.text}</button></li>)}</ul>
+                <ul className="mt-2 flex flex-col gap-2">{state.notes.map((n) => <li key={n.id}><button type="button" className="w-full cursor-pointer rounded-[2px] border border-line bg-surface p-2.5 text-left text-[13.5px]" onClick={() => { go(n.roomId); engine.current?.select({ kind: "note", id: n.id }); }}><span className="text-muted">{roomOf(n.roomId)?.name} · </span>{n.text}</button></li>)}</ul>
               )}
               <label htmlFor="astuce" className="mt-4 block text-[13.5px] font-semibold">Partager une astuce</label>
               <textarea id="astuce" className="input mt-1 min-h-20" maxLength={500} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Ex. : un rideau tringlé au ras du plafond agrandit la hauteur." />

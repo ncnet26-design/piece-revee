@@ -111,7 +111,7 @@ export default function StudioApp() {
       </nav>
 
       {(tab === "explorer" || tab === "3d") && (
-        <form onSubmit={ask} className="mt-4 flex items-center gap-2 rounded-2xl border border-line bg-white px-3 py-1.5 focus-within:border-ink/50" role="search">
+        <form onSubmit={ask} className="mt-4 flex items-center gap-2 rounded-[2px] border border-line bg-white px-3 py-1.5 focus-within:border-ink/50" role="search">
           <span aria-hidden className="text-muted">✦</span>
           <input value={cmd} onChange={(e) => setCmd(e.target.value)} className="min-w-0 flex-1 bg-transparent py-1.5 text-[14px] outline-none" placeholder="Ex. « Remplace la table basse par quelque chose de plus sculptural, pour moins de 400 € »" aria-label="Demander une modification ou une recherche" />
           {intent && <button type="button" className="text-[12px] text-muted underline" onClick={() => { setIntent(null); setCmd(""); }}>Effacer</button>}
@@ -131,7 +131,7 @@ export default function StudioApp() {
           {images.length > 1 && (
             <div className="mb-3 flex gap-2 overflow-x-auto pb-1" role="listbox" aria-label="Rendus du projet">
               {images.map((i) => (
-                <button key={i.id} type="button" role="option" aria-selected={i.id === image.id} onClick={() => setCurrent(i.id)} className={`h-14 w-20 shrink-0 overflow-hidden rounded-xl border-2 ${i.id === image.id ? "border-ink" : "border-transparent opacity-80 hover:opacity-100"}`}>
+                <button key={i.id} type="button" role="option" aria-selected={i.id === image.id} onClick={() => setCurrent(i.id)} className={`h-14 w-20 shrink-0 overflow-hidden rounded-[2px] border-2 ${i.id === image.id ? "border-ink" : "border-transparent opacity-80 hover:opacity-100"}`}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={i.src} alt={i.title} className="size-full object-cover" />
                 </button>
@@ -140,7 +140,7 @@ export default function StudioApp() {
           )}
           <Explorer key={image.id} image={image} intent={intent} onObjects={setObjects} onNewVersion={onNewVersion} inList={inList} onAdd={onAdd} />
         </>) : (
-          <div className="grid place-items-center gap-3 rounded-[14px] border border-dashed border-line bg-white/60 p-10 text-center">
+          <div className="grid place-items-center gap-3 rounded-[2px] border border-dashed border-line bg-white/60 p-10 text-center">
             <p className="text-[15px] font-medium">Aucun rendu à explorer pour l'instant</p>
             <p className="max-w-md text-[13px] text-muted">Créez une pièce dans « Créer », ou ajoutez une image d'intérieur (par exemple une création faite avec un autre outil d'IA) : vous pourrez y désigner chaque meuble et trouver des modèles ressemblants.</p>
             <button type="button" className="btn btn-primary" onClick={() => setTab("creer")}>Créer une pièce</button>

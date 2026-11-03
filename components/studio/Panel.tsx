@@ -16,7 +16,7 @@ export function Panel({ open, title, kicker, onClose, children }: { open: boolea
   }, [open, title, onClose]);
   return (
     <aside aria-label={title} hidden={!open}
-      className="studio-panel fixed inset-x-0 bottom-0 z-40 max-h-[64vh] overflow-y-auto rounded-t-[26px] border-t border-line bg-[#FBFAF8] px-5 pb-8 pt-3 shadow-[0_-24px_60px_-30px_rgba(0,0,0,.35)] lg:absolute lg:inset-y-3 lg:right-3 lg:left-auto lg:bottom-auto lg:max-h-none lg:w-[400px] lg:rounded-[14px] lg:border lg:pt-5">
+      className="studio-panel fixed inset-x-0 bottom-0 z-40 max-h-[64vh] overflow-y-auto rounded-t-[26px] border-t border-line bg-[#FBFAF8] px-5 pb-8 pt-3 shadow-[0_-24px_60px_-30px_rgba(0,0,0,.35)] lg:absolute lg:inset-y-3 lg:right-3 lg:left-auto lg:bottom-auto lg:max-h-none lg:w-[400px] lg:rounded-[2px] lg:border lg:pt-5">
       <div aria-hidden className="mx-auto mb-3 h-1 w-10 rounded-full bg-line lg:hidden" />
       <div className="flex items-start justify-between gap-3">
         <div>

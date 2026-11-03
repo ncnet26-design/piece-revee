@@ -123,15 +123,15 @@ export function Parcours() {
         ))}
       </ol>
 
-      {busy && <p role="status" className="studio-progress mt-6 rounded-[10px] bg-soft px-4 py-3 text-[14px]">{busy}{job && job.status === "en_cours" ? ` · ${job.provider}` : ""}</p>}
-      {error && <p role="alert" className="mt-6 rounded-[10px] bg-[#FBEDE6] px-4 py-3 text-[14px] text-[#8A3B17]">{error}</p>}
+      {busy && <p role="status" className="studio-progress mt-6 rounded-[2px] bg-soft px-4 py-3 text-[14px]">{busy}{job && job.status === "en_cours" ? ` · ${job.provider}` : ""}</p>}
+      {error && <p role="alert" className="mt-6 rounded-[2px] bg-[#FBEDE6] px-4 py-3 text-[14px] text-[#8A3B17]">{error}</p>}
 
       {etape === "photos" && (
         <div className="mt-8 grid gap-10 lg:grid-cols-2">
           <section aria-labelledby="h-piece">
             <h2 id="h-piece" className="text-[30px]">Ma pièce</h2>
             <p className="mt-2 text-[14px] text-muted">Une photo de la pièce telle qu'elle est aujourd'hui, prise de face, à hauteur d'yeux, bien éclairée.</p>
-            <label className="mt-4 flex aspect-[4/3] cursor-pointer items-center justify-center overflow-hidden rounded-[12px] border border-dashed border-line bg-surface text-center text-[14px] text-muted transition hover:border-ink">
+            <label className="mt-4 flex aspect-[4/3] cursor-pointer items-center justify-center overflow-hidden rounded-[2px] border border-dashed border-line bg-surface text-center text-[14px] text-muted transition hover:border-ink">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               {room ? <img src={room} alt="Ma pièce" className="size-full object-cover" /> : <span>Prendre ou choisir une photo<br /><span className="text-[12px]">JPG, PNG ou HEIC</span></span>}
               <input type="file" accept="image/*" capture="environment" className="sr-only" aria-label="Choisir la photo de ma pièce" onChange={(e) => void onRoom(e.target.files?.[0])} />
@@ -145,7 +145,7 @@ export function Parcours() {
             <p className="mt-2 text-[14px] text-muted">Jusqu'à {MAX_INSPI} images : Pinterest, Instagram, Google, un magazine… Choisissez des fichiers, glissez-les ici ou collez une capture (Ctrl + V).</p>
             <ul className="mt-4 grid list-none grid-cols-3 gap-2 p-0">
               {inspi.map((s, i) => (
-                <li key={i} className="relative aspect-square overflow-hidden rounded-[10px] bg-soft">
+                <li key={i} className="relative aspect-square overflow-hidden rounded-[2px] bg-soft">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={s} alt={`Inspiration ${i + 1}`} className="size-full object-cover" />
                   <button type="button" onClick={() => setInspi((c) => c.filter((_, j) => j !== i))} aria-label={`Retirer l'inspiration ${i + 1}`} className="absolute right-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-white/90 text-[15px]">×</button>
@@ -153,7 +153,7 @@ export function Parcours() {
               ))}
               {inspi.length < MAX_INSPI && (
                 <li>
-                  <label className="flex aspect-square cursor-pointer items-center justify-center rounded-[10px] border border-dashed border-line bg-surface text-center text-[13px] text-muted transition hover:border-ink">
+                  <label className="flex aspect-square cursor-pointer items-center justify-center rounded-[2px] border border-dashed border-line bg-surface text-center text-[13px] text-muted transition hover:border-ink">
                     + Ajouter
                     <input type="file" accept="image/*" multiple className="sr-only" aria-label="Ajouter des inspirations" onChange={(e) => void addInspi([...(e.target.files ?? [])])} />
                   </label>
@@ -183,7 +183,7 @@ export function Parcours() {
             {mood?.summary && <p className="mt-3 max-w-[52ch] text-[15px] text-muted">{mood.summary}</p>}
             <div className="mt-6 columns-2 gap-2 sm:columns-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              {inspi.map((s, i) => <img key={i} src={s} alt={`Inspiration ${i + 1}`} className="mb-2 w-full break-inside-avoid rounded-[8px]" />)}
+              {inspi.map((s, i) => <img key={i} src={s} alt={`Inspiration ${i + 1}`} className="mb-2 w-full break-inside-avoid rounded-[2px]" />)}
             </div>
           </section>
           <aside className="flex flex-col gap-7">
@@ -201,7 +201,7 @@ export function Parcours() {
                 <ul className="mt-3 grid list-none grid-cols-2 gap-2 p-0">
                   {mood.materials.map((id) => { const m = materialById(id); if (!m) return null; return (
                     <li key={id} className="flex items-center gap-2.5 text-[13px]">
-                      <span aria-hidden className="size-10 shrink-0 rounded-[6px] bg-cover bg-center ring-1 ring-black/5" style={{ backgroundColor: m.baseColor, backgroundImage: `url(/editorial/matieres/${id}.webp)` }} />
+                      <span aria-hidden className="size-10 shrink-0 rounded-[2px] bg-cover bg-center ring-1 ring-black/5" style={{ backgroundColor: m.baseColor, backgroundImage: `url(/editorial/matieres/${id}.webp)` }} />
                       <span><span className="font-medium">{m.name}</span><br /><span className="text-muted">{m.finish}</span></span>
                     </li>); })}
                 </ul>

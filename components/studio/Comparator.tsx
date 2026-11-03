@@ -27,7 +27,7 @@ export function Comparator({ features, objectName, preset, inList, onAdd, onRepl
   const exact = matches.find((m) => m.exact);
   const set = (p: Partial<Filters>) => setF((x) => ({ ...x, ...p }));
   const toggleTier = (t: keyof typeof TIERS) => set({ tiers: f.tiers?.includes(t) ? f.tiers.filter((y) => y !== t) : [...(f.tiers ?? []), t] });
-  const sel = "rounded-lg border border-line bg-white px-2 py-1.5 text-[12px]";
+  const sel = "rounded-[2px] border border-line bg-white px-2 py-1.5 text-[12px]";
 
   return (
     <section aria-labelledby="h-compare" data-objet={objectName} className="mt-6">
@@ -40,7 +40,7 @@ export function Comparator({ features, objectName, preset, inList, onAdd, onRepl
           Ce meuble est une création originale : voici des <strong className="font-semibold text-ink">alternatives ressemblantes</strong> vendues aujourd'hui, pas le modèle exact.
         </p>
       )}
-      <details className="group mt-3 rounded-xl border border-line bg-white/70 open:bg-white">
+      <details className="group mt-3 rounded-[2px] border border-line bg-white/70 open:bg-white">
         <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-2 text-[12.5px] font-medium">Filtres<span aria-hidden className="text-muted transition group-open:rotate-180">⌄</span></summary>
         <div className="grid gap-2 px-3 pb-3">
           <div className="flex flex-wrap gap-1.5" role="group" aria-label="Gamme">
@@ -62,7 +62,7 @@ export function Comparator({ features, objectName, preset, inList, onAdd, onRepl
 
       {exact && <ul className="mt-3 grid list-none gap-2 p-0"><ProductCard m={exact} added={inList(exact.product.id)} onAdd={onAdd} onReplace={onReplace} /></ul>}
       {matches.length === 0 ? (
-        <p className="mt-4 rounded-xl bg-[#F4F1EA] px-3 py-3 text-[13px] leading-snug">
+        <p className="mt-4 rounded-[2px] bg-[#F4F1EA] px-3 py-3 text-[13px] leading-snug">
           {sameCategory === 0 ? `Notre base ne contient pas encore de ${CATEGORIES[features.category].toLowerCase()} vérifiés.` : all.length === 0 ? "Aucun produit de notre base n'est assez ressemblant : nous préférons ne rien proposer plutôt qu'un modèle sans rapport." : "Aucun produit ne correspond à ces filtres."}
         </p>
       ) : TIER_KEYS.filter((t) => !f.tiers?.length || f.tiers.includes(t)).map((t) => {
@@ -83,9 +83,9 @@ export function Comparator({ features, objectName, preset, inList, onAdd, onRepl
 function ProductCard({ m, added, onAdd, onReplace }: { m: Match; added: boolean; onAdd: (p: Product) => void; onReplace?: (p: Product) => void }) {
   const p = m.product, old = daysSince(p.verification.at) > 30;
   return (
-    <li className="pr-card rounded-2xl border border-line bg-white p-3">
+    <li className="pr-card rounded-[2px] border border-line bg-white p-3">
       <div className="flex gap-3">
-        <div aria-hidden className="relative size-14 shrink-0 overflow-hidden rounded-xl" style={{ background: `radial-gradient(120% 90% at 30% 25%, #fff 0%, ${p.colors[0]?.hex ?? "#ddd"} 70%)` }} />
+        <div aria-hidden className="relative size-14 shrink-0 overflow-hidden rounded-[2px]" style={{ background: `radial-gradient(120% 90% at 30% 25%, #fff 0%, ${p.colors[0]?.hex ?? "#ddd"} 70%)` }} />
         <div className="min-w-0 flex-1">
           <p className="text-[10.5px] font-semibold uppercase tracking-[.1em] text-muted">{p.brand}{p.retailer !== p.brand ? ` · chez ${p.retailer}` : ""}</p>
           <p className="text-[13.5px] font-medium leading-tight">{p.name}</p>

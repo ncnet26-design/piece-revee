@@ -242,7 +242,7 @@ export default function Planche() {
     <li key={ref}>
       <button type="button" draggable onDragStart={(e) => { dragRef.current = ref; e.dataTransfer.setData("text/plain", ref); e.dataTransfer.effectAllowed = "copy"; }}
         onClick={() => addAt(ref)} className="group block w-full text-left" title={`Ajouter « ${label} » à la planche (ou glissez-le)`}>
-        <span aria-hidden="true" className="block aspect-square overflow-hidden rounded-[10px] bg-[var(--surface-2,#ECE8E0)] shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)] transition group-hover:-translate-y-0.5 group-hover:shadow-md">
+        <span aria-hidden="true" className="block aspect-square overflow-hidden rounded-[2px] bg-[var(--surface-2,#ECE8E0)] shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)] transition group-hover:-translate-y-0.5 group-hover:shadow-md">
           <Thumb refId={ref} className="h-full w-full" />
         </span>
         <span className="mt-1 block truncate text-[12px] leading-tight">{label}</span>
@@ -321,7 +321,7 @@ export default function Planche() {
               {uploads.size > 0 && <ul className="mt-3 grid grid-cols-3 gap-2">{[...uploads].map(([id, url]) => (
                 <li key={id}><button type="button" className="block w-full" onClick={() => addAt(id)} title="Ajouter à la planche">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={url} alt="Votre photo" className="aspect-square w-full rounded-[10px] object-cover" />
+                  <img src={url} alt="Votre photo" className="aspect-square w-full rounded-[2px] object-cover" />
                 </button></li>
               ))}</ul>}
             </>}
@@ -342,9 +342,9 @@ export default function Planche() {
             {toast && <p role="status" className="absolute left-1/2 top-3 -translate-x-1/2 rounded-full bg-black/75 px-4 py-1.5 text-[13px] text-white">{toast}</p>}
 
             {current && (
-              <div className="absolute inset-x-3 bottom-3 ml-auto max-w-[380px] rounded-[16px] bg-[var(--bg)]/95 p-3 shadow-lg backdrop-blur sm:right-3 sm:inset-x-auto sm:w-[360px]" role="region" aria-label="Élément sélectionné">
+              <div className="absolute inset-x-3 bottom-3 ml-auto max-w-[380px] rounded-[2px] bg-[var(--bg)]/95 p-3 shadow-lg backdrop-blur sm:right-3 sm:inset-x-auto sm:w-[360px]" role="region" aria-label="Élément sélectionné">
                 <div className="flex items-start gap-3">
-                  <span aria-hidden="true" className="h-12 w-12 shrink-0 overflow-hidden rounded-[8px]"><Thumb refId={current.ref} className="h-full w-full" /></span>
+                  <span aria-hidden="true" className="h-12 w-12 shrink-0 overflow-hidden rounded-[2px]"><Thumb refId={current.ref} className="h-full w-full" /></span>
                   <div className="min-w-0 flex-1">
                     <b className="block truncate text-[14px]">{current.ref.startsWith("up-") ? "Photo importée" : libModel(current.ref) ? frenchName(libModel(current.ref)!) : parseVariant(current.ref) ? variantName(parseVariant(current.ref)!, true) : itemName(current.ref)}</b>
                     <div className="mt-1 flex flex-wrap gap-1">
@@ -411,7 +411,7 @@ export default function Planche() {
       </div>
 
       {/* Appliquer la planche à une photo de la pièce */}
-      <section className="mt-12 grid gap-6 rounded-[28px] bg-surface p-5 shadow-[0_1px_2px_rgba(0,0,0,.04),0_24px_48px_-28px_rgba(0,0,0,.2)] sm:p-8 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)]" aria-labelledby="appliquer">
+      <section className="mt-12 grid gap-6 rounded-[2px] bg-surface p-5 shadow-[0_1px_2px_rgba(0,0,0,.04),0_24px_48px_-28px_rgba(0,0,0,.2)] sm:p-8 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)]" aria-labelledby="appliquer">
         <div>
           <span className="eyebrow">Ma planche, chez moi</span>
           <h2 id="appliquer" className="mt-1 text-[clamp(1.6rem,3vw,2.2rem)]">Appliquer ma planche <em>à ma pièce</em></h2>
@@ -432,8 +432,8 @@ export default function Planche() {
           {room && applied
             ? <><BeforeAfter before={<img src={room} alt="Votre pièce, avant" />} after={<img src={applied} alt="Votre pièce avec les matières de la planche" />} labelAfter="Avec ma planche" />
               <a className="btn btn-sm btn-primary mt-3" href={applied} download="ma-piece-avec-ma-planche.jpg">Télécharger le rendu</a></>
-            : room ? <img src={room} alt="Votre pièce" className="aspect-[4/3] w-full rounded-[18px] object-cover" />
-              : <div className="grid aspect-[4/3] w-full place-items-center rounded-[18px] border border-dashed border-line text-center text-[14px] text-muted">Votre photo apparaîtra ici</div>}
+            : room ? <img src={room} alt="Votre pièce" className="aspect-[4/3] w-full rounded-[2px] object-cover" />
+              : <div className="grid aspect-[4/3] w-full place-items-center rounded-[2px] border border-dashed border-line text-center text-[14px] text-muted">Votre photo apparaîtra ici</div>}
           {/* eslint-enable @next/next/no-img-element */}
         </div>
       </section>
@@ -450,7 +450,7 @@ export default function Planche() {
               const v = parseVariant(i.ref), m = materialById.get(i.ref) ?? (v?.family.materialId ? materialById.get(v.family.materialId) : undefined), lm = libModel(i.ref), rt = realTexture(i.ref), shop = shopFor(i.ref);
               return (
                 <li key={i.ref} className="panel flex gap-4">
-                  <span className="h-24 w-24 shrink-0 overflow-hidden rounded-[12px]"><Thumb refId={i.ref} className="h-full w-full" /></span>
+                  <span className="h-24 w-24 shrink-0 overflow-hidden rounded-[2px]"><Thumb refId={i.ref} className="h-full w-full" /></span>
                   <div className="min-w-0 flex-1">
                     <h3 className="font-ui text-[15.5px] font-semibold">{lm ? frenchName(lm) : itemName(i.ref)}</h3>
                     <p className="text-[13px] text-muted">
@@ -474,7 +474,7 @@ export default function Planche() {
             <ul className="mt-4 grid gap-3 sm:grid-cols-3">
               {TEMPLATES.map((t) => { const b = t.board(); return (
                 <li key={t.id}><button type="button" className="panel block w-full p-3 text-left hover:shadow-md" onClick={() => { setBoard(b); setSel(null); setTemplates(false); }}>
-                  <span aria-hidden="true" className="grid grid-cols-3 gap-1 overflow-hidden rounded-[10px]">{b.items.filter((i) => !libModel(i.ref)).slice(0, 6).map((i) => <span key={i.id} className="aspect-square overflow-hidden"><Thumb refId={i.ref} className="h-full w-full" /></span>)}</span>
+                  <span aria-hidden="true" className="grid grid-cols-3 gap-1 overflow-hidden rounded-[2px]">{b.items.filter((i) => !libModel(i.ref)).slice(0, 6).map((i) => <span key={i.id} className="aspect-square overflow-hidden"><Thumb refId={i.ref} className="h-full w-full" /></span>)}</span>
                   <b className="mt-2 block text-[14px]">{t.name}</b><span className="text-[12.5px] text-muted">{t.text}</span>
                 </button></li>
               ); })}
@@ -490,7 +490,7 @@ export default function Planche() {
             {/* eslint-disable @next/next/no-img-element */}
             {photo.image
               ? <BeforeAfter before={<img src={photo.render} alt="Planche en 3D" />} after={<img src={photo.image} alt={`Photo réaliste de la planche « ${board?.title} »`} />} labelAfter="Photo IA" ratio="3 / 2" />
-              : <div className="relative"><img src={photo.render} alt="Planche en 3D" className="max-h-[70vh] w-full rounded-[12px] object-contain opacity-70" />{photo.busy && <span className="absolute inset-0 grid place-items-center text-[15px] font-medium"><span><span className="spinner" /> Photographie en cours (20 à 40 s)…</span></span>}</div>}
+              : <div className="relative"><img src={photo.render} alt="Planche en 3D" className="max-h-[70vh] w-full rounded-[2px] object-contain opacity-70" />{photo.busy && <span className="absolute inset-0 grid place-items-center text-[15px] font-medium"><span><span className="spinner" /> Photographie en cours (20 à 40 s)…</span></span>}</div>}
             {/* eslint-enable @next/next/no-img-element */}
             {photo.msg && <p role="status" className="mt-2 text-[13px] text-muted">{photo.msg}</p>}
             <div className="mt-3 flex flex-wrap justify-end gap-2">
@@ -506,7 +506,7 @@ export default function Planche() {
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/75 p-4" role="dialog" aria-modal="true" aria-label="Image haute définition">
           <div className="w-full max-w-5xl rounded-[var(--r-l)] bg-[var(--bg)] p-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={render} alt={`Planche « ${board?.title} » en haute définition`} className="max-h-[72vh] w-full rounded-[12px] object-contain" />
+            <img src={render} alt={`Planche « ${board?.title} » en haute définition`} className="max-h-[72vh] w-full rounded-[2px] object-contain" />
             <div className="mt-3 flex justify-end gap-2">
               <a className="btn btn-sm btn-primary" href={render} download={`planche-${(board?.title ?? "piece-revee").toLowerCase().replace(/[^a-z0-9]+/g, "-")}.jpg`}>Télécharger</a>
               <button type="button" className="btn btn-sm" onClick={() => setRender(null)}>Fermer</button>

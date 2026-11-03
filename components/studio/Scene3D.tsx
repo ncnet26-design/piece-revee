@@ -99,7 +99,7 @@ export function Scene3D({ intent, inList, onAdd, onFinal }: { intent: Intent | n
   const btn = (on: boolean) => `grid h-10 min-w-10 place-items-center rounded-full px-3 text-[12.5px] font-medium transition ${on ? "bg-ink text-white" : "text-ink hover:bg-black/5"}`;
   return (
     <div className="relative">
-      <div ref={host} className="relative h-[min(78vh,760px)] min-h-[420px] scroll-mt-3 overflow-hidden rounded-[14px] bg-[#E9E6E0]" data-testid="scene-3d">
+      <div ref={host} className="relative h-[min(78vh,760px)] min-h-[420px] scroll-mt-3 overflow-hidden rounded-[2px] bg-[#E9E6E0]" data-testid="scene-3d">
         {state !== "pret" && <div className="absolute inset-0 grid place-items-center text-[13px] text-muted">{state === "indisponible" ? "La 3D n'est pas disponible sur cet appareil." : "Préparation de la pièce…"}</div>}
         {state === "pret" && loading > 0 && <div role="status" className="studio-progress absolute left-1/2 top-4 -translate-x-1/2 rounded-full bg-white/85 px-3 py-1 text-[12px] backdrop-blur">Chargement des meubles et des matières…</div>}
       </div>
@@ -114,13 +114,13 @@ export function Scene3D({ intent, inList, onAdd, onFinal }: { intent: Intent | n
       </div>
 
       {room && scene && (
-        <div className="absolute left-3 top-3 z-30 w-[280px] rounded-2xl border border-line bg-white/95 p-4 text-[12.5px] shadow-xl backdrop-blur">
+        <div className="absolute left-3 top-3 z-30 w-[280px] rounded-[2px] border border-line bg-white/95 p-4 text-[12.5px] shadow-xl backdrop-blur">
           <p className="font-semibold">Murs</p>
           <div className="mt-2 flex flex-wrap gap-1.5">{PAINTS.map((c) => <button key={c} type="button" aria-label={`Peindre les murs en ${c}`} aria-pressed={scene.room.wall === c} onClick={() => eng.current?.setWallColor(c)} className={`size-7 rounded-full ring-1 ring-black/10 ${scene.room.wall === c ? "outline outline-2 outline-offset-2 outline-ink" : ""}`} style={{ background: c }} />)}
             <label className="grid size-7 cursor-pointer place-items-center rounded-full bg-[conic-gradient(red,yellow,lime,cyan,blue,magenta,red)] ring-1 ring-black/10"><span className="sr-only">Teinte sur mesure</span><input type="color" className="sr-only" value={scene.room.wall} onChange={(e) => eng.current?.setWallColor(e.target.value.toUpperCase())} /></label>
           </div>
           <p className="mt-3 font-semibold">Sol</p>
-          <select className="mt-1 w-full rounded-lg border border-line px-2 py-1.5" value={scene.room.floor} onChange={(e) => eng.current?.setFloor(e.target.value)}>
+          <select className="mt-1 w-full rounded-[2px] border border-line px-2 py-1.5" value={scene.room.floor} onChange={(e) => eng.current?.setFloor(e.target.value)}>
             {MATERIALS.filter((m) => ["Sol", "Bois", "Pierre"].includes(m.category) && !/tapis/.test(m.id)).map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
           </select>
           <button type="button" className="mt-3 text-muted underline" onClick={() => { if (confirm("Revenir à la pièce témoin d'origine ?")) void eng.current?.load(structuredClone(DEFAULT_SCENE)); }}>Réinitialiser la pièce</button>
@@ -128,7 +128,7 @@ export function Scene3D({ intent, inList, onAdd, onFinal }: { intent: Intent | n
       )}
 
       {final && (
-        <div role="dialog" aria-label="Rendu final" className="absolute right-3 top-3 z-30 w-[300px] rounded-2xl border border-line bg-white/95 p-4 text-[12.5px] shadow-xl backdrop-blur">
+        <div role="dialog" aria-label="Rendu final" className="absolute right-3 top-3 z-30 w-[300px] rounded-[2px] border border-line bg-white/95 p-4 text-[12.5px] shadow-xl backdrop-blur">
           <p className="font-semibold">Rendu final par lancer de rayons</p>
           <p className="mt-1 text-muted">Lumière indirecte, rebonds, reflets et ombres douces calculés physiquement, à la résolution choisie (aucun agrandissement).</p>
           {final.running ? (<>
@@ -180,7 +180,7 @@ export function Scene3D({ intent, inList, onAdd, onFinal }: { intent: Intent | n
           {sameCategory(def).length > 1 && (<>
             <h3 className="mt-5 text-[13px] font-semibold">Remplacer par un autre modèle</h3>
             <div className="mt-2 grid grid-cols-3 gap-2">{sameCategory(def).map((f) => (
-              <button key={f.id} type="button" aria-pressed={f.id === def.id} onClick={() => void eng.current?.replace(obj.uid, f.id)} className={`overflow-hidden rounded-xl border bg-white text-left text-[11px] leading-tight ${f.id === def.id ? "border-ink" : "border-line hover:border-ink/40"}`}>
+              <button key={f.id} type="button" aria-pressed={f.id === def.id} onClick={() => void eng.current?.replace(obj.uid, f.id)} className={`overflow-hidden rounded-[2px] border bg-white text-left text-[11px] leading-tight ${f.id === def.id ? "border-ink" : "border-line hover:border-ink/40"}`}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 {f.kind === "glb" ? <img src={`/models/thumbs/${f.model}.webp`} alt="" className="aspect-square w-full bg-[#F4F1EA] object-contain" loading="lazy" /> : <span className="grid aspect-square place-items-center bg-[#F4F1EA] text-muted">3D</span>}
                 <span className="block p-1.5">{f.name}</span>

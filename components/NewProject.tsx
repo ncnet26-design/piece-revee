@@ -79,7 +79,7 @@ export function NewProject() {
             onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); void onPhoto(e.dataTransfer.files[0]); }}>
             {photo
               // eslint-disable-next-line @next/next/no-img-element
-              ? <img src={photo.dataUrl} alt="Votre espace" className="max-h-80 w-full rounded-md object-cover" />
+              ? <img src={photo.dataUrl} alt="Votre espace" className="max-h-80 w-full rounded-[2px] object-cover" />
               : <span className="flex flex-col items-center gap-1.5"><IconCamera width={28} height={28} /><b>Prendre ou choisir une photo</b><span className="text-[13px] text-muted">Depuis un angle, en lumière du jour. JPG, PNG, WebP ou HEIC, 20 Mo au plus.</span></span>}
           </label>
           <input id={ids.photo} type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" capture="environment" className="sr-only" onChange={(e) => void onPhoto(e.target.files?.[0])} />
@@ -90,8 +90,8 @@ export function NewProject() {
           <span className="eyebrow">2 · Inspirations (facultatif, 3 au plus)</span>
           <div className="flex flex-wrap gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            {insp.map((p, i) => <figure key={i} className="relative m-0 h-16 w-16"><img src={p.dataUrl} alt={`Inspiration ${i + 1}`} className="h-16 w-16 rounded-md object-cover" /><button type="button" className="absolute -right-1.5 -top-1.5 h-5 w-5 rounded-full border-0 bg-ink p-0 text-xs text-bg" aria-label={`Retirer l'inspiration ${i + 1}`} onClick={() => setInsp(insp.filter((_, j) => j !== i))}>×</button></figure>)}
-            {insp.length < 3 && <label htmlFor={ids.insp} className="grid h-16 w-16 cursor-pointer place-items-center rounded-md border-[1.5px] border-dashed border-muted text-2xl text-muted" aria-label="Ajouter des inspirations">+</label>}
+            {insp.map((p, i) => <figure key={i} className="relative m-0 h-16 w-16"><img src={p.dataUrl} alt={`Inspiration ${i + 1}`} className="h-16 w-16 rounded-[2px] object-cover" /><button type="button" className="absolute -right-1.5 -top-1.5 h-5 w-5 rounded-full border-0 bg-ink p-0 text-xs text-bg" aria-label={`Retirer l'inspiration ${i + 1}`} onClick={() => setInsp(insp.filter((_, j) => j !== i))}>×</button></figure>)}
+            {insp.length < 3 && <label htmlFor={ids.insp} className="grid h-16 w-16 cursor-pointer place-items-center rounded-[2px] border-[1.5px] border-dashed border-muted text-2xl text-muted" aria-label="Ajouter des inspirations">+</label>}
             <input id={ids.insp} type="file" accept="image/jpeg,image/png,image/webp" multiple className="sr-only" onChange={(e) => void onInsp(e.target.files)} />
           </div>
           {favs.length > 0 && <p className="notice">Votre moodboard ({favs.length} élément{favs.length > 1 ? "s" : ""}) sera pris en compte.</p>}

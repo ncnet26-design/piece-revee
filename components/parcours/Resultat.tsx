@@ -55,7 +55,7 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
         // eslint-disable-next-line @next/next/no-img-element
         <BeforeAfter ratio={ratio} labelBefore="Ma pièce" labelAfter="Transformée" before={<img src={before} alt="Ma pièce avant" />} after={<img src={image} alt="Ma pièce transformée" />} />
       ) : (
-        <div className="relative cursor-crosshair overflow-hidden rounded-[12px] bg-soft" onClick={onClick} data-testid="piece-transformee">
+        <div className="relative cursor-crosshair overflow-hidden rounded-[2px] bg-soft" onClick={onClick} data-testid="piece-transformee">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img ref={img} src={image} alt="Ma pièce transformée avec mes inspirations" crossOrigin="anonymous" className="block w-full" onLoad={(e) => setRatio(`${e.currentTarget.naturalWidth} / ${e.currentTarget.naturalHeight}`)} />
           {objects.map((o) => (
@@ -113,21 +113,21 @@ function Teinte({ hex, name, kind, material, finish }: { hex?: string; name?: st
   return (
     <div className="mt-4 grid gap-5">
       <div className="flex items-center gap-4">
-        <span aria-hidden className="size-16 shrink-0 rounded-[10px] ring-1 ring-black/10" style={{ background: hex }} />
+        <span aria-hidden className="size-16 shrink-0 rounded-[2px] ring-1 ring-black/10" style={{ background: hex }} />
         <div className="text-[13px]">
           <p className="text-[15px] font-medium">{name || paint.name}</p>
           <p className="text-muted">{[material, finish].filter(Boolean).join(" · ") || "Couleur relevée sur l'image"}</p>
           <p className="mt-1 font-mono text-[12px]">{hex} · teinte approchante : {paint.name.toLowerCase()}</p>
         </div>
       </div>
-      <p className="rounded-[8px] bg-soft px-3 py-2 text-[12px] leading-snug text-muted">Une couleur à l'écran n'est jamais exactement la couleur réelle : comparez sur un nuancier ou un échantillon avant d'acheter.</p>
+      <p className="rounded-[2px] bg-soft px-3 py-2 text-[12px] leading-snug text-muted">Une couleur à l'écran n'est jamais exactement la couleur réelle : comparez sur un nuancier ou un échantillon avant d'acheter.</p>
       {mats.length > 0 && (
         <div>
           <p className="eyebrow">Matières proches</p>
           <ul className="mt-2 grid list-none gap-2 p-0">
             {mats.map((m) => (
               <li key={m.id} className="flex items-center gap-3 text-[13px]">
-                <span aria-hidden className="size-10 shrink-0 rounded-[6px] bg-cover bg-center ring-1 ring-black/5" style={{ backgroundColor: m.baseColor, backgroundImage: `url(/editorial/matieres/${m.id}.webp)` }} />
+                <span aria-hidden className="size-10 shrink-0 rounded-[2px] bg-cover bg-center ring-1 ring-black/5" style={{ backgroundColor: m.baseColor, backgroundImage: `url(/editorial/matieres/${m.id}.webp)` }} />
                 <span><span className="font-medium">{m.name}</span><br /><span className="text-muted">{m.finish}</span></span>
               </li>
             ))}

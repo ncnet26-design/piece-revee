@@ -76,12 +76,12 @@ export function InspirationBank() {
           {list.map((e) => (
             <li key={e.id} className="group">
               <button type="button" onClick={() => setOpen(e)} className="block w-full border-0 bg-transparent p-0 text-left" aria-label={`${e.title} : voir le détail${e.image?.kind === "ia" ? " · Image générée par IA" : ""}`}>
-                <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-[10px] bg-soft">
+                <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-[2px] bg-soft">
                   {e.image ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={e.image.kind === "ia" ? e.image.src.replace(/\.webp$/, "-640.webp") : e.image.src} alt="" loading="lazy" className="size-full object-cover transition duration-700 group-hover:scale-[1.025]" />
                   ) : (
-                    <div className="flex size-full items-end gap-2 p-6">{e.palette.map((c) => <span key={c} className="h-2/3 flex-1 rounded-[6px]" style={{ background: c }} />)}</div>
+                    <div className="flex size-full items-end gap-2 p-6">{e.palette.map((c) => <span key={c} className="h-2/3 flex-1 rounded-[2px]" style={{ background: c }} />)}</div>
                   )}
                   {e.image?.kind === "ia" && <figcaption className="absolute bottom-2 left-2 rounded-full bg-black/45 px-2 py-0.5 text-[10.5px] font-medium text-white backdrop-blur">Image générée par IA</figcaption>}
                 </figure>
@@ -100,14 +100,14 @@ export function InspirationBank() {
         </ul>
       )}
 
-      <dialog ref={dlg} onClose={() => setOpen(null)} aria-label={open?.title} className="m-auto w-[min(1100px,94vw)] max-h-[92vh] overflow-y-auto rounded-[14px] border-0 bg-surface p-0 text-ink backdrop:bg-[var(--scrim)]">
+      <dialog ref={dlg} onClose={() => setOpen(null)} aria-label={open?.title} className="m-auto w-[min(1100px,94vw)] max-h-[92vh] overflow-y-auto rounded-[2px] border-0 bg-surface p-0 text-ink backdrop:bg-[var(--scrim)]">
         {open && (
           <div className="grid lg:grid-cols-[1.25fr_1fr]">
             <figure className="relative m-0 bg-soft">
               {open.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={open.image.src} alt={open.title} className="size-full max-h-[80vh] object-cover" />
-              ) : <div className="flex aspect-[4/3] items-end gap-3 p-10">{open.palette.map((c) => <span key={c} className="h-3/4 flex-1 rounded-[8px]" style={{ background: c }} />)}</div>}
+              ) : <div className="flex aspect-[4/3] items-end gap-3 p-10">{open.palette.map((c) => <span key={c} className="h-3/4 flex-1 rounded-[2px]" style={{ background: c }} />)}</div>}
               {open.image && <figcaption className="absolute bottom-3 left-3 max-w-[90%] rounded-full bg-black/45 px-3 py-1 text-[11px] text-white backdrop-blur">{open.image.kind === "photo" ? "Photographie" : open.image.kind === "planche" ? "Planche de matières" : open.image.kind === "ia" ? "Image générée par IA" : "Matière photographiée"} · {open.image.credit} · {open.image.license}{open.image.sourceUrl ? <> · <a className="underline" href={open.image.sourceUrl} target="_blank" rel="noopener noreferrer">source</a></> : null}</figcaption>}
             </figure>
             <div className="flex flex-col gap-5 p-7 lg:p-9">
@@ -122,7 +122,7 @@ export function InspirationBank() {
               {open.palette.length > 0 && <div><p className="eyebrow">Palette</p><div className="mt-2 flex gap-2">{open.palette.map((c) => <span key={c} className="flex flex-col items-center gap-1 text-[10.5px] text-muted"><span className="size-10 rounded-full ring-1 ring-black/10" style={{ background: c }} />{c}</span>)}</div></div>}
               {open.planche && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={open.planche} alt={`Planche de matières : ${open.title}`} loading="lazy" className="w-full rounded-[8px]" />
+                <img src={open.planche} alt={`Planche de matières : ${open.title}`} loading="lazy" className="w-full rounded-[2px]" />
               )}
               <div>
                 <p className="eyebrow">Matières</p>
@@ -130,7 +130,7 @@ export function InspirationBank() {
                   {open.materials.map((id) => { const m = materialById(id); if (!m) return null; return (
                     <li key={id} className="flex items-center gap-2.5 text-[13px]">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={`/editorial/matieres/${id}.webp`} alt="" className="size-10 rounded-[6px] object-cover" onError={(ev) => { (ev.currentTarget as HTMLImageElement).style.background = m.baseColor; (ev.currentTarget as HTMLImageElement).removeAttribute("src"); }} />
+                      <img src={`/editorial/matieres/${id}.webp`} alt="" className="size-10 rounded-[2px] object-cover" onError={(ev) => { (ev.currentTarget as HTMLImageElement).style.background = m.baseColor; (ev.currentTarget as HTMLImageElement).removeAttribute("src"); }} />
                       <span><span className="font-medium">{m.name}</span><br /><span className="text-muted">{m.finish}</span></span>
                     </li>); })}
                 </ul>

@@ -42,7 +42,7 @@ export function Camille() {
         <CamilleAvatar size={26} className="-my-1" /> Demander à Camille
       </button>
       {bubble && guide && bubble === guide.key && !open && (
-        <section aria-label="Conseil de Camille" className="camille-bubble fixed z-26 w-[min(360px,calc(100vw-24px))] rounded-[22px] border border-line bg-surface p-4 shadow-[0_24px_60px_-20px_rgba(0,0,0,.35)]"
+        <section aria-label="Conseil de Camille" className="camille-bubble fixed z-26 w-[min(360px,calc(100vw-24px))] rounded-[2px] border border-line bg-surface p-4 shadow-[0_24px_60px_-20px_rgba(0,0,0,.35)]"
           style={{ right: "max(12px, calc(env(safe-area-inset-right, 0px) + 20px))", bottom: "calc(var(--tabbar, 0px) + 92px + env(safe-area-inset-bottom, 0px))" }}>
           <div className="flex items-start gap-3">
             <CamilleAvatar size={44} />

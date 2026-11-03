@@ -88,12 +88,12 @@ export function Boutique() {
         ))}
       </nav>
 
-      <div className="mt-6 grid gap-3 border-y border-line py-4 sm:grid-cols-2 lg:grid-cols-[1.6fr_repeat(4,1fr)]">
-        <input value={q} onChange={(e) => { setQ(e.target.value); setN(PAGE); }} placeholder="Rechercher : canapé bouclé, lampe laiton, vase grès…" aria-label="Rechercher un produit" className="input !rounded-full" />
-        <select aria-label="Zone de vente" className="input !rounded-full" value={zone} onChange={(e) => setZone(e.target.value as typeof zone)}><option value="">Toutes les zones</option>{Object.entries(ZONES).map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select>
-        <select aria-label="Enseigne" className="input !rounded-full" value={vendeur} onChange={(e) => setVendeur(e.target.value)}><option value="">Toutes les enseignes</option>{vendeurs.map((v) => <option key={v} value={v}>{v}</option>)}</select>
-        <select aria-label="Prix maximum" className="input !rounded-full" value={max ?? ""} onChange={(e) => setMax(e.target.value ? Number(e.target.value) : null)}><option value="">Tous les prix</option>{[50, 100, 250, 500, 1000, 2000, 5000].map((v) => <option key={v} value={v}>Jusqu'à {v.toLocaleString("fr-FR")}</option>)}</select>
-        <select aria-label="Trier" className="input !rounded-full" value={tri} onChange={(e) => setTri(e.target.value as typeof tri)}><option value="pertinence">Sélection</option><option value="prix-asc">Prix croissant</option><option value="prix-desc">Prix décroissant</option></select>
+      <div className="mt-6 grid grid-cols-2 gap-2 border-y border-line py-4 sm:gap-3 lg:grid-cols-[1.6fr_repeat(4,1fr)]">
+        <input value={q} onChange={(e) => { setQ(e.target.value); setN(PAGE); }} placeholder="Rechercher : canapé bouclé, lampe laiton, vase grès…" aria-label="Rechercher un produit" className="input col-span-2 lg:col-span-1 !rounded-full" />
+        <select aria-label="Zone de vente" className="input !rounded-full !px-3 text-[13.5px] sm:!px-4 sm:text-[15px]" value={zone} onChange={(e) => setZone(e.target.value as typeof zone)}><option value="">Toutes zones</option>{Object.entries(ZONES).map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select>
+        <select aria-label="Enseigne" className="input !rounded-full !px-3 text-[13.5px] sm:!px-4 sm:text-[15px]" value={vendeur} onChange={(e) => setVendeur(e.target.value)}><option value="">Toutes enseignes</option>{vendeurs.map((v) => <option key={v} value={v}>{v}</option>)}</select>
+        <select aria-label="Prix maximum" className="input !rounded-full !px-3 text-[13.5px] sm:!px-4 sm:text-[15px]" value={max ?? ""} onChange={(e) => setMax(e.target.value ? Number(e.target.value) : null)}><option value="">Tous les prix</option>{[50, 100, 250, 500, 1000, 2000, 5000].map((v) => <option key={v} value={v}>Jusqu'à {v.toLocaleString("fr-FR")}</option>)}</select>
+        <select aria-label="Trier" className="input !rounded-full !px-3 text-[13.5px] sm:!px-4 sm:text-[15px]" value={tri} onChange={(e) => setTri(e.target.value as typeof tri)}><option value="pertinence">Sélection</option><option value="prix-asc">Prix croissant</option><option value="prix-desc">Prix décroissant</option></select>
       </div>
       <div className="mt-3 flex flex-wrap items-center gap-4 text-[13px]">
         <label className="flex items-center gap-2"><input type="checkbox" checked={stock} onChange={(e) => setStock(e.target.checked)} /> En stock uniquement</label>

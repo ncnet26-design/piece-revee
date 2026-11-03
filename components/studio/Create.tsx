@@ -79,7 +79,7 @@ export function Create({ project, onExplore }: { project: Project; onExplore: (v
       <form className="grid content-start gap-6" onSubmit={(e) => { e.preventDefault(); void generate(); }}>
         <fieldset className="grid gap-2">
           <legend className="studio-step">1 · Votre idée</legend>
-          <textarea value={text} onChange={(e) => setText(e.target.value)} rows={4} placeholder={EXAMPLE} className="rounded-2xl border border-line bg-white p-3 text-[14px] leading-relaxed" aria-label="Décrivez la pièce que vous imaginez" />
+          <textarea value={text} onChange={(e) => setText(e.target.value)} rows={4} placeholder={EXAMPLE} className="rounded-[2px] border border-line bg-white p-3 text-[14px] leading-relaxed" aria-label="Décrivez la pièce que vous imaginez" />
           {!text && <button type="button" className="justify-self-start text-[12px] text-muted underline" onClick={() => setText(EXAMPLE)}>Utiliser l'exemple</button>}
         </fieldset>
         <fieldset className="grid gap-2">
@@ -87,8 +87,8 @@ export function Create({ project, onExplore }: { project: Project; onExplore: (v
           <div className="flex flex-wrap gap-1.5">{ROOMS.map(([id, l]) => <button key={id} type="button" aria-pressed={b.room === id} className={chip(b.room === id)} onClick={() => set({ room: b.room === id ? null : id })}>{l}</button>)}</div>
           {/* eslint-disable @next/next/no-img-element */}
           <div className="grid grid-cols-2 gap-2">
-            <button type="button" onClick={() => photoIn.current?.click()} className="studio-drop">{b.photo ? <img src={b.photo} alt="Votre pièce" className="size-full rounded-xl object-cover" /> : <span>Photo de ma pièce<small>elle servira de base</small></span>}</button>
-            <button type="button" onClick={() => inspIn.current?.click()} className="studio-drop">{b.inspirations[0] ? <img src={b.inspirations[0]} alt="Votre inspiration" className="size-full rounded-xl object-cover" /> : <span>Image d'inspiration<small>Pinterest, magazine…</small></span>}</button>
+            <button type="button" onClick={() => photoIn.current?.click()} className="studio-drop">{b.photo ? <img src={b.photo} alt="Votre pièce" className="size-full rounded-[2px] object-cover" /> : <span>Photo de ma pièce<small>elle servira de base</small></span>}</button>
+            <button type="button" onClick={() => inspIn.current?.click()} className="studio-drop">{b.inspirations[0] ? <img src={b.inspirations[0]} alt="Votre inspiration" className="size-full rounded-[2px] object-cover" /> : <span>Image d'inspiration<small>Pinterest, magazine…</small></span>}</button>
           </div>
           <input ref={photoIn} type="file" accept="image/*" className="sr-only" aria-label="Importer la photo de ma pièce" onChange={async (e) => { const f = e.target.files?.[0]; if (f) { const d = await readFile(f, 1600); if (d) set({ photo: d }); } e.target.value = ""; }} />
           <input ref={inspIn} type="file" accept="image/*" className="sr-only" aria-label="Importer une image d'inspiration" onChange={async (e) => { const f = e.target.files?.[0]; if (f) { const d = await readFile(f, 1024); if (d) set({ inspirations: [d, ...b.inspirations].slice(0, 3) }); } e.target.value = ""; }} />
@@ -96,7 +96,7 @@ export function Create({ project, onExplore }: { project: Project; onExplore: (v
           {b.photo && (<>
             <p className="mt-1 text-[12.5px] font-medium">À conserver sur ma photo</p>
             <div className="flex flex-wrap gap-1.5">{KEEPS.map(([id, l]) => <button key={id} type="button" aria-pressed={b.keep.includes(id)} className={chip(b.keep.includes(id))} onClick={() => set({ keep: b.keep.includes(id) ? b.keep.filter((k) => k !== id) : [...b.keep, id] })}>{l}</button>)}</div>
-            <input value={b.keepFree} onChange={(e) => set({ keepFree: e.target.value })} placeholder="Autre chose à garder (ex. la bibliothèque)" className="rounded-xl border border-line bg-white px-3 py-2 text-[13px]" />
+            <input value={b.keepFree} onChange={(e) => set({ keepFree: e.target.value })} placeholder="Autre chose à garder (ex. la bibliothèque)" className="rounded-[2px] border border-line bg-white px-3 py-2 text-[13px]" />
           </>)}
         </fieldset>
         <fieldset className="grid gap-2">
@@ -106,33 +106,33 @@ export function Create({ project, onExplore }: { project: Project; onExplore: (v
             <button key={n} type="button" aria-pressed={on} onClick={() => set({ palette: on ? [] : [n] })} className={`flex items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-[12px] ${on ? "border-ink" : "border-line bg-white"}`}><span className="flex">{cs.map((c) => <span key={c} className="-ml-1 size-5 rounded-full ring-2 ring-white first:ml-0" style={{ background: c }} />)}</span>{n}</button>); })}</div>
           <div className="flex flex-wrap gap-1.5">{MATERIALS.filter((m) => ["travertin", "marbre-calacatta", "noyer-verni", "chene-naturel", "boucle", "velours-foret", "lin-lave", "laiton-brosse", "enduit-chaux", "zellige-emeraude"].includes(m.id) || mats.includes(m.id)).map((m) => (
             <button key={m.id} type="button" aria-pressed={mats.includes(m.id)} className={`${chip(mats.includes(m.id))} flex items-center gap-1.5`} onClick={() => setMats((x) => (x.includes(m.id) ? x.filter((y) => y !== m.id) : [...x, m.id]))}><span aria-hidden className="size-3.5 rounded-full ring-1 ring-black/10" style={{ background: m.baseColor }} />{m.name}</button>))}</div>
-          <label className="flex items-center gap-2 text-[13px]">Budget mobilier<input type="number" min={0} step={100} value={b.budget ?? ""} onChange={(e) => set({ budget: e.target.value ? Number(e.target.value) : null })} className="w-28 rounded-xl border border-line bg-white px-3 py-1.5" placeholder="—" /> €</label>
+          <label className="flex items-center gap-2 text-[13px]">Budget mobilier<input type="number" min={0} step={100} value={b.budget ?? ""} onChange={(e) => set({ budget: e.target.value ? Number(e.target.value) : null })} className="w-28 rounded-[2px] border border-line bg-white px-3 py-1.5" placeholder="—" /> €</label>
         </fieldset>
         <div className="flex flex-wrap items-center gap-3">
           <button type="submit" className="btn btn-primary">{b.photo ? "Transformer ma pièce" : "Créer la pièce"}</button>
-          <label className="text-[12.5px] text-muted">Propositions <select value={variants} onChange={(e) => setVariants(Number(e.target.value))} className="rounded-lg border border-line bg-white px-1.5 py-1">{[1, 2, 3].map((n) => <option key={n}>{n}</option>)}</select></label>
-          <label className="text-[12.5px] text-muted">Qualité <select value={quality} onChange={(e) => setQuality(e.target.value as Quality)} className="rounded-lg border border-line bg-white px-1.5 py-1"><option value="brouillon">Brouillon</option><option value="standard">Standard</option><option value="premium">Premium (2K)</option></select></label>
+          <label className="text-[12.5px] text-muted">Propositions <select value={variants} onChange={(e) => setVariants(Number(e.target.value))} className="rounded-[2px] border border-line bg-white px-1.5 py-1">{[1, 2, 3].map((n) => <option key={n}>{n}</option>)}</select></label>
+          <label className="text-[12.5px] text-muted">Qualité <select value={quality} onChange={(e) => setQuality(e.target.value as Quality)} className="rounded-[2px] border border-line bg-white px-1.5 py-1"><option value="brouillon">Brouillon</option><option value="standard">Standard</option><option value="premium">Premium (2K)</option></select></label>
         </div>
-        {error && <p role="alert" className="rounded-xl bg-[#FBEDE6] px-3 py-2 text-[13px] text-[#8A3B17]">{error}</p>}
+        {error && <p role="alert" className="rounded-[2px] bg-[#FBEDE6] px-3 py-2 text-[13px] text-[#8A3B17]">{error}</p>}
       </form>
 
       <section aria-label="Propositions et versions" className="grid content-start gap-4">
         {runs.filter((r) => r.job.status !== "terminee").map((r) => (
-          <div key={r.job.id} className="rounded-2xl border border-line bg-white p-4 text-[13px]" role="status">
+          <div key={r.job.id} className="rounded-[2px] border border-line bg-white p-4 text-[13px]" role="status">
             {r.job.status === "erreur" ? (<>
               <p className="font-medium text-[#8A3B17]">La génération a échoué : {r.job.error?.message}</p>
               {r.job.error?.retryable && <button type="button" className="btn mt-2 !min-h-0 !py-1.5 text-[12px]" onClick={async () => { const x = await retryJob(r.job.id); if (x.ok) follow(x.value, "Nouvelle tentative"); else setError(x.message); }}>Réessayer</button>}
             </>) : (<>
-              <div className="studio-shimmer aspect-[3/2] rounded-xl" aria-hidden />
+              <div className="studio-shimmer aspect-[3/2] rounded-[2px]" aria-hidden />
               <p className="mt-2">{r.job.status === "en_attente" ? "En file d'attente…" : "Création en cours"} · {Math.round((now - r.started) / 1000)} s <span className="text-muted">({r.job.provider}, souvent 20 à 90 s)</span></p>
             </>)}
           </div>
         ))}
         {versions.length === 0 && runs.length === 0 && (
-          <div className="grid aspect-[3/2] place-items-center rounded-[14px] border border-dashed border-line bg-white/60 p-8 text-center text-[13.5px] text-muted">Vos propositions apparaîtront ici, avec chaque version conservée pour les comparer.</div>
+          <div className="grid aspect-[3/2] place-items-center rounded-[2px] border border-dashed border-line bg-white/60 p-8 text-center text-[13.5px] text-muted">Vos propositions apparaîtront ici, avec chaque version conservée pour les comparer.</div>
         )}
         {cmpA && cmpB && (
-          <figure className="studio-compare relative overflow-hidden rounded-[14px]" style={{ aspectRatio: "3 / 2" }}>
+          <figure className="studio-compare relative overflow-hidden rounded-[2px]" style={{ aspectRatio: "3 / 2" }}>
             { }
             <img src={cmpA.imageUrl!} alt={cmpA.label} className="absolute inset-0 size-full object-cover" />
             { }
@@ -144,7 +144,7 @@ export function Create({ project, onExplore }: { project: Project; onExplore: (v
         )}
         <ul className="grid list-none gap-4 p-0 sm:grid-cols-2">
           {versions.map((v) => (
-            <li key={v.id} className="pr-card overflow-hidden rounded-[12px] border border-line bg-white">
+            <li key={v.id} className="pr-card overflow-hidden rounded-[2px] border border-line bg-white">
               { }
               <img src={v.imageUrl!} alt={v.label} className="aspect-[3/2] w-full object-cover" loading="lazy" />
               <div className="grid gap-2 p-3 text-[12.5px]">
@@ -158,7 +158,7 @@ export function Create({ project, onExplore }: { project: Project; onExplore: (v
                 </div>
                 {adjust?.v.id === v.id && (
                   <form className="flex gap-1.5" onSubmit={(e) => { e.preventDefault(); void runAdjust(); }}>
-                    <input autoFocus value={adjust.text} onChange={(e) => setAdjust({ v, text: e.target.value })} placeholder="Ex. un tapis plus clair, des rideaux en lin" className="min-w-0 flex-1 rounded-lg border border-line px-2 py-1.5" aria-label="Ajustement demandé" />
+                    <input autoFocus value={adjust.text} onChange={(e) => setAdjust({ v, text: e.target.value })} placeholder="Ex. un tapis plus clair, des rideaux en lin" className="min-w-0 flex-1 rounded-[2px] border border-line px-2 py-1.5" aria-label="Ajustement demandé" />
                     <button type="submit" className="btn !min-h-0 !px-3 !py-1.5 text-[12px]" disabled={!adjust.text.trim()}>Lancer</button>
                   </form>
                 )}

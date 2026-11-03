@@ -83,7 +83,7 @@ export default function Concept() {
         <p className="mx-auto mt-5 max-w-[56ch] text-[17px] text-muted">Une phrase suffit : une image éditoriale est créée, puis le site en tire la palette et choisit dans le showroom les matières assorties, rôle par rôle.</p>
       </header>
 
-      <form className="mx-auto max-w-[860px] rounded-[28px] bg-surface p-4 shadow-[0_1px_2px_rgba(0,0,0,.04),0_24px_48px_-28px_rgba(0,0,0,.2)] sm:p-6" onSubmit={(e) => { e.preventDefault(); void create(); }}>
+      <form className="mx-auto max-w-[860px] rounded-[2px] bg-surface p-4 shadow-[0_1px_2px_rgba(0,0,0,.04),0_24px_48px_-28px_rgba(0,0,0,.2)] sm:p-6" onSubmit={(e) => { e.preventDefault(); void create(); }}>
         <label htmlFor="concept-prompt" className="sr-only">Votre ambiance</label>
         <textarea id="concept-prompt" rows={3} maxLength={600} value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="Ex. : salon lambrissé de noyer, canapé brun en velours et touches de bleu doux"
           className="block w-full resize-none border-0 bg-transparent p-2 text-[18px] leading-relaxed outline-none placeholder:text-muted" />
@@ -99,7 +99,7 @@ export default function Concept() {
 
       <div ref={top} className="scroll-mt-24" />
       {res && (
-        <section aria-labelledby="concept-title" className="mt-12 rounded-[32px] bg-surface p-5 shadow-[0_1px_2px_rgba(0,0,0,.04),0_30px_60px_-34px_rgba(0,0,0,.25)] sm:p-10">
+        <section aria-labelledby="concept-title" className="mt-12 rounded-[2px] bg-surface p-5 shadow-[0_1px_2px_rgba(0,0,0,.04),0_30px_60px_-34px_rgba(0,0,0,.25)] sm:p-10">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14">
             <div className="flex flex-col">
               <h2 id="concept-title" className="text-[clamp(40px,4.6vw,68px)] leading-[1]">{res.card.title}</h2>
@@ -115,7 +115,7 @@ export default function Concept() {
               </dl>
             </div>
             <figure className="m-0">
-              <img src={res.image} alt={`Image d'ambiance : ${prompt}`} className="aspect-[4/5] w-full rounded-[22px] object-cover" />
+              <img src={res.image} alt={`Image d'ambiance : ${prompt}`} className="aspect-[4/5] w-full rounded-[2px] object-cover" />
               <figcaption className="mt-2 text-[12px] text-muted">Image créée par IA, à titre d'inspiration.</figcaption>
             </figure>
           </div>
@@ -125,8 +125,8 @@ export default function Concept() {
             {res.card.picks.map((p, i) => (
               <li key={`${p.ref}-${i}`}>
                 {libModel(p.ref)
-                  ? <img src={`/models/thumbs/${p.ref}.webp`} alt="" className="aspect-square w-full rounded-[16px] bg-[#F2F2F4] object-contain p-3" loading="lazy" />
-                  : <Swatch refId={p.ref} label={p.name} size={260} className="aspect-square w-full rounded-[16px]" />}
+                  ? <img src={`/models/thumbs/${p.ref}.webp`} alt="" className="aspect-square w-full rounded-[2px] bg-[#F2F2F4] object-contain p-3" loading="lazy" />
+                  : <Swatch refId={p.ref} label={p.name} size={260} className="aspect-square w-full rounded-[2px]" />}
                 <p className="mb-0 mt-3 text-[11px] font-semibold uppercase tracking-[.14em] text-muted">{p.role}</p>
                 <p className="m-0 mt-1 text-[14.5px] font-medium leading-snug">{p.name.split(" · ")[0]}</p>
               </li>

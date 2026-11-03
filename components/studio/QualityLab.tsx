@@ -65,12 +65,12 @@ export default function QualityLab() {
         <a className="text-[13px] underline" href={`?avant=${baseline ? 0 : 1}&vue=${view}`}>{baseline ? "Voir le pipeline actuel" : "Voir l'ancien pipeline (avant)"}</a>
         <button type="button" className="btn !min-h-0 !py-1.5 text-[13px]" onClick={() => void render()} disabled={!ready}>Rendu final (lancer de rayons)</button>
       </div>
-      <div ref={host} data-testid="qa-scene" className="relative mt-4 aspect-video w-full overflow-hidden rounded-[14px] bg-[#E9E6E0]">
+      <div ref={host} data-testid="qa-scene" className="relative mt-4 aspect-video w-full overflow-hidden rounded-[2px] bg-[#E9E6E0]">
         {!ready && <span className="absolute inset-0 grid place-items-center text-[13px] text-muted">Chargement de la scène de contrôle…</span>}
         <span className="absolute left-3 top-3 rounded-full bg-black/50 px-2.5 py-1 text-[11px] text-white">{baseline ? "Avant : couleurs unies, sans éclairage d'intérieur" : "Après : matières PBR, HDR, occlusion ambiante"}</span>
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      {final && <img src={final} alt="Rendu final de la scène de contrôle" className="mt-4 w-full rounded-[14px]" />}
+      {final && <img src={final} alt="Rendu final de la scène de contrôle" className="mt-4 w-full rounded-[2px]" />}
     </div>
   );
 }

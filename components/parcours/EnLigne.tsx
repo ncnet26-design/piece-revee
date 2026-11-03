@@ -39,8 +39,8 @@ export function EnLigne({ query, label, forObject }: { query: string; label: str
         {!loading && <span className="text-[11.5px] text-muted" aria-live="polite">{list.length} résultat{list.length > 1 ? "s" : ""}</span>}
       </div>
       <p className="mt-1 text-[12px] text-muted">Recherche : « {query} »</p>
-      {loading && <p role="status" className="studio-progress mt-3 rounded-[10px] bg-soft px-3 py-2.5 text-[13px]">Recherche en cours chez les vendeurs en ligne…</p>}
-      {!loading && state?.error && <p role="alert" className="mt-3 rounded-[10px] bg-[#FBEDE6] px-3 py-2 text-[12.5px] text-[#8A3B17]">{state.error}</p>}
+      {loading && <p role="status" className="studio-progress mt-3 rounded-[2px] bg-soft px-3 py-2.5 text-[13px]">Recherche en cours chez les vendeurs en ligne…</p>}
+      {!loading && state?.error && <p role="alert" className="mt-3 rounded-[2px] bg-[#FBEDE6] px-3 py-2 text-[12.5px] text-[#8A3B17]">{state.error}</p>}
       {!loading && !state?.error && list.length === 0 && <p className="mt-3 text-[12.5px] text-muted">Aucune page produit trouvée pour cet élément. Essayez Google Lens ci-dessous.</p>}
       {list.length > 0 && (
         <ul className="mt-3 grid list-none gap-2 p-0">
@@ -66,7 +66,7 @@ export function EnLigne({ query, label, forObject }: { query: string; label: str
       {!loading && state?.data?.suggestions && (
         <div className="mt-4">
           <p className="text-[11px] text-muted">Recherches Google associées</p>
-          <iframe title="Suggestions de recherche Google" sandbox="allow-popups allow-popups-to-escape-sandbox" className="mt-1 h-[64px] w-full rounded-[8px] border-0"
+          <iframe title="Suggestions de recherche Google" sandbox="allow-popups allow-popups-to-escape-sandbox" className="mt-1 h-[64px] w-full rounded-[2px] border-0"
             srcDoc={`<base target="_blank">${state.data.suggestions}`} />
         </div>
       )}

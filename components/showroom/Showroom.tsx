@@ -103,7 +103,7 @@ export default function Showroom() {
                 return (
                   <li key={o.id} className="group">
                     <button type="button" className="block w-full text-left" onClick={() => setDetail(ref)}>
-                      <span aria-hidden="true" className="block overflow-hidden rounded-[14px] shadow-[0_1px_0_rgba(0,0,0,.04),0_10px_30px_-18px_rgba(40,30,20,.45)] transition duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_18px_40px_-20px_rgba(40,30,20,.55)]">
+                      <span aria-hidden="true" className="block overflow-hidden rounded-[2px] shadow-[0_1px_0_rgba(0,0,0,.04),0_10px_30px_-18px_rgba(40,30,20,.45)] transition duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_18px_40px_-20px_rgba(40,30,20,.55)]">
                         <Swatch key={ref} refId={ref} label={name} size={fam.id === "peinture" ? 200 : 320} className="aspect-square" />
                       </span>
                       <span className="mt-2.5 block font-display text-[19px] leading-tight">{o.label}</span>
@@ -164,7 +164,7 @@ function Detail({ refId, onChange, onClose, onAdd }: { refId: string; onChange: 
             {ai?.image && <><a className="btn btn-sm btn-light" href={ai.image} download={`${name.toLowerCase().replace(/[^a-z0-9]+/gi, "-")}.jpg`}>Télécharger</a><button type="button" className="btn btn-sm btn-light" onClick={() => setAi(null)}>Revenir à la 3D</button></>}
             {!ai?.image && <button type="button" className="btn btn-sm btn-light" onClick={() => void makePhoto()} disabled={ai?.busy}>{ai?.busy ? <><span className="spinner" /> Photo en cours…</> : "Photo réaliste (IA)"}</button>}
           </div>
-          {ai?.msg && <p role="status" className="absolute bottom-16 right-4 max-w-[70%] rounded-[12px] bg-white/90 px-3 py-2 text-[12.5px] text-ink shadow">{ai.msg}</p>}
+          {ai?.msg && <p role="status" className="absolute bottom-16 right-4 max-w-[70%] rounded-[2px] bg-white/90 px-3 py-2 text-[12.5px] text-ink shadow">{ai.msg}</p>}
           <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-white/70 px-3 py-1 text-[11.5px] uppercase tracking-[.14em] text-ink/70 backdrop-blur">Échantillon {Math.round(sampleSize(v.family.gen) * 100)} × {Math.round(sampleSize(v.family.gen) * 100)} cm</span>
         </div>
         <div className="flex flex-1 flex-col gap-5 p-6 sm:p-8">
