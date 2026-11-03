@@ -1,0 +1,42 @@
+{
+  "japandi": {
+    "obligatoires": ["light oiled oak furniture", "low-slung lines and low seating", "handmade matte ceramics", "washed linen textiles", "washi paper pendant", "warm off-white clay or lime plaster walls", "a single dark ink accent (black or very dark brown)"],
+    "interdits": ["glossy surfaces", "chrome", "saturated colours", "clutter", "decorative bamboo or pebbles"],
+    "piece_type": "living room with a low bench and floor cushions", "lumiere": "soft morning light filtered by a linen curtain", "angle": "low eye level 1.1 m, frontal"
+  },
+  "scandinave": {
+    "obligatoires": ["blond birch or pine wood", "spindle-back or shell dining chairs", "white walls with large uncurtained windows", "sheepskin or chunky wool throw", "white ceramics", "black accent (lamp or frame)"],
+    "interdits": ["heavy dark furniture", "busy patterns", "brass"],
+    "piece_type": "dining room and kitchen corner", "lumiere": "bright overcast northern daylight", "angle": "eye level 1.4 m, two-point perspective"
+  },
+  "industriel": {
+    "obligatoires": ["exposed red brick wall", "black steel atelier glass partition", "polished or raw concrete floor", "patinated leather sofa", "reclaimed wood table", "factory pendant lights", "tall atelier windows"],
+    "interdits": ["fake decorative signage", "low ceilings", "pastel colours"],
+    "piece_type": "loft living room with double height", "lumiere": "hard side light from tall steel windows, late afternoon", "angle": "eye level 1.5 m, wide 24 mm showing ceiling height"
+  },
+  "haussmannien": {
+    "obligatoires": ["ornate plaster mouldings and cornices", "herringbone (point de Hongrie) oak parquet", "carved marble fireplace", "large antique mirror above the fireplace", "tall French windows with wrought-iron balcony", "ceiling height of at least 3.2 m"],
+    "interdits": ["straight-plank floors", "modern aluminium windows", "low ceilings"],
+    "piece_type": "Parisian salon", "lumiere": "golden late-afternoon sun through tall windows", "angle": "eye level 1.5 m, 28 mm, corner view showing two walls"
+  },
+  "mid-century": {
+    "obligatoires": ["walnut or teak furniture", "tapered compass legs", "low walnut sideboard", "mustard and olive green upholstery", "terrazzo or warm wood floor", "arc floor lamp", "large picture window"],
+    "interdits": ["chrome contemporary pieces", "grey and beige only palette"],
+    "piece_type": "living room with garden view", "lumiere": "warm golden hour", "angle": "eye level 1.2 m, frontal through the room"
+  },
+  "wabi-sabi": {
+    "obligatoires": ["irregular lime or clay plaster walls", "raw weathered wood", "imperfect handmade ceramics", "crumpled natural linen", "earthy palette (ochre, clay, brown)", "dry branches", "deep raking shadows"],
+    "interdits": ["perfect smooth surfaces", "new mass-produced objects", "flat even lighting", "bright white"],
+    "piece_type": "bedroom or quiet sitting corner", "lumiere": "low raking side light, deep shadows", "angle": "low eye level 1.1 m, close framing"
+  },
+  "boheme": {
+    "obligatoires": ["rattan or wicker armchair", "layered textiles (kilim, Berber rug, throws)", "many real green plants", "patterned cushions", "terracotta and ochre tones", "jute rug", "handmade ceramics and baskets"],
+    "interdits": ["dirty clutter", "artificial plants", "cold grey palette"],
+    "piece_type": "sunny living room or terrace room", "lumiere": "warm afternoon sun with patterned shadows", "angle": "eye level 1.3 m, slight diagonal"
+  },
+  "contemporain": {
+    "obligatoires": ["sculptural organic sofa", "monolithic stone coffee table (travertine or marble)", "integrated indirect lighting", "one strong colour accent", "statement designer-like light fixture (original)", "generous glazing", "large-format stone or wide-plank floor"],
+    "interdits": ["hotel anonymity", "all beige without accent", "ornate mouldings"],
+    "piece_type": "open living room", "lumiere": "soft daylight plus warm indirect light at dusk", "angle": "eye level 1.3 m, 35 mm, slightly off-axis"
+  }
+}

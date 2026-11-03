@@ -1,0 +1,817 @@
+{
+ "date": "2026-11-03T21:44:00.327Z",
+ "pages": {
+  "/": {
+   "lighthouse": {
+    "performance": 42,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "7.9 s",
+    "cls": "0",
+    "tbt": "2,990 ms",
+    "poids": "Total size was 906 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 19,
+    "octets": 2627636,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [
+     "/editorial/ia/art-deco-contemporain-2400.webp (2400px pour 390px)",
+     "/editorial/ia/salon-boucle-noyer-2400.webp (2400px pour 358px)"
+    ],
+    "floues": [
+     "/editorial/ia/salon-velours-chene-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/japandi-essai-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/luxe-discret-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/matiere-travertin-640.webp (640px pour 358px affichés ×3)"
+    ],
+    "sansSrcset": 19,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   },
+   "ordinateur": {
+    "images": 19,
+    "octets": 2584892,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [
+     "/editorial/ia/art-deco-contemporain-2400.webp (2400px pour 1440px)",
+     "/editorial/ia/salon-velours-chene-640.webp (640px pour 307px)",
+     "/editorial/ia/japandi-essai-640.webp (640px pour 307px)",
+     "/editorial/ia/luxe-discret-640.webp (640px pour 307px)",
+     "/editorial/ia/matiere-travertin-640.webp (640px pour 307px)",
+     "/editorial/ia/salon-boucle-noyer-2400.webp (2400px pour 754px)",
+     "/editorial/ia/contemporain-sculptural.webp (1600px pour 408px)",
+     "/editorial/ia/japandi-essai.webp (1600px pour 408px)",
+     "/editorial/ia/haussmannien-renove.webp (1600px pour 408px)",
+     "/editorial/ia/salon-boucle-noyer.webp (1600px pour 734px)",
+     "/editorial/ia/salon-velours-chene.webp (1600px pour 734px)",
+     "/editorial/ia/matiere-travertin-640.webp (640px pour 198px)",
+     "/editorial/ia/matiere-noyer-640.webp (640px pour 198px)",
+     "/editorial/ia/matiere-boucle-640.webp (640px pour 198px)",
+     "/editorial/ia/matiere-enduit-640.webp (640px pour 198px)",
+     "/editorial/ia/matiere-laiton-640.webp (640px pour 198px)",
+     "/editorial/ia/matiere-velours-640.webp (640px pour 198px)",
+     "/inspirations/villas-14.webp (1467px pour 737px)",
+     "/inspirations/villas-16.webp (1600px pour 527px)"
+    ],
+    "floues": [],
+    "sansSrcset": 19,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   }
+  },
+  "/transformer/": {
+   "lighthouse": {
+    "performance": 94,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "0.9 s",
+    "cls": "0.001",
+    "tbt": "290 ms",
+    "poids": "Total size was 738 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 0,
+    "octets": 169428,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   },
+   "ordinateur": {
+    "images": 0,
+    "octets": 153882,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   }
+  },
+  "/galerie/": {
+   "lighthouse": {
+    "performance": 92,
+    "accessibilite": 98,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "3.3 s",
+    "cls": "0.001",
+    "tbt": "100 ms",
+    "poids": "Total size was 939 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 12,
+    "octets": 404687,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [],
+    "floues": [
+     "/editorial/ia/parisien-contemporain-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/haussmannien-renove-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/minimalisme-chaleureux-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/scandinave-haut-de-gamme-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/japandi-essai-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/brutalisme-raffine-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/mid-century-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/art-deco-contemporain-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/mediterraneen-contemporain-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/campagne-elegante-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/luxe-discret-640.webp (640px pour 358px affichés ×3)",
+     "/editorial/ia/contemporain-sculptural-640.webp (640px pour 358px affichés ×3)"
+    ],
+    "sansSrcset": 12,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   },
+   "ordinateur": {
+    "images": 12,
+    "octets": 371220,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [
+     "/editorial/ia/parisien-contemporain-640.webp (640px pour 413px)",
+     "/editorial/ia/haussmannien-renove-640.webp (640px pour 413px)",
+     "/editorial/ia/minimalisme-chaleureux-640.webp (640px pour 413px)",
+     "/editorial/ia/scandinave-haut-de-gamme-640.webp (640px pour 413px)",
+     "/editorial/ia/japandi-essai-640.webp (640px pour 413px)",
+     "/editorial/ia/brutalisme-raffine-640.webp (640px pour 413px)",
+     "/editorial/ia/mid-century-640.webp (640px pour 413px)",
+     "/editorial/ia/art-deco-contemporain-640.webp (640px pour 413px)",
+     "/editorial/ia/mediterraneen-contemporain-640.webp (640px pour 413px)",
+     "/editorial/ia/campagne-elegante-640.webp (640px pour 413px)",
+     "/editorial/ia/luxe-discret-640.webp (640px pour 413px)",
+     "/editorial/ia/contemporain-sculptural-640.webp (640px pour 413px)"
+    ],
+    "floues": [],
+    "sansSrcset": 12,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   }
+  },
+  "/boutique/": {
+   "lighthouse": {
+    "performance": 76,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "0.9 s",
+    "cls": "0.525",
+    "tbt": "200 ms",
+    "poids": "Total size was 1,428 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 0,
+    "octets": 591916,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   },
+   "ordinateur": {
+    "images": 0,
+    "octets": 570037,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   }
+  },
+  "/showroom/": {
+   "lighthouse": {
+    "performance": 70,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "0.9 s",
+    "cls": "0.01",
+    "tbt": "12,870 ms",
+    "poids": "Total size was 985 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 0,
+    "octets": 281910,
+    "deborde": false,
+    "dessins": 17,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   },
+   "ordinateur": {
+    "images": 0,
+    "octets": 188577,
+    "deborde": false,
+    "dessins": 17,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   }
+  },
+  "/studio/": {
+   "lighthouse": {
+    "performance": 87,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "3.2 s",
+    "cls": "0",
+    "tbt": "300 ms",
+    "poids": "Total size was 839 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 1,
+    "octets": 170044,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 1,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   },
+   "ordinateur": {
+    "images": 1,
+    "octets": 151599,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 1,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   }
+  },
+  "/planche/": {
+   "lighthouse": {
+    "performance": 55,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "2.5 s",
+    "cls": "0",
+    "tbt": "19,790 ms",
+    "poids": "Total size was 2,406 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 0,
+    "octets": 802311,
+    "deborde": false,
+    "dessins": 28,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   },
+   "ordinateur": {
+    "images": 0,
+    "octets": 791381,
+    "deborde": false,
+    "dessins": 28,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   }
+  },
+  "/matieres/": {
+   "lighthouse": {
+    "performance": 68,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "3.4 s",
+    "cls": "0",
+    "tbt": "1,230 ms",
+    "poids": "Total size was 1,033 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 26,
+    "octets": 3897770,
+    "deborde": false,
+    "dessins": 34,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 26,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   },
+   "ordinateur": {
+    "images": 26,
+    "octets": 3850314,
+    "deborde": false,
+    "dessins": 34,
+    "tropLourdes": [
+     "/textures/m-travertin/diff.webp (1024px pour 307px)",
+     "/textures/m-ardoise/diff.webp (1024px pour 307px)",
+     "/textures/m-terrazzo/diff.webp (1024px pour 307px)",
+     "/textures/m-ciment/diff.webp (1024px pour 307px)",
+     "/textures/m-tomette/diff.webp (1024px pour 307px)",
+     "/textures/m-gres/diff.webp (1024px pour 307px)",
+     "/textures/m-metro/diff.webp (1024px pour 307px)",
+     "/textures/m-brique/diff.webp (1024px pour 307px)",
+     "/textures/m-tadelakt/diff.webp (1024px pour 307px)",
+     "/textures/m-chaux/diff.webp (1024px pour 307px)",
+     "/textures/m-chene/diff.webp (1024px pour 307px)",
+     "/textures/m-noyer/diff.webp (1024px pour 307px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 307px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 307px)",
+     "/textures/m-pin/diff.webp (1024px pour 307px)",
+     "/textures/m-teck/diff.webp (1024px pour 307px)",
+     "/textures/m-bambou/diff.webp (1024px pour 307px)",
+     "/textures/m-composite/diff.webp (1024px pour 307px)",
+     "/textures/m-jute/diff.webp (1024px pour 307px)",
+     "/textures/m-lin/diff.webp (1024px pour 307px)",
+     "/textures/m-velours/diff.webp (1024px pour 307px)",
+     "/textures/m-corten/diff.webp (1024px pour 307px)",
+     "/textures/m-beton/diff.webp (1024px pour 307px)",
+     "/textures/m-stratifie/diff.webp (1024px pour 307px)",
+     "/textures/m-gravier/diff.webp (1024px pour 307px)",
+     "/textures/m-pierre-seche/diff.webp (1024px pour 307px)"
+    ],
+    "floues": [],
+    "sansSrcset": 26,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   }
+  },
+  "/matieres/travertin/": {
+   "lighthouse": {
+    "performance": 64,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "3.1 s",
+    "cls": "0",
+    "tbt": "3,120 ms",
+    "poids": "Total size was 911 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 3,
+    "octets": 209849,
+    "deborde": false,
+    "dessins": 1,
+    "tropLourdes": [
+     "/textures/m-noyer/diff.webp (1024px pour 119px)"
+    ],
+    "floues": [],
+    "sansSrcset": 3,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   },
+   "ordinateur": {
+    "images": 3,
+    "octets": 206600,
+    "deborde": false,
+    "dessins": 1,
+    "tropLourdes": [
+     "/textures/m-travertin/diff.webp (1024px pour 598px)",
+     "/textures/m-travertin/diff.webp (1024px pour 203px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)"
+    ],
+    "floues": [],
+    "sansSrcset": 3,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   }
+  },
+  "/styles/": {
+   "lighthouse": {
+    "performance": 72,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "0.9 s",
+    "cls": "0",
+    "tbt": "2,090 ms",
+    "poids": "Total size was 770 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 0,
+    "octets": 293324,
+    "deborde": false,
+    "dessins": 20,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   },
+   "ordinateur": {
+    "images": 0,
+    "octets": 210428,
+    "deborde": false,
+    "dessins": 20,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   }
+  },
+  "/accords/": {
+   "lighthouse": {
+    "performance": 89,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "3.8 s",
+    "cls": "0",
+    "tbt": "50 ms",
+    "poids": "Total size was 2,269 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 48,
+    "octets": 342958,
+    "deborde": false,
+    "dessins": 42,
+    "tropLourdes": [
+     "/textures/m-noyer/diff.webp (1024px pour 119px)",
+     "/textures/m-lin/diff.webp (1024px pour 119px)",
+     "/textures/m-tomette/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-tomette/diff.webp (1024px pour 119px)",
+     "/textures/m-lin/diff.webp (1024px pour 119px)",
+     "/textures/m-chaux/diff.webp (1024px pour 119px)",
+     "/textures/m-metro/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-brique/diff.webp (1024px pour 119px)",
+     "/textures/m-pin/diff.webp (1024px pour 119px)",
+     "/textures/m-lin/diff.webp (1024px pour 119px)",
+     "/textures/m-ardoise/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-teck/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-jute/diff.webp (1024px pour 119px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 119px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 119px)",
+     "/textures/m-noyer/diff.webp (1024px pour 119px)",
+     "/textures/m-pierre-seche/diff.webp (1024px pour 119px)",
+     "/textures/m-lin/diff.webp (1024px pour 119px)",
+     "/textures/m-gravier/diff.webp (1024px pour 119px)",
+     "/textures/m-composite/diff.webp (1024px pour 119px)",
+     "/textures/m-brique/diff.webp (1024px pour 119px)",
+     "/textures/m-teck/diff.webp (1024px pour 119px)",
+     "/textures/m-tadelakt/diff.webp (1024px pour 119px)",
+     "/textures/m-ardoise/diff.webp (1024px pour 119px)",
+     "/textures/m-bambou/diff.webp (1024px pour 119px)",
+     "/textures/m-pierre-seche/diff.webp (1024px pour 119px)"
+    ],
+    "floues": [],
+    "sansSrcset": 48,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   },
+   "ordinateur": {
+    "images": 48,
+    "octets": 155693,
+    "deborde": false,
+    "dessins": 42,
+    "tropLourdes": [
+     "/textures/m-travertin/diff.webp (1024px pour 203px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 203px)",
+     "/textures/m-lin/diff.webp (1024px pour 102px)",
+     "/textures/m-tomette/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-beton/diff.webp (1024px pour 203px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 203px)",
+     "/textures/m-tadelakt/diff.webp (1024px pour 203px)",
+     "/textures/m-tomette/diff.webp (1024px pour 102px)",
+     "/textures/m-terrazzo/diff.webp (1024px pour 203px)",
+     "/textures/m-noyer/diff.webp (1024px pour 203px)",
+     "/textures/m-lin/diff.webp (1024px pour 102px)",
+     "/textures/m-chaux/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 203px)",
+     "/textures/m-metro/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-brique/diff.webp (1024px pour 102px)",
+     "/textures/m-chaux/diff.webp (1024px pour 203px)",
+     "/textures/m-pin/diff.webp (1024px pour 102px)",
+     "/textures/m-lin/diff.webp (1024px pour 102px)",
+     "/textures/m-ardoise/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-teck/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-jute/diff.webp (1024px pour 102px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 102px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 102px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)",
+     "/textures/m-ciment/diff.webp (1024px pour 203px)",
+     "/textures/m-gravier/diff.webp (1024px pour 203px)",
+     "/textures/m-pierre-seche/diff.webp (1024px pour 102px)",
+     "/textures/m-pin/diff.webp (1024px pour 203px)",
+     "/textures/m-lin/diff.webp (1024px pour 102px)",
+     "/textures/m-corten/diff.webp (1024px pour 203px)",
+     "/textures/m-gravier/diff.webp (1024px pour 102px)",
+     "/textures/m-composite/diff.webp (1024px pour 102px)",
+     "/textures/m-brique/diff.webp (1024px pour 102px)",
+     "/textures/m-teck/diff.webp (1024px pour 102px)",
+     "/textures/m-tadelakt/diff.webp (1024px pour 102px)",
+     "/textures/m-bambou/diff.webp (1024px pour 203px)",
+     "/textures/m-gravier/diff.webp (1024px pour 203px)",
+     "/textures/m-ardoise/diff.webp (1024px pour 102px)",
+     "/textures/m-bambou/diff.webp (1024px pour 102px)",
+     "/textures/m-brique/diff.webp (1024px pour 203px)",
+     "/textures/m-pierre-seche/diff.webp (1024px pour 102px)",
+     "/textures/m-teck/diff.webp (1024px pour 203px)",
+     "/textures/m-chaux/diff.webp (1024px pour 203px)"
+    ],
+    "floues": [],
+    "sansSrcset": 48,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   }
+  },
+  "/lieux/": {
+   "lighthouse": {
+    "performance": 99,
+    "accessibilite": 100,
+    "bonnesPratiques": 96,
+    "seo": 100,
+    "lcp": "0.9 s",
+    "cls": "0",
+    "tbt": "120 ms",
+    "poids": "Total size was 772 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 0,
+    "octets": 319440,
+    "deborde": false,
+    "dessins": 40,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   },
+   "ordinateur": {
+    "images": 0,
+    "octets": 217325,
+    "deborde": false,
+    "dessins": 40,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   }
+  },
+  "/plantes/": {
+   "lighthouse": {
+    "performance": 100,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "0.9 s",
+    "cls": "0",
+    "tbt": "70 ms",
+    "poids": "Total size was 771 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 0,
+    "octets": 418498,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   },
+   "ordinateur": {
+    "images": 0,
+    "octets": 386363,
+    "deborde": false,
+    "dessins": 0,
+    "tropLourdes": [],
+    "floues": [],
+    "sansSrcset": 0,
+    "nonDifferees": 0,
+    "formats": []
+   }
+  },
+  "/mobilier/": {
+   "lighthouse": {
+    "performance": 85,
+    "accessibilite": 100,
+    "bonnesPratiques": 100,
+    "seo": 100,
+    "lcp": "3.9 s",
+    "cls": "0",
+    "tbt": "200 ms",
+    "poids": "Total size was 1,126 KiB",
+    "lcpElement": null
+   },
+   "mobile": {
+    "images": 77,
+    "octets": 405144,
+    "deborde": false,
+    "dessins": 178,
+    "tropLourdes": [
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-noyer/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-lin/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-lin/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-noyer/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-teck/diff.webp (1024px pour 119px)",
+     "/textures/m-noyer/diff.webp (1024px pour 119px)",
+     "/textures/m-noyer/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-velours/diff.webp (1024px pour 119px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 119px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 119px)",
+     "/textures/m-noyer/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-noyer/diff.webp (1024px pour 119px)",
+     "/textures/m-chene/diff.webp (1024px pour 119px)",
+     "/textures/m-noyer/diff.webp (1024px pour 119px)",
+     "/textures/m-noyer/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 119px)",
+     "/textures/m-bambou/diff.webp (1024px pour 119px)"
+    ],
+    "floues": [],
+    "sansSrcset": 77,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   },
+   "ordinateur": {
+    "images": 77,
+    "octets": 346972,
+    "deborde": false,
+    "dessins": 178,
+    "tropLourdes": [
+     "/textures/m-velours/diff.webp (1024px pour 203px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 203px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 203px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 203px)",
+     "/textures/m-lin/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 203px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 203px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 203px)",
+     "/textures/m-lin/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 203px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 203px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 203px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-noyer/diff.webp (1024px pour 203px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 203px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 203px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-teck/diff.webp (1024px pour 203px)",
+     "/textures/m-teck/diff.webp (1024px pour 102px)",
+     "/textures/m-noyer/diff.webp (1024px pour 203px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 203px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 203px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 203px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-velours/diff.webp (1024px pour 102px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 203px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 102px)",
+     "/textures/m-chenefume/diff.webp (1024px pour 102px)",
+     "/textures/m-noyer/diff.webp (1024px pour 203px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 203px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 203px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 203px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 203px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-noyer/diff.webp (1024px pour 203px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)",
+     "/textures/m-chene/diff.webp (1024px pour 203px)",
+     "/textures/m-chene/diff.webp (1024px pour 102px)",
+     "/textures/m-noyer/diff.webp (1024px pour 203px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)",
+     "/textures/m-noyer/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 203px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 203px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-bouleau/diff.webp (1024px pour 102px)",
+     "/textures/m-bambou/diff.webp (1024px pour 102px)"
+    ],
+    "floues": [],
+    "sansSrcset": 77,
+    "nonDifferees": 0,
+    "formats": [
+     "webp"
+    ]
+   }
+  }
+ }
+}

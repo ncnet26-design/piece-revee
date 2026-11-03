@@ -1,0 +1,3938 @@
+{
+ "date": "2026-11-03T21:43:12.764Z",
+ "images": [
+  {
+   "path": "/editorial/ia/accueil-table.webp",
+   "w": 1600,
+   "h": 1073,
+   "ratio": 1.491,
+   "kb": 327,
+   "format": "webp",
+   "mean": [
+    173,
+    156,
+    135
+   ],
+   "saturation": 0.245,
+   "luminance": 158,
+   "hash": "1100000011011010111000011110011010010010000001101000011101100000",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/ia/commandes/accueil-table.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : accueil et Studio"
+  },
+  {
+   "path": "/editorial/ia/art-deco-contemporain-2400.webp",
+   "w": 2400,
+   "h": 1792,
+   "ratio": 1.339,
+   "kb": 189,
+   "format": "webp",
+   "mean": [
+    89,
+    79,
+    68
+   ],
+   "saturation": 0.357,
+   "luminance": 81,
+   "hash": "0111000000110011001000010010001100100011011000011001000110001001",
+   "usedIn": [
+    "app/page.tsx"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/art-deco-contemporain.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 116,
+   "format": "webp",
+   "mean": [
+    89,
+    79,
+    68
+   ],
+   "saturation": 0.357,
+   "luminance": 80,
+   "hash": "0111000000110011001000010010001100100011011000011001000110001001",
+   "usedIn": [
+    "app/page.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/art-deco-contemporain.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/brutalisme-raffine.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 248,
+   "format": "webp",
+   "mean": [
+    111,
+    99,
+    86
+   ],
+   "saturation": 0.288,
+   "luminance": 101,
+   "hash": "0000000000011000010110000001100001011000010110000001100000011000",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/brutalisme-raffine.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/bureau.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 177,
+   "format": "webp",
+   "mean": [
+    152,
+    134,
+    115
+   ],
+   "saturation": 0.294,
+   "luminance": 136,
+   "hash": "1111110001110100111101000111010011101110011011100000111011011111",
+   "usedIn": [
+    "components/InspirationBank.tsx",
+    "components/studio/Create.tsx",
+    "lib/concept.ts",
+    "lib/home3d/furniture.ts"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/ia/campagne-elegante.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 112,
+   "format": "webp",
+   "mean": [
+    145,
+    136,
+    127
+   ],
+   "saturation": 0.179,
+   "luminance": 137,
+   "hash": "1100110011001010110010101100101001000110000101100111111010011110",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/campagne-elegante.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/chambre.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 176,
+   "format": "webp",
+   "mean": [
+    168,
+    154,
+    136
+   ],
+   "saturation": 0.221,
+   "luminance": 155,
+   "hash": "0111100100111011001110110011101100011011001110010100111010001110",
+   "usedIn": [
+    "components/CamilleDrawer.tsx",
+    "components/InspirationBank.tsx",
+    "components/boutique/Boutique.tsx",
+    "components/home3d/PlanEditor.tsx"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/ia/contemporain-sculptural.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 73,
+   "format": "webp",
+   "mean": [
+    180,
+    169,
+    155
+   ],
+   "saturation": 0.161,
+   "luminance": 170,
+   "hash": "1000000010011000100010001000100001001000010111001100010011000100",
+   "usedIn": [
+    "app/page.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/contemporain-sculptural.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/cuisine.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 66,
+   "format": "webp",
+   "mean": [
+    172,
+    154,
+    133
+   ],
+   "saturation": 0.245,
+   "luminance": 156,
+   "hash": "0100000001100110010000110110001010000000000110000001100000000000",
+   "usedIn": [
+    "app/visite-3d/page.tsx",
+    "components/InspirationBank.tsx",
+    "components/home3d/PlanEditor.tsx",
+    "components/home3d/Visite3D.tsx"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/ia/dressing.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 167,
+   "format": "webp",
+   "mean": [
+    143,
+    117,
+    92
+   ],
+   "saturation": 0.39,
+   "luminance": 120,
+   "hash": "1111100100111001100111011001110111111101100110010111100111001000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/dressing.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/ia/entree.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 107,
+   "format": "webp",
+   "mean": [
+    176,
+    164,
+    150
+   ],
+   "saturation": 0.18,
+   "luminance": 165,
+   "hash": "1000111010001110100111101000111010000110100101101001101100010000",
+   "usedIn": [
+    "components/InspirationBank.tsx",
+    "components/home3d/PlanEditor.tsx",
+    "components/studio/Create.tsx",
+    "lib/home3d/engine.ts"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/ia/facade.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 308,
+   "format": "webp",
+   "mean": [
+    156,
+    149,
+    137
+   ],
+   "saturation": 0.171,
+   "luminance": 150,
+   "hash": "1000000011001001110010011011000011001101110011011001101001111000",
+   "usedIn": [
+    "lib/home3d/engine.ts",
+    "content/data/inspiration-bank.json",
+    "content/data/place-photos.json",
+    "content/ia/commandes/accord-facade.json"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/ia/haussmannien-renove.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 191,
+   "format": "webp",
+   "mean": [
+    168,
+    151,
+    131
+   ],
+   "saturation": 0.245,
+   "luminance": 153,
+   "hash": "0011100101111011011110010011001100110111000101100101001101100010",
+   "usedIn": [
+    "app/page.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/haussmannien-renove.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/japandi-essai.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 153,
+   "format": "webp",
+   "mean": [
+    170,
+    156,
+    142
+   ],
+   "saturation": 0.191,
+   "luminance": 158,
+   "hash": "1011100010110000101100001011000010110000001101101111010110010001",
+   "usedIn": [
+    "app/page.tsx",
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/japandi-essai.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/jardin.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 641,
+   "format": "webp",
+   "mean": [
+    123,
+    119,
+    85
+   ],
+   "saturation": 0.355,
+   "luminance": 117,
+   "hash": "1000011001001110010110110001001101100110100110101110001111100011",
+   "usedIn": [
+    "app/explorer/page.tsx",
+    "app/guides/page.tsx",
+    "app/lieux/[slug]/page.tsx",
+    "app/lieux/page.tsx"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/ia/luxe-discret.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 210,
+   "format": "webp",
+   "mean": [
+    151,
+    134,
+    118
+   ],
+   "saturation": 0.272,
+   "luminance": 136,
+   "hash": "1111100011111111101111111110111111111111111011110011001110110111",
+   "usedIn": [
+    "app/page.tsx",
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/luxe-discret.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/matiere-boucle.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 129,
+   "format": "webp",
+   "mean": [
+    156,
+    143,
+    127
+   ],
+   "saturation": 0.259,
+   "luminance": 145,
+   "hash": "0111100011000000110000001000000010000000110000001000000010000010",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-boucle.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-ceramique.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 185,
+   "format": "webp",
+   "mean": [
+    142,
+    129,
+    116
+   ],
+   "saturation": 0.24,
+   "luminance": 131,
+   "hash": "1100000111000001010001001100101111011011100010111011111011110000",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-ceramique.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-chene.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 170,
+   "format": "webp",
+   "mean": [
+    118,
+    94,
+    71
+   ],
+   "saturation": 0.458,
+   "luminance": 97,
+   "hash": "1000110111111100100011001110000011111000001100100010101011100100",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-chene.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-enduit.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 61,
+   "format": "webp",
+   "mean": [
+    216,
+    211,
+    205
+   ],
+   "saturation": 0.058,
+   "luminance": 211,
+   "hash": "1111111011111110111111101111101011111100111111001111110011010010",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-enduit.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-laiton.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 79,
+   "format": "webp",
+   "mean": [
+    179,
+    169,
+    157
+   ],
+   "saturation": 0.17,
+   "luminance": 170,
+   "hash": "0110000001111000001111100011011001101011111001011111100111001111",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-laiton.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-lin.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 302,
+   "format": "webp",
+   "mean": [
+    148,
+    137,
+    123
+   ],
+   "saturation": 0.21,
+   "luminance": 138,
+   "hash": "1111011110110111010011101110011010110010101101101011110110111110",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-lin.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-marbre.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 54,
+   "format": "webp",
+   "mean": [
+    199,
+    196,
+    191
+   ],
+   "saturation": 0.053,
+   "luminance": 196,
+   "hash": "1100000000000000110110001000101110010110001000101110010001100100",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-marbre.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-noyer.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 137,
+   "format": "webp",
+   "mean": [
+    106,
+    79,
+    62
+   ],
+   "saturation": 0.462,
+   "luminance": 83,
+   "hash": "0111001001110110010111100101011001010110010101100101001001010000",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-noyer.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-peinture.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 112,
+   "format": "webp",
+   "mean": [
+    116,
+    68,
+    49
+   ],
+   "saturation": 0.613,
+   "luminance": 77,
+   "hash": "1001110010011100100111001101110011011100110110101101101111110011",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-peinture.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-pierre.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 141,
+   "format": "webp",
+   "mean": [
+    188,
+    177,
+    163
+   ],
+   "saturation": 0.162,
+   "luminance": 178,
+   "hash": "0000000010000000011000000010000000000001110001110110000000110001",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-pierre.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-travertin.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 83,
+   "format": "webp",
+   "mean": [
+    162,
+    148,
+    131
+   ],
+   "saturation": 0.274,
+   "luminance": 150,
+   "hash": "1111000011001111110011011001111111111110111111001111110111011110",
+   "usedIn": [
+    "app/page.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-travertin.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-velours.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 105,
+   "format": "webp",
+   "mean": [
+    42,
+    60,
+    43
+   ],
+   "saturation": 0.409,
+   "luminance": 55,
+   "hash": "1000000011000000011100110011110100000110010001100100011101000111",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-velours.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/matiere-verre.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 163,
+   "format": "webp",
+   "mean": [
+    124,
+    109,
+    91
+   ],
+   "saturation": 0.312,
+   "luminance": 111,
+   "hash": "1011000010110000001110000011100010011000001111111011010011100010",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/matiere-verre.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : matières"
+  },
+  {
+   "path": "/editorial/ia/mediterraneen-contemporain.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 124,
+   "format": "webp",
+   "mean": [
+    172,
+    145,
+    119
+   ],
+   "saturation": 0.329,
+   "luminance": 149,
+   "hash": "0010001100110010000100010001001100011011100101100000011100000011",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/mediterraneen-contemporain.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/mid-century.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 195,
+   "format": "webp",
+   "mean": [
+    166,
+    153,
+    135
+   ],
+   "saturation": 0.213,
+   "luminance": 154,
+   "hash": "1111110010111101100111101001010001110001011000010110001111111101",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/ai-prompts.json",
+    "content/data/furniture.json",
+    "content/data/inspiration-bank.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/minimalisme-chaleureux.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 82,
+   "format": "webp",
+   "mean": [
+    170,
+    155,
+    137
+   ],
+   "saturation": 0.223,
+   "luminance": 157,
+   "hash": "1100011011000110110011001100110011000011100010111001011110000001",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/minimalisme-chaleureux.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/parisien-contemporain.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 176,
+   "format": "webp",
+   "mean": [
+    170,
+    157,
+    142
+   ],
+   "saturation": 0.201,
+   "luminance": 159,
+   "hash": "1111000000110000001100000011000000010000010110011001100100010000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/parisien-contemporain.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/salle-a-manger.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 100,
+   "format": "webp",
+   "mean": [
+    149,
+    128,
+    107
+   ],
+   "saturation": 0.32,
+   "luminance": 131,
+   "hash": "1111100011101101111001011110110111001100110001001100000111001111",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/ai-prompts.json",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/salle-a-manger.json"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/ia/salle-de-bain.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 117,
+   "format": "webp",
+   "mean": [
+    159,
+    138,
+    115
+   ],
+   "saturation": 0.32,
+   "luminance": 141,
+   "hash": "0110010001100100011000000110000001100001011000000110010011100001",
+   "usedIn": [
+    "components/InspirationBank.tsx",
+    "components/boutique/Boutique.tsx",
+    "components/studio/Create.tsx",
+    "components/studio/Explorer.tsx"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/ia/salon-boucle-noyer.webp",
+   "w": 1600,
+   "h": 893,
+   "ratio": 1.792,
+   "kb": 101,
+   "format": "webp",
+   "mean": [
+    184,
+    175,
+    165
+   ],
+   "saturation": 0.126,
+   "luminance": 176,
+   "hash": "0010000001100001011000011110000100110001000100011001011010110010",
+   "usedIn": [
+    "app/page.tsx",
+    "components/ShopTheLook.tsx",
+    "content/data/showcase.json",
+    "content/ia/commandes/salon-boucle-noyer.json"
+   ],
+   "group": "Images IA : accueil et Studio"
+  },
+  {
+   "path": "/editorial/ia/salon-velours-chene.webp",
+   "w": 1600,
+   "h": 893,
+   "ratio": 1.792,
+   "kb": 82,
+   "format": "webp",
+   "mean": [
+    170,
+    162,
+    156
+   ],
+   "saturation": 0.112,
+   "luminance": 163,
+   "hash": "0010000101100000011000011110000100110001001100010011011010110010",
+   "usedIn": [
+    "app/page.tsx",
+    "content/ia/commandes/salon-velours-chene.json"
+   ],
+   "group": "Images IA : accueil et Studio"
+  },
+  {
+   "path": "/editorial/ia/salon.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 168,
+   "format": "webp",
+   "mean": [
+    170,
+    161,
+    148
+   ],
+   "saturation": 0.149,
+   "luminance": 162,
+   "hash": "1111001011110010111100101111001011110010101101001101010011111010",
+   "usedIn": [
+    "app/guides/page.tsx",
+    "app/page.tsx",
+    "app/visite-3d/page.tsx",
+    "components/CamilleDrawer.tsx"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/ia/scandinave-haut-de-gamme.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 163,
+   "format": "webp",
+   "mean": [
+    175,
+    166,
+    156
+   ],
+   "saturation": 0.127,
+   "luminance": 167,
+   "hash": "0110000000100000001000000010000100000001010100111100001010000000",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/scandinave-haut-de-gamme.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Images IA : styles"
+  },
+  {
+   "path": "/editorial/ia/terrasse.webp",
+   "w": 1600,
+   "h": 1195,
+   "ratio": 1.339,
+   "kb": 465,
+   "format": "webp",
+   "mean": [
+    149,
+    129,
+    105
+   ],
+   "saturation": 0.352,
+   "luminance": 132,
+   "hash": "0000000100111110111110000011100000010001100000001100100011011000",
+   "usedIn": [
+    "app/visite-3d/page.tsx",
+    "components/NewProject.tsx",
+    "components/ProjectPages.tsx",
+    "components/home3d/Visite3D.tsx"
+   ],
+   "group": "Images IA : espaces"
+  },
+  {
+   "path": "/editorial/matieres/bois-huile.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 83,
+   "format": "webp",
+   "mean": [
+    73,
+    56,
+    41
+   ],
+   "saturation": 0.446,
+   "luminance": 58,
+   "hash": "0101000010010000000000010000001000000110000110000011000001110000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/boucle.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 56,
+   "format": "webp",
+   "mean": [
+    231,
+    230,
+    225
+   ],
+   "saturation": 0.027,
+   "luminance": 230,
+   "hash": "0100010010001010000100000001001001000010001000001000000001000000",
+   "usedIn": [
+    "app/page.tsx",
+    "components/ShopTheLook.tsx",
+    "components/Visual.tsx",
+    "components/studio/Comparator.tsx"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/bronze-brosse.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 13,
+   "format": "webp",
+   "mean": [
+    128,
+    96,
+    55
+   ],
+   "saturation": 0.572,
+   "luminance": 100,
+   "hash": "1011111001111101111111001110010011111000100100000100000010000000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/chene-fume.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 63,
+   "format": "webp",
+   "mean": [
+    97,
+    75,
+    57
+   ],
+   "saturation": 0.415,
+   "luminance": 79,
+   "hash": "0000000000000000000000010000001000001110000110000011000001110000",
+   "usedIn": [
+    "components/studio/QualityLab.tsx",
+    "lib/showroom/catalog.ts",
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/chene-naturel.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 134,
+   "format": "webp",
+   "mean": [
+    163,
+    130,
+    93
+   ],
+   "saturation": 0.429,
+   "luminance": 134,
+   "hash": "0000010100010101000100010001000100010000000100000001100001000000",
+   "usedIn": [
+    "components/studio/Create.tsx",
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/enduit-chaux.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 98,
+   "format": "webp",
+   "mean": [
+    224,
+    220,
+    214
+   ],
+   "saturation": 0.044,
+   "luminance": 220,
+   "hash": "0010000000000000101001001000000000010000100000000000000000000000",
+   "usedIn": [
+    "app/page.tsx",
+    "components/studio/Create.tsx",
+    "lib/studio/scene.ts",
+    "content/data/inspiration-bank.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/faience-blanche.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 3,
+   "format": "webp",
+   "mean": [
+    244,
+    242,
+    238
+   ],
+   "saturation": 0.025,
+   "luminance": 242,
+   "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/laiton-brosse.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 14,
+   "format": "webp",
+   "mean": [
+    188,
+    155,
+    99
+   ],
+   "saturation": 0.472,
+   "luminance": 158,
+   "hash": "1111111111101011111011101110110011011000101100000110000010000000",
+   "usedIn": [
+    "app/page.tsx",
+    "components/studio/Create.tsx",
+    "lib/studio/engine.ts",
+    "content/data/inspiration-bank.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/laque-brillante.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 11,
+   "format": "webp",
+   "mean": [
+    43,
+    63,
+    57
+   ],
+   "saturation": 0.323,
+   "luminance": 59,
+   "hash": "0000000000000000000000010000001100000111000111000011000001110000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/lin-lave.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 241,
+   "format": "webp",
+   "mean": [
+    211,
+    205,
+    194
+   ],
+   "saturation": 0.08,
+   "luminance": 205,
+   "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+   "usedIn": [
+    "components/studio/Create.tsx",
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/marbre-calacatta.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 4,
+   "format": "webp",
+   "mean": [
+    237,
+    234,
+    228
+   ],
+   "saturation": 0.038,
+   "luminance": 234,
+   "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+   "usedIn": [
+    "components/studio/Create.tsx",
+    "content/data/inspiration-bank.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/noyer-verni.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 90,
+   "format": "webp",
+   "mean": [
+    174,
+    143,
+    120
+   ],
+   "saturation": 0.313,
+   "luminance": 148,
+   "hash": "0000000000000000000000111000001101000000000110000001000001000000",
+   "usedIn": [
+    "app/page.tsx",
+    "components/studio/Create.tsx",
+    "components/studio/QualityLab.tsx",
+    "lib/studio/scene.ts"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/parquet-chevron.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 197,
+   "format": "webp",
+   "mean": [
+    151,
+    118,
+    84
+   ],
+   "saturation": 0.444,
+   "luminance": 122,
+   "hash": "1000000011010000111010000010100100101100000111001101000011101000",
+   "usedIn": [
+    "lib/studio/scene.ts",
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/peinture-mate.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 10,
+   "format": "webp",
+   "mean": [
+    232,
+    230,
+    228
+   ],
+   "saturation": 0.018,
+   "luminance": 231,
+   "hash": "0000000000000000001000000000010000010000000010000000000001000000",
+   "usedIn": [
+    "lib/studio/engine.ts",
+    "lib/studio/scene.ts",
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/peinture-velours.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 10,
+   "format": "webp",
+   "mean": [
+    227,
+    224,
+    218
+   ],
+   "saturation": 0.037,
+   "luminance": 224,
+   "hash": "0010000000000000101000000010000000010000000000000000000000000000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/pierre-mate.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 263,
+   "format": "webp",
+   "mean": [
+    126,
+    126,
+    118
+   ],
+   "saturation": 0.067,
+   "luminance": 126,
+   "hash": "0001000001000001001010010010010000001110100101000011000001010010",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/pierre-naturelle.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 347,
+   "format": "webp",
+   "mean": [
+    210,
+    165,
+    121
+   ],
+   "saturation": 0.426,
+   "luminance": 171,
+   "hash": "1000000100000100010001001100010000110100001000001000000010001000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/platre-texture.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 175,
+   "format": "webp",
+   "mean": [
+    235,
+    233,
+    231
+   ],
+   "saturation": 0.016,
+   "luminance": 233,
+   "hash": "1000000111000000110000001000110000001100000000000000100000000000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/tadelakt.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 44,
+   "format": "webp",
+   "mean": [
+    210,
+    199,
+    183
+   ],
+   "saturation": 0.13,
+   "luminance": 200,
+   "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+   "usedIn": [
+    "lib/board/state.ts",
+    "lib/home3d/plan.ts",
+    "lib/parcours.ts",
+    "lib/showroom/catalog.ts"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/tapis-laine.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 58,
+   "format": "webp",
+   "mean": [
+    223,
+    219,
+    211
+   ],
+   "saturation": 0.054,
+   "luminance": 219,
+   "hash": "0100010010001010000000000001001001001000001000001000000000000000",
+   "usedIn": [
+    "lib/studio/scene.ts",
+    "content/data/furniture.json",
+    "content/data/inspiration-bank.json",
+    "content/data/materials-pbr.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/terrazzo.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 366,
+   "format": "webp",
+   "mean": [
+    140,
+    114,
+    92
+   ],
+   "saturation": 0.342,
+   "luminance": 118,
+   "hash": "0000000000101000001000010000001000001100000010000011000001000000",
+   "usedIn": [
+    "app/showroom/page.tsx",
+    "components/board/Planche.tsx",
+    "components/studio/Scene3D.tsx",
+    "lib/board/state.ts"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/terre-cuite.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 71,
+   "format": "webp",
+   "mean": [
+    83,
+    47,
+    34
+   ],
+   "saturation": 0.59,
+   "luminance": 53,
+   "hash": "0000010000000101000000010001010100011101000111000001010001110000",
+   "usedIn": [
+    "components/studio/Explorer.tsx",
+    "lib/showroom/catalog.ts",
+    "content/data/furniture.json",
+    "content/data/inspiration-bank.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/travertin.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 89,
+   "format": "webp",
+   "mean": [
+    221,
+    202,
+    171
+   ],
+   "saturation": 0.223,
+   "luminance": 204,
+   "hash": "1001000001001001010010101000000110001100000110001100000000100000",
+   "usedIn": [
+    "app/page.tsx",
+    "app/planche/page.tsx",
+    "app/studio/controle/page.tsx",
+    "components/InspirationBank.tsx"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/velours-foret.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 99,
+   "format": "webp",
+   "mean": [
+    56,
+    79,
+    67
+   ],
+   "saturation": 0.294,
+   "luminance": 73,
+   "hash": "0000000000000000000000010000011100000110000011000011100001110000",
+   "usedIn": [
+    "app/page.tsx",
+    "components/studio/Create.tsx",
+    "components/studio/QualityLab.tsx",
+    "content/data/inspiration-bank.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/verre-clair.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 3,
+   "format": "webp",
+   "mean": [
+    244,
+    246,
+    246
+   ],
+   "saturation": 0.008,
+   "luminance": 246,
+   "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/verre-depoli.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 3,
+   "format": "webp",
+   "mean": [
+    238,
+    241,
+    240
+   ],
+   "saturation": 0.012,
+   "luminance": 240,
+   "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/verre-fume.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 17,
+   "format": "webp",
+   "mean": [
+    91,
+    85,
+    80
+   ],
+   "saturation": 0.121,
+   "luminance": 86,
+   "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+   "usedIn": [
+    "lib/showroom/catalog.ts",
+    "lib/showroom/generate.ts",
+    "content/data/inspiration-bank.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/matieres/zellige-emeraude.webp",
+   "w": 1200,
+   "h": 1200,
+   "ratio": 1,
+   "kb": 8,
+   "format": "webp",
+   "mean": [
+    30,
+    107,
+    86
+   ],
+   "saturation": 0.72,
+   "luminance": 89,
+   "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+   "usedIn": [
+    "components/studio/Create.tsx",
+    "content/data/inspiration-bank.json",
+    "content/data/materials-premium.json"
+   ],
+   "group": "Gros plans de textures (composés)"
+  },
+  {
+   "path": "/editorial/planches/art-deco-contemporain.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 16,
+   "format": "webp",
+   "mean": [
+    195,
+    193,
+    181
+   ],
+   "saturation": 0.135,
+   "luminance": 192,
+   "hash": "0000100100100111001000110010001100100111010010110100101101101011",
+   "usedIn": [
+    "app/page.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/art-deco-contemporain.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/brutalisme-raffine.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 166,
+   "format": "webp",
+   "mean": [
+    196,
+    191,
+    183
+   ],
+   "saturation": 0.078,
+   "luminance": 191,
+   "hash": "0001100100011001010110010101101101011011001100110011001101100011",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/brutalisme-raffine.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/campagne-elegante.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 139,
+   "format": "webp",
+   "mean": [
+    187,
+    170,
+    155
+   ],
+   "saturation": 0.217,
+   "luminance": 173,
+   "hash": "0101100101011001010110010101101101011011001100110011001100110011",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/campagne-elegante.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/chambre.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 137,
+   "format": "webp",
+   "mean": [
+    222,
+    215,
+    205
+   ],
+   "saturation": 0.085,
+   "luminance": 216,
+   "hash": "0000100000011011010110110001101100010011001100110011001101100011",
+   "usedIn": [
+    "components/CamilleDrawer.tsx",
+    "components/InspirationBank.tsx",
+    "components/boutique/Boutique.tsx",
+    "components/home3d/PlanEditor.tsx"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/contemporain-sculptural.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 65,
+   "format": "webp",
+   "mean": [
+    227,
+    216,
+    200
+   ],
+   "saturation": 0.124,
+   "luminance": 217,
+   "hash": "0010100100011001000110010001101101011011010011110100111100111011",
+   "usedIn": [
+    "app/page.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/contemporain-sculptural.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/dressing.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 110,
+   "format": "webp",
+   "mean": [
+    208,
+    193,
+    173
+   ],
+   "saturation": 0.195,
+   "luminance": 195,
+   "hash": "0000100000011011010110110001101101011011001100110011001101100011",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/dressing.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/entree.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 72,
+   "format": "webp",
+   "mean": [
+    222,
+    208,
+    190
+   ],
+   "saturation": 0.152,
+   "luminance": 210,
+   "hash": "0010100000000011000000110000001101001111010011010100110101101011",
+   "usedIn": [
+    "components/InspirationBank.tsx",
+    "components/home3d/PlanEditor.tsx",
+    "components/studio/Create.tsx",
+    "lib/home3d/engine.ts"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/facade.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 135,
+   "format": "webp",
+   "mean": [
+    212,
+    201,
+    188
+   ],
+   "saturation": 0.132,
+   "luminance": 202,
+   "hash": "0000100000100011001000110010001100100011010000110100001101101011",
+   "usedIn": [
+    "lib/home3d/engine.ts",
+    "content/data/inspiration-bank.json",
+    "content/data/place-photos.json",
+    "content/ia/commandes/accord-facade.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/haussmannien-renove.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 85,
+   "format": "webp",
+   "mean": [
+    195,
+    184,
+    167
+   ],
+   "saturation": 0.19,
+   "luminance": 185,
+   "hash": "0001100100011001010110010101100101110011001100110011001100110011",
+   "usedIn": [
+    "app/page.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/haussmannien-renove.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/japandi.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 86,
+   "format": "webp",
+   "mean": [
+    183,
+    173,
+    163
+   ],
+   "saturation": 0.161,
+   "luminance": 174,
+   "hash": "0101100101011001010110010101101101011011011111110111111100101011",
+   "usedIn": [
+    "app/page.tsx",
+    "components/HomePage.tsx",
+    "components/InspirationBank.tsx",
+    "components/boutique/Boutique.tsx"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/jardin.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 184,
+   "format": "webp",
+   "mean": [
+    196,
+    173,
+    152
+   ],
+   "saturation": 0.265,
+   "luminance": 176,
+   "hash": "0001100000100011000000110000001101001111010010110000101101101011",
+   "usedIn": [
+    "app/explorer/page.tsx",
+    "app/guides/page.tsx",
+    "app/lieux/[slug]/page.tsx",
+    "app/lieux/page.tsx"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/luxe-discret.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 70,
+   "format": "webp",
+   "mean": [
+    220,
+    207,
+    191
+   ],
+   "saturation": 0.146,
+   "luminance": 209,
+   "hash": "0010100100000001000000110000001101001111001111010111100100111011",
+   "usedIn": [
+    "app/page.tsx",
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/luxe-discret.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/mediterraneen-contemporain.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 88,
+   "format": "webp",
+   "mean": [
+    203,
+    189,
+    176
+   ],
+   "saturation": 0.172,
+   "luminance": 191,
+   "hash": "0000100100100111001000110010001101101111010010110100101100111011",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/mediterraneen-contemporain.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/mid-century.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 97,
+   "format": "webp",
+   "mean": [
+    183,
+    170,
+    152
+   ],
+   "saturation": 0.216,
+   "luminance": 172,
+   "hash": "0000100101000111010000110100001101001111010010110100101101101011",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/ai-prompts.json",
+    "content/data/furniture.json",
+    "content/data/inspiration-bank.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/minimalisme-chaleureux.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 101,
+   "format": "webp",
+   "mean": [
+    220,
+    212,
+    200
+   ],
+   "saturation": 0.106,
+   "luminance": 213,
+   "hash": "0000100100100111001000110010001100101111000010110000101100111011",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/minimalisme-chaleureux.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/parisien-contemporain.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 118,
+   "format": "webp",
+   "mean": [
+    211,
+    198,
+    183
+   ],
+   "saturation": 0.165,
+   "luminance": 200,
+   "hash": "0001100100011001010110010101101101111001001100010011000100110011",
+   "usedIn": [
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/parisien-contemporain.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/salle-a-manger.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 47,
+   "format": "webp",
+   "mean": [
+    201,
+    190,
+    176
+   ],
+   "saturation": 0.16,
+   "luminance": 191,
+   "hash": "0001100001011001010110010101100101010011011100110100001101100011",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/ai-prompts.json",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/salle-a-manger.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/salle-de-bain.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 145,
+   "format": "webp",
+   "mean": [
+    212,
+    197,
+    180
+   ],
+   "saturation": 0.165,
+   "luminance": 199,
+   "hash": "0001100000000011001000110010001101101111010010110100101101001011",
+   "usedIn": [
+    "components/InspirationBank.tsx",
+    "components/boutique/Boutique.tsx",
+    "components/studio/Create.tsx",
+    "components/studio/Explorer.tsx"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/scandinave-haut-de-gamme.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 103,
+   "format": "webp",
+   "mean": [
+    187,
+    178,
+    168
+   ],
+   "saturation": 0.164,
+   "luminance": 179,
+   "hash": "0101100101011001010110010101101101011011001110110111101100111011",
+   "usedIn": [
+    "components/boutique/Boutique.tsx",
+    "content/data/inspiration-bank.json",
+    "content/ia/commandes/scandinave-haut-de-gamme.json",
+    "content/ia/lots/lot-1.json"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/editorial/planches/terrasse.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 143,
+   "format": "webp",
+   "mean": [
+    184,
+    163,
+    147
+   ],
+   "saturation": 0.272,
+   "luminance": 166,
+   "hash": "0001100001011011010110110101101101011011011111110111111101001011",
+   "usedIn": [
+    "app/visite-3d/page.tsx",
+    "components/NewProject.tsx",
+    "components/ProjectPages.tsx",
+    "components/home3d/Visite3D.tsx"
+   ],
+   "group": "Planches de style (composées)"
+  },
+  {
+   "path": "/inspirations/cuisines-68.webp",
+   "w": 1600,
+   "h": 801,
+   "ratio": 1.998,
+   "kb": 190,
+   "format": "webp",
+   "mean": [
+    135,
+    132,
+    128
+   ],
+   "saturation": 0.149,
+   "luminance": 132,
+   "hash": "0011010000011001001010010010100110101001011001100110011011100110",
+   "usedIn": [
+    "content/data/inspirations.json"
+   ],
+   "group": "Photographies d'architecture"
+  },
+  {
+   "path": "/inspirations/villas-10.webp",
+   "w": 1600,
+   "h": 900,
+   "ratio": 1.778,
+   "kb": 145,
+   "format": "webp",
+   "mean": [
+    141,
+    135,
+    130
+   ],
+   "saturation": 0.168,
+   "luminance": 136,
+   "hash": "0101000100110011001100100100010011101100010011000100100001101001",
+   "usedIn": [
+    "content/data/inspirations.json"
+   ],
+   "group": "Photographies d'architecture"
+  },
+  {
+   "path": "/inspirations/villas-14.webp",
+   "w": 1467,
+   "h": 1100,
+   "ratio": 1.334,
+   "kb": 175,
+   "format": "webp",
+   "mean": [
+    121,
+    119,
+    112
+   ],
+   "saturation": 0.158,
+   "luminance": 119,
+   "hash": "1111111011111111111110101011111010011011101110010011111111111011",
+   "usedIn": [
+    "app/page.tsx",
+    "content/data/inspirations.json"
+   ],
+   "group": "Photographies d'architecture"
+  },
+  {
+   "path": "/inspirations/villas-15.webp",
+   "w": 1100,
+   "h": 1100,
+   "ratio": 1,
+   "kb": 129,
+   "format": "webp",
+   "mean": [
+    133,
+    120,
+    116
+   ],
+   "saturation": 0.169,
+   "luminance": 122,
+   "hash": "1111110111111101110001001010001010111101001111010011111011101110",
+   "usedIn": [
+    "content/data/inspirations.json"
+   ],
+   "group": "Photographies d'architecture"
+  },
+  {
+   "path": "/inspirations/villas-16.webp",
+   "w": 1600,
+   "h": 937,
+   "ratio": 1.708,
+   "kb": 175,
+   "format": "webp",
+   "mean": [
+    109,
+    103,
+    97
+   ],
+   "saturation": 0.165,
+   "luminance": 104,
+   "hash": "1110000011111000111100010111000101010011111011001110110011101100",
+   "usedIn": [
+    "app/page.tsx",
+    "content/data/inspirations.json"
+   ],
+   "group": "Photographies d'architecture"
+  },
+  {
+   "path": "/inspirations/villas-24.webp",
+   "w": 1600,
+   "h": 1067,
+   "ratio": 1.5,
+   "kb": 308,
+   "format": "webp",
+   "mean": [
+    122,
+    130,
+    139
+   ],
+   "saturation": 0.22,
+   "luminance": 129,
+   "hash": "1110011011101000111111001111110010001010111001001110100011001101",
+   "usedIn": [
+    "content/data/inspirations.json"
+   ],
+   "group": "Photographies d'architecture"
+  },
+  {
+   "path": "/visuels/cuisine-3d.webp",
+   "w": 1200,
+   "h": 1500,
+   "ratio": 0.8,
+   "kb": 72,
+   "format": "webp",
+   "mean": [
+    163,
+    153,
+    132
+   ],
+   "saturation": 0.223,
+   "luminance": 154,
+   "hash": "1100000011100000100000101100011011001101111100011101000011011011",
+   "usedIn": [
+    "lib/board/state.ts"
+   ],
+   "group": "Anciens visuels"
+  },
+  {
+   "path": "/visuels/hero-3d.webp",
+   "w": 2000,
+   "h": 1125,
+   "ratio": 1.778,
+   "kb": 93,
+   "format": "webp",
+   "mean": [
+    168,
+    156,
+    139
+   ],
+   "saturation": 0.258,
+   "luminance": 157,
+   "hash": "0111100010111001100101101001110001011110001001110010011100001110",
+   "usedIn": [
+    "lib/board/state.ts"
+   ],
+   "group": "Anciens visuels"
+  },
+  {
+   "path": "/visuels/planche-hero.webp",
+   "w": 1600,
+   "h": 1200,
+   "ratio": 1.333,
+   "kb": 97,
+   "format": "webp",
+   "mean": [
+    232,
+    220,
+    202
+   ],
+   "saturation": 0.144,
+   "luminance": 221,
+   "hash": "0000100100001001001110010011101100110111010001110100001000000000",
+   "usedIn": [
+    "lib/board/state.ts"
+   ],
+   "group": "Anciens visuels"
+  },
+  {
+   "path": "/visuels/visite-3d.webp",
+   "w": 1200,
+   "h": 1500,
+   "ratio": 0.8,
+   "kb": 82,
+   "format": "webp",
+   "mean": [
+    179,
+    167,
+    143
+   ],
+   "saturation": 0.231,
+   "luminance": 168,
+   "hash": "1110000011100000001111110011001000110111011000011111100010111110",
+   "usedIn": [
+    "app/visite-3d/page.tsx",
+    "components/Chrome.tsx",
+    "components/home3d/Visite3D.tsx",
+    "lib/board/state.ts"
+   ],
+   "group": "Anciens visuels"
+  }
+ ],
+ "styles": [
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "art-deco-contemporain.webp",
+   "palette": 0.005,
+   "structure": 0
+  },
+  {
+   "a": "chambre.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.095,
+   "structure": 22
+  },
+  {
+   "a": "chambre.webp",
+   "b": "mid-century.webp",
+   "palette": 0.109,
+   "structure": 32
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.11,
+   "structure": 32
+  },
+  {
+   "a": "chambre.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.111,
+   "structure": 28
+  },
+  {
+   "a": "salon.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.116,
+   "structure": 36
+  },
+  {
+   "a": "chambre.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.119,
+   "structure": 45
+  },
+  {
+   "a": "mid-century.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.121,
+   "structure": 32
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "mid-century.webp",
+   "palette": 0.124,
+   "structure": 36
+  },
+  {
+   "a": "chambre.webp",
+   "b": "cuisine.webp",
+   "palette": 0.127,
+   "structure": 32
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.14,
+   "structure": 29
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.144,
+   "structure": 19
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.145,
+   "structure": 29
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "mid-century.webp",
+   "palette": 0.145,
+   "structure": 27
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.146,
+   "structure": 36
+  },
+  {
+   "a": "parisien-contemporain.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.149,
+   "structure": 17
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.15,
+   "structure": 45
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.154,
+   "structure": 30
+  },
+  {
+   "a": "salle-a-manger.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.154,
+   "structure": 30
+  },
+  {
+   "a": "bureau.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.158,
+   "structure": 26
+  },
+  {
+   "a": "dressing.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.162,
+   "structure": 27
+  },
+  {
+   "a": "chambre.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.166,
+   "structure": 35
+  },
+  {
+   "a": "parisien-contemporain.webp",
+   "b": "salon.webp",
+   "palette": 0.167,
+   "structure": 29
+  },
+  {
+   "a": "luxe-discret.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.169,
+   "structure": 24
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "mid-century.webp",
+   "palette": 0.17,
+   "structure": 46
+  },
+  {
+   "a": "bureau.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.171,
+   "structure": 24
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.171,
+   "structure": 35
+  },
+  {
+   "a": "entree.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.171,
+   "structure": 37
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "salon.webp",
+   "palette": 0.172,
+   "structure": 20
+  },
+  {
+   "a": "entree.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.175,
+   "structure": 31
+  },
+  {
+   "a": "bureau.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.176,
+   "structure": 29
+  },
+  {
+   "a": "bureau.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.176,
+   "structure": 33
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.176,
+   "structure": 27
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "cuisine.webp",
+   "palette": 0.177,
+   "structure": 32
+  },
+  {
+   "a": "chambre.webp",
+   "b": "contemporain-sculptural.webp",
+   "palette": 0.179,
+   "structure": 34
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.179,
+   "structure": 28
+  },
+  {
+   "a": "entree.webp",
+   "b": "salon.webp",
+   "palette": 0.179,
+   "structure": 35
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.179,
+   "structure": 29
+  },
+  {
+   "a": "bureau.webp",
+   "b": "chambre.webp",
+   "palette": 0.182,
+   "structure": 34
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.184,
+   "structure": 40
+  },
+  {
+   "a": "salle-de-bain.webp",
+   "b": "terrasse.webp",
+   "palette": 0.184,
+   "structure": 28
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.189,
+   "structure": 41
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "entree.webp",
+   "palette": 0.189,
+   "structure": 30
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "salon.webp",
+   "palette": 0.189,
+   "structure": 33
+  },
+  {
+   "a": "entree.webp",
+   "b": "facade.webp",
+   "palette": 0.192,
+   "structure": 30
+  },
+  {
+   "a": "mid-century.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.194,
+   "structure": 35
+  },
+  {
+   "a": "chambre.webp",
+   "b": "salon.webp",
+   "palette": 0.196,
+   "structure": 33
+  },
+  {
+   "a": "bureau.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.199,
+   "structure": 36
+  },
+  {
+   "a": "chambre.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.2,
+   "structure": 27
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.2,
+   "structure": 25
+  },
+  {
+   "a": "mid-century.webp",
+   "b": "salon.webp",
+   "palette": 0.201,
+   "structure": 33
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.202,
+   "structure": 22
+  },
+  {
+   "a": "salle-a-manger.webp",
+   "b": "terrasse.webp",
+   "palette": 0.21,
+   "structure": 34
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "salon.webp",
+   "palette": 0.211,
+   "structure": 28
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.211,
+   "structure": 36
+  },
+  {
+   "a": "entree.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.211,
+   "structure": 21
+  },
+  {
+   "a": "bureau.webp",
+   "b": "cuisine.webp",
+   "palette": 0.213,
+   "structure": 36
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "mid-century.webp",
+   "palette": 0.213,
+   "structure": 32
+  },
+  {
+   "a": "luxe-discret.webp",
+   "b": "terrasse.webp",
+   "palette": 0.213,
+   "structure": 44
+  },
+  {
+   "a": "minimalisme-chaleureux.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.214,
+   "structure": 37
+  },
+  {
+   "a": "luxe-discret.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.216,
+   "structure": 40
+  },
+  {
+   "a": "bureau.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.218,
+   "structure": 26
+  },
+  {
+   "a": "bureau.webp",
+   "b": "mid-century.webp",
+   "palette": 0.219,
+   "structure": 28
+  },
+  {
+   "a": "mid-century.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.22,
+   "structure": 35
+  },
+  {
+   "a": "minimalisme-chaleureux.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.222,
+   "structure": 31
+  },
+  {
+   "a": "bureau.webp",
+   "b": "terrasse.webp",
+   "palette": 0.223,
+   "structure": 36
+  },
+  {
+   "a": "chambre.webp",
+   "b": "entree.webp",
+   "palette": 0.224,
+   "structure": 42
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.225,
+   "structure": 26
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.229,
+   "structure": 33
+  },
+  {
+   "a": "minimalisme-chaleureux.webp",
+   "b": "salon.webp",
+   "palette": 0.231,
+   "structure": 34
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "mid-century.webp",
+   "palette": 0.232,
+   "structure": 35
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.233,
+   "structure": 30
+  },
+  {
+   "a": "bureau.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.235,
+   "structure": 32
+  },
+  {
+   "a": "dressing.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.235,
+   "structure": 41
+  },
+  {
+   "a": "entree.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.237,
+   "structure": 34
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "salon.webp",
+   "palette": 0.238,
+   "structure": 29
+  },
+  {
+   "a": "entree.webp",
+   "b": "mid-century.webp",
+   "palette": 0.241,
+   "structure": 36
+  },
+  {
+   "a": "dressing.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.242,
+   "structure": 27
+  },
+  {
+   "a": "bureau.webp",
+   "b": "dressing.webp",
+   "palette": 0.25,
+   "structure": 35
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.25,
+   "structure": 29
+  },
+  {
+   "a": "luxe-discret.webp",
+   "b": "salon.webp",
+   "palette": 0.253,
+   "structure": 31
+  },
+  {
+   "a": "dressing.webp",
+   "b": "terrasse.webp",
+   "palette": 0.254,
+   "structure": 29
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "chambre.webp",
+   "palette": 0.256,
+   "structure": 33
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "salon.webp",
+   "palette": 0.259,
+   "structure": 31
+  },
+  {
+   "a": "entree.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.259,
+   "structure": 32
+  },
+  {
+   "a": "entree.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.26,
+   "structure": 36
+  },
+  {
+   "a": "minimalisme-chaleureux.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.263,
+   "structure": 31
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.264,
+   "structure": 34
+  },
+  {
+   "a": "mediterraneen-contemporain.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.264,
+   "structure": 42
+  },
+  {
+   "a": "bureau.webp",
+   "b": "entree.webp",
+   "palette": 0.266,
+   "structure": 38
+  },
+  {
+   "a": "facade.webp",
+   "b": "salon.webp",
+   "palette": 0.267,
+   "structure": 33
+  },
+  {
+   "a": "bureau.webp",
+   "b": "salon.webp",
+   "palette": 0.268,
+   "structure": 27
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.269,
+   "structure": 36
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "contemporain-sculptural.webp",
+   "palette": 0.271,
+   "structure": 25
+  },
+  {
+   "a": "luxe-discret.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.271,
+   "structure": 31
+  },
+  {
+   "a": "minimalisme-chaleureux.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.271,
+   "structure": 32
+  },
+  {
+   "a": "facade.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.274,
+   "structure": 33
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.275,
+   "structure": 29
+  },
+  {
+   "a": "mediterraneen-contemporain.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.276,
+   "structure": 35
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.279,
+   "structure": 20
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "facade.webp",
+   "palette": 0.28,
+   "structure": 31
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "entree.webp",
+   "palette": 0.282,
+   "structure": 21
+  },
+  {
+   "a": "dressing.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.283,
+   "structure": 35
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.287,
+   "structure": 36
+  },
+  {
+   "a": "chambre.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.288,
+   "structure": 30
+  },
+  {
+   "a": "chambre.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.29,
+   "structure": 38
+  },
+  {
+   "a": "luxe-discret.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.29,
+   "structure": 40
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.291,
+   "structure": 33
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.293,
+   "structure": 35
+  },
+  {
+   "a": "bureau.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.297,
+   "structure": 38
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "entree.webp",
+   "palette": 0.298,
+   "structure": 30
+  },
+  {
+   "a": "facade.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.298,
+   "structure": 34
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.299,
+   "structure": 23
+  },
+  {
+   "a": "mediterraneen-contemporain.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.306,
+   "structure": 36
+  },
+  {
+   "a": "bureau.webp",
+   "b": "contemporain-sculptural.webp",
+   "palette": 0.307,
+   "structure": 36
+  },
+  {
+   "a": "chambre.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.308,
+   "structure": 38
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.308,
+   "structure": 29
+  },
+  {
+   "a": "chambre.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.31,
+   "structure": 24
+  },
+  {
+   "a": "luxe-discret.webp",
+   "b": "mid-century.webp",
+   "palette": 0.311,
+   "structure": 24
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "terrasse.webp",
+   "palette": 0.314,
+   "structure": 29
+  },
+  {
+   "a": "minimalisme-chaleureux.webp",
+   "b": "terrasse.webp",
+   "palette": 0.318,
+   "structure": 35
+  },
+  {
+   "a": "bureau.webp",
+   "b": "campagne-elegante.webp",
+   "palette": 0.32,
+   "structure": 31
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.32,
+   "structure": 24
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.32,
+   "structure": 30
+  },
+  {
+   "a": "facade.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.322,
+   "structure": 30
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.323,
+   "structure": 26
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.325,
+   "structure": 45
+  },
+  {
+   "a": "facade.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.325,
+   "structure": 37
+  },
+  {
+   "a": "mediterraneen-contemporain.webp",
+   "b": "mid-century.webp",
+   "palette": 0.325,
+   "structure": 42
+  },
+  {
+   "a": "mid-century.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.325,
+   "structure": 30
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.328,
+   "structure": 42
+  },
+  {
+   "a": "bureau.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.329,
+   "structure": 37
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.329,
+   "structure": 30
+  },
+  {
+   "a": "bureau.webp",
+   "b": "facade.webp",
+   "palette": 0.33,
+   "structure": 34
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.33,
+   "structure": 33
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "brutalisme-raffine.webp",
+   "palette": 0.331,
+   "structure": 33
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "brutalisme-raffine.webp",
+   "palette": 0.332,
+   "structure": 33
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "bureau.webp",
+   "palette": 0.333,
+   "structure": 35
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.334,
+   "structure": 42
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "jardin.webp",
+   "palette": 0.336,
+   "structure": 34
+  },
+  {
+   "a": "entree.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.336,
+   "structure": 48
+  },
+  {
+   "a": "luxe-discret.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.336,
+   "structure": 43
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "terrasse.webp",
+   "palette": 0.338,
+   "structure": 19
+  },
+  {
+   "a": "jardin.webp",
+   "b": "terrasse.webp",
+   "palette": 0.339,
+   "structure": 33
+  },
+  {
+   "a": "mediterraneen-contemporain.webp",
+   "b": "terrasse.webp",
+   "palette": 0.339,
+   "structure": 30
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.34,
+   "structure": 41
+  },
+  {
+   "a": "chambre.webp",
+   "b": "terrasse.webp",
+   "palette": 0.341,
+   "structure": 26
+  },
+  {
+   "a": "facade.webp",
+   "b": "mid-century.webp",
+   "palette": 0.345,
+   "structure": 34
+  },
+  {
+   "a": "luxe-discret.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.345,
+   "structure": 38
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.35,
+   "structure": 34
+  },
+  {
+   "a": "mediterraneen-contemporain.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.357,
+   "structure": 28
+  },
+  {
+   "a": "entree.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.359,
+   "structure": 36
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "cuisine.webp",
+   "palette": 0.36,
+   "structure": 29
+  },
+  {
+   "a": "mid-century.webp",
+   "b": "terrasse.webp",
+   "palette": 0.361,
+   "structure": 32
+  },
+  {
+   "a": "mid-century.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.364,
+   "structure": 28
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.365,
+   "structure": 33
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "terrasse.webp",
+   "palette": 0.367,
+   "structure": 28
+  },
+  {
+   "a": "parisien-contemporain.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.368,
+   "structure": 38
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "campagne-elegante.webp",
+   "palette": 0.374,
+   "structure": 30
+  },
+  {
+   "a": "chambre.webp",
+   "b": "facade.webp",
+   "palette": 0.374,
+   "structure": 40
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "facade.webp",
+   "palette": 0.375,
+   "structure": 24
+  },
+  {
+   "a": "parisien-contemporain.webp",
+   "b": "terrasse.webp",
+   "palette": 0.377,
+   "structure": 24
+  },
+  {
+   "a": "jardin.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.378,
+   "structure": 37
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.381,
+   "structure": 34
+  },
+  {
+   "a": "dressing.webp",
+   "b": "jardin.webp",
+   "palette": 0.383,
+   "structure": 36
+  },
+  {
+   "a": "dressing.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.384,
+   "structure": 36
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "terrasse.webp",
+   "palette": 0.385,
+   "structure": 28
+  },
+  {
+   "a": "entree.webp",
+   "b": "terrasse.webp",
+   "palette": 0.386,
+   "structure": 32
+  },
+  {
+   "a": "dressing.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.389,
+   "structure": 30
+  },
+  {
+   "a": "dressing.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.39,
+   "structure": 29
+  },
+  {
+   "a": "entree.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.39,
+   "structure": 32
+  },
+  {
+   "a": "facade.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.391,
+   "structure": 29
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.393,
+   "structure": 28
+  },
+  {
+   "a": "salle-de-bain.webp",
+   "b": "salon.webp",
+   "palette": 0.393,
+   "structure": 29
+  },
+  {
+   "a": "salle-a-manger.webp",
+   "b": "salon.webp",
+   "palette": 0.394,
+   "structure": 31
+  },
+  {
+   "a": "chambre.webp",
+   "b": "dressing.webp",
+   "palette": 0.396,
+   "structure": 25
+  },
+  {
+   "a": "facade.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.398,
+   "structure": 34
+  },
+  {
+   "a": "parisien-contemporain.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.403,
+   "structure": 30
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "dressing.webp",
+   "palette": 0.405,
+   "structure": 28
+  },
+  {
+   "a": "salon.webp",
+   "b": "terrasse.webp",
+   "palette": 0.405,
+   "structure": 29
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "terrasse.webp",
+   "palette": 0.408,
+   "structure": 35
+  },
+  {
+   "a": "mediterraneen-contemporain.webp",
+   "b": "salon.webp",
+   "palette": 0.408,
+   "structure": 33
+  },
+  {
+   "a": "jardin.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.412,
+   "structure": 31
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "facade.webp",
+   "palette": 0.413,
+   "structure": 23
+  },
+  {
+   "a": "facade.webp",
+   "b": "terrasse.webp",
+   "palette": 0.414,
+   "structure": 28
+  },
+  {
+   "a": "jardin.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.414,
+   "structure": 35
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "dressing.webp",
+   "palette": 0.415,
+   "structure": 39
+  },
+  {
+   "a": "bureau.webp",
+   "b": "jardin.webp",
+   "palette": 0.432,
+   "structure": 37
+  },
+  {
+   "a": "dressing.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.433,
+   "structure": 29
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "campagne-elegante.webp",
+   "palette": 0.437,
+   "structure": 43
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "campagne-elegante.webp",
+   "palette": 0.437,
+   "structure": 43
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "entree.webp",
+   "palette": 0.44,
+   "structure": 31
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "facade.webp",
+   "palette": 0.441,
+   "structure": 30
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "chambre.webp",
+   "palette": 0.442,
+   "structure": 29
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "terrasse.webp",
+   "palette": 0.442,
+   "structure": 26
+  },
+  {
+   "a": "facade.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.442,
+   "structure": 28
+  },
+  {
+   "a": "mediterraneen-contemporain.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.445,
+   "structure": 25
+  },
+  {
+   "a": "dressing.webp",
+   "b": "mid-century.webp",
+   "palette": 0.446,
+   "structure": 23
+  },
+  {
+   "a": "salle-de-bain.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.453,
+   "structure": 19
+  },
+  {
+   "a": "salle-a-manger.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.456,
+   "structure": 33
+  },
+  {
+   "a": "jardin.webp",
+   "b": "mid-century.webp",
+   "palette": 0.461,
+   "structure": 35
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.463,
+   "structure": 33
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.466,
+   "structure": 36
+  },
+  {
+   "a": "facade.webp",
+   "b": "jardin.webp",
+   "palette": 0.467,
+   "structure": 33
+  },
+  {
+   "a": "scandinave-haut-de-gamme.webp",
+   "b": "terrasse.webp",
+   "palette": 0.468,
+   "structure": 25
+  },
+  {
+   "a": "dressing.webp",
+   "b": "salon.webp",
+   "palette": 0.47,
+   "structure": 36
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.471,
+   "structure": 33
+  },
+  {
+   "a": "facade.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.472,
+   "structure": 36
+  },
+  {
+   "a": "jardin.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.472,
+   "structure": 27
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "mid-century.webp",
+   "palette": 0.473,
+   "structure": 35
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.475,
+   "structure": 32
+  },
+  {
+   "a": "haussmannien-renove.webp",
+   "b": "jardin.webp",
+   "palette": 0.478,
+   "structure": 25
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.486,
+   "structure": 35
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "bureau.webp",
+   "palette": 0.488,
+   "structure": 36
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.488,
+   "structure": 32
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "luxe-discret.webp",
+   "palette": 0.488,
+   "structure": 32
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "salon.webp",
+   "palette": 0.488,
+   "structure": 36
+  },
+  {
+   "a": "dressing.webp",
+   "b": "entree.webp",
+   "palette": 0.488,
+   "structure": 35
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "bureau.webp",
+   "palette": 0.489,
+   "structure": 36
+  },
+  {
+   "a": "cuisine.webp",
+   "b": "jardin.webp",
+   "palette": 0.496,
+   "structure": 31
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "cuisine.webp",
+   "palette": 0.499,
+   "structure": 23
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.5,
+   "structure": 17
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "terrasse.webp",
+   "palette": 0.504,
+   "structure": 30
+  },
+  {
+   "a": "japandi-essai.webp",
+   "b": "jardin.webp",
+   "palette": 0.504,
+   "structure": 38
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "terrasse.webp",
+   "palette": 0.505,
+   "structure": 30
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "facade.webp",
+   "palette": 0.508,
+   "structure": 36
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "facade.webp",
+   "palette": 0.508,
+   "structure": 36
+  },
+  {
+   "a": "chambre.webp",
+   "b": "jardin.webp",
+   "palette": 0.508,
+   "structure": 37
+  },
+  {
+   "a": "dressing.webp",
+   "b": "facade.webp",
+   "palette": 0.509,
+   "structure": 29
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "dressing.webp",
+   "palette": 0.511,
+   "structure": 38
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.511,
+   "structure": 39
+  },
+  {
+   "a": "facade.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.517,
+   "structure": 40
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.52,
+   "structure": 29
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "dressing.webp",
+   "palette": 0.523,
+   "structure": 31
+  },
+  {
+   "a": "jardin.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.526,
+   "structure": 39
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.529,
+   "structure": 32
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "salle-a-manger.webp",
+   "palette": 0.53,
+   "structure": 32
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.532,
+   "structure": 28
+  },
+  {
+   "a": "brutalisme-raffine.webp",
+   "b": "contemporain-sculptural.webp",
+   "palette": 0.533,
+   "structure": 19
+  },
+  {
+   "a": "dressing.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.534,
+   "structure": 36
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "dressing.webp",
+   "palette": 0.535,
+   "structure": 33
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "dressing.webp",
+   "palette": 0.535,
+   "structure": 33
+  },
+  {
+   "a": "jardin.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.548,
+   "structure": 28
+  },
+  {
+   "a": "jardin.webp",
+   "b": "salon.webp",
+   "palette": 0.551,
+   "structure": 32
+  },
+  {
+   "a": "entree.webp",
+   "b": "jardin.webp",
+   "palette": 0.556,
+   "structure": 27
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.559,
+   "structure": 24
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "salle-de-bain.webp",
+   "palette": 0.559,
+   "structure": 24
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "jardin.webp",
+   "palette": 0.569,
+   "structure": 37
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "jardin.webp",
+   "palette": 0.569,
+   "structure": 37
+  },
+  {
+   "a": "campagne-elegante.webp",
+   "b": "jardin.webp",
+   "palette": 0.57,
+   "structure": 28
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "mid-century.webp",
+   "palette": 0.577,
+   "structure": 32
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "mid-century.webp",
+   "palette": 0.579,
+   "structure": 32
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "entree.webp",
+   "palette": 0.589,
+   "structure": 42
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "chambre.webp",
+   "palette": 0.59,
+   "structure": 24
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "entree.webp",
+   "palette": 0.59,
+   "structure": 42
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "chambre.webp",
+   "palette": 0.591,
+   "structure": 24
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.592,
+   "structure": 26
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "haussmannien-renove.webp",
+   "palette": 0.592,
+   "structure": 26
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.601,
+   "structure": 20
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "parisien-contemporain.webp",
+   "palette": 0.601,
+   "structure": 20
+  },
+  {
+   "a": "jardin.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.61,
+   "structure": 34
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.612,
+   "structure": 35
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "minimalisme-chaleureux.webp",
+   "palette": 0.612,
+   "structure": 35
+  },
+  {
+   "a": "contemporain-sculptural.webp",
+   "b": "jardin.webp",
+   "palette": 0.614,
+   "structure": 33
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.621,
+   "structure": 27
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "japandi-essai.webp",
+   "palette": 0.621,
+   "structure": 27
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "salon.webp",
+   "palette": 0.624,
+   "structure": 31
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "salon.webp",
+   "palette": 0.625,
+   "structure": 31
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.637,
+   "structure": 17
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "scandinave-haut-de-gamme.webp",
+   "palette": 0.638,
+   "structure": 17
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.646,
+   "structure": 26
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "mediterraneen-contemporain.webp",
+   "palette": 0.646,
+   "structure": 26
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "cuisine.webp",
+   "palette": 0.651,
+   "structure": 26
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "cuisine.webp",
+   "palette": 0.652,
+   "structure": 26
+  },
+  {
+   "a": "art-deco-contemporain-2400.webp",
+   "b": "contemporain-sculptural.webp",
+   "palette": 0.675,
+   "structure": 36
+  },
+  {
+   "a": "art-deco-contemporain.webp",
+   "b": "contemporain-sculptural.webp",
+   "palette": 0.675,
+   "structure": 36
+  }
+ ],
+ "doublons": [
+  [
+   "/editorial/ia/art-deco-contemporain-2400.webp",
+   "/editorial/ia/art-deco-contemporain.webp"
+  ],
+  [
+   "/editorial/ia/salon-boucle-noyer.webp",
+   "/editorial/ia/salon-velours-chene.webp"
+  ],
+  [
+   "/editorial/matieres/boucle.webp",
+   "/editorial/matieres/tapis-laine.webp"
+  ],
+  [
+   "/editorial/matieres/enduit-chaux.webp",
+   "/editorial/matieres/peinture-velours.webp"
+  ],
+  [
+   "/editorial/matieres/faience-blanche.webp",
+   "/editorial/matieres/marbre-calacatta.webp"
+  ],
+  [
+   "/editorial/matieres/faience-blanche.webp",
+   "/editorial/matieres/peinture-mate.webp"
+  ],
+  [
+   "/editorial/matieres/faience-blanche.webp",
+   "/editorial/matieres/peinture-velours.webp"
+  ],
+  [
+   "/editorial/matieres/faience-blanche.webp",
+   "/editorial/matieres/verre-clair.webp"
+  ],
+  [
+   "/editorial/matieres/faience-blanche.webp",
+   "/editorial/matieres/verre-depoli.webp"
+  ],
+  [
+   "/editorial/matieres/marbre-calacatta.webp",
+   "/editorial/matieres/peinture-mate.webp"
+  ],
+  [
+   "/editorial/matieres/marbre-calacatta.webp",
+   "/editorial/matieres/peinture-velours.webp"
+  ],
+  [
+   "/editorial/matieres/marbre-calacatta.webp",
+   "/editorial/matieres/verre-clair.webp"
+  ],
+  [
+   "/editorial/matieres/marbre-calacatta.webp",
+   "/editorial/matieres/verre-depoli.webp"
+  ],
+  [
+   "/editorial/matieres/peinture-mate.webp",
+   "/editorial/matieres/peinture-velours.webp"
+  ],
+  [
+   "/editorial/matieres/peinture-mate.webp",
+   "/editorial/matieres/verre-clair.webp"
+  ],
+  [
+   "/editorial/matieres/peinture-mate.webp",
+   "/editorial/matieres/verre-depoli.webp"
+  ],
+  [
+   "/editorial/matieres/peinture-velours.webp",
+   "/editorial/matieres/verre-clair.webp"
+  ],
+  [
+   "/editorial/matieres/peinture-velours.webp",
+   "/editorial/matieres/verre-depoli.webp"
+  ],
+  [
+   "/editorial/matieres/verre-clair.webp",
+   "/editorial/matieres/verre-depoli.webp"
+  ],
+  [
+   "/editorial/planches/haussmannien-renove.webp",
+   "/editorial/planches/parisien-contemporain.webp"
+  ]
+ ]
+}
