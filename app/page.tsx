@@ -26,7 +26,7 @@ export default function Home() {
       <section className="bleed relative -mt-7 overflow-hidden bg-[#141712] text-white">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/editorial/ia/art-deco-contemporain-2400.webp" alt="Salle à manger : murs laqués vert bouteille, table en marbre, chaises en velours rouille" className="absolute inset-0 size-full object-cover opacity-90" fetchPriority="high" />
-        <div aria-hidden className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,14,11,.82)_0%,rgba(12,14,11,.45)_45%,rgba(12,14,11,.05)_75%)]" />
+        <div aria-hidden className="absolute inset-0 bg-[linear-gradient(0deg,rgba(12,14,11,.9)_0%,rgba(12,14,11,.62)_55%,rgba(12,14,11,.3)_100%)] sm:bg-[linear-gradient(90deg,rgba(12,14,11,.82)_0%,rgba(12,14,11,.45)_45%,rgba(12,14,11,.05)_75%)]" />
         <div className="wrap relative flex min-h-[min(86vh,880px)] flex-col justify-end pb-14 pt-32 sm:pb-20">
           <p className="text-[11.5px] font-semibold uppercase tracking-[.22em] text-white/75">Studio d'architecture intérieure</p>
           <h1 className="mt-5 max-w-[13ch] text-[clamp(52px,8vw,124px)] leading-[.92] text-white">L'intérieur, dessiné <em className="text-white/70">avant d'être construit.</em></h1>
