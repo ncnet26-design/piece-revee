@@ -9,5 +9,18 @@
         "repo": "anthropics/claude-plugins-official"
       }
     }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/proteger-fichiers.mjs\""
+          }
+        ]
+      }
+    ]
   }
 }
