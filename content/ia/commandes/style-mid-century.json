@@ -1,0 +1,11 @@
+{
+  "id": "style-mid-century",
+  "usage": "Style : Mid-century",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A room in the « Mid-century » style: Les années 50 et 60 : noyer, pieds compas, orange brûlé et bleu canard. Key elements: Mobilier sur pieds fins; Bois de noyer ou de teck; Couleurs chaudes et bleu canard; Luminaires sculpturaux. Materials: Noyer, Teck, Laiton brossé, Velours côtelé. Palette close to #EDE4D3, #6A4A35, #D9822B, #2F5D62, #C9B08A. Avoid: Imitations bas de gamme de pièces célèbres.\nEditorial interior photograph for an architecture and design magazine, shot at eye level from about 1.2 metres with a 28 mm lens and perfectly straight verticals. Natural daylight with soft shadows and clear contact shadows under the furniture, true material texture, neutral-warm colour balance, no blown highlights, calm composition with generous negative space, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

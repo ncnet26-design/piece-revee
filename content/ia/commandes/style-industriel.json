@@ -1,0 +1,11 @@
+{
+  "id": "style-industriel",
+  "usage": "Style : Industriel",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A room in the « Industriel » style: L'esprit loft : métal noir, brique, béton et bois brut. Key elements: Verrière en acier noir; Brique ou béton apparent; Luminaires d'atelier; Cuir patiné. Materials: Acier noir thermolaqué, Brique, Béton ciré, Cuir pleine fleur. Palette close to #9A968E, #4A4643, #A0522D, #C9C2B5, #1F2326. Avoid: Pièce trop froide sans textile; Mobilier trop massif dans un petit espace.\nEditorial interior photograph for an architecture and design magazine, shot at eye level from about 1.2 metres with a 28 mm lens and perfectly straight verticals. Natural daylight with soft shadows and clear contact shadows under the furniture, true material texture, neutral-warm colour balance, no blown highlights, calm composition with generous negative space, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

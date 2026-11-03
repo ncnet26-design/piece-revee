@@ -1,0 +1,11 @@
+{
+  "id": "lib-laiton",
+  "usage": "Matériauthèque : Laiton brossé",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:5",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "Laiton brossé (Métal). Or chaud et mat qui se patine avec le temps. La touche bijou d'un intérieur. Show the real material at close range in a refined interior context, with one or two discreet complementary objects; colour palette close to #C49A52, #9E7735, #E3C487.\nEditorial still-life photograph for an interior design magazine, 85 mm lens, close framing where the material fills most of the frame, soft raking daylight from the side that reveals the texture, natural depth of field, true colour, no blown highlights.\nLOCKS: no brand, no logo, no label, no text, no people."
+}

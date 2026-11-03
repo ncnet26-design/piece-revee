@@ -1,0 +1,11 @@
+{
+  "id": "etude-cuisine-avant",
+  "usage": "Étude : cuisine (avant)",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "An ordinary small kitchen from the 2000s before renovation: glossy cream cabinets, speckled laminate worktop, white tiles, fluorescent ceiling light, a window. Photographed honestly as a real estate photo, eye level, straight verticals, natural light.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

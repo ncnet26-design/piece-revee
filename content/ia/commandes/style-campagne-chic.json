@@ -1,0 +1,11 @@
+{
+  "id": "style-campagne-chic",
+  "usage": "Style : Campagne chic",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A room in the « Campagne chic » style: La maison de famille revisitée : bois patiné, lin, vert sauge et vaisselle chinée. Key elements: Meubles anciens remis au goût du jour; Lin et coton lavé; Vert sauge et beige; Poutres et tomettes. Materials: Chêne huilé clair, Lin lavé, Tomette en terre cuite, Osier. Palette close to #EFE9DF, #B99B74, #8FA08A, #5E5246, #D7CFC2. Avoid: Style « faux vieux » industriel.\nEditorial interior photograph for an architecture and design magazine, shot at eye level from about 1.2 metres with a 28 mm lens and perfectly straight verticals. Natural daylight with soft shadows and clear contact shadows under the furniture, true material texture, neutral-warm colour balance, no blown highlights, calm composition with generous negative space, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

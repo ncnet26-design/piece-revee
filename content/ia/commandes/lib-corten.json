@@ -1,0 +1,11 @@
+{
+  "id": "lib-corten",
+  "usage": "Matériauthèque : Acier Corten",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:5",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "Acier Corten (Extérieur). Une rouille protectrice stable lui donne une teinte orangée chaude. Parfait en bordures et jardinières. Show the real material at close range in a contemporary garden or terrace setting, with one or two discreet complementary objects; colour palette close to #8B4A2B, #6E3920, #A65E38.\nEditorial still-life photograph for an interior design magazine, 85 mm lens, close framing where the material fills most of the frame, soft raking daylight from the side that reveals the texture, natural depth of field, true colour, no blown highlights.\nLOCKS: no brand, no logo, no label, no text, no people."
+}

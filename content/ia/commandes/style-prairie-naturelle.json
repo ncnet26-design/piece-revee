@@ -1,0 +1,11 @@
+{
+  "id": "style-prairie-naturelle",
+  "usage": "Style : Prairie naturelle",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "An outdoor space in the « Prairie naturelle » style: Graminées et vivaces en mouvement, pensées pour la biodiversité et peu d'entretien. Key elements: Graminées hautes; Vivaces mellifères; Une seule fauche par an; Allée tondue pour circuler. Materials: Châtaignier, Gravier et galets, Acier Corten. Palette close to #EAE4CF, #B49B6B, #8FA35F, #D8C25A, #9C7BB0. Avoid: Engrais : la prairie aime les sols pauvres.\nEditorial architecture photograph for a design magazine, eye-level viewpoint with a 28 mm lens and perfectly straight verticals, natural light, true material texture, balanced exposure with no blown highlights, calm composition, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

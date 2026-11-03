@@ -1,0 +1,11 @@
+{
+  "id": "style-terrasse-contemporaine",
+  "usage": "Style : Terrasse contemporaine",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "An outdoor space in the « Terrasse contemporaine » style: Lignes nettes, grands pots, graminées et mobilier graphique. Key elements: Grands bacs alignés; Graminées et persistants; Mobilier métal ou aluminium; Éclairage rasant. Materials: Bois composite, Acier Corten, Aluminium. Palette close to #E4E2DC, #8C7A66, #6D8360, #2B2B2B, #C9C2B5. Avoid: Trop de petits pots dispersés.\nEditorial architecture photograph for a design magazine, eye-level viewpoint with a 28 mm lens and perfectly straight verticals, natural light, true material texture, balanced exposure with no blown highlights, calm composition, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

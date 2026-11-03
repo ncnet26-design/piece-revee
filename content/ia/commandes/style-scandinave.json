@@ -1,0 +1,11 @@
+{
+  "id": "style-scandinave",
+  "usage": "Style : Scandinave",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A room in the « Scandinave » style: Clair, fonctionnel, chaleureux : pensé pour les longs hivers du Nord. Key elements: Blanc et bois très clair; Mobilier simple et utile; Textiles douillets; Plantes vertes. Materials: Contreplaqué de bouleau, Laine, Faïence métro. Palette close to #F2F2EE, #D9C7A8, #9FB3C2, #4A4F55, #E6D3C1. Avoid: Pièces surchargées; Couleurs sombres partout.\nEditorial interior photograph for an architecture and design magazine, shot at eye level from about 1.2 metres with a 28 mm lens and perfectly straight verticals. Natural daylight with soft shadows and clear contact shadows under the furniture, true material texture, neutral-warm colour balance, no blown highlights, calm composition with generous negative space, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

@@ -1,0 +1,11 @@
+{
+  "id": "lib-laine",
+  "usage": "Matériauthèque : Laine",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:5",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "Laine (Textile). Fibre naturelle douce, isolante et naturellement peu salissante. Le tapis qui dure. Show the real material at close range in a refined interior context, with one or two discreet complementary objects; colour palette close to #E6DFD2, #D2C9B8, #BDB3A0.\nEditorial still-life photograph for an interior design magazine, 85 mm lens, close framing where the material fills most of the frame, soft raking daylight from the side that reveals the texture, natural depth of field, true colour, no blown highlights.\nLOCKS: no brand, no logo, no label, no text, no people."
+}

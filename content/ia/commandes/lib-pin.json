@@ -1,0 +1,11 @@
+{
+  "id": "lib-pin",
+  "usage": "Matériauthèque : Pin et douglas",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:5",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "Pin et douglas (Bois). Résineux clairs et abordables. Le douglas résiste naturellement dehors sans traitement chimique. Show the real material at close range in a refined interior context, with one or two discreet complementary objects; colour palette close to #E2C394, #D1AE7B, #B98F5C.\nEditorial still-life photograph for an interior design magazine, 85 mm lens, close framing where the material fills most of the frame, soft raking daylight from the side that reveals the texture, natural depth of field, true colour, no blown highlights.\nLOCKS: no brand, no logo, no label, no text, no people."
+}

@@ -1,0 +1,11 @@
+{
+  "id": "hero-boutique",
+  "usage": "En-tête : Boutique",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "16:9",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A gallery-like furniture showroom in a converted Parisian atelier: a curated arrangement of a bouclé armchair, a travertine side table, a walnut sideboard, a paper pendant lamp and ceramic vases, concrete floor, tall steel windows, soft daylight.\nEditorial interior photograph for an architecture and design magazine, shot at eye level from about 1.2 metres with a 28 mm lens and perfectly straight verticals. Natural daylight with soft shadows and clear contact shadows under the furniture, true material texture, neutral-warm colour balance, no blown highlights, calm composition with generous negative space, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

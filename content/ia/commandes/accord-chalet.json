@@ -1,0 +1,11 @@
+{
+  "id": "accord-chalet",
+  "usage": "Accord de matières : Refuge moderne",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "A designer's material composition titled in spirit « Refuge moderne »: real samples of Noyer, Cuir pleine fleur, Lin lavé arranged together as an interior architect's still life, in the proportion Noyer en boiserie · cuir en fauteuil · lin en textile. Mood: Chalet d'architecte, feu de cheminée.\nEditorial still-life photograph for an interior design magazine, 85 mm lens, close framing where the material fills most of the frame, soft raking daylight from the side that reveals the texture, natural depth of field, true colour, no blown highlights.\nLOCKS: no brand, no logo, no label, no text, no people."
+}

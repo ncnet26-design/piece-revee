@@ -1,0 +1,11 @@
+{
+  "id": "lib-zellige",
+  "usage": "Matériauthèque : Zellige",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:5",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "Zellige (Terre). Petits carreaux de terre émaillés et taillés à la main. Chaque pièce est unique, la lumière y danse. Show the real material at close range in a refined interior context, with one or two discreet complementary objects; colour palette close to #2F6F62, #3C8273, #24574C.\nEditorial still-life photograph for an interior design magazine, 85 mm lens, close framing where the material fills most of the frame, soft raking daylight from the side that reveals the texture, natural depth of field, true colour, no blown highlights.\nLOCKS: no brand, no logo, no label, no text, no people."
+}

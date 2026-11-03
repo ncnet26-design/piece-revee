@@ -1,0 +1,11 @@
+{
+  "id": "etude-sdb-avant",
+  "usage": "Étude : sdb (avant)",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "An ordinary small bathroom before renovation: small white square tiles, a basic white washbasin on a pedestal, a shower curtain, chrome fittings, harsh ceiling light. Photographed honestly as a real estate photo, eye level, straight verticals, natural light.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

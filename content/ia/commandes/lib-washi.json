@@ -1,0 +1,11 @@
+{
+  "id": "lib-washi",
+  "usage": "Matériauthèque : Papier japonais (washi)",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:5",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "Papier japonais (washi) (Fibre). Papier de fibres de mûrier, translucide. Diffuse une lumière d'une douceur unique. Show the real material at close range in a refined interior context, with one or two discreet complementary objects; colour palette close to #F3EEE2, #E4DCCB, #FFFFFF.\nEditorial still-life photograph for an interior design magazine, 85 mm lens, close framing where the material fills most of the frame, soft raking daylight from the side that reveals the texture, natural depth of field, true colour, no blown highlights.\nLOCKS: no brand, no logo, no label, no text, no people."
+}

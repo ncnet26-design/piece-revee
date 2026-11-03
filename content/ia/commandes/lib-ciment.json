@@ -1,0 +1,11 @@
+{
+  "id": "lib-ciment",
+  "usage": "Matériauthèque : Carreau ciment",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:5",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "Carreau ciment (Terre). Carreaux à motifs teintés dans la masse. Parfait pour une entrée ou une cuisine qui raconte une histoire. Show the real material at close range in a refined interior context, with one or two discreet complementary objects; colour palette close to #EDE6D8, #2E4A6B, #C27B4E.\nEditorial still-life photograph for an interior design magazine, 85 mm lens, close framing where the material fills most of the frame, soft raking daylight from the side that reveals the texture, natural depth of field, true colour, no blown highlights.\nLOCKS: no brand, no logo, no label, no text, no people."
+}

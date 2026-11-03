@@ -1,0 +1,11 @@
+{
+  "id": "style-jardin-sec",
+  "usage": "Style : Méditerranéen sec",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "An outdoor space in the « Méditerranéen sec » style: Gravier, plantes grises et parfumées, peu d'arrosage : le jardin qui supporte la chaleur. Key elements: Paillage minéral; Plantes au feuillage gris; Floraisons lavande et blanches; Jarres en terre cuite. Materials: Gravier et galets, Pierre sèche, Terre cuite émaillée. Palette close to #E9DCC6, #C9A57A, #8A9A6E, #A98BB8, #7E8F9C. Avoid: Pelouse gourmande en eau; Arrosage automatique trop fréquent.\nEditorial architecture photograph for a design magazine, eye-level viewpoint with a 28 mm lens and perfectly straight verticals, natural light, true material texture, balanced exposure with no blown highlights, calm composition, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

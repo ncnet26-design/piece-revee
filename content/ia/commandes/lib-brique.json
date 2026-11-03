@@ -1,0 +1,11 @@
+{
+  "id": "lib-brique",
+  "usage": "Matériauthèque : Brique",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:5",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "Brique (Terre). Terre cuite rouge ou rosée, qui donne immédiatement du caractère. Version loft ou version maison de campagne. Show the real material at close range in a refined interior context, with one or two discreet complementary objects; colour palette close to #A65A3E, #8C4A33, #C27454.\nEditorial still-life photograph for an interior design magazine, 85 mm lens, close framing where the material fills most of the frame, soft raking daylight from the side that reveals the texture, natural depth of field, true colour, no blown highlights.\nLOCKS: no brand, no logo, no label, no text, no people."
+}

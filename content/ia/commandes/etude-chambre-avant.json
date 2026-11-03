@@ -1,0 +1,11 @@
+{
+  "id": "etude-chambre-avant",
+  "usage": "Étude : chambre (avant)",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "An ordinary bedroom before renovation: pale yellow walls, old carpet, a pine bed with mismatched bedding, a white wardrobe, a basic ceiling lamp, daylight from a window. Photographed honestly as a real estate photo, eye level, straight verticals, natural light.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}

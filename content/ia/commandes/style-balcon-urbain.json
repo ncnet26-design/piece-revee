@@ -1,0 +1,11 @@
+{
+  "id": "style-balcon-urbain",
+  "usage": "Style : Balcon urbain",
+  "model": "gemini-nano-banana-2.1",
+  "aspect_ratio": "4:3",
+  "image_size": "2K",
+  "thinking_level": "medium",
+  "store": false,
+  "tarif_nominal_usd": 0.0504,
+  "prompt": "An outdoor space in the « Balcon urbain » style: Petit espace, grand effet : plantes en hauteur, mobilier pliant, lumière d'ambiance. Key elements: Jardinières suspendues au garde-corps; Mobilier pliant; Brise-vue végétal; Guirlande lumineuse. Materials: Bambou, Aluminium, Terre cuite émaillée. Palette close to #E1DED6, #B08E6A, #6F8F5A, #2F5D62, #E2B04A. Avoid: Bacs trop lourds sans vérifier la charge admissible.\nEditorial architecture photograph for a design magazine, eye-level viewpoint with a 28 mm lens and perfectly straight verticals, natural light, true material texture, balanced exposure with no blown highlights, calm composition, the quiet realism of a real photograph.\nLOCKS: original unbranded furniture and objects only, no logo, no text, no people, no artwork with writing."
+}
