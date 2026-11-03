@@ -6,7 +6,7 @@
  * Usage : node scripts/audit-qualite.mjs [--sans-lighthouse]
  */
 import { execFileSync } from "node:child_process";
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { chromium } from "@playwright/test";
 
 const BASE = "http://localhost:4173";

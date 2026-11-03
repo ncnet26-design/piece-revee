@@ -10,7 +10,7 @@ import sharp from "sharp";
 
 const OUT = "docs/audit";
 mkdirSync(`${OUT}/planches`, { recursive: true });
-const walk = (d, o = []) => { for (const f of readdirSync(d)) { const p = join(d, f); statSync(p).isDirectory() ? walk(p, o) : o.push(p); } return o; };
+const walk = (d, o = []) => { for (const f of readdirSync(d)) { const p = join(d, f); if (statSync(p).isDirectory()) walk(p, o); else o.push(p); } return o; };
 const code = ["app", "components", "lib", "content"].flatMap((d) => walk(d)).filter((f) => /\.(tsx?|json)$/.test(f) && !f.includes("catalogue")).map((f) => [f, readFileSync(f, "utf8")]);
 const IMG = /\.(webp|jpe?g|png|avif)$/i;
 
@@ -78,7 +78,7 @@ pairs.sort((x, y) => x.palette - y.palette);
 const doublons = [];
 for (let i = 0; i < rows.length; i++) for (let j = i + 1; j < rows.length; j++) if (ham(rows[i].hash, rows[j].hash) <= 6 && histDist(rows[i].hist, rows[j].hist) < 0.15) doublons.push([rows[i].path, rows[j].path]);
 
-writeFileSync(`${OUT}/visuel.json`, JSON.stringify({ date: new Date().toISOString(), images: rows.map(({ hist, ...r }) => r), styles: pairs, doublons }, null, 1));
+writeFileSync(`${OUT}/visuel.json`, JSON.stringify({ date: new Date().toISOString(), images: rows.map((r) => { const { hist: _h, ...rest } = r; void _h; return rest; }), styles: pairs, doublons }, null, 1));
 const ratios = [...new Set(rows.map((r) => r.ratio))].sort();
 const sat = (g) => { const l = rows.filter((r) => r.group === g); return l.length ? (l.reduce((s, r) => s + r.saturation, 0) / l.length).toFixed(2) : "–"; };
 let md = `# Audit visuel — mesures automatiques\n\nGénéré par \`node scripts/audit-visuel.mjs\` le ${new Date().toISOString().slice(0, 10)}. La notation A/B/C est dans \`docs/AUDIT-REFONTE.md\`.\n\n`;
