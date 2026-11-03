@@ -15,6 +15,7 @@ export type Famille = keyof typeof FAMILLES;
 export interface ProduitCatalogue {
   /** nom */ n: string; /** marque */ b: string | null; /** vendeur */ m: string; /** adresse */ u: string;
   /** prix */ p: number | null; /** devise */ c: string | null; /** disponibilité */ a: string | null; /** relevé le (AAAA-MM-JJ) */ d: string;
+  /** zone de vente : France, Europe ou États-Unis */ z?: "FR" | "EU" | "US";
 }
 export interface IndexCatalogue { updatedAt: string; total: number; familles: Partial<Record<Famille, number>>; vendeurs: Record<string, number> }
 
@@ -22,23 +23,23 @@ export const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀
 
 // L'ordre compte : les familles les plus précises d'abord.
 const RULES: Array<[Famille, RegExp]> = [
-  ["robinetterie", /\b(robinet|mitigeur|colonne de douche)\b/],
+  ["robinetterie", /\b(robinet|mitigeur|colonne de douche|faucet)\b/],
   ["salle-de-bain", /\b(vasque|lavabo|meuble sous vasque|meuble de salle de bain)\b/],
   ["poignee", /\b(poignee|bouton de meuble|bouton de porte)\b/],
   ["peinture", /\b(peinture|lasure|vernis)\b/],
   ["sol", /\b(parquet|carrelage|carreau|stratifie|sol vinyle|moquette|tomette|dalle)\b/],
-  ["rideau", /\b(rideau|rideaux|voilage|store)\b/],
-  ["lampadaire", /\b(lampadaire|floor lamp)\b/],
-  ["luminaire", /\b(suspension|applique|lustre|lampe|plafonnier|baladeuse|liseuse)\b/],
-  ["tapis", /\b(tapis|rug)\b/],
-  ["table-basse", /\b(table basse|tables basses|bout de canape|table d appoint|gueridon|coffee table|side table)\b/],
-  ["table-manger", /\b(table a manger|table de salle a manger|table extensible|dining table|table de repas)\b/],
-  ["canape", /\b(canape|sofa|banquette|meridienne)\b/],
-  ["fauteuil", /\b(fauteuil|bergere|armchair|chauffeuse)\b/],
-  ["chaise", /\b(chaise|chaises|tabouret|stool|chair)\b/],
-  ["lit", /\b(lit|tete de lit|sommier|bed)\b/],
-  ["rangement", /\b(buffet|commode|etagere|bibliotheque|armoire|meuble tv|console|enfilade|vaisselier|caisson|chiffonnier|vitrine|desserte)\b/],
-  ["deco", /\b(vase|coussin|housse de coussin|plaid|miroir|cadre|affiche|bougeoir|bougie|plante|cache pot|pot|jardiniere|corbeille|panier|plateau|sculpture|horloge|nappe|bol|carafe|photophore|statue|objet)\b/],
+  ["rideau", /\b(rideau|rideaux|voilage|store|curtains?|drapes?|curtain panel)\b/],
+  ["lampadaire", /\b(lampadaire|floor lamps?)\b/],
+  ["luminaire", /\b(suspension|applique|lustre|lampe|plafonnier|baladeuse|liseuse|pendant|sconce|chandelier|table lamp|lamps?|flush mount)\b/],
+  ["tapis", /\b(tapis|rugs?)\b/],
+  ["table-basse", /\b(table basse|tables basses|bout de canape|table d appoint|gueridon|coffee tables?|side tables?|end tables?|accent tables?)\b/],
+  ["table-manger", /\b(table a manger|table de salle a manger|table extensible|dining tables?|table de repas)\b/],
+  ["canape", /\b(canape|sofas?|banquette|meridienne|sectionals?|loveseats?)\b/],
+  ["fauteuil", /\b(fauteuil|bergere|armchairs?|chauffeuse|accent chairs?|lounge chairs?)\b/],
+  ["chaise", /\b(chaise|chaises|tabouret|stools?|chairs?)\b/],
+  ["lit", /\b(lit|tete de lit|sommier|beds?|headboards?)\b/],
+  ["rangement", /\b(buffet|commode|etagere|bibliotheque|armoire|meuble tv|console|enfilade|vaisselier|caisson|chiffonnier|vitrine|desserte|dressers?|sideboards?|credenzas?|bookcases?|bookshelf|shelves|cabinets?|nightstands?|media console)\b/],
+  ["deco", /\b(vase|coussin|housse de coussin|plaid|miroir|cadre|affiche|bougeoir|bougie|plante|cache pot|pot|jardiniere|corbeille|panier|plateau|sculpture|horloge|nappe|bol|carafe|photophore|statue|objet|pillows?|throws?|vases?|mirrors?|planters?|candles?|candleholders?|trays?|baskets?|bowls?)\b/],
 ];
 export function famille(name: string): Famille | null {
   const t = ` ${norm(name)} `;

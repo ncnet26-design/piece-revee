@@ -23,10 +23,10 @@ const arg = (k: string, d: string) => { const i = process.argv.indexOf(`--${k}`)
 const PAGES = Number(arg("pages", "150")), MINUTES = Number(arg("minutes", "40")), ONLY = arg("enseignes", "").split(",").filter(Boolean);
 const END = Date.now() + MINUTES * 60_000;
 /** Adresses suivies au plus par enseigne (le fichier d'état reste raisonnable). */
-const MAX_URLS = 4000;
+const MAX_URLS = 12000;
 
 /** Enseignes suivies : maison, déco, bricolage. Le robot découvre lui-même leurs plans de site. */
-const ENSEIGNES: Array<{ id: string; nom: string; site: string; produit?: RegExp }> = [
+const ENSEIGNES: Array<{ id: string; nom: string; site: string; produit?: RegExp; zone?: "FR" | "EU" | "US" }> = [
   { id: "ikea", nom: "IKEA", site: "https://www.ikea.com", produit: /\/fr\/fr\/p\// },
   { id: "maisonsdumonde", nom: "Maisons du Monde", site: "https://www.maisonsdumonde.com", produit: /\/FR\/fr\/p\// },
   { id: "laredoute", nom: "La Redoute", site: "https://www.laredoute.fr", produit: /\/ppdp\/prod-/ },
@@ -43,9 +43,37 @@ const ENSEIGNES: Array<{ id: string; nom: string; site: string; produit?: RegExp
   { id: "manomano", nom: "ManoMano", site: "https://www.manomano.fr" },
   { id: "selency", nom: "Selency", site: "https://www.selency.fr" },
   { id: "amazon", nom: "Amazon", site: "https://www.amazon.fr" },
+  // France et Europe : design, déco, mobilier.
+  { id: "tikamoon", nom: "Tikamoon", site: "https://www.tikamoon.com" },
+  { id: "drawer", nom: "Drawer", site: "https://www.drawer.fr" },
+  { id: "venteunique", nom: "Vente-unique", site: "https://www.vente-unique.com" },
+  { id: "miliboo", nom: "Miliboo", site: "https://www.miliboo.com" },
+  { id: "home24", nom: "home24", site: "https://www.home24.fr" },
+  { id: "zarahome", nom: "Zara Home", site: "https://www.zarahome.com", produit: /\/fr\//, zone: "EU" },
+  { id: "ampm", nom: "AM.PM", site: "https://www.ampm.fr" },
+  { id: "bobochic", nom: "Bobochic Paris", site: "https://www.bobochicparis.com" },
+  { id: "socialite", nom: "The Socialite Family", site: "https://www.thesocialitefamily.com" },
+  { id: "sentou", nom: "Sentou", site: "https://www.sentou.fr" },
+  { id: "ligneroset", nom: "Ligne Roset", site: "https://www.ligne-roset.com", produit: /\/fr\//, zone: "EU" },
+  { id: "rochebobois", nom: "Roche Bobois", site: "https://www.roche-bobois.com", produit: /\/fr-FR\//i },
+  { id: "fermliving", nom: "Ferm Living", site: "https://fermliving.com", zone: "EU" },
+  { id: "hay", nom: "HAY", site: "https://www.hay.com", zone: "EU" },
+  { id: "muuto", nom: "Muuto", site: "https://www.muuto.com", zone: "EU" },
+  { id: "lafoirfouille", nom: "La Foir'Fouille", site: "https://www.lafoirfouille.fr" },
+  { id: "gifi", nom: "Gifi", site: "https://www.gifi.fr" },
+  // États-Unis : prix en dollars, livraison à vérifier.
+  { id: "westelm", nom: "West Elm", site: "https://www.westelm.com", zone: "US" },
+  { id: "cb2", nom: "CB2", site: "https://www.cb2.com", zone: "US" },
+  { id: "crateandbarrel", nom: "Crate & Barrel", site: "https://www.crateandbarrel.com", zone: "US" },
+  { id: "article", nom: "Article", site: "https://www.article.com", zone: "US" },
+  { id: "schoolhouse", nom: "Schoolhouse", site: "https://www.schoolhouse.com", zone: "US" },
+  { id: "luluandgeorgia", nom: "Lulu and Georgia", site: "https://www.luluandgeorgia.com", zone: "US" },
+  { id: "burrow", nom: "Burrow", site: "https://burrow.com", zone: "US" },
+  { id: "rejuvenation", nom: "Rejuvenation", site: "https://www.rejuvenation.com", zone: "US" },
+  { id: "dwr", nom: "Design Within Reach", site: "https://www.dwr.com", zone: "US" },
 ];
 /** Mots qui signalent un article de maison dans l'adresse d'une page (pour ne pas parcourir tout un catalogue généraliste). */
-const MAISON = /canape|sofa|fauteuil|chaise|tabouret|table|buffet|commode|etagere|bibliotheque|armoire|console|enfilade|[-/]lit[-/]|tete-de-lit|lampe|luminaire|suspension|applique|lampadaire|lustre|tapis|coussin|plaid|rideau|voilage|vase|miroir|cadre|bougeoir|jardiniere|cache-pot|pouf|banc|meuble|peinture|parquet|carrelage|robinet|mitigeur|vasque|poignee/i;
+const MAISON = /armchair|accent-chair|lounge|sectional|dining|coffee-table|side-table|nightstand|dresser|sideboard|credenza|bookcase|shelf|cabinet|pendant|sconce|chandelier|floor-lamp|lamp|rug|pillow|throw|mirror|planter|candle|bench|ottoman|headboard|bed-|curtain|drape|faucet|hardware|canape|sofa|fauteuil|chaise|tabouret|table|buffet|commode|etagere|bibliotheque|armoire|console|enfilade|[-/]lit[-/]|tete-de-lit|lampe|luminaire|suspension|applique|lampadaire|lustre|tapis|coussin|plaid|rideau|voilage|vase|miroir|cadre|bougeoir|jardiniere|cache-pot|pouf|banc|meuble|peinture|parquet|carrelage|robinet|mitigeur|vasque|poignee/i;
 /** Articles hors sujet (cuisine, outillage, électroménager…). */
 const HORS = /couteau|filtre|casserole|poele|batterie|perceuse|tournevis|visseuse|pneu|outil|lave-|refrigerateur|frigo|aspirateur|tondeuse|cartouche|ampoule-led-e|piece-detachee|accessoire-hotte|tableau-electrique|disjoncteur/i;
 /** Adresse qui ressemble à une page produit (et pas à une page de rayon). */
@@ -157,7 +185,7 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
     const d = r.status < 400 ? parseProduct(r.body) : null;
     const f = d ? famille(`${d.name} ${u}`) : null;
     if (d && f && d.name) {
-      catalogue.set(u, { n: d.name, b: d.brand, m: e.nom, u, p: d.price, c: d.price ? d.currency ?? "EUR" : null, a: d.availability, d: today, f });
+      catalogue.set(u, { n: d.name, b: d.brand, m: e.nom, u, p: d.price, c: d.price ? d.currency ?? (e.zone === "US" ? "USD" : "EUR") : null, a: d.availability, d: today, f, z: e.zone ?? "FR" });
       gardes++;
     } else { if (r.status < 400) sansFiche++; if (catalogue.delete(u)) retires++; }
     await sleep(st.delai * 1000);
@@ -177,7 +205,7 @@ etat.maj = new Date().toISOString();
 writeFileSync(ETAT_F, `${JSON.stringify(etat)}\n`);
 const index: IndexCatalogue = { updatedAt: etat.maj, total: catalogue.size, familles: {}, vendeurs: {} };
 for (const f of Object.keys(FAMILLES) as Famille[]) {
-  const list = [...catalogue.values()].filter((p) => p.f === f).map((p) => ({ n: p.n, b: p.b, m: p.m, u: p.u, p: p.p, c: p.c, a: p.a, d: p.d })).sort((a, b) => a.n.localeCompare(b.n));
+  const list = [...catalogue.values()].filter((p) => p.f === f).map((p) => ({ n: p.n, b: p.b, m: p.m, u: p.u, p: p.p, c: p.c, a: p.a, d: p.d, z: p.z ?? "FR" })).sort((a, b) => a.n.localeCompare(b.n));
   writeFileSync(`${CAT_DIR}/${f}.json`, JSON.stringify(list));
   if (list.length) index.familles[f] = list.length;
 }
