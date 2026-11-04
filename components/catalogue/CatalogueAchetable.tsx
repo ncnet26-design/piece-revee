@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { Elevation } from "@/components/catalogue/Elevation";
 import { filtrer, GAMMES, NOM_GAMME, NOM_PIECE, NOM_STYLE, PIECES, STYLES, vignette, type Filtres, type Gamme, type Piece, type ProduitAchetable, type Style } from "@/lib/catalogue-achetable";
 
 const prix = (n: number) => n.toLocaleString("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: n % 1 ? 2 : 0 });
@@ -19,13 +20,20 @@ export function Carte({ p, textures }: { p: ProduitAchetable; textures: Readonly
   const v = vignette(p, textures);
   return (
     <li className="flex flex-col">
-      <a href={p.url} target="_blank" rel="noopener noreferrer nofollow" tabIndex={-1} aria-hidden className="relative block aspect-square overflow-hidden" style={{ background: v.teinte }}>
-        {v.texture && (
-          // Texture réelle de la matière (CC0), pas la photo de l'enseigne.
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={`/matieres/${v.texture}/640.webp`} srcSet={`/matieres/${v.texture}/640.webp 640w, /matieres/${v.texture}/1280.webp 1280w`} sizes="(min-width:1024px) 22vw, 45vw" alt="" loading="lazy" decoding="async" className="size-full object-cover" />
-        )}
-        {v.legende && <span className="absolute bottom-2 left-2 bg-surface/90 px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-[.12em] text-ink">{v.legende}</span>}
+      {/* Élévation au trait du meuble + pastille de sa matière (texture réelle) ou de sa couleur, comme sur une nomenclature d'architecte. */}
+      <a href={p.url} target="_blank" rel="noopener noreferrer nofollow" tabIndex={-1} aria-hidden className="relative block aspect-square bg-[#EFEBE3] text-ink no-underline transition-colors hover:bg-[#E9E4DA]">
+        <Elevation famille={p.famille} nom={p.nom} dimensions={p.dimensions} className="absolute inset-x-[10%] top-[14%] h-[62%] w-[80%]" />
+        <span className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
+          <span className="relative block size-7 shrink-0 overflow-hidden rounded-full ring-1 ring-black/10" style={{ background: v.teinte }}>
+            {v.texture && (
+              // Texture réelle de la matière (CC0), pas la photo de l'enseigne.
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={`/matieres/${v.texture}/640.webp`} alt="" loading="lazy" decoding="async" className="size-full object-cover" />
+            )}
+          </span>
+          {v.legende && <span className="truncate text-[10.5px] font-semibold uppercase tracking-[.14em] text-muted">{v.legende}</span>}
+          <span className="ml-auto font-mono text-[10px] text-muted">{p.id.slice(0, 4).toUpperCase()}</span>
+        </span>
       </a>
       <p className="mt-3 text-[10.5px] font-semibold uppercase tracking-[.14em] text-muted">{p.enseigne}{p.marque ? ` · ${p.marque}` : ""}</p>
       <p className="mt-1 line-clamp-2 text-[14.5px] leading-snug">{p.nom}</p>
