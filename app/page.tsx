@@ -54,7 +54,7 @@ export default function Home() {
           <p className="mt-7 max-w-[46ch] text-[17px] leading-relaxed text-white/80">Photographiez votre pièce, ajoutez vos inspirations : nous la transformons dans cet esprit, et chaque meuble, couleur ou matière devient cliquable pour l'acheter.</p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link href="/transformer/" className="btn btn-light btn-lg">Transformer ma pièce</Link>
-            <Link href="/boutique/" className="btn btn-lg border-white/40 bg-transparent text-white hover:border-white">Ouvrir la boutique</Link>
+            <Link href="/catalogue/" className="btn btn-lg border-white/40 bg-transparent text-white hover:border-white">Ouvrir le catalogue</Link>
           </div>
           <p className="mt-10 text-[11px] text-white/55">Image générée par IA</p>
         </div>
