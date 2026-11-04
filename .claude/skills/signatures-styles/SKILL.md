@@ -1,6 +1,6 @@
 ---
 name: signatures-styles
-description: Marqueurs visuels obligatoires (5 à 8) et interdits de chaque style d'intérieur, pour que chaque image de style soit reconnaissable au premier regard. À utiliser pour écrire ou valider toute consigne ou image d'inspiration, d'étude ou d'en-tête liée à un style.
+description: Marqueurs visuels obligatoires (5 à 8) et interdits de chaque style d'intérieur (japandi, scandinave, industriel, haussmannien, mid-century, wabi-sabi, bohème, contemporain…), pour qu'une image de style soit reconnaissable sans lire son titre. À utiliser AVANT de choisir, générer ou valider toute image d'inspiration ou de style, et pour classer un produit par style.
 ---
 
 # Signatures des styles

@@ -1,6 +1,6 @@
 ---
 name: catalogue-ameublement
-description: Structure et alimentation de la base d'ameublement de Pièce Rêvée (champs, gammes de prix, styles, pièces, sources : robot schema.org et flux d'affiliation Awin, Amazon Partenaires…), mise à jour des prix, détection des liens morts, recherche par budget, pièce et style. À utiliser pour modifier le robot, importer un flux, enrichir les produits ou construire une page de recherche de produits.
+description: Structure et alimentation du catalogue achetable de Pièce Rêvée (data/catalogue.json et public/catalogue : champs, gammes petit/moyen/haut de gamme, styles, pièces, matières, sources robot schema.org et flux d'affiliation Awin, Amazon Partenaires…), vérification des prix et des liens, recherche par budget, pièce, style et matière. À utiliser AVANT d'ajouter, modifier ou afficher un produit, de relier une inspiration ou une matière à des produits, ou de construire une page catalogue.
 ---
 
 # Catalogue d'ameublement

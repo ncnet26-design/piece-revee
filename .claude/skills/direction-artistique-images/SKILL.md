@@ -1,6 +1,6 @@
 ---
 name: direction-artistique-images
-description: Règles d'une photographie d'architecture intérieure professionnelle pour toutes les images de Pièce Rêvée (lumière, verticales, focale, hauteur, grain, ratios, traitement homogène) et grille de rejet. À utiliser pour écrire une consigne d'image, choisir ou recadrer une image, et valider ou rejeter toute image avant publication.
+description: Règles d'une photographie d'architecture intérieure professionnelle pour toutes les images de Pièce Rêvée (lumière, verticales, focale, hauteur, grain, ratios, traitement homogène, résolution minimale) et grille de rejet. À utiliser AVANT toute image : ajout, remplacement, suppression, génération, recadrage, tri de photos Pexels/Unsplash, audit d'images et validation avant publication.
 ---
 
 # Direction artistique des images

@@ -1,6 +1,6 @@
 ---
 name: frontend-aesthetics
-description: Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.
+description: Direction esthétique des écrans de Pièce Rêvée (niveau studio de design de Los Angeles) : choix typographiques, rythme, contrastes, mise en page éditoriale qui ne ressemble pas à un modèle générique. À utiliser en complément de charte-graphique pour toute nouvelle page, refonte d'écran ou section d'accueil, et pour juger si un écran fait « premium ».
 license: Complete terms in LICENSE.txt
 ---
 

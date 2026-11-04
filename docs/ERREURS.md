@@ -51,6 +51,7 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 | Accueil qui téléchargeait 1,2 Mo de catalogue | Calcul fait à la publication | Calculer au build ce qui ne dépend pas du visiteur |
 | Saut de mise en page dû aux polices | Préchargement des polices de titres | Précharger les polices visibles au-dessus de la ligne de flottaison |
 | Points cliquables sans nom pour les lecteurs d'écran (mobile) | `aria-label` | Lancer axe sur ordinateur ET mobile |
+| 4 images supprimées comme « inutilisées » alors qu'elles sont chargées par un chemin calculé (planche, tests) | Remises aussitôt | Avant de supprimer, chercher aussi le dossier et les préfixes dynamiques (`/visuels/${…}`), et lancer les tests |
 | `pkill -f "serve out"` a tué le terminal lui-même | Ne plus utiliser `pkill -f` avec un motif présent dans la commande | — |
 | Politique de sécurité qui bloquait les images du service IA | `img-src https:` | Tester la page publiée, pas seulement en local |
 

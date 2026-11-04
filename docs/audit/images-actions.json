@@ -1,0 +1,2804 @@
+[
+ {
+  "fichier": "/apple-icon.png",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "outil"
+ },
+ {
+  "fichier": "/editorial/ia/accueil-table-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/accueil-table-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/accueil-table.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/art-deco-contemporain-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/art-deco-contemporain-2400.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/art-deco-contemporain-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/art-deco-contemporain.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/brutalisme-raffine-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/brutalisme-raffine-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/brutalisme-raffine.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/bureau-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/bureau-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/bureau.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/campagne-elegante-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/campagne-elegante-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/campagne-elegante.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/chambre-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/chambre-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/chambre.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/contemporain-sculptural-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/contemporain-sculptural-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/contemporain-sculptural.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/cuisine-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/cuisine-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/cuisine.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/dressing-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/dressing-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/dressing.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/entree-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/entree-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/entree.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/facade-1024.webp",
+  "action": "supprimer",
+  "note": "B",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/editorial/ia/facade-640.webp",
+  "action": "supprimer",
+  "note": "B",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/editorial/ia/facade.webp",
+  "action": "supprimer",
+  "note": "B",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/editorial/ia/haussmannien-renove-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/haussmannien-renove-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/haussmannien-renove.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/japandi-essai-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/japandi-essai-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/japandi-essai.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/jardin-1024.webp",
+  "action": "supprimer",
+  "note": "B",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/editorial/ia/jardin-640.webp",
+  "action": "supprimer",
+  "note": "B",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/editorial/ia/jardin.webp",
+  "action": "supprimer",
+  "note": "B",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/editorial/ia/luxe-discret-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/luxe-discret-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/luxe-discret.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-boucle-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-boucle-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-boucle.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-ceramique-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-ceramique-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-ceramique.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-chene-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-chene-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-chene.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-enduit-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-enduit-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-enduit.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-laiton-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-laiton-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-laiton.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-lin-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-lin-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-lin.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-marbre-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-marbre-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-marbre.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-noyer-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-noyer-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-noyer.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-peinture-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-peinture-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-peinture.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-pierre-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-pierre-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-pierre.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-travertin-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-travertin-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-travertin.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-velours-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-velours-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-velours.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-verre-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-verre-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/matiere-verre.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/mediterraneen-contemporain-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/mediterraneen-contemporain-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/mediterraneen-contemporain.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/mid-century-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/mid-century-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/mid-century.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/minimalisme-chaleureux-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/minimalisme-chaleureux-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/minimalisme-chaleureux.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/parisien-contemporain-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/parisien-contemporain-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/parisien-contemporain.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salle-a-manger-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salle-a-manger-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salle-a-manger.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salle-de-bain-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salle-de-bain-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salle-de-bain.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salon-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salon-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salon-boucle-noyer-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salon-boucle-noyer-2400.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salon-boucle-noyer-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salon-boucle-noyer.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salon-velours-chene-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salon-velours-chene-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salon-velours-chene.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/salon.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/scandinave-haut-de-gamme-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/scandinave-haut-de-gamme-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/scandinave-haut-de-gamme.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/terrasse-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/terrasse-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/ia/terrasse.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/bois-huile.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/boucle.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/bronze-brosse.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/chene-fume.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/chene-naturel.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/enduit-chaux.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/faience-blanche.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/laiton-brosse.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/laque-brillante.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/lin-lave.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/marbre-calacatta.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/noyer-verni.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/parquet-chevron.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/peinture-mate.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/peinture-velours.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/pierre-mate.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/pierre-naturelle.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/platre-texture.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/tadelakt.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/tapis-laine.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/terrazzo.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/terre-cuite.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/travertin.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/velours-foret.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/verre-clair.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/verre-depoli.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/verre-fume.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/matieres/zellige-emeraude.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/art-deco-contemporain.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/brutalisme-raffine.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/campagne-elegante.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/chambre.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/contemporain-sculptural.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/dressing.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/entree.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/facade.webp",
+  "action": "supprimer",
+  "note": "B",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/editorial/planches/haussmannien-renove.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/japandi.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/jardin.webp",
+  "action": "supprimer",
+  "note": "B",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/editorial/planches/luxe-discret.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/mediterraneen-contemporain.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/mid-century.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/minimalisme-chaleureux.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/parisien-contemporain.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/salle-a-manger.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/salle-de-bain.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/scandinave-haut-de-gamme.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/editorial/planches/terrasse.webp",
+  "action": "supprimer",
+  "note": "B",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/icon-192.png",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "outil"
+ },
+ {
+  "fichier": "/icon-512.png",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "outil"
+ },
+ {
+  "fichier": "/icon.svg",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "outil"
+ },
+ {
+  "fichier": "/inspirations/cuisines-68-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/cuisines-68-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/cuisines-68.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-10-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-10-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-10.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-14-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-14-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-14.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-15-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-15-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-15.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-16-1024.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-16-640.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-16.webp",
+  "action": "supprimer (< 2000 px) dès que le remplaçant existe",
+  "note": "B",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/inspirations/villas-24-1024.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/inspirations/villas-24-640.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/inspirations/villas-24.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "non"
+ },
+ {
+  "fichier": "/materiaux/bois-huile/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/bois-huile/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/bois-huile/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/bois-huile/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/boucle/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/boucle/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/boucle/displacement.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/boucle/metallic.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/boucle/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/boucle/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/chene-fume/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/chene-fume/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/chene-fume/displacement.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/chene-fume/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/chene-fume/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/chene-naturel/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/chene-naturel/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/chene-naturel/displacement.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/chene-naturel/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/chene-naturel/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/coton/ao.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/coton/basecolor.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/coton/displacement.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/coton/metallic.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/coton/normal.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/coton/roughness.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/enduit-chaux/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/enduit-chaux/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/enduit-chaux/displacement.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/enduit-chaux/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/enduit-chaux/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/lin-lave/ao.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/lin-lave/basecolor.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/lin-lave/displacement.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/lin-lave/metallic.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/lin-lave/normal.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/lin-lave/roughness.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/noyer-verni/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/noyer-verni/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/noyer-verni/displacement.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/noyer-verni/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/noyer-verni/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/parquet-chevron/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/parquet-chevron/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/parquet-chevron/displacement.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/parquet-chevron/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/parquet-chevron/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/pierre-mate/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/pierre-mate/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/pierre-mate/displacement.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/pierre-mate/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/pierre-mate/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/pierre-naturelle/ao.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/pierre-naturelle/basecolor.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/pierre-naturelle/displacement.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/pierre-naturelle/normal.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/pierre-naturelle/roughness.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/platre-texture/ao.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/platre-texture/basecolor.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/platre-texture/displacement.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/platre-texture/normal.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/platre-texture/roughness.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/tadelakt/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/tadelakt/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/tadelakt/displacement.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/tadelakt/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/tadelakt/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/terrazzo/ao.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/terrazzo/basecolor.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/terrazzo/displacement.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/terrazzo/normal.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/terrazzo/roughness.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/terre-cuite/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/terre-cuite/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/terre-cuite/displacement.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/terre-cuite/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/terre-cuite/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/travertin/ao.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/travertin/basecolor.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/travertin/displacement.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/travertin/normal.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/travertin/roughness.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/velours-foret/ao.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/velours-foret/basecolor.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/velours-foret/displacement.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/velours-foret/metallic.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/velours-foret/normal.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/materiaux/velours-foret/roughness.webp",
+  "action": "supprimer",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/ArmChair_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/Chandelier_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/Chandelier_02.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/ClassicConsole_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/CoffeeTable_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/GreenChair_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/Ottoman_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/Sofa_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/antique_ceramic_vase_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/bar_chair_round_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/book_encyclopedia_set_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/brass_candleholders.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/brass_vase_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/brass_vase_02.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/brass_vase_03.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/brass_vase_04.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/carved_wooden_plate.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/ceramic_pot.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/ceramic_vase_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/ceramic_vase_02.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/ceramic_vase_03.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/ceramic_vase_04.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/chinese_armchair.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/chinese_console_table.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/chinese_screen_panels.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/chinese_stool.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/chinese_tea_table.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/coffee_table_round_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/dead_quiver_branch_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/dining_chair_02.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/dry_branches_medium_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/dry_quiver_leaf.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/gallinera_chair.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/gallinera_table.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/lambis_shell.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/marble_bust_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/mid_century_lounge_chair.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/modern_arm_chair_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/modern_ceiling_lamp_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/modern_coffee_table_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/modern_coffee_table_02.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/modern_wooden_cabinet.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/ornate_mirror_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/planter_pot_clay.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/potted_plant_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/potted_plant_02.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/potted_plant_04.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/round_wooden_table_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/round_wooden_table_02.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/side_table_tall_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/sofa_02.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/throw_pillows_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wall_clock.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wf_anisotropy_barn_lamp.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wf_diffuse_transmission_plant.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wf_glam_velvet_sofa.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wf_glass_vase_flowers.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wf_iridescence_lamp.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wf_sheen_chair.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wf_specular_silk_pouf.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wicker_basket_01.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wicker_basket_02.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wooden_bowl_02.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/models/thumbs/wooden_candlestick.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/og.png",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "outil"
+ },
+ {
+  "fichier": "/textures/m-ardoise/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-ardoise/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-ardoise/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-bambou/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-bambou/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-bambou/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-beton/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-beton/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-beton/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-bouleau/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-bouleau/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-bouleau/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-brique/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-brique/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-brique/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-chaux/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-chaux/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-chaux/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-chene/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-chene/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-chene/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-chenefume/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-chenefume/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-chenefume/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-ciment/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-ciment/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-ciment/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-composite/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-composite/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-composite/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-corten/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-corten/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-corten/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-cuir/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-cuir/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-feutre/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-feutre/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-gravier/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-gravier/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-gravier/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-gres/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-gres/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-gres/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-jute/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-jute/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-jute/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-lin/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-lin/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-lin/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-metro/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-metro/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-metro/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-noyer/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-noyer/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-noyer/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-pierre-seche/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-pierre-seche/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-pierre-seche/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-pin/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-pin/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-pin/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-stratifie/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-stratifie/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-stratifie/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-tadelakt/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-tadelakt/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-tadelakt/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-teck/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-teck/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-teck/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-terrazzo/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-terrazzo/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-terrazzo/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-tomette/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-tomette/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-tomette/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-travertin/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-travertin/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-travertin/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-velours/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-velours/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/m-velours/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-beton/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-beton/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-beton/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-bois-fin/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-bois-fin/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-bois-fin/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-bouclette/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-bouclette/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-bouclette/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-chene/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-chene/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-chene/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-chine/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-chine/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-chine/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-cotele/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-cotele/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-cotele/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-coton/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-coton/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-coton/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-cuir/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-cuir/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-cuir/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-cuir-vieilli/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-cuir-vieilli/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-cuir-vieilli/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-enduit/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-enduit/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-enduit/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-enduit-nuage/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-enduit-nuage/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-enduit-nuage/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-laine/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-laine/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-laine/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-nubuck/diff.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-nubuck/nor.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/textures/tx-nubuck/rough.webp",
+  "action": "garder (technique) jusqu'au remplacement",
+  "note": "—",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/visuels/cuisine-3d.webp",
+  "action": "supprimer après avoir retiré son usage dans la planche et les tests",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/visuels/hero-3d.webp",
+  "action": "supprimer après avoir retiré son usage dans la planche et les tests",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/visuels/planche-hero.webp",
+  "action": "supprimer après avoir retiré son usage dans la planche et les tests",
+  "note": "C",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/visuels/visite-3d.webp",
+  "action": "supprimer après avoir retiré son usage dans la planche et les tests",
+  "note": "C",
+  "sujet": "oui"
+ }
+]
