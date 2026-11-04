@@ -9,6 +9,9 @@ import { MaterialCard } from "@/components/cards";
 import { meta } from "@/lib/seo";
 import { ProduitsDuStyle } from "@/components/catalogue/ProduitsDuStyle";
 import { absoluteUrl } from "@/lib/site";
+import { PHOTOS_STYLES } from "@/lib/inspirations-photos";
+import { STYLES as STYLES_CATALOGUE, type Style } from "@/lib/catalogue-achetable";
+import { PhotoUnsplash } from "@/components/inspirations/PhotoUnsplash";
 
 export const dynamicParams = false;
 export function generateStaticParams() { return STYLES.map((s) => ({ slug: s.slug })); }
@@ -24,13 +27,20 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   if (!s) notFound();
   const mats = s.materials.map((id) => materialById.get(id)).filter((m) => m !== undefined);
   const spaces = GALLERY.filter((g) => g.styleId === s.id);
+  // Vraies photos seulement quand le style correspond exactement (pas d'à-peu-près).
+  const photos = (STYLES_CATALOGUE as readonly string[]).includes(s.id) ? PHOTOS_STYLES[s.id as Style] : undefined;
+  const photo = photos?.[0];
   return (
     <article>
       <Crumbs items={[{ name: "Styles", href: "/styles/" }, { name: s.name, href: `/styles/${s.slug}/` }]} />
       <div className="grid gap-8 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-[var(--r)] bg-soft" style={{ aspectRatio: "4 / 3", maxWidth: "100%" }}>
-          <Scene spec={{ scope: s.scope, space: s.scope === "interieur" ? "Salon" : "Terrasse", palette: s.palette, seed: s.id.length * 977 }} width={800} height={600} label={`Illustration du style ${s.name}`} className="h-full w-full" />
-        </div>
+        {photo ? (
+          <PhotoUnsplash p={photo} alt={`Intérieur ${s.name.toLowerCase()} : ${photo.alt}`} sizes="(min-width:1024px) 50vw, 100vw" className="aspect-[4/3]" eager />
+        ) : (
+          <div className="overflow-hidden rounded-[var(--r)] bg-soft" style={{ aspectRatio: "4 / 3", maxWidth: "100%" }}>
+            <Scene spec={{ scope: s.scope, space: s.scope === "interieur" ? "Salon" : "Terrasse", palette: s.palette, seed: s.id.length * 977 }} width={800} height={600} label={`Illustration du style ${s.name}`} className="h-full w-full" />
+          </div>
+        )}
         <div className="flex flex-col gap-4">
           <span className="eyebrow">Style · {s.scope === "interieur" ? "Intérieur" : "Extérieur"}</span>
           <h1 className="text-[clamp(32px,4.4vw,52px)]">{s.name}</h1>
@@ -38,9 +48,17 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <div><span className="eyebrow">Palette</span><div className="pal lg mt-2">{s.palette.map((c) => <span key={c} style={{ background: c }} title={c} />)}</div></div>
           <div><h2 className="eyebrow mb-2">Les clés</h2><ul className="dots">{s.keys.map((k) => <li key={k}>{k}</li>)}</ul></div>
           <div><h2 className="eyebrow mb-2">À éviter</h2><ul className="dots warn">{s.avoid.map((k) => <li key={k}>{k}</li>)}</ul></div>
-          <div className="flex flex-wrap gap-1.5"><Link className="btn btn-primary" href={`/projet/nouveau/?style=${s.id}`}>Appliquer ce style à ma pièce</Link><Link className="btn" href={`/galerie/?style=${s.slug}`}>Voir les inspirations</Link><AskCamille question={`Comment adopter le style ${s.name} chez moi avec un petit budget ?`} /></div>
+          <div className="flex flex-wrap gap-1.5"><Link className="btn btn-primary" href={`/projet/nouveau/?style=${s.id}`}>Appliquer ce style à ma pièce</Link><Link className="btn" href={photos ? `/galerie/#style-${s.id}` : `/galerie/?style=${s.slug}`}>Voir les inspirations</Link><AskCamille question={`Comment adopter le style ${s.name} chez moi avec un petit budget ?`} /></div>
         </div>
       </div>
+      {photos && photos.length > 1 && (
+        <section className="section" aria-labelledby="h-photos-style">
+          <h2 id="h-photos-style">En vraies photos</h2>
+          <div className="mt-6 grid gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-5">
+            {photos.slice(1).map((p) => <PhotoUnsplash key={p.ref} p={p} alt={`Intérieur ${s.name.toLowerCase()} : ${p.alt}`} sizes="(min-width:1024px) 20vw, (min-width:640px) 50vw, 100vw" className="aspect-[4/5]" />)}
+          </div>
+        </section>
+      )}
       <section className="section grid gap-4 md:grid-cols-2">
         <div className="panel"><h2 className="text-xl">Petit budget</h2><p className="mt-2 text-muted">{s.budgetTip}</p></div>
         <div className="panel"><h2 className="text-xl">Locataire</h2><p className="mt-2 text-muted">{s.rentalTip}</p></div>

@@ -62,3 +62,8 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 ## Connecteurs
 - Context7 et Firecrawl : refusés par le réseau de la machine de travail (« fetch failed », HTTP 403) le 4 novembre ; Poly Haven et ambientCG aussi. Passer par les robots GitHub Actions pour télécharger des ressources libres.
 - Perplexity : chaque appel est payant sur la clé du propriétaire → ne pas l'utiliser sans accord.
+
+## 4 novembre — Photos Unsplash : des rendus 3D parmi les « photos »
+- Constat : sur les planches wabi-sabi et contemporain, une bonne part des candidates étaient des images de synthèse (auteurs Deconovo, Taitopia Render, Max Harlynking, mentions « 3D render »).
+- Correction : le robot écarte ces auteurs et les descriptions « render/3D/CGI » ; choix enregistrés par identifiant de photo (plus par numéro de planche, qui change à chaque recherche).
+- Rappel : `pkill -f` dans la même commande tue le terminal de la session ; arrêter un serveur autrement.

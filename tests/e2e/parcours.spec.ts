@@ -515,7 +515,19 @@ test("inspirations : filtrer, garder en favori, lancer un projet avec un style",
   await expect(page.getByRole("button", { name: "Japandi", exact: true })).toHaveAttribute("aria-pressed", "true");
   await page.goto("/galerie/");
   await page.getByRole("button", { name: /Mes favoris \(1\)/ }).click();
-  await expect(page.getByRole("heading", { name: "Japandi" })).toBeVisible();
+  await expect(page.getByRole("region", { name: /Partir d'une ambiance/ }).getByRole("heading", { name: "Japandi" })).toBeVisible();
+});
+
+test("inspirations : huit styles en vraies photos, photographe crédité, reliés au catalogue", async ({ page }) => {
+  await page.goto("/galerie/");
+  for (const s of ["japandi", "scandinave", "industriel", "haussmannien", "mid-century", "wabi-sabi", "boheme", "contemporain"]) {
+    const sec = page.locator(`#style-${s}`);
+    await expect(sec.locator("img")).toHaveCount(6);
+    await expect(sec.getByRole("link", { name: "Unsplash" })).toHaveCount(6);
+    await expect(sec.getByRole("link", { name: "Les pièces de ce style, par budget" })).toHaveAttribute("href", `/catalogue/?style=${s}`);
+  }
+  const src = await page.locator("#style-japandi img").first().getAttribute("srcset");
+  expect(src).toMatch(/images\.unsplash\.com.*2560w/);
 });
 
 test("showroom : teinte sur mesure (matières sans limite)", async ({ page }) => {

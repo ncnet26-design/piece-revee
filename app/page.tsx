@@ -1,24 +1,23 @@
 import Link from "next/link";
-import bank from "@/content/data/inspiration-bank.json";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { ShopTheLook } from "@/components/ShopTheLook";
 import { ChoixPieceStyle, type Apercu } from "@/components/home/ChoixPieceStyle";
 import catalogue from "@/data/catalogue.json";
-import { GAMMES, PIECES, STYLES as STYLES_CATALOGUE, type ProduitAchetable } from "@/lib/catalogue-achetable";
+import { GAMMES, NOM_STYLE, PIECES, STYLES as STYLES_CATALOGUE, type ProduitAchetable } from "@/lib/catalogue-achetable";
 import { meta } from "@/lib/seo";
+import { PHOTOS_STYLES } from "@/lib/inspirations-photos";
+import { PhotoUnsplash } from "@/components/inspirations/PhotoUnsplash";
 import { Photo } from "@/components/Photo";
 import matieres4k from "@/content/data/matieres-4k.json";
 import { MATIERES_REELLES } from "@/components/matieres/MatieresReelles";
 
 export const metadata = meta({ title: "Pièce Rêvée · Studio d'architecture intérieure", description: "Photographiez votre pièce, ajoutez vos inspirations : votre pièce transformée, et chaque meuble, couleur ou matière cliquable pour l'acheter.", path: "/" });
 
-type Entry = { id: string; type: string; title: string; subtitle: string; image: { src: string } | null; palette: string[] };
-const STYLES = ["contemporain-sculptural", "japandi", "haussmannien-renove"].map((id) => (bank as Entry[]).find((e) => e.id === id)!);
 /** Matières de l'accueil : textures réelles photographiées (CC0), plus aucune image générée. */
 const MATIERES = (["travertin", "noyer", "marbre-carrare", "enduit-chaux", "terrazzo", "rotin"] as const).map((k) => ({ id: k, name: MATIERES_REELLES[k]!.nom, credit: (matieres4k as Record<string, { source: string }>)[k]?.source ?? "" }));
 const PORTES: Array<[string, string, string, string]> = [
   ["/transformer/", "Transformer ma pièce", "Votre photo, vos inspirations, votre pièce transformée.", "/editorial/ia/salon-velours-chene-640.webp"],
-  ["/galerie/", "Inspirations", "Douze styles, onze espaces, treize matières.", "/editorial/ia/japandi-essai-640.webp"],
+  ["/galerie/", "Inspirations", "Huit styles en vraies photos, reliés aux pièces en vente.", "/editorial/ia/japandi-essai-640.webp"],
   ["/catalogue/", "Le catalogue", "Votre style, à votre budget : des pièces réelles, vérifiées.", "/editorial/ia/luxe-discret-640.webp"],
   ["/matieres/", "Matières", "Bois, pierres, enduits, tissus : de vraies textures, à l'échelle.", "/matieres/travertin/1280.webp"],
 ];
@@ -115,22 +114,23 @@ export default function Home() {
         <ShopTheLook />
       </section>
 
-      {/* ——— Styles ——— */}
+      {/* ——— Styles : vraies photos ——— */}
       <section aria-labelledby="h-styles" className="py-20">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <div><p className="eyebrow">Inspirations</p><h2 id="h-styles" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Douze styles, <em>chacun une famille de matières.</em></h2></div>
-          <Link href="/galerie/" className="btn">Tous les styles</Link>
+          <div><p className="eyebrow">Inspirations</p><h2 id="h-styles" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Huit styles, <em>en vraies photos.</em></h2></div>
+          <Link href="/galerie/" className="btn">Toutes les inspirations</Link>
         </div>
-        <ul className="mt-12 grid list-none gap-8 p-0 md:grid-cols-3">
-          {STYLES.map((s) => (
-            <li key={s.id}>
-              <Link href="/galerie/" className="group block no-underline">
-                <span className="block overflow-hidden"><Photo src={s.image!.src} alt={`${s.title} : pièce type du style`} sizes="(min-width:768px) 33vw, 100vw" className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-[1.015]" /></span>
-                <p className="mt-4 text-[11px] font-semibold uppercase tracking-[.16em] text-muted">{s.subtitle}</p>
-                <h3 className="mt-1 font-display text-[28px] font-normal">{s.title}</h3>
-              </Link>
-            </li>
-          ))}
+        <ul className="mt-12 grid list-none grid-cols-2 gap-x-4 gap-y-10 p-0 lg:grid-cols-4">
+          {STYLES_CATALOGUE.map((st) => {
+            const p = PHOTOS_STYLES[st]?.[0];
+            if (!p) return null;
+            return (
+              <li key={st} className="group relative">
+                <PhotoUnsplash p={p} alt={`Intérieur ${NOM_STYLE[st].toLowerCase()} : ${p.alt}`} sizes="(min-width:1024px) 25vw, 50vw" className="aspect-[4/5]" />
+                <h3 className="mt-2 font-display text-[26px] font-normal leading-tight"><Link href={`/galerie/#style-${st}`} className="no-underline after:absolute after:inset-x-0 after:top-0 after:aspect-[4/5]">{NOM_STYLE[st]}</Link></h3>
+              </li>
+            );
+          })}
         </ul>
       </section>
 
