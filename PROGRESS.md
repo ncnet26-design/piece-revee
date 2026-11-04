@@ -39,5 +39,41 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - 40 skills projet (`.claude/skills`) + 3 utilisateur (`~/.claude/skills` : agent-reach, banana, session-start-hook). Descriptions précises avec déclencheurs.
 - Réécrites : `frontend-aesthetics` (anglaise et générique), `direction-artistique-images`, `signatures-styles`, `catalogue-ameublement` (déclenchement « AVANT toute image / tout produit »).
 
-## Étapes suivantes
-Voir plus bas (mis à jour au fil du travail).
+## Étape 1 — CLAUDE.md : fait
+42 lignes : concept, obligations de skills (images, matières, produits), règles images, charte, règles du propriétaire.
+
+## Étape 2 — Audit et nettoyage des images : audit fait, suppression EN ATTENTE D'ACCORD
+- `audit-images.md` : 467 images ; 91 font 2000 px ou plus ; notes A/B/C selon la grille.
+- À supprimer : 100 tout de suite (hors sujet ou note C), 116 dès que leur remplaçant existe. **Plus de 20 fichiers → votre accord est nécessaire.**
+- Ordre prévu : remplacer d'abord (matières 4K, catalogue), puis supprimer, pour ne casser aucune page.
+- Erreur évitée : 4 images crues inutilisées étaient en fait chargées par la planche (chemin calculé) ; remises, notée au journal.
+
+## Étape 3 — Matières 4K : en cours
+- Robot `scripts/matieres-4k.ts` + tâche GitHub « Matières 4K » (internet complet côté GitHub).
+- Inventaire Poly Haven + ambientCG fait ; 19 textures choisies sur planches (`content/data/matieres-choix.json`).
+- Téléchargement 4K + versions AVIF/WebP 640, 1280, 1920, 3840 ; original 4K gardé pour le zoom.
+- Manques réels : **laiton brossé** (aucune texture de laiton dans les deux bibliothèques), **zellige** (remplacé par une vraie terre cuite émaillée, nommée comme telle), lin uniquement en bleu (nommé « Lin lavé, bleu »).
+- Matériauthèque : planche de matières (code MAT-xx, échelle réelle, source) + 3 produits par matière (un par gamme). Trous : béton haut de gamme, pierre petit budget.
+
+## Étape 4 — Inspirations : BLOQUÉE (clés)
+- Aucune clé PEXELS_API_KEY ni UNSPLASH_ACCESS_KEY (ni dans la session, ni utilisable comme secret GitHub vérifiable).
+- **À faire par vous (gratuit, 2 minutes)** : créer une clé Pexels sur https://www.pexels.com/api/ puis l'ajouter dans GitHub → Settings → Secrets and variables → Actions → New secret `PEXELS_API_KEY`. Le robot « Ressources » sait déjà l'utiliser.
+- Génération Replicate/fal : service payant → non lancé sans votre accord.
+
+## Étape 5 — Catalogue achetable : fait (à enrichir)
+- `data/catalogue.json` : 169 produits réels de 20 enseignes, 8 styles, 4 pièces, 3 gammes équilibrées. Champs : nom, enseigne, prix, gamme, styles (déduits, signalés), pièce, dimensions (si publiées), matière, couleur, URL, date de vérification, `affiliate_url` vide.
+- Vérification page par page par robot (`scripts/verifier-catalogue.ts`, chaque lundi + à la main) : 156/156 prix relevés le 4 novembre.
+- Écartés : imitations (« effet chêne », « aspect lin »), animaux, enfants, lots, petits accessoires.
+- Enseignes demandées absentes : Maisons du Monde, La Redoute, AM.PM, Made in Design, Kave Home bloquent les robots (403/429) ; Ligne Roset non lisible. Respecté : pas de contournement. Solution propre : flux d'affiliation (Awin) à créer par vous.
+- Page `/catalogue/` : filtres budget, pièce, style, matière ; produits rangés par gamme ; élévation d'architecte au trait + pastille matière (pas de photo d'enseigne) ; « Voir chez [enseigne] ».
+- Pages de style reliées : « Le style X, à chaque budget » (3 produits par gamme) + lien vers le catalogue filtré.
+
+## Référence visuelle reçue
+- Rayon (rayon.design) : présentations d'architectes d'intérieur au trait (plans, élévations, menuiseries), planches de matières, nomenclatures. Adopté : élévations au trait, codes MAT-xx, nomenclature par gamme.
+
+## Reste à faire
+1. Intégrer les textures 4K téléchargées, vérifier visuellement chaque matière, `credits.md`.
+2. Remplacer les images IA de matières (accueil, boutique) par les textures réelles.
+3. Avec votre accord : supprimer les images listées dans `audit-images.md`.
+4. Inspirations réelles (après clé Pexels).
+5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.
