@@ -112,7 +112,7 @@ export default function Page() {
               ["/transformer/", "Transformer ma pièce", "Votre photo, vos inspirations, votre pièce transformée et cliquable.", "/editorial/ia/salon-velours-chene.webp", "lg:col-span-3"],
               ["/boutique/", "La boutique", c ? `${fr(c.total)} produits suivis, relevés sur les sites des enseignes.` : "Des produits réels, relevés sur les sites des enseignes.", "/editorial/ia/luxe-discret.webp", "lg:col-span-3"],
               ["/galerie/", "Inspirations", "Des styles et des espaces pour trouver votre direction.", "/editorial/ia/japandi-essai.webp", "lg:col-span-2"],
-              ["/showroom/", "Matières", "Bois, pierres, enduits, tissus, dans leurs nuances.", "/editorial/ia/matiere-enduit.webp", "lg:col-span-2"],
+              ["/matieres/", "Matières", "De vraies textures, à l'échelle, reliées aux produits.", "/matieres/travertin/1920.webp", "lg:col-span-2"],
               ["/studio/", "Studio 3D", "Composer la pièce en 3D, objet par objet.", "/editorial/ia/contemporain-sculptural.webp", "lg:col-span-2"],
             ] as const).map(([href, t, d, img, span]) => (
               <li key={href} className={span}>

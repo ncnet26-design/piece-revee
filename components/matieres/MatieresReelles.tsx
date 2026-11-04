@@ -11,7 +11,7 @@ export const MATIERES_REELLES: Record<string, { nom: string; produits?: string }
   "parquet-point-de-hongrie": { nom: "Parquet point de Hongrie", produits: "chêne" }, noyer: { nom: "Noyer", produits: "noyer" },
   travertin: { nom: "Travertin", produits: "travertin" }, "marbre-carrare": { nom: "Marbre blanc veiné", produits: "marbre" },
   terrazzo: { nom: "Terrazzo", produits: "terrazzo" }, "beton-cire": { nom: "Béton lissé", produits: "béton" }, "enduit-chaux": { nom: "Enduit à la chaux" },
-  "lin-lave": { nom: "Lin lavé, bleu", produits: "lin" }, bouclette: { nom: "Laine bouclée", produits: "bouclette" }, velours: { nom: "Velours", produits: "velours" },
+  "lin-lave": { nom: "Lin lavé, bleu", produits: "lin" }, bouclette: { nom: "Moquette bouclée", produits: "bouclette" }, velours: { nom: "Velours", produits: "velours" },
   cuir: { nom: "Cuir", produits: "cuir" }, rotin: { nom: "Rotin tressé", produits: "rotin" }, brique: { nom: "Brique" },
   "terre-cuite-emaillee": { nom: "Terre cuite émaillée", produits: "céramique" }, "terre-cuite": { nom: "Carreaux de terre cuite", produits: "terre cuite" },
   "pierre-calcaire": { nom: "Pierre calcaire", produits: "pierre" }, ardoise: { nom: "Ardoise" },
@@ -43,7 +43,6 @@ export function MatieresReelles() {
               <a href={`${base}/original-4k.webp`} target="_blank" rel="noopener" className="group relative block aspect-square overflow-hidden bg-soft">
                 <picture>
                   <source type="image/avif" srcSet={`${base}/640.avif 640w, ${base}/1280.avif 1280w, ${base}/1920.avif 1920w, ${base}/3840.avif 3840w`} sizes="(min-width:1024px) 31vw, (min-width:640px) 48vw, 100vw" />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={`${base}/1280.webp`} srcSet={`${base}/640.webp 640w, ${base}/1280.webp 1280w, ${base}/1920.webp 1920w, ${base}/3840.webp 3840w`} sizes="(min-width:1024px) 31vw, (min-width:640px) 48vw, 100vw"
                     alt={`${m.nom} : texture photographiée`} width={1280} height={1280} loading={i < 3 ? "eager" : "lazy"} decoding="async" className="size-full object-cover transition duration-700 group-hover:scale-[1.04]" />
                 </picture>
@@ -52,7 +51,7 @@ export function MatieresReelles() {
               </a>
               <div className="mt-4 flex items-baseline justify-between gap-3 border-b border-line pb-2">
                 <h3 className="font-display text-[26px] font-normal leading-tight">{m.nom}</h3>
-                {c.dimensions_m && <span className="shrink-0 font-mono text-[11px] text-muted">{c.dimensions_m.join(" × ")} m</span>}
+                {c.dimensions_m && <span className="shrink-0 font-mono text-[11px] text-muted">{c.dimensions_m.map((d) => d.toLocaleString("fr-FR", { maximumFractionDigits: 2 })).join(" × ")} m</span>}
               </div>
               <p className="mt-2 text-[11px] text-muted">{c.source} · {c.nom} · {c.auteurs.join(", ")} · {c.licence} · <a href={c.url} target="_blank" rel="noopener noreferrer" className="underline">source</a></p>
               {m.produits && (

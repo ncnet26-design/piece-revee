@@ -556,3 +556,23 @@ test("expérience : récit 3D au défilement, points cliquables, chiffres réels
   expect(r.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).slice(0, 3).join(" | ")}`)).toEqual([]);
   expect(errors).toEqual([]);
 });
+
+test("catalogue : filtres budget, pièce, style, matière ; liens vers les enseignes ; aucune photo d'enseigne", async ({ page }) => {
+  const errors = noJsErrors(page);
+  await page.goto("/catalogue/?style=japandi");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Votre style");
+  await expect(page.getByRole("button", { name: "Japandi" })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Haut de gamme" }).click();
+  await expect(page.getByRole("heading", { name: "Haut de gamme", level: 2 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Petit budget", level: 2 })).toHaveCount(0);
+  const lien = page.getByRole("link", { name: /^Voir chez / }).first();
+  await expect(lien).toHaveAttribute("href", /^https:\/\//);
+  await expect(lien).toHaveAttribute("rel", /nofollow/);
+  expect(page.url()).toContain("gamme=haut");
+  // Aucune image hébergée chez une enseigne : seulement nos textures et dessins.
+  const srcs = await page.locator("main img").evaluateAll((l) => l.map((i) => (i as HTMLImageElement).src));
+  expect(srcs.filter((s) => !/^https?:\/\/(localhost|127\.0\.0\.1)/.test(s))).toEqual([]);
+  const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
+  expect(r.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).slice(0, 3).join(" | ")}`)).toEqual([]);
+  expect(errors).toEqual([]);
+});

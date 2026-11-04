@@ -1,1 +1,284 @@
-{}
+{
+ "chene-huile": {
+  "source": "Poly Haven",
+  "id": "oak_veneer_01",
+  "nom": "Oak Veneer 01",
+  "auteurs": [
+   "Jenelle van Heerden"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://polyhaven.com/a/oak_veneer_01",
+  "dimensions_m": [
+   1.8300000429153442,
+   1.8300000429153442
+  ],
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "chene-fume": {
+  "source": "ambientCG",
+  "id": "Wood051",
+  "nom": "Wood 051",
+  "auteurs": [
+   "ambientCG (Lennart Demes)"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://ambientcg.com/view?id=Wood051",
+  "dimensions_m": null,
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "parquet-point-de-hongrie": {
+  "source": "Poly Haven",
+  "id": "herringbone_parquet",
+  "nom": "Herringbone Parquet",
+  "auteurs": [
+   "Jenelle van Heerden",
+   "Sergej Majboroda"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://polyhaven.com/a/herringbone_parquet",
+  "dimensions_m": [
+   3.4000000953674316,
+   3.4000000953674316
+  ],
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "noyer": {
+  "source": "Poly Haven",
+  "id": "walnut_veneer",
+  "nom": "Walnut Veneer",
+  "auteurs": [
+   "Jenelle van Heerden"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://polyhaven.com/a/walnut_veneer",
+  "dimensions_m": [
+   1.7999999523162842,
+   1.7999999523162842
+  ],
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "travertin": {
+  "source": "ambientCG",
+  "id": "Travertine003",
+  "nom": "Travertine 003",
+  "auteurs": [
+   "ambientCG (Lennart Demes)"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://ambientcg.com/view?id=Travertine003",
+  "dimensions_m": null,
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "marbre-carrare": {
+  "source": "ambientCG",
+  "id": "Marble021",
+  "nom": "Marble 021",
+  "auteurs": [
+   "ambientCG (Lennart Demes)"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://ambientcg.com/view?id=Marble021",
+  "dimensions_m": null,
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "terrazzo": {
+  "source": "ambientCG",
+  "id": "Terrazzo011",
+  "nom": "Terrazzo 011",
+  "auteurs": [
+   "ambientCG (Lennart Demes)"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://ambientcg.com/view?id=Terrazzo011",
+  "dimensions_m": null,
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "beton-cire": {
+  "source": "ambientCG",
+  "id": "Concrete030",
+  "nom": "Concrete 030",
+  "auteurs": [
+   "ambientCG (Lennart Demes)"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://ambientcg.com/view?id=Concrete030",
+  "dimensions_m": null,
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "enduit-chaux": {
+  "source": "ambientCG",
+  "id": "Plaster003",
+  "nom": "Plaster 003",
+  "auteurs": [
+   "ambientCG (Lennart Demes)"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://ambientcg.com/view?id=Plaster003",
+  "dimensions_m": null,
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "lin-lave": {
+  "source": "Poly Haven",
+  "id": "rough_linen",
+  "nom": "Rough Linen",
+  "auteurs": [
+   "colormass",
+   "Rico Cilliers"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://polyhaven.com/a/rough_linen",
+  "dimensions_m": [
+   0.2707081392676629,
+   0.27129998803138733
+  ],
+  "largeur": 4096,
+  "hauteur": 4105,
+  "telecharge_le": "2026-11-04"
+ },
+ "bouclette": {
+  "source": "ambientCG",
+  "id": "Carpet016",
+  "nom": "Carpet 016",
+  "auteurs": [
+   "ambientCG (Lennart Demes)"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://ambientcg.com/view?id=Carpet016",
+  "dimensions_m": null,
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "velours": {
+  "source": "Poly Haven",
+  "id": "velour_velvet",
+  "nom": "Velour Velvet",
+  "auteurs": [
+   "colormass",
+   "Rico Cilliers"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://polyhaven.com/a/velour_velvet",
+  "dimensions_m": [
+   0.28422817052147237,
+   0.273499995470047
+  ],
+  "largeur": 4096,
+  "hauteur": 3941,
+  "telecharge_le": "2026-11-04"
+ },
+ "cuir": {
+  "source": "Poly Haven",
+  "id": "brown_leather",
+  "nom": "Brown Leather",
+  "auteurs": [
+   "Rob Tuytel"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://polyhaven.com/a/brown_leather",
+  "dimensions_m": [
+   0.4000000059604645,
+   0.40000003576278687
+  ],
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "rotin": {
+  "source": "ambientCG",
+  "id": "Wicker010A",
+  "nom": "Wicker 010 A",
+  "auteurs": [
+   "ambientCG (Lennart Demes)"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://ambientcg.com/view?id=Wicker010A",
+  "dimensions_m": null,
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "brique": {
+  "source": "Poly Haven",
+  "id": "red_brick",
+  "nom": "Red Brick",
+  "auteurs": [
+   "Rob Tuytel"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://polyhaven.com/a/red_brick",
+  "dimensions_m": [
+   1.399999976158142,
+   1.399999976158142
+  ],
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "terre-cuite": {
+  "source": "Poly Haven",
+  "id": "brown_floor_tiles",
+  "nom": "Brown Floor Tilles",
+  "auteurs": [
+   "Rob Tuytel"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://polyhaven.com/a/brown_floor_tiles",
+  "dimensions_m": [
+   1.7000000476837158,
+   1.7000000476837158
+  ],
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "pierre-calcaire": {
+  "source": "ambientCG",
+  "id": "Tiles139",
+  "nom": "Tiles 139",
+  "auteurs": [
+   "ambientCG (Lennart Demes)"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://ambientcg.com/view?id=Tiles139",
+  "dimensions_m": null,
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ },
+ "ardoise": {
+  "source": "Poly Haven",
+  "id": "stone_tiles_02",
+  "nom": "Stone Tiles 02",
+  "auteurs": [
+   "Charlotte Baglioni"
+  ],
+  "licence": "CC0 1.0",
+  "url": "https://polyhaven.com/a/stone_tiles_02",
+  "dimensions_m": [
+   2,
+   2
+  ],
+  "largeur": 4096,
+  "hauteur": 4096,
+  "telecharge_le": "2026-11-04"
+ }
+}

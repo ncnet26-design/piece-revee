@@ -42,6 +42,7 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 | Texte posé sur les zones claires de la 3D | Décalage de l'image vers la droite sur ordinateur, vers le haut sur téléphone | Toujours vérifier la lisibilité sur captures aux étapes clés |
 | Rendu 3D en continu : 134 s de blocage mesurés (Lighthouse mobile) | Redessin seulement pendant le défilement ou l'animation, démarrage au premier geste sur téléphone, shaders préparés en parallèle | Ne jamais laisser une boucle de rendu tourner pour rien |
 | Image d'ouverture publiée sans l'avoir regardée : capturée au début de l'animation, scène presque vide | Retirée aussitôt, ancienne photo remise | Ouvrir et regarder chaque image avant de la publier, sans exception |
+| Robot matières : recherche ambientCG par nom au lieu de l'identifiant (10 échecs), puis envoi de 135 Mo d'un bloc refusé par GitHub | Recherche par identifiant, envoi matière par matière | Tester une source avec un seul élément avant un lot ; découper les gros envois |
 | Images de 2400 px chargées sur téléphone (accueil à 42/100) | Composant `Photo` avec tailles 640/1024/1600 | Toujours `srcset` + `sizes` |
 
 ## Code et outils

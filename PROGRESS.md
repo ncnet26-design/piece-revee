@@ -48,7 +48,7 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - Ordre prévu : remplacer d'abord (matières 4K, catalogue), puis supprimer, pour ne casser aucune page.
 - Erreur évitée : 4 images crues inutilisées étaient en fait chargées par la planche (chemin calculé) ; remises, notée au journal.
 
-## Étape 3 — Matières 4K : en cours
+## Étape 3 — Matières 4K : fait (18 matières)
 - Robot `scripts/matieres-4k.ts` + tâche GitHub « Matières 4K » (internet complet côté GitHub).
 - Inventaire Poly Haven + ambientCG fait ; 19 textures choisies sur planches (`content/data/matieres-choix.json`).
 - Téléchargement 4K + versions AVIF/WebP 640, 1280, 1920, 3840 ; original 4K gardé pour le zoom.
@@ -71,9 +71,14 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 ## Référence visuelle reçue
 - Rayon (rayon.design) : présentations d'architectes d'intérieur au trait (plans, élévations, menuiseries), planches de matières, nomenclatures. Adopté : élévations au trait, codes MAT-xx, nomenclature par gamme.
 
+- Intégré : 18 textures 4K regardées une par une (`public/matieres`, 133 Mo, 6,5 Mo max par fichier), `credits.md` généré. Retirée : terre cuite émaillée (aplat blanc sans caractère, note C). Bouclette nommée honnêtement « Moquette bouclée ».
+- Images IA de matières remplacées par les textures réelles : accueil, boutique (couvertures de familles), page Expérience.
+
+## Étape 6 — Vérifications (4 novembre)
+- typecheck, lint, 123 tests unitaires, build, 95 tests de parcours (ordinateur + mobile, avec accessibilité) : tout passe.
+- Captures ouvertes et regardées : /catalogue (ordinateur, mobile), /matieres (ordinateur, mobile), accueil.
+
 ## Reste à faire
-1. Intégrer les textures 4K téléchargées, vérifier visuellement chaque matière, `credits.md`.
-2. Remplacer les images IA de matières (accueil, boutique) par les textures réelles.
-3. Avec votre accord : supprimer les images listées dans `audit-images.md`.
+1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
 4. Inspirations réelles (après clé Pexels).
 5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.

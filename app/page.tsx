@@ -2,21 +2,22 @@ import Link from "next/link";
 import bank from "@/content/data/inspiration-bank.json";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { ShopTheLook } from "@/components/ShopTheLook";
-import { materialById } from "@/lib/materials/schema";
 import { meta } from "@/lib/seo";
 import { Photo } from "@/components/Photo";
+import matieres4k from "@/content/data/matieres-4k.json";
+import { MATIERES_REELLES } from "@/components/matieres/MatieresReelles";
 
 export const metadata = meta({ title: "Pièce Rêvée · Studio d'architecture intérieure", description: "Photographiez votre pièce, ajoutez vos inspirations : votre pièce transformée, et chaque meuble, couleur ou matière cliquable pour l'acheter.", path: "/" });
 
 type Entry = { id: string; type: string; title: string; subtitle: string; image: { src: string } | null; palette: string[] };
 const STYLES = ["contemporain-sculptural", "japandi", "haussmannien-renove"].map((id) => (bank as Entry[]).find((e) => e.id === id)!);
-const MATIERES = ([["travertin", "travertin"], ["noyer-verni", "noyer"], ["boucle", "boucle"], ["enduit-chaux", "enduit"], ["laiton-brosse", "laiton"], ["velours-foret", "velours"]] as const)
-  .map(([id, photo]) => ({ ...materialById(id)!, photo: `/editorial/ia/matiere-${photo}-640.webp` }));
+/** Matières de l'accueil : textures réelles photographiées (CC0), plus aucune image générée. */
+const MATIERES = (["travertin", "noyer", "marbre-carrare", "enduit-chaux", "terrazzo", "rotin"] as const).map((k) => ({ id: k, name: MATIERES_REELLES[k]!.nom, credit: (matieres4k as Record<string, { source: string }>)[k]?.source ?? "" }));
 const PORTES: Array<[string, string, string, string]> = [
   ["/transformer/", "Transformer ma pièce", "Votre photo, vos inspirations, votre pièce transformée.", "/editorial/ia/salon-velours-chene-640.webp"],
   ["/galerie/", "Inspirations", "Douze styles, onze espaces, treize matières.", "/editorial/ia/japandi-essai-640.webp"],
   ["/boutique/", "La boutique", "Des milliers de pièces réelles, relevées chaque nuit.", "/editorial/ia/luxe-discret-640.webp"],
-  ["/showroom/", "Matières", "Bois, pierres, enduits, tissus, dans toutes leurs nuances.", "/editorial/ia/matiere-travertin-640.webp"],
+  ["/matieres/", "Matières", "Bois, pierres, enduits, tissus : de vraies textures, à l'échelle.", "/matieres/travertin/1280.webp"],
 ];
 
 /** Accueil : une proposition claire, des images d'abord, chaque section mène à une action réelle. */
@@ -131,13 +132,16 @@ export default function Home() {
         <ul className="mt-12 grid list-none grid-cols-2 gap-x-5 gap-y-8 p-0 sm:grid-cols-3 lg:grid-cols-6">
           {MATIERES.map((m) => (
             <li key={m.id}>
-              <Photo src={m.photo} alt={m.name} sizes="(min-width:1024px) 16vw, (min-width:640px) 33vw, 50vw" className="aspect-square w-full object-cover" />
-              <p className="mt-3 text-[14px] font-medium">{m.name}</p>
-              <p className="text-[12.5px] text-muted">{m.finish}</p>
+              <Link href="/matieres/#h-reelles" className="block no-underline">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`/matieres/${m.id}/640.webp`} srcSet={`/matieres/${m.id}/640.webp 640w, /matieres/${m.id}/1280.webp 1280w`} sizes="(min-width:1024px) 16vw, (min-width:640px) 33vw, 50vw" alt={`${m.name} : texture photographiée`} loading="lazy" decoding="async" className="aspect-square w-full object-cover" />
+                <p className="mt-3 text-[14px] font-medium text-ink">{m.name}</p>
+                <p className="text-[12.5px] text-muted">{m.credit} · CC0</p>
+              </Link>
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-[12px] text-muted">Images générées par IA. Dans la scène 3D, les matières utilisent des textures photographiées (Poly Haven, ambientCG, CC0).</p>
+        <p className="mt-6 text-[12px] text-muted">Textures photographiées en 4K, libres de droits (Poly Haven, ambientCG). Chacune renvoie à des pièces en vente, du petit budget au haut de gamme.</p>
       </section>
 
       {/* ——— Références ——— */}

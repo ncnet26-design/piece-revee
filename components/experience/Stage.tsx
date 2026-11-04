@@ -5,7 +5,7 @@ import { CHAPITRES, CHOIX_DEPART, FINITIONS, POINTS, pointSelon, type Choix, typ
 import type { StageHandle } from "./scene";
 
 /** Images de repli (sans 3D) : une par chapitre, générées par IA et étiquetées. */
-const REPLI = ["/editorial/ia/art-deco-contemporain", "/editorial/ia/accueil-table", "/editorial/ia/japandi-essai", "/editorial/ia/matiere-travertin", "/editorial/ia/salon-boucle-noyer", "/editorial/ia/salon-velours-chene"];
+const REPLI = ["/editorial/ia/art-deco-contemporain", "/editorial/ia/accueil-table", "/editorial/ia/japandi-essai", "/matieres/travertin/1280", "/editorial/ia/salon-boucle-noyer", "/editorial/ia/salon-velours-chene"];
 
 const progressOf = (el: HTMLElement | null) => {
   if (!el) return 0;
@@ -95,7 +95,7 @@ export function Stage({ chapters }: { chapters: ReactNode[] }) {
           <div aria-hidden className={`absolute inset-0 transition-opacity duration-700 ${mode === "3d" ? "opacity-0" : "opacity-100"}`}>
             {REPLI.map((n, i) => (
               // eslint-disable-next-line @next/next/no-img-element
-              <img key={n} src={`${n}-1024.webp`} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async"
+              <img key={n} src={n.startsWith("/matieres/") ? `${n}.webp` : `${n}-1024.webp`} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async"
                 className={`absolute inset-0 size-full object-cover transition-opacity duration-700 motion-reduce:transition-none ${i === chap ? "opacity-60" : "opacity-0"}`} />
             ))}
           </div>

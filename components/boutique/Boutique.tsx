@@ -7,10 +7,10 @@ import { ProduitImage } from "@/components/ProduitImage";
 /** Image d'ambiance de chaque famille (images éditoriales du site, générées par IA et étiquetées). */
 export const COUVERTURES: Partial<Record<Famille, string>> = {
   canape: "/editorial/ia/luxe-discret-640.webp", fauteuil: "/editorial/ia/brutalisme-raffine-640.webp", chaise: "/editorial/ia/scandinave-haut-de-gamme-640.webp",
-  "table-basse": "/editorial/ia/accueil-table-640.webp", "table-manger": "/editorial/ia/salle-a-manger-640.webp", rangement: "/editorial/ia/matiere-noyer-640.webp",
+  "table-basse": "/editorial/ia/accueil-table-640.webp", "table-manger": "/editorial/ia/salle-a-manger-640.webp", rangement: "/matieres/noyer/640.webp",
   luminaire: "/editorial/ia/japandi-essai-640.webp", lampadaire: "/editorial/ia/mid-century-640.webp", tapis: "/editorial/ia/chambre-640.webp", lit: "/editorial/ia/minimalisme-chaleureux-640.webp",
-  deco: "/editorial/ia/matiere-ceramique-640.webp", rideau: "/editorial/ia/matiere-lin-640.webp", poignee: "/editorial/ia/matiere-laiton-640.webp", robinetterie: "/editorial/ia/matiere-laiton-640.webp",
-  "salle-de-bain": "/editorial/ia/salle-de-bain-640.webp", peinture: "/editorial/ia/matiere-peinture-640.webp", sol: "/editorial/ia/matiere-chene-640.webp",
+  deco: "/matieres/terre-cuite/640.webp", rideau: "/matieres/lin-lave/640.webp", poignee: "/matieres/cuir/640.webp", robinetterie: "/matieres/pierre-calcaire/640.webp",
+  "salle-de-bain": "/editorial/ia/salle-de-bain-640.webp", peinture: "/matieres/enduit-chaux/640.webp", sol: "/matieres/parquet-point-de-hongrie/640.webp",
 };
 const ZONES = { FR: "France", EU: "Europe", US: "États-Unis" } as const;
 const AV: Record<string, string> = { InStock: "En stock", OutOfStock: "Épuisé", PreOrder: "Précommande", BackOrder: "Sur commande", LimitedAvailability: "Stock limité" };
