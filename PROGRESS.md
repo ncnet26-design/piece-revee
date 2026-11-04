@@ -62,7 +62,7 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 
 ## Étape 5 — Catalogue achetable : fait (à enrichir)
 - `data/catalogue.json` : 169 produits réels de 20 enseignes, 8 styles, 4 pièces, 3 gammes équilibrées. Champs : nom, enseigne, prix, gamme, styles (déduits, signalés), pièce, dimensions (si publiées), matière, couleur, URL, date de vérification, `affiliate_url` vide.
-- Vérification page par page par robot (`scripts/verifier-catalogue.ts`, chaque lundi + à la main) : 156/156 prix relevés le 4 novembre.
+- Vérification page par page par robot (`scripts/verifier-catalogue.ts`, chaque lundi + à la main) : 169/169 prix relevés le 4 novembre.
 - Écartés : imitations (« effet chêne », « aspect lin »), animaux, enfants, lots, petits accessoires.
 - Enseignes demandées absentes : Maisons du Monde, La Redoute, AM.PM, Made in Design, Kave Home bloquent les robots (403/429) ; Ligne Roset non lisible. Respecté : pas de contournement. Solution propre : flux d'affiliation (Awin) à créer par vous.
 - Page `/catalogue/` : filtres budget, pièce, style, matière ; produits rangés par gamme ; élévation d'architecte au trait + pastille matière (pas de photo d'enseigne) ; « Voir chez [enseigne] ».
