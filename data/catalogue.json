@@ -4523,7 +4523,7 @@
    ],
    "url": "https://www.thesocialitefamily.com/fr-fr/products/chaise-haute-classica-bouclette-blanc-creme",
    "verifie_le": "2026-11-04",
-   "disponibilite": "InStock",
+   "disponibilite": "OutOfStock",
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé"
   },
@@ -5000,6 +5000,34 @@
     "gris"
    ],
    "url": "https://www.selency.fr/p/W5KGUU6A/tapis-kilim-turc-en-laine-naturelle-beige-et-gris-pierre-233-x-293-cm",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": "",
+   "verification": "page ouverte, prix relevé"
+  },
+  {
+   "id": "6ed4aa06221e",
+   "nom": "Petit cache-pot en pierre dolomite Tile",
+   "enseigne": "Westwing",
+   "marque": "&klevering",
+   "prix": 23.99,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "pierre"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/cache-pot-tile-134940.html",
    "verifie_le": "2026-11-04",
    "disponibilite": "InStock",
    "affiliate_url": "",

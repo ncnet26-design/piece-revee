@@ -21,8 +21,8 @@ test("accueil : promesse, accès direct au Studio, sections éditoriales", async
   await expect(page.getByRole("heading", { level: 1 })).toContainText("dessiné");
   await expect(page.getByRole("link", { name: "Transformer ma pièce" }).first()).toHaveAttribute("href", "/transformer/");
   const mobile = (page.viewportSize()?.width ?? 1200) < 1024;
-  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Catalogue", "Studio 3D"]);
-  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Catalogue", "Matières", "Studio 3D"]);
+  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Catalogue", "Matières"]);
+  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Catalogue", "Matières"]);
   await expect(page.getByRole("heading", { name: /trouvez-la en vente/ })).toBeVisible();
   await page.getByRole("button", { name: /Table basse en travertin : voir les produits ressemblants/ }).click();
   await expect(page.getByRole("link", { name: /travertin/i }).first()).toHaveAttribute("target", "_blank");

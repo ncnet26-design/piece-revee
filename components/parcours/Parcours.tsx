@@ -237,7 +237,7 @@ export function Parcours() {
           <div className="mt-8 flex flex-wrap gap-2 border-t border-line pt-6">
             {room && <button type="button" className="btn" disabled={Boolean(busy)} onClick={() => void transform()}>Proposer une autre version</button>}
             <button type="button" className="btn" onClick={() => go("moodboard")} disabled={!mood && !inspi.length}>Revoir mon moodboard</button>
-            <a className="btn" href="/studio/?etape=explorer">Ouvrir dans le Studio</a>
+            <a className="btn" href="/catalogue/">Voir le catalogue par budget</a>
             <button type="button" className="btn btn-ghost" onClick={restart}>Nouveau projet</button>
           </div>
         </div>

@@ -139,8 +139,8 @@ export default function Home() {
         <div>
           <p className="eyebrow">Personnaliser</p>
           <h2 id="h-perso" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Même pièce, <em>autre caractère.</em></h2>
-          <p className="mt-6 max-w-[40ch] text-[15px] text-muted">Bouclé et noyer, ou velours vert et chêne fumé : on change une matière, le reste de la pièce ne bouge pas. Dans le Studio, la scène 3D fait de même pour chaque objet.</p>
-          <Link href="/studio/?etape=3d" className="btn mt-8">Ouvrir la scène 3D</Link>
+          <p className="mt-6 max-w-[40ch] text-[15px] text-muted">Bouclé et noyer, ou velours vert et chêne fumé : on change une matière, le reste de la pièce ne bouge pas. Avec votre photo, chaque matière proposée mène à de vrais produits.</p>
+          <Link href="/transformer/" className="btn mt-8">Essayer avec ma pièce</Link>
         </div>
         <div>
           <BeforeAfter ratio="16 / 9" labelBefore="Bouclé et noyer" labelAfter="Velours et chêne fumé"

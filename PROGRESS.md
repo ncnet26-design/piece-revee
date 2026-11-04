@@ -79,6 +79,12 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - typecheck, lint, 123 tests unitaires, build, 95 tests de parcours (ordinateur + mobile, avec accessibilité) : tout passe.
 - Captures ouvertes et regardées : /catalogue (ordinateur, mobile), /matieres (ordinateur, mobile), accueil.
 
+## Refonte de l'accueil et de la navigation (4 novembre, après-midi)
+- Accueil : bloc central « Votre pièce, votre style, votre budget » (pièce + style → 3 pièces réelles par gamme, grandes pièces d'abord, lien vers le catalogue filtré). Section « Apprendre des maîtres » retirée.
+- Navigation : Transformer ma pièce · Inspirations · Catalogue · Matières. Studio 3D et page Expérience retirés des menus, du pied de page et de l'accueil (pages conservées, suppression du code à décider dans quelques semaines). « Ma pièce composée » reste accessible depuis les parcours.
+- Catalogue : vue « Nomenclature » (inspirée de Rayon) ; 170 produits vérifiés le 4 novembre. Trous restants assumés : béton haut de gamme, pierre petit budget (aucun produit réel trouvé, ni par le robot ni par recherche web).
+- Matières : bouclette remplacée par un vrai tissu bouclé ; laiton et enduit d'argile essayés puis écartés (rendu plat) ; zellige introuvable en texture libre.
+
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
 4. Inspirations réelles (après clé Pexels).
