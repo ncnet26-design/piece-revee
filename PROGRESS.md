@@ -56,10 +56,13 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - Manques réels : **laiton brossé** (aucune texture de laiton dans les deux bibliothèques), **zellige** (remplacé par une vraie terre cuite émaillée, nommée comme telle), lin uniquement en bleu (nommé « Lin lavé, bleu »).
 - Matériauthèque : planche de matières (code MAT-xx, échelle réelle, source) + 3 produits par matière (un par gamme). Trous : béton haut de gamme, pierre petit budget.
 
-## Étape 4 — Inspirations : BLOQUÉE (clés)
-- Aucune clé PEXELS_API_KEY ni UNSPLASH_ACCESS_KEY (ni dans la session, ni utilisable comme secret GitHub vérifiable).
-- **À faire par vous (gratuit, 2 minutes)** : créer une clé Pexels sur https://www.pexels.com/api/ puis l'ajouter dans GitHub → Settings → Secrets and variables → Actions → New secret `PEXELS_API_KEY`. Le robot « Ressources » sait déjà l'utiliser.
-- Génération Replicate/fal : service payant → non lancé sans votre accord.
+## Étape 4 — Inspirations : faite (48 vraies photos, 4 novembre)
+- Clé Unsplash ajoutée par vous dans GitHub ; robot `scripts/inspirations-photos.ts` (tâche « Photos d'inspiration »).
+- 465 candidates de 2000 px ou plus, regardées sur planches puis agrandies ; 6 retenues par style pour leurs marqueurs (signatures-styles).
+- Écartés : rendus 3D publiés comme photos (Deconovo, Taitopia Render, Max Harlynking… désormais filtrés par le robot), objets seuls, pièces vides, doublons, photos de produits.
+- Affichage depuis Unsplash (règle Unsplash), AVIF/WebP 640 à 2560 px avec srcset, photographe crédité sous chaque photo, utilisation signalée à Unsplash. Liste dans `credits.md`.
+- Où : page Inspirations (huit styles, une grande + cinq photos, bouton « Les pièces de ce style, par budget » vers le catalogue filtré), accueil (« Huit styles, en vraies photos »), pages de style japandi, scandinave, industriel, bohème, mid-century.
+- Limites : wabi-sabi a peu de vraies photos sur Unsplash (sélection plus « enduit et voûtes » que meubles) ; japandi compte deux pièces japonaises traditionnelles.
 
 ## Étape 5 — Catalogue achetable : fait (à enrichir)
 - `data/catalogue.json` : 169 produits réels de 20 enseignes, 8 styles, 4 pièces, 3 gammes équilibrées. Champs : nom, enseigne, prix, gamme, styles (déduits, signalés), pièce, dimensions (si publiées), matière, couleur, URL, date de vérification, `affiliate_url` vide.
@@ -87,5 +90,5 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
-4. Inspirations réelles (après clé Pexels).
+4. Remplacer les images IA restantes (portes de l'accueil, banque « Composer son projet ») par ces photos, puis retirer les 116 images de moins de 2000 px (avec votre accord : plus de 20 fichiers).
 5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.
