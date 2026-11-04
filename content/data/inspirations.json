@@ -40,47 +40,5 @@
   "source": "Wikimedia Commons",
   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Villa_Tugendhat_Haus_house_Brno_Br%C3%BCnn_Bauhaus_classic_library_MD284.jpg",
   "license": "CC BY-SA 4.0"
- },
- {
-  "id": "villas-10",
-  "collection": "villas",
-  "src": "/inspirations/villas-10.webp",
-  "thumb": "/inspirations/villas-10-640.webp",
-  "width": 1600,
-  "height": 900,
-  "title": "Séjour contemporain, laiton et marbre",
-  "author": "IYAD AJAMI",
-  "authorUrl": null,
-  "source": "Wikimedia Commons",
-  "sourceUrl": "https://commons.wikimedia.org/wiki/File:Interior-design_talal_modern-style-for-LuxuryVilla-dieb-stydio.jpg",
-  "license": "CC BY-SA 4.0"
- },
- {
-  "id": "villas-24",
-  "collection": "villas",
-  "src": "/inspirations/villas-24.webp",
-  "thumb": "/inspirations/villas-24-640.webp",
-  "width": 1600,
-  "height": 1067,
-  "title": "Villa contemporaine en surplomb",
-  "author": "Tuantranseo",
-  "authorUrl": null,
-  "source": "Wikimedia Commons",
-  "sourceUrl": "https://commons.wikimedia.org/wiki/File:3D_Rendering_of_Modern_Luxury_Villa_Exterior_with_Pool.jpg",
-  "license": "CC BY 4.0"
- },
- {
-  "id": "cuisines-68",
-  "collection": "cuisines",
-  "src": "/inspirations/cuisines-68.webp",
-  "thumb": "/inspirations/cuisines-68-640.webp",
-  "width": 1600,
-  "height": 801,
-  "title": "Cuisine en chêne et quartz veiné",
-  "author": "Rikayon",
-  "authorUrl": null,
-  "source": "Wikimedia Commons",
-  "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shimizu_Kitchen_Design.jpg",
-  "license": "CC BY-SA 4.0"
  }
 ]

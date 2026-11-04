@@ -1,1263 +1,1068 @@
 [
-  {
-    "id": "parisien-contemporain",
-    "type": "style",
-    "title": "Parisien contemporain",
-    "subtitle": "Moulures, parquet, lignes douces",
-    "description": "Le volume haussmannien allégé : murs clairs, parquet chevron, mobilier aux courbes souples et touches de laiton.",
-    "materials": [
-      "parquet-chevron",
-      "platre-texture",
-      "boucle",
-      "marbre-calacatta",
-      "laiton-brosse"
-    ],
-    "palette": [
-      "#EFEBE4",
-      "#D8CDBB",
-      "#A87B4F",
-      "#C9A564",
-      "#2B2A28"
-    ],
-    "rooms": [
-      "salon",
-      "chambre",
-      "salle-a-manger"
-    ],
-    "styles": [
-      "parisien-contemporain"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/parisien-contemporain.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Contemporary Parisian living room in a Haussmann apartment, white plaster mouldings, oak herringbone floor, curved cream boucle sofa, honed Calacatta marble side table, brushed brass details, soft daylight from tall French windows.",
-    "brief": "Parisien contemporain. Le volume haussmannien allégé : murs clairs, parquet chevron, mobilier aux courbes souples et touches de laiton.",
-    "planche": "/editorial/planches/parisien-contemporain.webp"
+ {
+  "id": "parisien-contemporain",
+  "type": "style",
+  "title": "Parisien contemporain",
+  "subtitle": "Moulures, parquet, lignes douces",
+  "description": "Le volume haussmannien allégé : murs clairs, parquet chevron, mobilier aux courbes souples et touches de laiton.",
+  "materials": [
+   "parquet-chevron",
+   "platre-texture",
+   "boucle",
+   "marbre-calacatta",
+   "laiton-brosse"
+  ],
+  "palette": [
+   "#EFEBE4",
+   "#D8CDBB",
+   "#A87B4F",
+   "#C9A564",
+   "#2B2A28"
+  ],
+  "rooms": [
+   "salon",
+   "chambre",
+   "salle-a-manger"
+  ],
+  "styles": [
+   "parisien-contemporain"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/parisien-contemporain.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "haussmannien-renove",
-    "type": "style",
-    "title": "Haussmannien rénové",
-    "subtitle": "Le patrimoine, sans le figer",
-    "description": "Cheminée en marbre, boiseries repeintes, velours profond et laiton : le décor d'origine assumé, la couleur en plus.",
-    "materials": [
-      "parquet-chevron",
-      "marbre-calacatta",
-      "velours-foret",
-      "peinture-velours",
-      "laiton-brosse"
-    ],
-    "palette": [
-      "#F2EEE7",
-      "#E3DCD0",
-      "#2F4A3D",
-      "#C9A564",
-      "#6B4A33"
-    ],
-    "rooms": [
-      "salon",
-      "salle-a-manger"
-    ],
-    "styles": [
-      "haussmannien-renove"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/haussmannien-renove.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Renovated Haussmann salon, original marble fireplace, repainted wall panelling, forest green velvet armchair, oak herringbone parquet, brass wall lights, morning light.",
-    "brief": "Haussmannien rénové. Cheminée en marbre, boiseries repeintes, velours profond et laiton : le décor d'origine assumé, la couleur en plus.",
-    "planche": "/editorial/planches/haussmannien-renove.webp"
+  "prompt": "Contemporary Parisian living room in a Haussmann apartment, white plaster mouldings, oak herringbone floor, curved cream boucle sofa, honed Calacatta marble side table, brushed brass details, soft daylight from tall French windows.",
+  "brief": "Parisien contemporain. Le volume haussmannien allégé : murs clairs, parquet chevron, mobilier aux courbes souples et touches de laiton.",
+  "planche": "/editorial/planches/parisien-contemporain.webp"
+ },
+ {
+  "id": "haussmannien-renove",
+  "type": "style",
+  "title": "Haussmannien rénové",
+  "subtitle": "Le patrimoine, sans le figer",
+  "description": "Cheminée en marbre, boiseries repeintes, velours profond et laiton : le décor d'origine assumé, la couleur en plus.",
+  "materials": [
+   "parquet-chevron",
+   "marbre-calacatta",
+   "velours-foret",
+   "peinture-velours",
+   "laiton-brosse"
+  ],
+  "palette": [
+   "#F2EEE7",
+   "#E3DCD0",
+   "#2F4A3D",
+   "#C9A564",
+   "#6B4A33"
+  ],
+  "rooms": [
+   "salon",
+   "salle-a-manger"
+  ],
+  "styles": [
+   "haussmannien-renove"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/haussmannien-renove.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "minimalisme-chaleureux",
-    "type": "style",
-    "title": "Minimalisme chaleureux",
-    "subtitle": "Peu d'objets, beaucoup de matière",
-    "description": "Des surfaces calmes et texturées : enduit à la chaux, chêne clair, lin lavé, pierre adoucie. La lumière fait le décor.",
-    "materials": [
-      "enduit-chaux",
-      "chene-naturel",
-      "lin-lave",
-      "travertin",
-      "boucle"
-    ],
-    "palette": [
-      "#E6DDCF",
-      "#C9B79C",
-      "#B98E5E",
-      "#8C7B66",
-      "#3A332C"
-    ],
-    "rooms": [
-      "salon",
-      "chambre"
-    ],
-    "styles": [
-      "minimalisme-chaleureux"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/minimalisme-chaleureux.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Warm minimalist bedroom, lime plaster walls, light oak platform bed, washed linen bedding, travertine bedside table, low afternoon sun, very few objects.",
-    "brief": "Minimalisme chaleureux. Des surfaces calmes et texturées : enduit à la chaux, chêne clair, lin lavé, pierre adoucie. La lumière fait le décor.",
-    "planche": "/editorial/planches/minimalisme-chaleureux.webp"
+  "prompt": "Renovated Haussmann salon, original marble fireplace, repainted wall panelling, forest green velvet armchair, oak herringbone parquet, brass wall lights, morning light.",
+  "brief": "Haussmannien rénové. Cheminée en marbre, boiseries repeintes, velours profond et laiton : le décor d'origine assumé, la couleur en plus.",
+  "planche": "/editorial/planches/haussmannien-renove.webp"
+ },
+ {
+  "id": "minimalisme-chaleureux",
+  "type": "style",
+  "title": "Minimalisme chaleureux",
+  "subtitle": "Peu d'objets, beaucoup de matière",
+  "description": "Des surfaces calmes et texturées : enduit à la chaux, chêne clair, lin lavé, pierre adoucie. La lumière fait le décor.",
+  "materials": [
+   "enduit-chaux",
+   "chene-naturel",
+   "lin-lave",
+   "travertin",
+   "boucle"
+  ],
+  "palette": [
+   "#E6DDCF",
+   "#C9B79C",
+   "#B98E5E",
+   "#8C7B66",
+   "#3A332C"
+  ],
+  "rooms": [
+   "salon",
+   "chambre"
+  ],
+  "styles": [
+   "minimalisme-chaleureux"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/minimalisme-chaleureux.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "scandinave-haut-de-gamme",
-    "type": "style",
-    "title": "Scandinave haut de gamme",
-    "subtitle": "Bois clair et laine épaisse",
-    "description": "Bois huilé, laine bouclée, plâtre blanc et pierre claire : la simplicité nordique avec des matières plus nobles.",
-    "materials": [
-      "bois-huile",
-      "platre-texture",
-      "tapis-laine",
-      "lin-lave",
-      "pierre-naturelle"
-    ],
-    "palette": [
-      "#F3F0EA",
-      "#E2D8C8",
-      "#C49A6C",
-      "#9AA39A",
-      "#454540"
-    ],
-    "rooms": [
-      "salon",
-      "salle-a-manger",
-      "chambre"
-    ],
-    "styles": [
-      "scandinave-haut-de-gamme"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/scandinave-haut-de-gamme.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "High-end Scandinavian dining room, oiled light wood table and chairs, thick wool rug, white plaster walls, pale stone floor, soft overcast daylight.",
-    "brief": "Scandinave haut de gamme. Bois huilé, laine bouclée, plâtre blanc et pierre claire : la simplicité nordique avec des matières plus nobles.",
-    "planche": "/editorial/planches/scandinave-haut-de-gamme.webp"
+  "prompt": "Warm minimalist bedroom, lime plaster walls, light oak platform bed, washed linen bedding, travertine bedside table, low afternoon sun, very few objects.",
+  "brief": "Minimalisme chaleureux. Des surfaces calmes et texturées : enduit à la chaux, chêne clair, lin lavé, pierre adoucie. La lumière fait le décor.",
+  "planche": "/editorial/planches/minimalisme-chaleureux.webp"
+ },
+ {
+  "id": "scandinave-haut-de-gamme",
+  "type": "style",
+  "title": "Scandinave haut de gamme",
+  "subtitle": "Bois clair et laine épaisse",
+  "description": "Bois huilé, laine bouclée, plâtre blanc et pierre claire : la simplicité nordique avec des matières plus nobles.",
+  "materials": [
+   "bois-huile",
+   "platre-texture",
+   "tapis-laine",
+   "lin-lave",
+   "pierre-naturelle"
+  ],
+  "palette": [
+   "#F3F0EA",
+   "#E2D8C8",
+   "#C49A6C",
+   "#9AA39A",
+   "#454540"
+  ],
+  "rooms": [
+   "salon",
+   "salle-a-manger",
+   "chambre"
+  ],
+  "styles": [
+   "scandinave-haut-de-gamme"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/scandinave-haut-de-gamme.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "japandi",
-    "type": "style",
-    "title": "Japandi",
-    "subtitle": "Retenue japonaise, chaleur nordique",
-    "description": "Bois fumé, enduit nuancé, lin et pierre sombre : peu de formes, beaucoup de soin dans les jonctions.",
-    "materials": [
-      "chene-fume",
-      "enduit-chaux",
-      "lin-lave",
-      "pierre-mate",
-      "bois-huile"
-    ],
-    "palette": [
-      "#E8E1D6",
-      "#B9A68C",
-      "#5E4632",
-      "#3F4448",
-      "#1E1E1C"
-    ],
-    "rooms": [
-      "salon",
-      "chambre",
-      "bureau"
-    ],
-    "styles": [
-      "japandi"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/japandi-essai.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Japandi living room, smoked oak low furniture, textured lime plaster walls, linen floor cushions, dark slate details, paper lantern light, calm composition.",
-    "brief": "Japandi. Bois fumé, enduit nuancé, lin et pierre sombre : peu de formes, beaucoup de soin dans les jonctions.",
-    "planche": "/editorial/planches/japandi.webp"
+  "prompt": "High-end Scandinavian dining room, oiled light wood table and chairs, thick wool rug, white plaster walls, pale stone floor, soft overcast daylight.",
+  "brief": "Scandinave haut de gamme. Bois huilé, laine bouclée, plâtre blanc et pierre claire : la simplicité nordique avec des matières plus nobles.",
+  "planche": "/editorial/planches/scandinave-haut-de-gamme.webp"
+ },
+ {
+  "id": "japandi",
+  "type": "style",
+  "title": "Japandi",
+  "subtitle": "Retenue japonaise, chaleur nordique",
+  "description": "Bois fumé, enduit nuancé, lin et pierre sombre : peu de formes, beaucoup de soin dans les jonctions.",
+  "materials": [
+   "chene-fume",
+   "enduit-chaux",
+   "lin-lave",
+   "pierre-mate",
+   "bois-huile"
+  ],
+  "palette": [
+   "#E8E1D6",
+   "#B9A68C",
+   "#5E4632",
+   "#3F4448",
+   "#1E1E1C"
+  ],
+  "rooms": [
+   "salon",
+   "chambre",
+   "bureau"
+  ],
+  "styles": [
+   "japandi"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/japandi-essai.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "brutalisme-raffine",
-    "type": "style",
-    "title": "Brutalisme raffiné",
-    "subtitle": "Le minéral brut, adouci",
-    "description": "Pierre sombre, plâtre brut et noyer : la puissance du béton tempérée par des textiles moelleux.",
-    "materials": [
-      "pierre-mate",
-      "platre-texture",
-      "noyer-verni",
-      "boucle",
-      "terrazzo"
-    ],
-    "palette": [
-      "#D6D1C8",
-      "#9C968C",
-      "#5B4030",
-      "#3F4448",
-      "#EEE7DA"
-    ],
-    "rooms": [
-      "salon",
-      "bureau"
-    ],
-    "styles": [
-      "brutalisme-raffine"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/brutalisme-raffine.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Refined brutalist living room, raw plaster and dark stone walls, walnut built-in shelving, sculptural cream boucle armchair, terrazzo floor, dramatic side light.",
-    "brief": "Brutalisme raffiné. Pierre sombre, plâtre brut et noyer : la puissance du béton tempérée par des textiles moelleux.",
-    "planche": "/editorial/planches/brutalisme-raffine.webp"
+  "prompt": "Japandi living room, smoked oak low furniture, textured lime plaster walls, linen floor cushions, dark slate details, paper lantern light, calm composition.",
+  "brief": "Japandi. Bois fumé, enduit nuancé, lin et pierre sombre : peu de formes, beaucoup de soin dans les jonctions.",
+  "planche": "/editorial/planches/japandi.webp"
+ },
+ {
+  "id": "brutalisme-raffine",
+  "type": "style",
+  "title": "Brutalisme raffiné",
+  "subtitle": "Le minéral brut, adouci",
+  "description": "Pierre sombre, plâtre brut et noyer : la puissance du béton tempérée par des textiles moelleux.",
+  "materials": [
+   "pierre-mate",
+   "platre-texture",
+   "noyer-verni",
+   "boucle",
+   "terrazzo"
+  ],
+  "palette": [
+   "#D6D1C8",
+   "#9C968C",
+   "#5B4030",
+   "#3F4448",
+   "#EEE7DA"
+  ],
+  "rooms": [
+   "salon",
+   "bureau"
+  ],
+  "styles": [
+   "brutalisme-raffine"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/brutalisme-raffine.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "mid-century",
-    "type": "style",
-    "title": "Mid-century modern",
-    "subtitle": "Noyer, laiton, couleurs franches",
-    "description": "Les années 1950 et 1960 : noyer verni, velours vert, terrazzo et laiton, lignes fines et pieds fuselés.",
-    "materials": [
-      "noyer-verni",
-      "velours-foret",
-      "laiton-brosse",
-      "terrazzo",
-      "chene-naturel"
-    ],
-    "palette": [
-      "#EDE6DA",
-      "#5B4030",
-      "#2F4A3D",
-      "#C99A2E",
-      "#C9A564"
-    ],
-    "rooms": [
-      "salon",
-      "bureau"
-    ],
-    "styles": [
-      "mid-century"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/mid-century.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Mid-century modern living room, walnut sideboard, forest green velvet sofa with tapered legs, terrazzo floor, brass floor lamp, warm late afternoon light.",
-    "brief": "Mid-century modern. Les années 1950 et 1960 : noyer verni, velours vert, terrazzo et laiton, lignes fines et pieds fuselés.",
-    "planche": "/editorial/planches/mid-century.webp"
+  "prompt": "Refined brutalist living room, raw plaster and dark stone walls, walnut built-in shelving, sculptural cream boucle armchair, terrazzo floor, dramatic side light.",
+  "brief": "Brutalisme raffiné. Pierre sombre, plâtre brut et noyer : la puissance du béton tempérée par des textiles moelleux.",
+  "planche": "/editorial/planches/brutalisme-raffine.webp"
+ },
+ {
+  "id": "mid-century",
+  "type": "style",
+  "title": "Mid-century modern",
+  "subtitle": "Noyer, laiton, couleurs franches",
+  "description": "Les années 1950 et 1960 : noyer verni, velours vert, terrazzo et laiton, lignes fines et pieds fuselés.",
+  "materials": [
+   "noyer-verni",
+   "velours-foret",
+   "laiton-brosse",
+   "terrazzo",
+   "chene-naturel"
+  ],
+  "palette": [
+   "#EDE6DA",
+   "#5B4030",
+   "#2F4A3D",
+   "#C99A2E",
+   "#C9A564"
+  ],
+  "rooms": [
+   "salon",
+   "bureau"
+  ],
+  "styles": [
+   "mid-century"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/mid-century.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "art-deco-contemporain",
-    "type": "style",
-    "title": "Art déco contemporain",
-    "subtitle": "Géométrie, laque et marbre",
-    "description": "Marbre veiné, laque profonde, laiton et velours : la géométrie Art déco, dans une version épurée.",
-    "materials": [
-      "marbre-calacatta",
-      "laque-brillante",
-      "laiton-brosse",
-      "velours-foret",
-      "noyer-verni"
-    ],
-    "palette": [
-      "#EEEAE3",
-      "#1F3A33",
-      "#C9A564",
-      "#2F4A3D",
-      "#5B4030"
-    ],
-    "rooms": [
-      "salon",
-      "salle-a-manger",
-      "salle-de-bain"
-    ],
-    "styles": [
-      "art-deco-contemporain"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/art-deco-contemporain.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Contemporary Art Deco dining room, Calacatta marble table, deep green lacquered walls, fluted walnut sideboard, brass geometric pendant, velvet chairs.",
-    "brief": "Art déco contemporain. Marbre veiné, laque profonde, laiton et velours : la géométrie Art déco, dans une version épurée.",
-    "planche": "/editorial/planches/art-deco-contemporain.webp"
+  "prompt": "Mid-century modern living room, walnut sideboard, forest green velvet sofa with tapered legs, terrazzo floor, brass floor lamp, warm late afternoon light.",
+  "brief": "Mid-century modern. Les années 1950 et 1960 : noyer verni, velours vert, terrazzo et laiton, lignes fines et pieds fuselés.",
+  "planche": "/editorial/planches/mid-century.webp"
+ },
+ {
+  "id": "art-deco-contemporain",
+  "type": "style",
+  "title": "Art déco contemporain",
+  "subtitle": "Géométrie, laque et marbre",
+  "description": "Marbre veiné, laque profonde, laiton et velours : la géométrie Art déco, dans une version épurée.",
+  "materials": [
+   "marbre-calacatta",
+   "laque-brillante",
+   "laiton-brosse",
+   "velours-foret",
+   "noyer-verni"
+  ],
+  "palette": [
+   "#EEEAE3",
+   "#1F3A33",
+   "#C9A564",
+   "#2F4A3D",
+   "#5B4030"
+  ],
+  "rooms": [
+   "salon",
+   "salle-a-manger",
+   "salle-de-bain"
+  ],
+  "styles": [
+   "art-deco-contemporain"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/art-deco-contemporain.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "mediterraneen-contemporain",
-    "type": "style",
-    "title": "Méditerranéen contemporain",
-    "subtitle": "Chaux, terre cuite et lumière",
-    "description": "Tadelakt, tomettes, lin et pierre : la douceur du Sud dans des volumes simples et lumineux.",
-    "materials": [
-      "tadelakt",
-      "terre-cuite",
-      "lin-lave",
-      "pierre-naturelle",
-      "chene-naturel"
-    ],
-    "palette": [
-      "#EFE6D8",
-      "#D9C7AE",
-      "#B35A3B",
-      "#8C7B66",
-      "#3A332C"
-    ],
-    "rooms": [
-      "salon",
-      "salle-de-bain",
-      "terrasse"
-    ],
-    "styles": [
-      "mediterraneen-contemporain"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/mediterraneen-contemporain.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Contemporary Mediterranean living room, tadelakt walls with soft arches, terracotta tile floor, linen sofa, natural stone bench, strong sunlight and deep shadows.",
-    "brief": "Méditerranéen contemporain. Tadelakt, tomettes, lin et pierre : la douceur du Sud dans des volumes simples et lumineux.",
-    "planche": "/editorial/planches/mediterraneen-contemporain.webp"
+  "prompt": "Contemporary Art Deco dining room, Calacatta marble table, deep green lacquered walls, fluted walnut sideboard, brass geometric pendant, velvet chairs.",
+  "brief": "Art déco contemporain. Marbre veiné, laque profonde, laiton et velours : la géométrie Art déco, dans une version épurée.",
+  "planche": "/editorial/planches/art-deco-contemporain.webp"
+ },
+ {
+  "id": "mediterraneen-contemporain",
+  "type": "style",
+  "title": "Méditerranéen contemporain",
+  "subtitle": "Chaux, terre cuite et lumière",
+  "description": "Tadelakt, tomettes, lin et pierre : la douceur du Sud dans des volumes simples et lumineux.",
+  "materials": [
+   "tadelakt",
+   "terre-cuite",
+   "lin-lave",
+   "pierre-naturelle",
+   "chene-naturel"
+  ],
+  "palette": [
+   "#EFE6D8",
+   "#D9C7AE",
+   "#B35A3B",
+   "#8C7B66",
+   "#3A332C"
+  ],
+  "rooms": [
+   "salon",
+   "salle-de-bain",
+   "terrasse"
+  ],
+  "styles": [
+   "mediterraneen-contemporain"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/mediterraneen-contemporain.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "campagne-elegante",
-    "type": "style",
-    "title": "Maison de campagne élégante",
-    "subtitle": "Rustique, mais tenu",
-    "description": "Chêne fumé, pierre, lin et terre cuite : la maison de famille, sans l'accumulation.",
-    "materials": [
-      "chene-fume",
-      "pierre-naturelle",
-      "lin-lave",
-      "platre-texture",
-      "terre-cuite"
-    ],
-    "palette": [
-      "#EDE6DA",
-      "#C9B79C",
-      "#5E4632",
-      "#8E8E8A",
-      "#B35A3B"
-    ],
-    "rooms": [
-      "cuisine",
-      "salle-a-manger",
-      "salon"
-    ],
-    "styles": [
-      "campagne-elegante"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/campagne-elegante.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Elegant country house kitchen, smoked oak cabinets, limestone worktop, terracotta floor, linen curtains, white plaster walls, soft morning light.",
-    "brief": "Maison de campagne élégante. Chêne fumé, pierre, lin et terre cuite : la maison de famille, sans l'accumulation.",
-    "planche": "/editorial/planches/campagne-elegante.webp"
+  "prompt": "Contemporary Mediterranean living room, tadelakt walls with soft arches, terracotta tile floor, linen sofa, natural stone bench, strong sunlight and deep shadows.",
+  "brief": "Méditerranéen contemporain. Tadelakt, tomettes, lin et pierre : la douceur du Sud dans des volumes simples et lumineux.",
+  "planche": "/editorial/planches/mediterraneen-contemporain.webp"
+ },
+ {
+  "id": "campagne-elegante",
+  "type": "style",
+  "title": "Maison de campagne élégante",
+  "subtitle": "Rustique, mais tenu",
+  "description": "Chêne fumé, pierre, lin et terre cuite : la maison de famille, sans l'accumulation.",
+  "materials": [
+   "chene-fume",
+   "pierre-naturelle",
+   "lin-lave",
+   "platre-texture",
+   "terre-cuite"
+  ],
+  "palette": [
+   "#EDE6DA",
+   "#C9B79C",
+   "#5E4632",
+   "#8E8E8A",
+   "#B35A3B"
+  ],
+  "rooms": [
+   "cuisine",
+   "salle-a-manger",
+   "salon"
+  ],
+  "styles": [
+   "campagne-elegante"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/campagne-elegante.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "luxe-discret",
-    "type": "style",
-    "title": "Luxe discret",
-    "subtitle": "La qualité qui ne se montre pas",
-    "description": "Travertin, noyer, bouclé et bronze brossé : des matières rares dans une palette très retenue.",
-    "materials": [
-      "travertin",
-      "noyer-verni",
-      "boucle",
-      "peinture-velours",
-      "bronze-brosse"
-    ],
-    "palette": [
-      "#E8E1D4",
-      "#DCCBAE",
-      "#5B4030",
-      "#8C6A3F",
-      "#2B2A28"
-    ],
-    "rooms": [
-      "salon",
-      "chambre",
-      "entree"
-    ],
-    "styles": [
-      "luxe-discret"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/luxe-discret.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Quiet luxury living room, travertine coffee table, walnut wall panelling, cream boucle sofa, brushed bronze details, muted palette, soft diffused daylight.",
-    "brief": "Luxe discret. Travertin, noyer, bouclé et bronze brossé : des matières rares dans une palette très retenue.",
-    "planche": "/editorial/planches/luxe-discret.webp"
+  "prompt": "Elegant country house kitchen, smoked oak cabinets, limestone worktop, terracotta floor, linen curtains, white plaster walls, soft morning light.",
+  "brief": "Maison de campagne élégante. Chêne fumé, pierre, lin et terre cuite : la maison de famille, sans l'accumulation.",
+  "planche": "/editorial/planches/campagne-elegante.webp"
+ },
+ {
+  "id": "luxe-discret",
+  "type": "style",
+  "title": "Luxe discret",
+  "subtitle": "La qualité qui ne se montre pas",
+  "description": "Travertin, noyer, bouclé et bronze brossé : des matières rares dans une palette très retenue.",
+  "materials": [
+   "travertin",
+   "noyer-verni",
+   "boucle",
+   "peinture-velours",
+   "bronze-brosse"
+  ],
+  "palette": [
+   "#E8E1D4",
+   "#DCCBAE",
+   "#5B4030",
+   "#8C6A3F",
+   "#2B2A28"
+  ],
+  "rooms": [
+   "salon",
+   "chambre",
+   "entree"
+  ],
+  "styles": [
+   "luxe-discret"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/luxe-discret.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "contemporain-sculptural",
-    "type": "style",
-    "title": "Contemporain sculptural",
-    "subtitle": "Des meubles comme des sculptures",
-    "description": "Formes organiques, pierre massive, bouclé et laiton : chaque pièce a la présence d'une œuvre.",
-    "materials": [
-      "travertin",
-      "boucle",
-      "enduit-chaux",
-      "laiton-brosse",
-      "chene-naturel"
-    ],
-    "palette": [
-      "#EEE7DA",
-      "#DCCBAE",
-      "#B98E5E",
-      "#C9A564",
-      "#3A332C"
-    ],
-    "rooms": [
-      "salon",
-      "entree"
-    ],
-    "styles": [
-      "contemporain-sculptural"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/contemporain-sculptural.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Sculptural contemporary living room, organic travertine coffee table carved from one block, curved cream boucle sofa, lime plaster walls, brass floor lamp, gallery-like composition.",
-    "brief": "Contemporain sculptural. Formes organiques, pierre massive, bouclé et laiton : chaque pièce a la présence d'une œuvre.",
-    "planche": "/editorial/planches/contemporain-sculptural.webp"
+  "prompt": "Quiet luxury living room, travertine coffee table, walnut wall panelling, cream boucle sofa, brushed bronze details, muted palette, soft diffused daylight.",
+  "brief": "Luxe discret. Travertin, noyer, bouclé et bronze brossé : des matières rares dans une palette très retenue.",
+  "planche": "/editorial/planches/luxe-discret.webp"
+ },
+ {
+  "id": "contemporain-sculptural",
+  "type": "style",
+  "title": "Contemporain sculptural",
+  "subtitle": "Des meubles comme des sculptures",
+  "description": "Formes organiques, pierre massive, bouclé et laiton : chaque pièce a la présence d'une œuvre.",
+  "materials": [
+   "travertin",
+   "boucle",
+   "enduit-chaux",
+   "laiton-brosse",
+   "chene-naturel"
+  ],
+  "palette": [
+   "#EEE7DA",
+   "#DCCBAE",
+   "#B98E5E",
+   "#C9A564",
+   "#3A332C"
+  ],
+  "rooms": [
+   "salon",
+   "entree"
+  ],
+  "styles": [
+   "contemporain-sculptural"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/contemporain-sculptural.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "salon",
-    "type": "espace",
-    "title": "Salons",
-    "subtitle": "Le cœur de la maison",
-    "description": "Circulation de 80 à 90 cm, table basse aux deux tiers du canapé, trois couches de lumière.",
-    "materials": [
-      "parquet-chevron",
-      "boucle",
-      "travertin",
-      "laiton-brosse"
-    ],
-    "palette": [
-      "#EFEBE4",
-      "#DCCBAE",
-      "#A87B4F",
-      "#2B2A28"
-    ],
-    "rooms": [
-      "salon"
-    ],
-    "styles": [
-      "parisien-contemporain",
-      "contemporain-sculptural"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/salon.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Salons. Circulation de 80 à 90 cm, table basse aux deux tiers du canapé, trois couches de lumière."
+  "prompt": "Sculptural contemporary living room, organic travertine coffee table carved from one block, curved cream boucle sofa, lime plaster walls, brass floor lamp, gallery-like composition.",
+  "brief": "Contemporain sculptural. Formes organiques, pierre massive, bouclé et laiton : chaque pièce a la présence d'une œuvre.",
+  "planche": "/editorial/planches/contemporain-sculptural.webp"
+ },
+ {
+  "id": "salon",
+  "type": "espace",
+  "title": "Salons",
+  "subtitle": "Le cœur de la maison",
+  "description": "Circulation de 80 à 90 cm, table basse aux deux tiers du canapé, trois couches de lumière.",
+  "materials": [
+   "parquet-chevron",
+   "boucle",
+   "travertin",
+   "laiton-brosse"
+  ],
+  "palette": [
+   "#EFEBE4",
+   "#DCCBAE",
+   "#A87B4F",
+   "#2B2A28"
+  ],
+  "rooms": [
+   "salon"
+  ],
+  "styles": [
+   "parisien-contemporain",
+   "contemporain-sculptural"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/salon.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "cuisine",
-    "type": "espace",
-    "title": "Cuisines",
-    "subtitle": "Matières qui durent",
-    "description": "Plans en pierre, façades en bois, crédence lavable : le triangle évier, cuisson, froid avant tout.",
-    "materials": [
-      "chene-naturel",
-      "pierre-naturelle",
-      "marbre-calacatta",
-      "laiton-brosse"
-    ],
-    "palette": [
-      "#EDE6DA",
-      "#B98E5E",
-      "#D9CDB8",
-      "#3A332C"
-    ],
-    "rooms": [
-      "cuisine"
-    ],
-    "styles": [
-      "campagne-elegante",
-      "minimalisme-chaleureux"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/cuisine.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Cuisines. Plans en pierre, façades en bois, crédence lavable : le triangle évier, cuisson, froid avant tout."
+  "prompt": "",
+  "brief": "Salons. Circulation de 80 à 90 cm, table basse aux deux tiers du canapé, trois couches de lumière."
+ },
+ {
+  "id": "cuisine",
+  "type": "espace",
+  "title": "Cuisines",
+  "subtitle": "Matières qui durent",
+  "description": "Plans en pierre, façades en bois, crédence lavable : le triangle évier, cuisson, froid avant tout.",
+  "materials": [
+   "chene-naturel",
+   "pierre-naturelle",
+   "marbre-calacatta",
+   "laiton-brosse"
+  ],
+  "palette": [
+   "#EDE6DA",
+   "#B98E5E",
+   "#D9CDB8",
+   "#3A332C"
+  ],
+  "rooms": [
+   "cuisine"
+  ],
+  "styles": [
+   "campagne-elegante",
+   "minimalisme-chaleureux"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/cuisine.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "salle-de-bain",
-    "type": "espace",
-    "title": "Salles de bains",
-    "subtitle": "Étanches et sensuelles",
-    "description": "Tadelakt, terrazzo, robinetterie brossée : des matières qui supportent l'eau et vieillissent bien.",
-    "materials": [
-      "tadelakt",
-      "terrazzo",
-      "pierre-naturelle",
-      "laiton-brosse"
-    ],
-    "palette": [
-      "#EFE6D8",
-      "#E3DCD0",
-      "#D9C7AE",
-      "#C9A564"
-    ],
-    "rooms": [
-      "salle-de-bain"
-    ],
-    "styles": [
-      "mediterraneen-contemporain",
-      "art-deco-contemporain"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/salle-de-bain.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Serene bathroom, tadelakt walls, terrazzo floor, freestanding stone washbasin, brushed brass wall-mounted tap, soft window light.",
-    "brief": "Salles de bains. Tadelakt, terrazzo, robinetterie brossée : des matières qui supportent l'eau et vieillissent bien.",
-    "planche": "/editorial/planches/salle-de-bain.webp"
+  "prompt": "",
+  "brief": "Cuisines. Plans en pierre, façades en bois, crédence lavable : le triangle évier, cuisson, froid avant tout."
+ },
+ {
+  "id": "salle-de-bain",
+  "type": "espace",
+  "title": "Salles de bains",
+  "subtitle": "Étanches et sensuelles",
+  "description": "Tadelakt, terrazzo, robinetterie brossée : des matières qui supportent l'eau et vieillissent bien.",
+  "materials": [
+   "tadelakt",
+   "terrazzo",
+   "pierre-naturelle",
+   "laiton-brosse"
+  ],
+  "palette": [
+   "#EFE6D8",
+   "#E3DCD0",
+   "#D9C7AE",
+   "#C9A564"
+  ],
+  "rooms": [
+   "salle-de-bain"
+  ],
+  "styles": [
+   "mediterraneen-contemporain",
+   "art-deco-contemporain"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/salle-de-bain.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "chambre",
-    "type": "espace",
-    "title": "Chambres",
-    "subtitle": "Le calme d'abord",
-    "description": "Textiles naturels, lumière tamisée, tête de lit généreuse et 60 cm de passage autour du lit.",
-    "materials": [
-      "lin-lave",
-      "boucle",
-      "chene-naturel",
-      "enduit-chaux"
-    ],
-    "palette": [
-      "#E6DDCF",
-      "#D8CDBB",
-      "#B98E5E",
-      "#3A332C"
-    ],
-    "rooms": [
-      "chambre"
-    ],
-    "styles": [
-      "minimalisme-chaleureux",
-      "japandi"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/chambre.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Calm bedroom, lime plaster walls, washed linen bedding, oak bed, boucle bench, bedside wall lights, evening light.",
-    "brief": "Chambres. Textiles naturels, lumière tamisée, tête de lit généreuse et 60 cm de passage autour du lit.",
-    "planche": "/editorial/planches/chambre.webp"
+  "prompt": "Serene bathroom, tadelakt walls, terrazzo floor, freestanding stone washbasin, brushed brass wall-mounted tap, soft window light.",
+  "brief": "Salles de bains. Tadelakt, terrazzo, robinetterie brossée : des matières qui supportent l'eau et vieillissent bien.",
+  "planche": "/editorial/planches/salle-de-bain.webp"
+ },
+ {
+  "id": "chambre",
+  "type": "espace",
+  "title": "Chambres",
+  "subtitle": "Le calme d'abord",
+  "description": "Textiles naturels, lumière tamisée, tête de lit généreuse et 60 cm de passage autour du lit.",
+  "materials": [
+   "lin-lave",
+   "boucle",
+   "chene-naturel",
+   "enduit-chaux"
+  ],
+  "palette": [
+   "#E6DDCF",
+   "#D8CDBB",
+   "#B98E5E",
+   "#3A332C"
+  ],
+  "rooms": [
+   "chambre"
+  ],
+  "styles": [
+   "minimalisme-chaleureux",
+   "japandi"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/chambre.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "entree",
-    "type": "espace",
-    "title": "Entrées",
-    "subtitle": "La première impression",
-    "description": "Un banc, un miroir, une console et une lumière d'accent : peu d'éléments, très bien choisis.",
-    "materials": [
-      "travertin",
-      "noyer-verni",
-      "platre-texture",
-      "laiton-brosse"
-    ],
-    "palette": [
-      "#EFEBE4",
-      "#DCCBAE",
-      "#5B4030",
-      "#C9A564"
-    ],
-    "rooms": [
-      "entree"
-    ],
-    "styles": [
-      "luxe-discret",
-      "contemporain-sculptural"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/entree.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Elegant entrance hall, travertine console, walnut bench, round mirror, plaster walls, sculptural brass wall light.",
-    "brief": "Entrées. Un banc, un miroir, une console et une lumière d'accent : peu d'éléments, très bien choisis.",
-    "planche": "/editorial/planches/entree.webp"
+  "prompt": "Calm bedroom, lime plaster walls, washed linen bedding, oak bed, boucle bench, bedside wall lights, evening light.",
+  "brief": "Chambres. Textiles naturels, lumière tamisée, tête de lit généreuse et 60 cm de passage autour du lit.",
+  "planche": "/editorial/planches/chambre.webp"
+ },
+ {
+  "id": "entree",
+  "type": "espace",
+  "title": "Entrées",
+  "subtitle": "La première impression",
+  "description": "Un banc, un miroir, une console et une lumière d'accent : peu d'éléments, très bien choisis.",
+  "materials": [
+   "travertin",
+   "noyer-verni",
+   "platre-texture",
+   "laiton-brosse"
+  ],
+  "palette": [
+   "#EFEBE4",
+   "#DCCBAE",
+   "#5B4030",
+   "#C9A564"
+  ],
+  "rooms": [
+   "entree"
+  ],
+  "styles": [
+   "luxe-discret",
+   "contemporain-sculptural"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/entree.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "salle-a-manger",
-    "type": "espace",
-    "title": "Salles à manger",
-    "subtitle": "Autour de la table",
-    "description": "Compter 60 cm par convive et 90 cm derrière les chaises ; une suspension à 75 cm au-dessus du plateau.",
-    "materials": [
-      "noyer-verni",
-      "marbre-calacatta",
-      "velours-foret",
-      "laiton-brosse"
-    ],
-    "palette": [
-      "#EEEAE3",
-      "#5B4030",
-      "#2F4A3D",
-      "#C9A564"
-    ],
-    "rooms": [
-      "salle-a-manger"
-    ],
-    "styles": [
-      "art-deco-contemporain",
-      "mid-century"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/salle-a-manger.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Dining room, marble oval table, walnut chairs with velvet seats, low brass pendant, plaster walls, evening ambience.",
-    "brief": "Salles à manger. Compter 60 cm par convive et 90 cm derrière les chaises ; une suspension à 75 cm au-dessus du plateau.",
-    "planche": "/editorial/planches/salle-a-manger.webp"
+  "prompt": "Elegant entrance hall, travertine console, walnut bench, round mirror, plaster walls, sculptural brass wall light.",
+  "brief": "Entrées. Un banc, un miroir, une console et une lumière d'accent : peu d'éléments, très bien choisis.",
+  "planche": "/editorial/planches/entree.webp"
+ },
+ {
+  "id": "salle-a-manger",
+  "type": "espace",
+  "title": "Salles à manger",
+  "subtitle": "Autour de la table",
+  "description": "Compter 60 cm par convive et 90 cm derrière les chaises ; une suspension à 75 cm au-dessus du plateau.",
+  "materials": [
+   "noyer-verni",
+   "marbre-calacatta",
+   "velours-foret",
+   "laiton-brosse"
+  ],
+  "palette": [
+   "#EEEAE3",
+   "#5B4030",
+   "#2F4A3D",
+   "#C9A564"
+  ],
+  "rooms": [
+   "salle-a-manger"
+  ],
+  "styles": [
+   "art-deco-contemporain",
+   "mid-century"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/salle-a-manger.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "bureau",
-    "type": "espace",
-    "title": "Bureaux",
-    "subtitle": "Travailler chez soi",
-    "description": "Lumière naturelle de côté, rangements fermés, une matière chaude sous la main.",
-    "materials": [
-      "noyer-verni",
-      "chene-fume",
-      "lin-lave",
-      "pierre-mate"
-    ],
-    "palette": [
-      "#E8E1D6",
-      "#5B4030",
-      "#5E4632",
-      "#3F4448"
-    ],
-    "rooms": [
-      "bureau"
-    ],
-    "styles": [
-      "japandi",
-      "brutalisme-raffine"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/bureau.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Bureaux. Lumière naturelle de côté, rangements fermés, une matière chaude sous la main."
+  "prompt": "Dining room, marble oval table, walnut chairs with velvet seats, low brass pendant, plaster walls, evening ambience.",
+  "brief": "Salles à manger. Compter 60 cm par convive et 90 cm derrière les chaises ; une suspension à 75 cm au-dessus du plateau.",
+  "planche": "/editorial/planches/salle-a-manger.webp"
+ },
+ {
+  "id": "bureau",
+  "type": "espace",
+  "title": "Bureaux",
+  "subtitle": "Travailler chez soi",
+  "description": "Lumière naturelle de côté, rangements fermés, une matière chaude sous la main.",
+  "materials": [
+   "noyer-verni",
+   "chene-fume",
+   "lin-lave",
+   "pierre-mate"
+  ],
+  "palette": [
+   "#E8E1D6",
+   "#5B4030",
+   "#5E4632",
+   "#3F4448"
+  ],
+  "rooms": [
+   "bureau"
+  ],
+  "styles": [
+   "japandi",
+   "brutalisme-raffine"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/bureau.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "dressing",
-    "type": "espace",
-    "title": "Dressings",
-    "subtitle": "Ranger avec élégance",
-    "description": "Façades en bois, éclairage intégré, miroir pleine hauteur et assise pour se chausser.",
-    "materials": [
-      "chene-naturel",
-      "lin-lave",
-      "laiton-brosse",
-      "boucle"
-    ],
-    "palette": [
-      "#EDE6DA",
-      "#B98E5E",
-      "#D8CDBB",
-      "#C9A564"
-    ],
-    "rooms": [
-      "dressing"
-    ],
-    "styles": [
-      "luxe-discret"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/dressing.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Walk-in dressing room, oak cabinetry with integrated lighting, full-height mirror, boucle ottoman, brass handles.",
-    "brief": "Dressings. Façades en bois, éclairage intégré, miroir pleine hauteur et assise pour se chausser.",
-    "planche": "/editorial/planches/dressing.webp"
+  "prompt": "",
+  "brief": "Bureaux. Lumière naturelle de côté, rangements fermés, une matière chaude sous la main."
+ },
+ {
+  "id": "dressing",
+  "type": "espace",
+  "title": "Dressings",
+  "subtitle": "Ranger avec élégance",
+  "description": "Façades en bois, éclairage intégré, miroir pleine hauteur et assise pour se chausser.",
+  "materials": [
+   "chene-naturel",
+   "lin-lave",
+   "laiton-brosse",
+   "boucle"
+  ],
+  "palette": [
+   "#EDE6DA",
+   "#B98E5E",
+   "#D8CDBB",
+   "#C9A564"
+  ],
+  "rooms": [
+   "dressing"
+  ],
+  "styles": [
+   "luxe-discret"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/dressing.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "terrasse",
-    "type": "espace",
-    "title": "Terrasses",
-    "subtitle": "Le dehors, meublé",
-    "description": "Sol en pierre ou terre cuite, ombrage, mobilier résistant, végétaux en pots adaptés à l'exposition.",
-    "materials": [
-      "terre-cuite",
-      "pierre-naturelle",
-      "lin-lave",
-      "chene-naturel"
-    ],
-    "palette": [
-      "#EFE6D8",
-      "#B35A3B",
-      "#D9CDB8",
-      "#6E7344"
-    ],
-    "rooms": [
-      "terrasse"
-    ],
-    "styles": [
-      "mediterraneen-contemporain"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/terrasse.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Mediterranean terrace, terracotta floor, natural stone bench, linen shade sail, olive trees in pots, golden hour light.",
-    "brief": "Terrasses. Sol en pierre ou terre cuite, ombrage, mobilier résistant, végétaux en pots adaptés à l'exposition.",
-    "planche": "/editorial/planches/terrasse.webp"
+  "prompt": "Walk-in dressing room, oak cabinetry with integrated lighting, full-height mirror, boucle ottoman, brass handles.",
+  "brief": "Dressings. Façades en bois, éclairage intégré, miroir pleine hauteur et assise pour se chausser.",
+  "planche": "/editorial/planches/dressing.webp"
+ },
+ {
+  "id": "terrasse",
+  "type": "espace",
+  "title": "Terrasses",
+  "subtitle": "Le dehors, meublé",
+  "description": "Sol en pierre ou terre cuite, ombrage, mobilier résistant, végétaux en pots adaptés à l'exposition.",
+  "materials": [
+   "terre-cuite",
+   "pierre-naturelle",
+   "lin-lave",
+   "chene-naturel"
+  ],
+  "palette": [
+   "#EFE6D8",
+   "#B35A3B",
+   "#D9CDB8",
+   "#6E7344"
+  ],
+  "rooms": [
+   "terrasse"
+  ],
+  "styles": [
+   "mediterraneen-contemporain"
+  ],
+  "image": {
+   "kind": "ia",
+   "src": "/editorial/ia/terrasse.webp",
+   "width": 1600,
+   "height": 1195,
+   "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
+   "license": "Création Pièce Rêvée",
+   "sourceUrl": null
   },
-  {
-    "id": "jardin",
-    "type": "espace",
-    "title": "Jardins",
-    "subtitle": "Composer avec le vivant",
-    "description": "Allées en pierre, massifs selon l'exposition, éclairage bas ; penser entretien et besoins en eau.",
-    "materials": [
-      "pierre-naturelle",
-      "terre-cuite",
-      "chene-naturel",
-      "pierre-mate"
-    ],
-    "palette": [
-      "#D9CDB8",
-      "#6E7344",
-      "#9DAA8C",
-      "#3F4448"
-    ],
-    "rooms": [
-      "jardin"
-    ],
-    "styles": [
-      "campagne-elegante"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/jardin.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Contemporary garden, natural stone path, layered planting of grasses and perennials, oak bench, low garden lights at dusk.",
-    "brief": "Jardins. Allées en pierre, massifs selon l'exposition, éclairage bas ; penser entretien et besoins en eau.",
-    "planche": "/editorial/planches/jardin.webp"
+  "prompt": "Mediterranean terrace, terracotta floor, natural stone bench, linen shade sail, olive trees in pots, golden hour light.",
+  "brief": "Terrasses. Sol en pierre ou terre cuite, ombrage, mobilier résistant, végétaux en pots adaptés à l'exposition."
+ },
+ {
+  "id": "matiere-chene",
+  "type": "matiere",
+  "title": "Chêne naturel",
+  "subtitle": "Matière",
+  "description": "Fil droit, maillures, teinte miel : le bois le plus polyvalent.",
+  "materials": [
+   "chene-naturel"
+  ],
+  "palette": [],
+  "rooms": [],
+  "styles": [
+   "scandinave-haut-de-gamme",
+   "minimalisme-chaleureux"
+  ],
+  "image": {
+   "kind": "matiere",
+   "src": "/matieres/chene-huile/1280.webp",
+   "width": 1280,
+   "height": 1280,
+   "credit": "Oak Veneer 01 · Jenelle van Heerden (Poly Haven)",
+   "license": "CC0 1.0",
+   "sourceUrl": "https://polyhaven.com/a/oak_veneer_01"
   },
-  {
-    "id": "facade",
-    "type": "espace",
-    "title": "Façades",
-    "subtitle": "L'architecture en premier",
-    "description": "Enduit, pierre, bois et menuiseries : la couleur se choisit avec le paysage et les règles locales d'urbanisme.",
-    "materials": [
-      "enduit-chaux",
-      "pierre-naturelle",
-      "chene-fume",
-      "pierre-mate"
-    ],
-    "palette": [
-      "#E6DDCF",
-      "#D9CDB8",
-      "#5E4632",
-      "#3F4448"
-    ],
-    "rooms": [
-      "facade"
-    ],
-    "styles": [
-      "mediterraneen-contemporain",
-      "campagne-elegante"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/facade.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "Renovated house facade, lime render, natural stone base, smoked oak shutters, dark metal window frames, soft daylight.",
-    "brief": "Façades. Enduit, pierre, bois et menuiseries : la couleur se choisit avec le paysage et les règles locales d'urbanisme.",
-    "planche": "/editorial/planches/facade.webp"
+  "prompt": "",
+  "brief": "Une pièce mettant en valeur : chêne naturel."
+ },
+ {
+  "id": "matiere-noyer",
+  "type": "matiere",
+  "title": "Noyer",
+  "subtitle": "Matière",
+  "description": "Veinage ondulé, brun profond, vernis satiné.",
+  "materials": [
+   "noyer-verni"
+  ],
+  "palette": [],
+  "rooms": [],
+  "styles": [
+   "mid-century",
+   "luxe-discret"
+  ],
+  "image": {
+   "kind": "matiere",
+   "src": "/matieres/noyer/1280.webp",
+   "width": 1280,
+   "height": 1280,
+   "credit": "Walnut Veneer · Jenelle van Heerden (Poly Haven)",
+   "license": "CC0 1.0",
+   "sourceUrl": "https://polyhaven.com/a/walnut_veneer"
   },
-  {
-    "id": "matiere-chene",
-    "type": "matiere",
-    "title": "Chêne naturel",
-    "subtitle": "Matière",
-    "description": "Fil droit, maillures, teinte miel : le bois le plus polyvalent.",
-    "materials": [
-      "chene-naturel"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "scandinave-haut-de-gamme",
-      "minimalisme-chaleureux"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-chene.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : chêne naturel."
+  "prompt": "",
+  "brief": "Une pièce mettant en valeur : noyer."
+ },
+ {
+  "id": "matiere-pierre",
+  "type": "matiere",
+  "title": "Pierre naturelle",
+  "subtitle": "Matière",
+  "description": "Calcaire clair au grain fin, nuances discrètes.",
+  "materials": [
+   "pierre-naturelle"
+  ],
+  "palette": [],
+  "rooms": [],
+  "styles": [
+   "campagne-elegante",
+   "mediterraneen-contemporain"
+  ],
+  "image": {
+   "kind": "matiere",
+   "src": "/matieres/pierre-calcaire/1280.webp",
+   "width": 1280,
+   "height": 1280,
+   "credit": "Tiles 139 · ambientCG (Lennart Demes) (ambientCG)",
+   "license": "CC0 1.0",
+   "sourceUrl": "https://ambientcg.com/view?id=Tiles139"
   },
-  {
-    "id": "matiere-noyer",
-    "type": "matiere",
-    "title": "Noyer",
-    "subtitle": "Matière",
-    "description": "Veinage ondulé, brun profond, vernis satiné.",
-    "materials": [
-      "noyer-verni"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "mid-century",
-      "luxe-discret"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-noyer.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : noyer."
+  "prompt": "",
+  "brief": "Une pièce mettant en valeur : pierre naturelle."
+ },
+ {
+  "id": "matiere-travertin",
+  "type": "matiere",
+  "title": "Travertin",
+  "subtitle": "Matière",
+  "description": "Veines dans le sens du lit, alvéoles caractéristiques.",
+  "materials": [
+   "travertin"
+  ],
+  "palette": [],
+  "rooms": [],
+  "styles": [
+   "contemporain-sculptural",
+   "luxe-discret"
+  ],
+  "image": {
+   "kind": "matiere",
+   "src": "/matieres/travertin/1280.webp",
+   "width": 1280,
+   "height": 1280,
+   "credit": "Travertine 003 · ambientCG (Lennart Demes) (ambientCG)",
+   "license": "CC0 1.0",
+   "sourceUrl": "https://ambientcg.com/view?id=Travertine003"
   },
-  {
-    "id": "matiere-pierre",
-    "type": "matiere",
-    "title": "Pierre naturelle",
-    "subtitle": "Matière",
-    "description": "Calcaire clair au grain fin, nuances discrètes.",
-    "materials": [
-      "pierre-naturelle"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "campagne-elegante",
-      "mediterraneen-contemporain"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-pierre.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : pierre naturelle."
+  "prompt": "",
+  "brief": "Une pièce mettant en valeur : travertin."
+ },
+ {
+  "id": "matiere-marbre",
+  "type": "matiere",
+  "title": "Marbre",
+  "subtitle": "Matière",
+  "description": "Fond blanc chaud, veines grises à dorées.",
+  "materials": [
+   "marbre-calacatta"
+  ],
+  "palette": [],
+  "rooms": [],
+  "styles": [
+   "art-deco-contemporain",
+   "haussmannien-renove"
+  ],
+  "image": {
+   "kind": "matiere",
+   "src": "/matieres/marbre-carrare/1280.webp",
+   "width": 1280,
+   "height": 1280,
+   "credit": "Marble 021 · ambientCG (Lennart Demes) (ambientCG)",
+   "license": "CC0 1.0",
+   "sourceUrl": "https://ambientcg.com/view?id=Marble021"
   },
-  {
-    "id": "matiere-travertin",
-    "type": "matiere",
-    "title": "Travertin",
-    "subtitle": "Matière",
-    "description": "Veines dans le sens du lit, alvéoles caractéristiques.",
-    "materials": [
-      "travertin"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "contemporain-sculptural",
-      "luxe-discret"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-travertin.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : travertin."
+  "prompt": "",
+  "brief": "Une pièce mettant en valeur : marbre."
+ },
+ {
+  "id": "matiere-enduit",
+  "type": "matiere",
+  "title": "Enduits texturés",
+  "subtitle": "Matière",
+  "description": "Chaux taloché en passes croisées : nuances nuageuses.",
+  "materials": [
+   "enduit-chaux"
+  ],
+  "palette": [],
+  "rooms": [],
+  "styles": [
+   "minimalisme-chaleureux",
+   "japandi"
+  ],
+  "image": {
+   "kind": "matiere",
+   "src": "/matieres/enduit-chaux/1280.webp",
+   "width": 1280,
+   "height": 1280,
+   "credit": "Plaster 003 · ambientCG (Lennart Demes) (ambientCG)",
+   "license": "CC0 1.0",
+   "sourceUrl": "https://ambientcg.com/view?id=Plaster003"
   },
-  {
-    "id": "matiere-marbre",
-    "type": "matiere",
-    "title": "Marbre",
-    "subtitle": "Matière",
-    "description": "Fond blanc chaud, veines grises à dorées.",
-    "materials": [
-      "marbre-calacatta"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "art-deco-contemporain",
-      "haussmannien-renove"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-marbre.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : marbre."
+  "prompt": "",
+  "brief": "Une pièce mettant en valeur : enduits texturés."
+ },
+ {
+  "id": "matiere-lin",
+  "type": "matiere",
+  "title": "Lin",
+  "subtitle": "Matière",
+  "description": "Fils irréguliers, froissé naturel.",
+  "materials": [
+   "lin-lave"
+  ],
+  "palette": [],
+  "rooms": [],
+  "styles": [
+   "minimalisme-chaleureux",
+   "japandi"
+  ],
+  "image": {
+   "kind": "matiere",
+   "src": "/matieres/lin-lave/1280.webp",
+   "width": 1280,
+   "height": 1280,
+   "credit": "Rough Linen · colormass, Rico Cilliers (Poly Haven)",
+   "license": "CC0 1.0",
+   "sourceUrl": "https://polyhaven.com/a/rough_linen"
   },
-  {
-    "id": "matiere-enduit",
-    "type": "matiere",
-    "title": "Enduits texturés",
-    "subtitle": "Matière",
-    "description": "Chaux taloché en passes croisées : nuances nuageuses.",
-    "materials": [
-      "enduit-chaux"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "minimalisme-chaleureux",
-      "japandi"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-enduit.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : enduits texturés."
+  "prompt": "",
+  "brief": "Une pièce mettant en valeur : lin."
+ },
+ {
+  "id": "matiere-velours",
+  "type": "matiere",
+  "title": "Velours",
+  "subtitle": "Matière",
+  "description": "Couleur changeante selon la lumière et le sens du poil.",
+  "materials": [
+   "velours-foret"
+  ],
+  "palette": [],
+  "rooms": [],
+  "styles": [
+   "mid-century",
+   "haussmannien-renove"
+  ],
+  "image": {
+   "kind": "matiere",
+   "src": "/matieres/velours/1280.webp",
+   "width": 1280,
+   "height": 1280,
+   "credit": "Velour Velvet · colormass, Rico Cilliers (Poly Haven)",
+   "license": "CC0 1.0",
+   "sourceUrl": "https://polyhaven.com/a/velour_velvet"
   },
-  {
-    "id": "matiere-peinture",
-    "type": "matiere",
-    "title": "Peintures mates",
-    "subtitle": "Matière",
-    "description": "Lumière très diffuse, micro-relief du rouleau.",
-    "materials": [
-      "peinture-mate"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "parisien-contemporain"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-peinture.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : peintures mates."
+  "prompt": "",
+  "brief": "Une pièce mettant en valeur : velours."
+ },
+ {
+  "id": "matiere-boucle",
+  "type": "matiere",
+  "title": "Bouclé",
+  "subtitle": "Matière",
+  "description": "Boucles serrées qui captent la lumière.",
+  "materials": [
+   "boucle"
+  ],
+  "palette": [],
+  "rooms": [],
+  "styles": [
+   "contemporain-sculptural",
+   "luxe-discret"
+  ],
+  "image": {
+   "kind": "matiere",
+   "src": "/matieres/bouclette/1280.webp",
+   "width": 1280,
+   "height": 1280,
+   "credit": "Carpet 016 · ambientCG (Lennart Demes) (ambientCG)",
+   "license": "CC0 1.0",
+   "sourceUrl": "https://ambientcg.com/view?id=Carpet016"
   },
-  {
-    "id": "matiere-laiton",
-    "type": "matiere",
-    "title": "Laiton brossé",
-    "subtitle": "Matière",
-    "description": "Reflets étirés, chaleur dorée ; se patine s'il n'est pas verni.",
-    "materials": [
-      "laiton-brosse"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "mid-century",
-      "art-deco-contemporain"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-laiton.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : laiton brossé."
-  },
-  {
-    "id": "matiere-lin",
-    "type": "matiere",
-    "title": "Lin",
-    "subtitle": "Matière",
-    "description": "Fils irréguliers, froissé naturel.",
-    "materials": [
-      "lin-lave"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "minimalisme-chaleureux",
-      "japandi"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-lin.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : lin."
-  },
-  {
-    "id": "matiere-velours",
-    "type": "matiere",
-    "title": "Velours",
-    "subtitle": "Matière",
-    "description": "Couleur changeante selon la lumière et le sens du poil.",
-    "materials": [
-      "velours-foret"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "mid-century",
-      "haussmannien-renove"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-velours.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : velours."
-  },
-  {
-    "id": "matiere-boucle",
-    "type": "matiere",
-    "title": "Bouclé",
-    "subtitle": "Matière",
-    "description": "Boucles serrées qui captent la lumière.",
-    "materials": [
-      "boucle"
-    ],
-    "palette": [],
-    "rooms": [],
-    "styles": [
-      "contemporain-sculptural",
-      "luxe-discret"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-boucle.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur : bouclé."
-  },
-  {
-    "id": "matiere-verre",
-    "type": "matiere",
-    "title": "Verre",
-    "subtitle": "Matière",
-    "description": "Clair, fumé ou dépoli : transparence, reflets et lumière diffuse.",
-    "materials": [
-      "verre-clair",
-      "verre-fume",
-      "verre-depoli"
-    ],
-    "palette": [
-      "#F4F7F6",
-      "#5A5550",
-      "#EEF1F0"
-    ],
-    "rooms": [],
-    "styles": [
-      "art-deco-contemporain"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-verre.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur le verre."
-  },
-  {
-    "id": "matiere-ceramique",
-    "type": "matiere",
-    "title": "Céramique",
-    "subtitle": "Matière",
-    "description": "Zellige émaillé à la main, faïence brillante : chaque carreau a sa nuance.",
-    "materials": [
-      "zellige-emeraude",
-      "faience-blanche"
-    ],
-    "palette": [
-      "#1E6B55",
-      "#F3F2EE",
-      "#D9C7AE"
-    ],
-    "rooms": [
-      "salle-de-bain",
-      "cuisine"
-    ],
-    "styles": [
-      "mediterraneen-contemporain"
-    ],
-    "image": {
-      "kind": "ia",
-      "src": "/editorial/ia/matiere-ceramique.webp",
-      "width": 1600,
-      "height": 1195,
-      "credit": "Image générée par IA (Google Nano Banana 2.1, 2026-10-29)",
-      "license": "Création Pièce Rêvée",
-      "sourceUrl": null
-    },
-    "prompt": "",
-    "brief": "Une pièce mettant en valeur la céramique."
-  }
+  "prompt": "",
+  "brief": "Une pièce mettant en valeur : bouclé."
+ }
 ]

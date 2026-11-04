@@ -17,26 +17,6 @@
       "displacement": "displacement.webp"
     }
   },
-  "velours-foret": {
-    "assetId": "velour_velvet",
-    "name": "Velour Velvet",
-    "url": "https://polyhaven.com/a/velour_velvet",
-    "authors": [
-      "colormass",
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0",
-    "resolution": 2048,
-    "dir": "/materiaux/velours-foret",
-    "maps": {
-      "basecolor": "basecolor.webp",
-      "normal": "normal.webp",
-      "roughness": "roughness.webp",
-      "ao": "ao.webp",
-      "displacement": "displacement.webp",
-      "metallic": "metallic.webp"
-    }
-  },
   "parquet-chevron": {
     "assetId": "herringbone_parquet",
     "name": "Herringbone Parquet",
@@ -217,24 +197,6 @@
       "displacement": "displacement.webp"
     }
   },
-  "platre-texture": {
-    "assetId": "white_plaster_02",
-    "name": "White Plaster 02",
-    "url": "https://polyhaven.com/a/white_plaster_02",
-    "authors": [
-      "Rob Tuytel"
-    ],
-    "license": "CC0 1.0",
-    "resolution": 2048,
-    "dir": "/materiaux/platre-texture",
-    "maps": {
-      "basecolor": "basecolor.webp",
-      "normal": "normal.webp",
-      "roughness": "roughness.webp",
-      "ao": "ao.webp",
-      "displacement": "displacement.webp"
-    }
-  },
   "travertin": {
     "assetId": "Travertine009",
     "name": "Travertine 009",
@@ -245,24 +207,6 @@
     "license": "CC0 1.0",
     "resolution": 2048,
     "dir": "/materiaux/travertin",
-    "maps": {
-      "basecolor": "basecolor.webp",
-      "normal": "normal.webp",
-      "roughness": "roughness.webp",
-      "ao": "ao.webp",
-      "displacement": "displacement.webp"
-    }
-  },
-  "pierre-naturelle": {
-    "assetId": "sandstone_cracks",
-    "name": "Sandstone Cracks",
-    "url": "https://polyhaven.com/a/sandstone_cracks",
-    "authors": [
-      "Rob Tuytel"
-    ],
-    "license": "CC0 1.0",
-    "resolution": 2048,
-    "dir": "/materiaux/pierre-naturelle",
     "maps": {
       "basecolor": "basecolor.webp",
       "normal": "normal.webp",
@@ -287,64 +231,6 @@
       "roughness": "roughness.webp",
       "ao": "ao.webp",
       "displacement": "displacement.webp"
-    }
-  },
-  "terrazzo": {
-    "assetId": "terrazzo_tiles",
-    "name": "Terrazzo Tiles",
-    "url": "https://polyhaven.com/a/terrazzo_tiles",
-    "authors": [
-      "Amal Kumar"
-    ],
-    "license": "CC0 1.0",
-    "resolution": 2048,
-    "dir": "/materiaux/terrazzo",
-    "maps": {
-      "basecolor": "basecolor.webp",
-      "normal": "normal.webp",
-      "roughness": "roughness.webp",
-      "ao": "ao.webp",
-      "displacement": "displacement.webp"
-    }
-  },
-  "lin-lave": {
-    "assetId": "rough_linen",
-    "name": "Rough Linen",
-    "url": "https://polyhaven.com/a/rough_linen",
-    "authors": [
-      "colormass",
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0",
-    "resolution": 2048,
-    "dir": "/materiaux/lin-lave",
-    "maps": {
-      "basecolor": "basecolor.webp",
-      "normal": "normal.webp",
-      "roughness": "roughness.webp",
-      "ao": "ao.webp",
-      "displacement": "displacement.webp",
-      "metallic": "metallic.webp"
-    }
-  },
-  "coton": {
-    "assetId": "cotton_jersey",
-    "name": "Cotton Jersey",
-    "url": "https://polyhaven.com/a/cotton_jersey",
-    "authors": [
-      "colormass",
-      "Rico Cilliers"
-    ],
-    "license": "CC0 1.0",
-    "resolution": 2048,
-    "dir": "/materiaux/coton",
-    "maps": {
-      "basecolor": "basecolor.webp",
-      "normal": "normal.webp",
-      "roughness": "roughness.webp",
-      "ao": "ao.webp",
-      "displacement": "displacement.webp",
-      "metallic": "metallic.webp"
     }
   },
   "boucle": {

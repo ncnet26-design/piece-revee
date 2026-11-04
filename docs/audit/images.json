@@ -387,39 +387,6 @@
   "nb_refs": 2
  },
  {
-  "fichier": "/editorial/ia/facade-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 87,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/facade-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 43,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/facade.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 308,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
   "fichier": "/editorial/ia/haussmannien-renove-1024.webp",
   "largeur": 1024,
   "hauteur": 765,
@@ -504,39 +471,6 @@
   "nb_refs": 7
  },
  {
-  "fichier": "/editorial/ia/jardin-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 201,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/jardin-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 100,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/jardin.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 641,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
   "fichier": "/editorial/ia/luxe-discret-1024.webp",
   "largeur": 1024,
   "hauteur": 765,
@@ -580,462 +514,6 @@
    "content/data/inspiration-bank.json"
   ],
   "nb_refs": 6
- },
- {
-  "fichier": "/editorial/ia/matiere-boucle-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 49,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-boucle-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 31,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-boucle.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 129,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-ceramique-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 52,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-ceramique-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 30,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-ceramique.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 185,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-chene-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 46,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-chene-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 23,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-chene.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 170,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-enduit-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 15,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-enduit-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 8,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-enduit.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 61,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-laiton-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 25,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-laiton-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 15,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-laiton.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 79,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-lin-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 71,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-lin-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 33,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-lin.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 302,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-marbre-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 21,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-marbre-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 12,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-marbre.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 54,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-noyer-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 45,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-noyer-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 26,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-noyer.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 137,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-peinture-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 16,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-peinture-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 9,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-peinture.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 112,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/matiere-pierre-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 38,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-pierre-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 22,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-pierre.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 141,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-travertin-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 27,
-  "utilise_par": [
-   "app/page.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 4
- },
- {
-  "fichier": "/editorial/ia/matiere-travertin-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 16,
-  "utilise_par": [
-   "app/page.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 4
- },
- {
-  "fichier": "/editorial/ia/matiere-travertin.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 83,
-  "utilise_par": [
-   "app/page.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 4
- },
- {
-  "fichier": "/editorial/ia/matiere-velours-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 29,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-velours-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 16,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-velours.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 105,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-verre-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 52,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-verre-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 29,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/matiere-verre.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 163,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
  },
  {
   "fichier": "/editorial/ia/mediterraneen-contemporain-1024.webp",
@@ -1509,14 +987,6 @@
   "nb_refs": 0
  },
  {
-  "fichier": "/editorial/matieres/faience-blanche.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 3,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
   "fichier": "/editorial/matieres/laiton-brosse.webp",
   "largeur": 1200,
   "hauteur": 1200,
@@ -1525,26 +995,10 @@
   "nb_refs": 0
  },
  {
-  "fichier": "/editorial/matieres/laque-brillante.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 11,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
   "fichier": "/editorial/matieres/lin-lave.webp",
   "largeur": 1200,
   "hauteur": 1200,
   "ko": 241,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/marbre-calacatta.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 4,
   "utilise_par": [],
   "nb_refs": 0
  },
@@ -1561,22 +1015,6 @@
   "largeur": 1200,
   "hauteur": 1200,
   "ko": 197,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/peinture-mate.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 10,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/peinture-velours.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 10,
   "utilise_par": [],
   "nb_refs": 0
  },
@@ -1601,14 +1039,6 @@
   "largeur": 1200,
   "hauteur": 1200,
   "ko": 175,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/tadelakt.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 44,
   "utilise_par": [],
   "nb_refs": 0
  },
@@ -1651,38 +1081,6 @@
   "largeur": 1200,
   "hauteur": 1200,
   "ko": 99,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/verre-clair.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 3,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/verre-depoli.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 3,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/verre-fume.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 17,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/zellige-emeraude.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 8,
   "utilise_par": [],
   "nb_refs": 0
  },
@@ -1757,16 +1155,6 @@
   "nb_refs": 1
  },
  {
-  "fichier": "/editorial/planches/facade.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 135,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
   "fichier": "/editorial/planches/haussmannien-renove.webp",
   "largeur": 1600,
   "hauteur": 1200,
@@ -1781,16 +1169,6 @@
   "largeur": 1600,
   "hauteur": 1200,
   "ko": 86,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/jardin.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 184,
   "utilise_par": [
    "content/data/inspiration-bank.json"
   ],
@@ -1877,16 +1255,6 @@
   "nb_refs": 1
  },
  {
-  "fichier": "/editorial/planches/terrasse.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 143,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
   "fichier": "/icon-192.png",
   "largeur": 192,
   "hauteur": 192,
@@ -1930,72 +1298,6 @@
    "components/Chrome.tsx"
   ],
   "nb_refs": 17
- },
- {
-  "fichier": "/inspirations/cuisines-68-1024.webp",
-  "largeur": 1024,
-  "hauteur": 513,
-  "ko": 58,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/inspirations/cuisines-68-640.webp",
-  "largeur": 640,
-  "hauteur": 440,
-  "ko": 38,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/inspirations/cuisines-68.webp",
-  "largeur": 1600,
-  "hauteur": 801,
-  "ko": 190,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/inspirations/villas-10-1024.webp",
-  "largeur": 1024,
-  "hauteur": 576,
-  "ko": 57,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/inspirations/villas-10-640.webp",
-  "largeur": 640,
-  "hauteur": 440,
-  "ko": 37,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/inspirations/villas-10.webp",
-  "largeur": 1600,
-  "hauteur": 900,
-  "ko": 145,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
  },
  {
   "fichier": "/inspirations/villas-14-1024.webp",
@@ -2101,39 +1403,6 @@
    "content/data/inspirations.json"
   ],
   "nb_refs": 3
- },
- {
-  "fichier": "/inspirations/villas-24-1024.webp",
-  "largeur": 1024,
-  "hauteur": 683,
-  "ko": 90,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/inspirations/villas-24-640.webp",
-  "largeur": 640,
-  "hauteur": 440,
-  "ko": 42,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/inspirations/villas-24.webp",
-  "largeur": 1600,
-  "hauteur": 1067,
-  "ko": 308,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
  },
  {
   "fichier": "/materiaux/bois-huile/ao.webp",
@@ -2336,66 +1605,6 @@
   "nb_refs": 1
  },
  {
-  "fichier": "/materiaux/coton/ao.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1489,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/coton/basecolor.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 944,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/coton/displacement.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1610,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/coton/metallic.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 7,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/coton/normal.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1054,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/coton/roughness.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1925,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
   "fichier": "/materiaux/enduit-chaux/ao.webp",
   "largeur": 2048,
   "hauteur": 2048,
@@ -2440,66 +1649,6 @@
   "largeur": 2048,
   "hauteur": 2048,
   "ko": 242,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/lin-lave/ao.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1893,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/lin-lave/basecolor.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1091,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/lin-lave/displacement.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1213,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/lin-lave/metallic.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 408,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/lin-lave/normal.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1378,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/lin-lave/roughness.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 2183,
   "utilise_par": [
    "content/data/materials-pbr.json"
   ],
@@ -2656,106 +1805,6 @@
   "nb_refs": 1
  },
  {
-  "fichier": "/materiaux/pierre-naturelle/ao.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1402,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/pierre-naturelle/basecolor.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1428,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/pierre-naturelle/displacement.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 221,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/pierre-naturelle/normal.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1878,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/pierre-naturelle/roughness.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 989,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/platre-texture/ao.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1512,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/platre-texture/basecolor.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1450,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/platre-texture/displacement.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 460,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/platre-texture/normal.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1384,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/platre-texture/roughness.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1063,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
   "fichier": "/materiaux/tadelakt/ao.webp",
   "largeur": 2048,
   "hauteur": 2048,
@@ -2800,56 +1849,6 @@
   "largeur": 2048,
   "hauteur": 2048,
   "ko": 148,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/terrazzo/ao.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 110,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/terrazzo/basecolor.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1556,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/terrazzo/displacement.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 13,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/terrazzo/normal.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 17,
-  "utilise_par": [
-   "content/data/materials-pbr.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/materiaux/terrazzo/roughness.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 390,
   "utilise_par": [
    "content/data/materials-pbr.json"
   ],
@@ -2956,64 +1955,1378 @@
   "nb_refs": 1
  },
  {
-  "fichier": "/materiaux/velours-foret/ao.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 883,
+  "fichier": "/matieres/ardoise/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 176,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/ardoise/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 276,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/ardoise/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 480,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/ardoise/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 721,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/ardoise/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 2238,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/ardoise/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 3298,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/ardoise/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 37,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/ardoise/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 60,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/ardoise/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 6664,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/beton-cire/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 30,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/beton-cire/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 76,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/beton-cire/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 97,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/beton-cire/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 234,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/beton-cire/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 496,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/beton-cire/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 943,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/beton-cire/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 6,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/beton-cire/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 15,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/beton-cire/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 3180,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/bouclette/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 104,
   "utilise_par": [
-   "content/data/materials-pbr.json"
+   "content/data/inspiration-bank.json"
   ],
   "nb_refs": 1
  },
  {
-  "fichier": "/materiaux/velours-foret/basecolor.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 759,
+  "fichier": "/matieres/bouclette/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 174,
   "utilise_par": [
-   "content/data/materials-pbr.json"
+   "content/data/inspiration-bank.json"
   ],
   "nb_refs": 1
  },
  {
-  "fichier": "/materiaux/velours-foret/displacement.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 389,
+  "fichier": "/matieres/bouclette/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 206,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/bouclette/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 340,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/bouclette/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 533,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/bouclette/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 889,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/bouclette/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 28,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/bouclette/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 47,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/bouclette/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 2350,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/brique/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 104,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/brique/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 163,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/brique/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 250,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/brique/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 397,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/brique/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 1169,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/brique/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 1914,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/brique/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 31,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/brique/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 43,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/brique/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 5452,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-fume/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 36,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-fume/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 77,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-fume/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 76,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-fume/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 170,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-fume/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 225,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-fume/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 489,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-fume/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 10,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-fume/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 22,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-fume/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 1340,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-huile/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 65,
   "utilise_par": [
-   "content/data/materials-pbr.json"
+   "content/data/inspiration-bank.json"
   ],
   "nb_refs": 1
  },
  {
-  "fichier": "/materiaux/velours-foret/metallic.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1119,
+  "fichier": "/matieres/chene-huile/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 121,
   "utilise_par": [
-   "content/data/materials-pbr.json"
+   "content/data/inspiration-bank.json"
   ],
   "nb_refs": 1
  },
  {
-  "fichier": "/materiaux/velours-foret/normal.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 543,
+  "fichier": "/matieres/chene-huile/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 151,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-huile/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 305,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-huile/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 1104,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-huile/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 2036,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-huile/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 18,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-huile/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 31,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/chene-huile/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 5416,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/cuir/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 116,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/cuir/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 210,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/cuir/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 309,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/cuir/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 523,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/cuir/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 1093,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/cuir/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 1722,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/cuir/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 21,
   "utilise_par": [
-   "content/data/materials-pbr.json"
+   "components/boutique/Boutique.tsx"
   ],
   "nb_refs": 1
  },
  {
-  "fichier": "/materiaux/velours-foret/roughness.webp",
-  "largeur": 2048,
-  "hauteur": 2048,
-  "ko": 1737,
+  "fichier": "/matieres/cuir/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 45,
   "utilise_par": [
-   "content/data/materials-pbr.json"
+   "components/boutique/Boutique.tsx"
   ],
   "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/cuir/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 4322,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 370,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 477,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 840,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 1103,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 2108,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 3323,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 76,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 103,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 6157,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/lin-lave/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1283,
+  "ko": 144,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/lin-lave/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1283,
+  "ko": 343,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/lin-lave/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1924,
+  "ko": 380,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/lin-lave/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1924,
+  "ko": 803,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/lin-lave/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3848,
+  "ko": 1086,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/lin-lave/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3848,
+  "ko": 2198,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/lin-lave/640.avif",
+  "largeur": 640,
+  "hauteur": 641,
+  "ko": 12,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/lin-lave/640.webp",
+  "largeur": 640,
+  "hauteur": 641,
+  "ko": 38,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/lin-lave/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4105,
+  "ko": 5147,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 58,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 95,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 110,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 181,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 272,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 470,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 18,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 29,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 1185,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/noyer/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 27,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/noyer/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 62,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/noyer/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 53,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/noyer/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 132,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/noyer/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 202,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/noyer/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 509,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/noyer/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 8,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/noyer/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 16,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/noyer/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 2099,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 133,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 229,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 345,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 592,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 1298,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 2279,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 27,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 48,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 5505,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 87,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 149,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 231,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 390,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 950,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 1554,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 21,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 33,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 4225,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/rotin/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 51,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/rotin/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 77,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/rotin/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 86,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/rotin/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 134,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/rotin/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 257,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/rotin/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 467,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/rotin/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 23,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/rotin/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 30,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/rotin/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 1423,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terrazzo/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 103,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terrazzo/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 138,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terrazzo/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 164,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terrazzo/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 235,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terrazzo/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 372,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terrazzo/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 577,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terrazzo/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 46,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terrazzo/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 58,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terrazzo/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 1374,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terre-cuite/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 156,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terre-cuite/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 271,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terre-cuite/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 452,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terre-cuite/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 723,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terre-cuite/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 1588,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terre-cuite/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 2614,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/terre-cuite/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 23,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/terre-cuite/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 46,
+  "utilise_par": [
+   "components/boutique/Boutique.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/terre-cuite/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 5798,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/travertin/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 105,
+  "utilise_par": [
+   "app/page.tsx",
+   "components/experience/Stage.tsx",
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 3
+ },
+ {
+  "fichier": "/matieres/travertin/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1280,
+  "ko": 185,
+  "utilise_par": [
+   "app/page.tsx",
+   "components/experience/Stage.tsx",
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 3
+ },
+ {
+  "fichier": "/matieres/travertin/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 228,
+  "utilise_par": [
+   "app/experience/page.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/travertin/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1920,
+  "ko": 410,
+  "utilise_par": [
+   "app/experience/page.tsx"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/travertin/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 749,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/travertin/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3840,
+  "ko": 1367,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/travertin/640.avif",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 29,
+  "utilise_par": [
+   "app/experience/page.tsx",
+   "app/page.tsx"
+  ],
+  "nb_refs": 2
+ },
+ {
+  "fichier": "/matieres/travertin/640.webp",
+  "largeur": 640,
+  "hauteur": 640,
+  "ko": 50,
+  "utilise_par": [
+   "app/experience/page.tsx",
+   "app/page.tsx"
+  ],
+  "nb_refs": 2
+ },
+ {
+  "fichier": "/matieres/travertin/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 4096,
+  "ko": 3736,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/velours/1280.avif",
+  "largeur": 1280,
+  "hauteur": 1231,
+  "ko": 112,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/velours/1280.webp",
+  "largeur": 1280,
+  "hauteur": 1231,
+  "ko": 206,
+  "utilise_par": [
+   "content/data/inspiration-bank.json"
+  ],
+  "nb_refs": 1
+ },
+ {
+  "fichier": "/matieres/velours/1920.avif",
+  "largeur": 1920,
+  "hauteur": 1847,
+  "ko": 289,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/velours/1920.webp",
+  "largeur": 1920,
+  "hauteur": 1847,
+  "ko": 553,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/velours/3840.avif",
+  "largeur": 3840,
+  "hauteur": 3695,
+  "ko": 1059,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/velours/3840.webp",
+  "largeur": 3840,
+  "hauteur": 3695,
+  "ko": 1930,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/velours/640.avif",
+  "largeur": 640,
+  "hauteur": 616,
+  "ko": 3,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/velours/640.webp",
+  "largeur": 640,
+  "hauteur": 616,
+  "ko": 24,
+  "utilise_par": [],
+  "nb_refs": 0
+ },
+ {
+  "fichier": "/matieres/velours/original-4k.webp",
+  "largeur": 4096,
+  "hauteur": 3941,
+  "ko": 5079,
+  "utilise_par": [],
+  "nb_refs": 0
  },
  {
   "fichier": "/models/thumbs/ArmChair_01.webp",
@@ -3533,14 +3846,14 @@
   "hauteur": 630,
   "ko": 58,
   "utilise_par": [
+   "app/catalogue/page.tsx",
    "app/connexion/page.tsx",
    "app/experience/page.tsx",
    "app/globals.css",
    "app/page.tsx",
-   "app/tarifs/page.tsx",
-   "app/transformer/page.tsx"
+   "app/styles/[slug]/page.tsx"
   ],
-  "nb_refs": 253
+  "nb_refs": 259
  },
  {
   "fichier": "/textures/m-ardoise/diff.webp",

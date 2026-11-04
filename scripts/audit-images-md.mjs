@@ -12,6 +12,7 @@ function noter(x) {
   if (f.startsWith("/models/thumbs/")) return ["oui", "—", "vignette technique du Studio 3D (240 px)"];
   if (f.startsWith("/textures/")) return ["oui", "—", "carte de texture 3D 1024 px (Poly Haven) : à remplacer par la 4K (étape 3)"];
   if (f.startsWith("/visuels/")) return ["oui", "C", "ancien rendu 3D plat ; encore chargé par la planche (chemin calculé « vis- ») et par les tests"];
+  if (f.startsWith("/matieres/")) return ["oui", "A", "texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web"];
   if (f.startsWith("/materiaux/")) {
     const d = f.split("/")[2];
     if (["velours-foret", "lin-lave", "coton"].includes(d)) return ["oui", "C", "texture réelle mais couleur contraire au nom (rouge, bleu, rose)"];
@@ -34,7 +35,8 @@ function noter(x) {
   return ["?", "?", "à examiner"];
 }
 const rows = L.map((x) => { const [sujet, note, raison] = noter(x); return { ...x, sujet, note, raison,
-  action: x.fichier.startsWith("/visuels/") ? "supprimer après avoir retiré son usage dans la planche et les tests"
+  action: x.fichier.startsWith("/matieres/") ? "garder"
+    : x.fichier.startsWith("/visuels/") ? "supprimer après avoir retiré son usage dans la planche et les tests"
     : x.fichier.startsWith("/models/thumbs/") || x.fichier.startsWith("/textures/") || /^\/(icon|apple-icon|og)/.test(x.fichier) ? "garder (technique) jusqu'au remplacement"
     : sujet === "non" || note === "C" ? "supprimer" : (x.largeur ?? 0) < 2000 ? "supprimer (< 2000 px) dès que le remplaçant existe" : "garder" }; });
 const n = (p) => rows.filter(p).length;

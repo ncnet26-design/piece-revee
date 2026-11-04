@@ -4,9 +4,9 @@ Grille : `direction-artistique-images` (A publiable, B à améliorer, C à refai
 Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel de chaque groupe sur planches-contact.
 
 ## Bilan
-- 467 images au total, 91 font 2000 px ou plus.
-- Hors sujet : 12 ; note C : 95 ; note B : 83 ; note A : 99.
-- À supprimer : 100 tout de suite (hors sujet ou C), 116 quand leur remplaçant existera, 57 à garder, 190 fichiers techniques.
+- 529 images au total, 112 font 2000 px ou plus.
+- Hors sujet : 0 ; note C : 4 ; note B : 74 ; note A : 261.
+- À supprimer : 0 tout de suite (hors sujet ou C), 116 quand leur remplaçant existera, 219 à garder, 190 fichiers techniques.
 - Les liens « utilisé par » sont des fichiers source ; les textures 3D sont chargées par un chemin calculé, d'où « 0 » parfois.
 
 ## Détail
@@ -44,60 +44,15 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/editorial/ia/entree-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 25 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/entree-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 14 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/entree.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 107 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/facade-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 87 Ko | non | B | extérieur : hors du concept (intérieur) | supprimer |
-| `/editorial/ia/facade-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 43 Ko | non | B | extérieur : hors du concept (intérieur) | supprimer |
-| `/editorial/ia/facade.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 308 Ko | non | B | extérieur : hors du concept (intérieur) | supprimer |
 | `/editorial/ia/haussmannien-renove-1024.webp` | page.tsx, experience/scene.ts | 1024×765 | 55 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/haussmannien-renove-640.webp` | page.tsx, experience/scene.ts | 640×478 | 27 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/haussmannien-renove.webp` | page.tsx, experience/scene.ts | 1600×1195 | 191 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/japandi-essai-1024.webp` | experience/page.tsx, page.tsx | 1024×765 | 43 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/japandi-essai-640.webp` | experience/page.tsx, page.tsx | 640×478 | 23 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/japandi-essai.webp` | experience/page.tsx, page.tsx | 1600×1195 | 153 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/jardin-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 201 Ko | non | B | extérieur : hors du concept (intérieur) | supprimer |
-| `/editorial/ia/jardin-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 100 Ko | non | B | extérieur : hors du concept (intérieur) | supprimer |
-| `/editorial/ia/jardin.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 641 Ko | non | B | extérieur : hors du concept (intérieur) | supprimer |
 | `/editorial/ia/luxe-discret-1024.webp` | experience/page.tsx, page.tsx | 1024×765 | 56 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/luxe-discret-640.webp` | experience/page.tsx, page.tsx | 640×478 | 29 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/luxe-discret.webp` | experience/page.tsx, page.tsx | 1600×1195 | 210 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/matiere-boucle-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 49 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-boucle-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 31 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-boucle.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 129 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-ceramique-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 52 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-ceramique-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 30 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-ceramique.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 185 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-chene-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 46 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-chene-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 23 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-chene.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 170 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-enduit-1024.webp` | experience/page.tsx, photos-variantes.json | 1024×765 | 15 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-enduit-640.webp` | experience/page.tsx, photos-variantes.json | 640×478 | 8 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-enduit.webp` | experience/page.tsx, photos-variantes.json | 1600×1195 | 61 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-laiton-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 25 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-laiton-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 15 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-laiton.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 79 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-lin-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 71 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-lin-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 33 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-lin.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 302 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-marbre-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 21 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-marbre-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 12 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-marbre.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 54 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-noyer-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 45 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-noyer-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 26 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-noyer.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 137 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-peinture-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 16 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-peinture-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 9 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-peinture.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 112 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-pierre-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 38 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-pierre-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 22 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-pierre.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 141 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-travertin-1024.webp` | page.tsx, experience/Stage.tsx | 1024×765 | 27 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-travertin-640.webp` | page.tsx, experience/Stage.tsx | 640×478 | 16 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-travertin.webp` | page.tsx, experience/Stage.tsx | 1600×1195 | 83 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-velours-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 29 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-velours-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 16 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-velours.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 105 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-verre-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 52 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-verre-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 29 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
-| `/editorial/ia/matiere-verre.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 163 Ko | oui | C | image IA de matière : interdite désormais pour les matières | supprimer |
 | `/editorial/ia/mediterraneen-contemporain-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 37 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/mediterraneen-contemporain-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 21 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/ia/mediterraneen-contemporain.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 124 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
@@ -138,28 +93,18 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/editorial/matieres/chene-fume.webp` | — | 1200×1200 | 63 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/matieres/chene-naturel.webp` | — | 1200×1200 | 134 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/matieres/enduit-chaux.webp` | — | 1200×1200 | 98 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/faience-blanche.webp` | — | 1200×1200 | 3 Ko | oui | C | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer |
 | `/editorial/matieres/laiton-brosse.webp` | — | 1200×1200 | 14 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/laque-brillante.webp` | — | 1200×1200 | 11 Ko | oui | C | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer |
 | `/editorial/matieres/lin-lave.webp` | — | 1200×1200 | 241 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/marbre-calacatta.webp` | — | 1200×1200 | 4 Ko | oui | C | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer |
 | `/editorial/matieres/noyer-verni.webp` | — | 1200×1200 | 90 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/matieres/parquet-chevron.webp` | — | 1200×1200 | 197 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/peinture-mate.webp` | — | 1200×1200 | 10 Ko | oui | C | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer |
-| `/editorial/matieres/peinture-velours.webp` | — | 1200×1200 | 10 Ko | oui | C | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer |
 | `/editorial/matieres/pierre-mate.webp` | — | 1200×1200 | 263 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/matieres/pierre-naturelle.webp` | — | 1200×1200 | 347 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/matieres/platre-texture.webp` | — | 1200×1200 | 175 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/tadelakt.webp` | — | 1200×1200 | 44 Ko | oui | C | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer |
 | `/editorial/matieres/tapis-laine.webp` | — | 1200×1200 | 58 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/matieres/terrazzo.webp` | — | 1200×1200 | 366 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/matieres/terre-cuite.webp` | — | 1200×1200 | 71 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/matieres/travertin.webp` | InspirationBank.tsx | 1200×1200 | 89 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/matieres/velours-foret.webp` | — | 1200×1200 | 99 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/verre-clair.webp` | — | 1200×1200 | 3 Ko | oui | C | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer |
-| `/editorial/matieres/verre-depoli.webp` | — | 1200×1200 | 3 Ko | oui | C | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer |
-| `/editorial/matieres/verre-fume.webp` | — | 1200×1200 | 17 Ko | oui | C | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer |
-| `/editorial/matieres/zellige-emeraude.webp` | — | 1200×1200 | 8 Ko | oui | C | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer |
 | `/editorial/planches/art-deco-contemporain.webp` | data/inspiration-bank.json | 1600×1200 | 16 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/planches/brutalisme-raffine.webp` | data/inspiration-bank.json | 1600×1200 | 166 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/planches/campagne-elegante.webp` | data/inspiration-bank.json | 1600×1200 | 139 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
@@ -167,10 +112,8 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/editorial/planches/contemporain-sculptural.webp` | data/inspiration-bank.json | 1600×1200 | 65 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/planches/dressing.webp` | data/inspiration-bank.json | 1600×1200 | 110 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/planches/entree.webp` | data/inspiration-bank.json | 1600×1200 | 72 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/facade.webp` | data/inspiration-bank.json | 1600×1200 | 135 Ko | non | B | planche composée d'échantillons, pas une photo | supprimer |
 | `/editorial/planches/haussmannien-renove.webp` | data/inspiration-bank.json | 1600×1200 | 85 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/planches/japandi.webp` | data/inspiration-bank.json | 1600×1200 | 86 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/jardin.webp` | data/inspiration-bank.json | 1600×1200 | 184 Ko | non | B | planche composée d'échantillons, pas une photo | supprimer |
 | `/editorial/planches/luxe-discret.webp` | data/inspiration-bank.json | 1600×1200 | 70 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/planches/mediterraneen-contemporain.webp` | data/inspiration-bank.json | 1600×1200 | 88 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/planches/mid-century.webp` | data/inspiration-bank.json | 1600×1200 | 97 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
@@ -179,16 +122,9 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/editorial/planches/salle-a-manger.webp` | data/inspiration-bank.json | 1600×1200 | 47 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/planches/salle-de-bain.webp` | data/inspiration-bank.json | 1600×1200 | 145 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/editorial/planches/scandinave-haut-de-gamme.webp` | data/inspiration-bank.json | 1600×1200 | 103 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/terrasse.webp` | data/inspiration-bank.json | 1600×1200 | 143 Ko | non | B | planche composée d'échantillons, pas une photo | supprimer |
 | `/icon-192.png` | layout.tsx, manifest.ts | 192×192 | 4 Ko | outil | — | icône / partage, technique | garder (technique) jusqu'au remplacement |
 | `/icon-512.png` | layout.tsx, manifest.ts | 512×512 | 12 Ko | outil | — | icône / partage, technique | garder (technique) jusqu'au remplacement |
 | `/icon.svg` | layout.tsx, manifest.ts | 64×64 | 0 Ko | outil | — | icône / partage, technique | garder (technique) jusqu'au remplacement |
-| `/inspirations/cuisines-68-1024.webp` | photos-variantes.json, data/inspirations.json | 1024×513 | 58 Ko | oui | C | intérieur kitsch ou rendu de promoteur | supprimer |
-| `/inspirations/cuisines-68-640.webp` | photos-variantes.json, data/inspirations.json | 640×440 | 38 Ko | oui | C | intérieur kitsch ou rendu de promoteur | supprimer |
-| `/inspirations/cuisines-68.webp` | photos-variantes.json, data/inspirations.json | 1600×801 | 190 Ko | oui | C | intérieur kitsch ou rendu de promoteur | supprimer |
-| `/inspirations/villas-10-1024.webp` | photos-variantes.json, data/inspirations.json | 1024×576 | 57 Ko | oui | C | intérieur kitsch ou rendu de promoteur | supprimer |
-| `/inspirations/villas-10-640.webp` | photos-variantes.json, data/inspirations.json | 640×440 | 37 Ko | oui | C | intérieur kitsch ou rendu de promoteur | supprimer |
-| `/inspirations/villas-10.webp` | photos-variantes.json, data/inspirations.json | 1600×900 | 145 Ko | oui | C | intérieur kitsch ou rendu de promoteur | supprimer |
 | `/inspirations/villas-14-1024.webp` | page.tsx, photos-variantes.json | 1024×768 | 65 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/inspirations/villas-14-640.webp` | page.tsx, photos-variantes.json | 640×440 | 31 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/inspirations/villas-14.webp` | page.tsx, photos-variantes.json | 1467×1100 | 175 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
@@ -198,9 +134,6 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/inspirations/villas-16-1024.webp` | page.tsx, photos-variantes.json | 1024×600 | 54 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/inspirations/villas-16-640.webp` | page.tsx, photos-variantes.json | 640×440 | 28 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/inspirations/villas-16.webp` | page.tsx, photos-variantes.json | 1600×937 | 175 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/inspirations/villas-24-1024.webp` | photos-variantes.json, data/inspirations.json | 1024×683 | 90 Ko | non | C | maison vue de l'extérieur, rendu | supprimer |
-| `/inspirations/villas-24-640.webp` | photos-variantes.json, data/inspirations.json | 640×440 | 42 Ko | non | C | maison vue de l'extérieur, rendu | supprimer |
-| `/inspirations/villas-24.webp` | photos-variantes.json, data/inspirations.json | 1600×1067 | 308 Ko | non | C | maison vue de l'extérieur, rendu | supprimer |
 | `/materiaux/bois-huile/ao.webp` | data/materials-pbr.json | 2048×2048 | 1721 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/bois-huile/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 395 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/bois-huile/normal.webp` | data/materials-pbr.json | 2048×2048 | 189 Ko | oui | A | texture réelle Poly Haven 2K | garder |
@@ -221,23 +154,11 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/materiaux/chene-naturel/displacement.webp` | data/materials-pbr.json | 2048×2048 | 8 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/chene-naturel/normal.webp` | data/materials-pbr.json | 2048×2048 | 435 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/chene-naturel/roughness.webp` | data/materials-pbr.json | 2048×2048 | 1808 Ko | oui | A | texture réelle Poly Haven 2K | garder |
-| `/materiaux/coton/ao.webp` | data/materials-pbr.json | 2048×2048 | 1489 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/coton/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 944 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/coton/displacement.webp` | data/materials-pbr.json | 2048×2048 | 1610 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/coton/metallic.webp` | data/materials-pbr.json | 2048×2048 | 7 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/coton/normal.webp` | data/materials-pbr.json | 2048×2048 | 1054 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/coton/roughness.webp` | data/materials-pbr.json | 2048×2048 | 1925 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
 | `/materiaux/enduit-chaux/ao.webp` | data/materials-pbr.json | 2048×2048 | 649 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/enduit-chaux/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 1031 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/enduit-chaux/displacement.webp` | data/materials-pbr.json | 2048×2048 | 312 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/enduit-chaux/normal.webp` | data/materials-pbr.json | 2048×2048 | 1436 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/enduit-chaux/roughness.webp` | data/materials-pbr.json | 2048×2048 | 242 Ko | oui | A | texture réelle Poly Haven 2K | garder |
-| `/materiaux/lin-lave/ao.webp` | data/materials-pbr.json | 2048×2048 | 1893 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/lin-lave/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 1091 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/lin-lave/displacement.webp` | data/materials-pbr.json | 2048×2048 | 1213 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/lin-lave/metallic.webp` | data/materials-pbr.json | 2048×2048 | 408 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/lin-lave/normal.webp` | data/materials-pbr.json | 2048×2048 | 1378 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/lin-lave/roughness.webp` | data/materials-pbr.json | 2048×2048 | 2183 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
 | `/materiaux/noyer-verni/ao.webp` | data/materials-pbr.json | 2048×2048 | 943 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/noyer-verni/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 420 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/noyer-verni/displacement.webp` | data/materials-pbr.json | 2048×2048 | 27 Ko | oui | A | texture réelle Poly Haven 2K | garder |
@@ -253,26 +174,11 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/materiaux/pierre-mate/displacement.webp` | data/materials-pbr.json | 2048×2048 | 221 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/pierre-mate/normal.webp` | data/materials-pbr.json | 2048×2048 | 994 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/pierre-mate/roughness.webp` | data/materials-pbr.json | 2048×2048 | 730 Ko | oui | A | texture réelle Poly Haven 2K | garder |
-| `/materiaux/pierre-naturelle/ao.webp` | data/materials-pbr.json | 2048×2048 | 1402 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/pierre-naturelle/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 1428 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/pierre-naturelle/displacement.webp` | data/materials-pbr.json | 2048×2048 | 221 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/pierre-naturelle/normal.webp` | data/materials-pbr.json | 2048×2048 | 1878 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/pierre-naturelle/roughness.webp` | data/materials-pbr.json | 2048×2048 | 989 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/platre-texture/ao.webp` | data/materials-pbr.json | 2048×2048 | 1512 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/platre-texture/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 1450 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/platre-texture/displacement.webp` | data/materials-pbr.json | 2048×2048 | 460 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/platre-texture/normal.webp` | data/materials-pbr.json | 2048×2048 | 1384 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/platre-texture/roughness.webp` | data/materials-pbr.json | 2048×2048 | 1063 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
 | `/materiaux/tadelakt/ao.webp` | data/materials-pbr.json | 2048×2048 | 358 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/tadelakt/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 416 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/tadelakt/displacement.webp` | data/materials-pbr.json | 2048×2048 | 644 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/tadelakt/normal.webp` | data/materials-pbr.json | 2048×2048 | 1439 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/tadelakt/roughness.webp` | data/materials-pbr.json | 2048×2048 | 148 Ko | oui | A | texture réelle Poly Haven 2K | garder |
-| `/materiaux/terrazzo/ao.webp` | data/materials-pbr.json | 2048×2048 | 110 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/terrazzo/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 1556 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/terrazzo/displacement.webp` | data/materials-pbr.json | 2048×2048 | 13 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/terrazzo/normal.webp` | data/materials-pbr.json | 2048×2048 | 17 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
-| `/materiaux/terrazzo/roughness.webp` | data/materials-pbr.json | 2048×2048 | 390 Ko | oui | C | texture réelle mais ce n'est pas la matière annoncée | supprimer |
 | `/materiaux/terre-cuite/ao.webp` | data/materials-pbr.json | 2048×2048 | 882 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/terre-cuite/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 357 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/terre-cuite/displacement.webp` | data/materials-pbr.json | 2048×2048 | 103 Ko | oui | A | texture réelle Poly Haven 2K | garder |
@@ -283,12 +189,168 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/materiaux/travertin/displacement.webp` | data/materials-pbr.json | 2048×2048 | 8 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/travertin/normal.webp` | data/materials-pbr.json | 2048×2048 | 10 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/travertin/roughness.webp` | data/materials-pbr.json | 2048×2048 | 63 Ko | oui | A | texture réelle Poly Haven 2K | garder |
-| `/materiaux/velours-foret/ao.webp` | data/materials-pbr.json | 2048×2048 | 883 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/velours-foret/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 759 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/velours-foret/displacement.webp` | data/materials-pbr.json | 2048×2048 | 389 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/velours-foret/metallic.webp` | data/materials-pbr.json | 2048×2048 | 1119 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/velours-foret/normal.webp` | data/materials-pbr.json | 2048×2048 | 543 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
-| `/materiaux/velours-foret/roughness.webp` | data/materials-pbr.json | 2048×2048 | 1737 Ko | oui | C | texture réelle mais couleur contraire au nom (rouge, bleu, rose) | supprimer |
+| `/matieres/ardoise/1280.avif` | — | 1280×1280 | 176 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/ardoise/1280.webp` | — | 1280×1280 | 276 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/ardoise/1920.avif` | — | 1920×1920 | 480 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/ardoise/1920.webp` | — | 1920×1920 | 721 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/ardoise/3840.avif` | — | 3840×3840 | 2238 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/ardoise/3840.webp` | — | 3840×3840 | 3298 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/ardoise/640.avif` | — | 640×640 | 37 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/ardoise/640.webp` | — | 640×640 | 60 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/ardoise/original-4k.webp` | — | 4096×4096 | 6664 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/beton-cire/1280.avif` | — | 1280×1280 | 30 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/beton-cire/1280.webp` | — | 1280×1280 | 76 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/beton-cire/1920.avif` | — | 1920×1920 | 97 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/beton-cire/1920.webp` | — | 1920×1920 | 234 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/beton-cire/3840.avif` | — | 3840×3840 | 496 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/beton-cire/3840.webp` | — | 3840×3840 | 943 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/beton-cire/640.avif` | — | 640×640 | 6 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/beton-cire/640.webp` | — | 640×640 | 15 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/beton-cire/original-4k.webp` | — | 4096×4096 | 3180 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/1280.avif` | data/inspiration-bank.json | 1280×1280 | 104 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/1280.webp` | data/inspiration-bank.json | 1280×1280 | 174 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/1920.avif` | — | 1920×1920 | 206 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/1920.webp` | — | 1920×1920 | 340 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/3840.avif` | — | 3840×3840 | 533 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/3840.webp` | — | 3840×3840 | 889 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/640.avif` | — | 640×640 | 28 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/640.webp` | — | 640×640 | 47 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/original-4k.webp` | — | 4096×4096 | 2350 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/brique/1280.avif` | — | 1280×1280 | 104 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/brique/1280.webp` | — | 1280×1280 | 163 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/brique/1920.avif` | — | 1920×1920 | 250 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/brique/1920.webp` | — | 1920×1920 | 397 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/brique/3840.avif` | — | 3840×3840 | 1169 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/brique/3840.webp` | — | 3840×3840 | 1914 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/brique/640.avif` | — | 640×640 | 31 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/brique/640.webp` | — | 640×640 | 43 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/brique/original-4k.webp` | — | 4096×4096 | 5452 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-fume/1280.avif` | — | 1280×1280 | 36 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-fume/1280.webp` | — | 1280×1280 | 77 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-fume/1920.avif` | — | 1920×1920 | 76 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-fume/1920.webp` | — | 1920×1920 | 170 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-fume/3840.avif` | — | 3840×3840 | 225 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-fume/3840.webp` | — | 3840×3840 | 489 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-fume/640.avif` | — | 640×640 | 10 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-fume/640.webp` | — | 640×640 | 22 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-fume/original-4k.webp` | — | 4096×4096 | 1340 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-huile/1280.avif` | data/inspiration-bank.json | 1280×1280 | 65 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-huile/1280.webp` | data/inspiration-bank.json | 1280×1280 | 121 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-huile/1920.avif` | — | 1920×1920 | 151 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-huile/1920.webp` | — | 1920×1920 | 305 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-huile/3840.avif` | — | 3840×3840 | 1104 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-huile/3840.webp` | — | 3840×3840 | 2036 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-huile/640.avif` | — | 640×640 | 18 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-huile/640.webp` | — | 640×640 | 31 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/chene-huile/original-4k.webp` | — | 4096×4096 | 5416 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/cuir/1280.avif` | — | 1280×1280 | 116 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/cuir/1280.webp` | — | 1280×1280 | 210 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/cuir/1920.avif` | — | 1920×1920 | 309 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/cuir/1920.webp` | — | 1920×1920 | 523 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/cuir/3840.avif` | — | 3840×3840 | 1093 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/cuir/3840.webp` | — | 3840×3840 | 1722 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/cuir/640.avif` | boutique/Boutique.tsx | 640×640 | 21 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/cuir/640.webp` | boutique/Boutique.tsx | 640×640 | 45 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/cuir/original-4k.webp` | — | 4096×4096 | 4322 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/enduit-chaux/1280.avif` | data/inspiration-bank.json | 1280×1280 | 370 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/enduit-chaux/1280.webp` | data/inspiration-bank.json | 1280×1280 | 477 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/enduit-chaux/1920.avif` | — | 1920×1920 | 840 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/enduit-chaux/1920.webp` | — | 1920×1920 | 1103 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/enduit-chaux/3840.avif` | — | 3840×3840 | 2108 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/enduit-chaux/3840.webp` | — | 3840×3840 | 3323 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/enduit-chaux/640.avif` | boutique/Boutique.tsx | 640×640 | 76 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/enduit-chaux/640.webp` | boutique/Boutique.tsx | 640×640 | 103 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/enduit-chaux/original-4k.webp` | — | 4096×4096 | 6157 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/lin-lave/1280.avif` | data/inspiration-bank.json | 1280×1283 | 144 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/lin-lave/1280.webp` | data/inspiration-bank.json | 1280×1283 | 343 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/lin-lave/1920.avif` | — | 1920×1924 | 380 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/lin-lave/1920.webp` | — | 1920×1924 | 803 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/lin-lave/3840.avif` | — | 3840×3848 | 1086 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/lin-lave/3840.webp` | — | 3840×3848 | 2198 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/lin-lave/640.avif` | boutique/Boutique.tsx | 640×641 | 12 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/lin-lave/640.webp` | boutique/Boutique.tsx | 640×641 | 38 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/lin-lave/original-4k.webp` | — | 4096×4105 | 5147 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/marbre-carrare/1280.avif` | data/inspiration-bank.json | 1280×1280 | 58 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/marbre-carrare/1280.webp` | data/inspiration-bank.json | 1280×1280 | 95 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/marbre-carrare/1920.avif` | — | 1920×1920 | 110 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/marbre-carrare/1920.webp` | — | 1920×1920 | 181 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/marbre-carrare/3840.avif` | — | 3840×3840 | 272 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/marbre-carrare/3840.webp` | — | 3840×3840 | 470 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/marbre-carrare/640.avif` | — | 640×640 | 18 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/marbre-carrare/640.webp` | — | 640×640 | 29 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/marbre-carrare/original-4k.webp` | — | 4096×4096 | 1185 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/noyer/1280.avif` | data/inspiration-bank.json | 1280×1280 | 27 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/noyer/1280.webp` | data/inspiration-bank.json | 1280×1280 | 62 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/noyer/1920.avif` | — | 1920×1920 | 53 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/noyer/1920.webp` | — | 1920×1920 | 132 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/noyer/3840.avif` | — | 3840×3840 | 202 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/noyer/3840.webp` | — | 3840×3840 | 509 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/noyer/640.avif` | boutique/Boutique.tsx | 640×640 | 8 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/noyer/640.webp` | boutique/Boutique.tsx | 640×640 | 16 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/noyer/original-4k.webp` | — | 4096×4096 | 2099 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/parquet-point-de-hongrie/1280.avif` | — | 1280×1280 | 133 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/parquet-point-de-hongrie/1280.webp` | — | 1280×1280 | 229 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/parquet-point-de-hongrie/1920.avif` | — | 1920×1920 | 345 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/parquet-point-de-hongrie/1920.webp` | — | 1920×1920 | 592 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/parquet-point-de-hongrie/3840.avif` | — | 3840×3840 | 1298 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/parquet-point-de-hongrie/3840.webp` | — | 3840×3840 | 2279 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/parquet-point-de-hongrie/640.avif` | boutique/Boutique.tsx | 640×640 | 27 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/parquet-point-de-hongrie/640.webp` | boutique/Boutique.tsx | 640×640 | 48 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/parquet-point-de-hongrie/original-4k.webp` | — | 4096×4096 | 5505 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/pierre-calcaire/1280.avif` | data/inspiration-bank.json | 1280×1280 | 87 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/pierre-calcaire/1280.webp` | data/inspiration-bank.json | 1280×1280 | 149 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/pierre-calcaire/1920.avif` | — | 1920×1920 | 231 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/pierre-calcaire/1920.webp` | — | 1920×1920 | 390 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/pierre-calcaire/3840.avif` | — | 3840×3840 | 950 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/pierre-calcaire/3840.webp` | — | 3840×3840 | 1554 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/pierre-calcaire/640.avif` | boutique/Boutique.tsx | 640×640 | 21 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/pierre-calcaire/640.webp` | boutique/Boutique.tsx | 640×640 | 33 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/pierre-calcaire/original-4k.webp` | — | 4096×4096 | 4225 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/rotin/1280.avif` | — | 1280×1280 | 51 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/rotin/1280.webp` | — | 1280×1280 | 77 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/rotin/1920.avif` | — | 1920×1920 | 86 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/rotin/1920.webp` | — | 1920×1920 | 134 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/rotin/3840.avif` | — | 3840×3840 | 257 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/rotin/3840.webp` | — | 3840×3840 | 467 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/rotin/640.avif` | — | 640×640 | 23 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/rotin/640.webp` | — | 640×640 | 30 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/rotin/original-4k.webp` | — | 4096×4096 | 1423 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terrazzo/1280.avif` | — | 1280×1280 | 103 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terrazzo/1280.webp` | — | 1280×1280 | 138 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terrazzo/1920.avif` | — | 1920×1920 | 164 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terrazzo/1920.webp` | — | 1920×1920 | 235 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terrazzo/3840.avif` | — | 3840×3840 | 372 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terrazzo/3840.webp` | — | 3840×3840 | 577 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terrazzo/640.avif` | — | 640×640 | 46 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terrazzo/640.webp` | — | 640×640 | 58 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terrazzo/original-4k.webp` | — | 4096×4096 | 1374 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terre-cuite/1280.avif` | — | 1280×1280 | 156 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terre-cuite/1280.webp` | — | 1280×1280 | 271 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terre-cuite/1920.avif` | — | 1920×1920 | 452 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terre-cuite/1920.webp` | — | 1920×1920 | 723 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terre-cuite/3840.avif` | — | 3840×3840 | 1588 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terre-cuite/3840.webp` | — | 3840×3840 | 2614 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terre-cuite/640.avif` | boutique/Boutique.tsx | 640×640 | 23 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terre-cuite/640.webp` | boutique/Boutique.tsx | 640×640 | 46 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/terre-cuite/original-4k.webp` | — | 4096×4096 | 5798 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/1280.avif` | page.tsx, experience/Stage.tsx | 1280×1280 | 105 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/1280.webp` | page.tsx, experience/Stage.tsx | 1280×1280 | 185 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/1920.avif` | experience/page.tsx | 1920×1920 | 228 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/1920.webp` | experience/page.tsx | 1920×1920 | 410 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/3840.avif` | — | 3840×3840 | 749 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/3840.webp` | — | 3840×3840 | 1367 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/640.avif` | experience/page.tsx, page.tsx | 640×640 | 29 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/640.webp` | experience/page.tsx, page.tsx | 640×640 | 50 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/original-4k.webp` | — | 4096×4096 | 3736 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/velours/1280.avif` | data/inspiration-bank.json | 1280×1231 | 112 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/velours/1280.webp` | data/inspiration-bank.json | 1280×1231 | 206 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/velours/1920.avif` | — | 1920×1847 | 289 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/velours/1920.webp` | — | 1920×1847 | 553 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/velours/3840.avif` | — | 3840×3695 | 1059 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/velours/3840.webp` | — | 3840×3695 | 1930 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/velours/640.avif` | — | 640×616 | 3 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/velours/640.webp` | — | 640×616 | 24 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/velours/original-4k.webp` | — | 4096×3941 | 5079 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/models/thumbs/ArmChair_01.webp` | — | 240×240 | 8 Ko | oui | — | vignette technique du Studio 3D (240 px) | garder (technique) jusqu'au remplacement |
 | `/models/thumbs/Chandelier_01.webp` | — | 240×240 | 9 Ko | oui | — | vignette technique du Studio 3D (240 px) | garder (technique) jusqu'au remplacement |
 | `/models/thumbs/Chandelier_02.webp` | — | 240×240 | 6 Ko | oui | — | vignette technique du Studio 3D (240 px) | garder (technique) jusqu'au remplacement |
@@ -353,7 +415,7 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/models/thumbs/wicker_basket_02.webp` | — | 240×240 | 8 Ko | oui | — | vignette technique du Studio 3D (240 px) | garder (technique) jusqu'au remplacement |
 | `/models/thumbs/wooden_bowl_02.webp` | — | 240×240 | 7 Ko | oui | — | vignette technique du Studio 3D (240 px) | garder (technique) jusqu'au remplacement |
 | `/models/thumbs/wooden_candlestick.webp` | — | 240×240 | 4 Ko | oui | — | vignette technique du Studio 3D (240 px) | garder (technique) jusqu'au remplacement |
-| `/og.png` | connexion/page.tsx, experience/page.tsx | 1200×630 | 58 Ko | outil | — | icône / partage, technique | garder (technique) jusqu'au remplacement |
+| `/og.png` | catalogue/page.tsx, connexion/page.tsx | 1200×630 | 58 Ko | outil | — | icône / partage, technique | garder (technique) jusqu'au remplacement |
 | `/textures/m-ardoise/diff.webp` | data/materials-premium.json | 1024×1024 | 195 Ko | oui | — | carte de texture 3D 1024 px (Poly Haven) : à remplacer par la 4K (étape 3) | garder (technique) jusqu'au remplacement |
 | `/textures/m-ardoise/nor.webp` | data/materials-premium.json | 1024×1024 | 224 Ko | oui | — | carte de texture 3D 1024 px (Poly Haven) : à remplacer par la 4K (étape 3) | garder (technique) jusqu'au remplacement |
 | `/textures/m-ardoise/rough.webp` | data/materials-premium.json | 1024×1024 | 76 Ko | oui | — | carte de texture 3D 1024 px (Poly Haven) : à remplacer par la 4K (étape 3) | garder (technique) jusqu'au remplacement |

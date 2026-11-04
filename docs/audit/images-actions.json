@@ -192,24 +192,6 @@
   "sujet": "oui"
  },
  {
-  "fichier": "/editorial/ia/facade-1024.webp",
-  "action": "supprimer",
-  "note": "B",
-  "sujet": "non"
- },
- {
-  "fichier": "/editorial/ia/facade-640.webp",
-  "action": "supprimer",
-  "note": "B",
-  "sujet": "non"
- },
- {
-  "fichier": "/editorial/ia/facade.webp",
-  "action": "supprimer",
-  "note": "B",
-  "sujet": "non"
- },
- {
   "fichier": "/editorial/ia/haussmannien-renove-1024.webp",
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "A",
@@ -246,24 +228,6 @@
   "sujet": "oui"
  },
  {
-  "fichier": "/editorial/ia/jardin-1024.webp",
-  "action": "supprimer",
-  "note": "B",
-  "sujet": "non"
- },
- {
-  "fichier": "/editorial/ia/jardin-640.webp",
-  "action": "supprimer",
-  "note": "B",
-  "sujet": "non"
- },
- {
-  "fichier": "/editorial/ia/jardin.webp",
-  "action": "supprimer",
-  "note": "B",
-  "sujet": "non"
- },
- {
   "fichier": "/editorial/ia/luxe-discret-1024.webp",
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "B",
@@ -279,240 +243,6 @@
   "fichier": "/editorial/ia/luxe-discret.webp",
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "B",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-boucle-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-boucle-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-boucle.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-ceramique-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-ceramique-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-ceramique.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-chene-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-chene-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-chene.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-enduit-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-enduit-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-enduit.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-laiton-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-laiton-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-laiton.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-lin-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-lin-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-lin.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-marbre-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-marbre-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-marbre.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-noyer-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-noyer-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-noyer.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-peinture-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-peinture-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-peinture.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-pierre-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-pierre-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-pierre.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-travertin-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-travertin-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-travertin.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-velours-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-velours-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-velours.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-verre-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-verre-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/ia/matiere-verre.webp",
-  "action": "supprimer",
-  "note": "C",
   "sujet": "oui"
  },
  {
@@ -756,33 +486,15 @@
   "sujet": "oui"
  },
  {
-  "fichier": "/editorial/matieres/faience-blanche.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
   "fichier": "/editorial/matieres/laiton-brosse.webp",
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "B",
   "sujet": "oui"
  },
  {
-  "fichier": "/editorial/matieres/laque-brillante.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
   "fichier": "/editorial/matieres/lin-lave.webp",
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "B",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/matieres/marbre-calacatta.webp",
-  "action": "supprimer",
-  "note": "C",
   "sujet": "oui"
  },
  {
@@ -795,18 +507,6 @@
   "fichier": "/editorial/matieres/parquet-chevron.webp",
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "B",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/matieres/peinture-mate.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/matieres/peinture-velours.webp",
-  "action": "supprimer",
-  "note": "C",
   "sujet": "oui"
  },
  {
@@ -825,12 +525,6 @@
   "fichier": "/editorial/matieres/platre-texture.webp",
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "B",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/matieres/tadelakt.webp",
-  "action": "supprimer",
-  "note": "C",
   "sujet": "oui"
  },
  {
@@ -861,30 +555,6 @@
   "fichier": "/editorial/matieres/velours-foret.webp",
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "B",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/matieres/verre-clair.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/matieres/verre-depoli.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/matieres/verre-fume.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/editorial/matieres/zellige-emeraude.webp",
-  "action": "supprimer",
-  "note": "C",
   "sujet": "oui"
  },
  {
@@ -930,12 +600,6 @@
   "sujet": "oui"
  },
  {
-  "fichier": "/editorial/planches/facade.webp",
-  "action": "supprimer",
-  "note": "B",
-  "sujet": "non"
- },
- {
   "fichier": "/editorial/planches/haussmannien-renove.webp",
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "B",
@@ -946,12 +610,6 @@
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "B",
   "sujet": "oui"
- },
- {
-  "fichier": "/editorial/planches/jardin.webp",
-  "action": "supprimer",
-  "note": "B",
-  "sujet": "non"
  },
  {
   "fichier": "/editorial/planches/luxe-discret.webp",
@@ -1002,12 +660,6 @@
   "sujet": "oui"
  },
  {
-  "fichier": "/editorial/planches/terrasse.webp",
-  "action": "supprimer",
-  "note": "B",
-  "sujet": "non"
- },
- {
   "fichier": "/icon-192.png",
   "action": "garder (technique) jusqu'au remplacement",
   "note": "—",
@@ -1024,42 +676,6 @@
   "action": "garder (technique) jusqu'au remplacement",
   "note": "—",
   "sujet": "outil"
- },
- {
-  "fichier": "/inspirations/cuisines-68-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/inspirations/cuisines-68-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/inspirations/cuisines-68.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/inspirations/villas-10-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/inspirations/villas-10-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/inspirations/villas-10.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
  },
  {
   "fichier": "/inspirations/villas-14-1024.webp",
@@ -1114,24 +730,6 @@
   "action": "supprimer (< 2000 px) dès que le remplaçant existe",
   "note": "B",
   "sujet": "oui"
- },
- {
-  "fichier": "/inspirations/villas-24-1024.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "non"
- },
- {
-  "fichier": "/inspirations/villas-24-640.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "non"
- },
- {
-  "fichier": "/inspirations/villas-24.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "non"
  },
  {
   "fichier": "/materiaux/bois-huile/ao.webp",
@@ -1254,42 +852,6 @@
   "sujet": "oui"
  },
  {
-  "fichier": "/materiaux/coton/ao.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/coton/basecolor.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/coton/displacement.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/coton/metallic.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/coton/normal.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/coton/roughness.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
   "fichier": "/materiaux/enduit-chaux/ao.webp",
   "action": "garder",
   "note": "A",
@@ -1317,42 +879,6 @@
   "fichier": "/materiaux/enduit-chaux/roughness.webp",
   "action": "garder",
   "note": "A",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/lin-lave/ao.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/lin-lave/basecolor.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/lin-lave/displacement.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/lin-lave/metallic.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/lin-lave/normal.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/lin-lave/roughness.webp",
-  "action": "supprimer",
-  "note": "C",
   "sujet": "oui"
  },
  {
@@ -1446,66 +972,6 @@
   "sujet": "oui"
  },
  {
-  "fichier": "/materiaux/pierre-naturelle/ao.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/pierre-naturelle/basecolor.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/pierre-naturelle/displacement.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/pierre-naturelle/normal.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/pierre-naturelle/roughness.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/platre-texture/ao.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/platre-texture/basecolor.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/platre-texture/displacement.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/platre-texture/normal.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/platre-texture/roughness.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
   "fichier": "/materiaux/tadelakt/ao.webp",
   "action": "garder",
   "note": "A",
@@ -1533,36 +999,6 @@
   "fichier": "/materiaux/tadelakt/roughness.webp",
   "action": "garder",
   "note": "A",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/terrazzo/ao.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/terrazzo/basecolor.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/terrazzo/displacement.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/terrazzo/normal.webp",
-  "action": "supprimer",
-  "note": "C",
-  "sujet": "oui"
- },
- {
-  "fichier": "/materiaux/terrazzo/roughness.webp",
-  "action": "supprimer",
-  "note": "C",
   "sujet": "oui"
  },
  {
@@ -1626,39 +1062,975 @@
   "sujet": "oui"
  },
  {
-  "fichier": "/materiaux/velours-foret/ao.webp",
-  "action": "supprimer",
-  "note": "C",
+  "fichier": "/matieres/ardoise/1280.avif",
+  "action": "garder",
+  "note": "A",
   "sujet": "oui"
  },
  {
-  "fichier": "/materiaux/velours-foret/basecolor.webp",
-  "action": "supprimer",
-  "note": "C",
+  "fichier": "/matieres/ardoise/1280.webp",
+  "action": "garder",
+  "note": "A",
   "sujet": "oui"
  },
  {
-  "fichier": "/materiaux/velours-foret/displacement.webp",
-  "action": "supprimer",
-  "note": "C",
+  "fichier": "/matieres/ardoise/1920.avif",
+  "action": "garder",
+  "note": "A",
   "sujet": "oui"
  },
  {
-  "fichier": "/materiaux/velours-foret/metallic.webp",
-  "action": "supprimer",
-  "note": "C",
+  "fichier": "/matieres/ardoise/1920.webp",
+  "action": "garder",
+  "note": "A",
   "sujet": "oui"
  },
  {
-  "fichier": "/materiaux/velours-foret/normal.webp",
-  "action": "supprimer",
-  "note": "C",
+  "fichier": "/matieres/ardoise/3840.avif",
+  "action": "garder",
+  "note": "A",
   "sujet": "oui"
  },
  {
-  "fichier": "/materiaux/velours-foret/roughness.webp",
-  "action": "supprimer",
-  "note": "C",
+  "fichier": "/matieres/ardoise/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/ardoise/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/ardoise/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/ardoise/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/beton-cire/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/beton-cire/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/beton-cire/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/beton-cire/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/beton-cire/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/beton-cire/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/beton-cire/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/beton-cire/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/beton-cire/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/bouclette/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/bouclette/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/bouclette/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/bouclette/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/bouclette/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/bouclette/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/bouclette/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/bouclette/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/bouclette/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/brique/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/brique/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/brique/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/brique/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/brique/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/brique/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/brique/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/brique/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/brique/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-fume/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-fume/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-fume/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-fume/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-fume/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-fume/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-fume/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-fume/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-fume/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-huile/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-huile/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-huile/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-huile/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-huile/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-huile/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-huile/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-huile/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/chene-huile/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/cuir/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/cuir/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/cuir/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/cuir/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/cuir/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/cuir/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/cuir/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/cuir/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/cuir/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/enduit-chaux/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/lin-lave/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/lin-lave/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/lin-lave/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/lin-lave/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/lin-lave/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/lin-lave/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/lin-lave/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/lin-lave/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/lin-lave/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/marbre-carrare/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/noyer/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/noyer/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/noyer/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/noyer/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/noyer/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/noyer/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/noyer/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/noyer/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/noyer/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/parquet-point-de-hongrie/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/pierre-calcaire/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/rotin/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/rotin/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/rotin/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/rotin/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/rotin/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/rotin/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/rotin/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/rotin/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/rotin/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terrazzo/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terrazzo/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terrazzo/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terrazzo/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terrazzo/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terrazzo/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terrazzo/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terrazzo/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terrazzo/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terre-cuite/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terre-cuite/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terre-cuite/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terre-cuite/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terre-cuite/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terre-cuite/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terre-cuite/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terre-cuite/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/terre-cuite/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/travertin/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/travertin/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/travertin/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/travertin/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/travertin/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/travertin/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/travertin/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/travertin/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/travertin/original-4k.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/velours/1280.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/velours/1280.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/velours/1920.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/velours/1920.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/velours/3840.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/velours/3840.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/velours/640.avif",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/velours/640.webp",
+  "action": "garder",
+  "note": "A",
+  "sujet": "oui"
+ },
+ {
+  "fichier": "/matieres/velours/original-4k.webp",
+  "action": "garder",
+  "note": "A",
   "sujet": "oui"
  },
  {

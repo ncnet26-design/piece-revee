@@ -336,7 +336,7 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   await page.goto("/transformer/");
   await expect(page.getByRole("button", { name: "Créer mon moodboard" })).toBeDisabled();
   await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/inspirations/villas-16.webp");
-  await page.getByLabel("Ajouter des inspirations").setInputFiles(["public/editorial/ia/japandi-essai.webp", "public/editorial/ia/matiere-lin.webp"]);
+  await page.getByLabel("Ajouter des inspirations").setInputFiles(["public/editorial/ia/japandi-essai.webp", "public/editorial/ia/salon.webp"]);
   await expect(page.getByRole("img", { name: "Inspiration 2" })).toBeVisible();
   await page.getByRole("button", { name: "Créer mon moodboard" }).click();
   await expect(page.getByRole("heading", { name: "Japandi chaleureux" })).toBeVisible({ timeout: 20_000 });
