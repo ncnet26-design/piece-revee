@@ -154,17 +154,21 @@
   "telecharge_le": "2026-11-04"
  },
  "bouclette": {
-  "source": "ambientCG",
-  "id": "Carpet016",
-  "nom": "Carpet 016",
+  "source": "Poly Haven",
+  "id": "curly_teddy_natural",
+  "nom": "Curly Teddy Natural",
   "auteurs": [
-   "ambientCG (Lennart Demes)"
+   "colormass",
+   "Rico Cilliers"
   ],
   "licence": "CC0 1.0",
-  "url": "https://ambientcg.com/view?id=Carpet016",
-  "dimensions_m": null,
+  "url": "https://polyhaven.com/a/curly_teddy_natural",
+  "dimensions_m": [
+   0.335804452696631,
+   0.33090004324913025
+  ],
   "largeur": 4096,
-  "hauteur": 4096,
+  "hauteur": 4036,
   "telecharge_le": "2026-11-04"
  },
  "velours": {

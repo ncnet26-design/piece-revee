@@ -11,7 +11,7 @@ export const MATIERES_REELLES: Record<string, { nom: string; produits?: string }
   "parquet-point-de-hongrie": { nom: "Parquet point de Hongrie", produits: "chêne" }, noyer: { nom: "Noyer", produits: "noyer" },
   travertin: { nom: "Travertin", produits: "travertin" }, "marbre-carrare": { nom: "Marbre blanc veiné", produits: "marbre" },
   terrazzo: { nom: "Terrazzo", produits: "terrazzo" }, "beton-cire": { nom: "Béton lissé", produits: "béton" }, "enduit-chaux": { nom: "Enduit à la chaux" },
-  "lin-lave": { nom: "Lin lavé, bleu", produits: "lin" }, bouclette: { nom: "Moquette bouclée", produits: "bouclette" }, velours: { nom: "Velours", produits: "velours" },
+  "lin-lave": { nom: "Lin lavé, bleu", produits: "lin" }, bouclette: { nom: "Bouclette", produits: "bouclette" }, velours: { nom: "Velours", produits: "velours" },
   cuir: { nom: "Cuir", produits: "cuir" }, rotin: { nom: "Rotin tressé", produits: "rotin" }, brique: { nom: "Brique" },
   "terre-cuite-emaillee": { nom: "Terre cuite émaillée", produits: "céramique" }, "terre-cuite": { nom: "Carreaux de terre cuite", produits: "terre cuite" },
   "pierre-calcaire": { nom: "Pierre calcaire", produits: "pierre" }, ardoise: { nom: "Ardoise" },

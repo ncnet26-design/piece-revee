@@ -14,7 +14,7 @@
 | beton-cire | Concrete 030 | ambientCG (Lennart Demes) | [ambientCG](https://ambientcg.com/view?id=Concrete030) | 4096×4096 | 2026-11-04 |
 | enduit-chaux | Plaster 003 | ambientCG (Lennart Demes) | [ambientCG](https://ambientcg.com/view?id=Plaster003) | 4096×4096 | 2026-11-04 |
 | lin-lave | Rough Linen | colormass, Rico Cilliers | [Poly Haven](https://polyhaven.com/a/rough_linen) | 4096×4105 | 2026-11-04 |
-| bouclette | Carpet 016 | ambientCG (Lennart Demes) | [ambientCG](https://ambientcg.com/view?id=Carpet016) | 4096×4096 | 2026-11-04 |
+| bouclette | Curly Teddy Natural | colormass, Rico Cilliers | [Poly Haven](https://polyhaven.com/a/curly_teddy_natural) | 4096×4036 | 2026-11-04 |
 | velours | Velour Velvet | colormass, Rico Cilliers | [Poly Haven](https://polyhaven.com/a/velour_velvet) | 4096×3941 | 2026-11-04 |
 | cuir | Brown Leather | Rob Tuytel | [Poly Haven](https://polyhaven.com/a/brown_leather) | 4096×4096 | 2026-11-04 |
 | rotin | Wicker 010 A | ambientCG (Lennart Demes) | [ambientCG](https://ambientcg.com/view?id=Wicker010A) | 4096×4096 | 2026-11-04 |

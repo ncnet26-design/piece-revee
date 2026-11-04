@@ -44,6 +44,8 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 | Image d'ouverture publiée sans l'avoir regardée : capturée au début de l'animation, scène presque vide | Retirée aussitôt, ancienne photo remise | Ouvrir et regarder chaque image avant de la publier, sans exception |
 | Robot matières : recherche ambientCG par nom au lieu de l'identifiant (10 échecs), puis envoi de 135 Mo d'un bloc refusé par GitHub | Recherche par identifiant, envoi matière par matière | Tester une source avec un seul élément avant un lot ; découper les gros envois |
 | Envois GitHub refusés (erreurs 500/502 passagères) pendant les robots et mes propres envois | Nouvelles tentatives avec pauses croissantes | Tout envoi automatique doit réessayer ; vérifier que la branche distante a bien reçu le commit |
+| Métaux et enduits lisses : leur carte de couleur seule paraît plate (laiton = papier jaune) | Non publiés | Un métal se montre rendu avec ses reflets, jamais en carte de couleur seule |
+| Node ne passait pas par le relais réseau (ENOTFOUND) alors que curl oui | `NODE_USE_ENV_PROXY=1` | Pour un script Node avec internet dans la session, activer le relais |
 | Images de 2400 px chargées sur téléphone (accueil à 42/100) | Composant `Photo` avec tailles 640/1024/1600 | Toujours `srcset` + `sizes` |
 
 ## Code et outils
