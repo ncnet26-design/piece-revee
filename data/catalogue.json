@@ -1,0 +1,4468 @@
+{
+ "genere_le": "2026-11-04",
+ "source": "Robot catalogue (pages des enseignes, schema.org), puis vérification page par page",
+ "produits": [
+  {
+   "id": "ff91a64f9dc0",
+   "nom": "Canapé d'angle 4 places avec coffre et housses lavables - Mélange coton-lin - 274 x 128,5 x 83 cm - Gris",
+   "enseigne": "Vente-unique",
+   "marque": "Merax",
+   "prix": 587.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "canape",
+   "dimensions": "274 × 128.5 × 83 cm",
+   "matiere": [
+    "lin",
+    "coton"
+   ],
+   "couleur": [
+    "gris"
+   ],
+   "url": "https://www.vente-unique.com/p/canape-d-angle-4-places-avec-coffre-et-housses-lavables-melange-coton-lin-274-x-128-5-x-83-cm-gris",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "5e7ceb99d632",
+   "nom": "STEGESUND Étagère - bambou clair 36x28x87 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 39.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": "36 × 28 × 87 cm",
+   "matiere": [
+    "bambou"
+   ],
+   "couleur": [],
+   "url": "https://www.ikea.com/fr/fr/p/stegesund-etagere-bambou-clair-50632010/",
+   "verifie_le": "2026-11-01",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "7798c37c362c",
+   "nom": "vase ⌀24,5x30cm Zwier céramique moucheté blanc",
+   "enseigne": "HEMA",
+   "marque": null,
+   "prix": 23.49,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "24.5 × 30 cm",
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.hema.com/fr-fr/maison-deco/deco/vases/vase-%E2%8C%80245x30cm-zwier-ceramique-mouchete-blanc-13326282.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "c2d0aee1802e",
+   "nom": "Applique murale Ø35 cm en lin Vidson",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 60.95,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "Ø 35 cm",
+   "matiere": [
+    "lin"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-appliques-murales-de-chambre/180424-applique-murale-o35-cm-en-lin-vidson.html",
+   "verifie_le": "2026-10-31",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "c37b61f873c1",
+   "nom": "ALPHA BORDERS - coussin - lin - L 60 x W 40 cm - moutarde",
+   "enseigne": "Pomax",
+   "marque": "RAMESH IMPEX",
+   "prix": 77.5,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "japandi",
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "lin"
+   ],
+   "couleur": [
+    "moutarde"
+   ],
+   "url": "https://pomax.com/fr/products/alpha-borders-coussin-lin-l-60-x-w-40-cm-moutarde",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "2b5135c1d5ca",
+   "nom": "Rideau Vento en lin blanc",
+   "enseigne": "The Socialite Family",
+   "marque": null,
+   "prix": 120,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "rideau",
+   "dimensions": null,
+   "matiere": [
+    "lin"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.thesocialitefamily.com/fr-fr/products/rideau-vento-en-lin-blanc",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "a9d9f47bbc7b",
+   "nom": "Punta - Lampe à poser ronde en lin ø30cm",
+   "enseigne": "Drawer",
+   "marque": null,
+   "prix": 49.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "Ø 30 cm",
+   "matiere": [
+    "lin"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/lampe-poser/612379-lampe-a-poser-ronde-lin-30cm-drawer-punta.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "7241e1d02229",
+   "nom": "Commode 35x35 cm en bambou Nafan",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 44.95,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": "35 × 35 cm",
+   "matiere": [
+    "bambou"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-chiffonnier/103197-commode-en-bambou-nafan.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "88c56d243be6",
+   "nom": "Coussin en lin et coton - 45 x 45 cm - Rouge et Ecru à motifs",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 29,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "45 × 45 cm",
+   "matiere": [
+    "lin",
+    "coton"
+   ],
+   "couleur": [
+    "écru"
+   ],
+   "url": "https://www.habitat.fr/p/santa-coussin-en-lin-et-coton-45-x-45-cm-rouge-et-ecru-a-motifs",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "b9a1f12f3207",
+   "nom": "Punta - Suspension ronde en lin ø45cm",
+   "enseigne": "Drawer",
+   "marque": null,
+   "prix": 69.99,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "Ø 45 cm",
+   "matiere": [
+    "lin"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/luminaire-suspension/612378-suspension-ronde-en-lin-45cm-drawer-punta.html",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "5b1397445613",
+   "nom": "Coussin Vice Versa - Black Line Lin Stone Washed - Naturel",
+   "enseigne": "Fleux",
+   "marque": "Maison de Vacances",
+   "prix": 177.95,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "lin"
+   ],
+   "couleur": [
+    "naturel"
+   ],
+   "url": "https://www.fleux.com/products/coussin-vice-versa-black-line-lin-stone-washed-naturel",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "773c9ec06bf6",
+   "nom": "Lampe de table vintage en céramique blanche, pied strié et abat-jour conique",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 250,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "japandi",
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.selency.fr/p/5378W716/lampe-d-table-vintage-ceramique-blanche-corps-strie-et-abat-jour-conique",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "896ff01aed6e",
+   "nom": "STEGESUND Étagère - bambou clair 36x28x162 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 49.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": "36 × 28 × 162 cm",
+   "matiere": [
+    "bambou"
+   ],
+   "couleur": [],
+   "url": "https://www.ikea.com/fr/fr/p/stegesund-etagere-bambou-clair-20632021/",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "6db5ea2e026a",
+   "nom": "Applique murale design en bambou naturel Evelyn",
+   "enseigne": "Westwing",
+   "marque": "Westwing Collection",
+   "prix": 49.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "bambou"
+   ],
+   "couleur": [
+    "naturel"
+   ],
+   "url": "https://www.westwing.fr/applique-design-bambou-naturel-evelyn-138616.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "143b3d8f20e3",
+   "nom": "TROTTEN / SMÖRKULL Bureau et chaise - électrique décor frêne/blanc gris foncé 120x70 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 368,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": "120 × 70 cm",
+   "matiere": [
+    "frêne"
+   ],
+   "couleur": [
+    "blanc",
+    "gris"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/trotten-smoerkull-bureau-et-chaise-electrique-decor-frene-blanc-gris-fonce-s39627345/",
+   "verifie_le": "2026-11-01",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "15fdb9c5e70d",
+   "nom": "Set de table à manger rectangulaire 180x90 cm Arnaiz et 4 chaises avec accoudoirs en frêne et rotin Lali",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 1109.95,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "table-manger",
+   "dimensions": "180 × 90 cm",
+   "matiere": [
+    "frêne",
+    "rotin"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-lots-de-tables-et-chaises/119622-ensemble-table-a-manger-rectangulaire-en-bois-180x90-cm-arnaiz-et-4-chaises-avec-accoudoirs-en-bois-style-lali.html",
+   "verifie_le": "2026-10-30",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "ecd7f78127aa",
+   "nom": "Chaise Double Jeu - Doré / Lin",
+   "enseigne": "Maison Sarah Lavoine",
+   "marque": null,
+   "prix": 745,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "japandi",
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "lin"
+   ],
+   "couleur": [
+    "doré"
+   ],
+   "url": "https://www.maisonsarahlavoine.com/products/chaise-double-jeu-asolo-gold-lin10-noir21-85x45xp43-gold-lin10-noir21",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "d56ad2b26091",
+   "nom": "EIVISSA - applique murale - papier mâché - DIA 60 cm - beige",
+   "enseigne": "Pomax",
+   "marque": "RUSTIC INDIA",
+   "prix": 257,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "japandi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "papier"
+   ],
+   "couleur": [
+    "beige"
+   ],
+   "url": "https://pomax.com/products/eivissa-muurlamp-papier-mache-dia-60-cm-beige",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "e70b4376ea94",
+   "nom": "Vasque à poser céramique ronde noir mat HALVINA - Diam. 33 cm hauteur 14 cm",
+   "enseigne": "Brico Dépôt",
+   "marque": "Cooke & Lewis",
+   "prix": 59.9,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi",
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "salle-de-bain",
+   "dimensions": "Ø 33 cm",
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://www.bricodepot.fr/p/5063022565068/vasque-a-poser-ceramique-ronde-noir-mat-halvina-diam-33-cm-hauteur-14-cm",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "c938a558faba",
+   "nom": "SMÅSTAD / PLATSA Armoire-penderie - blanc bouleau/avec 3 tablettes 60x57x123 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 151,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": "60 × 57 × 123 cm",
+   "matiere": [
+    "bouleau"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/smastad-platsa-armoire-penderie-blanc-bouleau-avec-3-tablettes-s29483352/",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "bc9eb8015988",
+   "nom": "Canapé 2 Places en Tissu, 112cm Style Moderne Scandinave pour Salon, Appartement, Petit Espace, Cadre en métal, Gris",
+   "enseigne": "Vente-unique",
+   "marque": null,
+   "prix": 109.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "canape",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "gris"
+   ],
+   "url": "https://www.vente-unique.com/p/canape-2-places-en-tissu-112cm-style-moderne-scandinave-pour-salon-appartement-petit-espace-cadre-en-metal-gris",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "795e03ac47c1",
+   "nom": "Coussin en laine et soie - 45 x 45 cm - Brun",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 59,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "45 × 45 cm",
+   "matiere": [
+    "laine"
+   ],
+   "couleur": [
+    "marron"
+   ],
+   "url": "https://www.habitat.fr/p/claus-coussin-en-laine-et-soie-45-x-45-cm-brun",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "c83850e5bfe4",
+   "nom": "Tapis kilim rouge en laine - 100x180cm",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 270,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "scandinave",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": "100 × 180 cm",
+   "matiere": [
+    "laine"
+   ],
+   "couleur": [],
+   "url": "https://www.selency.fr/p/L7AtVJZ/tapis-kilim-rouge-en-laine",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "b3098573abb2",
+   "nom": "Plaid à franges en coton et laine recyclés - 120 x 180 cm - Vert Kaki",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 79,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "120 × 180 cm",
+   "matiere": [
+    "coton",
+    "laine"
+   ],
+   "couleur": [
+    "vert"
+   ],
+   "url": "https://www.habitat.fr/p/briac-plaid-a-franges-en-coton-et-laine-recycles-120-x-180-cm-vert-kaki",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "505f8b30229f",
+   "nom": "Grand tapis berbère Beni Ouarain bleu Majorelle 300x200 cm – laine épaisse",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 650,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": "300 × 200 cm",
+   "matiere": [
+    "laine"
+   ],
+   "couleur": [
+    "bleu"
+   ],
+   "url": "https://www.selency.fr/p/3AUKT214/grand-tapis-berbere-beni-ouarain-bleu-majorelle-300x200-cm-laine-epaisse",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "04afd58910df",
+   "nom": "TROFAST Bureau avec étagère - pin teinté blanc clair 124x44x52 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 157.98,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": "124 × 44 × 52 cm",
+   "matiere": [
+    "pin"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/trofast-bureau-avec-etagere-pin-teinte-blanc-clair-s59613936/",
+   "verifie_le": "2026-10-29",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "42568332bea8",
+   "nom": "Fauteuil de relaxation Scandinave avec repose-pied Marron Velours SHL4288",
+   "enseigne": "Vente-unique",
+   "marque": null,
+   "prix": 123.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "fauteuil",
+   "dimensions": null,
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [
+    "marron"
+   ],
+   "url": "https://www.vente-unique.com/p/fauteuil-de-relaxation-scandinave-avec-repose-pied-marron-velours-shl4288",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "63edb273a1f6",
+   "nom": "Meuble TV 4 portes 140 cm CAPUS pin laqué terracotta",
+   "enseigne": "Bobochic Paris",
+   "marque": null,
+   "prix": 299,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "scandinave",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "pin"
+   ],
+   "couleur": [
+    "terracotta"
+   ],
+   "url": "https://bobochicparis.com/fr/meubles-tv/19914-meuble-tv-4-portes-140-cm-capus-pin-laque-terracotta.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "c8d296a7bb67",
+   "nom": "Coussin Divino laine bouclette blanc crème",
+   "enseigne": "The Socialite Family",
+   "marque": null,
+   "prix": 70,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "scandinave",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "bouclette",
+    "laine"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.thesocialitefamily.com/fr-fr/products/coussin-divino-laine-bouclette-blanc-creme",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "11496f53ee5b",
+   "nom": "Coussin Vice Versa - Drap de Laine - Highlander Black Cab 40x60 cm",
+   "enseigne": "Fleux",
+   "marque": "Maison de Vacances",
+   "prix": 198.22,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "40 × 60 cm",
+   "matiere": [
+    "laine"
+   ],
+   "couleur": [],
+   "url": "https://www.fleux.com/products/coussin-vice-versa-drap-de-laine-highlander-black-cab-40x60-cm",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "e81e200eb821",
+   "nom": "Tapis tufté en laine - 170 x 240 cm - Bleu canard - Design by Floriane Jacques",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 399,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": "170 × 240 cm",
+   "matiere": [
+    "laine"
+   ],
+   "couleur": [
+    "bleu"
+   ],
+   "url": "https://www.habitat.fr/p/gloria-tapis-en-laine-170-x-240-cm-bleu-canard-design-by-floriane-jacques",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "9c127fe468b1",
+   "nom": "SMÅSTAD / PLATSA Armoire-penderie - blanc/bouleau 60x57x123 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 158,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": "60 × 57 × 123 cm",
+   "matiere": [
+    "bouleau"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/smastad-platsa-armoire-penderie-blanc-bouleau-s69430154/",
+   "verifie_le": "2026-11-01",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "2d272586bda7",
+   "nom": "PINNTORP Chaise - teinté blanc/pin",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 39.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "pin"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/pinntorp-chaise-teinte-blanc-pin-90635177/",
+   "verifie_le": "2026-11-02",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "e1d20468f9db",
+   "nom": "Chaise LALIE tissu velours côtelé et pieds scandinaves noirs",
+   "enseigne": "Bobochic Paris",
+   "marque": null,
+   "prix": 229,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://bobochicparis.com/fr/chaises/17284-chaise-lalie-tissu-velours-cotele-et-pieds-scandinaves-noirs.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "1df37fc86ea6",
+   "nom": "Ensemble CAPUS avec buffet 140 cm + meuble TV 140 cm pin laqué terracotta",
+   "enseigne": "Bobochic Paris",
+   "marque": null,
+   "prix": 629,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "scandinave",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "pin"
+   ],
+   "couleur": [
+    "terracotta"
+   ],
+   "url": "https://bobochicparis.com/fr/sejour-complet/19919-ensemble-capus-avec-buffet-140-cm-meuble-tv-140-cm-pin-laque-terracotta.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "fe82fdf7b768",
+   "nom": "Chaise Classica laine bouclette blanc crème",
+   "enseigne": "The Socialite Family",
+   "marque": "COSVE",
+   "prix": 430,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "bouclette",
+    "laine"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.thesocialitefamily.com/fr-fr/products/chaise-classica-laine-bouclette-blanc-creme",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "0265b89b37fe",
+   "nom": "Armoire en bois de pin cannelé Avourio",
+   "enseigne": "Westwing",
+   "marque": "WOOOD",
+   "prix": 679,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "pin"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/armoire-avec-2-portes-en-bois-de-pin-avourio-142623.html",
+   "verifie_le": "2026-10-30",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "27ca9cd1cd90",
+   "nom": "Vita - Etagère en bois et métal blanc 51x170cm",
+   "enseigne": "Drawer",
+   "marque": "House Nordic",
+   "prix": 109,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": "51 × 170 cm",
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.drawer.fr/etagere-sur-pieds/610796-etagere-bois-metal-blanc-51x170cm-house-nordic-vita.html",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "5fb1e5163544",
+   "nom": "Mange debout bois et métal noir 60x100xH105cm",
+   "enseigne": "Gifi",
+   "marque": null,
+   "prix": 49.95,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "table-basse",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://www.gifi.fr/meuble-et-deco/meuble-d-interieur/table-a-manger-et-table-basse/mange-debout-bois-et-metal-noir-60x100xh105cm/000000000000637341.html",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "d632fe3fff32",
+   "nom": "Coussin de bain de soleil GoodHome Tiga gris acier 55 x 190 cm",
+   "enseigne": "Castorama",
+   "marque": null,
+   "prix": 69.9,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "55 × 190 cm",
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "gris"
+   ],
+   "url": "https://www.castorama.fr/coussin-de-bain-de-soleil-goodhome-tiga-gris-acier-55-x-190-cm/5059340678344_CAFR.prd",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "f90aa70a8054",
+   "nom": "Set de 2 tables basses pour plateaux ronds en métal noir - Ø 62 cm & Ø 93 cm",
+   "enseigne": "Fleux",
+   "marque": "Ethnicraft",
+   "prix": 589,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "table-basse",
+   "dimensions": "Ø 62 cm",
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://www.fleux.com/products/set-de-2-tables-basses-pour-plateaux-ronds-en-metal-noir-o-62-cm-o-93-cm",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "4b5f86899d1b",
+   "nom": "Miroir asymétrique en acier inoxydable - 34 x 68 cm - Noir mat",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 99,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "34 × 68 cm",
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://www.habitat.fr/p/oryna-miroir-asymetrique-en-aluminium-68-x-34-cm-noir-mat",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "d23eb48a3cc5",
+   "nom": "Applique Ho Ip20 en Acier - 45 x 13 cm - Laiton",
+   "enseigne": "Fleux",
+   "marque": "ENOstudio",
+   "prix": 279,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "industriel",
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "45 × 13 cm",
+   "matiere": [
+    "laiton",
+    "métal"
+   ],
+   "couleur": [],
+   "url": "https://www.fleux.com/products/applique-ho-ip20-en-acier-45-x-13-x-21-cm-laiton",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "917456894ada",
+   "nom": "Fauteuil de Salon-Chaise de relax Gris foncé 76x94x102 cm Faux cuir SHL1070",
+   "enseigne": "Vente-unique",
+   "marque": null,
+   "prix": 155.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "fauteuil",
+   "dimensions": "76 × 94 × 102 cm",
+   "matiere": [
+    "cuir"
+   ],
+   "couleur": [
+    "gris"
+   ],
+   "url": "https://www.vente-unique.com/p/fauteuil-de-salon-chaise-de-relax-gris-fonce-76x94x102-cm-faux-cuir-shl1070",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "6793e922cab5",
+   "nom": "Étagère à poser Linéa 3 niveaux métal rose 39x36xH123cm",
+   "enseigne": "Gifi",
+   "marque": null,
+   "prix": 69.95,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "rose"
+   ],
+   "url": "https://www.gifi.fr/maison/rangement-et-entretien/rangement/etagere-de-rangement/etagere-a-poser-linea-3-niveaux-metal-rose-39x36xh123cm/000000000000645742.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "36e50a372671",
+   "nom": "Coussin de banc Blooma Denia gris acier",
+   "enseigne": "Castorama",
+   "marque": null,
+   "prix": 44.9,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "gris"
+   ],
+   "url": "https://www.castorama.fr/coussin-de-banc-blooma-denia-gris-acier/3663602725244_CAFR.prd",
+   "verifie_le": "2026-11-02",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "38f1905e63a6",
+   "nom": "Yvonne - Suspension ronde en métal finition brillant ø35cm",
+   "enseigne": "Drawer",
+   "marque": null,
+   "prix": 62.99,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "Ø 35 cm",
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/luminaire-suspension/612377-suspension-ronde-metal-finition-brillant-35cm-drawer-yvonne.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "233c18dde006",
+   "nom": "Miroir mural ovale 40x120 cm en métal Elsie Gold",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 116.95,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "industriel",
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "40 × 120 cm",
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-miroirs-de-mur/95104-miroir-mural-ovale-en-metal-elsie-gold.html",
+   "verifie_le": "2026-10-30",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "f30dea57aba7",
+   "nom": "VANTA - fauteuil lounge - métal - L 72 x W 67 x H 73 cm - noir",
+   "enseigne": "Pomax",
+   "marque": "AT PRIVATE ENTERPRISE",
+   "prix": 926,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "fauteuil",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://pomax.com/fr/products/fauteuil-lounge-vanta-metal-l-72-x-w-67-x-h-73-cm-noir",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "d2661728f3be",
+   "nom": "Chaise papillon noir et blanc cuir de vache 74x66x90 cm SHL4062",
+   "enseigne": "Vente-unique",
+   "marque": null,
+   "prix": 124.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": "74 × 66 × 90 cm",
+   "matiere": [
+    "cuir"
+   ],
+   "couleur": [
+    "blanc",
+    "noir"
+   ],
+   "url": "https://www.vente-unique.com/p/chaise-papillon-noir-et-blanc-cuir-de-vache-74x66x90-cm-shl4062",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "4e27e419b4d8",
+   "nom": "Étagère sur pieds Detroit métal bois noir et marron 80x35xH102,5 cm",
+   "enseigne": "Gifi",
+   "marque": null,
+   "prix": 79.95,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "noir",
+    "marron"
+   ],
+   "url": "https://www.gifi.fr/maison/rangement-et-entretien/rangement/etagere-de-rangement/etagere-sur-pieds-detroit-metal-bois-noir-et-marron-80x35xh1025-cm/000000000000591303.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "fe3025893619",
+   "nom": "Desserte roulante pour cuisine extérieur avec tablettes latérales acier noir Le Marquier",
+   "enseigne": "Castorama",
+   "marque": null,
+   "prix": 579.9,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://www.castorama.fr/desserte-roulante-pour-cuisine-exterieur-avec-tablettes-laterales-acier-noir-le-marquier/3339380173156_CAFR.prd",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "181e07639e32",
+   "nom": "Suspension en métal - Diamètre 80 cm - Noir",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 69,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "Ø 80 cm",
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://www.habitat.fr/p/nelly-suspension-en-metal-diametre-80-cm-noir",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "f0cb5076bb5a",
+   "nom": "Set de table rectangulaire 180x90 cm en bois d'acacia et acier Maupi et 6 chaises de jardin en rotin synthétique Gouda Naturel",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 699.95,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "industriel",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": "180 × 90 cm",
+   "matiere": [
+    "métal",
+    "rotin"
+   ],
+   "couleur": [
+    "naturel"
+   ],
+   "url": "https://www.sklum.com/fr/acheter-ensemble-table-et-chaises-de-jardin/201940-ensemble-table-rectangulaire-180x90-cm-en-bois-d-acacia-et-acier-maupi-et-6-chaises-de-jardin-en-rotin-synthetique-gouda-natural.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "BackOrder",
+   "affiliate_url": ""
+  },
+  {
+   "id": "c44aea833d44",
+   "nom": "Lustre ALTEA bicolore blanc en acier",
+   "enseigne": "Bobochic Paris",
+   "marque": null,
+   "prix": 279,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://bobochicparis.com/fr/suspensions/19313-lustre-altea-bicolore-blanc-en-acier.html",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "3c072eacf485",
+   "nom": "SALLSJÖN Mitigeur avec poignée latérale - couleur acier inox",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 59,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "robinetterie",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [],
+   "url": "https://www.ikea.com/fr/fr/p/sallsjoen-mitigeur-avec-poignee-laterale-couleur-acier-inox-90602025/",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "1ad51f816db7",
+   "nom": "TAKSJÖN Mitigeur cuisine - couleur acier inox",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 99,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "industriel"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "robinetterie",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [],
+   "url": "https://www.ikea.com/fr/fr/p/taksjoen-mitigeur-cuisine-couleur-acier-inox-00602303/",
+   "verifie_le": "2026-11-02",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "8f47c0aa5cbd",
+   "nom": "Grand coussin canapé en velours côtelé Lennon, 60 x 60 cm",
+   "enseigne": "Westwing",
+   "marque": "Westwing Collection",
+   "prix": 59.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "canape",
+   "dimensions": "60 × 60 cm",
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/coussin-canape-60x60-velours-cotele-gris-lennon-132787.html",
+   "verifie_le": "2026-10-31",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "e8f28249c0c7",
+   "nom": "Fauteuil Salon-Chaise de relax Gris foncé 63x67x94 cm Velours SHL2580",
+   "enseigne": "Vente-unique",
+   "marque": null,
+   "prix": 110.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "fauteuil",
+   "dimensions": "63 × 67 × 94 cm",
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [
+    "gris"
+   ],
+   "url": "https://www.vente-unique.com/p/fauteuil-salon-chaise-de-relax-gris-fonce-63x67x94-cm-velours-shl2580",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "0e302543be57",
+   "nom": "Applique Laga - 24 x 16 cm - Noir & Marbre",
+   "enseigne": "Fleux",
+   "marque": "ENOstudio",
+   "prix": 124.5,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "haussmannien",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "24 × 16 cm",
+   "matiere": [
+    "marbre"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://www.fleux.com/products/applique-laga-24-x-16-cm-noir-marbre",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "2cc245bffb1d",
+   "nom": "Jersey - Miroir rond en métal ø40cm",
+   "enseigne": "Drawer",
+   "marque": "House Nordic",
+   "prix": 29.9,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "industriel",
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "Ø 40 cm",
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/miroir-design/608751-miroir-rond-metal-o40cm-jersey-house-nordic.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "f2bc1367ed85",
+   "nom": "Miroir ancien ovale à crète en laiton, 41x26 cm",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 125,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "41 × 26 cm",
+   "matiere": [
+    "laiton"
+   ],
+   "couleur": [],
+   "url": "https://www.selency.fr/p/KU24H7K4/miroir-ancien-ovale-a-crete-en-laiton-41x26-cm",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "4003c0701a84",
+   "nom": "Bout de canapé Triangolo marbre vert",
+   "enseigne": "The Socialite Family",
+   "marque": "SERRA MARMI",
+   "prix": 1790,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "table-basse",
+   "dimensions": null,
+   "matiere": [
+    "marbre"
+   ],
+   "couleur": [
+    "vert"
+   ],
+   "url": "https://www.thesocialitefamily.com/fr-fr/products/bout-de-canape-triangolo-marbre-vert",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "3a7e60c8a4d5",
+   "nom": "Fauteuil de Salon-Chaise-Fauteuil œuf avec repose-pieds Gris foncé 63x73x90 cm Velours SHL3825",
+   "enseigne": "Vente-unique",
+   "marque": null,
+   "prix": 141.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "fauteuil",
+   "dimensions": "63 × 73 × 90 cm",
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [
+    "gris"
+   ],
+   "url": "https://www.vente-unique.com/p/fauteuil-de-salon-chaise-fauteuil-oeuf-avec-repose-pieds-gris-fonce-63x73x90-cm-velours-shl3825",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "9e7f0134c589",
+   "nom": "Lampe de table en métal couleur aubergine, courbure en laiton et bois de teck années 1960-70",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 49,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "industriel",
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "teck",
+    "laiton",
+    "métal"
+   ],
+   "couleur": [],
+   "url": "https://www.selency.fr/p/3WJQE7RJ/lampe-de-table-en-metal-couleur-aubergine-courbure-en-laiton-et-bois-de-teck-annees-1960-70",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "3d653a65d542",
+   "nom": "Miroir mural rond Ø60 cm en rotin Beku",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 24.95,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "haussmannien",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "Ø 60 cm",
+   "matiere": [
+    "rotin"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-miroirs-de-mur/79304-miroir-mural-rond-en-rotin-beku.html",
+   "verifie_le": "2026-11-02",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "513b7305f670",
+   "nom": "Cama - Lit coffre en velours côtelé 140x190cm",
+   "enseigne": "Drawer",
+   "marque": null,
+   "prix": 269,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "chambre"
+   ],
+   "famille": "lit",
+   "dimensions": "140 × 190 cm",
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/lit-coffre/611645-lit-coffre-velours-cotele-140x190cm-drawer-cama.html",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "18adf34c6536",
+   "nom": "Lit Grand Ours - Velours Havane",
+   "enseigne": "Tediber",
+   "marque": null,
+   "prix": 3299.8,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "chambre"
+   ],
+   "famille": "lit",
+   "dimensions": null,
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [],
+   "url": "https://www.tediber.com/products/lit-boxspring-grand-ours-velours-havane",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "b4b14d6e4d16",
+   "nom": "Miroir Ovo - Noyer",
+   "enseigne": "Maison Sarah Lavoine",
+   "marque": null,
+   "prix": 530,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien",
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "noyer"
+   ],
+   "couleur": [],
+   "url": "https://www.maisonsarahlavoine.com/products/miroir-ovo-noyer-naturel-50x38cm-naturel",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "b86aeb21f7a2",
+   "nom": "Tabouret en velours Orchid",
+   "enseigne": "Westwing",
+   "marque": "Westwing Collection",
+   "prix": 59.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/pouf-rond-velours-daisy-125713.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "261eaafc23be",
+   "nom": "Armoire salle de bain miroir blanc style l.50 x h.60 x p.15 cm",
+   "enseigne": "Brico Dépôt",
+   "marque": "Unbranded",
+   "prix": 70.9,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.bricodepot.fr/p/5057741445671/armoire-salle-de-bain-miroir-blanc-style-l-50-x-h-60-x-p-15-cm",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "983e1e6c0d55",
+   "nom": "Table ronde en marbre Abby, Ø 120 cm",
+   "enseigne": "Westwing",
+   "marque": "Westwing Collection",
+   "prix": 1299,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "haussmannien",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "table-manger",
+   "dimensions": "Ø 120 cm",
+   "matiere": [
+    "marbre"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/table-de-salle-a-manger-ronde-en-bois-de-manguier-abby-o-120-cm-158094.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "d880465a28b6",
+   "nom": "Chaise LALIE tissu velours côtelé et pieds métal noir",
+   "enseigne": "Bobochic Paris",
+   "marque": null,
+   "prix": 229,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "industriel",
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "métal",
+    "velours"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://bobochicparis.com/fr/chaises/17275-chaise-lalie-tissu-velours-cotele-et-pieds-metal-noir.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "eb482d8e5a34",
+   "nom": "Chaise Laura bois brun velours tigre",
+   "enseigne": "The Socialite Family",
+   "marque": null,
+   "prix": 530,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [
+    "marron"
+   ],
+   "url": "https://www.thesocialitefamily.com/fr-fr/products/chaise-laura-bois-brun-velours-tigre",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "fa5309eb8e40",
+   "nom": "Suspension globe verre soufflé doré",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 319,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "verre"
+   ],
+   "couleur": [
+    "doré"
+   ],
+   "url": "https://www.selency.fr/p/8STVEP2D/suspension-globe-verre-souffle-dore",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "bb9b679ad007",
+   "nom": "TÄNNFORSEN / VÄSTERSJÖN Meuble lavabo avec portes/vasque - blanc/blanc marbré 62x49x79 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 350,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "haussmannien",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "salle-de-bain",
+   "dimensions": "62 × 49 × 79 cm",
+   "matiere": [
+    "marbre"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/taennforsen-vaestersjoen-meuble-lavabo-avec-portes-vasque-blanc-blanc-marbre-s79629941/",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "39d5d3bdb78f",
+   "nom": "Robinet de lavabo en laiton Alameda",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 36.95,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "robinetterie",
+   "dimensions": null,
+   "matiere": [
+    "laiton"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-robinets/185213-robinet-de-lavabo-en-laiton-alameda.html",
+   "verifie_le": "2026-11-01",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "8d61a0928efd",
+   "nom": "TÄNNFORSEN / ORRSJÖN Meuble lavabo avec tiroirs/vasque - blanc/blanc marbré 122x49x71 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 601,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "salle-de-bain",
+   "dimensions": "122 × 49 × 71 cm",
+   "matiere": [
+    "marbre"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/taennforsen-orrsjoen-meuble-lavabo-avec-tiroirs-vasque-blanc-blanc-marbre-s79629837/",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "d4024ad03b55",
+   "nom": "Robinet d'évier à encastrer en laiton Orveta",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 92.95,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "robinetterie",
+   "dimensions": null,
+   "matiere": [
+    "laiton"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-robinets/184165-robinet-d-evier-a-encastrer-en-laiton-orveta.html",
+   "verifie_le": "2026-11-01",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "ed3fecc7d444",
+   "nom": "PASO - table d'appoint - métal - L 48 x W 32,5 x H 62 cm - noyer",
+   "enseigne": "Pomax",
+   "marque": "EAST COAST INDUSTRIES",
+   "prix": 164,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "industriel",
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "table-basse",
+   "dimensions": null,
+   "matiere": [
+    "noyer",
+    "métal"
+   ],
+   "couleur": [],
+   "url": "https://pomax.com/fr/products/table-d-appoint-paso-metal-l-48-x-l-32-5-x-h-62-cm-noyer",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "b13db4806e3e",
+   "nom": "Etagère String Pocket - Noyer & Noir",
+   "enseigne": "Fleux",
+   "marque": "String Furniture",
+   "prix": 197,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "noyer"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://www.fleux.com/products/etagere-string-pocket-noyer-noir",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "7c8a183008d8",
+   "nom": "Table Basse LALINDE Ronde TECK - Sentou",
+   "enseigne": "Sentou",
+   "marque": null,
+   "prix": 325,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "table-basse",
+   "dimensions": null,
+   "matiere": [
+    "teck"
+   ],
+   "couleur": [],
+   "url": "https://sentou.fr/produit/table-basse-lalinde-ronde-teck/",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "84cdff430d2f",
+   "nom": "CAMOU - vase / photophore - verre - DIA 10 x H 12 cm - vert olive",
+   "enseigne": "Pomax",
+   "marque": "POSHE DALIAN CO LTD",
+   "prix": 30.99,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "verre"
+   ],
+   "couleur": [
+    "vert"
+   ],
+   "url": "https://pomax.com/fr/products/vase-photophore-camou-verre-dia-10-x-h-12-cm-vert-olive",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "857c9d2277a1",
+   "nom": "Firth Jute Rug - Dark Olive",
+   "enseigne": "Ferm Living",
+   "marque": null,
+   "prix": 735.2,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "mid-century",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": null,
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [],
+   "url": "https://fermliving.com/products/firth-jute-rug-dark-olive",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "fc97be4a271a",
+   "nom": "Miroir Organique - Noyer",
+   "enseigne": "Maison Sarah Lavoine",
+   "marque": null,
+   "prix": 650,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien",
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "noyer"
+   ],
+   "couleur": [],
+   "url": "https://www.maisonsarahlavoine.com/products/miroir-organique-noyer-naturel-75x50cm-naturel",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "9762ca4995db",
+   "nom": "Fauteuil de relaxation-Chaise de bureau Jaune moutarde Velours SHL2726",
+   "enseigne": "Vente-unique",
+   "marque": null,
+   "prix": 82.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "haussmannien",
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "fauteuil",
+   "dimensions": null,
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [
+    "moutarde"
+   ],
+   "url": "https://www.vente-unique.com/p/fauteuil-de-relaxation-chaise-de-bureau-jaune-moutarde-velours-shl2726",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "17c2a308ec6a",
+   "nom": "Abbeville - Applique murale en terrazzo",
+   "enseigne": "Drawer",
+   "marque": "Venture Home",
+   "prix": 59.9,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "terrazzo"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/applique-murale/610574-applique-murale-terrazzo-venture-home-abbeville.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "eb6c25ed7d29",
+   "nom": "Tête de lit vintage en rotin 2 places 155 x 140 cm",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 185,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "mid-century",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "chambre"
+   ],
+   "famille": "lit",
+   "dimensions": "155 × 140 cm",
+   "matiere": [
+    "rotin"
+   ],
+   "couleur": [],
+   "url": "https://www.selency.fr/p/QEGCDKGG/tete-de-lit-vintage-en-rotin-2-places-155-x-140-cm",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "ff4a1e6e6f51",
+   "nom": "ORBIT - vase / photophore - verre - DIA 13,5 x H 20 cm - vert olive",
+   "enseigne": "Pomax",
+   "marque": "BEIJING HOUSEWARES INDUSTRIES",
+   "prix": 36.5,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "verre"
+   ],
+   "couleur": [
+    "vert"
+   ],
+   "url": "https://pomax.com/fr/products/vase-photophore-orbit-en-verre-dia-13-5-x-h-20-cm-vert-olive",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "17b0ef57f616",
+   "nom": "Tapis Boujaad vintage rose 171 x 273 cm - Tapis en laine berbère fait main",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 650,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave",
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": "171 × 273 cm",
+   "matiere": [
+    "laine"
+   ],
+   "couleur": [
+    "rose"
+   ],
+   "url": "https://www.selency.fr/p/S9HRX5JB/tapis-boujaad-vintage-rose-171-x-273-cm-tapis-en-laine-berbere-fait-main",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "f0bb91418ebf",
+   "nom": "Miroir Ovo - Noyer",
+   "enseigne": "Maison Sarah Lavoine",
+   "marque": null,
+   "prix": 650,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien",
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "noyer"
+   ],
+   "couleur": [],
+   "url": "https://www.maisonsarahlavoine.com/products/miroir-ovo-noyer-naturel-75x57cm-naturel",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "44290efd20f8",
+   "nom": "Table à manger carrée de jardin en teck massif - Naturel",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 549,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "table-manger",
+   "dimensions": null,
+   "matiere": [
+    "teck"
+   ],
+   "couleur": [
+    "naturel"
+   ],
+   "url": "https://www.habitat.fr/p/calvia-calvia-table-carree-de-jardin-en-teck-massif-naturel",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "aac20e840a86",
+   "nom": "Tabouret en teck Lawas",
+   "enseigne": "Westwing",
+   "marque": "Westwing Collection",
+   "prix": 109,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "teck"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/tabouret-en-teck-lawas-55297.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "ab560dcb7be3",
+   "nom": "Table à manger ovale 220 cm PABLO placage noyer",
+   "enseigne": "Bobochic Paris",
+   "marque": null,
+   "prix": 799,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "mid-century",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "table-manger",
+   "dimensions": null,
+   "matiere": [
+    "noyer"
+   ],
+   "couleur": [],
+   "url": "https://bobochicparis.com/fr/tables-a-manger/19601-table-a-manger-ovale-220-cm-pablo-placage-noyer.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "bbc7b8832f74",
+   "nom": "Armoire murale rectangulaire 45x60 cm pour salle de bain en bois de teck avec miroir et coins arrondis Ian",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 204.95,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "haussmannien",
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": "45 × 60 cm",
+   "matiere": [
+    "teck"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-armoires-murales-de-salle-de-bain/193500-armoire-murale-de-salle-de-bain-en-bois-de-teck-ian-avec-miroir.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "87bc32314f05",
+   "nom": "Tabouret Chiesa velours vert olive brillant",
+   "enseigne": "The Socialite Family",
+   "marque": null,
+   "prix": 580,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien",
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [
+    "vert"
+   ],
+   "url": "https://www.thesocialitefamily.com/fr-fr/products/tabouret-chiesa-velours-vert-olive-brillant",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "d460dffabc96",
+   "nom": "Commode Essence - Noyer",
+   "enseigne": "Maison Sarah Lavoine",
+   "marque": null,
+   "prix": 2950,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "noyer"
+   ],
+   "couleur": [],
+   "url": "https://www.maisonsarahlavoine.com/products/commode-essence-placage-noyer-placagenoyer-mdrotin-100cm-placagenoyer-mdrotin",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "01ad41ed2ac2",
+   "nom": "Ensemble meuble de salle de bain suspendu 60x45 cm en bois de teck Jabari",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 244.95,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "salle-de-bain",
+   "dimensions": "60 × 45 cm",
+   "matiere": [
+    "teck"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-ensembles-de-meubles-de-salle-de-bain/178832-ensemble-de-meubles-de-salle-de-bain-en-bois-de-teck-jabari.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "d8dd7230574d",
+   "nom": "TÄNNFORSEN / VÄSTERSJÖN Meuble lavabo avec portes/vasque - blanc/brun motif noyer 62x49x79 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 350,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "salle-de-bain",
+   "dimensions": "62 × 49 × 79 cm",
+   "matiere": [
+    "noyer"
+   ],
+   "couleur": [
+    "blanc",
+    "marron"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/taennforsen-vaestersjoen-meuble-lavabo-avec-portes-vasque-blanc-brun-motif-noyer-s09629874/",
+   "verifie_le": "2026-10-29",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "bab25ad81062",
+   "nom": "TÄNNFORSEN / RUTSJÖN Meuble lavabo avec tiroirs/vasque - blanc/brun motif noyer 102x49x76 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 495,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "mid-century"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "salle-de-bain",
+   "dimensions": "102 × 49 × 76 cm",
+   "matiere": [
+    "noyer"
+   ],
+   "couleur": [
+    "blanc",
+    "marron"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/taennforsen-rutsjoen-meuble-lavabo-avec-tiroirs-vasque-blanc-brun-motif-noyer-s49629792/",
+   "verifie_le": "2026-10-31",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "268711e5b4e2",
+   "nom": "Table de bar ronde Ø60 cm en grès Xiren",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 174.95,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "table-basse",
+   "dimensions": "Ø 60 cm",
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-tables-basses-de-bar/111506-table-de-bar-ronde-en-gres-o60-cm-metallic-chack.html",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "a7ca8f81a1af",
+   "nom": "Pied de lampe de table en grès",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 35,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [],
+   "url": "https://www.selency.fr/p/VEKCA4XB/lampe-de-table-en-gres",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "5519e958d5be",
+   "nom": "Vases TERRA - Sentou collection céramique artisanale design",
+   "enseigne": "Sentou",
+   "marque": null,
+   "prix": 55,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [],
+   "url": "https://sentou.fr/produit/vases-terra/",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "84f298f86e6a",
+   "nom": "ECLIPSE - applique murale - grès - L 17,5 x W 6 x H 18 cm - blanc",
+   "enseigne": "Pomax",
+   "marque": "CHAOZHOU FEATUREX LIGHTINGS (FENGXIN)",
+   "prix": 123,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://pomax.com/products/eclipse-wandlamp-steengoed-l-17-5-x-w-6-x-h-18-cm-wit",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "54b4f38a62b3",
+   "nom": "Coussin Vice Versa - Velours Palazzo - Argile 40x60 cm",
+   "enseigne": "Fleux",
+   "marque": "Maison de Vacances",
+   "prix": 177.02,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "40 × 60 cm",
+   "matiere": [
+    "velours"
+   ],
+   "couleur": [],
+   "url": "https://www.fleux.com/products/coussin-vice-versa-velours-palazzo-argile-40x60-cm",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "f48753e4aad3",
+   "nom": "CORDOBA - lampe de table - terre cuite - DIA 25 x H 42 cm - noir",
+   "enseigne": "Pomax",
+   "marque": "COREP LIGHTING INDIA (P) LTD.",
+   "prix": 258,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "terre cuite"
+   ],
+   "couleur": [
+    "noir"
+   ],
+   "url": "https://pomax.com/fr/products/lampe-a-poser-cordoba-en-terre-cuite-diametre-25-x-h-42-cm-noire",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "7a960cb83073",
+   "nom": "Lampe de table en grès et raphia d'Arendal",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 50.95,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-lampe-de-table/175774-lampe-de-table-en-gres-et-raphia-arendal.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "022887f4515c",
+   "nom": "TOLKNING Tête de lit - fait main rotin",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 49.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "wabi-sabi",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "chambre"
+   ],
+   "famille": "lit",
+   "dimensions": null,
+   "matiere": [
+    "rotin"
+   ],
+   "couleur": [],
+   "url": "https://www.ikea.com/fr/fr/p/tolkning-tete-de-lit-fait-main-rotin-30512631/",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "210a6bb5ccc1",
+   "nom": "Parure en lin lavé - Gris ardoise",
+   "enseigne": "Tediber",
+   "marque": null,
+   "prix": 265,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "chambre"
+   ],
+   "famille": "lit",
+   "dimensions": null,
+   "matiere": [
+    "lin"
+   ],
+   "couleur": [
+    "gris"
+   ],
+   "url": "https://www.tediber.com/products/parure-de-lit-lin-gris-ardoise",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "fdc00f74e0f4",
+   "nom": "Petit vase design en grès Isold, haut. 22 cm",
+   "enseigne": "Westwing",
+   "marque": "Bloomingville",
+   "prix": 28.99,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/vase-gres-isold-135489.html",
+   "verifie_le": "2026-11-01",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "6bfd3bc071a9",
+   "nom": "Corvo - Vase en terre cuite 80x40cm",
+   "enseigne": "Drawer",
+   "marque": "House Nordic",
+   "prix": 229,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "80 × 40 cm",
+   "matiere": [
+    "terre cuite"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/soliflores-vases-design/608687-vase-en-terre-cuite-80x40cm-corvo.html",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "10190ff90656",
+   "nom": "Tapis berbère en laine pure, artisanal, 250x150 cm, fait main au Maroc",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 370,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": "250 × 150 cm",
+   "matiere": [
+    "laine"
+   ],
+   "couleur": [],
+   "url": "https://www.selency.fr/p/AXBC8U7S/tapis-berbere-en-laine-pure-artisanal-250x150-cm-fait-main-au-maroc",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "db9b117ee093",
+   "nom": "Table à manger ronde avec pied en métal - 4 couverts - Vert argile émaillé",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 499,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "industriel",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "table-manger",
+   "dimensions": null,
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [
+    "vert"
+   ],
+   "url": "https://www.habitat.fr/p/reki-table-a-manger-ronde-avec-pied-en-metal-vert-argile-emaille",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "08164313069d",
+   "nom": "Lampe de table Ximena en lin et terre cuite",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 58.95,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "japandi",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "terre cuite",
+    "lin"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-lampe-de-table/148611-lampe-de-table-ximena-en-lin-et-terre-cuite.html",
+   "verifie_le": "2026-11-02",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "5e818684d184",
+   "nom": "ECLIPSE - applique murale - grès - L 17,5 x W 6 x H 18 cm - blanc",
+   "enseigne": "Pomax",
+   "marque": "CHAOZHOU FEATUREX LIGHTINGS (FENGXIN)",
+   "prix": 123,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "japandi",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://pomax.com/fr/products/lampe-a-poser-eclipse-en-gres-l-17-5-x-l-6-x-h-18-cm-blanche",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "10612fe7928c",
+   "nom": "Tabouret artisanal en chêne Eton",
+   "enseigne": "Westwing",
+   "marque": "Gallery Direct",
+   "prix": 269,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "chêne"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/tabouret-en-bois-avec-jonc-tresse-a-la-main-eton-153057.html",
+   "verifie_le": "2026-11-01",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "1bb37678cb10",
+   "nom": "Applique murale Lisette - Grès minuit",
+   "enseigne": "Fleux",
+   "marque": "Enamoura",
+   "prix": 260,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "japandi",
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "céramique"
+   ],
+   "couleur": [],
+   "url": "https://www.fleux.com/products/applique-murale-lisette-gres-minuit",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "07cb322b5a1e",
+   "nom": "Enfilade artisanale en chêne massif Chandler",
+   "enseigne": "Westwing",
+   "marque": "Westwing Collection",
+   "prix": 1249,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "wabi-sabi"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "chêne"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/enfilade-artisanale-en-chene-massif-chandler-159331.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "e4f255e29c8d",
+   "nom": "Loveuse Louise rotin avec coussin blanc 115x91xH101cm",
+   "enseigne": "Gifi",
+   "marque": null,
+   "prix": 59,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "fauteuil",
+   "dimensions": null,
+   "matiere": [
+    "rotin"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.gifi.fr/exterieur-et-animalerie/mobilier-exterieur/transat-hamac-fauteuil-de-jardin/loveuse-louise-rotin-avec-coussin-blanc-115x91xh101cm/000000000000503687.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "96f5632da570",
+   "nom": "Abat-jour pour suspension extérieur en toile de jute Ø.70 cm Lumisky Freya Large",
+   "enseigne": "Castorama",
+   "marque": null,
+   "prix": 59.9,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [],
+   "url": "https://www.castorama.fr/abat-jour-pour-suspension-exterieur-en-toile-de-jute-70-cm-lumisky-freya-large/3666162008574_CAFR.prd",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "815881822675",
+   "nom": "Gesso Jute Rug - Terracotta/Off-White",
+   "enseigne": "Ferm Living",
+   "marque": null,
+   "prix": 239.2,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": null,
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [
+    "terracotta"
+   ],
+   "url": "https://fermliving.com/fr-fr/products/gesso-jute-rug-terracotta-off-white",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "c198cf5b0520",
+   "nom": "Coussin de sol carré en jute beige 50 x 50 cm Deko&Co",
+   "enseigne": "Castorama",
+   "marque": null,
+   "prix": 34.9,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "50 × 50 cm",
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [
+    "beige"
+   ],
+   "url": "https://www.castorama.fr/coussin-de-sol-carre-en-jute-beige-50-x-50-cm-deko-co/3663655061320_CAFR.prd",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "275c0f951c40",
+   "nom": "Eternal Round Jute Rug - Natural",
+   "enseigne": "Ferm Living",
+   "marque": null,
+   "prix": 287.2,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": null,
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [],
+   "url": "https://fermliving.com/fr-fr/products/eternal-round-jute-rug-small-natural",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "524d4d551dcb",
+   "nom": "Ensemble CAPUS avec buffet 140 cm + meuble TV 180 cm pin laqué terracotta",
+   "enseigne": "Bobochic Paris",
+   "marque": null,
+   "prix": 699,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "pin"
+   ],
+   "couleur": [
+    "terracotta"
+   ],
+   "url": "https://bobochicparis.com/fr/sejour-complet/19918-ensemble-capus-avec-buffet-140-cm-meuble-tv-180-cm-pin-laque-terracotta.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "54277dc36a6f",
+   "nom": "Console en bois et rotin Kanna 3 tiroirs 80x40xH80cm",
+   "enseigne": "Gifi",
+   "marque": null,
+   "prix": 89,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "rotin"
+   ],
+   "couleur": [],
+   "url": "https://www.gifi.fr/meuble-et-deco/meuble-d-interieur/commode-dressing-et-penderie/console-en-bois-et-rotin-kanna-3-tiroirs-80x40xh80cm/000000000000643425.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "470ebb3abf3e",
+   "nom": "Balance - Suspension en rotin ø35cm",
+   "enseigne": "Drawer",
+   "marque": "Zuiver",
+   "prix": 38.7,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "Ø 35 cm",
+   "matiere": [
+    "rotin"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/luminaire-suspension/608892-suspension-rotin-o35cm-zuiver-balance.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "555bd59a84c2",
+   "nom": "Gesso Jute Rug - Terracotta/Off-White",
+   "enseigne": "Ferm Living",
+   "marque": null,
+   "prix": 239.2,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": null,
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [
+    "terracotta"
+   ],
+   "url": "https://fermliving.com/products/gesso-jute-rug-terracotta-off-white",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "b88075486a0b",
+   "nom": "Coussin Jute coloris naturel Deco&Co L.50 x L.30 cm",
+   "enseigne": "Castorama",
+   "marque": null,
+   "prix": 21.9,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [
+    "naturel"
+   ],
+   "url": "https://www.castorama.fr/coussin-jute-coloris-naturel-deco-co-l-50-x-l-30-cm/3663655037141_CAFR.prd",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "18a4db2126e8",
+   "nom": "Eternal Round Jute Rug - Natural",
+   "enseigne": "Ferm Living",
+   "marque": null,
+   "prix": 287.2,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": null,
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [],
+   "url": "https://fermliving.com/products/eternal-round-jute-rug-small-natural",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "b70e072ac382",
+   "nom": "Petite suspension en jute RO, Ø 15 cm",
+   "enseigne": "Westwing",
+   "marque": "Made By Hand",
+   "prix": 269,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "Ø 15 cm",
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/petite-suspension-en-jute-ro-159287.html",
+   "verifie_le": "2026-10-30",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "ee95bd83c2ae",
+   "nom": "Paula - Chaise pliante en cannage et bois",
+   "enseigne": "Drawer",
+   "marque": null,
+   "prix": 75.91,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "cannage"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/chaise-design/611094-chaise-pliante-cannage-bois-drawer-paula.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "880a7dec8055",
+   "nom": "Table à manger en rotin",
+   "enseigne": "Selency",
+   "marque": null,
+   "prix": 130,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "table-manger",
+   "dimensions": null,
+   "matiere": [
+    "rotin"
+   ],
+   "couleur": [],
+   "url": "https://www.selency.fr/p/2F72VUEP/table-a-manger-en-rotin",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "641c9fdd1085",
+   "nom": "Abat-jour pour suspension extérieure en toile de jute E27 H.22 x Ø.75 cm Lumisky Havana",
+   "enseigne": "Castorama",
+   "marque": null,
+   "prix": 64.9,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [],
+   "url": "https://www.castorama.fr/abat-jour-pour-suspension-exterieure-en-toile-de-jute-e27-h-22-x-75-cm-lumisky-havana/3666162007744_CAFR.prd",
+   "verifie_le": "2026-11-01",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "1fb64b456c37",
+   "nom": "Chaise en corde tressée et chêne massif finition noyer avec accoudoirs - Naturel",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 249,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "mid-century",
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "chêne",
+    "noyer"
+   ],
+   "couleur": [
+    "naturel"
+   ],
+   "url": "https://www.habitat.fr/p/aaron-chaise-en-corde-tressee-et-noyer-massif-avec-accoudoirs-naturel",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "862435e0dd23",
+   "nom": "Ensemble ALBI avec buffet 186 cm + meuble TV 180 cm bois massif et rotin",
+   "enseigne": "Bobochic Paris",
+   "marque": null,
+   "prix": 699,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "rotin"
+   ],
+   "couleur": [],
+   "url": "https://bobochicparis.com/fr/sejour-complet/17049-ensemble-albi-avec-buffet-186-cm-meuble-tv-180-cm-bois-massif-et-rotin.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "30c28a500ad4",
+   "nom": "Petite suspension en jute RO, Ø 23 cm",
+   "enseigne": "Westwing",
+   "marque": "Made By Hand",
+   "prix": 299,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "boheme"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "Ø 23 cm",
+   "matiere": [
+    "jute"
+   ],
+   "couleur": [],
+   "url": "https://www.westwing.fr/petite-suspension-en-jute-ro-159283.html",
+   "verifie_le": "2026-10-29",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "a7e780b7105a",
+   "nom": "Canapé 2 places en tissu bouclette beige 142x85x73,5 cm",
+   "enseigne": "Vente-unique",
+   "marque": "Homcom",
+   "prix": 213.9,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "canape",
+   "dimensions": "142 × 85 × 73.5 cm",
+   "matiere": [
+    "bouclette"
+   ],
+   "couleur": [
+    "beige"
+   ],
+   "url": "https://www.vente-unique.com/p/canape-2-places-bouclette-beige-dim-142-x-85-x-73-5-cm-aucun-montage",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "51e7c89defb4",
+   "nom": "Vita - Étagère ovale en bois et métal 85x111cm",
+   "enseigne": "Drawer",
+   "marque": "House Nordic",
+   "prix": 79.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "industriel",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": "85 × 111 cm",
+   "matiere": [
+    "métal"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/etagere-sur-pieds/608673-etagere-ovale-bois-metal-85x111cm-vita-house-nordic.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "c46c761d7644",
+   "nom": "plaid 150 x 130 cm boucle vert",
+   "enseigne": "HEMA",
+   "marque": null,
+   "prix": 23.49,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "150 × 130 cm",
+   "matiere": [
+    "bouclette"
+   ],
+   "couleur": [
+    "vert"
+   ],
+   "url": "https://www.hema.com/fr-fr/maison-deco/deco/plaids/plaid-150-x-130-cm-boucle-vert-7326246.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "dd5565e950a8",
+   "nom": "Dase Sofa Center - Soft Bouclé - Natural",
+   "enseigne": "Ferm Living",
+   "marque": null,
+   "prix": 1085,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon"
+   ],
+   "famille": "canape",
+   "dimensions": null,
+   "matiere": [
+    "bouclette"
+   ],
+   "couleur": [],
+   "url": "https://fermliving.com/fr-fr/products/dase-sofa-center-soft-boucle-natural",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "caf66bddb019",
+   "nom": "Coussin Carino laine bouclette blanc crème",
+   "enseigne": "The Socialite Family",
+   "marque": null,
+   "prix": 110,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "bouclette",
+    "laine"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.thesocialitefamily.com/fr-fr/products/coussin-carino-laine-bouclette-blanc-creme",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "c279f00098ce",
+   "nom": "Tapis tufté en laine et bouclette - 160 x 230 cm - Ecru et Corail clair - Design by Floriane Jacques",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 499,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "tapis",
+   "dimensions": "160 × 230 cm",
+   "matiere": [
+    "bouclette",
+    "laine"
+   ],
+   "couleur": [
+    "écru"
+   ],
+   "url": "https://www.habitat.fr/p/candice-tapis-tufte-en-laine-et-bouclette-160-x-230-cm-ecru-et-corail-clair-design-by-floriane-jacques",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "f415acbfdd34",
+   "nom": "Fauteuil de salon pivotant ALYA en tissu bouclette beige",
+   "enseigne": "Vente-unique",
+   "marque": "Sia Home",
+   "prix": 129,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "fauteuil",
+   "dimensions": null,
+   "matiere": [
+    "bouclette"
+   ],
+   "couleur": [
+    "beige"
+   ],
+   "url": "https://www.vente-unique.com/p/fauteuil-de-salle-a-manger-velours-lisse-beige-alya",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "d94b3044a968",
+   "nom": "Applique mural Ø15 cm en travertin et bois Davise",
+   "enseigne": "Sklum",
+   "marque": "Sklum FR",
+   "prix": 40.95,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": "Ø 15 cm",
+   "matiere": [
+    "travertin"
+   ],
+   "couleur": [],
+   "url": "https://www.sklum.com/fr/acheter-mur/202965-applique-o15-cm-en-travertin-et-bois-davise.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "e9a68c098eb6",
+   "nom": "plaid 150 x 130 cm boucle vert",
+   "enseigne": "HEMA",
+   "marque": null,
+   "prix": 23.49,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": "150 × 130 cm",
+   "matiere": [
+    "bouclette"
+   ],
+   "couleur": [
+    "vert"
+   ],
+   "url": "https://www.hema.com/fr-fr/maison-deco/deco/plaids/plaid-150-x-130-cm-boucle-vert-7326221.html",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "c938a59c4d9d",
+   "nom": "Tête de lit en tissu bouclette 166 x 111 cm - Beige",
+   "enseigne": "Habitat",
+   "marque": null,
+   "prix": 349,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "chambre"
+   ],
+   "famille": "lit",
+   "dimensions": "166 × 111 cm",
+   "matiere": [
+    "bouclette"
+   ],
+   "couleur": [
+    "beige"
+   ],
+   "url": "https://www.habitat.fr/p/jupiter-ii-tete-de-lit-en-tissu-bouclette-166-x-111-cm-beige",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "f1b08fef83b6",
+   "nom": "Lit scandi - Beige Bouclé",
+   "enseigne": "Tediber",
+   "marque": null,
+   "prix": 619.9,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "chambre"
+   ],
+   "famille": "lit",
+   "dimensions": null,
+   "matiere": [
+    "bouclette"
+   ],
+   "couleur": [
+    "beige"
+   ],
+   "url": "https://www.tediber.com/products/lit-scandinave-beige-boucle",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "4326a7cce9d6",
+   "nom": "Coussin Bomboloni laine bouclette blanc crème",
+   "enseigne": "The Socialite Family",
+   "marque": null,
+   "prix": 120,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre"
+   ],
+   "famille": "deco",
+   "dimensions": null,
+   "matiere": [
+    "bouclette",
+    "laine"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.thesocialitefamily.com/fr-fr/products/coussin-bomboloni-laine-bouclette-blanc-creme",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "07e1d1fb97a6",
+   "nom": "Tabouret Eve Tissu Bouclette - Caramel",
+   "enseigne": "Fleux",
+   "marque": "Sélectionné par Fleux",
+   "prix": 79.95,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "bouclette"
+   ],
+   "couleur": [],
+   "url": "https://www.fleux.com/products/tabouret-eve-tissu-bouclette-caramel",
+   "verifie_le": "2026-11-04",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "05797c8862ab",
+   "nom": "Raya - Applique murale en bois et travertin",
+   "enseigne": "Drawer",
+   "marque": null,
+   "prix": 49.99,
+   "devise": "EUR",
+   "gamme": "petit",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "luminaire",
+   "dimensions": null,
+   "matiere": [
+    "travertin"
+   ],
+   "couleur": [],
+   "url": "https://www.drawer.fr/applique-murale/612373-applique-murale-bois-travertin-drawer-raya.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "fc3bc779c459",
+   "nom": "Boda Dining Chair - Upholstered Seat - Soft Bouclé - Dark Stained Beech/Natural",
+   "enseigne": "Ferm Living",
+   "marque": null,
+   "prix": 379,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "bouclette"
+   ],
+   "couleur": [],
+   "url": "https://fermliving.com/fr-fr/products/boda-dining-chair-upholstered-seat-soft-boucle-dark-stained-beech-natural",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "27a6ae3bf0b3",
+   "nom": "Meuble TV arrondi 2 portes 168 cm AMBOISE couleur chêne",
+   "enseigne": "Bobochic Paris",
+   "marque": null,
+   "prix": 359,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salon",
+    "chambre",
+    "salle-a-manger"
+   ],
+   "famille": "rangement",
+   "dimensions": null,
+   "matiere": [
+    "chêne"
+   ],
+   "couleur": [],
+   "url": "https://bobochicparis.com/fr/meubles-tv/18742-meuble-tv-arrondi-2-portes-168-cm-amboise-couleur-chene.html",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "2cd8ce2d17d0",
+   "nom": "Chaise de bar Classica laine bouclette blanc crème",
+   "enseigne": "The Socialite Family",
+   "marque": "COSVE",
+   "prix": 550,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "scandinave",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "chaise",
+   "dimensions": null,
+   "matiere": [
+    "bouclette",
+    "laine"
+   ],
+   "couleur": [
+    "blanc"
+   ],
+   "url": "https://www.thesocialitefamily.com/fr-fr/products/chaise-haute-classica-bouclette-blanc-creme",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "e5c75e4e3cd2",
+   "nom": "Table de salle à manger Carlotta Alta marbre marron et pieds noirs - 4 places - imparfaits",
+   "enseigne": "The Socialite Family",
+   "marque": null,
+   "prix": 3140,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-a-manger"
+   ],
+   "famille": "table-manger",
+   "dimensions": null,
+   "matiere": [
+    "marbre"
+   ],
+   "couleur": [
+    "noir",
+    "marron"
+   ],
+   "url": "https://www.thesocialitefamily.com/fr-fr/products/table-de-salle-a-manger-carlotta-alta-marbre-marron-et-pieds-noirs-4-places-imparfaits",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "7aba3d1abb0d",
+   "nom": "TÄNNFORSEN / VÄSTERSJÖN Meuble lavabo avec portes/vasque - blanc/noir marbré 62x49x79 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 350,
+   "devise": "EUR",
+   "gamme": "moyen",
+   "styles": [
+    "haussmannien",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "salle-de-bain",
+   "dimensions": "62 × 49 × 79 cm",
+   "matiere": [
+    "marbre"
+   ],
+   "couleur": [
+    "blanc",
+    "noir"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/taennforsen-vaestersjoen-meuble-lavabo-avec-portes-vasque-blanc-noir-marbre-s29629905/",
+   "verifie_le": "2026-10-29",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  },
+  {
+   "id": "cf7bf4947331",
+   "nom": "TÄNNFORSEN / ORRSJÖN Meuble lavabo avec tiroirs/vasque - blanc/noir marbré 122x49x71 cm",
+   "enseigne": "IKEA",
+   "marque": null,
+   "prix": 601,
+   "devise": "EUR",
+   "gamme": "haut",
+   "styles": [
+    "haussmannien",
+    "contemporain"
+   ],
+   "styles_deduits": true,
+   "piece": [
+    "salle-de-bain"
+   ],
+   "famille": "salle-de-bain",
+   "dimensions": "122 × 49 × 71 cm",
+   "matiere": [
+    "marbre"
+   ],
+   "couleur": [
+    "blanc",
+    "noir"
+   ],
+   "url": "https://www.ikea.com/fr/fr/p/taennforsen-orrsjoen-meuble-lavabo-avec-tiroirs-vasque-blanc-noir-marbre-s49629805/",
+   "verifie_le": "2026-11-03",
+   "disponibilite": "InStock",
+   "affiliate_url": ""
+  }
+ ]
+}
