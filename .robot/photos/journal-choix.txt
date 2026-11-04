@@ -1,0 +1,1 @@
+japandi: 6, scandinave: 6, industriel: 6, haussmannien: 6, mid-century: 6, wabi-sabi: 6, boheme: 6, contemporain: 6
