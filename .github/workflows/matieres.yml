@@ -1,0 +1,37 @@
+name: Matières 4K (Poly Haven, ambientCG)
+
+# Lancé à la main (ou par Claude) : « inventaire » produit des planches de candidates à regarder,
+# « telecharger » récupère les textures choisies (content/data/matieres-choix.json) en 4K avec leurs versions web.
+on:
+  workflow_dispatch:
+    inputs:
+      action: { description: "inventaire ou telecharger", type: choice, options: [inventaire, telecharger], default: inventaire }
+
+permissions:
+  contents: write
+
+jobs:
+  matieres:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - name: Robot matières
+        run: |
+          mkdir -p .robot/matieres
+          node --experimental-strip-types scripts/matieres-4k.ts --${{ inputs.action }} 2>&1 | tee .robot/matieres/journal.txt
+      - name: Déposer le résultat dans la branche robot/matieres (relecture avant intégration)
+        if: ${{ always() }}
+        run: |
+          git config user.name "piece-revee-robot"
+          git config user.email "robot@users.noreply.github.com"
+          git checkout -B robot/matieres
+          rm -rf .robot/tmp
+          git add -f .robot/matieres
+          [ -d public/matieres ] && git add public/matieres content/data/matieres-4k.json || true
+          git commit -m "matières : ${{ inputs.action }} ($(date +%Y-%m-%d))" || { echo "Rien de nouveau"; exit 0; }
+          git push -f origin robot/matieres
