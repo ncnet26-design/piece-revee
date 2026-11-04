@@ -87,6 +87,7 @@ async function telecharger() {
   const ph = (await (await get("https://api.polyhaven.com/assets?t=textures")).json()) as Record<string, PH>;
   const tmp = ".robot/tmp"; mkdirSync(tmp, { recursive: true });
   for (const [slug, ref] of Object.entries(choix)) {
+    if (existsSync(`public/matieres/${slug}/original-4k.webp`) && (credits[slug] as { id?: string } | undefined)?.id === ref.split(":")[1]) { console.log(`= ${slug} déjà présent`); continue; }
     try {
       const [src, id] = ref.split(":") as ["ph" | "acg", string];
       let buf: Buffer, credit: Record<string, unknown>;
@@ -99,7 +100,8 @@ async function telecharger() {
         const a = ph[id]!;
         credit = { source: "Poly Haven", id, nom: a.name, auteurs: Object.keys(a.authors), licence: "CC0 1.0", url: `https://polyhaven.com/a/${id}`, dimensions_m: a.dimensions?.map((d) => d / 1000) ?? null };
       } else {
-        const found = (await acgSearch(id)).find((a) => a.assetId === id);
+        const byId = `https://ambientcg.com/api/v2/full_json?id=${encodeURIComponent(id)}&include=downloadData`;
+        const found = (((await (await get(byId)).json()) as { foundAssets?: ACG[] }).foundAssets ?? []).find((a) => a.assetId === id);
         const dl = found?.downloadFolders?.default?.downloadFiletypeCategories?.zip?.downloads?.find((d) => d.attribute === "4K-JPG");
         if (!dl) throw new Error("pas de 4K-JPG");
         const zip = `${tmp}/${id}.zip`; writeFileSync(zip, Buffer.from(await (await get(dl.downloadLink)).arrayBuffer()));
