@@ -1,0 +1,40 @@
+name: Photos d'inspiration (Unsplash ou Pixabay)
+
+# « inventaire » : planches de candidates par style, à regarder avant tout choix.
+# « choix » : enregistre les photos retenues (content/data/inspirations-choix.json).
+on:
+  workflow_dispatch:
+    inputs:
+      action: { description: "inventaire ou choix", type: choice, options: [inventaire, choix], default: inventaire }
+
+permissions:
+  contents: write
+
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - name: Robot photos
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+        run: |
+          mkdir -p .robot/photos
+          git fetch origin robot/photos 2>/dev/null && git checkout origin/robot/photos -- .robot/photos 2>/dev/null || true
+          node --experimental-strip-types scripts/inspirations-photos.ts --${{ inputs.action }} 2>&1 | tee .robot/photos/journal-${{ inputs.action }}.txt
+      - name: Déposer dans robot/photos
+        if: ${{ always() }}
+        run: |
+          git config user.name "piece-revee-robot"
+          git config user.email "robot@users.noreply.github.com"
+          git checkout -B robot/photos
+          git add -f .robot/photos
+          [ -f content/data/inspirations-styles.json ] && git add content/data/inspirations-styles.json || true
+          git commit -m "photos : ${{ inputs.action }} ($(date +%Y-%m-%d))" || { echo "Rien de nouveau"; exit 0; }
+          for n in 1 2 3 4 5; do git push -f origin robot/photos && break; sleep $((n*10)); done
