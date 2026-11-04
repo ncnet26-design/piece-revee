@@ -29,4 +29,4 @@ jobs:
           git checkout -B robot/verification
           git add data/catalogue.json && git add -f .robot/verification.txt
           git commit -m "catalogue : vérification des pages produits ($(date +%Y-%m-%d))" || { echo "Rien de nouveau"; exit 0; }
-          git push -f origin robot/verification
+          for n in 1 2 3 4 5; do git push -f origin robot/verification && break; sleep $((n*10)); done
