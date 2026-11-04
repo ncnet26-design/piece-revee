@@ -45,6 +45,43 @@ export function Carte({ p, textures }: { p: ProduitAchetable; textures: Readonly
   );
 }
 
+/** Nomenclature d'architecte : une ligne par produit (code, dessin, désignation, finition, cote, enseigne, prix daté, lien). */
+function Nomenclature({ l, textures }: { l: ProduitAchetable[]; textures: ReadonlySet<string> }) {
+  return (
+    <div className="mt-6 overflow-x-auto">
+      <table className="w-full min-w-[860px] table-fixed border-collapse text-left text-[13px]">
+        <colgroup><col className="w-[6%]" /><col className="w-[9%]" /><col className="w-[29%]" /><col className="w-[13%]" /><col className="w-[12%]" /><col className="w-[11%]" /><col className="w-[9%]" /><col className="w-[11%]" /></colgroup>
+        <thead>
+          <tr className="border-b border-ink text-[10.5px] uppercase tracking-[.14em] text-muted">
+            <th scope="col" className="py-2 pr-3 font-semibold">Code</th><th scope="col" className="py-2 pr-3 font-semibold"><span className="sr-only">Dessin</span></th>
+            <th scope="col" className="py-2 pr-3 font-semibold">Désignation</th><th scope="col" className="py-2 pr-3 font-semibold">Finition</th>
+            <th scope="col" className="py-2 pr-3 font-semibold">Cotes</th><th scope="col" className="py-2 pr-3 font-semibold">Enseigne</th>
+            <th scope="col" className="py-2 pr-3 text-right font-semibold">Prix</th><th scope="col" className="py-2 font-semibold"><span className="sr-only">Lien</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {l.map((p) => { const v = vignette(p, textures); return (
+            <tr key={p.id} className="border-b border-line align-middle">
+              <td className="py-2 pr-3 font-mono text-[11px] text-muted">{p.id.slice(0, 4).toUpperCase()}</td>
+              <td className="py-2 pr-3"><span className="flex items-center gap-2"><Elevation famille={p.famille} nom={p.nom} dimensions={null} className="h-9 w-14 text-ink" />
+                <span className="relative block size-6 shrink-0 overflow-hidden rounded-full ring-1 ring-black/10" style={{ background: v.teinte }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  {v.texture && <img src={`/matieres/${v.texture}/640.webp`} alt="" loading="lazy" className="size-full object-cover" />}
+                </span></span></td>
+              <td className="max-w-[320px] py-2 pr-3"><span className="line-clamp-2">{p.nom}</span></td>
+              <td className="py-2 pr-3 text-muted">{[...p.matiere, ...p.couleur].slice(0, 3).join(", ") || "—"}</td>
+              <td className="whitespace-nowrap py-2 pr-3 font-mono text-[11px] text-muted">{p.dimensions ?? "—"}</td>
+              <td className="py-2 pr-3">{p.enseigne}</td>
+              <td className="whitespace-nowrap py-2 pr-3 text-right"><span className="font-semibold tabular-nums">{prix(p.prix)}</span><br /><span className="text-[10.5px] text-muted">le {date(p.verifie_le)}</span></td>
+              <td className="py-2"><a href={p.url} target="_blank" rel="noopener noreferrer nofollow" className="underline decoration-[var(--bronze)] underline-offset-4">Voir chez {p.enseigne}<span className="sr-only"> : {p.nom} (nouvel onglet)</span></a></td>
+            </tr>
+          ); })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function Puces<T extends string>({ label, valeurs, noms, actif, choisir }: { label: string; valeurs: readonly T[]; noms: Record<T, string> | ((v: T) => string); actif: T | ""; choisir: (v: T | "") => void }) {
   const nom = (v: T) => (typeof noms === "function" ? noms(v) : noms[v]);
   return (
@@ -67,6 +104,7 @@ function Puces<T extends string>({ label, valeurs, noms, actif, choisir }: { lab
  */
 export function CatalogueAchetable({ produits, textures, matieres }: { produits: ProduitAchetable[]; textures: string[]; matieres: string[] }) {
   const [f, setF] = useState<Filtres>(VIDE);
+  const [vue, setVue] = useState<"planche" | "nomenclature">("planche");
   const dispo = useMemo(() => new Set(textures), [textures]);
   useEffect(() => { const a = lireAdresse(); if (a.style || a.piece || a.gamme || a.matiere) setTimeout(() => setF(a), 0); }, []);
   useEffect(() => {
@@ -85,7 +123,12 @@ export function CatalogueAchetable({ produits, textures, matieres }: { produits:
         <Puces label="Style" valeurs={STYLES} noms={NOM_STYLE} actif={f.style} choisir={set("style")} />
         <Puces label="Matière" valeurs={matieres} noms={(m: string) => m.charAt(0).toUpperCase() + m.slice(1)} actif={f.matiere} choisir={set("matiere")} />
       </div>
-      <p className="mt-4 text-[13px] text-muted" aria-live="polite">{liste.length} produit{liste.length > 1 ? "s" : ""}{f.style ? ` · ${NOM_STYLE[f.style]}` : ""}{f.piece ? ` · ${NOM_PIECE[f.piece]}` : ""}{f.matiere ? ` · ${f.matiere}` : ""}</p>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+      <p className="m-0 text-[13px] text-muted" aria-live="polite">{liste.length} produit{liste.length > 1 ? "s" : ""}{f.style ? ` · ${NOM_STYLE[f.style]}` : ""}{f.piece ? ` · ${NOM_PIECE[f.piece]}` : ""}{f.matiere ? ` · ${f.matiere}` : ""}</p>
+        <div className="seg" role="group" aria-label="Présentation">
+          {(["planche", "nomenclature"] as const).map((v) => <button key={v} type="button" aria-pressed={vue === v} className={vue === v ? "on" : ""} onClick={() => setVue(v)}>{v === "planche" ? "Planche" : "Nomenclature"}</button>)}
+        </div>
+      </div>
       {liste.length === 0 && <p className="mt-16 text-center text-muted">Aucun produit pour cette combinaison. Retirez un filtre.</p>}
       {gammes.map((g) => {
         const l = liste.filter((p) => p.gamme === g);
@@ -96,9 +139,11 @@ export function CatalogueAchetable({ produits, textures, matieres }: { produits:
               <h2 id={`g-${g}`} className="text-[clamp(28px,3.2vw,44px)]">{NOM_GAMME[g]}</h2>
               <p className="text-[13px] text-muted">{l.length} produit{l.length > 1 ? "s" : ""} · {prix(Math.min(...l.map((p) => p.prix)))} à {prix(Math.max(...l.map((p) => p.prix)))}</p>
             </div>
-            <ul className="mt-8 grid list-none grid-cols-2 gap-x-4 gap-y-12 p-0 sm:grid-cols-3 lg:grid-cols-4">
-              {l.map((p) => <Carte key={p.id} p={p} textures={dispo} />)}
-            </ul>
+            {vue === "planche" ? (
+              <ul className="mt-8 grid list-none grid-cols-2 gap-x-4 gap-y-12 p-0 sm:grid-cols-3 lg:grid-cols-4">
+                {l.map((p) => <Carte key={p.id} p={p} textures={dispo} />)}
+              </ul>
+            ) : <Nomenclature l={l} textures={dispo} />}
           </section>
         );
       })}
