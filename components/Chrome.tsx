@@ -14,8 +14,8 @@ import { IconGrid, IconHeart, IconHouse, IconPhoto, IconSwatches, IconTheme, Ico
 const NAV = [
   { href: "/transformer/", label: "Transformer ma pièce" },
   { href: "/galerie/", label: "Inspirations" },
-  { href: "/boutique/", label: "Boutique" },
-  { href: "/showroom/", label: "Matières" },
+  { href: "/catalogue/", label: "Catalogue" },
+  { href: "/matieres/", label: "Matières" },
   { href: "/studio/", label: "Studio 3D" },
 ];
 const EXPLORE = ["/explorer/", "/matieres/", "/accords/", "/mobilier/", "/lieux/", "/plantes/", "/guides/", "/styles/"];
@@ -87,7 +87,7 @@ export function TabBar() {
   const items = [
     { href: "/transformer/", label: "Transformer", Icon: IconSwatches, active: path.startsWith("/transformer") },
     { href: "/galerie/", label: "Inspirations", Icon: IconPhoto, active: path.startsWith("/galerie") },
-    { href: "/boutique/", label: "Boutique", Icon: IconGrid, active: path.startsWith("/boutique") || path.startsWith("/showroom") || EXPLORE.some((p) => path.startsWith(p)) },
+    { href: "/catalogue/", label: "Catalogue", Icon: IconGrid, active: path.startsWith("/catalogue") || path.startsWith("/boutique") || path.startsWith("/showroom") || EXPLORE.some((p) => path.startsWith(p)) },
     { href: "/studio/", label: "Studio 3D", Icon: IconHouse, active: path.startsWith("/studio") || path.startsWith("/concept") || path.startsWith("/visite-3d") || path.startsWith("/planche") },
   ];
   return (
@@ -141,7 +141,7 @@ export function CookieBanner() {
 
 export function Footer() {
   const cols = [
-    { title: "Créer", links: [["Transformer ma pièce", "/transformer/"], ["Inspirations", "/galerie/"], ["Boutique", "/boutique/"], ["Matières", "/showroom/"], ["Studio 3D", "/studio/"], ["Trouver mon style", "/quiz/"], ["Tarifs", "/tarifs/"]] },
+    { title: "Créer", links: [["Transformer ma pièce", "/transformer/"], ["Inspirations", "/galerie/"], ["Catalogue", "/catalogue/"], ["Matières", "/matieres/"], ["Toutes les enseignes", "/boutique/"], ["Studio 3D", "/studio/"], ["Trouver mon style", "/quiz/"], ["Tarifs", "/tarifs/"]] },
     { title: "Autres outils", links: [["Le parcours en 3D", "/experience/"], ["Planches de matières", "/planche/"], ["Concept éditorial", "/concept/"], ["Maquette d'appartement 3D", "/visite-3d/"], ["Mon projet d'étude", "/projet/"], ["Ma maison", "/maison/"]] },
     { title: "Explorer", links: [["Tout explorer", "/explorer/"], ["Matériauthèque", "/matieres/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
     { title: "Informations", links: [["Mentions légales", "/legal/mentions-legales/"], ["CGU", "/legal/cgu/"], ["CGV", "/legal/cgv/"], ["Confidentialité", "/legal/confidentialite/"], ["Cookies", "/legal/cookies/"], ["Liens affiliés", "/legal/affiliation/"]] },

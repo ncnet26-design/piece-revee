@@ -2,6 +2,9 @@ import Link from "next/link";
 import bank from "@/content/data/inspiration-bank.json";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { ShopTheLook } from "@/components/ShopTheLook";
+import { ChoixPieceStyle, type Apercu } from "@/components/home/ChoixPieceStyle";
+import catalogue from "@/data/catalogue.json";
+import { GAMMES, PIECES, STYLES as STYLES_CATALOGUE, type ProduitAchetable } from "@/lib/catalogue-achetable";
 import { meta } from "@/lib/seo";
 import { Photo } from "@/components/Photo";
 import matieres4k from "@/content/data/matieres-4k.json";
@@ -16,9 +19,26 @@ const MATIERES = (["travertin", "noyer", "marbre-carrare", "enduit-chaux", "terr
 const PORTES: Array<[string, string, string, string]> = [
   ["/transformer/", "Transformer ma pièce", "Votre photo, vos inspirations, votre pièce transformée.", "/editorial/ia/salon-velours-chene-640.webp"],
   ["/galerie/", "Inspirations", "Douze styles, onze espaces, treize matières.", "/editorial/ia/japandi-essai-640.webp"],
-  ["/boutique/", "La boutique", "Des milliers de pièces réelles, relevées chaque nuit.", "/editorial/ia/luxe-discret-640.webp"],
+  ["/catalogue/", "Le catalogue", "Votre style, à votre budget : des pièces réelles, vérifiées.", "/editorial/ia/luxe-discret-640.webp"],
   ["/matieres/", "Matières", "Bois, pierres, enduits, tissus : de vraies textures, à l'échelle.", "/matieres/travertin/1280.webp"],
 ];
+
+/** Aperçu du catalogue vérifié par pièce et style : 3 pièces par gamme (calculé à la publication). */
+const PRIORITE = ["canape", "lit", "table-manger", "fauteuil", "table-basse", "chaise", "rangement", "tapis", "luminaire", "lampadaire", "salle-de-bain", "robinetterie", "rideau", "deco"];
+const APERCU: Apercu = (() => {
+  const l = (catalogue as { produits: ProduitAchetable[] }).produits, out: Apercu = {};
+  for (const p of PIECES) for (const st of STYLES_CATALOGUE) {
+    const k = `${p}|${st}`; out[k] = {};
+    for (const g of GAMMES) {
+      const c = l.filter((x) => x.piece.includes(p) && x.styles.includes(st) && x.gamme === g).sort((a, b) => a.prix - b.prix);
+      // Les grandes pièces d'abord (canapé, lit, table…), une par type de meuble.
+      const rang = (f: string) => { const i = PRIORITE.indexOf(f); return i < 0 ? 99 : i; };
+      const vus = new Set<string>(), ex = [...c].sort((a, b) => rang(a.famille) - rang(b.famille)).filter((x) => !vus.has(x.famille) && vus.add(x.famille)).slice(0, 3);
+      if (c.length) out[k]![g] = { n: c.length, min: c[0]!.prix, exemples: ex.map((x) => ({ nom: x.nom, enseigne: x.enseigne, prix: x.prix, url: x.url })) };
+    }
+  }
+  return out;
+})();
 
 /** Accueil : une proposition claire, des images d'abord, chaque section mène à une action réelle. */
 export default function Home() {
@@ -59,6 +79,13 @@ export default function Home() {
             </li>
           ))}
         </ul>
+      </section>
+
+      {/* ——— Le concept en un geste : pièce + style → pièces réelles par budget ——— */}
+      <section aria-labelledby="h-choix" className="border-t border-line py-20 sm:py-24">
+        <p className="eyebrow">Votre pièce, votre style, votre budget</p>
+        <h2 id="h-choix" className="mt-4 max-w-[20ch] text-[clamp(40px,5vw,72px)]">Refaire son intérieur, <em>à chaque budget.</em></h2>
+        <div className="mt-12"><ChoixPieceStyle apercu={APERCU} /></div>
       </section>
 
       {/* ——— Trois gestes ——— */}
@@ -144,26 +171,12 @@ export default function Home() {
         <p className="mt-6 text-[12px] text-muted">Textures photographiées en 4K, libres de droits (Poly Haven, ambientCG). Chacune renvoie à des pièces en vente, du petit budget au haut de gamme.</p>
       </section>
 
-      {/* ——— Références ——— */}
-      <section aria-labelledby="h-ref" className="py-20">
-        <p className="eyebrow">Références</p>
-        <h2 id="h-ref" className="mt-4 max-w-[18ch] text-[clamp(36px,4.4vw,60px)]">Apprendre des maîtres, <em>pas les copier.</em></h2>
-        <div className="mt-12 grid gap-6 md:grid-cols-[1.4fr_1fr]">
-          {([["villas-14", "Le séjour vitré"], ["villas-16", "La bibliothèque"]] as const).map(([id, t]) => (
-            <figure key={id} className="m-0">
-              <Photo src={`/inspirations/${id}.webp`} alt={`Villa Tugendhat : ${t.toLowerCase()}`} sizes="(min-width:768px) 55vw, 100vw" className="aspect-[4/3] w-full object-cover" />
-              <figcaption className="mt-3 flex justify-between gap-4 text-[12px] text-muted"><span>Villa Tugendhat — {t}</span><span>Mike Duchstein · CC BY-SA 4.0</span></figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-
       {/* ——— Appel final ——— */}
       <section className="border-t border-line py-24 text-center">
         <h2 className="mx-auto max-w-[16ch] text-[clamp(40px,5.6vw,80px)]">Votre pièce, <em>en vrai.</em></h2>
         <div className="mt-9 flex flex-wrap justify-center gap-3">
           <Link href="/transformer/" className="btn btn-primary btn-lg">Transformer ma pièce</Link>
-          <Link href="/showroom/" className="btn btn-lg btn-ghost">Voir les matières</Link>
+          <Link href="/catalogue/" className="btn btn-lg btn-ghost">Ouvrir le catalogue</Link>
         </div>
       </section>
     </>
