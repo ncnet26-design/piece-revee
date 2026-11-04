@@ -36,6 +36,7 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 | Sol « avant » plus beau que prévu (parquet stratifié) | Sol gris uni | L'état « avant » doit être clairement terne pour que la transformation se voie |
 | Texte posé sur les zones claires de la 3D | Décalage de l'image vers la droite sur ordinateur, vers le haut sur téléphone | Toujours vérifier la lisibilité sur captures aux étapes clés |
 | Rendu 3D en continu : 134 s de blocage mesurés (Lighthouse mobile) | Redessin seulement pendant le défilement ou l'animation, démarrage au premier geste sur téléphone, shaders préparés en parallèle | Ne jamais laisser une boucle de rendu tourner pour rien |
+| Image d'ouverture publiée sans l'avoir regardée : capturée au début de l'animation, scène presque vide | Retirée aussitôt, ancienne photo remise | Ouvrir et regarder chaque image avant de la publier, sans exception |
 | Images de 2400 px chargées sur téléphone (accueil à 42/100) | Composant `Photo` avec tailles 640/1024/1600 | Toujours `srcset` + `sizes` |
 
 ## Code et outils

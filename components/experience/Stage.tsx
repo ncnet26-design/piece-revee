@@ -4,8 +4,8 @@ import { createContext, useContext, useEffect, useRef, useState, type ReactNode 
 import { CHAPITRES, CHOIX_DEPART, FINITIONS, POINTS, pointSelon, type Choix, type Partie } from "./chapitres";
 import type { StageHandle } from "./scene";
 
-/** Images de repli (sans 3D) : la pièce rêvée rendue en 3D pour l'ouverture, puis des images générées par IA, étiquetées. */
-const REPLI = ["/editorial/experience/ouverture", "/editorial/ia/accueil-table", "/editorial/ia/japandi-essai", "/editorial/ia/matiere-travertin", "/editorial/ia/salon-boucle-noyer", "/editorial/ia/salon-velours-chene"];
+/** Images de repli (sans 3D) : une par chapitre, générées par IA et étiquetées. */
+const REPLI = ["/editorial/ia/art-deco-contemporain", "/editorial/ia/accueil-table", "/editorial/ia/japandi-essai", "/editorial/ia/matiere-travertin", "/editorial/ia/salon-boucle-noyer", "/editorial/ia/salon-velours-chene"];
 
 const progressOf = (el: HTMLElement | null) => {
   if (!el) return 0;
@@ -93,15 +93,9 @@ export function Stage({ chapters }: { chapters: ReactNode[] }) {
         <div className="sticky top-0 h-[100svh] overflow-hidden">
           {/* Repli : images fixes, une par chapitre */}
           <div aria-hidden className={`absolute inset-0 transition-opacity duration-700 ${mode === "3d" ? "opacity-0" : "opacity-100"}`}>
-            {REPLI.map((n, i) => i === 0 ? (
-              <picture key={n}>
-                <source media="(max-aspect-ratio: 1/1)" srcSet={`${n}-mobile.webp`} />
-                <img src={`${n}.webp`} alt="" fetchPriority="high" decoding="async"
-                  className={`absolute inset-0 size-full object-cover transition-opacity duration-700 motion-reduce:transition-none ${i === chap ? "opacity-100" : "opacity-0"}`} />
-              </picture>
-            ) : (
+            {REPLI.map((n, i) => (
               // eslint-disable-next-line @next/next/no-img-element
-              <img key={n} src={`${n}-1024.webp`} alt="" loading="lazy" decoding="async"
+              <img key={n} src={`${n}-1024.webp`} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async"
                 className={`absolute inset-0 size-full object-cover transition-opacity duration-700 motion-reduce:transition-none ${i === chap ? "opacity-60" : "opacity-0"}`} />
             ))}
           </div>
@@ -143,7 +137,7 @@ export function Stage({ chapters }: { chapters: ReactNode[] }) {
             Faites défiler <span aria-hidden className="block h-9 w-px overflow-hidden bg-white/20"><span className="block h-1/2 w-px bg-[#C99467]" /></span>
           </a>
           <div aria-hidden className="absolute inset-x-0 bottom-0 h-[2px] bg-white/10"><div ref={bar} className="h-full origin-left bg-[#C99467]" style={{ transform: "scaleX(0)" }} /></div>
-          <p className="absolute bottom-4 right-5 m-0 text-[10.5px] text-[#F2EEE6]/55">{mode === "3d" || chap === 0 ? "Scène 3D · textures CC0 · images d'inspiration générées par IA" : "Images générées par IA"}</p>
+          <p className="absolute bottom-4 right-5 m-0 text-[10.5px] text-[#F2EEE6]/55">{mode === "3d" ? "Scène 3D · textures CC0 · images d'inspiration générées par IA" : "Images générées par IA"}</p>
         </div>
 
         {/* Les chapitres défilent par-dessus la scène */}
