@@ -23,10 +23,14 @@ export const RECHERCHES: Record<string, string[]> = {
   industriel: ["industrial loft living room brick", "loft interior steel windows", "industrial apartment concrete"],
   haussmannien: ["parisian apartment interior moulding", "paris apartment herringbone parquet fireplace", "haussmann apartment living room"],
   "mid-century": ["mid century modern living room walnut", "mid century interior teak sideboard", "mid century modern lounge"],
-  "wabi-sabi": ["wabi sabi interior", "lime plaster interior minimal", "wabi sabi bedroom linen"],
+  "wabi-sabi": ["wabi sabi interior", "lime plaster interior minimal", "wabi sabi bedroom linen", "wabi sabi living room", "limewash wall living room", "earthy minimalist interior plaster", "japanese wabi sabi room", "raw plaster wall bedroom"],
   boheme: ["bohemian living room rattan plants", "boho interior jute rug", "rattan chair living room plants"],
-  contemporain: ["contemporary living room travertine", "modern luxury living room curved sofa", "minimalist contemporary interior stone"],
+  contemporain: ["contemporary living room travertine", "modern luxury living room curved sofa", "minimalist contemporary interior stone", "travertine coffee table living room", "modern living room stone fireplace", "contemporary apartment living room"],
 };
+
+/** Auteurs qui publient des rendus 3D ou des images générées : écartés (on veut de vraies photos). */
+const RENDUS = /render|deconovo|harlynking|curaits|3d|cgi|visuali[sz]/i;
+const SEULEMENT = process.argv.find((a) => a.startsWith("--styles="))?.slice(9).split(",").filter(Boolean);
 
 type Cand = { ref: string; w: number; h: number; auteur: string; auteur_url: string; page: string; thumb: string; full: string; download_location?: string; alt: string };
 const get = async (u: string, h: Record<string, string> = {}) => { const r = await fetch(u, { headers: { "user-agent": "PieceRevee-Inspirations/1.0", ...h }, signal: AbortSignal.timeout(30000) }); if (!r.ok) throw new Error(`${r.status} ${u.split("?")[0]}`); return r; };
@@ -45,14 +49,17 @@ async function inventaire() {
   const source = U ? "unsplash" : P ? "pixabay" : null;
   console.log(`Clés présentes : Unsplash ${U ? "oui" : "non"}, Pixabay ${P ? "oui" : "non"} → source : ${source ?? "aucune"}`);
   if (!source) { writeFileSync(`${OUT}/candidats.json`, "{}"); return; }
-  const tout: Record<string, Cand[]> = {};
+  let tout: Record<string, Cand[]> = {};
+  if (SEULEMENT) { try { tout = (JSON.parse(readFileSync(`${OUT}/candidats.json`, "utf8")) as { styles: Record<string, Cand[]> }).styles; } catch { /* premier passage */ } }
   for (const [style, qs] of Object.entries(RECHERCHES)) {
-    const vus = new Set<string>(), l: Cand[] = [];
+    if (SEULEMENT && !SEULEMENT.includes(style)) continue;
+    // Passage ciblé : on garde les anciennes candidates en tête (numéros inchangés) et on ajoute les nouvelles.
+    const l: Cand[] = SEULEMENT ? [...(tout[style] ?? [])] : [], vus = new Set<string>(l.map((c) => c.ref));
     for (const q of qs) {
-      try { for (const c of await (source === "unsplash" ? unsplash(q) : pixabay(q))) if (!vus.has(c.ref) && c.w >= 2000) { vus.add(c.ref); l.push(c); } }
+      try { for (const c of await (source === "unsplash" ? unsplash(q) : pixabay(q))) if (!vus.has(c.ref) && c.w >= 2000 && !RENDUS.test(`${c.auteur} ${c.alt}`)) { vus.add(c.ref); l.push(c); } }
       catch (e) { console.log(`✗ ${style} « ${q} » : ${String(e)}`); }
     }
-    tout[style] = l.slice(0, 48);
+    tout[style] = l.slice(0, SEULEMENT ? 112 : 48);
     // Planche numérotée (le numéro sert à choisir).
     const C = 300, R = 210, COLS = 8, tiles: sharp.OverlayOptions[] = [];
     await Promise.all(tout[style]!.map(async (c, i) => {
@@ -72,12 +79,13 @@ async function inventaire() {
 
 async function choix() {
   const c = JSON.parse(readFileSync(`${OUT}/candidats.json`, "utf8")) as { source: string; styles: Record<string, Cand[]> };
-  const ch = JSON.parse(readFileSync("content/data/inspirations-choix.json", "utf8")) as Record<string, number[]>;
+  const ch = JSON.parse(readFileSync("content/data/inspirations-choix.json", "utf8")) as Record<string, string[]>;
+  const tous = new Map(Object.values(c.styles).flat().map((x) => [x.ref, x]));
   const out: Record<string, unknown[]> = {};
-  for (const [style, nums] of Object.entries(ch)) {
+  for (const [style, refs] of Object.entries(ch)) {
     out[style] = [];
-    for (const n of nums) {
-      const x = c.styles[style]?.[n]; if (!x) continue;
+    for (const ref of refs) {
+      const x = tous.get(ref); if (!x) { console.log(`✗ ${style} : ${ref} introuvable dans les candidates`); continue; }
       // Règle Unsplash : signaler l'utilisation de la photo.
       if (x.download_location && U) { try { await get(x.download_location, { Authorization: `Client-ID ${U}` }); } catch { /* sans effet sur l'affichage */ } }
       out[style]!.push({ ref: x.ref, src: x.full, largeur: x.w, hauteur: x.h, auteur: x.auteur, auteur_url: x.auteur_url, page: x.page, alt: x.alt, source: c.source });

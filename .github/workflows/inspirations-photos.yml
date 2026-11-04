@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       action: { description: "inventaire ou choix", type: choice, options: [inventaire, choix], default: inventaire }
+      styles: { description: "styles à refaire (inventaire), séparés par des virgules ; vide = tous", type: string, default: "" }
 
 permissions:
   contents: write
@@ -27,7 +28,7 @@ jobs:
         run: |
           mkdir -p .robot/photos
           git fetch origin robot/photos 2>/dev/null && git checkout origin/robot/photos -- .robot/photos 2>/dev/null || true
-          node --experimental-strip-types scripts/inspirations-photos.ts --${{ inputs.action }} 2>&1 | tee .robot/photos/journal-${{ inputs.action }}.txt
+          node --experimental-strip-types scripts/inspirations-photos.ts --${{ inputs.action }} ${{ inputs.styles && format('--styles={0}', inputs.styles) || '' }} 2>&1 | tee .robot/photos/journal-${{ inputs.action }}.txt
       - name: Déposer dans robot/photos
         if: ${{ always() }}
         run: |
