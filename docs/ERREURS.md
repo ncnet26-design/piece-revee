@@ -10,6 +10,11 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 - Ne rien inventer : produits, prix, avis, chiffres, promesses. Un prix a toujours sa date de relevé ; une image IA est signalée.
 - Avant « terminé » : typecheck, lint, tests, build, tests de parcours, captures ordinateur et mobile.
 
+## Façon de décider
+| Erreur | Correction | Règle |
+|---|---|---|
+| Après « les images sont moches », j'ai enchaîné des changements visuels (meubles 3D importés) sans valider la direction | Changement annulé avant publication | Quand le propriétaire n'est pas satisfait : m'arrêter, proposer 2 ou 3 directions avec un aperçu, attendre son choix avant de toucher au visuel |
+
 ## Contenu et honnêteté
 | Erreur | Correction | Règle |
 |---|---|---|
