@@ -56,6 +56,9 @@ export function dimensionsDuNom(nom: string): string | null {
   return d ? `Ø ${d[1]} cm` : null;
 }
 
+/** Matières de la matériauthèque (libellés du champ « matiere »). */
+export const MATIERES_CLES = ["chêne", "noyer", "travertin", "marbre", "terrazzo", "béton", "lin", "bouclette", "velours", "cuir", "rotin", "céramique", "terre cuite", "pierre"];
+
 export interface ProduitAchetable {
   id: string; nom: string; enseigne: string; marque: string | null; prix: number; devise: string; gamme: Gamme;
   styles: Style[]; styles_deduits: true; piece: Piece[]; famille: Famille; dimensions: string | null; matiere: string[]; couleur: string[];
@@ -119,6 +122,12 @@ export function composer(parCase = 2) {
       if (!best) break;
       pris.set(best.id, best); familles.add(best.famille); parEnseigne.set(best.enseigne, (parEnseigne.get(best.enseigne) ?? 0) + 1);
     }
+  }
+  // Chaque matière de la matériauthèque : au moins un produit par gamme (petit, moyen, haut de gamme).
+  for (const m of MATIERES_CLES) for (const g of ["petit", "moyen", "haut"] as Gamme[]) {
+    if ([...pris.values()].some((p) => p.gamme === g && p.matiere.includes(m))) continue;
+    const best = candidats.filter((p) => p.gamme === g && p.matiere.includes(m) && !pris.has(p.id)).sort((a, b) => score(b) - score(a) || a.prix - b.prix)[0];
+    if (best) { pris.set(best.id, best); parEnseigne.set(best.enseigne, (parEnseigne.get(best.enseigne) ?? 0) + 1); }
   }
   return { produits: [...pris.values()], candidats: candidats.length };
 }

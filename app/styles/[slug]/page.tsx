@@ -7,6 +7,7 @@ import { Scene } from "@/components/Visual";
 import { AskCamille } from "@/components/DetailBits";
 import { MaterialCard } from "@/components/cards";
 import { meta } from "@/lib/seo";
+import { ProduitsDuStyle } from "@/components/catalogue/ProduitsDuStyle";
 import { absoluteUrl } from "@/lib/site";
 
 export const dynamicParams = false;
@@ -47,6 +48,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       <section className="section"><h2>Ses matières</h2><div className="grid-cards mt-4">{mats.map((m) => <MaterialCard key={m.id} m={m} />)}</div></section>
       <section className="section"><h2>Pièce par pièce</h2><div className="mt-3 flex flex-wrap gap-1.5">{spaces.map((g) => <Link key={g.id} className="chip" href={`/galerie/?g=${g.id}`}>{g.space}</Link>)}</div></section>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "Article", headline: `Style ${s.name}`, description: s.summary, inLanguage: "fr-FR", url: absoluteUrl(`/styles/${s.slug}/`) }} />
+      <ProduitsDuStyle styleId={s.id} />
     </article>
   );
 }
