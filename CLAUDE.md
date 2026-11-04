@@ -14,6 +14,7 @@ Site d'architecture intérieure et de décoration (Next.js 16 en export statique
 - Technique bâtiment : jamais de certification électrique, de plomberie ou de structure ; une estimation n'est pas un devis.
 
 ## Façon de travailler
+- **Lire `docs/ERREURS.md` avant de commencer** et y ajouter chaque nouvelle erreur avec sa correction.
 - Compétences à utiliser : `charte-graphique`, `direction-artistique-images`, `signatures-styles`, `anti-rendu-ia`, `matieres-4k`, `catalogue-ameublement`, `audit-visuel`, `audit-qualite`, `verification-before-completion`, `systematic-debugging`.
 - Avant de dire « terminé » : `pnpm typecheck && pnpm lint && pnpm test`, `pnpm build`, tests de parcours concernés (`npx playwright test`), captures ordinateur et mobile.
 - Commits : terminer par les lignes d'attribution demandées par la session ; aucun identifiant de modèle dans le dépôt.

@@ -1,3 +1,5 @@
+// Import relatif avec extension : ce fichier sert aussi au robot (node --experimental-strip-types).
+import { decodeEntites } from "../workers/ia/src/produit.ts";
 /**
  * Catalogue de produits collecté automatiquement par le robot (scripts/robot-catalogue.ts) :
  * classement par famille, normalisation du texte et recherche par ressemblance de description.
@@ -20,6 +22,17 @@ export interface ProduitCatalogue {
 }
 export interface IndexCatalogue { updatedAt: string; total: number; familles: Partial<Record<Famille, number>>; vendeurs: Record<string, number> }
 
+/** Nom lisible d'un produit : entités décodées ; nom vide ou erreur de tableur (« #REF! ») remplacé par le titre tiré de l'adresse. */
+export function nomProduit(name: string, url: string): string {
+  const n = decodeEntites(name ?? "").replace(/\s+/g, " ").trim();
+  if (/[a-zà-ÿ]{3,}/i.test(n) && !/^#(ref|n\/a|value|name)!?/i.test(n)) return n;
+  try {
+    const seg = new URL(url).pathname.split("/").filter(Boolean).map((x) => decodeURIComponent(x).replace(/\.(html?|php|aspx)$/i, "")).filter((x) => /[a-z]{3,}-[a-z]{3,}/i.test(x)).pop() ?? "";
+    const t = seg.replace(/[-_]+/g, " ").split(" ").filter((w) => !/^(p|prod|produit|product|ref\w*|sku)$/i.test(w) && !/^[a-z]?\d{4,}$/i.test(w)).join(" ").trim();
+    return t ? t.charAt(0).toUpperCase() + t.slice(1, 140) : n;
+  } catch { return n; }
+}
+
 export const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 
 // L'ordre compte : les familles les plus précises d'abord.
@@ -27,9 +40,12 @@ const RULES: Array<[Famille, RegExp]> = [
   ["robinetterie", /\b(robinet|mitigeur|colonne de douche|faucet)\b/],
   ["salle-de-bain", /\b(vasque|lavabo|meuble sous vasque|meuble de salle de bain)\b/],
   ["poignee", /\b(poignee|bouton de meuble|bouton de porte)\b/],
-  ["peinture", /\b(peinture|lasure|vernis)\b/],
+  // Peinture : seulement les produits à appliquer (pot avec contenance, lasure, sous-couche, peinture murale…), pas les tableaux ni les meubles vernis.
+  ["peinture", /\b(lasure|sous couche|peinture (murale|mur|murs|plafond|boiseries?|bois|sol|facade|radiateur|carrelage|meubles?|multi ?supports?|interieure|exterieure|de renovation|a la chaux|chaux)|(peinture|vernis)\b.*\b(\d+([.,]\d+)? ?(l|litres?|ml)|\d+l\d+))\b|^ peinture (?!a l huile|.*\btube\b)/],
   ["sol", /\b(parquet|carrelage|carreau|stratifie|sol vinyle|moquette|tomette|dalle)\b/],
   ["rideau", /\b(rideau|rideaux|voilage|store|curtains?|drapes?|curtain panel)\b/],
+  // Bougeoirs et photophores : de la décoration, même rangés dans le rayon « luminaires » d'une enseigne.
+  ["deco", /\b(bougeoirs?|photophores?|bougies?|candle holders?)\b/],
   ["lampadaire", /\b(lampadaire|floor lamps?)\b/],
   ["luminaire", /\b(suspension|applique|lustre|lampe|plafonnier|baladeuse|liseuse|pendant|sconce|chandelier|table lamp|lamps?|flush mount)\b/],
   ["tapis", /\b(tapis|rugs?)\b/],
@@ -44,11 +60,13 @@ const RULES: Array<[Famille, RegExp]> = [
 ];
 /** Accessoires et consommables : pas des pièces qu'on choisit pour composer une pièce. */
 const ACCESSOIRE = /\b(anneaux?|tringles?|embouts?|supports?|fixations?|crochets?|visserie|vis|chevilles?|kit|kits|recharges?|ampoules?|piles?|cables?|rallonge|housse de protection|pieds? de rechange|patins?|joints?|adaptateur|entretoise|equerres?|rail|rails|glissiere|charniere|serre cable|echantillon|nuancier|testeur|lot de \d+ (anneaux|crochets))\b/;
-export const estAccessoire = (name: string) => ACCESSOIRE.test(` ${norm(name)} `);
+/** Outils et fournitures (rouleaux, pinceaux, disques, toiles à peindre…) : ce ne sont pas des produits de décoration. */
+const OUTIL = /\b(manchons?|rouleaux? (a|de|pour) peinture|pinceaux?|brosses? (a|de) peinture|disques?|meuleuse|ponceuse|abrasif|toiles? (a|de) peindre|toiles? de peinture|bac a peinture|additifs?|acetone|nettoyants?|diluants?|white spirit|traceur|spatules?|couteaux? a enduire|ruban de masquage|baches?|grattoirs?|decapants?|chevalet)\b/;
+export const estAccessoire = (name: string) => { const t = ` ${norm(name)} `; return ACCESSOIRE.test(t) || OUTIL.test(t); };
 
 export function famille(name: string): Famille | null {
   const t = ` ${norm(name)} `;
-  if (ACCESSOIRE.test(t)) return null;
+  if (ACCESSOIRE.test(t) || OUTIL.test(t)) return null;
   for (const [f, re] of RULES) if (re.test(t)) return f;
   return null;
 }

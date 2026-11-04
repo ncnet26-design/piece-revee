@@ -16,7 +16,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { gunzipSync } from "node:zlib";
 import { parseProduct } from "../workers/ia/src/produit.ts";
-import { famille, FAMILLES, type Famille, type IndexCatalogue, type ProduitCatalogue } from "../lib/catalogue.ts";
+import { famille, FAMILLES, nomProduit, type Famille, type IndexCatalogue, type ProduitCatalogue } from "../lib/catalogue.ts";
 
 const UA = "Mozilla/5.0 (compatible; PieceReveeBot/1.0; +https://odd-bar-c583.ewanesteves26.workers.dev/legal/)";
 const arg = (k: string, d: string) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1]! : d; };
@@ -206,10 +206,11 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
     if (!r || r.status === 404 || r.status === 410) { delete st.urls[u]; if (catalogue.delete(u)) retires++; await sleep(st.delai * 1000); continue; }
     st.urls[u] = today;
     const d = r.status < 400 ? parseProduct(r.body) : null;
-    const f = d ? famille(`${d.name} ${u}`) : null;
-    if (d && f && d.name) {
+    const nom = d ? nomProduit(d.name, u) : "";
+    const f = d ? famille(`${nom} ${u}`) : null;
+    if (d && f && nom) {
       const img = (() => { try { const x = d.image ? new URL(d.image, u) : null; return x && x.protocol === "https:" ? x.href : null; } catch { return null; } })();
-      catalogue.set(u, { n: d.name, b: d.brand, m: e.nom, u, p: d.price, c: d.price ? d.currency ?? (e.zone === "US" ? "USD" : "EUR") : null, a: d.availability, d: today, f, z: e.zone ?? "FR", i: img });
+      catalogue.set(u, { n: nom, b: d.brand, m: e.nom, u, p: d.price, c: d.price ? d.currency ?? (e.zone === "US" ? "USD" : "EUR") : null, a: d.availability, d: today, f, z: e.zone ?? "FR", i: img });
       gardes++;
     } else { if (r.status < 400) sansFiche++; if (catalogue.delete(u)) retires++; }
     await sleep(st.delai * 1000);

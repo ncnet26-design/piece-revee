@@ -65,3 +65,25 @@ describe("matière exigée", () => {
     expect(r.map((x) => x.n)).toEqual(["Table basse ovale en travertin"]);
   });
 });
+
+describe("famille peinture : uniquement des produits à appliquer", () => {
+  it("garde les peintures murales, même sans contenance ou avec « 2l5 »", () => {
+    for (const n of ["Peinture Bleu canard 2l5 mat", "Peinture L&#39;Alliance", "Peinture Terre cuite 0l75 mat", "Lasure chêne clair 1L"]) expect(famille(n)).toBe("peinture");
+  });
+  it("écarte outils, tableaux et meubles vernis", () => {
+    expect(famille("Set de rouleau de peinture 7 accessoires")).toBeNull();
+    expect(famille("1 disque meuleuse décapage rapide bois et peinture Ø125 mm")).toBeNull();
+    expect(famille("Peinture à l'huile d'Alexander Michael")).toBeNull();
+    expect(famille("Acrylique sur toile, peinture contemporaine")).toBeNull();
+    expect(famille("Armoire 1960 bois blond vernis")).toBe("rangement");
+  });
+});
+
+describe("nom des produits", () => {
+  it("décode les entités et remplace les erreurs de tableur par le titre de l'adresse", async () => {
+    const { nomProduit } = await import("@/lib/catalogue");
+    expect(nomProduit("Peinture L&#39;Alliance", "https://x.fr/p")).toBe("Peinture L'Alliance");
+    expect(nomProduit("Buffet &amp; console", "https://x.fr/p")).toBe("Buffet & console");
+    expect(nomProduit("#REF!", "https://www.thesocialitefamily.com/en-eu/products/canape-d-angle-aldo-velours-cotele-beige")).toBe("Canape d angle aldo velours cotele beige");
+  });
+});

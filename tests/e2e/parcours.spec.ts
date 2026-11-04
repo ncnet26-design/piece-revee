@@ -548,7 +548,7 @@ test("expérience : récit 3D au défilement, points cliquables, chiffres réels
   // Les six chapitres existent et le récit se termine sur des liens réels vers la boutique.
   for (const id of ["ouverture", "piece", "inspirations", "moodboard", "transformation", "cliquable"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
   await page.locator("#cliquable").scrollIntoViewIfNeeded();
-  await expect(page.locator("#cliquable").getByRole("link", { name: "Canapé courbe en bouclé" })).toHaveAttribute("href", "/boutique/?famille=canape");
+  await expect(page.locator("#cliquable").getByRole("link", { name: "Canapé courbe en bouclé" })).toHaveAttribute("href", "/boutique/?famille=canape&q=bouclé");
   // Chiffres lus dans le catalogue publié, pas inventés.
   const idx = (await (await page.request.get("/catalogue/index.json")).json()) as { total: number };
   await expect(page.getByText(idx.total.toLocaleString("fr-FR"), { exact: true })).toBeVisible();

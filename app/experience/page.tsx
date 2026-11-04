@@ -1,10 +1,10 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { Photo } from "@/components/Photo";
-import { SpotList, Stage } from "@/components/experience/Stage";
+import { Composer, Stage } from "@/components/experience/Stage";
 import type { IndexCatalogue, ProduitCatalogue } from "@/lib/catalogue";
 import { meta } from "@/lib/seo";
 
@@ -45,15 +45,18 @@ export default function Page() {
   const c = chiffres();
   const chapters: ReactNode[] = [
     <div key="0" className="max-w-[880px]">
-      <p className="m-0 text-[11.5px] font-semibold uppercase tracking-[.24em] text-[#F2EEE6]/70">Pièce Rêvée · architecture intérieure</p>
-      <h1 className="mt-5 text-[clamp(56px,9.2vw,148px)] leading-[.9] text-[#F2EEE6]">Votre pièce, <em className="text-[#C99467]">rêvée.</em><br />Puis réelle.</h1>
-      <p className="mt-7 max-w-[46ch] text-[17px] leading-relaxed text-[#F2EEE6]/80">Une photo de votre pièce, vos inspirations : nous la transformons dans cet esprit, puis chaque meuble, matière et couleur devient cliquable vers des produits réellement en vente.</p>
-      <div className="mt-9 flex flex-wrap gap-3">
+      <p className="xp-rise m-0 text-[11.5px] font-semibold uppercase tracking-[.24em] text-[#F2EEE6]/70" style={{ "--d": ".2s" } as CSSProperties}>Pièce Rêvée · architecture intérieure</p>
+      <h1 className="mt-5 text-[clamp(56px,9.2vw,148px)] leading-[.9] text-[#F2EEE6]">
+        <span className="xp-rise block" style={{ "--d": ".45s" } as CSSProperties}>Votre pièce, <em className="text-[#C99467]">rêvée.</em></span>
+        <span className="xp-rise block" style={{ "--d": "1.6s" } as CSSProperties}>Puis réelle.</span>
+      </h1>
+      <p className="xp-rise mt-7 max-w-[46ch] text-[17px] leading-relaxed text-[#F2EEE6]/80" style={{ "--d": "2.4s" } as CSSProperties}>Une photo de votre pièce, vos inspirations : nous la transformons dans cet esprit, puis chaque meuble, matière et couleur devient cliquable vers des produits réellement en vente.</p>
+      <div className="xp-rise mt-9 flex flex-wrap gap-3" style={{ "--d": "2.8s" } as CSSProperties}>
         <Link href="/transformer/" className="btn btn-light btn-lg">Transformer ma pièce</Link>
         <a href="#piece" className={DARK_BTN}>Voir comment ça marche ↓</a>
       </div>
     </div>,
-    <Chap key="1" n="01 — Votre pièce" titre={<>Telle qu'elle est, <em>aujourd'hui.</em></>}>
+    <Chap key="1" n="01 — Votre pièce" titre={<>Aujourd'hui, <em>elle ressemble à ça.</em></>}>
       <p className="m-0">Une simple photo suffit. L'IA repère les murs, le sol et chaque meuble de votre pièce pour savoir ce qui peut changer, et ce qui reste.</p>
     </Chap>,
     <Chap key="2" n="02 — Vos inspirations" titre={<>Ce qui vous plaît, <em>d'où qu'il vienne.</em></>}>
@@ -66,8 +69,8 @@ export default function Page() {
       <p className="m-0">Votre pièce est réimaginée dans cet esprit : nouvelles matières, nouveaux meubles, même lumière. L'image est générée par IA : c'est une proposition à discuter, pas un relevé de chantier.</p>
     </Chap>,
     <Chap key="5" n="05 — Tout est cliquable" titre={<>Touchez, <em>trouvez, achetez.</em></>}>
-      <p className="m-0">Touchez un meuble, un mur, un sol : des produits réels, leur prix relevé sur le site du vendeur avec sa date, et le lien pour l'acheter.</p>
-      <SpotList />
+      <p className="m-0">Touchez un meuble, un mur, un sol : des produits réels, leur prix relevé sur le site du vendeur avec sa date, et le lien pour l'acheter. Essayez d'autres finitions : la pièce change, les liens aussi.</p>
+      <Composer />
     </Chap>,
   ];
 

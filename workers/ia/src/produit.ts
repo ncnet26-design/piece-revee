@@ -5,6 +5,13 @@
 const clean = (s: unknown, n: number) => (typeof s === "string" ? s.replace(/\s+/g, " ").trim().slice(0, n) : "");
 
 /** Données produit publiées par le vendeur (JSON-LD schema.org), si la page en contient. */
+/** Décode les entités HTML courantes (&#39;, &amp;, &eacute;…) laissées dans les noms publiés. */
+const ENT: Record<string, string> = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", eacute: "é", egrave: "è", ecirc: "ê", agrave: "à", acirc: "â", ccedil: "ç", ocirc: "ô", ucirc: "û", icirc: "î", iuml: "ï", euml: "ë", rsquo: "’", lsquo: "‘", laquo: "«", raquo: "»", hellip: "…", ndash: "–", mdash: "—", deg: "°", times: "×", oelig: "œ" };
+export const decodeEntites = (s: string) => s.replace(/&(#x?[0-9a-f]+|[a-z]+);/gi, (m, e: string) => {
+  if (e[0] === "#") { const n = e[1] === "x" || e[1] === "X" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10); return Number.isFinite(n) && n > 0 && n < 0x110000 ? String.fromCodePoint(n) : m; }
+  return ENT[e.toLowerCase()] ?? m;
+});
+
 export interface ProduitPage { name: string; brand: string | null; price: number | null; currency: string | null; availability: string | null; image: string | null }
 export function parseProduct(html: string): ProduitPage | null {
   const blocks = [...html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].map((m) => m[1]!);
@@ -24,7 +31,7 @@ export function parseProduct(html: string): ProduitPage | null {
   const agg = offers && (offers["@type"] === "AggregateOffer" ? offers : undefined);
   const raw = offers?.price ?? agg?.lowPrice ?? (offers?.priceSpecification as Record<string, unknown> | undefined)?.price;
   const price = raw !== undefined && Number.isFinite(Number(String(raw).replace(",", "."))) ? Number(String(raw).replace(",", ".")) : null;
-  const brand = typeof p.brand === "string" ? p.brand : clean((p.brand as Record<string, unknown> | undefined)?.name, 60) || null;
+  const brand = typeof p.brand === "string" ? clean(p.brand, 60) || null : clean((p.brand as Record<string, unknown> | undefined)?.name, 60) || null;
   const av = clean(offers?.availability, 80).replace(/^https?:\/\/schema\.org\//, "") || null;
   // Image publiée par le vendeur (JSON-LD image, sinon og:image) : adresse seulement, l'image n'est jamais copiée.
   const pickImg = (v: unknown): string | null => {
@@ -35,7 +42,7 @@ export function parseProduct(html: string): ProduitPage | null {
   };
   const og = /<meta[^>]+(?:property|name)=["']og:image(?::secure_url)?["'][^>]+content=["']([^"']+)["']/i.exec(html)?.[1] ?? /<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']og:image["']/i.exec(html)?.[1] ?? null;
   const image = (pickImg(p.image ?? variant?.image) ?? og)?.replace(/&amp;/g, "&").trim() || null;
-  return { name: clean(p.name, 160), brand, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av, image: image && image.length < 1000 ? image : null };
+  return { name: decodeEntites(clean(p.name, 200)).slice(0, 160), brand: brand ? decodeEntites(brand) : null, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av, image: image && image.length < 1000 ? image : null };
 }
 
 

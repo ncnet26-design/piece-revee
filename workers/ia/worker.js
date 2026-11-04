@@ -477,6 +477,14 @@ async function analyseOpenAI(env, image) {
 
 // workers/ia/src/produit.ts
 var clean = (s, n2) => typeof s === "string" ? s.replace(/\s+/g, " ").trim().slice(0, n2) : "";
+var ENT = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", eacute: "\xE9", egrave: "\xE8", ecirc: "\xEA", agrave: "\xE0", acirc: "\xE2", ccedil: "\xE7", ocirc: "\xF4", ucirc: "\xFB", icirc: "\xEE", iuml: "\xEF", euml: "\xEB", rsquo: "\u2019", lsquo: "\u2018", laquo: "\xAB", raquo: "\xBB", hellip: "\u2026", ndash: "\u2013", mdash: "\u2014", deg: "\xB0", times: "\xD7", oelig: "\u0153" };
+var decodeEntites = (s) => s.replace(/&(#x?[0-9a-f]+|[a-z]+);/gi, (m, e) => {
+  if (e[0] === "#") {
+    const n2 = e[1] === "x" || e[1] === "X" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
+    return Number.isFinite(n2) && n2 > 0 && n2 < 1114112 ? String.fromCodePoint(n2) : m;
+  }
+  return ENT[e.toLowerCase()] ?? m;
+});
 function parseProduct(html) {
   const blocks = [...html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].map((m) => m[1]);
   const all = [];
@@ -507,7 +515,7 @@ function parseProduct(html) {
   const agg = offers && (offers["@type"] === "AggregateOffer" ? offers : void 0);
   const raw = offers?.price ?? agg?.lowPrice ?? offers?.priceSpecification?.price;
   const price = raw !== void 0 && Number.isFinite(Number(String(raw).replace(",", "."))) ? Number(String(raw).replace(",", ".")) : null;
-  const brand = typeof p.brand === "string" ? p.brand : clean(p.brand?.name, 60) || null;
+  const brand = typeof p.brand === "string" ? clean(p.brand, 60) || null : clean(p.brand?.name, 60) || null;
   const av = clean(offers?.availability, 80).replace(/^https?:\/\/schema\.org\//, "") || null;
   const pickImg = (v) => {
     if (typeof v === "string") return v;
@@ -520,7 +528,7 @@ function parseProduct(html) {
   };
   const og = /<meta[^>]+(?:property|name)=["']og:image(?::secure_url)?["'][^>]+content=["']([^"']+)["']/i.exec(html)?.[1] ?? /<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']og:image["']/i.exec(html)?.[1] ?? null;
   const image = (pickImg(p.image ?? variant?.image) ?? og)?.replace(/&amp;/g, "&").trim() || null;
-  return { name: clean(p.name, 160), brand, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av, image: image && image.length < 1e3 ? image : null };
+  return { name: decodeEntites(clean(p.name, 200)).slice(0, 160), brand: brand ? decodeEntites(brand) : null, price: price && price > 0 ? price : null, currency: clean(offers?.priceCurrency, 3) || null, availability: av, image: image && image.length < 1e3 ? image : null };
 }
 function metaProduct(html) {
   const meta = (prop) => new RegExp(`<meta[^>]+(?:property|name)=["']${prop}["'][^>]+content=["']([^"']+)["']`, "i").exec(html)?.[1] ?? new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']${prop}["']`, "i").exec(html)?.[1];

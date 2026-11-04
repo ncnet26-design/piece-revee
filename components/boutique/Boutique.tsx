@@ -44,7 +44,12 @@ export function Boutique() {
 
   useEffect(() => {
     void fetch("/catalogue/index.json").then((r) => (r.ok ? r.json() : null)).then((d: IndexCatalogue | null) => setIndex(d)).catch(() => setIndex(null));
-    try { const f = new URLSearchParams(location.search).get("famille"); if (f && f in FAMILLES) setTimeout(() => setFam(f as Famille), 0); } catch { /* */ }
+    try {
+      const u = new URLSearchParams(location.search), f = u.get("famille"), recherche = u.get("q");
+      if (f && f in FAMILLES) setTimeout(() => setFam(f as Famille), 0);
+      // Recherche transmise par un lien (ex. une matière choisie dans la pièce 3D).
+      if (recherche) setTimeout(() => setQ(recherche.slice(0, 80)), 0);
+    } catch { /* */ }
   }, []);
   const familles = useMemo(() => (Object.keys(FAMILLES) as Famille[]).filter((f) => (index?.familles[f] ?? 0) > 0), [index]);
   // Familles à charger : celle choisie, ou toutes dès qu'on cherche ou qu'on regarde « tout ».
