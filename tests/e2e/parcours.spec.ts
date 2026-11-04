@@ -539,3 +539,20 @@ test("boutique : familles, recherche, filtres et ajout à ma pièce", async ({ p
   await expect(page.getByRole("button", { name: /^Canapés/ })).toHaveAttribute("aria-pressed", "true");
   expect(errors).toEqual([]);
 });
+
+test("expérience : récit 3D au défilement, points cliquables, chiffres réels et appels à l'action", async ({ page }) => {
+  const errors = noJsErrors(page);
+  await page.goto("/experience/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Votre pièce");
+  await expect(page.getByRole("link", { name: "Transformer ma pièce" }).first()).toHaveAttribute("href", "/transformer/");
+  // Les six chapitres existent et le récit se termine sur des liens réels vers la boutique.
+  for (const id of ["ouverture", "piece", "inspirations", "moodboard", "transformation", "cliquable"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
+  await page.locator("#cliquable").scrollIntoViewIfNeeded();
+  await expect(page.locator("#cliquable").getByRole("link", { name: "Canapé courbe en bouclé" })).toHaveAttribute("href", "/boutique/?famille=canape");
+  // Chiffres lus dans le catalogue publié, pas inventés.
+  const idx = (await (await page.request.get("/catalogue/index.json")).json()) as { total: number };
+  await expect(page.getByText(idx.total.toLocaleString("fr-FR"), { exact: true })).toBeVisible();
+  const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).exclude("canvas").analyze();
+  expect(r.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).slice(0, 3).join(" | ")}`)).toEqual([]);
+  expect(errors).toEqual([]);
+});
