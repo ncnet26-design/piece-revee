@@ -29,7 +29,8 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - WebFetch : ✗ (`ENOTFOUND` sur ikea.com, habitat.fr, api.polyhaven.com).
 - curl depuis la session : ✗ pour api.polyhaven.com, ambientcg.com, api.pexels.com, api.unsplash.com et toutes les enseignes (code 000).
 - **Contournement** : les robots GitHub Actions du projet ont un accès internet complet (le robot catalogue lit IKEA, Habitat, Sklum… chaque nuit). Téléchargements de textures et vérifications de produits passent par eux.
-- **Pour tout débloquer (à faire par vous, 1 minute)** : sur claude.ai/code, menu de l'environnement dans la barre de titre → Edit → Network access → « Full » (ou ajouter les domaines). Documentation : https://code.claude.com/docs/en/cloud-environments#network-access
+- **Mise à jour : réseau complet ouvert le 4 novembre** (Poly Haven, ambientCG, enseignes, Context7 répondent).
+- (Ancienne consigne) : sur claude.ai/code, menu de l'environnement dans la barre de titre → Edit → Network access → « Full » (ou ajouter les domaines). Documentation : https://code.claude.com/docs/en/cloud-environments#network-access
 
 ### Clés (présence seulement, valeurs jamais affichées)
 - Pas de fichier `.env` (seulement `.env.example`). Aucune clé dans l'environnement de la session : PEXELS_API_KEY, UNSPLASH_ACCESS_KEY, REPLICATE_API_TOKEN, FAL_KEY absentes.
@@ -42,9 +43,9 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 ## Étape 1 — CLAUDE.md : fait
 42 lignes : concept, obligations de skills (images, matières, produits), règles images, charte, règles du propriétaire.
 
-## Étape 2 — Audit et nettoyage des images : audit fait, suppression EN ATTENTE D'ACCORD
+## Étape 2 — Audit et nettoyage des images : fait (suppression validée le 4 novembre)
 - `audit-images.md` : 467 images ; 91 font 2000 px ou plus ; notes A/B/C selon la grille.
-- À supprimer : 100 tout de suite (hors sujet ou note C), 116 dès que leur remplaçant existe. **Plus de 20 fichiers → votre accord est nécessaire.**
+- 100 images ratées ou hors sujet supprimées avec votre accord (extérieurs façade/jardin, images IA de matières, aplats de couleur, photos kitsch, textures mal nommées), références corrigées, aucune page ne pointe vers une image disparue. Restent 116 images de moins de 2000 px à remplacer (surtout les images IA de styles et d'espaces, 1600 px) avant de les retirer.
 - Ordre prévu : remplacer d'abord (matières 4K, catalogue), puis supprimer, pour ne casser aucune page.
 - Erreur évitée : 4 images crues inutilisées étaient en fait chargées par la planche (chemin calculé) ; remises, notée au journal.
 
