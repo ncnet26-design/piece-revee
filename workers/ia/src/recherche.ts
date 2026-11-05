@@ -9,6 +9,10 @@
 import type { Env } from "./config";
 import { fetchRetry, ProviderError } from "./providers";
 import { TEXT_MODEL } from "./analyse";
+/** Modèle de la recherche de produits : léger et rapide (la recherche Google fait l'essentiel du travail). */
+export const SEARCH_MODEL = "gemini-3.5-flash-lite";
+/** Temps maximum passé à ouvrir les pages produits pour relever les prix (au-delà, le lien est montré sans prix). */
+const DELAI_PAGES = 4000;
 import { parseProduct } from "./produit";
 export { parseProduct };
 
@@ -22,7 +26,7 @@ export interface Trouve {
 export interface Recherche { produits: Trouve[]; suggestions: string | null; requetes: string[]; etapes?: Record<string, unknown> }
 
 const PROMPT = (q: string, label: string, pays: string) => [
-  `Use Google Search now (at most 2 searches) to find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
+  `Use Google Search now (one single search, answer fast) to find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
   `Prefer online shops that deliver to ${pays === "FR" ? "France" : "Europe"} (marketplaces, furniture and decor retailers, DIY stores, design brands), with a range of prices from affordable to premium.`,
   "Only list direct product pages (one product per page), never category pages, blogs or search pages. Never invent a URL: only pages you found with the search.",
   'Finish your answer with a JSON block: {"products":[{"title":"","url":"","merchant":""}]}.',
@@ -45,14 +49,14 @@ export function slugTitle(u: string): string {
 async function resolve(u: string): Promise<string> {
   if (!/grounding-api-redirect/.test(u)) return u;
   try {
-    const r = await fetch(u, { method: "HEAD", redirect: "manual", signal: AbortSignal.timeout(5000) });
+    const r = await fetch(u, { method: "HEAD", redirect: "manual", signal: AbortSignal.timeout(2500) });
     return r.headers.get("location") || u;
   } catch { return u; }
 }
 
 async function inspect(url: string): Promise<ReturnType<typeof parseProduct>> {
   try {
-    const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 (compatible; PieceReveeBot/1.0; +https://odd-bar-c583.ewanesteves26.workers.dev)", accept: "text/html", "accept-language": "fr-FR,fr;q=0.9" }, redirect: "follow", signal: AbortSignal.timeout(7000) });
+    const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 (compatible; PieceReveeBot/1.0; +https://odd-bar-c583.ewanesteves26.workers.dev)", accept: "text/html", "accept-language": "fr-FR,fr;q=0.9" }, redirect: "follow", signal: AbortSignal.timeout(3500) });
     if (!r.ok || !(r.headers.get("content-type") ?? "").includes("html")) return null;
     const html = (await r.text()).slice(0, 1_500_000);
     return parseProduct(html);
@@ -61,11 +65,13 @@ async function inspect(url: string): Promise<ReturnType<typeof parseProduct>> {
 
 export async function rechercher(env: Env, q: string, label: string, pays = "FR"): Promise<Recherche> {
   if (!env.GEMINI_API_KEY) throw new ProviderError("La recherche sur internet n'est pas configurée (clé manquante).", false);
-  const model = env.GEMINI_SEARCH_MODEL || env.GEMINI_TEXT_MODEL || TEXT_MODEL;
-  const r = await fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-    method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }] }),
-  });
+  // Rapidité : modèle léger avec réflexion courte ; si ce réglage est refusé, on repasse au modèle habituel sans réglage.
+  const appel = (model: string, rapide: boolean) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+    method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY! },
+    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }], ...(rapide ? { generationConfig: { thinkingConfig: { thinkingLevel: "low" } } } : {}) }),
+  }, 2);
+  let r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL, true);
+  if (r.status === 400 || r.status === 404) r = await appel(env.GEMINI_TEXT_MODEL || TEXT_MODEL, false);
   if (!r.ok) throw new ProviderError("La recherche sur internet a échoué.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
   const j = await r.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> }; groundingMetadata?: { groundingChunks?: Array<{ web?: { uri?: string; title?: string } }>; searchEntryPoint?: { renderedContent?: string }; webSearchQueries?: string[] } }> };
   const c = j.candidates?.[0];
@@ -92,8 +98,9 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   const seen = new Set<string>(), unique = candidates.filter((p) => { const k = p.url.split("#")[0]!.split("?")[0]!; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 10);
 
   const now = new Date().toISOString();
+  const limite = new Promise<null>((ok) => setTimeout(() => ok(null), DELAI_PAGES));
   const produits = (await Promise.all(unique.map(async (p): Promise<Trouve | null> => {
-    const d = await inspect(p.url);
+    const d = await Promise.race([inspect(p.url), limite]);
     const title = d?.name || p.title || slugTitle(p.url);
     if (!title) return null; // page ni lisible ni décrite : rien à montrer
     return {

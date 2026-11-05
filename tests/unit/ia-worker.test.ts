@@ -231,6 +231,25 @@ describe("recherche de produits sur internet", () => {
     expect(d.suggestions).toBe("<div>suggestions</div>");
     const sent = JSON.parse(String((fetchMock.mock.calls.find((c) => String(c[0]).includes("generativelanguage"))![1] as RequestInit).body));
     expect(sent.tools).toEqual([{ google_search: {} }]);
+    // Rapidité : modèle léger et réflexion courte.
+    expect(String(fetchMock.mock.calls.find((c) => String(c[0]).includes("generativelanguage"))![0])).toContain("gemini-3.5-flash-lite");
+    expect(sent.generationConfig).toEqual({ thinkingConfig: { thinkingLevel: "low" } });
+  });
+
+  it("repasse au modèle habituel si le modèle rapide refuse la demande", async () => {
+    const modeles: string[] = [];
+    fetchMock.mockImplementation(async (url: string) => {
+      if (url.includes("generativelanguage")) {
+        modeles.push(url);
+        if (url.includes("flash-lite")) return new Response("{}", { status: 400 });
+        return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: '{"products":[]}' }] }, groundingMetadata: { groundingChunks: [] } }] }), { status: 200 });
+      }
+      return new Response("", { status: 404 });
+    });
+    const r = await call(env, "/v2/recherche", { method: "POST", body: JSON.stringify({ query: "vase en grès", label: "Vase", visiteur: "visiteur-test-02" }) });
+    expect(r.status).toBe(200);
+    expect(modeles).toHaveLength(2);
+    expect(modeles[1]).not.toContain("flash-lite");
   });
 });
 

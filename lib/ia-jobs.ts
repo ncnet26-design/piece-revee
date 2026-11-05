@@ -89,12 +89,16 @@ export interface Trouve { title: string; url: string; merchant: string; price: n
 export interface RechercheEnLigne { produits: Trouve[]; suggestions: string | null; requetes: string[] }
 const found = new Map<string, RechercheEnLigne>();
 /** Recherche de produits en vente sur internet (mémorisée pendant la visite, pour ne pas payer deux fois la même recherche). */
+const pending = new Map<string, Promise<Result<RechercheEnLigne>>>();
 export async function searchOnline(query: string, label: string): Promise<Result<RechercheEnLigne>> {
   const k = query.toLowerCase();
   const hit = found.get(k); if (hit) return { ok: true, value: hit };
-  const r = await call<RechercheEnLigne>("/v2/recherche", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query, label, visiteur: visitorId() }) });
-  if (r.ok) found.set(k, r.value);
-  return r;
+  // Une recherche déjà en cours pour le même élément est partagée (pas de second appel payant).
+  const enCours = pending.get(k); if (enCours) return enCours;
+  const p = call<RechercheEnLigne>("/v2/recherche", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query, label, visiteur: visitorId() }) })
+    .then((r) => { if (r.ok) found.set(k, r.value); pending.delete(k); return r; });
+  pending.set(k, p);
+  return p;
 }
 
 /** Suit la tâche jusqu'à la fin (intervalle croissant de 2 à 6 s, 8 minutes au plus). */
