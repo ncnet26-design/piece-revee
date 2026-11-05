@@ -3,14 +3,16 @@ import { useEffect, useMemo, useState } from "react";
 import { chercher, estAccessoire, FAMILLES, norm, selection, type Famille, type IndexCatalogue, type ProduitCatalogue } from "@/lib/catalogue";
 import { toggleExternal, useProject } from "@/lib/studio/project";
 import { ProduitImage } from "@/components/ProduitImage";
+import { PHOTOS_STYLES, tailleUnsplash } from "@/lib/inspirations-photos";
 
-/** Image d'ambiance de chaque famille (images éditoriales du site, générées par IA et étiquetées). */
+const U = (st: keyof typeof PHOTOS_STYLES, i: number) => tailleUnsplash(PHOTOS_STYLES[st][i]!.src, 160, "webp");
+/** Pastille de chaque famille : vraie photo d'intérieur (Unsplash) ou texture réelle de matière. */
 export const COUVERTURES: Partial<Record<Famille, string>> = {
-  canape: "/editorial/ia/luxe-discret-640.webp", fauteuil: "/editorial/ia/brutalisme-raffine-640.webp", chaise: "/editorial/ia/scandinave-haut-de-gamme-640.webp",
-  "table-basse": "/editorial/ia/accueil-table-640.webp", "table-manger": "/editorial/ia/salle-a-manger-640.webp", rangement: "/matieres/noyer/640.webp",
-  luminaire: "/editorial/ia/japandi-essai-640.webp", lampadaire: "/editorial/ia/mid-century-640.webp", tapis: "/editorial/ia/chambre-640.webp", lit: "/editorial/ia/minimalisme-chaleureux-640.webp",
+  canape: U("contemporain", 0), fauteuil: U("mid-century", 3), chaise: U("scandinave", 2),
+  "table-basse": U("japandi", 0), "table-manger": U("haussmannien", 0), rangement: "/matieres/noyer/640.webp",
+  luminaire: U("industriel", 4), lampadaire: U("mid-century", 1), tapis: U("boheme", 3), lit: U("wabi-sabi", 4),
   deco: "/matieres/terre-cuite/640.webp", rideau: "/matieres/lin-lave/640.webp", poignee: "/matieres/cuir/640.webp", robinetterie: "/matieres/pierre-calcaire/640.webp",
-  "salle-de-bain": "/editorial/ia/salle-de-bain-640.webp", peinture: "/matieres/enduit-chaux/640.webp", sol: "/matieres/parquet-point-de-hongrie/640.webp",
+  "salle-de-bain": U("contemporain", 5), peinture: "/matieres/enduit-chaux/640.webp", sol: "/matieres/parquet-point-de-hongrie/640.webp",
 };
 const ZONES = { FR: "France", EU: "Europe", US: "États-Unis" } as const;
 const AV: Record<string, string> = { InStock: "En stock", OutOfStock: "Épuisé", PreOrder: "Précommande", BackOrder: "Sur commande", LimitedAvailability: "Stock limité" };

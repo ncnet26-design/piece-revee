@@ -1,6 +1,8 @@
 "use client";
+import { textureMatiere } from "@/lib/texture-matiere";
 import { useCallback, useEffect, useRef, useState } from "react";
-import bank from "@/content/data/inspiration-bank.json";
+import { PHOTOS_STYLES, tailleUnsplash } from "@/lib/inspirations-photos";
+import { NOM_STYLE, STYLES as CATALOGUE_STYLES } from "@/lib/catalogue-achetable";
 import { MATERIALS, materialById } from "@/lib/materials/schema";
 import { preparePhoto, extractPalette } from "@/lib/photo";
 import { analyseImage, createJob, moodboardFrom, waitForJob, type IaJob, type Moodboard, type Surface } from "@/lib/ia-jobs";
@@ -8,7 +10,8 @@ import { AiObjectSchema, type AiObject } from "@/lib/studio/showcase";
 import { updateProject, uid } from "@/lib/studio/project";
 import { Resultat } from "./Resultat";
 
-const STYLES = (bank as Array<{ id: string; type: string; title: string; image: { src: string } | null }>).filter((e) => e.type === "style" && e.image);
+/** Styles proposés comme inspiration : vraies photos (Unsplash), une par style. */
+const STYLES = CATALOGUE_STYLES.filter((s) => PHOTOS_STYLES[s]?.[0]).map((s) => ({ id: s, title: NOM_STYLE[s], src: tailleUnsplash(PHOTOS_STYLES[s][0]!.src, 1280, "jpg") }));
 const CATALOG = MATERIALS.map((m) => ({ id: m.id, name: m.name }));
 const MAX_INSPI = 5;
 const KEEP: Array<[string, string]> = [["fenetres", "Fenêtres"], ["portes", "Portes"], ["murs", "Murs et volumes"], ["plafond", "Plafond"], ["sol", "Sol actuel"], ["cheminee", "Cheminée"], ["mobilier", "Mes meubles actuels"]];
@@ -163,7 +166,7 @@ export function Parcours() {
             <details className="mt-4 text-[13px]">
               <summary className="cursor-pointer text-muted hover:text-ink">Pas d'image sous la main ? Partir d'un de nos styles</summary>
               <div className="mt-3 flex flex-wrap gap-1.5">
-                {STYLES.map((s) => <button key={s.id} type="button" className="btn btn-sm" onClick={() => void addStyle(s.image!.src)}>{s.title}</button>)}
+                {STYLES.map((s) => <button key={s.id} type="button" className="btn btn-sm" onClick={() => void addStyle(s.src)}>{s.title}</button>)}
               </div>
             </details>
           </section>
@@ -201,7 +204,7 @@ export function Parcours() {
                 <ul className="mt-3 grid list-none grid-cols-2 gap-2 p-0">
                   {mood.materials.map((id) => { const m = materialById(id); if (!m) return null; return (
                     <li key={id} className="flex items-center gap-2.5 text-[13px]">
-                      <span aria-hidden className="size-10 shrink-0 rounded-[2px] bg-cover bg-center ring-1 ring-black/5" style={{ backgroundColor: m.baseColor, backgroundImage: `url(/editorial/matieres/${id}.webp)` }} />
+                      <span aria-hidden className="size-10 shrink-0 rounded-[2px] bg-cover bg-center ring-1 ring-black/5" style={{ backgroundColor: m.baseColor, backgroundImage: textureMatiere(id) ? `url(${textureMatiere(id)})` : undefined }} />
                       <span><span className="font-medium">{m.name}</span><br /><span className="text-muted">{m.finish}</span></span>
                     </li>); })}
                 </ul>

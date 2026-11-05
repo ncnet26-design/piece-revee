@@ -88,7 +88,16 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - Catalogue : vue « Nomenclature » (inspirée de Rayon) ; 170 produits vérifiés le 4 novembre. Trous restants assumés : béton haut de gamme, pierre petit budget (aucun produit réel trouvé, ni par le robot ni par recherche web).
 - Matières : bouclette remplacée par un vrai tissu bouclé ; laiton et enduit d'argile essayés puis écartés (rendu plat) ; zellige introuvable en texture libre.
 
+## 5 novembre — photos produits, vraies photos partout, bande des enseignes
+- Catalogue : chaque produit montre la photo publiée par son enseigne, chargée depuis le site de l'enseigne (jamais copiée, adresse de notre page non transmise) ; dessin au trait en secours. 169/169 photos relevées par le robot de vérification (qui note désormais l'image à chaque passage). Les images « pas de photo » de certaines enseignes sont écartées.
+- La boutique avait toujours ses photos ; c'est le Catalogue (menu) qui n'en avait plus, à cause de l'ancienne règle « pas de photo d'enseigne ».
+- Accueil : ouverture et portes d'entrée en vraies photos (Unsplash, crédit affiché) ; bande défilante des 27 enseignes (texte seulement, bouton pause, arrêt si l'appareil demande moins d'animations).
+- Boutique : pastilles des familles en vraies photos ; Transformer : styles proposés en vraies photos, vignettes de matières en textures réelles.
+- Supprimés : 18 vignettes de matières générées par IA (plus utilisées) et l'ancienne banque d'inspirations de la page Inspirations.
+- Images IA restantes (moins de 2000 px) : utilisées seulement par le Studio 3D et la page Expérience (cachés du menu), le comparatif « Même pièce, autre caractère » et « Touchez une pièce » de l'accueil (étiquetées IA). Les retirer demande de supprimer ces deux pages : à décider.
+- À faire par vous : la règle de CLAUDE.md « jamais de photo d'enseigne téléchargée » reste à reformuler (« photo affichée depuis le site de l'enseigne, jamais copiée ») ; modification du fichier de règles refusée à l'assistant.
+
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
-4. Remplacer les images IA restantes (portes de l'accueil, banque « Composer son projet ») par ces photos, puis retirer les 116 images de moins de 2000 px (avec votre accord : plus de 20 fichiers).
+4. Décider du sort du Studio 3D et de la page Expérience ; leur retrait permettrait de supprimer les 98 images IA restantes de moins de 2000 px.
 5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.

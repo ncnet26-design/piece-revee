@@ -500,24 +500,6 @@ test("planche : composer une planche à partir d'une image", async ({ page, isMo
   expect(errors).toEqual([]);
 });
 
-test("inspirations : filtrer, garder en favori, lancer un projet avec un style", async ({ page }) => {
-  await page.goto("/galerie/");
-  await page.getByRole("textbox", { name: "Rechercher une inspiration" }).fill("japandi");
-  await expect(page.getByText("1 inspiration")).toBeVisible();
-  await page.getByRole("button", { name: "Ajouter Japandi des favoris" }).click();
-  await page.getByRole("button", { name: "Japandi : voir le détail" }).click();
-  const d = page.getByRole("dialog", { name: "Japandi" });
-  await expect(d.getByText("Chêne fumé")).toBeVisible();
-  await expect(d.getByText(/Image générée par IA/).first()).toBeVisible();
-  await d.getByRole("button", { name: "Créer un projet avec ce style" }).click();
-  await expect(page).toHaveURL(/studio\/\?etape=creer/);
-  await expect(page.getByRole("textbox", { name: "Décrivez la pièce que vous imaginez" })).toHaveValue(/Japandi/);
-  await expect(page.getByRole("button", { name: "Japandi", exact: true })).toHaveAttribute("aria-pressed", "true");
-  await page.goto("/galerie/");
-  await page.getByRole("button", { name: /Mes favoris \(1\)/ }).click();
-  await expect(page.getByRole("region", { name: /Partir d'une ambiance/ }).getByRole("heading", { name: "Japandi" })).toBeVisible();
-});
-
 test("inspirations : huit styles en vraies photos, photographe crédité, reliés au catalogue", async ({ page }) => {
   await page.goto("/galerie/");
   for (const s of ["japandi", "scandinave", "industriel", "haussmannien", "mid-century", "wabi-sabi", "boheme", "contemporain"]) {
@@ -569,7 +551,7 @@ test("expérience : récit 3D au défilement, points cliquables, chiffres réels
   expect(errors).toEqual([]);
 });
 
-test("catalogue : filtres budget, pièce, style, matière ; liens vers les enseignes ; aucune photo d'enseigne", async ({ page }) => {
+test("catalogue : filtres budget, pièce, style, matière ; liens vers les enseignes ; photos chargées depuis l'enseigne", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/catalogue/?style=japandi");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Votre style");
@@ -581,10 +563,18 @@ test("catalogue : filtres budget, pièce, style, matière ; liens vers les ensei
   await expect(lien).toHaveAttribute("href", /^https:\/\//);
   await expect(lien).toHaveAttribute("rel", /nofollow/);
   expect(page.url()).toContain("gamme=haut");
-  // Aucune image hébergée chez une enseigne : seulement nos textures et dessins.
-  const srcs = await page.locator("main img").evaluateAll((l) => l.map((i) => (i as HTMLImageElement).src));
-  expect(srcs.filter((s) => !/^https?:\/\/(localhost|127\.0\.0\.1)/.test(s))).toEqual([]);
+  // Photos d'enseigne : chargées depuis leur site (jamais copiées), en https, sans transmettre l'adresse de la page.
+  const imgs = await page.locator("main img").evaluateAll((l) => l.map((i) => [(i as HTMLImageElement).src, i.getAttribute("referrerpolicy")]));
+  for (const [src, rp] of imgs.filter(([s]) => !/^https?:\/\/(localhost|127\.0\.0\.1)/.test(s!))) { expect(src).toMatch(/^https:\/\//); expect(rp).toBe("no-referrer"); }
   const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
   expect(r.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).slice(0, 3).join(" | ")}`)).toEqual([]);
   expect(errors).toEqual([]);
+});
+
+test("accueil : bande des enseignes, avec bouton pause", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: /\d+ enseignes sur Pièce Rêvée/ })).toBeVisible();
+  const b = page.getByRole("button", { name: "Mettre en pause" });
+  await b.click();
+  await expect(page.getByRole("button", { name: "Relancer le défilement" })).toHaveAttribute("aria-pressed", "true");
 });

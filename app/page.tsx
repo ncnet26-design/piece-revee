@@ -3,9 +3,11 @@ import { BeforeAfter } from "@/components/BeforeAfter";
 import { ShopTheLook } from "@/components/ShopTheLook";
 import { ChoixPieceStyle, type Apercu } from "@/components/home/ChoixPieceStyle";
 import catalogue from "@/data/catalogue.json";
+import indexCatalogue from "@/public/catalogue/index.json";
+import { MarquesDefilantes } from "@/components/home/MarquesDefilantes";
 import { GAMMES, NOM_STYLE, PIECES, STYLES as STYLES_CATALOGUE, type ProduitAchetable } from "@/lib/catalogue-achetable";
 import { meta } from "@/lib/seo";
-import { PHOTOS_STYLES } from "@/lib/inspirations-photos";
+import { lienUnsplash, PHOTOS_STYLES, srcsetUnsplash, tailleUnsplash, type PhotoStyle } from "@/lib/inspirations-photos";
 import { PhotoUnsplash } from "@/components/inspirations/PhotoUnsplash";
 import { Photo } from "@/components/Photo";
 import matieres4k from "@/content/data/matieres-4k.json";
@@ -15,10 +17,15 @@ export const metadata = meta({ title: "Pièce Rêvée · Studio d'architecture i
 
 /** Matières de l'accueil : textures réelles photographiées (CC0), plus aucune image générée. */
 const MATIERES = (["travertin", "noyer", "marbre-carrare", "enduit-chaux", "terrazzo", "rotin"] as const).map((k) => ({ id: k, name: MATIERES_REELLES[k]!.nom, credit: (matieres4k as Record<string, { source: string }>)[k]?.source ?? "" }));
-const PORTES: Array<[string, string, string, string]> = [
-  ["/transformer/", "Transformer ma pièce", "Votre photo, vos inspirations, votre pièce transformée.", "/editorial/ia/salon-velours-chene-640.webp"],
-  ["/galerie/", "Inspirations", "Huit styles en vraies photos, reliés aux pièces en vente.", "/editorial/ia/japandi-essai-640.webp"],
-  ["/catalogue/", "Le catalogue", "Votre style, à votre budget : des pièces réelles, vérifiées.", "/editorial/ia/luxe-discret-640.webp"],
+/** Enseignes présentes sur le site : celles du catalogue vérifié et celles relevées par le robot. */
+const MARQUES = [...new Set([...(catalogue as { produits: ProduitAchetable[] }).produits.map((p) => p.enseigne), ...Object.keys((indexCatalogue as { vendeurs: Record<string, number> }).vendeurs)])]
+  .sort((a, b) => a.localeCompare(b, "fr"));
+/** Vraies photos (Unsplash) pour l'ouverture et les portes d'entrée. */
+const OUVERTURE = PHOTOS_STYLES.haussmannien[0]!;
+const PORTES: Array<[string, string, string, string | PhotoStyle]> = [
+  ["/transformer/", "Transformer ma pièce", "Votre photo, vos inspirations, votre pièce transformée.", PHOTOS_STYLES.scandinave[0]!],
+  ["/galerie/", "Inspirations", "Huit styles en vraies photos, reliés aux pièces en vente.", PHOTOS_STYLES.japandi[0]!],
+  ["/catalogue/", "Le catalogue", "Votre style, à votre budget : des pièces réelles, vérifiées.", PHOTOS_STYLES["mid-century"][0]!],
   ["/matieres/", "Matières", "Bois, pierres, enduits, tissus : de vraies textures, à l'échelle.", "/matieres/travertin/1280.webp"],
 ];
 
@@ -45,7 +52,10 @@ export default function Home() {
     <>
       {/* ——— Ouverture : image plein cadre ——— */}
       <section className="bleed relative -mt-7 overflow-hidden bg-[#141712] text-white">
-        <Photo src="/editorial/ia/art-deco-contemporain.webp" priority alt="Salle à manger : murs laqués vert bouteille, table en marbre, chaises en velours rouille" className="absolute inset-0 size-full object-cover opacity-90" />
+        <picture>
+          <source type="image/avif" srcSet={srcsetUnsplash(OUVERTURE.src, "avif")} sizes="100vw" />
+          <img src={tailleUnsplash(OUVERTURE.src, 1920, "webp")} srcSet={srcsetUnsplash(OUVERTURE.src, "webp")} sizes="100vw" alt="Appartement haussmannien : parquet point de Hongrie, moulures, lustre et grandes fenêtres" fetchPriority="high" decoding="async" className="absolute inset-0 size-full object-cover opacity-90" />
+        </picture>
         <div aria-hidden className="absolute inset-0 bg-[linear-gradient(0deg,rgba(12,14,11,.9)_0%,rgba(12,14,11,.62)_55%,rgba(12,14,11,.3)_100%)] sm:bg-[linear-gradient(90deg,rgba(12,14,11,.82)_0%,rgba(12,14,11,.45)_45%,rgba(12,14,11,.05)_75%)]" />
         <div className="wrap relative flex min-h-[min(86vh,880px)] flex-col justify-end pb-14 pt-32 sm:pb-20">
           <p className="text-[11.5px] font-semibold uppercase tracking-[.22em] text-white/75">Studio d'architecture intérieure</p>
@@ -55,9 +65,11 @@ export default function Home() {
             <Link href="/transformer/" className="btn btn-light btn-lg">Transformer ma pièce</Link>
             <Link href="/catalogue/" className="btn btn-lg border-white/40 bg-transparent text-white hover:border-white">Ouvrir le catalogue</Link>
           </div>
-          <p className="mt-10 text-[11px] text-white/55">Image générée par IA</p>
+          <p className="mt-10 text-[11px] text-white/55">Photo <a href={lienUnsplash(OUVERTURE.auteur_url)} target="_blank" rel="noopener noreferrer" className="text-white/70 underline">{OUVERTURE.auteur}</a> sur <a href={lienUnsplash(OUVERTURE.page)} target="_blank" rel="noopener noreferrer" className="text-white/70 underline">Unsplash</a></p>
         </div>
       </section>
+
+      <MarquesDefilantes marques={MARQUES} />
 
       {/* ——— Quatre portes d'entrée ——— */}
       <section aria-labelledby="h-portes" className="py-16 sm:py-20">
@@ -66,9 +78,11 @@ export default function Home() {
           {PORTES.map(([href, t, d, img]) => (
             <li key={href}>
               <Link href={href} className="group block no-underline">
-                <span className="block overflow-hidden bg-soft">
-                  <Photo src={img} alt="" sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
-                </span>
+                {typeof img === "string" ? (
+                  <span className="block overflow-hidden bg-soft">
+                    <Photo src={img} alt="" sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
+                  </span>
+                ) : <PhotoUnsplash p={img} alt="" sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="aspect-[4/5]" credit={false} />}
                 <span className="mt-4 flex items-baseline justify-between gap-3">
                   <span className="font-display text-[26px] leading-tight text-ink">{t}</span>
                   <span aria-hidden className="text-muted transition group-hover:translate-x-1 group-hover:text-ink">→</span>

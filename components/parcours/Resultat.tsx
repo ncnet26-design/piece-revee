@@ -1,4 +1,5 @@
 "use client";
+import { textureMatiere } from "@/lib/texture-matiere";
 import { useCallback, useRef, useState } from "react";
 import type { Product } from "@/lib/products/schema";
 import { productById } from "@/lib/products/schema";
@@ -127,7 +128,7 @@ function Teinte({ hex, name, kind, material, finish }: { hex?: string; name?: st
           <ul className="mt-2 grid list-none gap-2 p-0">
             {mats.map((m) => (
               <li key={m.id} className="flex items-center gap-3 text-[13px]">
-                <span aria-hidden className="size-10 shrink-0 rounded-[2px] bg-cover bg-center ring-1 ring-black/5" style={{ backgroundColor: m.baseColor, backgroundImage: `url(/editorial/matieres/${m.id}.webp)` }} />
+                <span aria-hidden className="size-10 shrink-0 rounded-[2px] bg-cover bg-center ring-1 ring-black/5" style={{ backgroundColor: m.baseColor, backgroundImage: textureMatiere(m.id) ? `url(${textureMatiere(m.id)})` : undefined }} />
                 <span><span className="font-medium">{m.name}</span><br /><span className="text-muted">{m.finish}</span></span>
               </li>
             ))}
