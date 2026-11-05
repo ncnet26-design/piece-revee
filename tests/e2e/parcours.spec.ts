@@ -15,18 +15,18 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => { localStorage.setItem("pr_consent", JSON.stringify({ analytics: false, at: "2026-10-26", version: 1 })); localStorage.setItem("pr_camille_guide", "off"); });
 });
 
-test("accueil : promesse, accès direct au Studio, sections éditoriales", async ({ page }) => {
+test("accueil : promesse, démonstration à toucher, sections éditoriales", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("dessiné");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("tout est à acheter");
+  await expect(page.getByRole("link", { name: "Essayer gratuitement" })).toHaveAttribute("href", "/transformer/");
   await expect(page.getByRole("link", { name: "Transformer ma pièce" }).first()).toHaveAttribute("href", "/transformer/");
   const mobile = (page.viewportSize()?.width ?? 1200) < 1024;
   if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Boutique", "Tarifs"]);
   else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Boutique", "Tarifs"]);
-  await expect(page.getByRole("heading", { name: /trouvez-la en vente/ })).toBeVisible();
-  await page.getByRole("button", { name: /Table basse en travertin : voir les produits ressemblants/ }).click();
-  await expect(page.getByRole("link", { name: /travertin/i }).first()).toHaveAttribute("target", "_blank");
-  await expect(page.getByText(/Prix relevés sur les sites des enseignes/).first()).toBeVisible();
+  await page.getByRole("button", { name: /Table basse en travertin : voir les produits par budget/ }).click();
+  await expect(page.getByText("Table basse en travertin · en vente maintenant")).toBeVisible();
+  for (const g of ["Petit budget", "Budget moyen", "Haut de gamme"]) await expect(page.getByRole("link", { name: new RegExp(g) }).first()).toHaveAttribute("target", "_blank");
   await expect(page.getByRole("slider", { name: /Bouclé et noyer/ })).toBeVisible();
   expect(errors).toEqual([]);
 });
@@ -275,8 +275,10 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   await expect(meuble.getByRole("button", { name: "✓ Dans ma pièce" })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByRole("link", { name: /Ma pièce composée : 1 article · 489 €/ })).toBeVisible();
   expect(recherches).toContain("table basse galet travertin");
-  await meuble.getByText("Dans notre sélection vérifiée").click();
-  await expect(meuble.getByText(/alternatives ressemblantes/)).toBeVisible();
+  // Résultats rangés par budget ; « chercher ailleurs » replié.
+  await expect(meuble.getByText("Autres modèles").or(meuble.getByText("Petit budget")).first()).toBeVisible();
+  await meuble.getByText("Chercher ailleurs").click();
+  await expect(meuble.getByRole("link", { name: /Google Shopping/ })).toHaveAttribute("target", "_blank");
   await page.keyboard.press("Escape");
   // Une surface : sa teinte, des matières proches et où la trouver.
   await page.getByRole("button", { name: "Mur à la chaux" }).click();

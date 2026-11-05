@@ -19,7 +19,7 @@ import { enseigneRetenue, estAccessoire, FAMILLES, norm, SANS_PRIX, type Famille
 
 
 
-const EXCLU = / (lot de|lot|pack|set de \d|kit|housse|housses|recharge|piece detachee|pieces detachees|pied de remplacement|pieds de remplacement|echantillon|nuancier|carte cadeau|effet|aspect|imitation|facon|simili|look) /;
+const EXCLU = / (accoudoir|accoudoirs|armrest|module d angle|element d angle|lot de|lot|pack|set de \d|kit|housse|housses|recharge|piece detachee|pieces detachees|pied de remplacement|pieds de remplacement|echantillon|nuancier|carte cadeau|effet|aspect|imitation|facon|simili|look) /;
 const MAX_PAR_ENSEIGNE = 40;
 
 type Sel = ProduitCatalogue & { g: "petit" | "moyen" | "haut" };

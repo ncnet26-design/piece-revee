@@ -45,6 +45,8 @@ export const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀
 
 // L'ordre compte : les familles les plus précises d'abord.
 const RULES: Array<[Famille, RegExp]> = [
+  // Un nom qui commence par un objet textile ou une œuvre est de la déco (« coussin de canapé », « reproduction Bernard Buffet »).
+  ["deco", /^ (?:(?:grand|grande|petit|petite|gros|maxi|mini) )?(coussins?|housses? de coussin|plaids?|jetes? de canape|reproductions?|tableaux?|affiches?|posters?|lithographies?|estampes?|toiles? imprimees?|cadres?|pillows?|cushions?|throws?|prints?|posters?) /],
   ["robinetterie", /\b(robinet|mitigeur|colonne de douche|faucet)\b/],
   ["salle-de-bain", /\b(vasque|lavabo|meuble sous vasque|meuble de salle de bain)\b/],
   ["poignee", /\b(poignee|bouton de meuble|bouton de porte)\b/],

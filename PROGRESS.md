@@ -121,6 +121,12 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - Écartés : Gifi, Brico Dépôt, Vente-unique, Castorama (produits génériques) ; enseignes américaines ; GUBI (relevé en dollars) et Caravane (prix mal relevés) tant que le robot n'est pas corrigé. Sélection vérifiée : 141 pièces (21 de marques génériques retirées).
 - Menu : Transformer ma pièce · Inspirations · Boutique · Tarifs.
 
+## 5 novembre — Pour tout le monde, recherche IA précise, nouvel en-tête
+- Boutique ouverte à toutes les enseignes relevées (4 799 références, 21 enseignes, tous budgets). Leroy Merlin et BUT interdisent les robots ; Maisons du Monde, Conforama, La Redoute, Alinéa, Zara Home, H&M bloquent : non forcés. Ils sont couverts par la recherche IA (Google).
+- Recherche IA : description précise du meuble (matières, couleurs, forme, taille), toutes les enseignes et tous les budgets demandés, 9 résultats rangés en petit budget / budget moyen / haut de gamme ; panneau simplifié (« Chercher ailleurs » replié). À mettre en ligne côté service (accord du propriétaire requis).
+- Classement corrigé : un nom qui commence par coussin, plaid, tableau, reproduction… est de la déco ; accoudoirs et modules écartés de la boutique.
+- Accueil : nouvel en-tête « Votre pièce refaite, et tout est à acheter » ; à droite, une pièce dont on touche les meubles (points animés), chaque meuble montre 3 vrais produits (un par budget) ; l'ancienne section « Touchez une pièce » est fondue dedans.
+
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
 5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.

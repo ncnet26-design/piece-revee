@@ -1,15 +1,15 @@
 import Link from "next/link";
 import { BeforeAfter } from "@/components/BeforeAfter";
-import { ShopTheLook } from "@/components/ShopTheLook";
+import { Hero } from "@/components/home/Hero";
 import { ChoixPieceStyle, type Apercu } from "@/components/home/ChoixPieceStyle";
 import catalogue from "@/data/catalogue.json";
-import indexCatalogue from "@/public/catalogue/index.json";
+import indexCatalogue from "@/public/boutique/index.json";
 import { MarquesDefilantes } from "@/components/home/MarquesDefilantes";
 import { OffreTeaser } from "@/components/OffreTeaser";
 import { MentionIA } from "@/components/MentionIA";
 import { GAMMES, NOM_STYLE, PIECES, STYLES as STYLES_CATALOGUE, type ProduitAchetable } from "@/lib/catalogue-achetable";
 import { meta } from "@/lib/seo";
-import { lienUnsplash, PHOTOS_STYLES, srcsetUnsplash, tailleUnsplash, type PhotoStyle } from "@/lib/inspirations-photos";
+import { PHOTOS_STYLES, type PhotoStyle } from "@/lib/inspirations-photos";
 import { PhotoUnsplash } from "@/components/inspirations/PhotoUnsplash";
 import { Photo } from "@/components/Photo";
 
@@ -18,12 +18,11 @@ export const metadata = meta({ title: "Pièce Rêvée · Studio d'architecture i
 /** Enseignes présentes sur le site : celles du catalogue vérifié et celles relevées par le robot. */
 const MARQUES = [...new Set([...(catalogue as { produits: ProduitAchetable[] }).produits.map((p) => p.enseigne), ...Object.keys((indexCatalogue as { vendeurs: Record<string, number> }).vendeurs)])]
   .sort((a, b) => a.localeCompare(b, "fr"));
-/** Vraies photos (Unsplash) pour l'ouverture et les portes d'entrée. */
-const OUVERTURE = PHOTOS_STYLES.haussmannien[0]!;
+/** Portes d'entrée, en vraies photos (Unsplash). */
 const PORTES: Array<[string, string, string, string | PhotoStyle]> = [
   ["/transformer/", "Transformer ma pièce", "Votre photo, vos inspirations, votre pièce transformée.", PHOTOS_STYLES.scandinave[0]!],
   ["/galerie/", "Inspirations", "Huit styles en vraies photos, reliés aux pièces en vente.", PHOTOS_STYLES.japandi[0]!],
-  ["/boutique/", "La boutique", "Plus de 30 000 meubles et objets de 27 enseignes, revérifiés chaque nuit.", PHOTOS_STYLES.boheme[0]!],
+  ["/boutique/", "La boutique", "Près de 5 000 belles pièces de 21 enseignes, du petit prix au haut de gamme.", PHOTOS_STYLES.boheme[0]!],
 ];
 
 /** Aperçu du catalogue vérifié par pièce et style : 3 pièces par gamme (calculé à la publication). */
@@ -47,25 +46,8 @@ const APERCU: Apercu = (() => {
 export default function Home() {
   return (
     <>
-      {/* ——— Ouverture : image plein cadre ——— */}
-      <section className="bleed relative -mt-7 overflow-hidden bg-[#141712] text-white">
-        <picture>
-          <source type="image/avif" srcSet={srcsetUnsplash(OUVERTURE.src, "avif")} sizes="100vw" />
-          <img src={tailleUnsplash(OUVERTURE.src, 1920, "webp")} srcSet={srcsetUnsplash(OUVERTURE.src, "webp")} sizes="100vw" alt="Appartement haussmannien : parquet point de Hongrie, moulures, lustre et grandes fenêtres" fetchPriority="high" decoding="async" className="absolute inset-0 size-full object-cover opacity-90" />
-        </picture>
-        <div aria-hidden className="absolute inset-0 bg-[linear-gradient(0deg,rgba(12,14,11,.9)_0%,rgba(12,14,11,.62)_55%,rgba(12,14,11,.3)_100%)] sm:bg-[linear-gradient(90deg,rgba(12,14,11,.82)_0%,rgba(12,14,11,.45)_45%,rgba(12,14,11,.05)_75%)]" />
-        <div className="wrap relative flex min-h-[min(86vh,880px)] flex-col justify-end pb-14 pt-32 sm:pb-20">
-          <p className="text-[11.5px] font-semibold uppercase tracking-[.22em] text-white/75">Studio d'architecture intérieure</p>
-          <h1 className="mt-5 max-w-[13ch] text-[clamp(52px,8vw,124px)] leading-[.92] text-white">L'intérieur, dessiné <em className="text-white/70">avant d'être construit.</em></h1>
-          <p className="mt-7 max-w-[46ch] text-[17px] leading-relaxed text-white/80">Photographiez votre pièce, ajoutez vos inspirations : nous la transformons dans cet esprit, et chaque meuble, couleur ou matière devient cliquable pour l'acheter.</p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="/transformer/" className="btn btn-light btn-lg">Essayer gratuitement</Link>
-            <Link href="/boutique/" className="btn btn-lg border-white/40 bg-transparent text-white hover:border-white">Voir la boutique</Link>
-          </div>
-          <p className="mt-5 text-[13px] text-white/75">1 étude complète offerte · sans carte bancaire · des produits réels à chaque budget</p>
-          <p className="mt-8 text-[11px] text-white/55">Photo <a href={lienUnsplash(OUVERTURE.auteur_url)} target="_blank" rel="noopener noreferrer" className="text-white/70 underline">{OUVERTURE.auteur}</a> sur <a href={lienUnsplash(OUVERTURE.page)} target="_blank" rel="noopener noreferrer" className="text-white/70 underline">Unsplash</a></p>
-        </div>
-      </section>
+      {/* ——— Ouverture : la promesse et une pièce dont on touche les meubles ——— */}
+      <Hero />
 
       <MarquesDefilantes marques={MARQUES} />
 
@@ -115,15 +97,6 @@ export default function Home() {
         <p className="eyebrow">Votre pièce, votre style, votre budget</p>
         <h2 id="h-choix" className="mt-4 max-w-[20ch] text-[clamp(40px,5vw,72px)]">Refaire son intérieur, <em>à chaque budget.</em></h2>
         <div className="mt-12"><ChoixPieceStyle apercu={APERCU} /></div>
-      </section>
-
-      {/* ——— Shop the look ——— */}
-      <section aria-labelledby="h-achat" className="py-24">
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
-          <div><p className="eyebrow">Du rendu à l'achat</p><h2 id="h-achat" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Touchez une pièce, <em>trouvez-la en vente.</em></h2></div>
-          <p className="max-w-[40ch] text-[14px] text-muted">Chaque élément de l'image renvoie à des produits réels de la boutique, avec leur prix relevé et le lien pour l'acheter.</p>
-        </div>
-        <ShopTheLook />
       </section>
 
       {/* ——— Personnalisation ——— */}
