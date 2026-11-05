@@ -238,3 +238,19 @@
 .xp-cue > span > span { animation: xp-cue 1.8s cubic-bezier(.6, 0, .4, 1) infinite; }
 .xp-spot { animation: xp-ring 2.2s ease-out infinite; }
 @media (prefers-reduced-motion: reduce) { .xp-rise, .xp-cue > span > span, .xp-spot { animation: none; } }
+
+/* Attente animée du parcours Transformer (moodboard, transformation). */
+.chargement-photo { filter: saturate(.6) blur(1.5px); animation: chargement-respire 6s ease-in-out infinite; }
+@keyframes chargement-respire { 50% { filter: saturate(1) blur(0); transform: scale(1.03); } }
+.chargement-balayage { position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%); background-size: 250% 100%; animation: chargement-balaye 2.4s ease-in-out infinite; mix-blend-mode: soft-light; }
+@keyframes chargement-balaye { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+.chargement-grille { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.18) 1px, transparent 1px); background-size: 48px 48px; animation: chargement-grille 3s ease-in-out infinite; }
+@keyframes chargement-grille { 50% { opacity: .25; } }
+.chargement-vignette { animation: chargement-flotte 3.2s ease-in-out infinite; }
+@keyframes chargement-flotte { 50% { transform: translateY(-6px) rotate(-2deg); } }
+.chargement-actif { animation: chargement-pouls 1.2s ease-in-out infinite; }
+@keyframes chargement-pouls { 0%, 100% { box-shadow: 0 0 0 0 rgba(122,91,48,.35); } 50% { box-shadow: 0 0 0 7px rgba(122,91,48,0); } }
+.chargement-points i { font-style: normal; animation: blink 1.2s infinite; }
+.chargement-points i:nth-child(2) { animation-delay: .2s; } .chargement-points i:nth-child(3) { animation-delay: .4s; }
+.etape-ligne { transition: width .8s cubic-bezier(.2,.7,.2,1); }
+@media (prefers-reduced-motion: reduce) { .chargement-photo, .chargement-balayage, .chargement-grille, .chargement-vignette, .chargement-actif, .chargement-points i { animation: none; } }

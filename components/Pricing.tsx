@@ -7,7 +7,7 @@ import { startCheckout } from "@/lib/billing";
 
 const UNIT: Record<string, string> = { free: "", one_time: "une fois", monthly: "/ mois", yearly: "/ an" };
 
-export function Pricing() {
+export function Pricing({ ids }: { ids?: PlanId[] } = {}) {
   const [busy, setBusy] = useState<PlanId | null>(null);
   const [error, setError] = useState<string | null>(null);
   const buy = async (id: PlanId) => {
@@ -19,9 +19,9 @@ export function Pricing() {
   return (
     <>
       <div className="grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr))]">
-        {PLANS.map((p) => (
+        {PLANS.filter((p) => !ids || ids.includes(p.id)).map((p) => (
           <article key={p.id} className={`panel flex flex-col gap-3 ${p.highlight ? "border-2 border-accent" : ""}`}>
-            {p.highlight && <span className="self-start rounded-full bg-accent px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-accent-ink">Le plus choisi</span>}
+            {p.highlight && <span className="self-start rounded-full bg-accent px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-accent-ink">Recommandé</span>}
             {p.id === "pass" && <span className="self-start rounded-full bg-soft px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-muted">Sans abonnement</span>}
             <h2 className="text-[22px]">{p.name}</h2>
             <p className="text-sm text-muted">{p.tagline}</p>

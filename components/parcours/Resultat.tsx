@@ -97,6 +97,7 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
             <summary className="cursor-pointer list-none text-[14px] font-semibold">Dans notre sélection vérifiée<span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
             <Comparator key={sel.o.id} features={featuresOf(sel.o)} objectName={sel.o.label} inList={inList} onAdd={(p) => onAdd(p, sel.o.id)} />
           </details>
+          <PartoutEnLigne q={sel.o.query || sel.o.label} />
           <Lens image={image} />
         </>)}
         {sel?.kind === "surface" && <Teinte hex={sel.s.colors[0]?.hex} name={sel.s.colors[0]?.name} kind={sel.s.kind} material={sel.s.material} finish={sel.s.finish} />}
@@ -151,6 +152,17 @@ function Lens({ image }: { image: string }) {
     <div className="mt-5 border-t border-line pt-4 text-[12.5px]">
       <a className="btn btn-sm" href={lensUrl(image)} target="_blank" rel="noopener noreferrer">Chercher sur tout le web avec Google Lens<span className="sr-only"> (nouvel onglet)</span></a>
       <p className="mt-1.5 text-muted">Ouvre l'image dans Google Lens : sélectionnez le meuble pour voir des modèles en vente partout sur le web.</p>
+    </div>
+  );
+}
+
+/** Encore plus de modèles : la recherche de chaque enseigne et Google Shopping, ouverts sur leurs sites (prix et stock chez eux). */
+function PartoutEnLigne({ q }: { q: string }) {
+  return (
+    <div className="mt-5 border-t border-line pt-4">
+      <p className="text-[15px] font-semibold tracking-tight">Encore plus de modèles</p>
+      <div className="mt-2"><ShopLinks query={q} kinds={["meuble", "deco"]} max={30} title="" /></div>
+      <a className="btn btn-sm mt-2" href={`https://www.google.com/search?tbm=shop&hl=fr&gl=fr&q=${encodeURIComponent(q)}`} target="_blank" rel="noopener noreferrer nofollow">Comparer sur Google Shopping ↗<span className="sr-only"> (nouvel onglet)</span></a>
     </div>
   );
 }

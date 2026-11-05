@@ -21,8 +21,8 @@ test("accueil : promesse, accès direct au Studio, sections éditoriales", async
   await expect(page.getByRole("heading", { level: 1 })).toContainText("dessiné");
   await expect(page.getByRole("link", { name: "Transformer ma pièce" }).first()).toHaveAttribute("href", "/transformer/");
   const mobile = (page.viewportSize()?.width ?? 1200) < 1024;
-  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Catalogue", "Matières"]);
-  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Catalogue", "Matières"]);
+  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Catalogue", "Boutique"]);
+  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Catalogue", "Boutique", "Tarifs"]);
   await expect(page.getByRole("heading", { name: /trouvez-la en vente/ })).toBeVisible();
   await page.getByRole("button", { name: /Table basse en travertin : voir les produits ressemblants/ }).click();
   await expect(page.getByRole("link", { name: /travertin/i }).first()).toHaveAttribute("target", "_blank");
@@ -577,4 +577,22 @@ test("accueil : bande des enseignes, avec bouton pause", async ({ page }) => {
   const b = page.getByRole("button", { name: "Mettre en pause" });
   await b.click();
   await expect(page.getByRole("button", { name: "Relancer le défilement" })).toHaveAttribute("aria-pressed", "true");
+});
+
+test("transformer : attente animée pendant le moodboard (étapes, progression)", async ({ page }) => {
+  await page.route("**/v2/moodboard", async (r) => { await new Promise((x) => setTimeout(x, 4000)); await r.fulfill({ status: 500, headers: { "Access-Control-Allow-Origin": "*" }, body: "{}" }); });
+  await page.goto("/transformer/");
+  await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/inspirations/villas-16.webp");
+  await page.getByLabel("Ajouter des inspirations").setInputFiles(["public/editorial/ia/japandi-essai.webp"]);
+  await page.getByRole("button", { name: "Créer mon moodboard" }).click();
+  await expect(page.getByRole("status", { name: /Votre moodboard se compose/ })).toBeVisible();
+  await expect(page.getByText(/durée habituelle 10 à 20 s/)).toBeVisible();
+});
+
+test("tarifs : offres, contenu d'une étude, appel à l'essai gratuit", async ({ page }) => {
+  await page.goto("/tarifs/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("pour le prix d'un coussin");
+  await expect(page.getByText("Recommandé").first()).toBeVisible();
+  await expect(page.getByText("Le plus choisi")).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Faire mon étude offerte" })).toHaveAttribute("href", "/transformer/");
 });

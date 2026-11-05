@@ -4,6 +4,7 @@ import { chercher, estAccessoire, FAMILLES, norm, selection, type Famille, type 
 import { toggleExternal, useProject } from "@/lib/studio/project";
 import { ProduitImage } from "@/components/ProduitImage";
 import { PHOTOS_STYLES, tailleUnsplash } from "@/lib/inspirations-photos";
+import { imageValide } from "@/lib/catalogue-achetable";
 
 const U = (st: keyof typeof PHOTOS_STYLES, i: number) => tailleUnsplash(PHOTOS_STYLES[st][i]!.src, 160, "webp");
 /** Pastille de chaque famille : vraie photo d'intérieur (Unsplash) ou texture réelle de matière. */
@@ -73,7 +74,9 @@ export function Boutique() {
     if (q.trim().length > 1) l = chercher(l, q, 5000) as P[];
     if (tri === "prix-asc") l = [...l].sort((a, b) => (a.p ?? 1e9) - (b.p ?? 1e9));
     if (tri === "prix-desc") l = [...l].sort((a, b) => (b.p ?? -1) - (a.p ?? -1));
-    if (tri === "pertinence" && !q.trim()) l = selection(l).sort((a, b) => Number(Boolean(b.i)) - Number(Boolean(a.i)));
+    if (tri === "pertinence" && !q.trim()) l = selection(l);
+    // Produits avec une vraie photo d'abord, quel que soit le tri (tri stable : l'ordre choisi est gardé).
+    l = [...l].sort((a, b) => Number(imageValide(b.i)) - Number(imageValide(a.i)));
     return l;
   }, [items, zone, vendeur, max, stock, q, tri]);
 

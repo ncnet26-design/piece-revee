@@ -5,18 +5,15 @@ import { ChoixPieceStyle, type Apercu } from "@/components/home/ChoixPieceStyle"
 import catalogue from "@/data/catalogue.json";
 import indexCatalogue from "@/public/catalogue/index.json";
 import { MarquesDefilantes } from "@/components/home/MarquesDefilantes";
+import { OffreTeaser } from "@/components/OffreTeaser";
 import { GAMMES, NOM_STYLE, PIECES, STYLES as STYLES_CATALOGUE, type ProduitAchetable } from "@/lib/catalogue-achetable";
 import { meta } from "@/lib/seo";
 import { lienUnsplash, PHOTOS_STYLES, srcsetUnsplash, tailleUnsplash, type PhotoStyle } from "@/lib/inspirations-photos";
 import { PhotoUnsplash } from "@/components/inspirations/PhotoUnsplash";
 import { Photo } from "@/components/Photo";
-import matieres4k from "@/content/data/matieres-4k.json";
-import { MATIERES_REELLES } from "@/components/matieres/MatieresReelles";
 
 export const metadata = meta({ title: "Pièce Rêvée · Studio d'architecture intérieure", description: "Photographiez votre pièce, ajoutez vos inspirations : votre pièce transformée, et chaque meuble, couleur ou matière cliquable pour l'acheter.", path: "/" });
 
-/** Matières de l'accueil : textures réelles photographiées (CC0), plus aucune image générée. */
-const MATIERES = (["travertin", "noyer", "marbre-carrare", "enduit-chaux", "terrazzo", "rotin"] as const).map((k) => ({ id: k, name: MATIERES_REELLES[k]!.nom, credit: (matieres4k as Record<string, { source: string }>)[k]?.source ?? "" }));
 /** Enseignes présentes sur le site : celles du catalogue vérifié et celles relevées par le robot. */
 const MARQUES = [...new Set([...(catalogue as { produits: ProduitAchetable[] }).produits.map((p) => p.enseigne), ...Object.keys((indexCatalogue as { vendeurs: Record<string, number> }).vendeurs)])]
   .sort((a, b) => a.localeCompare(b, "fr"));
@@ -26,7 +23,7 @@ const PORTES: Array<[string, string, string, string | PhotoStyle]> = [
   ["/transformer/", "Transformer ma pièce", "Votre photo, vos inspirations, votre pièce transformée.", PHOTOS_STYLES.scandinave[0]!],
   ["/galerie/", "Inspirations", "Huit styles en vraies photos, reliés aux pièces en vente.", PHOTOS_STYLES.japandi[0]!],
   ["/catalogue/", "Le catalogue", "Votre style, à votre budget : des pièces réelles, vérifiées.", PHOTOS_STYLES["mid-century"][0]!],
-  ["/matieres/", "Matières", "Bois, pierres, enduits, tissus : de vraies textures, à l'échelle.", "/matieres/travertin/1280.webp"],
+  ["/boutique/", "La boutique", "Plus de 30 000 meubles et objets de 27 enseignes, revérifiés chaque nuit.", PHOTOS_STYLES.boheme[0]!],
 ];
 
 /** Aperçu du catalogue vérifié par pièce et style : 3 pièces par gamme (calculé à la publication). */
@@ -62,10 +59,11 @@ export default function Home() {
           <h1 className="mt-5 max-w-[13ch] text-[clamp(52px,8vw,124px)] leading-[.92] text-white">L'intérieur, dessiné <em className="text-white/70">avant d'être construit.</em></h1>
           <p className="mt-7 max-w-[46ch] text-[17px] leading-relaxed text-white/80">Photographiez votre pièce, ajoutez vos inspirations : nous la transformons dans cet esprit, et chaque meuble, couleur ou matière devient cliquable pour l'acheter.</p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="/transformer/" className="btn btn-light btn-lg">Transformer ma pièce</Link>
+            <Link href="/transformer/" className="btn btn-light btn-lg">Essayer gratuitement</Link>
             <Link href="/catalogue/" className="btn btn-lg border-white/40 bg-transparent text-white hover:border-white">Ouvrir le catalogue</Link>
           </div>
-          <p className="mt-10 text-[11px] text-white/55">Photo <a href={lienUnsplash(OUVERTURE.auteur_url)} target="_blank" rel="noopener noreferrer" className="text-white/70 underline">{OUVERTURE.auteur}</a> sur <a href={lienUnsplash(OUVERTURE.page)} target="_blank" rel="noopener noreferrer" className="text-white/70 underline">Unsplash</a></p>
+          <p className="mt-5 text-[13px] text-white/75">1 étude complète offerte · sans carte bancaire · des produits réels à chaque budget</p>
+          <p className="mt-8 text-[11px] text-white/55">Photo <a href={lienUnsplash(OUVERTURE.auteur_url)} target="_blank" rel="noopener noreferrer" className="text-white/70 underline">{OUVERTURE.auteur}</a> sur <a href={lienUnsplash(OUVERTURE.page)} target="_blank" rel="noopener noreferrer" className="text-white/70 underline">Unsplash</a></p>
         </div>
       </section>
 
@@ -94,13 +92,6 @@ export default function Home() {
         </ul>
       </section>
 
-      {/* ——— Le concept en un geste : pièce + style → pièces réelles par budget ——— */}
-      <section aria-labelledby="h-choix" className="border-t border-line py-20 sm:py-24">
-        <p className="eyebrow">Votre pièce, votre style, votre budget</p>
-        <h2 id="h-choix" className="mt-4 max-w-[20ch] text-[clamp(40px,5vw,72px)]">Refaire son intérieur, <em>à chaque budget.</em></h2>
-        <div className="mt-12"><ChoixPieceStyle apercu={APERCU} /></div>
-      </section>
-
       {/* ——— Trois gestes ——— */}
       <section aria-labelledby="h-gestes" className="border-y border-line py-14">
         <h2 id="h-gestes" className="sr-only">Comment ça marche</h2>
@@ -119,6 +110,13 @@ export default function Home() {
         </ol>
       </section>
 
+      {/* ——— Le concept en un geste : pièce + style → pièces réelles par budget ——— */}
+      <section aria-labelledby="h-choix" className="border-t border-line py-20 sm:py-24">
+        <p className="eyebrow">Votre pièce, votre style, votre budget</p>
+        <h2 id="h-choix" className="mt-4 max-w-[20ch] text-[clamp(40px,5vw,72px)]">Refaire son intérieur, <em>à chaque budget.</em></h2>
+        <div className="mt-12"><ChoixPieceStyle apercu={APERCU} /></div>
+      </section>
+
       {/* ——— Shop the look ——— */}
       <section aria-labelledby="h-achat" className="py-24">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
@@ -127,6 +125,23 @@ export default function Home() {
         </div>
         <ShopTheLook />
       </section>
+
+      {/* ——— Personnalisation ——— */}
+      <section aria-labelledby="h-perso" className="grid items-center gap-10 py-20 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
+        <div>
+          <p className="eyebrow">Personnaliser</p>
+          <h2 id="h-perso" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Même pièce, <em>autre caractère.</em></h2>
+          <p className="mt-6 max-w-[40ch] text-[15px] text-muted">Bouclé et noyer, ou velours vert et chêne fumé : on change une matière, le reste de la pièce ne bouge pas. Avec votre photo, chaque matière proposée mène à de vrais produits.</p>
+          <Link href="/transformer/" className="btn mt-8">Essayer avec ma pièce</Link>
+        </div>
+        <div>
+          <BeforeAfter ratio="16 / 9" labelBefore="Bouclé et noyer" labelAfter="Velours et chêne fumé"
+            before={<Photo src="/editorial/ia/salon-boucle-noyer.webp" sizes="(min-width:1024px) 60vw, 100vw" alt="Salon : canapé bouclé crème, buffet cannelé en noyer" />}
+            after={<Photo src="/editorial/ia/salon-velours-chene.webp" sizes="(min-width:1024px) 60vw, 100vw" alt="Même salon : canapé en velours vert, buffet en chêne fumé" />} />
+          <p className="mt-3 text-[12px] text-muted">Images générées par IA : même pièce, seules deux matières changent.</p>
+        </div>
+      </section>
+
 
       {/* ——— Styles : vraies photos ——— */}
       <section aria-labelledby="h-styles" className="py-20">
@@ -148,49 +163,14 @@ export default function Home() {
         </ul>
       </section>
 
-      {/* ——— Personnalisation ——— */}
-      <section aria-labelledby="h-perso" className="grid items-center gap-10 py-20 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
-        <div>
-          <p className="eyebrow">Personnaliser</p>
-          <h2 id="h-perso" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Même pièce, <em>autre caractère.</em></h2>
-          <p className="mt-6 max-w-[40ch] text-[15px] text-muted">Bouclé et noyer, ou velours vert et chêne fumé : on change une matière, le reste de la pièce ne bouge pas. Avec votre photo, chaque matière proposée mène à de vrais produits.</p>
-          <Link href="/transformer/" className="btn mt-8">Essayer avec ma pièce</Link>
-        </div>
-        <div>
-          <BeforeAfter ratio="16 / 9" labelBefore="Bouclé et noyer" labelAfter="Velours et chêne fumé"
-            before={<Photo src="/editorial/ia/salon-boucle-noyer.webp" sizes="(min-width:1024px) 60vw, 100vw" alt="Salon : canapé bouclé crème, buffet cannelé en noyer" />}
-            after={<Photo src="/editorial/ia/salon-velours-chene.webp" sizes="(min-width:1024px) 60vw, 100vw" alt="Même salon : canapé en velours vert, buffet en chêne fumé" />} />
-          <p className="mt-3 text-[12px] text-muted">Images générées par IA : même pièce, seules deux matières changent.</p>
-        </div>
-      </section>
-
-      {/* ——— Matières ——— */}
-      <section aria-labelledby="h-matieres" className="py-20">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div><p className="eyebrow">Matières</p><h2 id="h-matieres" className="mt-4 text-[clamp(36px,4.4vw,60px)]">De vraies matières, <em>à la bonne échelle.</em></h2></div>
-          <Link href="/showroom/" className="btn">La matériauthèque</Link>
-        </div>
-        <ul className="mt-12 grid list-none grid-cols-2 gap-x-5 gap-y-8 p-0 sm:grid-cols-3 lg:grid-cols-6">
-          {MATIERES.map((m) => (
-            <li key={m.id}>
-              <Link href="/matieres/#h-reelles" className="block no-underline">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/matieres/${m.id}/640.webp`} srcSet={`/matieres/${m.id}/640.webp 640w, /matieres/${m.id}/1280.webp 1280w`} sizes="(min-width:1024px) 16vw, (min-width:640px) 33vw, 50vw" alt={`${m.name} : texture photographiée`} loading="lazy" decoding="async" className="aspect-square w-full object-cover" />
-                <p className="mt-3 text-[14px] font-medium text-ink">{m.name}</p>
-                <p className="text-[12.5px] text-muted">{m.credit} · CC0</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-6 text-[12px] text-muted">Textures photographiées en 4K, libres de droits (Poly Haven, ambientCG). Chacune renvoie à des pièces en vente, du petit budget au haut de gamme.</p>
-      </section>
+      <OffreTeaser />
 
       {/* ——— Appel final ——— */}
       <section className="border-t border-line py-24 text-center">
         <h2 className="mx-auto max-w-[16ch] text-[clamp(40px,5.6vw,80px)]">Votre pièce, <em>en vrai.</em></h2>
         <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <Link href="/transformer/" className="btn btn-primary btn-lg">Transformer ma pièce</Link>
-          <Link href="/catalogue/" className="btn btn-lg btn-ghost">Ouvrir le catalogue</Link>
+          <Link href="/transformer/" className="btn btn-primary btn-lg">Faire mon étude offerte</Link>
+          <Link href="/tarifs/" className="btn btn-lg btn-ghost">Voir les tarifs</Link>
         </div>
       </section>
     </>

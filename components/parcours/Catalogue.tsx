@@ -16,14 +16,16 @@ export function Catalogue({ type, label, query, forObject }: { type: string; lab
   const project = useProject();
   const inList = (u: string) => project.list.some((x) => x.productId === u);
   const f = familleDe(type, label);
+  const [plus, setPlus] = useState<{ key: string; n: number }>({ key: "", n: 6 });
   const [res, setRes] = useState<{ key: string; list: Array<ProduitCatalogue & { score: number }>; total: number } | null>(null);
   const key = `${f}|${query}`;
   useEffect(() => {
     if (!f) return;
     let alive = true;
-    void load(f).then((all) => { if (alive) setRes({ key, list: chercher(all, `${query} ${label}`, 6), total: all.length }); });
+    void load(f).then((all) => { if (alive) setRes({ key, list: chercher(all, `${query} ${label}`, 500), total: all.length }); });
     return () => { alive = false; };
   }, [f, key, query, label]);
+  const vus = plus.key === key ? plus.n : 6;
   if (!f || !res || res.key !== key || res.total === 0) return null;
   return (
     <section aria-labelledby="h-catalogue" className="mt-6 border-t border-line pt-5">
@@ -33,7 +35,7 @@ export function Catalogue({ type, label, query, forObject }: { type: string; lab
       </div>
       {res.list.length === 0 ? <p className="mt-2 text-[12.5px] text-muted">Rien d'assez ressemblant parmi les produits suivis.</p> : (
         <ul className="mt-3 grid list-none gap-2 p-0">
-          {res.list.map((p) => (
+          {res.list.slice(0, vus).map((p) => (
             <li key={p.u} className="flex gap-3 rounded-[2px] border border-line bg-white p-3">
               <ProduitImage src={p.i} alt="" merchant={p.m} className="w-20 shrink-0 self-start" />
               <div className="min-w-0 flex-1">
@@ -49,6 +51,11 @@ export function Catalogue({ type, label, query, forObject }: { type: string; lab
             </li>
           ))}
         </ul>
+      )}
+      {res.list.length > vus && (
+        <button type="button" className="btn mt-3 w-full" onClick={() => setPlus({ key, n: vus + 12 })}>
+          Voir {Math.min(12, res.list.length - vus)} modèles de plus <span className="text-muted">· {res.list.length - vus} autres trouvés</span>
+        </button>
       )}
     </section>
   );

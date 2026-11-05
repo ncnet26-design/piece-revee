@@ -1,5 +1,7 @@
 "use client";
 import { textureMatiere } from "@/lib/texture-matiere";
+import { Chargement } from "./Chargement";
+import { OffreTeaser } from "@/components/OffreTeaser";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PHOTOS_STYLES, tailleUnsplash } from "@/lib/inspirations-photos";
 import { NOM_STYLE, STYLES as CATALOGUE_STYLES } from "@/lib/catalogue-achetable";
@@ -38,7 +40,7 @@ export function Parcours() {
   const [wish, setWish] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [job, setJob] = useState<IaJob | null>(null);
+  const [, setJob] = useState<IaJob | null>(null);
   const [result, setResult] = useState<Saved["result"]>(null);
   const [analysing, setAnalysing] = useState(false);
   const top = useRef<HTMLDivElement>(null);
@@ -115,18 +117,26 @@ export function Parcours() {
 
   const restart = () => { setEtape("photos"); setResult(null); setMood(null); setJob(null); setError(null); try { localStorage.removeItem(SAVE); } catch { /* */ } };
   const steps: Array<[Etape, string]> = [["photos", "Ma pièce et mes inspirations"], ["moodboard", "Mon moodboard"], ["resultat", "Ma pièce transformée"]];
+  // Pendant le calcul, l'étape en cours est celle qu'on prépare (moodboard ou transformation).
+  const idx = busy ? (busy.startsWith("Lecture") ? 1 : 2) : steps.findIndex(([id]) => id === etape);
 
   return (
     <div ref={top} className="scroll-mt-24">
-      <ol className="flex list-none flex-wrap gap-x-6 gap-y-2 border-b border-line p-0 pb-4 text-[14px]" aria-label="Étapes">
-        {steps.map(([id, l], i) => (
-          <li key={id} aria-current={etape === id ? "step" : undefined} className={etape === id ? "font-semibold text-ink" : "text-muted"}>
-            <span className="font-display mr-1.5 text-[18px]">{String(i + 1).padStart(2, "0")}</span>{l}
-          </li>
-        ))}
+      <ol className="relative grid list-none grid-cols-3 gap-2 p-0 pb-2 text-[13px] sm:text-[14px]" aria-label="Étapes">
+        <span aria-hidden className="absolute left-[16.6%] right-[16.6%] top-[17px] h-px bg-line" />
+        <span aria-hidden className="etape-ligne absolute left-[16.6%] top-[17px] h-px bg-ink" style={{ width: `${(66.8 * idx) / 2}%` }} />
+        {steps.map(([id, l], i) => {
+          const fait = i < idx, actif = i === idx;
+          return (
+            <li key={id} aria-current={actif ? "step" : undefined} className="relative flex flex-col items-center gap-2 text-center">
+              <span className={`grid size-[34px] place-items-center rounded-full border font-display text-[16px] transition-all duration-500 ${fait ? "border-ink bg-ink text-white" : actif ? `border-ink bg-surface text-ink ${busy ? "chargement-actif" : ""}` : "border-line bg-bg text-muted"}`}>{fait ? "✓" : i + 1}</span>
+              <span className={actif ? "font-semibold text-ink" : fait ? "text-ink" : "text-muted"}>{l}</span>
+            </li>
+          );
+        })}
       </ol>
 
-      {busy && <p role="status" className="studio-progress mt-6 rounded-[2px] bg-soft px-4 py-3 text-[14px]">{busy}{job && job.status === "en_cours" ? ` · ${job.provider}` : ""}</p>}
+      {busy && <Chargement kind={busy.startsWith("Lecture") ? "moodboard" : "transformation"} image={room} inspirations={inspi} />}
       {error && <p role="alert" className="mt-6 rounded-[2px] bg-[#FBEDE6] px-4 py-3 text-[14px] text-[#8A3B17]">{error}</p>}
 
       {etape === "photos" && (
@@ -243,6 +253,7 @@ export function Parcours() {
             <a className="btn" href="/catalogue/">Voir le catalogue par budget</a>
             <button type="button" className="btn btn-ghost" onClick={restart}>Nouveau projet</button>
           </div>
+          <OffreTeaser compact titre="Ça vous plaît ? Faites toutes vos pièces." />
         </div>
       )}
     </div>
