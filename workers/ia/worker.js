@@ -538,10 +538,10 @@ function metaProduct(html) {
 }
 
 // workers/ia/src/recherche.ts
-var SEARCH_MODEL = "gemini-3.5-flash-lite";
-var DELAI_PAGES = 4e3;
+var SEARCH_MODEL = TEXT_MODEL;
+var DELAI_PAGES = 6e3;
 var PROMPT = (q, label, pays) => [
-  `Use Google Search now (one single search, answer fast) to find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
+  `Use Google Search now (at most 2 searches) to find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
   `Prefer online shops that deliver to ${pays === "FR" ? "France" : "Europe"} (marketplaces, furniture and decor retailers, DIY stores, design brands), with a range of prices from affordable to premium.`,
   "Only list direct product pages (one product per page), never category pages, blogs or search pages. Never invent a URL: only pages you found with the search.",
   'Finish your answer with a JSON block: {"products":[{"title":"","url":"","merchant":""}]}.'
@@ -567,7 +567,7 @@ function slugTitle(u) {
 async function resolve(u) {
   if (!/grounding-api-redirect/.test(u)) return u;
   try {
-    const r = await fetch(u, { method: "HEAD", redirect: "manual", signal: AbortSignal.timeout(2500) });
+    const r = await fetch(u, { method: "HEAD", redirect: "manual", signal: AbortSignal.timeout(5e3) });
     return r.headers.get("location") || u;
   } catch {
     return u;
@@ -575,7 +575,7 @@ async function resolve(u) {
 }
 async function inspect(url) {
   try {
-    const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 (compatible; PieceReveeBot/1.0; +https://odd-bar-c583.ewanesteves26.workers.dev)", accept: "text/html", "accept-language": "fr-FR,fr;q=0.9" }, redirect: "follow", signal: AbortSignal.timeout(3500) });
+    const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 (compatible; PieceReveeBot/1.0; +https://odd-bar-c583.ewanesteves26.workers.dev)", accept: "text/html", "accept-language": "fr-FR,fr;q=0.9" }, redirect: "follow", signal: AbortSignal.timeout(6e3) });
     if (!r.ok || !(r.headers.get("content-type") ?? "").includes("html")) return null;
     const html = (await r.text()).slice(0, 15e5);
     return parseProduct(html);
@@ -585,13 +585,12 @@ async function inspect(url) {
 }
 async function rechercher(env, q, label, pays = "FR") {
   if (!env.GEMINI_API_KEY) throw new ProviderError("La recherche sur internet n'est pas configur\xE9e (cl\xE9 manquante).", false);
-  const appel = (model, rapide) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+  const appel = (model) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST",
     headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }], ...rapide ? { generationConfig: { thinkingConfig: { thinkingLevel: "low" } } } : {} })
+    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }] })
   }, 2);
-  let r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL, true);
-  if (r.status === 400 || r.status === 404) r = await appel(env.GEMINI_TEXT_MODEL || TEXT_MODEL, false);
+  const r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL);
   if (!r.ok) throw new ProviderError("La recherche sur internet a \xE9chou\xE9.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
   const j = await r.json();
   const c = j.candidates?.[0];
@@ -632,8 +631,7 @@ async function rechercher(env, q, label, pays = "FR") {
   const limite = new Promise((ok) => setTimeout(() => ok(null), DELAI_PAGES));
   const produits = (await Promise.all(unique.map(async (p) => {
     const d = await Promise.race([inspect(p.url), limite]);
-    const title = d?.name || p.title || slugTitle(p.url);
-    if (!title) return null;
+    const title = d?.name || p.title || slugTitle(p.url) || `Mod\xE8le chez ${p.merchant || host(p.url)}`;
     return {
       title,
       url: p.url,
