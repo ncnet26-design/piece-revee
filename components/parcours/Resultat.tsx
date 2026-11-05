@@ -92,7 +92,10 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
         {sel?.kind === "objet" && (<>
           {sel.o.description && <p className="mt-2 text-[13px] text-muted">{sel.o.description}</p>}
           <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={sel.o.label} forObject={sel.o.id} />
-          <Catalogue type={sel.o.type} label={sel.o.label} query={sel.o.query || sel.o.label} forObject={sel.o.id} />
+          <details className="group mt-5 border-t border-line pt-4">
+            <summary className="cursor-pointer list-none text-[14px] font-semibold">Aussi dans notre boutique<span className="ml-2 font-normal text-muted">30 000 produits, prix revérifiés chaque nuit</span><span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
+            <Catalogue type={sel.o.type} label={sel.o.label} query={sel.o.query || sel.o.label} forObject={sel.o.id} />
+          </details>
           <details className="group mt-5 border-t border-line pt-4">
             <summary className="cursor-pointer list-none text-[14px] font-semibold">Dans notre sélection vérifiée<span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
             <Comparator key={sel.o.id} features={featuresOf(sel.o)} objectName={sel.o.label} inList={inList} onAdd={(p) => onAdd(p, sel.o.id)} />

@@ -1217,37 +1217,6 @@
    "image": "https://www.gifi.fr/dw/image/v2/BJSK_PRD/on/demandware.static/-/Sites-master_GIFI/default/dw4ffa5675/6/3/637341_610766_F.jpg?sw=282&sh=282&sm=fit"
   },
   {
-   "id": "d632fe3fff32",
-   "nom": "Coussin de bain de soleil GoodHome Tiga gris acier 55 x 190 cm",
-   "enseigne": "Castorama",
-   "marque": null,
-   "prix": 69.9,
-   "devise": "EUR",
-   "gamme": "moyen",
-   "styles": [
-    "industriel"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "deco",
-   "dimensions": "55 × 190 cm",
-   "matiere": [
-    "métal"
-   ],
-   "couleur": [
-    "gris"
-   ],
-   "url": "https://www.castorama.fr/coussin-de-bain-de-soleil-goodhome-tiga-gris-acier-55-x-190-cm/5059340678344_CAFR.prd",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://media.castorama.fr/is/image/Castorama/coussin-de-bain-de-soleil-goodhome-tiga-gris-acier-55-x-190-cm~5059340678344_01c?$MOB_PREV$&$width=284&$height=284"
-  },
-  {
    "id": "f90aa70a8054",
    "nom": "Set de 2 tables basses pour plateaux ronds en métal noir - Ø 62 cm & Ø 93 cm",
    "enseigne": "Fleux",
@@ -1590,38 +1559,6 @@
    "image": "https://www.gifi.fr/dw/image/v2/BJSK_PRD/on/demandware.static/-/Sites-master_GIFI/default/dw95e5ec98/5/9/591303_M.jpg?sw=282&sh=282&sm=fit"
   },
   {
-   "id": "fe3025893619",
-   "nom": "Desserte roulante pour cuisine extérieur avec tablettes latérales acier noir Le Marquier",
-   "enseigne": "Castorama",
-   "marque": null,
-   "prix": 579.9,
-   "devise": "EUR",
-   "gamme": "moyen",
-   "styles": [
-    "industriel"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre",
-    "salle-a-manger"
-   ],
-   "famille": "rangement",
-   "dimensions": null,
-   "matiere": [
-    "métal"
-   ],
-   "couleur": [
-    "noir"
-   ],
-   "url": "https://www.castorama.fr/desserte-roulante-pour-cuisine-exterieur-avec-tablettes-laterales-acier-noir-le-marquier/3339380173156_CAFR.prd",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://media.castorama.fr/is/image/Castorama/desserte-roulante-pour-cuisine-exterieur-avec-tablettes-laterales-acier-noir-le-marquier~3339380173156_01c_FR_CF?$MOB_PREV$&$width=284&$height=284"
-  },
-  {
    "id": "181e07639e32",
    "nom": "Suspension en métal - Diamètre 80 cm - Noir",
    "enseigne": "Habitat",
@@ -1652,38 +1589,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://cdn.habitat.fr/thumbnails/product/90/90921/large/0/13529491.webp"
-  },
-  {
-   "id": "f0cb5076bb5a",
-   "nom": "Set de table rectangulaire 180x90 cm en bois d'acacia et acier Maupi et 6 chaises de jardin en rotin synthétique Gouda Naturel",
-   "enseigne": "Sklum",
-   "marque": "Sklum FR",
-   "prix": 699.95,
-   "devise": "EUR",
-   "gamme": "haut",
-   "styles": [
-    "industriel",
-    "boheme"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salle-a-manger"
-   ],
-   "famille": "chaise",
-   "dimensions": "180 × 90 cm",
-   "matiere": [
-    "métal",
-    "rotin"
-   ],
-   "couleur": [
-    "naturel"
-   ],
-   "url": "https://www.sklum.com/fr/acheter-ensemble-table-et-chaises-de-jardin/201940-ensemble-table-rectangulaire-180x90-cm-en-bois-d-acacia-et-acier-maupi-et-6-chaises-de-jardin-en-rotin-synthetique-gouda-natural.html",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "BackOrder",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn.sklum.com/fr/4170077/ensemble-table-rectangulaire-180x90-cm-en-bois-d-acacia-et-acier-maupi-et-6-chaises-de-jardin-en-rotin-synthetique-gouda-natural.jpg"
   },
   {
    "id": "c44aea833d44",
@@ -2800,36 +2705,6 @@
    "image": "https://www.maisonsarahlavoine.com/cdn/shop/files/3664511003003_2311MIROVO02-NATUREL--75X57CM_1.jpg?v=1720525710&width=1920"
   },
   {
-   "id": "44290efd20f8",
-   "nom": "Table à manger carrée de jardin en teck massif - Naturel",
-   "enseigne": "Habitat",
-   "marque": null,
-   "prix": 549,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "mid-century"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salle-a-manger"
-   ],
-   "famille": "table-manger",
-   "dimensions": null,
-   "matiere": [
-    "teck"
-   ],
-   "couleur": [
-    "naturel"
-   ],
-   "url": "https://www.habitat.fr/p/calvia-calvia-table-carree-de-jardin-en-teck-massif-naturel",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn.habitat.fr/thumbnails/product/122/122990/large/0/13551793.webp"
-  },
-  {
    "id": "aac20e840a86",
    "nom": "Tabouret en teck Lawas",
    "enseigne": "Westwing",
@@ -3590,67 +3465,6 @@
    "image": "https://cdn.shopify.com/s/files/1/0613/3107/9307/files/DEQ23WES59841-204766_fe05716fb54b12e0d2fe6baf9b43e5dc_dtl_1.jpg"
   },
   {
-   "id": "e4f255e29c8d",
-   "nom": "Loveuse Louise rotin avec coussin blanc 115x91xH101cm",
-   "enseigne": "Gifi",
-   "marque": null,
-   "prix": 59,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "boheme"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "fauteuil",
-   "dimensions": null,
-   "matiere": [
-    "rotin"
-   ],
-   "couleur": [
-    "blanc"
-   ],
-   "url": "https://www.gifi.fr/exterieur-et-animalerie/mobilier-exterieur/transat-hamac-fauteuil-de-jardin/loveuse-louise-rotin-avec-coussin-blanc-115x91xh101cm/000000000000503687.html",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://www.gifi.fr/dw/image/v2/BJSK_PRD/on/demandware.static/-/Sites-master_GIFI/default/dw0f3c1ca2/5/0/503687_F.jpg?sw=282&sh=282&sm=fit"
-  },
-  {
-   "id": "96f5632da570",
-   "nom": "Abat-jour pour suspension extérieur en toile de jute Ø.70 cm Lumisky Freya Large",
-   "enseigne": "Castorama",
-   "marque": null,
-   "prix": 59.9,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "boheme"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre",
-    "salle-a-manger"
-   ],
-   "famille": "luminaire",
-   "dimensions": null,
-   "matiere": [
-    "jute"
-   ],
-   "couleur": [],
-   "url": "https://www.castorama.fr/abat-jour-pour-suspension-exterieur-en-toile-de-jute-70-cm-lumisky-freya-large/3666162008574_CAFR.prd",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://media.castorama.fr/is/image/Castorama/abat-jour-pour-suspension-exterieur-en-toile-de-jute-70-cm-lumisky-freya-large~3666162008574_01i_FR_CF?$MOB_PREV$&$width=284&$height=284"
-  },
-  {
    "id": "815881822675",
    "nom": "Gesso Jute Rug - Terracotta/Off-White",
    "enseigne": "Ferm Living",
@@ -4010,36 +3824,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://images.selency.com/561dc575-161d-4303-b09a-72e676a0e3f1?width=1200&height=1200&func=bound"
-  },
-  {
-   "id": "641c9fdd1085",
-   "nom": "Abat-jour pour suspension extérieure en toile de jute E27 H.22 x Ø.75 cm Lumisky Havana",
-   "enseigne": "Castorama",
-   "marque": null,
-   "prix": 64.9,
-   "devise": "EUR",
-   "gamme": "moyen",
-   "styles": [
-    "boheme"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre",
-    "salle-a-manger"
-   ],
-   "famille": "luminaire",
-   "dimensions": null,
-   "matiere": [
-    "jute"
-   ],
-   "couleur": [],
-   "url": "https://www.castorama.fr/abat-jour-pour-suspension-exterieure-en-toile-de-jute-e27-h-22-x-75-cm-lumisky-havana/3666162007744_CAFR.prd",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://media.castorama.fr/is/image/Castorama/abat-jour-pour-suspension-exterieure-en-toile-de-jute-e27-h-22-x-75-cm-lumisky-havana~3666162007744_01i_FR_CF?$MOB_PREV$&$width=284&$height=284"
   },
   {
    "id": "1fb64b456c37",

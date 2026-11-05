@@ -97,6 +97,14 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - Images IA restantes (moins de 2000 px) : utilisées seulement par le Studio 3D et la page Expérience (cachés du menu), le comparatif « Même pièce, autre caractère » et « Touchez une pièce » de l'accueil (étiquetées IA). Les retirer demande de supprimer ces deux pages : à décider.
 - À faire par vous : la règle de CLAUDE.md « jamais de photo d'enseigne téléchargée » reste à reformuler (« photo affichée depuis le site de l'enseigne, jamais copiée ») ; modification du fichier de règles refusée à l'assistant.
 
+## 5 novembre (suite) — vendre, attendre joliment, plus d'extérieur
+- Transformer : attente animée au moodboard et à la transformation (photo balayée, étapes cochées, barre de progression estimée, durée habituelle) ; frise des étapes 1/2/3 animée.
+- Panneau d'un meuble : recherche internet par l'IA en premier (déjà en place : Gemini + recherche Google, jusqu'à 8 produits avec prix relevés sur la page) ; la boutique en complément repliée, avec « voir plus » ; recherches directes chez les enseignes et Google Shopping.
+- Boutique : 1 785 produits d'extérieur retirés (jardin, terrasse, outdoor, parasols…), le robot ne les reprendra plus ; 7 retirés du catalogue par budget (162 restent). Photos centrées sur fond beige, produits sans photo en fin de liste.
+- Menu : Transformer ma pièce · Inspirations · Catalogue · Boutique · Tarifs (Matières retiré du menu, de l'accueil et du pied de page ; la page reste accessible par lien).
+- Vendre : page Tarifs refaite (promesse, réassurance, contenu d'une étude, offres pro à part, FAQ sur les objections, appel final) ; « Le plus choisi » remplacé par « Recommandé » (aucune donnée ne le prouvait) ; encart des offres sur l'accueil et après une transformation ; accueil réordonné (essai gratuit en premier).
+- Écarté volontairement : faux avis, faux compteurs, fausse urgence.
+
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
 4. Décider du sort du Studio 3D et de la page Expérience ; leur retrait permettrait de supprimer les 98 images IA restantes de moins de 2000 px.

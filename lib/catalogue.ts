@@ -64,9 +64,13 @@ const ACCESSOIRE = /\b(anneaux?|tringles?|embouts?|supports?|fixations?|crochets
 const OUTIL = /\b(manchons?|rouleaux? (a|de|pour) peinture|pinceaux?|brosses? (a|de) peinture|disques?|meuleuse|ponceuse|abrasif|toiles? (a|de) peindre|toiles? de peinture|bac a peinture|additifs?|acetone|nettoyants?|diluants?|white spirit|traceur|spatules?|couteaux? a enduire|ruban de masquage|baches?|grattoirs?|decapants?|chevalet)\b/;
 export const estAccessoire = (name: string) => { const t = ` ${norm(name)} `; return ACCESSOIRE.test(t) || OUTIL.test(t); };
 
+/** Le site ne traite plus l'extérieur : jardin, terrasse, balcon, piscine, façade… sont écartés du catalogue. */
+const EXTERIEUR = / (jardin|jardins|exterieur|exterieure|exterieurs|exterieures|outdoor|outdoors|parasol|parasols|transat|transats|bain de soleil|bains de soleil|garden|patio|terrasse|terrasses|balcon|balcons|barbecue|barbecues|plancha|hamac|hamacs|pergola|pergolas|tonnelle|tonnelles|piscine|piscines|potager|arrosoir|tondeuse|resine tressee|facade|facades) /;
+export const estExterieur = (name: string) => EXTERIEUR.test(` ${norm(name)} `);
+
 export function famille(name: string): Famille | null {
   const t = ` ${norm(name)} `;
-  if (ACCESSOIRE.test(t) || OUTIL.test(t)) return null;
+  if (ACCESSOIRE.test(t) || OUTIL.test(t) || EXTERIEUR.test(t)) return null;
   for (const [f, re] of RULES) if (re.test(t)) return f;
   return null;
 }
