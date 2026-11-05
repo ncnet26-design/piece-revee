@@ -3,7 +3,7 @@
  * d'exception, à tous les prix, et écrit public/boutique/<famille>.json + index.json.
  *
  * Règles (aucune donnée inventée, seulement un tri) :
- *  - enseignes de design et d'éditeurs reconnus, à chaque niveau de prix ; enseignes de produits génériques écartées ;
+ *  - toutes les enseignes relevées, pour tous les budgets (sauf données mal relevées : voir ENSEIGNES_ECARTEES) ;
  *  - vendus en France ou en Europe, en euros, prix relevé, photo publiée par l'enseigne, pas épuisé ;
  *  - pas de lots, packs, housses, pièces détachées, ni d'imitations (« effet », « aspect »…) ;
  *  - une seule déclinaison par modèle (couleurs et tailles regroupées) ;
@@ -14,7 +14,7 @@
  * Usage : node --experimental-strip-types scripts/selection-boutique.ts
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { ENSEIGNES_SELECTION, estAccessoire, FAMILLES, norm, SANS_PRIX, type Famille, type IndexCatalogue, type ProduitCatalogue } from "../lib/catalogue.ts";
+import { enseigneRetenue, estAccessoire, FAMILLES, norm, SANS_PRIX, type Famille, type IndexCatalogue, type ProduitCatalogue } from "../lib/catalogue.ts";
 
 
 
@@ -37,7 +37,7 @@ for (const f of Object.keys(FAMILLES) as Famille[]) {
   const src = `${dir}/${f}.json`;
   const tous = existsSync(src) ? (JSON.parse(readFileSync(src, "utf8")) as ProduitCatalogue[]) : [];
   avant += tous.length;
-  const ok = tous.filter((p) => ENSEIGNES_SELECTION.has(p.m) && (p.z ?? "FR") !== "US" && (SANS_PRIX.has(p.m) ? p.p === null : (p.c ?? "EUR") === "EUR" && p.p !== null && p.p > 0)
+  const ok = tous.filter((p) => enseigneRetenue(p.m) && (p.z ?? "FR") !== "US" && (SANS_PRIX.has(p.m) ? p.p === null : (p.c ?? "EUR") === "EUR" && p.p !== null && p.p > 0)
     && imageOk(p.i) && p.a !== "OutOfStock" && !estAccessoire(p.n) && !EXCLU.test(` ${norm(p.n)} `));
   // Une déclinaison par modèle : on garde la moins chère (le client choisit la couleur chez l'enseigne).
   const parModele = new Map<string, ProduitCatalogue>();

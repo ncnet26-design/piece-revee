@@ -26,8 +26,9 @@ export interface Trouve {
 export interface Recherche { produits: Trouve[]; suggestions: string | null; requetes: string[]; etapes?: Record<string, unknown> }
 
 const PROMPT = (q: string, label: string, pays: string) => [
-  `Use Google Search now (at most 2 searches) to find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
-  `Prefer online shops that deliver to ${pays === "FR" ? "France" : "Europe"} (marketplaces, furniture and decor retailers, DIY stores, design brands), with a range of prices from affordable to premium.`,
+  `Use Google Search now (at most 2 searches) to find up to 9 different products currently for sale online that look as close as possible to this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
+  "Match what matters for a buyer: the same kind of item, the same shape, the same main material and the same colour; size close if given.",
+  `Shops must sell to ${pays === "FR" ? "France" : "Europe"}. Cover every budget for everyone: about 3 affordable (e.g. IKEA, Maisons du Monde, Leroy Merlin, La Redoute, Conforama, But, Alinéa, Castorama, Gifi, H&M Home, Zara Home, Sklum, Kave Home), about 3 mid-range (e.g. AM.PM, Habitat, Westwing, Made in Design, Fleux, Bobochic, Drawer) and about 3 premium design brands or editors (e.g. Roche Bobois, Ligne Roset, The Socialite Family, Sarah Lavoine, HAY, Ferm Living, Gubi, Selency for vintage).`,
   "Only list direct product pages (one product per page), never category pages, blogs or search pages. Never invent a URL: only pages you found with the search.",
   'Finish your answer with a JSON block: {"products":[{"title":"","url":"","merchant":""}]}.',
 ].join("\n");
@@ -85,7 +86,7 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w): w is { uri: string; title?: string } => typeof w?.uri === "string");
   const isRedirect = (u: string) => /grounding-api-redirect/.test(u);
   const viaModel = listed.map((p) => ({ url: clean(p.url, 1200), title: clean(p.title, 160), merchant: clean(p.merchant, 60) })).filter((p) => /^https?:\/\//.test(p.url));
-  const toResolve = [...viaModel.filter((p) => isRedirect(p.url)), ...chunks.map((w) => ({ url: w.uri, title: "", merchant: "" }))].slice(0, 14);
+  const toResolve = [...viaModel.filter((p) => isRedirect(p.url)), ...chunks.map((w) => ({ url: w.uri, title: "", merchant: "" }))].slice(0, 16);
   const resolved = await Promise.all(toResolve.map(async (p) => ({ ...p, url: await resolve(p.url) })));
   const domains = new Set([...resolved.map((w) => host(w.url)), ...chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))].filter(Boolean));
   const direct = viaModel.filter((p) => !isRedirect(p.url) && domains.has(host(p.url)));
@@ -93,7 +94,7 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   const key = (u: string) => u.split("#")[0]!.split("?")[0]!;
   const named = new Map([...resolved, ...direct].filter((p) => p.title).map((p) => [key(p.url), p] as const));
   const candidates = [...resolved, ...direct].filter((p) => !isRedirect(p.url) && isPage(p.url)).map((p) => ({ ...p, title: p.title || named.get(key(p.url))?.title || "", merchant: p.merchant || named.get(key(p.url))?.merchant || "" }));
-  const seen = new Set<string>(), unique = candidates.filter((p) => { const k = p.url.split("#")[0]!.split("?")[0]!; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 10);
+  const seen = new Set<string>(), unique = candidates.filter((p) => { const k = p.url.split("#")[0]!.split("?")[0]!; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 12);
 
   const now = new Date().toISOString();
   const limite = new Promise<null>((ok) => setTimeout(() => ok(null), DELAI_PAGES));
@@ -112,5 +113,5 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   produits.sort((a, b) => (a.source === b.source ? (a.price ?? 1e9) - (b.price ?? 1e9) : a.source === "page" ? -1 : 1));
   // Compteurs (aucune donnée personnelle) : aident à comprendre une recherche vide.
   const etapes = { listes: listed.length, sources: chunks.length, redirections: resolved.filter((p) => !isRedirect(p.url)).length, candidats: unique.length, pagesLues: produits.filter((p) => p.source === "page").length, exemples: unique.slice(0, 3).map((p) => host(p.url)) };
-  return { produits: produits.slice(0, 8), suggestions: meta?.searchEntryPoint?.renderedContent ?? null, requetes: (meta?.webSearchQueries ?? []).slice(0, 5), etapes };
+  return { produits: produits.slice(0, 9), suggestions: meta?.searchEntryPoint?.renderedContent ?? null, requetes: (meta?.webSearchQueries ?? []).slice(0, 5), etapes };
 }

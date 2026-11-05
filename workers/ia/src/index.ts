@@ -129,7 +129,7 @@ export default {
       const b = await request.json().catch(() => null) as { query?: unknown; label?: unknown; visiteur?: unknown; pays?: unknown } | null;
       const q = typeof b?.query === "string" ? b.query.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 160) : "";
       if (!b || q.length < 3 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Recherche incomplète." }, 400);
-      const label = typeof b.label === "string" ? b.label.trim().slice(0, 100) : q;
+      const label = typeof b.label === "string" ? b.label.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 220) : q;
       const visitor = await sha(`v|${b.visiteur}`), cost = 0.03;
       const refusal = overLimit(await usage(env, visitor, ipHash), cost);
       if (refusal) return json({ erreur: refusal }, 429);

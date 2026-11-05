@@ -23,16 +23,10 @@ export interface ProduitCatalogue {
 /** Sélection de la boutique : références d'exception, à tous les prix (voir scripts/selection-boutique.ts). */
 /** Maisons qui ne publient pas leurs prix en ligne : gardées sans prix, en haut de gamme. */
 export const SANS_PRIX = new Set(["Roche Bobois"]);
-/** Enseignes retenues. Les autres (produits génériques, enseignes sans livraison en France) ne sont pas montrées. */
-export const ENSEIGNES_SELECTION = new Set([
-  // Éditeurs et maisons haut de gamme
-  // (GUBI : relevé sur sa boutique américaine en dollars ; Caravane : prix mal relevés. Écartés tant que ce n'est pas corrigé.)
-  "Roche Bobois", "Audo Copenhagen", "Maison Sarah Lavoine", "Sentou", "Pomax", "Ferm Living", "The Socialite Family", "Selency",
-  // Design accessible
-  "Habitat", "Westwing", "Fleux", "Drawer", "Bobochic Paris", "Sklum", "Tediber",
-  // Petits prix bien dessinés
-  "IKEA", "HEMA",
-]);
+/** Enseignes écartées de la boutique : données mal relevées (prix en dollars ou faux), tant que le robot n'est pas corrigé. */
+export const ENSEIGNES_ECARTEES = new Set(["GUBI", "Caravane"]);
+/** La boutique est pour tout le monde : toutes les enseignes relevées, à tous les prix, sauf données fausses. */
+export const enseigneRetenue = (m: string) => !ENSEIGNES_ECARTEES.has(m);
 
 export interface IndexCatalogue { updatedAt: string; total: number; familles: Partial<Record<Famille, number>>; vendeurs: Record<string, number> }
 

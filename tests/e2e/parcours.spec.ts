@@ -422,7 +422,7 @@ test("showroom : teinte sur mesure (matières sans limite)", async ({ page }) =>
 test("boutique : sélection d'exception, recherche, budget et ajout à ma pièce", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/boutique/");
-  await expect(page.getByText(/références choisies chez \d+ éditeurs et maisons/)).toBeVisible();
+  await expect(page.getByText(/références choisies chez \d+ enseignes/)).toBeVisible();
   const tout = page.getByRole("region", { name: /Chercher, comparer/ });
   await tout.getByRole("textbox", { name: "Rechercher un produit" }).fill("table basse");
   await expect(tout.getByText(/^\d[\d\s ]* références?$/)).toBeVisible({ timeout: 20_000 });

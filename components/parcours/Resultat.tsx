@@ -1,14 +1,12 @@
 "use client";
 import { MentionIA } from "@/components/MentionIA";
 import { textureMatiere } from "@/lib/texture-matiere";
-import { useCallback, useRef, useState } from "react";
-import type { Product } from "@/lib/products/schema";
+import { useRef, useState } from "react";
 import { productById } from "@/lib/products/schema";
 import type { Surface } from "@/lib/ia-jobs";
-import { featuresOf, type AiObject } from "@/lib/studio/showcase";
-import { updateProject, useProject } from "@/lib/studio/project";
+import type { AiObject } from "@/lib/studio/showcase";
+import { useProject } from "@/lib/studio/project";
 import { hit, lensUrl, nearestMaterials, nearestPaint, sampleColor, surfaceQuery } from "@/lib/parcours";
-import { Comparator } from "@/components/parcours/Comparator";
 import { Panel } from "@/components/parcours/Panel";
 import { ShopLinks } from "@/components/ShopLinks";
 import { EnLigne } from "./EnLigne";
@@ -27,12 +25,8 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
   const [ratio, setRatio] = useState("4 / 3");
   const img = useRef<HTMLImageElement>(null);
   const project = useProject();
-  const inList = useCallback((id: string) => project.list.some((x) => x.productId === id), [project.list]);
   const total = project.list.reduce((s, x) => s + (productById(x.productId)?.price?.amount ?? x.external?.price ?? 0) * x.qty, 0);
 
-  const onAdd = (p: Product, forObject: string) => updateProject((x) => ({
-    ...x, list: x.list.some((y) => y.productId === p.id) ? x.list.filter((y) => y.productId !== p.id) : [...x.list, { productId: p.id, qty: 1, forObject }],
-  }));
 
   const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
@@ -92,17 +86,12 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
       <Panel open={Boolean(sel)} kicker={kicker} title={title} onClose={() => setSel(null)}>
         {sel?.kind === "objet" && (<>
           {sel.o.description && <p className="mt-2 text-[13px] text-muted">{sel.o.description}</p>}
-          <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={sel.o.label} forObject={sel.o.id} />
+          <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={descriptionPrecise(sel.o)} forObject={sel.o.id} />
           <details className="group mt-5 border-t border-line pt-4">
             <summary className="cursor-pointer list-none text-[14px] font-semibold">Aussi dans notre boutique<span className="ml-2 font-normal text-muted">références d'exception, prix revérifiés chaque nuit</span><span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
             <Catalogue type={sel.o.type} label={sel.o.label} query={sel.o.query || sel.o.label} forObject={sel.o.id} />
           </details>
-          <details className="group mt-5 border-t border-line pt-4">
-            <summary className="cursor-pointer list-none text-[14px] font-semibold">Dans notre sélection vérifiée<span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
-            <Comparator key={sel.o.id} features={featuresOf(sel.o)} objectName={sel.o.label} inList={inList} onAdd={(p) => onAdd(p, sel.o.id)} />
-          </details>
-          <PartoutEnLigne q={sel.o.query || sel.o.label} />
-          <Lens image={image} />
+          <PartoutEnLigne q={sel.o.query || sel.o.label} image={image} />
         </>)}
         {sel?.kind === "surface" && <Teinte hex={sel.s.colors[0]?.hex} name={sel.s.colors[0]?.name} kind={sel.s.kind} material={sel.s.material} finish={sel.s.finish} />}
         {sel?.kind === "couleur" && <Teinte hex={sel.hex} />}
@@ -160,13 +149,21 @@ function Lens({ image }: { image: string }) {
   );
 }
 
-/** Encore plus de modèles : la recherche de chaque enseigne et Google Shopping, ouverts sur leurs sites (prix et stock chez eux). */
-function PartoutEnLigne({ q }: { q: string }) {
+/** Encore plus de modèles, replié : la recherche de chaque enseigne, Google Shopping et Google Lens, ouverts sur leurs sites. */
+function PartoutEnLigne({ q, image }: { q: string; image: string }) {
   return (
-    <div className="mt-5 border-t border-line pt-4">
-      <p className="text-[15px] font-semibold tracking-tight">Encore plus de modèles</p>
-      <div className="mt-2"><ShopLinks query={q} kinds={["meuble", "deco"]} max={30} title="" /></div>
+    <details className="group mt-5 border-t border-line pt-4">
+      <summary className="cursor-pointer list-none text-[14px] font-semibold">Chercher ailleurs<span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
+      <div className="mt-3"><ShopLinks query={q} kinds={["meuble", "deco"]} max={30} title="" /></div>
       <a className="btn btn-sm mt-2" href={`https://www.google.com/search?tbm=shop&hl=fr&gl=fr&q=${encodeURIComponent(q)}`} target="_blank" rel="noopener noreferrer nofollow">Comparer sur Google Shopping ↗<span className="sr-only"> (nouvel onglet)</span></a>
-    </div>
+      <Lens image={image} />
+    </details>
   );
+}
+
+/** Description précise transmise à la recherche en ligne : type, matières, couleurs, forme et taille repérées sur l'image. */
+function descriptionPrecise(o: AiObject): string {
+  const d = o.estimated_dimensions_cm;
+  return [o.label, o.materials.join(", "), o.colors.map((c) => c.name).join(", "), o.shape.join(", "), d ? `environ ${Math.round(d.width)} × ${Math.round(d.depth)} × ${Math.round(d.height)} cm` : ""]
+    .filter(Boolean).join(" · ").slice(0, 220);
 }

@@ -8,7 +8,7 @@
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { ENSEIGNES_SELECTION, estAccessoire, FAMILLES, famille as familleDe, nomProduit, norm, type Famille, type ProduitCatalogue } from "../lib/catalogue";
+import { enseigneRetenue, estAccessoire, FAMILLES, famille as familleDe, nomProduit, norm, type Famille, type ProduitCatalogue } from "../lib/catalogue";
 
 export const STYLES = ["japandi", "scandinave", "industriel", "haussmannien", "mid-century", "wabi-sabi", "boheme", "contemporain"] as const;
 export type Style = (typeof STYLES)[number];
@@ -89,7 +89,7 @@ export function composer(parCase = 2) {
   const S = seuils(tous);
   const candidats: ProduitAchetable[] = [];
   for (const x of tous) {
-    if (!x.p || (x.c ?? "EUR") !== "EUR" || (x.z ?? "FR") === "US" || !ENSEIGNES_SELECTION.has(x.m) || estAccessoire(x.n) || x.a === "OutOfStock") continue;
+    if (!x.p || (x.c ?? "EUR") !== "EUR" || (x.z ?? "FR") === "US" || !enseigneRetenue(x.m) || estAccessoire(x.n) || x.a === "OutOfStock") continue;
     if (familleDe(`${x.n} ${x.u}`) !== x.f) continue; // classement confirmé par le nom
     const pieces = PIECES_DE[x.f]; const sx = S[x.f];
     if (!pieces || !sx) continue;

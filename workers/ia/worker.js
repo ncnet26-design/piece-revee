@@ -541,8 +541,9 @@ function metaProduct(html) {
 var SEARCH_MODEL = TEXT_MODEL;
 var DELAI_PAGES = 6e3;
 var PROMPT = (q, label, pays) => [
-  `Use Google Search now (at most 2 searches) to find up to 8 different products currently for sale online that closely match this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
-  `Prefer online shops that deliver to ${pays === "FR" ? "France" : "Europe"} (marketplaces, furniture and decor retailers, DIY stores, design brands), with a range of prices from affordable to premium.`,
+  `Use Google Search now (at most 2 searches) to find up to 9 different products currently for sale online that look as close as possible to this item seen in an interior design image: "${label}". Shopping query (French): "${q}".`,
+  "Match what matters for a buyer: the same kind of item, the same shape, the same main material and the same colour; size close if given.",
+  `Shops must sell to ${pays === "FR" ? "France" : "Europe"}. Cover every budget for everyone: about 3 affordable (e.g. IKEA, Maisons du Monde, Leroy Merlin, La Redoute, Conforama, But, Alin\xE9a, Castorama, Gifi, H&M Home, Zara Home, Sklum, Kave Home), about 3 mid-range (e.g. AM.PM, Habitat, Westwing, Made in Design, Fleux, Bobochic, Drawer) and about 3 premium design brands or editors (e.g. Roche Bobois, Ligne Roset, The Socialite Family, Sarah Lavoine, HAY, Ferm Living, Gubi, Selency for vintage).`,
   "Only list direct product pages (one product per page), never category pages, blogs or search pages. Never invent a URL: only pages you found with the search.",
   'Finish your answer with a JSON block: {"products":[{"title":"","url":"","merchant":""}]}.'
 ].join("\n");
@@ -606,7 +607,7 @@ async function rechercher(env, q, label, pays = "FR") {
   const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w) => typeof w?.uri === "string");
   const isRedirect = (u) => /grounding-api-redirect/.test(u);
   const viaModel = listed.map((p) => ({ url: clean2(p.url, 1200), title: clean2(p.title, 160), merchant: clean2(p.merchant, 60) })).filter((p) => /^https?:\/\//.test(p.url));
-  const toResolve = [...viaModel.filter((p) => isRedirect(p.url)), ...chunks.map((w) => ({ url: w.uri, title: "", merchant: "" }))].slice(0, 14);
+  const toResolve = [...viaModel.filter((p) => isRedirect(p.url)), ...chunks.map((w) => ({ url: w.uri, title: "", merchant: "" }))].slice(0, 16);
   const resolved = await Promise.all(toResolve.map(async (p) => ({ ...p, url: await resolve(p.url) })));
   const domains = new Set([...resolved.map((w) => host(w.url)), ...chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))].filter(Boolean));
   const direct = viaModel.filter((p) => !isRedirect(p.url) && domains.has(host(p.url)));
@@ -626,7 +627,7 @@ async function rechercher(env, q, label, pays = "FR") {
     if (seen.has(k)) return false;
     seen.add(k);
     return true;
-  }).slice(0, 10);
+  }).slice(0, 12);
   const now = (/* @__PURE__ */ new Date()).toISOString();
   const limite = new Promise((ok) => setTimeout(() => ok(null), DELAI_PAGES));
   const produits = (await Promise.all(unique.map(async (p) => {
@@ -654,7 +655,7 @@ async function rechercher(env, q, label, pays = "FR") {
   }))).filter((x) => x !== null && x.title.length > 2);
   produits.sort((a, b) => a.source === b.source ? (a.price ?? 1e9) - (b.price ?? 1e9) : a.source === "page" ? -1 : 1);
   const etapes = { listes: listed.length, sources: chunks.length, redirections: resolved.filter((p) => !isRedirect(p.url)).length, candidats: unique.length, pagesLues: produits.filter((p) => p.source === "page").length, exemples: unique.slice(0, 3).map((p) => host(p.url)) };
-  return { produits: produits.slice(0, 8), suggestions: meta?.searchEntryPoint?.renderedContent ?? null, requetes: (meta?.webSearchQueries ?? []).slice(0, 5), etapes };
+  return { produits: produits.slice(0, 9), suggestions: meta?.searchEntryPoint?.renderedContent ?? null, requetes: (meta?.webSearchQueries ?? []).slice(0, 5), etapes };
 }
 
 // workers/ia/src/jobs.ts
@@ -824,7 +825,7 @@ var index_default = {
       const b = await request.json().catch(() => null);
       const q = typeof b?.query === "string" ? b.query.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 160) : "";
       if (!b || q.length < 3 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Recherche incompl\xE8te." }, 400);
-      const label = typeof b.label === "string" ? b.label.trim().slice(0, 100) : q;
+      const label = typeof b.label === "string" ? b.label.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 220) : q;
       const visitor = await sha(`v|${b.visiteur}`), cost = 0.03;
       const refusal = overLimit(await usage(env, visitor, ipHash), cost);
       if (refusal) return json({ erreur: refusal }, 429);

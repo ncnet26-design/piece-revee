@@ -42,27 +42,31 @@ export function EnLigne({ query, label, forObject }: { query: string; label: str
       {loading && <p role="status" className="studio-progress mt-3 rounded-[2px] bg-soft px-3 py-2.5 text-[13px]">L'IA cherche ce modèle chez les vendeurs en ligne et relève les prix sur leurs pages…</p>}
       {!loading && state?.error && <p role="alert" className="mt-3 rounded-[2px] bg-[#FBEDE6] px-3 py-2 text-[12.5px] text-[#8A3B17]">{state.error}</p>}
       {!loading && !state?.error && list.length === 0 && <p className="mt-3 text-[12.5px] text-muted">Aucune page produit trouvée pour cet élément. Essayez Google Lens ci-dessous.</p>}
-      {list.length > 0 && (
-        <ul className="mt-3 grid list-none gap-2 p-0">
-          {list.map((p) => { const g = gamme(p, list), price = fmt(p); return (
-            <li key={p.url} className="rounded-[2px] border border-line bg-white p-3">
-              <div className="flex items-start justify-between gap-3">
-                {p.image ? <ProduitImage src={p.image} alt="" merchant={p.merchant} className="w-20 shrink-0" /> : null}
-                <div className="min-w-0">
-                  <p className="text-[10.5px] font-semibold uppercase tracking-[.1em] text-muted">{p.merchant}{p.brand && !p.merchant.toLowerCase().includes(p.brand.toLowerCase()) ? ` · ${p.brand}` : ""}</p>
-                  <p className="text-[13.5px] font-medium leading-snug">{p.title}</p>
-                  <p className="mt-0.5 text-[13px] font-semibold tabular-nums">{price ?? <span className="font-normal text-muted">Prix sur le site</span>}{p.availability && AV[p.availability] ? <span className="ml-2 font-normal text-muted">· {AV[p.availability]}</span> : null}</p>
-                </div>
-                {g && <span className="h-fit shrink-0 rounded-full bg-soft px-2 py-0.5 text-[11px] font-semibold">{g}</span>}
-              </div>
-              <p className="mt-1 text-[10.5px] text-muted">{p.checkedAt ? `Prix relevé sur la page le ${new Date(p.checkedAt).toLocaleString("fr-FR", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })}` : "Page trouvée par la recherche ; prix non relevé"}</p>
-              <div className="mt-2 flex flex-wrap gap-1.5">
-                <a className="btn btn-primary !min-h-0 !px-3 !py-1.5 text-[12px]" href={p.url} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.merchant}<span className="sr-only"> (nouvel onglet)</span></a>
-                <button type="button" className="btn !min-h-0 !px-3 !py-1.5 text-[12px]" aria-pressed={inList(p.url)} onClick={() => toggleExternal({ title: p.title, url: p.url, merchant: p.merchant, price: p.price, currency: p.currency, checkedAt: p.checkedAt, source: "internet" }, forObject)}>{inList(p.url) ? "✓ Dans ma pièce" : "Ajouter à ma pièce"}</button>
-              </div>
-            </li>); })}
-        </ul>
-      )}
+      {list.length > 0 && (["Économique", "Intermédiaire", "Premium", null] as const).map((g) => {
+        const l = list.filter((p) => gamme(p, list) === g);
+        if (!l.length) return null;
+        const titre = g === "Économique" ? "Petit budget" : g === "Intermédiaire" ? "Budget moyen" : g === "Premium" ? "Haut de gamme" : "Autres modèles";
+        return (
+          <div key={titre} className="mt-5">
+            <p className="text-[10.5px] font-semibold uppercase tracking-[.16em] text-muted">{titre}</p>
+            <ul className="mt-2 grid list-none gap-2 p-0">
+              {l.map((p) => { const price = fmt(p); return (
+                <li key={p.url} className="flex items-center gap-3 rounded-[2px] bg-surface p-2.5">
+                  {p.image ? <ProduitImage src={p.image} alt="" merchant={p.merchant} className="w-16 shrink-0" /> : <span aria-hidden className="grid size-16 shrink-0 place-items-center bg-[#EFEBE3] font-display text-[22px] text-[#CFC7BA]">{p.merchant.charAt(0).toUpperCase()}</span>}
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-[10.5px] font-semibold uppercase tracking-[.1em] text-muted">{p.merchant}</p>
+                    <p className="line-clamp-2 text-[13px] font-medium leading-snug">{p.title}</p>
+                    <p className="mt-0.5 text-[13px] font-semibold tabular-nums">{price ?? <span className="font-normal text-muted">Prix sur le site</span>}{p.availability && AV[p.availability] ? <span className="ml-2 font-normal text-muted">· {AV[p.availability]}</span> : null}</p>
+                    <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[12px]">
+                      <a className="font-semibold underline underline-offset-2" href={p.url} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.merchant}<span className="sr-only"> (nouvel onglet)</span></a>
+                      <button type="button" className="text-muted underline underline-offset-2 hover:text-ink" aria-pressed={inList(p.url)} onClick={() => toggleExternal({ title: p.title, url: p.url, merchant: p.merchant, price: p.price, currency: p.currency, checkedAt: p.checkedAt, source: "internet" }, forObject)}>{inList(p.url) ? "✓ Dans ma pièce" : "Ajouter à ma pièce"}</button>
+                    </div>
+                  </div>
+                </li>); })}
+            </ul>
+          </div>
+        );
+      })}
       {!loading && state?.data?.suggestions && (
         <div className="mt-4">
           <p className="text-[11px] text-muted">Recherches Google associées</p>
@@ -70,7 +74,7 @@ export function EnLigne({ query, label, forObject }: { query: string; label: str
             srcDoc={`<base target="_blank">${state.data.suggestions}`} />
         </div>
       )}
-      {list.length > 0 && <p className="mt-3 text-[11px] leading-snug text-muted">Résultats trouvés automatiquement à l'instant, sans partenariat. Vérifiez dimensions, prix et livraison sur le site du vendeur.</p>}
+      {list.length > 0 && <p className="mt-4 text-[11px] leading-snug text-muted">Trouvés à l'instant par l'IA avec la recherche Google, chez toutes les enseignes ; prix relevés sur leurs pages quand elles le permettent. Sans partenariat : vérifiez dimensions, prix et livraison chez le vendeur.</p>}
     </section>
   );
 }
