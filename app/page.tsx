@@ -23,7 +23,6 @@ const OUVERTURE = PHOTOS_STYLES.haussmannien[0]!;
 const PORTES: Array<[string, string, string, string | PhotoStyle]> = [
   ["/transformer/", "Transformer ma pièce", "Votre photo, vos inspirations, votre pièce transformée.", PHOTOS_STYLES.scandinave[0]!],
   ["/galerie/", "Inspirations", "Huit styles en vraies photos, reliés aux pièces en vente.", PHOTOS_STYLES.japandi[0]!],
-  ["/catalogue/", "Le catalogue", "Votre style, à votre budget : des pièces réelles, vérifiées.", PHOTOS_STYLES["mid-century"][0]!],
   ["/boutique/", "La boutique", "Plus de 30 000 meubles et objets de 27 enseignes, revérifiés chaque nuit.", PHOTOS_STYLES.boheme[0]!],
 ];
 
@@ -61,7 +60,7 @@ export default function Home() {
           <p className="mt-7 max-w-[46ch] text-[17px] leading-relaxed text-white/80">Photographiez votre pièce, ajoutez vos inspirations : nous la transformons dans cet esprit, et chaque meuble, couleur ou matière devient cliquable pour l'acheter.</p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link href="/transformer/" className="btn btn-light btn-lg">Essayer gratuitement</Link>
-            <Link href="/catalogue/" className="btn btn-lg border-white/40 bg-transparent text-white hover:border-white">Ouvrir le catalogue</Link>
+            <Link href="/boutique/" className="btn btn-lg border-white/40 bg-transparent text-white hover:border-white">Voir la boutique</Link>
           </div>
           <p className="mt-5 text-[13px] text-white/75">1 étude complète offerte · sans carte bancaire · des produits réels à chaque budget</p>
           <p className="mt-8 text-[11px] text-white/55">Photo <a href={lienUnsplash(OUVERTURE.auteur_url)} target="_blank" rel="noopener noreferrer" className="text-white/70 underline">{OUVERTURE.auteur}</a> sur <a href={lienUnsplash(OUVERTURE.page)} target="_blank" rel="noopener noreferrer" className="text-white/70 underline">Unsplash</a></p>
@@ -73,7 +72,7 @@ export default function Home() {
       {/* ——— Quatre portes d'entrée ——— */}
       <section aria-labelledby="h-portes" className="py-16 sm:py-20">
         <h2 id="h-portes" className="sr-only">Par où commencer</h2>
-        <ul className="grid list-none gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid list-none gap-5 p-0 sm:grid-cols-3">
           {PORTES.map(([href, t, d, img]) => (
             <li key={href}>
               <Link href={href} className="group block no-underline">

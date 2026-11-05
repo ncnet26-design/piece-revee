@@ -20,6 +20,20 @@ export interface ProduitCatalogue {
   /** zone de vente : France, Europe ou États-Unis */ z?: "FR" | "EU" | "US";
   /** adresse de l'image publiée par l'enseigne (affichée depuis son site, jamais copiée) */ i?: string | null;
 }
+/** Sélection de la boutique : références d'exception, à tous les prix (voir scripts/selection-boutique.ts). */
+/** Maisons qui ne publient pas leurs prix en ligne : gardées sans prix, en haut de gamme. */
+export const SANS_PRIX = new Set(["Roche Bobois"]);
+/** Enseignes retenues. Les autres (produits génériques, enseignes sans livraison en France) ne sont pas montrées. */
+export const ENSEIGNES_SELECTION = new Set([
+  // Éditeurs et maisons haut de gamme
+  // (GUBI : relevé sur sa boutique américaine en dollars ; Caravane : prix mal relevés. Écartés tant que ce n'est pas corrigé.)
+  "Roche Bobois", "Audo Copenhagen", "Maison Sarah Lavoine", "Sentou", "Pomax", "Ferm Living", "The Socialite Family", "Selency",
+  // Design accessible
+  "Habitat", "Westwing", "Fleux", "Drawer", "Bobochic Paris", "Sklum", "Tediber",
+  // Petits prix bien dessinés
+  "IKEA", "HEMA",
+]);
+
 export interface IndexCatalogue { updatedAt: string; total: number; familles: Partial<Record<Famille, number>>; vendeurs: Record<string, number> }
 
 /** Nom lisible d'un produit : entités décodées ; nom vide ou erreur de tableur (« #REF! ») remplacé par le titre tiré de l'adresse. */

@@ -56,7 +56,7 @@ export function ChoixPieceStyle({ apercu }: { apercu: Apercu }) {
       </div>
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
         <p className="m-0 text-[12px] text-muted">Gamme calculée pour chaque type de meuble (un canapé « petit budget » n'a pas le prix d'un vase). Prix relevés et vérifiés sur les pages des enseignes ; aucune marque ne paie pour être classée.</p>
-        <Link href={`/catalogue/?piece=${piece}&style=${style}`} className="btn btn-primary">Voir toutes les pièces</Link>
+        <Link href={`/boutique/?piece=${piece}&style=${style}#selection`} className="btn btn-primary">Voir toutes les pièces</Link>
       </div>
     </div>
   );

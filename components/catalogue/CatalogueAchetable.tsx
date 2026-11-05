@@ -20,17 +20,17 @@ export function Carte({ p, textures }: { p: ProduitAchetable; textures: Readonly
   const v = vignette(p, textures);
   const [photo, setPhoto] = useState(imageValide(p.image));
   return (
-    <li className="flex flex-col">
+    <li className="flex flex-col text-center">
       {/* Photo publiée par l'enseigne (chargée depuis son site, jamais copiée) ; à défaut, élévation au trait du meuble. Pastille de sa matière ou de sa couleur. */}
       <a href={p.url} target="_blank" rel="noopener noreferrer nofollow" tabIndex={-1} aria-hidden className="group relative block aspect-square overflow-hidden bg-[#EFEBE3] text-ink no-underline transition-colors hover:bg-[#E9E4DA]">
         {photo ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={p.image!} alt="" loading="lazy" decoding="async" referrerPolicy="no-referrer" onError={() => setPhoto(false)}
-            className="absolute inset-x-[8%] top-[6%] h-[76%] w-[84%] object-contain mix-blend-multiply transition duration-500 group-hover:scale-[1.03]" />
+            className="absolute inset-[9%] m-auto size-[82%] object-contain object-center mix-blend-multiply transition duration-500 group-hover:scale-[1.03]" />
         ) : (
           <Elevation famille={p.famille} nom={p.nom} dimensions={p.dimensions} className="absolute inset-x-[10%] top-[14%] h-[62%] w-[80%]" />
         )}
-        <span className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
+        {!photo && <span className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
           <span className="relative block size-7 shrink-0 overflow-hidden rounded-full ring-1 ring-black/10" style={{ background: v.teinte }}>
             {v.texture && (
               // Texture réelle de la matière (CC0), pas la photo de l'enseigne.
@@ -40,14 +40,14 @@ export function Carte({ p, textures }: { p: ProduitAchetable; textures: Readonly
           </span>
           {v.legende && <span className="truncate text-[10.5px] font-semibold uppercase tracking-[.14em] text-muted">{v.legende}</span>}
           <span className="ml-auto font-mono text-[10px] text-muted">{p.id.slice(0, 4).toUpperCase()}</span>
-        </span>
+        </span>}
       </a>
-      <p className="mt-3 text-[10.5px] font-semibold uppercase tracking-[.14em] text-muted">{p.enseigne}{p.marque ? ` · ${p.marque}` : ""}</p>
-      <p className="mt-1 line-clamp-2 text-[14.5px] leading-snug">{p.nom}</p>
+      <p className="mt-4 text-[10.5px] font-semibold uppercase tracking-[.16em] text-muted">{p.enseigne}{p.marque ? ` · ${p.marque}` : ""}</p>
+      <p className="mx-auto mt-1 line-clamp-2 max-w-[30ch] text-[14.5px] leading-snug">{p.nom}</p>
       {p.dimensions && <p className="mt-1 text-[12px] text-muted">{p.dimensions}</p>}
       <p className="mt-2 text-[16px] font-semibold tabular-nums">{prix(p.prix)}</p>
       <p className="text-[11px] text-muted">Prix relevé le {date(p.verifie_le)}</p>
-      <a href={p.url} target="_blank" rel="noopener noreferrer nofollow" className="btn mt-3 self-start !min-h-0 !px-3.5 !py-2 text-[12.5px]">Voir chez {p.enseigne}<span className="sr-only"> : {p.nom} (nouvel onglet)</span></a>
+      <a href={p.url} target="_blank" rel="noopener noreferrer nofollow" className="btn mt-3 self-center !min-h-0 !px-3.5 !py-2 text-[12.5px]">Voir chez {p.enseigne}<span className="sr-only"> : {p.nom} (nouvel onglet)</span></a>
     </li>
   );
 }
@@ -107,16 +107,18 @@ function Puces<T extends string>({ label, valeurs, noms, actif, choisir }: { lab
 
 /**
  * Catalogue achetable : filtres budget, pièce, style et matière ; produits rangés par gamme (petit, moyen, haut de gamme).
- * Vignette = texture réelle de la matière ou couleur du produit (pas de photo d'enseigne tant qu'il n'y a pas de flux d'affiliation).
+ * Photo publiée par l'enseigne (chargée depuis son site), dessin au trait en secours ; 8 pièces par budget, puis « voir plus ».
  */
 export function CatalogueAchetable({ produits, textures, matieres }: { produits: ProduitAchetable[]; textures: string[]; matieres: string[] }) {
   const [f, setF] = useState<Filtres>(VIDE);
   const [vue, setVue] = useState<"planche" | "nomenclature">("planche");
+  // 8 pièces par budget, puis « voir plus » : une page courte et lisible.
+  const [ouverts, setOuverts] = useState<Partial<Record<Gamme, boolean>>>({});
   const dispo = useMemo(() => new Set(textures), [textures]);
   useEffect(() => { const a = lireAdresse(); if (a.style || a.piece || a.gamme || a.matiere) setTimeout(() => setF(a), 0); }, []);
   useEffect(() => {
     const u = new URLSearchParams(); for (const [k, v] of Object.entries(f)) if (v) u.set(k, v);
-    const s = u.toString(); history.replaceState(null, "", s ? `?${s}` : location.pathname);
+    const s = u.toString(); history.replaceState(null, "", `${s ? `?${s}` : location.pathname}${location.hash}`);
   }, [f]);
   const liste = useMemo(() => filtrer(produits, f), [produits, f]);
   const set = <K extends keyof Filtres>(k: K) => (v: Filtres[K]) => setF((x) => ({ ...x, [k]: v }));
@@ -148,16 +150,17 @@ export function CatalogueAchetable({ produits, textures, matieres }: { produits:
             </div>
             {vue === "planche" ? (
               <ul className="mt-8 grid list-none grid-cols-2 gap-x-4 gap-y-12 p-0 sm:grid-cols-3 lg:grid-cols-4">
-                {l.map((p) => <Carte key={p.id} p={p} textures={dispo} />)}
+                {(ouverts[g] ? l : l.slice(0, 8)).map((p) => <Carte key={p.id} p={p} textures={dispo} />)}
               </ul>
-            ) : <Nomenclature l={l} textures={dispo} />}
+            ) : <Nomenclature l={ouverts[g] ? l : l.slice(0, 8)} textures={dispo} />}
+            {l.length > 8 && !ouverts[g] && <div className="mt-10 text-center"><button type="button" className="btn" onClick={() => setOuverts((o) => ({ ...o, [g]: true }))}>Voir les {l.length - 8} autres pièces {NOM_GAMME[g].toLowerCase()}</button></div>}
           </section>
         );
       })}
-      <p className="mt-16 text-[12px] leading-relaxed text-muted">
+      <p className="mx-auto mt-16 max-w-[70ch] text-center text-[12px] leading-relaxed text-muted">
         Produits réels relevés sur les pages des enseignes, puis vérifiés page par page (prix et lien) ; la date de relevé accompagne chaque prix.
         Gammes calculées par famille de produits sur les prix observés. Styles déduits des matières et des formes nommées par l'enseigne.
-        Vignettes : textures photographiées libres de droits (Poly Haven, ambientCG) ou couleur du produit, jamais la photo de l'enseigne. Aucun partenariat, aucun classement payé.
+        Photos publiées par les enseignes, affichées depuis leurs sites. Aucun partenariat, aucun classement payé.
       </p>
     </div>
   );

@@ -6,7 +6,7 @@ import { ProduitImage } from "@/components/ProduitImage";
 
 const files = new Map<string, Promise<ProduitCatalogue[]>>();
 const load = (f: string) => {
-  if (!files.has(f)) files.set(f, fetch(`/catalogue/${f}.json`).then((r) => (r.ok ? r.json() as Promise<ProduitCatalogue[]> : [])).catch(() => []));
+  if (!files.has(f)) files.set(f, fetch(`/boutique/${f}.json`).then((r) => (r.ok ? r.json() as Promise<ProduitCatalogue[]> : [])).catch(() => []));
   return files.get(f)!;
 };
 const AV: Record<string, string> = { InStock: "En stock", OutOfStock: "Épuisé", PreOrder: "Précommande", BackOrder: "Sur commande", LimitedAvailability: "Stock limité" };

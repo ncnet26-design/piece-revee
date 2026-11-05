@@ -3,37 +3,6 @@
  "source": "Robot catalogue (pages des enseignes, schema.org), puis vérification page par page",
  "produits": [
   {
-   "id": "ff91a64f9dc0",
-   "nom": "Canapé d'angle 4 places avec coffre et housses lavables - Mélange coton-lin - 274 x 128,5 x 83 cm - Gris",
-   "enseigne": "Vente-unique",
-   "marque": "Merax",
-   "prix": 587.99,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "japandi"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon"
-   ],
-   "famille": "canape",
-   "dimensions": "274 × 128.5 × 83 cm",
-   "matiere": [
-    "lin",
-    "coton"
-   ],
-   "couleur": [
-    "gris"
-   ],
-   "url": "https://www.vente-unique.com/p/canape-d-angle-4-places-avec-coffre-et-housses-lavables-melange-coton-lin-274-x-128-5-x-83-cm-gris",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/5248/5248255/large/0/69701295.webp"
-  },
-  {
    "id": "5e7ceb99d632",
    "nom": "STEGESUND Étagère - bambou clair 36x28x87 cm",
    "enseigne": "IKEA",
@@ -560,37 +529,6 @@
    "image": "https://pomax.com/cdn/shop/files/40491-BEI-15-product-1.jpg?v=1790680070&width=2458"
   },
   {
-   "id": "e70b4376ea94",
-   "nom": "Vasque à poser céramique ronde noir mat HALVINA - Diam. 33 cm hauteur 14 cm",
-   "enseigne": "Brico Dépôt",
-   "marque": "Cooke & Lewis",
-   "prix": 59.9,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "japandi",
-    "industriel"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salle-de-bain"
-   ],
-   "famille": "salle-de-bain",
-   "dimensions": "Ø 33 cm",
-   "matiere": [
-    "céramique"
-   ],
-   "couleur": [
-    "noir"
-   ],
-   "url": "https://www.bricodepot.fr/p/5063022565068/vasque-a-poser-ceramique-ronde-noir-mat-halvina-diam-33-cm-hauteur-14-cm",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://media.bricodepot.fr/is/image/KingfisherDigital/5063022565068_01i"
-  },
-  {
    "id": "c938a558faba",
    "nom": "SMÅSTAD / PLATSA Armoire-penderie - blanc bouleau/avec 3 tablettes 60x57x123 cm",
    "enseigne": "IKEA",
@@ -621,36 +559,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://www.ikea.com/fr/fr/images/products/smastad-platsa-armoire-penderie-blanc-bouleau-avec-3-tablettes__1099949_pe866014_s5.jpg"
-  },
-  {
-   "id": "bc9eb8015988",
-   "nom": "Canapé 2 Places en Tissu, 112cm Style Moderne Scandinave pour Salon, Appartement, Petit Espace, Cadre en métal, Gris",
-   "enseigne": "Vente-unique",
-   "marque": null,
-   "prix": 109.99,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "scandinave"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon"
-   ],
-   "famille": "canape",
-   "dimensions": null,
-   "matiere": [
-    "métal"
-   ],
-   "couleur": [
-    "gris"
-   ],
-   "url": "https://www.vente-unique.com/p/canape-2-places-en-tissu-112cm-style-moderne-scandinave-pour-salon-appartement-petit-espace-cadre-en-metal-gris",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/4387/4387842/large/0/51897278.webp"
   },
   {
    "id": "795e03ac47c1",
@@ -809,37 +717,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://www.ikea.com/fr/fr/images/products/trofast-bureau-avec-etagere-pin-teinte-blanc-clair__1458064_pe992870_s5.jpg"
-  },
-  {
-   "id": "42568332bea8",
-   "nom": "Fauteuil de relaxation Scandinave avec repose-pied Marron Velours SHL4288",
-   "enseigne": "Vente-unique",
-   "marque": null,
-   "prix": 123.99,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "scandinave"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "fauteuil",
-   "dimensions": null,
-   "matiere": [
-    "velours"
-   ],
-   "couleur": [
-    "marron"
-   ],
-   "url": "https://www.vente-unique.com/p/fauteuil-de-relaxation-scandinave-avec-repose-pied-marron-velours-shl4288",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/4502/4502282/large/0/53244129.webp"
   },
   {
    "id": "63edb273a1f6",
@@ -1187,36 +1064,6 @@
    "image": "https://www.drawer.fr/116834-home_default/etagere-bois-metal-blanc-51x170cm-house-nordic-vita.jpg"
   },
   {
-   "id": "5fb1e5163544",
-   "nom": "Mange debout bois et métal noir 60x100xH105cm",
-   "enseigne": "Gifi",
-   "marque": null,
-   "prix": 49.95,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "industriel"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon"
-   ],
-   "famille": "table-basse",
-   "dimensions": null,
-   "matiere": [
-    "métal"
-   ],
-   "couleur": [
-    "noir"
-   ],
-   "url": "https://www.gifi.fr/meuble-et-deco/meuble-d-interieur/table-a-manger-et-table-basse/mange-debout-bois-et-metal-noir-60x100xh105cm/000000000000637341.html",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://www.gifi.fr/dw/image/v2/BJSK_PRD/on/demandware.static/-/Sites-master_GIFI/default/dw4ffa5675/6/3/637341_610766_F.jpg?sw=282&sh=282&sm=fit"
-  },
-  {
    "id": "f90aa70a8054",
    "nom": "Set de 2 tables basses pour plateaux ronds en métal noir - Ø 62 cm & Ø 93 cm",
    "enseigne": "Fleux",
@@ -1310,100 +1157,6 @@
    "image": "https://www.fleux.com/cdn/shop/files/applique_murale_ho_laiton_1024x.png?v=1719954646"
   },
   {
-   "id": "917456894ada",
-   "nom": "Fauteuil de Salon-Chaise de relax Gris foncé 76x94x102 cm Faux cuir SHL1070",
-   "enseigne": "Vente-unique",
-   "marque": null,
-   "prix": 155.99,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "industriel"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "fauteuil",
-   "dimensions": "76 × 94 × 102 cm",
-   "matiere": [
-    "cuir"
-   ],
-   "couleur": [
-    "gris"
-   ],
-   "url": "https://www.vente-unique.com/p/fauteuil-de-salon-chaise-de-relax-gris-fonce-76x94x102-cm-faux-cuir-shl1070",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/4502/4502086/large/0/53242288.webp"
-  },
-  {
-   "id": "6793e922cab5",
-   "nom": "Étagère à poser Linéa 3 niveaux métal rose 39x36xH123cm",
-   "enseigne": "Gifi",
-   "marque": null,
-   "prix": 69.95,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "industriel"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre",
-    "salle-a-manger"
-   ],
-   "famille": "rangement",
-   "dimensions": null,
-   "matiere": [
-    "métal"
-   ],
-   "couleur": [
-    "rose"
-   ],
-   "url": "https://www.gifi.fr/maison/rangement-et-entretien/rangement/etagere-de-rangement/etagere-a-poser-linea-3-niveaux-metal-rose-39x36xh123cm/000000000000645742.html",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://www.gifi.fr/dw/image/v2/BJSK_PRD/on/demandware.static/-/Sites-master_GIFI/default/dw0d411563/6/4/645742_F1.jpg?sw=282&sh=282&sm=fit"
-  },
-  {
-   "id": "36e50a372671",
-   "nom": "Coussin de banc Blooma Denia gris acier",
-   "enseigne": "Castorama",
-   "marque": null,
-   "prix": 44.9,
-   "devise": "EUR",
-   "gamme": "moyen",
-   "styles": [
-    "industriel"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "deco",
-   "dimensions": null,
-   "matiere": [
-    "métal"
-   ],
-   "couleur": [
-    "gris"
-   ],
-   "url": "https://www.castorama.fr/coussin-de-banc-blooma-denia-gris-acier/3663602725244_CAFR.prd",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://media.castorama.fr/is/image/Castorama/coussin-de-banc-blooma-denia-gris-acier~3663602725244_02c?$MOB_PREV$&$width=284&$height=284"
-  },
-  {
    "id": "38f1905e63a6",
    "nom": "Yvonne - Suspension ronde en métal finition brillant ø35cm",
    "enseigne": "Drawer",
@@ -1493,70 +1246,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://pomax.com/cdn/shop/files/41599-BLA-05-product-1.jpg?v=1790758066&width=1290"
-  },
-  {
-   "id": "d2661728f3be",
-   "nom": "Chaise papillon noir et blanc cuir de vache 74x66x90 cm SHL4062",
-   "enseigne": "Vente-unique",
-   "marque": null,
-   "prix": 124.99,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "industriel"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salle-a-manger"
-   ],
-   "famille": "chaise",
-   "dimensions": "74 × 66 × 90 cm",
-   "matiere": [
-    "cuir"
-   ],
-   "couleur": [
-    "blanc",
-    "noir"
-   ],
-   "url": "https://www.vente-unique.com/p/chaise-papillon-noir-et-blanc-cuir-de-vache-74x66x90-cm-shl4062",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/4503/4503495/large/0/53255722.webp"
-  },
-  {
-   "id": "4e27e419b4d8",
-   "nom": "Étagère sur pieds Detroit métal bois noir et marron 80x35xH102,5 cm",
-   "enseigne": "Gifi",
-   "marque": null,
-   "prix": 79.95,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "industriel"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre",
-    "salle-a-manger"
-   ],
-   "famille": "rangement",
-   "dimensions": null,
-   "matiere": [
-    "métal"
-   ],
-   "couleur": [
-    "noir",
-    "marron"
-   ],
-   "url": "https://www.gifi.fr/maison/rangement-et-entretien/rangement/etagere-de-rangement/etagere-sur-pieds-detroit-metal-bois-noir-et-marron-80x35xh1025-cm/000000000000591303.html",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://www.gifi.fr/dw/image/v2/BJSK_PRD/on/demandware.static/-/Sites-master_GIFI/default/dw95e5ec98/5/9/591303_M.jpg?sw=282&sh=282&sm=fit"
   },
   {
    "id": "181e07639e32",
@@ -1707,37 +1396,6 @@
    "image": "https://cdn.shopify.com/s/files/1/0613/3107/9307/files/DEQ21WES45718-167023_b01ea60e70e0c49975f423e04096b983_dtl_1.jpg"
   },
   {
-   "id": "e8f28249c0c7",
-   "nom": "Fauteuil Salon-Chaise de relax Gris foncé 63x67x94 cm Velours SHL2580",
-   "enseigne": "Vente-unique",
-   "marque": null,
-   "prix": 110.99,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "haussmannien"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "fauteuil",
-   "dimensions": "63 × 67 × 94 cm",
-   "matiere": [
-    "velours"
-   ],
-   "couleur": [
-    "gris"
-   ],
-   "url": "https://www.vente-unique.com/p/fauteuil-salon-chaise-de-relax-gris-fonce-63x67x94-cm-velours-shl2580",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/4502/4502070/large/0/53242111.webp"
-  },
-  {
    "id": "0e302543be57",
    "nom": "Applique Laga - 24 x 16 cm - Noir & Marbre",
    "enseigne": "Fleux",
@@ -1859,37 +1517,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://cdn.shopify.com/s/files/1/0828/9730/5881/files/triangolo_jpeg_merch_1_6e488572-d60a-4fbd-aac4-17a8cf4bea37.jpg?v=1755678001"
-  },
-  {
-   "id": "3a7e60c8a4d5",
-   "nom": "Fauteuil de Salon-Chaise-Fauteuil œuf avec repose-pieds Gris foncé 63x73x90 cm Velours SHL3825",
-   "enseigne": "Vente-unique",
-   "marque": null,
-   "prix": 141.99,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "haussmannien"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "fauteuil",
-   "dimensions": "63 × 73 × 90 cm",
-   "matiere": [
-    "velours"
-   ],
-   "couleur": [
-    "gris"
-   ],
-   "url": "https://www.vente-unique.com/p/fauteuil-de-salon-chaise-fauteuil-oeuf-avec-repose-pieds-gris-fonce-63x73x90-cm-velours-shl3825",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/4503/4503605/large/0/53256800.webp"
   },
   {
    "id": "9e7f0134c589",
@@ -2067,36 +1694,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://cdn.shopify.com/s/files/1/0613/3107/9307/files/DEQ20BY408530-158436_381e15e3a61f4bbaacec384a9065720a_dtl_1.jpg"
-  },
-  {
-   "id": "261eaafc23be",
-   "nom": "Armoire salle de bain miroir blanc style l.50 x h.60 x p.15 cm",
-   "enseigne": "Brico Dépôt",
-   "marque": "Unbranded",
-   "prix": 70.9,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "haussmannien"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre",
-    "salle-a-manger"
-   ],
-   "famille": "rangement",
-   "dimensions": null,
-   "matiere": [],
-   "couleur": [
-    "blanc"
-   ],
-   "url": "https://www.bricodepot.fr/p/5057741445671/armoire-salle-de-bain-miroir-blanc-style-l-50-x-h-60-x-p-15-cm",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://media.bricodepot.fr/is/image/KingfisherDigital/5057741445671_01r"
   },
   {
    "id": "983e1e6c0d55",
@@ -2519,38 +2116,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://www.maisonsarahlavoine.com/cdn/shop/files/3664511002921_2311MIRORG02-NATUREL--75X50CM_1.jpg?v=1720525656&width=1920"
-  },
-  {
-   "id": "9762ca4995db",
-   "nom": "Fauteuil de relaxation-Chaise de bureau Jaune moutarde Velours SHL2726",
-   "enseigne": "Vente-unique",
-   "marque": null,
-   "prix": 82.99,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "haussmannien",
-    "mid-century"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "fauteuil",
-   "dimensions": null,
-   "matiere": [
-    "velours"
-   ],
-   "couleur": [
-    "moutarde"
-   ],
-   "url": "https://www.vente-unique.com/p/fauteuil-de-relaxation-chaise-de-bureau-jaune-moutarde-velours-shl2726",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/4500/4500968/large/0/53231585.webp"
   },
   {
    "id": "17c2a308ec6a",
@@ -3496,37 +3061,6 @@
    "image": "https://fermliving.com/cdn/shop/files/707294_1104271121_1.png?v=1762178749&width=2048"
   },
   {
-   "id": "c198cf5b0520",
-   "nom": "Coussin de sol carré en jute beige 50 x 50 cm Deko&Co",
-   "enseigne": "Castorama",
-   "marque": null,
-   "prix": 34.9,
-   "devise": "EUR",
-   "gamme": "moyen",
-   "styles": [
-    "boheme"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "deco",
-   "dimensions": "50 × 50 cm",
-   "matiere": [
-    "jute"
-   ],
-   "couleur": [
-    "beige"
-   ],
-   "url": "https://www.castorama.fr/coussin-de-sol-carre-en-jute-beige-50-x-50-cm-deko-co/3663655061320_CAFR.prd",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://media.castorama.fr/is/image/Castorama/coussin-de-sol-carre-en-jute-beige-50-x-50-cm-deko-co~3663655061320_02c_FR_CF?$MOB_PREV$&$width=284&$height=284"
-  },
-  {
    "id": "275c0f951c40",
    "nom": "Eternal Round Jute Rug - Natural",
    "enseigne": "Ferm Living",
@@ -3589,36 +3123,6 @@
    "image": "https://cdn.bobochicparis.com/414882-thickbox_default/ensemble-capus-avec-buffet-140-cm-meuble-tv-180-cm-pin-laque-terracotta.jpg"
   },
   {
-   "id": "54277dc36a6f",
-   "nom": "Console en bois et rotin Kanna 3 tiroirs 80x40xH80cm",
-   "enseigne": "Gifi",
-   "marque": null,
-   "prix": 89,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "boheme"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre",
-    "salle-a-manger"
-   ],
-   "famille": "rangement",
-   "dimensions": null,
-   "matiere": [
-    "rotin"
-   ],
-   "couleur": [],
-   "url": "https://www.gifi.fr/meuble-et-deco/meuble-d-interieur/commode-dressing-et-penderie/console-en-bois-et-rotin-kanna-3-tiroirs-80x40xh80cm/000000000000643425.html",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://www.gifi.fr/dw/image/v2/BJSK_PRD/on/demandware.static/-/Sites-master_GIFI/default/dw03b91259/6/4/643425_R.jpg?sw=282&sh=282&sm=fit"
-  },
-  {
    "id": "470ebb3abf3e",
    "nom": "Balance - Suspension en rotin ø35cm",
    "enseigne": "Drawer",
@@ -3678,37 +3182,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://fermliving.com/cdn/shop/files/707294_1104271121_1.png?v=1762178749&width=2048"
-  },
-  {
-   "id": "b88075486a0b",
-   "nom": "Coussin Jute coloris naturel Deco&Co L.50 x L.30 cm",
-   "enseigne": "Castorama",
-   "marque": null,
-   "prix": 21.9,
-   "devise": "EUR",
-   "gamme": "moyen",
-   "styles": [
-    "boheme"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "deco",
-   "dimensions": null,
-   "matiere": [
-    "jute"
-   ],
-   "couleur": [
-    "naturel"
-   ],
-   "url": "https://www.castorama.fr/coussin-jute-coloris-naturel-deco-co-l-50-x-l-30-cm/3663655037141_CAFR.prd",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://media.castorama.fr/is/image/Castorama/coussin-jute-coloris-naturel-deco-co-l-50-x-l-30-cm~3663655037141_02c_FR_CF?$MOB_PREV$&$width=284&$height=284"
   },
   {
    "id": "18a4db2126e8",
@@ -3918,36 +3391,6 @@
    "image": "https://cdn.shopify.com/s/files/1/0613/3107/9307/files/DEQ23MAD08518-204698_fdf305121bad4a3baf00fbbf54494176_dtl_1.jpg"
   },
   {
-   "id": "a7e780b7105a",
-   "nom": "Canapé 2 places en tissu bouclette beige 142x85x73,5 cm",
-   "enseigne": "Vente-unique",
-   "marque": "Homcom",
-   "prix": 213.9,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "contemporain"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon"
-   ],
-   "famille": "canape",
-   "dimensions": "142 × 85 × 73.5 cm",
-   "matiere": [
-    "bouclette"
-   ],
-   "couleur": [
-    "beige"
-   ],
-   "url": "https://www.vente-unique.com/p/canape-2-places-bouclette-beige-dim-142-x-85-x-73-5-cm-aucun-montage",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/4772/4772318/large/0/58141466.webp"
-  },
-  {
    "id": "51e7c89defb4",
    "nom": "Vita - Étagère ovale en bois et métal 85x111cm",
    "enseigne": "Drawer",
@@ -4102,37 +3545,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://cdn.habitat.fr/thumbnails/product/123/123108/large/0/13548788.webp"
-  },
-  {
-   "id": "f415acbfdd34",
-   "nom": "Fauteuil de salon pivotant ALYA en tissu bouclette beige",
-   "enseigne": "Vente-unique",
-   "marque": "Sia Home",
-   "prix": 129,
-   "devise": "EUR",
-   "gamme": "petit",
-   "styles": [
-    "contemporain"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon",
-    "chambre"
-   ],
-   "famille": "fauteuil",
-   "dimensions": null,
-   "matiere": [
-    "bouclette"
-   ],
-   "couleur": [
-    "beige"
-   ],
-   "url": "https://www.vente-unique.com/p/fauteuil-de-salle-a-manger-velours-lisse-beige-alya",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/4627/4627342/large/0/70153049.webp"
   },
   {
    "id": "d94b3044a968",
@@ -4803,36 +4215,6 @@
    "image": "https://pomax.com/cdn/shop/files/40502-BRO-05-product-1.jpg?v=1790757584&width=2400"
   },
   {
-   "id": "032f9f39db2f",
-   "nom": "Chaise longue côté gauche LATTES Cuir PU Blanc",
-   "enseigne": "Vente-unique",
-   "marque": "BELIANI",
-   "prix": 483.29,
-   "devise": "EUR",
-   "gamme": "haut",
-   "styles": [
-    "industriel"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salle-a-manger"
-   ],
-   "famille": "chaise",
-   "dimensions": null,
-   "matiere": [
-    "cuir"
-   ],
-   "couleur": [
-    "blanc"
-   ],
-   "url": "https://www.vente-unique.com/p/chaise-longue-chesterfield-en-cuir-pu-blanc-lattes",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/147/147099/large/0/66920783.webp"
-  },
-  {
    "id": "5954297b5db3",
    "nom": "EARTH - vase - terre cuite - DIA 14 x H 14 cm - blanc",
    "enseigne": "Pomax",
@@ -4862,38 +4244,6 @@
    "affiliate_url": "",
    "verification": "page ouverte, prix relevé",
    "image": "https://pomax.com/cdn/shop/files/41064-WHI-05-product-1.jpg?v=1790768055&width=1956"
-  },
-  {
-   "id": "af33c276854e",
-   "nom": "Canapé 3 places en cuir capitonné marron PIERRE",
-   "enseigne": "Vente-unique",
-   "marque": "Macabane",
-   "prix": 1499.99,
-   "devise": "EUR",
-   "gamme": "moyen",
-   "styles": [
-    "industriel",
-    "haussmannien"
-   ],
-   "styles_deduits": true,
-   "piece": [
-    "salon"
-   ],
-   "famille": "canape",
-   "dimensions": null,
-   "matiere": [
-    "pierre",
-    "cuir"
-   ],
-   "couleur": [
-    "marron"
-   ],
-   "url": "https://www.vente-unique.com/p/pierre-canape-3-places-cuir-couleur-caramel-assise-capitonnee",
-   "verifie_le": "2026-11-05",
-   "disponibilite": "InStock",
-   "affiliate_url": "",
-   "verification": "page ouverte, prix relevé",
-   "image": "https://cdn1.vente-unique.com/thumbnails/product/3722/3722602/large/0/64880344.webp"
   },
   {
    "id": "6746827c2890",

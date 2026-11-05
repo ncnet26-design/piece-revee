@@ -14,7 +14,6 @@ import { IconGrid, IconHeart, IconHouse, IconPhoto, IconSwatches, IconTheme, Ico
 const NAV = [
   { href: "/transformer/", label: "Transformer ma pièce" },
   { href: "/galerie/", label: "Inspirations" },
-  { href: "/catalogue/", label: "Catalogue" },
   { href: "/boutique/", label: "Boutique" },
   { href: "/tarifs/", label: "Tarifs" },
 ];
@@ -87,8 +86,8 @@ export function TabBar() {
   const items = [
     { href: "/transformer/", label: "Transformer", Icon: IconHouse, active: path.startsWith("/transformer") || path.startsWith("/ma-piece") },
     { href: "/galerie/", label: "Inspirations", Icon: IconPhoto, active: path.startsWith("/galerie") },
-    { href: "/catalogue/", label: "Catalogue", Icon: IconGrid, active: path.startsWith("/catalogue") },
-    { href: "/boutique/", label: "Boutique", Icon: IconSwatches, active: path.startsWith("/boutique") },
+    { href: "/boutique/", label: "Boutique", Icon: IconGrid, active: path.startsWith("/boutique") || path.startsWith("/catalogue") },
+    { href: "/tarifs/", label: "Tarifs", Icon: IconSwatches, active: path.startsWith("/tarifs") },
   ];
   return (
     <nav aria-label="Navigation mobile" className="fixed inset-x-0 bottom-0 z-25 border-t border-line bg-surface lg:hidden"
@@ -141,7 +140,7 @@ export function CookieBanner() {
 
 export function Footer() {
   const cols = [
-    { title: "Créer", links: [["Transformer ma pièce", "/transformer/"], ["Inspirations", "/galerie/"], ["Catalogue", "/catalogue/"], ["Boutique : toutes les enseignes", "/boutique/"], ["Trouver mon style", "/quiz/"], ["Tarifs", "/tarifs/"]] },
+    { title: "Créer", links: [["Transformer ma pièce", "/transformer/"], ["Inspirations", "/galerie/"], ["Boutique", "/boutique/"], ["Trouver mon style", "/quiz/"], ["Tarifs", "/tarifs/"]] },
     { title: "Autres outils", links: [["Planches de matières", "/planche/"], ["Concept éditorial", "/concept/"], ["Mon projet d'étude", "/projet/"], ["Ma maison", "/maison/"]] },
     { title: "Explorer", links: [["Tout explorer", "/explorer/"], ["Accords de matières", "/accords/"], ["Mobilier culte", "/mobilier/"], ["Lieux d'exception", "/lieux/"], ["Plantes", "/plantes/"], ["Guides pratiques", "/guides/"]] },
     { title: "Informations", links: [["Mentions légales", "/legal/mentions-legales/"], ["CGU", "/legal/cgu/"], ["CGV", "/legal/cgv/"], ["Confidentialité", "/legal/confidentialite/"], ["Cookies", "/legal/cookies/"], ["Liens affiliés", "/legal/affiliation/"]] },

@@ -250,7 +250,7 @@ export function Parcours() {
           <div className="mt-8 flex flex-wrap gap-2 border-t border-line pt-6">
             {room && <button type="button" className="btn" disabled={Boolean(busy)} onClick={() => void transform()}>Proposer une autre version</button>}
             <button type="button" className="btn" onClick={() => go("moodboard")} disabled={!mood && !inspi.length}>Revoir mon moodboard</button>
-            <a className="btn" href="/catalogue/">Voir le catalogue par budget</a>
+            <a className="btn" href="/boutique/">Voir la boutique</a>
             <button type="button" className="btn btn-ghost" onClick={restart}>Nouveau projet</button>
           </div>
           <OffreTeaser compact titre="Ça vous plaît ? Faites toutes vos pièces." />

@@ -21,8 +21,8 @@ test("accueil : promesse, accès direct au Studio, sections éditoriales", async
   await expect(page.getByRole("heading", { level: 1 })).toContainText("dessiné");
   await expect(page.getByRole("link", { name: "Transformer ma pièce" }).first()).toHaveAttribute("href", "/transformer/");
   const mobile = (page.viewportSize()?.width ?? 1200) < 1024;
-  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Catalogue", "Boutique"]);
-  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Catalogue", "Boutique", "Tarifs"]);
+  if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Boutique", "Tarifs"]);
+  else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Boutique", "Tarifs"]);
   await expect(page.getByRole("heading", { name: /trouvez-la en vente/ })).toBeVisible();
   await page.getByRole("button", { name: /Table basse en travertin : voir les produits ressemblants/ }).click();
   await expect(page.getByRole("link", { name: /travertin/i }).first()).toHaveAttribute("target", "_blank");
@@ -406,7 +406,7 @@ test("inspirations : huit styles en vraies photos, photographe crédité, relié
     const sec = page.locator(`#style-${s}`);
     await expect(sec.locator("img")).toHaveCount(6);
     await expect(sec.getByRole("link", { name: "Unsplash" })).toHaveCount(6);
-    await expect(sec.getByRole("link", { name: "Les pièces de ce style, par budget" })).toHaveAttribute("href", `/catalogue/?style=${s}`);
+    await expect(sec.getByRole("link", { name: "Les pièces de ce style, par budget" })).toHaveAttribute("href", `/boutique/?style=${s}#selection`);
   }
   const src = await page.locator("#style-japandi img").first().getAttribute("srcset");
   expect(src).toMatch(/images\.unsplash\.com.*2560w/);
@@ -419,27 +419,32 @@ test("showroom : teinte sur mesure (matières sans limite)", async ({ page }) =>
   await expect(dlg).toContainText(/Réf\. PR-PEI-6B3E7A·03/);
 });
 
-test("boutique : familles, recherche, filtres et ajout à ma pièce", async ({ page }) => {
+test("boutique : sélection d'exception, recherche, budget et ajout à ma pièce", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/boutique/");
-  await expect(page.getByText(/produits réels de \d+ enseignes/)).toBeVisible({ timeout: 20_000 });
-  await page.getByRole("textbox", { name: "Rechercher un produit" }).fill("table basse travertin");
-  await expect(page.getByText(/^\d[\d\s ]* produits?$/)).toBeVisible();
-  const first = page.getByRole("link", { name: /^Acheter chez / }).first();
+  await expect(page.getByText(/références choisies chez \d+ éditeurs et maisons/)).toBeVisible();
+  const tout = page.getByRole("region", { name: /Chercher, comparer/ });
+  await tout.getByRole("textbox", { name: "Rechercher un produit" }).fill("table basse");
+  await expect(tout.getByText(/^\d[\d\s ]* références?$/)).toBeVisible({ timeout: 20_000 });
+  const first = tout.getByRole("link", { name: /^Voir chez / }).first();
   await expect(first).toHaveAttribute("target", "_blank");
-  await page.getByRole("button", { name: "Ajouter à ma pièce" }).first().click();
-  await expect(page.getByRole("button", { name: "✓ Dans ma pièce" }).first()).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: /^Canapés/ }).click();
-  await expect(page.getByRole("button", { name: /^Canapés/ })).toHaveAttribute("aria-pressed", "true");
+  await tout.getByRole("button", { name: "Ajouter à ma pièce" }).first().click();
+  await expect(tout.getByRole("button", { name: "✓ Dans ma pièce" }).first()).toHaveAttribute("aria-pressed", "true");
+  await tout.getByRole("group", { name: "Budget" }).getByRole("button", { name: "Haut de gamme" }).click();
+  await expect(tout.getByText("Haut de gamme").nth(1)).toBeVisible();
+  await tout.getByRole("button", { name: "Canapés", exact: true }).click();
+  await expect(tout.getByRole("button", { name: "Canapés", exact: true })).toHaveAttribute("aria-pressed", "true");
   expect(errors).toEqual([]);
 });
 
 test("catalogue : filtres budget, pièce, style, matière ; liens vers les enseignes ; photos chargées depuis l'enseigne", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/catalogue/?style=japandi");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Votre style");
-  await expect(page.getByRole("button", { name: "Japandi" })).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: "Haut de gamme" }).click();
+  await expect(page).toHaveURL(/\/boutique\/\?style=japandi#selection/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("à chaque budget");
+  const sel = page.getByRole("region", { name: /Votre pièce, votre style/ });
+  await expect(sel.getByRole("button", { name: "Japandi" })).toHaveAttribute("aria-pressed", "true");
+  await sel.getByRole("button", { name: "Haut de gamme" }).click();
   await expect(page.getByRole("heading", { name: "Haut de gamme", level: 2 })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Petit budget", level: 2 })).toHaveCount(0);
   const lien = page.getByRole("link", { name: /^Voir chez / }).first();

@@ -22,7 +22,7 @@
     "eval:renders": "npx -y deno@2.9.6 run -A --config supabase/functions/deno.json scripts/eval-renders.ts",
     "server:assets": "node --experimental-strip-types scripts/build-server-assets.ts",
     "check:functions": "cd supabase/functions && npx -y deno@2.9.6 check --config deno.json */index.ts",
-    "prebuild": "node --experimental-strip-types scripts/build-server-assets.ts && node scripts/build-worker.mjs",
+    "prebuild": "node --experimental-strip-types scripts/build-server-assets.ts && node --experimental-strip-types scripts/selection-boutique.ts && node scripts/build-worker.mjs",
     "predev": "node scripts/build-worker.mjs"
   },
   "dependencies": {

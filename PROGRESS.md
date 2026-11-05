@@ -115,6 +115,12 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 ## 5 novembre — recherche en ligne accélérée (mise en ligne avec accord)
 - Service IA : modèle léger « Gemini 3.5 Flash Lite » à réflexion courte pour la recherche de produits (secours automatique vers le modèle habituel), une seule recherche Google, lecture des pages limitée à 4 s au total, liens Google suivis en 2,5 s maximum ; côté site, recherches identiques partagées. Mis en ligne le 5 novembre ; aucun essai payant fait, à juger sur une vraie transformation.
 
+## 5 novembre — Catalogue et Boutique fusionnés, sélection d'exception
+- Une seule page « Boutique » : en tête, la sélection vérifiée par pièce, style et budget (8 pièces par budget, « voir plus ») ; dessous, toute la boutique (recherche, familles, budget, enseigne). Les anciens liens /catalogue/ y mènent avec leurs filtres.
+- Tri (scripts/selection-boutique.ts, refait à chaque publication) : 30 944 produits relevés → 3 992 références de 17 éditeurs et maisons (Roche Bobois, Audo, Sarah Lavoine, Sentou, Pomax, Ferm Living, The Socialite Family, Selency, Habitat, Westwing, Fleux, Drawer, Bobochic, Sklum, Tediber, IKEA, HEMA) ; photo, prix en euros, pas épuisé, pas de lots ni d'imitations, une déclinaison par modèle, 40 modèles max par enseigne et par famille ; gamme par famille.
+- Écartés : Gifi, Brico Dépôt, Vente-unique, Castorama (produits génériques) ; enseignes américaines ; GUBI (relevé en dollars) et Caravane (prix mal relevés) tant que le robot n'est pas corrigé. Sélection vérifiée : 141 pièces (21 de marques génériques retirées).
+- Menu : Transformer ma pièce · Inspirations · Boutique · Tarifs.
+
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
 5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.

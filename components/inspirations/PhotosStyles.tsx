@@ -24,7 +24,7 @@ export function PhotosStyles() {
                 <h2 id={`h-style-${s}`} className="mt-3 text-[clamp(40px,5vw,72px)]">{NOM_STYLE[s]}</h2>
                 <p className="mt-3 max-w-[60ch] text-[16px] text-muted">{SIGNATURE[s]}</p>
               </div>
-              <Link href={`/catalogue/?style=${s}`} className="btn btn-primary">Les pièces de ce style, par budget</Link>
+              <Link href={`/boutique/?style=${s}#selection`} className="btn btn-primary">Les pièces de ce style, par budget</Link>
             </div>
             <div className="mt-8 grid gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="sm:col-span-2 lg:row-span-2">

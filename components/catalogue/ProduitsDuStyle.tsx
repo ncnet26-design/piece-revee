@@ -24,7 +24,7 @@ export function ProduitsDuStyle({ styleId }: { styleId: string }) {
           <p className="eyebrow">À acheter</p>
           <h2 id="h-achat-style" className="mt-3 text-[clamp(32px,4vw,56px)]">Le style {NOM_STYLE[style].toLowerCase()}, <em>à chaque budget.</em></h2>
         </div>
-        <Link href={`/catalogue/?style=${style}`} className="btn">Tout le style dans le catalogue</Link>
+        <Link href={`/boutique/?style=${style}#selection`} className="btn">Tout le style dans la boutique</Link>
       </div>
       <div className="mt-10 grid gap-12 lg:grid-cols-3">
         {GAMMES.map((g) => {

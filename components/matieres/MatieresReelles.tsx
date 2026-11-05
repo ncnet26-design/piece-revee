@@ -72,7 +72,7 @@ export function MatieresReelles() {
                   })}
                 </ul>
               )}
-              {m.produits && <Link href={`/catalogue/?matiere=${encodeURIComponent(m.produits)}`} className="mt-3 self-start text-[13px] underline decoration-[var(--bronze)] underline-offset-4">Toutes les pièces en {m.produits}</Link>}
+              {m.produits && <Link href={`/boutique/?matiere=${encodeURIComponent(m.produits)}#selection`} className="mt-3 self-start text-[13px] underline decoration-[var(--bronze)] underline-offset-4">Toutes les pièces en {m.produits}</Link>}
             </li>
           );
         })}
