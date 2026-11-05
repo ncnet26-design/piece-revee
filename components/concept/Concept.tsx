@@ -1,4 +1,5 @@
 "use client";
+import { MentionIA } from "@/components/MentionIA";
 /* eslint-disable @next/next/no-img-element -- image produite à la volée (data URL) */
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -114,9 +115,9 @@ export default function Concept() {
                 ))}
               </dl>
             </div>
-            <figure className="m-0">
+            <figure className="relative m-0">
               <img src={res.image} alt={`Image d'ambiance : ${prompt}`} className="aspect-[4/5] w-full rounded-[2px] object-cover" />
-              <figcaption className="mt-2 text-[12px] text-muted">Image créée par IA, à titre d'inspiration.</figcaption>
+              <MentionIA className="top-2.5 right-2.5" /><figcaption className="mt-2 text-[12px] text-muted">À titre d'inspiration.</figcaption>
             </figure>
           </div>
 

@@ -1,4 +1,5 @@
 "use client";
+import { MentionIA } from "@/components/MentionIA";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -157,7 +158,7 @@ function Detail({ refId, onChange, onClose, onAdd }: { refId: string; onChange: 
             <div className="absolute inset-0 bg-[var(--bg)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={ai.image} alt={`Photo réaliste créée par IA : ${name}`} className="h-full w-full object-cover" />
-              <span className="absolute left-4 top-14 rounded-full bg-white/80 px-3 py-1 text-[11.5px] text-ink/80 backdrop-blur">Photo créée par IA</span>
+              <MentionIA />
             </div>
           )}
           <div className="absolute bottom-4 right-4 flex gap-2">

@@ -1,4 +1,5 @@
 "use client";
+import { MentionIA } from "@/components/MentionIA";
 import Link from "next/link";
 import { useState } from "react";
 import type { ProduitCatalogue } from "@/lib/catalogue";
@@ -25,7 +26,7 @@ export function ShopTheLookVue({ found }: { found: Record<string, ProduitCatalog
             </span>
           </button>
         ))}
-        <figcaption className="absolute bottom-3 left-3 rounded-full bg-black/45 px-2.5 py-1 text-[10.5px] text-white backdrop-blur">Image générée par IA</figcaption>
+        <MentionIA />
       </figure>
       <div aria-live="polite">
         <p className="eyebrow">Dans l'image</p>

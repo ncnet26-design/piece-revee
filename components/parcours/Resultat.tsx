@@ -1,4 +1,5 @@
 "use client";
+import { MentionIA } from "@/components/MentionIA";
 import { textureMatiere } from "@/lib/texture-matiere";
 import { useCallback, useRef, useState } from "react";
 import type { Product } from "@/lib/products/schema";
@@ -67,7 +68,7 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
             </button>
           ))}
           {sel?.kind === "couleur" && <span aria-hidden className="pointer-events-none absolute size-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow" style={{ left: `${sel.x}%`, top: `${sel.y}%`, background: sel.hex }} />}
-          <span className="pointer-events-none absolute bottom-3 left-3 rounded-full bg-black/45 px-2.5 py-1 text-[10.5px] font-medium text-white backdrop-blur">Image générée par IA</span>
+          <MentionIA />
         </div>
       )}
 

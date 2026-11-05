@@ -6,6 +6,7 @@ import catalogue from "@/data/catalogue.json";
 import indexCatalogue from "@/public/catalogue/index.json";
 import { MarquesDefilantes } from "@/components/home/MarquesDefilantes";
 import { OffreTeaser } from "@/components/OffreTeaser";
+import { MentionIA } from "@/components/MentionIA";
 import { GAMMES, NOM_STYLE, PIECES, STYLES as STYLES_CATALOGUE, type ProduitAchetable } from "@/lib/catalogue-achetable";
 import { meta } from "@/lib/seo";
 import { lienUnsplash, PHOTOS_STYLES, srcsetUnsplash, tailleUnsplash, type PhotoStyle } from "@/lib/inspirations-photos";
@@ -135,10 +136,13 @@ export default function Home() {
           <Link href="/transformer/" className="btn mt-8">Essayer avec ma pièce</Link>
         </div>
         <div>
+          <div className="relative">
           <BeforeAfter ratio="16 / 9" labelBefore="Bouclé et noyer" labelAfter="Velours et chêne fumé"
             before={<Photo src="/editorial/ia/salon-boucle-noyer.webp" sizes="(min-width:1024px) 60vw, 100vw" alt="Salon : canapé bouclé crème, buffet cannelé en noyer" />}
             after={<Photo src="/editorial/ia/salon-velours-chene.webp" sizes="(min-width:1024px) 60vw, 100vw" alt="Même salon : canapé en velours vert, buffet en chêne fumé" />} />
-          <p className="mt-3 text-[12px] text-muted">Images générées par IA : même pièce, seules deux matières changent.</p>
+          <MentionIA className="bottom-2.5 left-2.5" />
+          </div>
+          <p className="mt-3 text-[12px] text-muted">Même pièce, seules deux matières changent.</p>
         </div>
       </section>
 
