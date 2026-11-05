@@ -112,6 +112,9 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - Visite 3D (/visite-3d) supprimée aussi, avec son moteur et l'éditeur de plan ; les bibliothèques de meubles 3D restent (planche, concept).
 - CLAUDE.md : règle des photos d'enseigne mise à jour (affichées depuis le site de l'enseigne, jamais copiées).
 
+## 5 novembre — recherche en ligne accélérée (mise en ligne avec accord)
+- Service IA : modèle léger « Gemini 3.5 Flash Lite » à réflexion courte pour la recherche de produits (secours automatique vers le modèle habituel), une seule recherche Google, lecture des pages limitée à 4 s au total, liens Google suivis en 2,5 s maximum ; côté site, recherches identiques partagées. Mis en ligne le 5 novembre ; aucun essai payant fait, à juger sur une vraie transformation.
+
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
 5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.
