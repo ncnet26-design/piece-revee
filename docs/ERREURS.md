@@ -67,3 +67,8 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 - Constat : sur les planches wabi-sabi et contemporain, une bonne part des candidates étaient des images de synthèse (auteurs Deconovo, Taitopia Render, Max Harlynking, mentions « 3D render »).
 - Correction : le robot écarte ces auteurs et les descriptions « render/3D/CGI » ; choix enregistrés par identifiant de photo (plus par numéro de planche, qui change à chaque recherche).
 - Rappel : `pkill -f` dans la même commande tue le terminal de la session ; arrêter un serveur autrement.
+
+## 5 novembre — Recherche en ligne « accélérée » : plus aucun résultat
+- Constat (signalé par le propriétaire) : après la mise en ligne, l'IA disait ne rien trouver.
+- Causes probables : modèle léger (Gemini 3.5 Flash Lite à réflexion courte) mis en ligne sans essai réel, liens Google coupés à 2,5 s, et produits jetés quand leur page n'était pas lue à temps.
+- Correction : retour au modèle habituel et aux délais d'origine ; un lien trouvé par Google reste montré même si sa page est lente. Leçon : ne jamais changer le modèle d'un service payant sans un essai réel chiffré et accepté.
