@@ -11,7 +11,7 @@ export const metadata = meta({
 
 export default function Page() {
   return (<>
-    <LegacyNotice href="/studio/?etape=3d" cta="Ouvrir la scène 3D du Studio">Maquette d'appartement simplifiée, pour tester un plan et des volumes. Pour une pièce aux matières photographiées, utilisez la scène 3D du Studio.</LegacyNotice>
+    <LegacyNotice>Maquette d'appartement simplifiée, pour tester un plan et des volumes. Pour voir votre vraie pièce transformée, utilisez « Transformer ma pièce ».</LegacyNotice>
     <Visite3D />
     <section className="mx-auto mt-8 max-w-3xl">
       <h2 className="text-2xl">Votre intérieur, en vrai volume</h2>

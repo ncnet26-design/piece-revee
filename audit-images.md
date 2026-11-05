@@ -1,139 +1,28 @@
-# Audit des images (2026-11-04)
+# Audit des images (2026-11-05)
 
 Grille : `direction-artistique-images` (A publiable, B à améliorer, C à refaire). Seuil : 2000 px de large minimum.
 Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel de chaque groupe sur planches-contact.
 
 ## Bilan
-- 529 images au total, 112 font 2000 px ou plus.
-- Hors sujet : 0 ; note C : 4 ; note B : 74 ; note A : 261.
-- À supprimer : 0 tout de suite (hors sujet ou C), 116 quand leur remplaçant existera, 219 à garder, 190 fichiers techniques.
+- 418 images au total, 111 font 2000 px ou plus.
+- Hors sujet : 0 ; note C : 4 ; note B : 0 ; note A : 224.
+- À supprimer : 0 tout de suite (hors sujet ou C), 6 quand leur remplaçant existera, 218 à garder, 190 fichiers techniques.
 - Les liens « utilisé par » sont des fichiers source ; les textures 3D sont chargées par un chemin calculé, d'où « 0 » parfois.
 
 ## Détail
 | Fichier | Utilisé par | Taille (px) | Poids | Design d'intérieur | Note | Raison | Action |
 |---|---|---|---|---|---|---|---|
 | `/apple-icon.png` | layout.tsx | 180×180 | 4 Ko | outil | — | icône / partage, technique | garder (technique) jusqu'au remplacement |
-| `/editorial/ia/accueil-table-1024.webp` | boutique/Boutique.tsx, experience/Stage.tsx | 1024×687 | 79 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/accueil-table-640.webp` | boutique/Boutique.tsx, experience/Stage.tsx | 640×429 | 35 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/accueil-table.webp` | boutique/Boutique.tsx, experience/Stage.tsx | 1600×1073 | 327 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/art-deco-contemporain-1024.webp` | experience/page.tsx, page.tsx | 1024×765 | 38 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/art-deco-contemporain-2400.webp` | experience/page.tsx, page.tsx | 2400×1792 | 189 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | garder |
-| `/editorial/ia/art-deco-contemporain-640.webp` | experience/page.tsx, page.tsx | 640×478 | 23 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/art-deco-contemporain.webp` | experience/page.tsx, page.tsx | 1600×1195 | 116 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/brutalisme-raffine-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 56 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/brutalisme-raffine-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 30 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/brutalisme-raffine.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 248 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/bureau-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 59 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/bureau-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 36 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/bureau.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 177 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/campagne-elegante-1024.webp` | experience/scene.ts, photos-variantes.json | 1024×765 | 34 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/campagne-elegante-640.webp` | experience/scene.ts, photos-variantes.json | 640×478 | 20 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/campagne-elegante.webp` | experience/scene.ts, photos-variantes.json | 1600×1195 | 112 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/chambre-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 50 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/chambre-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 27 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/chambre.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 176 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/contemporain-sculptural-1024.webp` | experience/page.tsx, page.tsx | 1024×765 | 17 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/contemporain-sculptural-640.webp` | experience/page.tsx, page.tsx | 640×478 | 9 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/contemporain-sculptural.webp` | experience/page.tsx, page.tsx | 1600×1195 | 73 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/cuisine-1024.webp` | Photo.tsx, photos-variantes.json | 1024×765 | 21 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/cuisine-640.webp` | Photo.tsx, photos-variantes.json | 640×478 | 13 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/cuisine.webp` | Photo.tsx, photos-variantes.json | 1600×1195 | 66 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/dressing-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 47 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/dressing-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 27 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/dressing.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 167 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/entree-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 25 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/entree-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 14 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/entree.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 107 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/haussmannien-renove-1024.webp` | page.tsx, experience/scene.ts | 1024×765 | 55 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/haussmannien-renove-640.webp` | page.tsx, experience/scene.ts | 640×478 | 27 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/haussmannien-renove.webp` | page.tsx, experience/scene.ts | 1600×1195 | 191 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/japandi-essai-1024.webp` | experience/page.tsx, page.tsx | 1024×765 | 43 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/japandi-essai-640.webp` | experience/page.tsx, page.tsx | 640×478 | 23 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/japandi-essai.webp` | experience/page.tsx, page.tsx | 1600×1195 | 153 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/luxe-discret-1024.webp` | experience/page.tsx, page.tsx | 1024×765 | 56 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/luxe-discret-640.webp` | experience/page.tsx, page.tsx | 640×478 | 29 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/luxe-discret.webp` | experience/page.tsx, page.tsx | 1600×1195 | 210 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/mediterraneen-contemporain-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 37 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/mediterraneen-contemporain-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 21 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/mediterraneen-contemporain.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 124 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/mid-century-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 54 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/mid-century-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 30 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/mid-century.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 195 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/minimalisme-chaleureux-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 23 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/minimalisme-chaleureux-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 14 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/minimalisme-chaleureux.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 82 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/parisien-contemporain-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 42 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/parisien-contemporain-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 23 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/parisien-contemporain.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 176 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salle-a-manger-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 32 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salle-a-manger-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 19 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salle-a-manger.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 100 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salle-de-bain-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 32 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salle-de-bain-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 18 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salle-de-bain.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 117 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salon-1024.webp` | experience/page.tsx, page.tsx | 1024×765 | 47 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salon-640.webp` | experience/page.tsx, page.tsx | 640×478 | 26 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salon-boucle-noyer-1024.webp` | experience/page.tsx, page.tsx | 1024×572 | 23 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salon-boucle-noyer-2400.webp` | experience/page.tsx, page.tsx | 2400×1340 | 193 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | garder |
-| `/editorial/ia/salon-boucle-noyer-640.webp` | experience/page.tsx, page.tsx | 640×357 | 12 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salon-boucle-noyer.webp` | experience/page.tsx, page.tsx | 1600×893 | 101 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salon-velours-chene-1024.webp` | experience/page.tsx, page.tsx | 1024×572 | 23 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salon-velours-chene-640.webp` | experience/page.tsx, page.tsx | 640×357 | 12 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salon-velours-chene.webp` | experience/page.tsx, page.tsx | 1600×893 | 82 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/salon.webp` | experience/page.tsx, page.tsx | 1600×1195 | 168 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/scandinave-haut-de-gamme-1024.webp` | boutique/Boutique.tsx, photos-variantes.json | 1024×765 | 50 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/scandinave-haut-de-gamme-640.webp` | boutique/Boutique.tsx, photos-variantes.json | 640×478 | 29 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/scandinave-haut-de-gamme.webp` | boutique/Boutique.tsx, photos-variantes.json | 1600×1195 | 163 Ko | oui | B | image IA crédible mais beige générique, style peu reconnaissable | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/terrasse-1024.webp` | photos-variantes.json, data/inspiration-bank.json | 1024×765 | 122 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/terrasse-640.webp` | photos-variantes.json, data/inspiration-bank.json | 640×478 | 63 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/ia/terrasse.webp` | photos-variantes.json, data/inspiration-bank.json | 1600×1195 | 465 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/bois-huile.webp` | — | 1200×1200 | 83 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/boucle.webp` | — | 1200×1200 | 56 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/bronze-brosse.webp` | — | 1200×1200 | 13 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/chene-fume.webp` | — | 1200×1200 | 63 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/chene-naturel.webp` | — | 1200×1200 | 134 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/enduit-chaux.webp` | — | 1200×1200 | 98 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/laiton-brosse.webp` | — | 1200×1200 | 14 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/lin-lave.webp` | — | 1200×1200 | 241 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/noyer-verni.webp` | — | 1200×1200 | 90 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/parquet-chevron.webp` | — | 1200×1200 | 197 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/pierre-mate.webp` | — | 1200×1200 | 263 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/pierre-naturelle.webp` | — | 1200×1200 | 347 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/platre-texture.webp` | — | 1200×1200 | 175 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/tapis-laine.webp` | — | 1200×1200 | 58 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/terrazzo.webp` | — | 1200×1200 | 366 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/terre-cuite.webp` | — | 1200×1200 | 71 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/travertin.webp` | InspirationBank.tsx | 1200×1200 | 89 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/matieres/velours-foret.webp` | — | 1200×1200 | 99 Ko | oui | B | vignette 1200 px recolorée ; aplats sans matière pour verre, laque, peinture, faïence, zellige, marbre | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/art-deco-contemporain.webp` | data/inspiration-bank.json | 1600×1200 | 16 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/brutalisme-raffine.webp` | data/inspiration-bank.json | 1600×1200 | 166 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/campagne-elegante.webp` | data/inspiration-bank.json | 1600×1200 | 139 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/chambre.webp` | data/inspiration-bank.json | 1600×1200 | 137 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/contemporain-sculptural.webp` | data/inspiration-bank.json | 1600×1200 | 65 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/dressing.webp` | data/inspiration-bank.json | 1600×1200 | 110 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/entree.webp` | data/inspiration-bank.json | 1600×1200 | 72 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/haussmannien-renove.webp` | data/inspiration-bank.json | 1600×1200 | 85 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/japandi.webp` | data/inspiration-bank.json | 1600×1200 | 86 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/luxe-discret.webp` | data/inspiration-bank.json | 1600×1200 | 70 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/mediterraneen-contemporain.webp` | data/inspiration-bank.json | 1600×1200 | 88 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/mid-century.webp` | data/inspiration-bank.json | 1600×1200 | 97 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/minimalisme-chaleureux.webp` | data/inspiration-bank.json | 1600×1200 | 101 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/parisien-contemporain.webp` | data/inspiration-bank.json | 1600×1200 | 118 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/salle-a-manger.webp` | data/inspiration-bank.json | 1600×1200 | 47 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/salle-de-bain.webp` | data/inspiration-bank.json | 1600×1200 | 145 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/editorial/planches/scandinave-haut-de-gamme.webp` | data/inspiration-bank.json | 1600×1200 | 103 Ko | oui | B | planche composée d'échantillons, pas une photo | supprimer (< 2000 px) dès que le remplaçant existe |
+| `/editorial/ia/salon-boucle-noyer-1024.webp` | page.tsx, Photo.tsx | 1024×572 | 23 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
+| `/editorial/ia/salon-boucle-noyer-2400.webp` | page.tsx, Photo.tsx | 2400×1340 | 193 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | garder |
+| `/editorial/ia/salon-boucle-noyer-640.webp` | page.tsx, Photo.tsx | 640×357 | 12 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
+| `/editorial/ia/salon-boucle-noyer.webp` | page.tsx, Photo.tsx | 1600×893 | 101 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
+| `/editorial/ia/salon-velours-chene-1024.webp` | page.tsx, photos-variantes.json | 1024×572 | 23 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
+| `/editorial/ia/salon-velours-chene-640.webp` | page.tsx, photos-variantes.json | 640×357 | 12 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
+| `/editorial/ia/salon-velours-chene.webp` | page.tsx, photos-variantes.json | 1600×893 | 82 Ko | oui | A | image IA crédible, style lisible (étiquetée IA) | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/icon-192.png` | layout.tsx, manifest.ts | 192×192 | 4 Ko | outil | — | icône / partage, technique | garder (technique) jusqu'au remplacement |
 | `/icon-512.png` | layout.tsx, manifest.ts | 512×512 | 12 Ko | outil | — | icône / partage, technique | garder (technique) jusqu'au remplacement |
 | `/icon.svg` | layout.tsx, manifest.ts | 64×64 | 0 Ko | outil | — | icône / partage, technique | garder (technique) jusqu'au remplacement |
-| `/inspirations/villas-14-1024.webp` | page.tsx, photos-variantes.json | 1024×768 | 65 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/inspirations/villas-14-640.webp` | page.tsx, photos-variantes.json | 640×440 | 31 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/inspirations/villas-14.webp` | page.tsx, photos-variantes.json | 1467×1100 | 175 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/inspirations/villas-15-1024.webp` | photos-variantes.json, data/inspirations.json | 1024×1024 | 76 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/inspirations/villas-15-640.webp` | photos-variantes.json, data/inspirations.json | 640×440 | 38 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/inspirations/villas-15.webp` | photos-variantes.json, data/inspirations.json | 1100×1100 | 129 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/inspirations/villas-16-1024.webp` | page.tsx, photos-variantes.json | 1024×600 | 54 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/inspirations/villas-16-640.webp` | page.tsx, photos-variantes.json | 640×440 | 28 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
-| `/inspirations/villas-16.webp` | page.tsx, photos-variantes.json | 1600×937 | 175 Ko | oui | B | vraie photo (Villa Tugendhat), belle mais trop petite | supprimer (< 2000 px) dès que le remplaçant existe |
 | `/materiaux/bois-huile/ao.webp` | data/materials-pbr.json | 2048×2048 | 1721 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/bois-huile/basecolor.webp` | data/materials-pbr.json | 2048×2048 | 395 Ko | oui | A | texture réelle Poly Haven 2K | garder |
 | `/materiaux/bois-huile/normal.webp` | data/materials-pbr.json | 2048×2048 | 189 Ko | oui | A | texture réelle Poly Haven 2K | garder |
@@ -207,15 +96,15 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/matieres/beton-cire/640.avif` | — | 640×640 | 6 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/beton-cire/640.webp` | — | 640×640 | 15 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/beton-cire/original-4k.webp` | — | 4096×4096 | 3180 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/bouclette/1280.avif` | data/inspiration-bank.json | 1280×1280 | 104 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/bouclette/1280.webp` | data/inspiration-bank.json | 1280×1280 | 174 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/bouclette/1920.avif` | — | 1920×1920 | 206 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/bouclette/1920.webp` | — | 1920×1920 | 340 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/bouclette/3840.avif` | — | 3840×3840 | 533 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/bouclette/3840.webp` | — | 3840×3840 | 889 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/bouclette/640.avif` | — | 640×640 | 28 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/bouclette/640.webp` | — | 640×640 | 47 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/bouclette/original-4k.webp` | — | 4096×4096 | 2350 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/1280.avif` | data/inspiration-bank.json | 1280×1261 | 73 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/1280.webp` | data/inspiration-bank.json | 1280×1261 | 128 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/1920.avif` | — | 1920×1892 | 118 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/1920.webp` | — | 1920×1892 | 217 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/3840.avif` | — | 3840×3784 | 264 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/3840.webp` | — | 3840×3784 | 542 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/640.avif` | — | 640×631 | 30 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/640.webp` | — | 640×631 | 50 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/bouclette/original-4k.webp` | — | 4096×4036 | 1707 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/brique/1280.avif` | — | 1280×1280 | 104 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/brique/1280.webp` | — | 1280×1280 | 163 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/brique/1920.avif` | — | 1920×1920 | 250 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
@@ -333,14 +222,14 @@ Méthode : mesures automatiques (`scripts/audit-images.mjs`), puis examen visuel
 | `/matieres/terre-cuite/640.avif` | boutique/Boutique.tsx | 640×640 | 23 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/terre-cuite/640.webp` | boutique/Boutique.tsx | 640×640 | 46 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/terre-cuite/original-4k.webp` | — | 4096×4096 | 5798 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/travertin/1280.avif` | page.tsx, experience/Stage.tsx | 1280×1280 | 105 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/travertin/1280.webp` | page.tsx, experience/Stage.tsx | 1280×1280 | 185 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/travertin/1920.avif` | experience/page.tsx | 1920×1920 | 228 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/travertin/1920.webp` | experience/page.tsx | 1920×1920 | 410 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/1280.avif` | data/inspiration-bank.json | 1280×1280 | 105 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/1280.webp` | data/inspiration-bank.json | 1280×1280 | 185 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/1920.avif` | — | 1920×1920 | 228 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/1920.webp` | — | 1920×1920 | 410 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/travertin/3840.avif` | — | 3840×3840 | 749 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/travertin/3840.webp` | — | 3840×3840 | 1367 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/travertin/640.avif` | experience/page.tsx, page.tsx | 640×640 | 29 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
-| `/matieres/travertin/640.webp` | experience/page.tsx, page.tsx | 640×640 | 50 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/640.avif` | — | 640×640 | 29 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
+| `/matieres/travertin/640.webp` | — | 640×640 | 50 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/travertin/original-4k.webp` | — | 4096×4096 | 3736 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/velours/1280.avif` | data/inspiration-bank.json | 1280×1231 | 112 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |
 | `/matieres/velours/1280.webp` | data/inspiration-bank.json | 1280×1231 | 206 Ko | oui | A | texture réelle 4K (Poly Haven / ambientCG) ; les petites tailles sont ses versions web | garder |

@@ -7,8 +7,8 @@ import type { Surface } from "@/lib/ia-jobs";
 import { featuresOf, type AiObject } from "@/lib/studio/showcase";
 import { updateProject, useProject } from "@/lib/studio/project";
 import { hit, lensUrl, nearestMaterials, nearestPaint, sampleColor, surfaceQuery } from "@/lib/parcours";
-import { Comparator } from "@/components/studio/Comparator";
-import { Panel } from "@/components/studio/Panel";
+import { Comparator } from "@/components/parcours/Comparator";
+import { Panel } from "@/components/parcours/Panel";
 import { ShopLinks } from "@/components/ShopLinks";
 import { EnLigne } from "./EnLigne";
 import { Catalogue } from "./Catalogue";
@@ -85,7 +85,7 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
         </div>
       )}
       {project.list.length > 0 && (
-        <p className="mt-4 text-[13px]"><a className="underline" href="/studio/?etape=liste">Ma pièce composée : {project.list.length} article{project.list.length > 1 ? "s" : ""}{total ? ` · ${total.toLocaleString("fr-FR")} € de prix relevés` : ""} — voir ma liste d'achats</a></p>
+        <p className="mt-4 text-[13px]"><a className="underline" href="/ma-piece/">Ma pièce composée : {project.list.length} article{project.list.length > 1 ? "s" : ""}{total ? ` · ${total.toLocaleString("fr-FR")} € de prix relevés` : ""} — voir ma liste d'achats</a></p>
       )}
 
       <Panel open={Boolean(sel)} kicker={kicker} title={title} onClose={() => setSel(null)}>

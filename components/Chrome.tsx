@@ -85,7 +85,7 @@ export function Header() {
 export function TabBar() {
   const path = usePathname() ?? "/";
   const items = [
-    { href: "/transformer/", label: "Transformer", Icon: IconHouse, active: path.startsWith("/transformer") || path.startsWith("/studio") },
+    { href: "/transformer/", label: "Transformer", Icon: IconHouse, active: path.startsWith("/transformer") || path.startsWith("/ma-piece") },
     { href: "/galerie/", label: "Inspirations", Icon: IconPhoto, active: path.startsWith("/galerie") },
     { href: "/catalogue/", label: "Catalogue", Icon: IconGrid, active: path.startsWith("/catalogue") },
     { href: "/boutique/", label: "Boutique", Icon: IconSwatches, active: path.startsWith("/boutique") },

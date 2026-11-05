@@ -105,7 +105,12 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - Vendre : page Tarifs refaite (promesse, réassurance, contenu d'une étude, offres pro à part, FAQ sur les objections, appel final) ; « Le plus choisi » remplacé par « Recommandé » (aucune donnée ne le prouvait) ; encart des offres sur l'accueil et après une transformation ; accueil réordonné (essai gratuit en premier).
 - Écarté volontairement : faux avis, faux compteurs, fausse urgence.
 
+## 5 novembre (fin) — Studio 3D et Expérience supprimés (accord du propriétaire)
+- Pages /studio et /experience supprimées, avec leur code (scène 3D, explorateur, labo qualité). La liste d'achats est gardée sur une page simple : /ma-piece/.
+- 114 images trop petites générées par IA supprimées (plus utilisées nulle part). Restent 2 images IA étiquetées sur l'accueil (« Même pièce, autre caractère » et « Touchez une pièce ») : elles montrent ce que fait la transformation, elles ne peuvent pas être de vraies photos.
+- Audit des images régénéré : 418 images, aucune hors sujet, 4 en note C (visuels techniques).
+- CLAUDE.md : règle des photos d'enseigne mise à jour (affichées depuis le site de l'enseigne, jamais copiées).
+
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
-4. Décider du sort du Studio 3D et de la page Expérience ; leur retrait permettrait de supprimer les 98 images IA restantes de moins de 2000 px.
 5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.

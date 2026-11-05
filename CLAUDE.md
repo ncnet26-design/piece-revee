@@ -16,7 +16,7 @@ Aider n'importe qui à refaire son intérieur, quel que soit son budget. On choi
 - Matières : textures réelles CC0 (Poly Haven, ambientCG), jamais d'IA. Original 4K gardé pour le zoom.
 - Largeur minimale 2000 px. Versions web AVIF + WebP (640, 1280, 1920, 3840), toujours `srcset` + `sizes`.
 - Une inspiration montre au moins 4 marqueurs de son style et aucun défaut de la grille de rejet ; on la reconnaît sans lire le titre.
-- Jamais de photo d'enseigne téléchargée : vignette matière/couleur + « Voir chez [enseigne] ».
+- Photo produit d'enseigne : affichée depuis son site (adresse seulement, jamais copiée ni stockée), dessin au trait en secours ; « Voir chez [enseigne] ».
 - Chaque image est ouverte et regardée avant publication. Crédits dans `credits.md`.
 
 ## Produits

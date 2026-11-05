@@ -2,7 +2,7 @@ import variantes from "@/lib/photos-variantes.json";
 
 const V = variantes as Record<string, { w: number[]; ratio: number }>;
 
-/** Adresse de base d'une photo (sans taille ni extension) : « /editorial/ia/cuisine-640.webp » → « /editorial/ia/cuisine ». */
+/** Adresse de base d'une photo (sans taille ni extension) : « /editorial/ia/salon-boucle-noyer-640.webp » → « /editorial/ia/salon-boucle-noyer ». */
 export const photoBase = (src: string) => src.replace(/(-\d{3,4})?\.webp$/, "");
 
 /** Liste srcset des tailles disponibles pour une photo (vide si la photo n'a pas de variantes). */

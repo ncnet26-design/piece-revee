@@ -10,765 +10,18 @@
   "nb_refs": 1
  },
  {
-  "fichier": "/editorial/ia/accueil-table-1024.webp",
-  "largeur": 1024,
-  "hauteur": 687,
-  "ko": 79,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/accueil-table-640.webp",
-  "largeur": 640,
-  "hauteur": 429,
-  "ko": 35,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/accueil-table.webp",
-  "largeur": 1600,
-  "hauteur": 1073,
-  "ko": 327,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/art-deco-contemporain-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 38,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 5
- },
- {
-  "fichier": "/editorial/ia/art-deco-contemporain-2400.webp",
-  "largeur": 2400,
-  "hauteur": 1792,
-  "ko": 189,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 5
- },
- {
-  "fichier": "/editorial/ia/art-deco-contemporain-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 23,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 5
- },
- {
-  "fichier": "/editorial/ia/art-deco-contemporain.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 116,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 5
- },
- {
-  "fichier": "/editorial/ia/brutalisme-raffine-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 56,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/brutalisme-raffine-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 30,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/brutalisme-raffine.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 248,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/bureau-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 59,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/bureau-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 36,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/bureau.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 177,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/campagne-elegante-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 34,
-  "utilise_par": [
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/campagne-elegante-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 20,
-  "utilise_par": [
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/campagne-elegante.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 112,
-  "utilise_par": [
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/chambre-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 50,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/chambre-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 27,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/chambre.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 176,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/contemporain-sculptural-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 17,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 5
- },
- {
-  "fichier": "/editorial/ia/contemporain-sculptural-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 9,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 5
- },
- {
-  "fichier": "/editorial/ia/contemporain-sculptural.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 73,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 5
- },
- {
-  "fichier": "/editorial/ia/cuisine-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 21,
-  "utilise_par": [
-   "components/Photo.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/cuisine-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 13,
-  "utilise_par": [
-   "components/Photo.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/cuisine.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 66,
-  "utilise_par": [
-   "components/Photo.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/dressing-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 47,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/dressing-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 27,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/dressing.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 167,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/entree-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 25,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/entree-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 14,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/entree.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 107,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/haussmannien-renove-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 55,
-  "utilise_par": [
-   "app/page.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 4
- },
- {
-  "fichier": "/editorial/ia/haussmannien-renove-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 27,
-  "utilise_par": [
-   "app/page.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 4
- },
- {
-  "fichier": "/editorial/ia/haussmannien-renove.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 191,
-  "utilise_par": [
-   "app/page.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 4
- },
- {
-  "fichier": "/editorial/ia/japandi-essai-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 43,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/boutique/Boutique.tsx",
-   "components/experience/Stage.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json"
-  ],
-  "nb_refs": 7
- },
- {
-  "fichier": "/editorial/ia/japandi-essai-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 23,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/boutique/Boutique.tsx",
-   "components/experience/Stage.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json"
-  ],
-  "nb_refs": 7
- },
- {
-  "fichier": "/editorial/ia/japandi-essai.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 153,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/boutique/Boutique.tsx",
-   "components/experience/Stage.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json"
-  ],
-  "nb_refs": 7
- },
- {
-  "fichier": "/editorial/ia/luxe-discret-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 56,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/boutique/Boutique.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 6
- },
- {
-  "fichier": "/editorial/ia/luxe-discret-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 29,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/boutique/Boutique.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 6
- },
- {
-  "fichier": "/editorial/ia/luxe-discret.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 210,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/boutique/Boutique.tsx",
-   "components/experience/scene.ts",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 6
- },
- {
-  "fichier": "/editorial/ia/mediterraneen-contemporain-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 37,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/mediterraneen-contemporain-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 21,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/mediterraneen-contemporain.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 124,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/mid-century-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 54,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/mid-century-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 30,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/mid-century.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 195,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/minimalisme-chaleureux-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 23,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/minimalisme-chaleureux-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 14,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/minimalisme-chaleureux.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 82,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/parisien-contemporain-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 42,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/parisien-contemporain-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 23,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/parisien-contemporain.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 176,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/salle-a-manger-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 32,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/salle-a-manger-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 19,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/salle-a-manger.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 100,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/salle-de-bain-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 32,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/salle-de-bain-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 18,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/salle-de-bain.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 117,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/salon-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 47,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/ShopTheLookVue.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 7
- },
- {
-  "fichier": "/editorial/ia/salon-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 26,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/ShopTheLookVue.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 7
- },
- {
   "fichier": "/editorial/ia/salon-boucle-noyer-1024.webp",
   "largeur": 1024,
   "hauteur": 572,
   "ko": 23,
   "utilise_par": [
-   "app/experience/page.tsx",
    "app/page.tsx",
+   "components/Photo.tsx",
    "components/ShopTheLookVue.tsx",
-   "components/experience/Stage.tsx",
    "lib/photos-variantes.json",
    "content/data/showcase.json"
   ],
-  "nb_refs": 6
+  "nb_refs": 5
  },
  {
   "fichier": "/editorial/ia/salon-boucle-noyer-2400.webp",
@@ -776,14 +29,13 @@
   "hauteur": 1340,
   "ko": 193,
   "utilise_par": [
-   "app/experience/page.tsx",
    "app/page.tsx",
+   "components/Photo.tsx",
    "components/ShopTheLookVue.tsx",
-   "components/experience/Stage.tsx",
    "lib/photos-variantes.json",
    "content/data/showcase.json"
   ],
-  "nb_refs": 6
+  "nb_refs": 5
  },
  {
   "fichier": "/editorial/ia/salon-boucle-noyer-640.webp",
@@ -791,14 +43,13 @@
   "hauteur": 357,
   "ko": 12,
   "utilise_par": [
-   "app/experience/page.tsx",
    "app/page.tsx",
+   "components/Photo.tsx",
    "components/ShopTheLookVue.tsx",
-   "components/experience/Stage.tsx",
    "lib/photos-variantes.json",
    "content/data/showcase.json"
   ],
-  "nb_refs": 6
+  "nb_refs": 5
  },
  {
   "fichier": "/editorial/ia/salon-boucle-noyer.webp",
@@ -806,14 +57,13 @@
   "hauteur": 893,
   "ko": 101,
   "utilise_par": [
-   "app/experience/page.tsx",
    "app/page.tsx",
+   "components/Photo.tsx",
    "components/ShopTheLookVue.tsx",
-   "components/experience/Stage.tsx",
    "lib/photos-variantes.json",
    "content/data/showcase.json"
   ],
-  "nb_refs": 6
+  "nb_refs": 5
  },
  {
   "fichier": "/editorial/ia/salon-velours-chene-1024.webp",
@@ -821,12 +71,10 @@
   "hauteur": 572,
   "ko": 23,
   "utilise_par": [
-   "app/experience/page.tsx",
    "app/page.tsx",
-   "components/experience/Stage.tsx",
    "lib/photos-variantes.json"
   ],
-  "nb_refs": 4
+  "nb_refs": 2
  },
  {
   "fichier": "/editorial/ia/salon-velours-chene-640.webp",
@@ -834,12 +82,10 @@
   "hauteur": 357,
   "ko": 12,
   "utilise_par": [
-   "app/experience/page.tsx",
    "app/page.tsx",
-   "components/experience/Stage.tsx",
    "lib/photos-variantes.json"
   ],
-  "nb_refs": 4
+  "nb_refs": 2
  },
  {
   "fichier": "/editorial/ia/salon-velours-chene.webp",
@@ -847,412 +93,10 @@
   "hauteur": 893,
   "ko": 82,
   "utilise_par": [
-   "app/experience/page.tsx",
    "app/page.tsx",
-   "components/experience/Stage.tsx",
    "lib/photos-variantes.json"
   ],
-  "nb_refs": 4
- },
- {
-  "fichier": "/editorial/ia/salon.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 168,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx",
-   "components/ShopTheLookVue.tsx",
-   "components/experience/Stage.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 7
- },
- {
-  "fichier": "/editorial/ia/scandinave-haut-de-gamme-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 50,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/scandinave-haut-de-gamme-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 29,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/scandinave-haut-de-gamme.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 163,
-  "utilise_par": [
-   "components/boutique/Boutique.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/editorial/ia/terrasse-1024.webp",
-  "largeur": 1024,
-  "hauteur": 765,
-  "ko": 122,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
   "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/terrasse-640.webp",
-  "largeur": 640,
-  "hauteur": 478,
-  "ko": 63,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/ia/terrasse.webp",
-  "largeur": 1600,
-  "hauteur": 1195,
-  "ko": 465,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/editorial/matieres/bois-huile.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 83,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/boucle.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 56,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/bronze-brosse.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 13,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/chene-fume.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 63,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/chene-naturel.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 134,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/enduit-chaux.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 98,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/laiton-brosse.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 14,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/lin-lave.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 241,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/noyer-verni.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 90,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/parquet-chevron.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 197,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/pierre-mate.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 263,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/pierre-naturelle.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 347,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/platre-texture.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 175,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/tapis-laine.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 58,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/terrazzo.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 366,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/terre-cuite.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 71,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/matieres/travertin.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 89,
-  "utilise_par": [
-   "components/InspirationBank.tsx"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/matieres/velours-foret.webp",
-  "largeur": 1200,
-  "hauteur": 1200,
-  "ko": 99,
-  "utilise_par": [],
-  "nb_refs": 0
- },
- {
-  "fichier": "/editorial/planches/art-deco-contemporain.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 16,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/brutalisme-raffine.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 166,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/campagne-elegante.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 139,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/chambre.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 137,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/contemporain-sculptural.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 65,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/dressing.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 110,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/entree.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 72,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/haussmannien-renove.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 85,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/japandi.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 86,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/luxe-discret.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 70,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/mediterraneen-contemporain.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 88,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/mid-century.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 97,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/minimalisme-chaleureux.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 101,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/parisien-contemporain.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 118,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/salle-a-manger.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 47,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/salle-de-bain.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 145,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
- },
- {
-  "fichier": "/editorial/planches/scandinave-haut-de-gamme.webp",
-  "largeur": 1600,
-  "hauteur": 1200,
-  "ko": 103,
-  "utilise_par": [
-   "content/data/inspiration-bank.json"
-  ],
-  "nb_refs": 1
  },
  {
   "fichier": "/icon-192.png",
@@ -1267,7 +111,7 @@
    "components/CamilleDrawer.tsx",
    "components/Chrome.tsx"
   ],
-  "nb_refs": 17
+  "nb_refs": 18
  },
  {
   "fichier": "/icon-512.png",
@@ -1282,7 +126,7 @@
    "components/CamilleDrawer.tsx",
    "components/Chrome.tsx"
   ],
-  "nb_refs": 17
+  "nb_refs": 18
  },
  {
   "fichier": "/icon.svg",
@@ -1297,112 +141,7 @@
    "components/CamilleDrawer.tsx",
    "components/Chrome.tsx"
   ],
-  "nb_refs": 17
- },
- {
-  "fichier": "/inspirations/villas-14-1024.webp",
-  "largeur": 1024,
-  "hauteur": 768,
-  "ko": 65,
-  "utilise_par": [
-   "app/page.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/inspirations/villas-14-640.webp",
-  "largeur": 640,
-  "hauteur": 440,
-  "ko": 31,
-  "utilise_par": [
-   "app/page.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/inspirations/villas-14.webp",
-  "largeur": 1467,
-  "hauteur": 1100,
-  "ko": 175,
-  "utilise_par": [
-   "app/page.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/inspirations/villas-15-1024.webp",
-  "largeur": 1024,
-  "hauteur": 1024,
-  "ko": 76,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/inspirations/villas-15-640.webp",
-  "largeur": 640,
-  "hauteur": 440,
-  "ko": 38,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/inspirations/villas-15.webp",
-  "largeur": 1100,
-  "hauteur": 1100,
-  "ko": 129,
-  "utilise_par": [
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 2
- },
- {
-  "fichier": "/inspirations/villas-16-1024.webp",
-  "largeur": 1024,
-  "hauteur": 600,
-  "ko": 54,
-  "utilise_par": [
-   "app/page.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/inspirations/villas-16-640.webp",
-  "largeur": 640,
-  "hauteur": 440,
-  "ko": 28,
-  "utilise_par": [
-   "app/page.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 3
- },
- {
-  "fichier": "/inspirations/villas-16.webp",
-  "largeur": 1600,
-  "hauteur": 937,
-  "ko": 175,
-  "utilise_par": [
-   "app/page.tsx",
-   "lib/photos-variantes.json",
-   "content/data/inspirations.json"
-  ],
-  "nb_refs": 3
+  "nb_refs": 18
  },
  {
   "fichier": "/materiaux/bois-huile/ao.webp",
@@ -2101,8 +840,8 @@
  {
   "fichier": "/matieres/bouclette/1280.avif",
   "largeur": 1280,
-  "hauteur": 1280,
-  "ko": 104,
+  "hauteur": 1261,
+  "ko": 73,
   "utilise_par": [
    "content/data/inspiration-bank.json"
   ],
@@ -2111,8 +850,8 @@
  {
   "fichier": "/matieres/bouclette/1280.webp",
   "largeur": 1280,
-  "hauteur": 1280,
-  "ko": 174,
+  "hauteur": 1261,
+  "ko": 128,
   "utilise_par": [
    "content/data/inspiration-bank.json"
   ],
@@ -2121,56 +860,56 @@
  {
   "fichier": "/matieres/bouclette/1920.avif",
   "largeur": 1920,
-  "hauteur": 1920,
-  "ko": 206,
+  "hauteur": 1892,
+  "ko": 118,
   "utilise_par": [],
   "nb_refs": 0
  },
  {
   "fichier": "/matieres/bouclette/1920.webp",
   "largeur": 1920,
-  "hauteur": 1920,
-  "ko": 340,
+  "hauteur": 1892,
+  "ko": 217,
   "utilise_par": [],
   "nb_refs": 0
  },
  {
   "fichier": "/matieres/bouclette/3840.avif",
   "largeur": 3840,
-  "hauteur": 3840,
-  "ko": 533,
+  "hauteur": 3784,
+  "ko": 264,
   "utilise_par": [],
   "nb_refs": 0
  },
  {
   "fichier": "/matieres/bouclette/3840.webp",
   "largeur": 3840,
-  "hauteur": 3840,
-  "ko": 889,
+  "hauteur": 3784,
+  "ko": 542,
   "utilise_par": [],
   "nb_refs": 0
  },
  {
   "fichier": "/matieres/bouclette/640.avif",
   "largeur": 640,
-  "hauteur": 640,
-  "ko": 28,
+  "hauteur": 631,
+  "ko": 30,
   "utilise_par": [],
   "nb_refs": 0
  },
  {
   "fichier": "/matieres/bouclette/640.webp",
   "largeur": 640,
-  "hauteur": 640,
-  "ko": 47,
+  "hauteur": 631,
+  "ko": 50,
   "utilise_par": [],
   "nb_refs": 0
  },
  {
   "fichier": "/matieres/bouclette/original-4k.webp",
   "largeur": 4096,
-  "hauteur": 4096,
-  "ko": 2350,
+  "hauteur": 4036,
+  "ko": 1707,
   "utilise_par": [],
   "nb_refs": 0
  },
@@ -3168,11 +1907,9 @@
   "hauteur": 1280,
   "ko": 105,
   "utilise_par": [
-   "app/page.tsx",
-   "components/experience/Stage.tsx",
    "content/data/inspiration-bank.json"
   ],
-  "nb_refs": 3
+  "nb_refs": 1
  },
  {
   "fichier": "/matieres/travertin/1280.webp",
@@ -3180,31 +1917,25 @@
   "hauteur": 1280,
   "ko": 185,
   "utilise_par": [
-   "app/page.tsx",
-   "components/experience/Stage.tsx",
    "content/data/inspiration-bank.json"
   ],
-  "nb_refs": 3
+  "nb_refs": 1
  },
  {
   "fichier": "/matieres/travertin/1920.avif",
   "largeur": 1920,
   "hauteur": 1920,
   "ko": 228,
-  "utilise_par": [
-   "app/experience/page.tsx"
-  ],
-  "nb_refs": 1
+  "utilise_par": [],
+  "nb_refs": 0
  },
  {
   "fichier": "/matieres/travertin/1920.webp",
   "largeur": 1920,
   "hauteur": 1920,
   "ko": 410,
-  "utilise_par": [
-   "app/experience/page.tsx"
-  ],
-  "nb_refs": 1
+  "utilise_par": [],
+  "nb_refs": 0
  },
  {
   "fichier": "/matieres/travertin/3840.avif",
@@ -3227,22 +1958,16 @@
   "largeur": 640,
   "hauteur": 640,
   "ko": 29,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx"
-  ],
-  "nb_refs": 2
+  "utilise_par": [],
+  "nb_refs": 0
  },
  {
   "fichier": "/matieres/travertin/640.webp",
   "largeur": 640,
   "hauteur": 640,
   "ko": 50,
-  "utilise_par": [
-   "app/experience/page.tsx",
-   "app/page.tsx"
-  ],
-  "nb_refs": 2
+  "utilise_par": [],
+  "nb_refs": 0
  },
  {
   "fichier": "/matieres/travertin/original-4k.webp",
@@ -3848,12 +2573,12 @@
   "utilise_par": [
    "app/catalogue/page.tsx",
    "app/connexion/page.tsx",
-   "app/experience/page.tsx",
    "app/globals.css",
    "app/page.tsx",
-   "app/styles/[slug]/page.tsx"
+   "app/styles/[slug]/page.tsx",
+   "app/tarifs/page.tsx"
   ],
-  "nb_refs": 259
+  "nb_refs": 260
  },
  {
   "fichier": "/textures/m-ardoise/diff.webp",

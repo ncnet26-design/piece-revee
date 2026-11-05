@@ -335,8 +335,8 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   });
   await page.goto("/transformer/");
   await expect(page.getByRole("button", { name: "Créer mon moodboard" })).toBeDisabled();
-  await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/inspirations/villas-16.webp");
-  await page.getByLabel("Ajouter des inspirations").setInputFiles(["public/editorial/ia/japandi-essai.webp", "public/editorial/ia/salon.webp"]);
+  await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/matieres/noyer/1280.webp");
+  await page.getByLabel("Ajouter des inspirations").setInputFiles(["public/matieres/travertin/1280.webp", "public/matieres/lin-lave/1280.webp"]);
   await expect(page.getByRole("img", { name: "Inspiration 2" })).toBeVisible();
   await page.getByRole("button", { name: "Créer mon moodboard" }).click();
   await expect(page.getByRole("heading", { name: "Japandi chaleureux" })).toBeVisible({ timeout: 20_000 });
@@ -375,7 +375,7 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   await page.getByTestId("piece-transformee").click({ position: { x: box.width * 0.05, y: box.height * 0.9 } });
   await expect(page.getByRole("complementary", { name: /^Couleur / })).toBeVisible();
   // La liste d'achats reprend le produit trouvé en ligne, avec son lien.
-  await page.goto("/studio/?etape=liste");
+  await page.goto("/ma-piece/");
   await expect(page.getByText("Table basse ovale en travertin", { exact: true })).toBeVisible({ timeout: 15_000 });
   await expect(page.getByRole("link", { name: /Acheter Table basse ovale en travertin/ })).toHaveAttribute("href", "https://boutique-exemple.fr/table-travertin");
   expect(errors).toEqual([]);
@@ -534,23 +534,6 @@ test("boutique : familles, recherche, filtres et ajout à ma pièce", async ({ p
   expect(errors).toEqual([]);
 });
 
-test("expérience : récit 3D au défilement, points cliquables, chiffres réels et appels à l'action", async ({ page }) => {
-  const errors = noJsErrors(page);
-  await page.goto("/experience/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Votre pièce");
-  await expect(page.getByRole("link", { name: "Transformer ma pièce" }).first()).toHaveAttribute("href", "/transformer/");
-  // Les six chapitres existent et le récit se termine sur des liens réels vers la boutique.
-  for (const id of ["ouverture", "piece", "inspirations", "moodboard", "transformation", "cliquable"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
-  await page.locator("#cliquable").scrollIntoViewIfNeeded();
-  await expect(page.locator("#cliquable").getByRole("link", { name: "Canapé courbe en bouclé" })).toHaveAttribute("href", "/boutique/?famille=canape&q=bouclé");
-  // Chiffres lus dans le catalogue publié, pas inventés.
-  const idx = (await (await page.request.get("/catalogue/index.json")).json()) as { total: number };
-  await expect(page.getByText(idx.total.toLocaleString("fr-FR"), { exact: true })).toBeVisible();
-  const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).exclude("canvas").analyze();
-  expect(r.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).slice(0, 3).join(" | ")}`)).toEqual([]);
-  expect(errors).toEqual([]);
-});
-
 test("catalogue : filtres budget, pièce, style, matière ; liens vers les enseignes ; photos chargées depuis l'enseigne", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/catalogue/?style=japandi");
@@ -582,8 +565,8 @@ test("accueil : bande des enseignes, avec bouton pause", async ({ page }) => {
 test("transformer : attente animée pendant le moodboard (étapes, progression)", async ({ page }) => {
   await page.route("**/v2/moodboard", async (r) => { await new Promise((x) => setTimeout(x, 4000)); await r.fulfill({ status: 500, headers: { "Access-Control-Allow-Origin": "*" }, body: "{}" }); });
   await page.goto("/transformer/");
-  await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/inspirations/villas-16.webp");
-  await page.getByLabel("Ajouter des inspirations").setInputFiles(["public/editorial/ia/japandi-essai.webp"]);
+  await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/matieres/noyer/1280.webp");
+  await page.getByLabel("Ajouter des inspirations").setInputFiles(["public/matieres/travertin/1280.webp"]);
   await page.getByRole("button", { name: "Créer mon moodboard" }).click();
   await expect(page.getByRole("status", { name: /Votre moodboard se compose/ })).toBeVisible();
   await expect(page.getByText(/durée habituelle 10 à 20 s/)).toBeVisible();
