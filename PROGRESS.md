@@ -109,6 +109,7 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - Pages /studio et /experience supprimées, avec leur code (scène 3D, explorateur, labo qualité). La liste d'achats est gardée sur une page simple : /ma-piece/.
 - 114 images trop petites générées par IA supprimées (plus utilisées nulle part). Restent 2 images IA étiquetées sur l'accueil (« Même pièce, autre caractère » et « Touchez une pièce ») : elles montrent ce que fait la transformation, elles ne peuvent pas être de vraies photos.
 - Audit des images régénéré : 418 images, aucune hors sujet, 4 en note C (visuels techniques).
+- Visite 3D (/visite-3d) supprimée aussi, avec son moteur et l'éditeur de plan ; les bibliothèques de meubles 3D restent (planche, concept).
 - CLAUDE.md : règle des photos d'enseigne mise à jour (affichées depuis le site de l'enseigne, jamais copiées).
 
 ## Reste à faire

@@ -135,7 +135,7 @@ test("404 utile", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toContainText("n'existe pas");
 });
 
-for (const url of ["/", "/boutique/", "/showroom/", "/transformer/", "/concept/", "/planche/", "/visite-3d/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
+for (const url of ["/", "/boutique/", "/showroom/", "/transformer/", "/concept/", "/planche/", "/galerie/", "/quiz/", "/projet/nouveau/", "/projet/etude/?id=exemple-salon", "/matieres/", "/tarifs/", "/compte/", "/legal/confidentialite/"]) {
   test(`accessibilité (axe, WCAG 2.2 AA) : ${url}`, async ({ page }) => {
     test.setTimeout(90_000);
     await page.goto(url);
@@ -148,95 +148,10 @@ for (const url of ["/", "/boutique/", "/showroom/", "/transformer/", "/concept/"
 test("aucun débordement horizontal sur mobile", async ({ page, isMobile }) => {
   test.skip(!isMobile, "mobile uniquement");
   test.setTimeout(90_000);
-    for (const url of ["/", "/boutique/", "/showroom/", "/transformer/", "/concept/", "/planche/", "/visite-3d/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
+    for (const url of ["/", "/boutique/", "/showroom/", "/transformer/", "/concept/", "/planche/", "/galerie/", "/projet/etude/?id=exemple-terrasse", "/tarifs/", "/matieres/zellige/"]) {
     await page.goto(url);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), url).toBe(true);
   }
-});
-
-test("visite 3D : pièces, style, modification d'un meuble, sauvegarde", async ({ page }) => {
-  test.setTimeout(150_000);
-  const errors = noJsErrors(page);
-  await page.addInitScript(() => localStorage.setItem("pr_home3d_hint", "1"));
-  await page.goto("/visite-3d/");
-  await expect(page.getByRole("heading", { level: 1, name: "Visite 3D" })).toBeVisible();
-  await expect(page.getByText(/Maquette d'appartement simplifiée/)).toBeVisible();
-  await expect(page.getByText("Chargement de la 3D")).toBeHidden({ timeout: 30_000 });
-  await expect(page.getByText("La 3D ne peut pas s'afficher")).toHaveCount(0);
-  await page.getByRole("navigation", { name: "Pièces" }).getByRole("button", { name: "Chambre" }).click();
-  await page.getByRole("button", { name: "Pièce", exact: true }).click();
-  const panel = page.getByRole("complementary", { name: "Réglages" });
-  await expect(panel.getByRole("heading", { name: "Chambre" })).toBeVisible();
-  await panel.getByRole("button", { name: "Scandinave" }).click();
-  await panel.getByRole("button", { name: "Lit" }).click();
-  await expect(panel.getByRole("heading", { name: /Lit/ })).toBeVisible();
-  await panel.getByRole("button", { name: "180 × 200" }).click();
-  await panel.getByRole("button", { name: "Bleu nuit" }).click();
-  await expect(panel.getByText("L 194 cm")).toBeVisible();
-  await page.waitForTimeout(600);
-  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("pr_home3d_v1") ?? "{}"));
-  const bed = saved.items.find((i: { type: string }) => i.type === "lit");
-  expect(bed).toMatchObject({ variant: "180 × 200", color: "#232F4A" });
-  expect(saved.rooms.chambre.wall).toEqual({ kind: "peinture", hex: "#F2F2EE" });
-  await page.reload();
-  await expect(page.getByText("Chargement de la 3D")).toBeHidden({ timeout: 30_000 });
-  const again = await page.evaluate(() => JSON.parse(localStorage.getItem("pr_home3d_v1") ?? "{}"));
-  expect(again.items.find((i: { type: string }) => i.type === "lit").color).toBe("#232F4A");
-  expect(errors).toEqual([]);
-});
-
-test("visite 3D : ajouter un objet et une astuce", async ({ page }) => {
-  test.setTimeout(90_000);
-  await page.addInitScript(() => localStorage.setItem("pr_home3d_hint", "1"));
-  await page.goto("/visite-3d/");
-  await expect(page.getByText("Chargement de la 3D")).toBeHidden({ timeout: 30_000 });
-  const before = await page.evaluate(() => JSON.parse(localStorage.getItem("pr_home3d_v1") ?? "{\"items\":[]}").items.length);
-  await page.getByRole("button", { name: "+ Ajouter" }).click();
-  await page.getByRole("complementary", { name: "Réglages" }).getByRole("button", { name: "Lampadaire" }).click();
-  await expect(page.getByRole("complementary", { name: "Réglages" }).getByRole("heading", { name: "Lampadaire" })).toBeVisible();
-  await page.getByRole("button", { name: "Astuces" }).click();
-  await page.getByLabel("Partager une astuce").fill("Une lampe dans chaque coin sombre.");
-  await page.getByRole("button", { name: "Ajouter à la pièce" }).click();
-  await page.waitForTimeout(600);
-  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("pr_home3d_v1") ?? "{}"));
-  expect(saved.items.length).toBeGreaterThan(before === 0 ? 50 : before);
-  expect(saved.notes.map((n: { text: string }) => n.text)).toContain("Une lampe dans chaque coin sombre.");
-});
-
-test("plan : dessiner son logement puis le visiter en 3D", async ({ page }) => {
-  test.setTimeout(180_000);
-  const errors = noJsErrors(page);
-  page.on("dialog", (d) => void d.accept());
-  await page.addInitScript(() => localStorage.setItem("pr_home3d_hint", "1"));
-  await page.goto("/visite-3d/");
-  await expect(page.getByText("Chargement de la 3D")).toBeHidden({ timeout: 30_000 });
-  await page.getByRole("button", { name: "Mon plan" }).click();
-  const dlg = page.getByRole("dialog", { name: "Plan de mon logement" });
-  await expect(dlg).toBeVisible();
-  const axe = await new AxeBuilder({ page }).include('[role="dialog"]').withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
-  expect(axe.violations.map((v) => v.id)).toEqual([]);
-  await dlg.getByLabel("Partir d'un modèle").selectOption("t2");
-  await expect(dlg.getByRole("button", { name: "Séjour" })).toBeVisible();
-  await dlg.getByLabel("Type de pièce à ajouter").selectOption("chambre");
-  await dlg.getByRole("button", { name: "+ Pièce" }).click();
-  await expect(dlg.getByLabel("Nom")).toHaveValue("Chambre 2");
-  await dlg.getByLabel("Largeur (m)").fill("3,6");
-  await dlg.getByLabel("Largeur (m)").press("Enter");
-  await expect(dlg.getByText("10,8 m²", { exact: false }).first()).toBeVisible();
-  await dlg.getByRole("button", { name: "Meubler automatiquement" }).click();
-  await dlg.getByRole("button", { name: "Voir en 3D" }).click();
-  await expect(dlg).toBeHidden();
-  const rooms = page.getByRole("navigation", { name: "Pièces" });
-  await expect(rooms.getByRole("button", { name: "Chambre 2" })).toBeVisible();
-  await expect(rooms.getByRole("button", { name: "Cuisine" })).toBeVisible();
-  await page.waitForTimeout(600);
-  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("pr_home3d_v1") ?? "{}"));
-  expect(saved.layout.rooms).toHaveLength(6);
-  const ch2 = saved.layout.rooms.find((r: { name: string }) => r.name === "Chambre 2");
-  expect(ch2.x1 - ch2.x0).toBeCloseTo(3.6);
-  expect(saved.items.some((i: { type: string; x: number; z: number }) => i.type === "lit" && i.x > ch2.x0 && i.x < ch2.x1 && i.z > ch2.z0 && i.z < ch2.z1)).toBe(true);
-  await rooms.getByRole("button", { name: "Chambre 2" }).click();
-  expect(errors).toEqual([]);
 });
 
 test("planche 3D : ajouter, modifier, retirer, fiche matériaux et partage", async ({ page, context, isMobile }) => {
@@ -465,21 +380,6 @@ test("planche : appliquer mes matières à la photo de ma pièce (service simul�
   await expect(page.getByRole("link", { name: "Télécharger le rendu" })).toBeVisible({ timeout: 60_000 });
   await expect(page.getByText("Il vous reste 3 rendus aujourd'hui.")).toBeVisible();
   expect(errors).toEqual([]);
-});
-
-test("plan : importer le plan de son logement comme calque", async ({ page, isMobile }) => {
-  test.skip(isMobile, "parcours bureau");
-  test.setTimeout(150_000);
-  await page.addInitScript(() => localStorage.setItem("pr_home3d_hint", "1"));
-  await page.goto("/visite-3d/");
-  await expect(page.getByText("Chargement de la 3D")).toBeHidden({ timeout: 30_000 });
-  await page.getByRole("button", { name: "Mon plan" }).click();
-  const dlg = page.getByRole("dialog", { name: "Plan de mon logement" });
-  await dlg.getByLabel("Importer mon plan").setInputFiles("public/visuels/planche-hero.webp");
-  await expect(dlg.getByRole("heading", { name: "Calque de mon plan" })).toBeVisible({ timeout: 20_000 });
-  await expect(dlg.getByText(/Plan importé/)).toBeVisible();
-  await dlg.getByRole("button", { name: "Retirer le calque" }).click();
-  await expect(dlg.getByRole("heading", { name: "Calque de mon plan" })).toHaveCount(0);
 });
 
 test("planche : composer une planche à partir d'une image", async ({ page, isMobile }) => {
