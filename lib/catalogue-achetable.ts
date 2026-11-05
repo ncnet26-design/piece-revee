@@ -20,7 +20,12 @@ export interface ProduitAchetable {
   id: string; nom: string; enseigne: string; marque: string | null; prix: number; devise: string; gamme: Gamme;
   styles: Style[]; styles_deduits: boolean; piece: Piece[]; famille: string; dimensions: string | null; matiere: string[]; couleur: string[];
   url: string; verifie_le: string; disponibilite: string | null; affiliate_url: string; verification?: string;
+  /** Adresse de la photo publiée par l'enseigne (affichée depuis son site, jamais copiée). */
+  image?: string | null;
 }
+
+/** Écarte les images « pas de photo » que certaines enseignes publient à la place du produit. */
+export const imageValide = (u?: string | null): u is string => Boolean(u && /^https:\/\//.test(u) && !/no[-_]?image|placeholder|default[-_]image/i.test(u));
 
 /** Matière d'un produit → dossier de texture réelle (public/matieres/<slug>), quand elle existe. */
 export const TEXTURE_DE: Record<string, string> = {

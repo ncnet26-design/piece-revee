@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { Elevation } from "@/components/catalogue/Elevation";
-import { filtrer, GAMMES, NOM_GAMME, NOM_PIECE, NOM_STYLE, PIECES, STYLES, vignette, type Filtres, type Gamme, type Piece, type ProduitAchetable, type Style } from "@/lib/catalogue-achetable";
+import { filtrer, imageValide, GAMMES, NOM_GAMME, NOM_PIECE, NOM_STYLE, PIECES, STYLES, vignette, type Filtres, type Gamme, type Piece, type ProduitAchetable, type Style } from "@/lib/catalogue-achetable";
 
 const prix = (n: number) => n.toLocaleString("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: n % 1 ? 2 : 0 });
 const date = (d: string) => new Date(d).toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
@@ -18,11 +18,18 @@ function lireAdresse(): Filtres {
 
 export function Carte({ p, textures }: { p: ProduitAchetable; textures: ReadonlySet<string> }) {
   const v = vignette(p, textures);
+  const [photo, setPhoto] = useState(imageValide(p.image));
   return (
     <li className="flex flex-col">
-      {/* Élévation au trait du meuble + pastille de sa matière (texture réelle) ou de sa couleur, comme sur une nomenclature d'architecte. */}
-      <a href={p.url} target="_blank" rel="noopener noreferrer nofollow" tabIndex={-1} aria-hidden className="relative block aspect-square bg-[#EFEBE3] text-ink no-underline transition-colors hover:bg-[#E9E4DA]">
-        <Elevation famille={p.famille} nom={p.nom} dimensions={p.dimensions} className="absolute inset-x-[10%] top-[14%] h-[62%] w-[80%]" />
+      {/* Photo publiée par l'enseigne (chargée depuis son site, jamais copiée) ; à défaut, élévation au trait du meuble. Pastille de sa matière ou de sa couleur. */}
+      <a href={p.url} target="_blank" rel="noopener noreferrer nofollow" tabIndex={-1} aria-hidden className="group relative block aspect-square overflow-hidden bg-[#EFEBE3] text-ink no-underline transition-colors hover:bg-[#E9E4DA]">
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={p.image!} alt="" loading="lazy" decoding="async" referrerPolicy="no-referrer" onError={() => setPhoto(false)}
+            className="absolute inset-x-[8%] top-[6%] h-[76%] w-[84%] object-contain mix-blend-multiply transition duration-500 group-hover:scale-[1.03]" />
+        ) : (
+          <Elevation famille={p.famille} nom={p.nom} dimensions={p.dimensions} className="absolute inset-x-[10%] top-[14%] h-[62%] w-[80%]" />
+        )}
         <span className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
           <span className="relative block size-7 shrink-0 overflow-hidden rounded-full ring-1 ring-black/10" style={{ background: v.teinte }}>
             {v.texture && (

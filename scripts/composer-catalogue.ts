@@ -62,7 +62,7 @@ export const MATIERES_CLES = ["chêne", "noyer", "travertin", "marbre", "terrazz
 export interface ProduitAchetable {
   id: string; nom: string; enseigne: string; marque: string | null; prix: number; devise: string; gamme: Gamme;
   styles: Style[]; styles_deduits: true; piece: Piece[]; famille: Famille; dimensions: string | null; matiere: string[]; couleur: string[];
-  url: string; verifie_le: string; disponibilite: string | null; affiliate_url: string;
+  url: string; verifie_le: string; disponibilite: string | null; affiliate_url: string; image: string | null;
 }
 
 function charger(): Array<ProduitCatalogue & { f: Famille }> {
@@ -108,7 +108,7 @@ export function composer(parCase = 2) {
       id: createHash("sha1").update(x.u).digest("hex").slice(0, 12), nom: x.n, enseigne: x.m, marque: x.b && x.b !== x.m ? x.b : null,
       prix: x.p, devise: "EUR", gamme, styles, styles_deduits: true, piece: pieces, famille: x.f, dimensions: dimensionsDuNom(x.n),
       matiere: MATIERES.filter(([, re]) => re.test(t)).map(([m]) => m), couleur: COULEURS.filter(([, re]) => re.test(t)).map(([c]) => c),
-      url: x.u, verifie_le: x.d, disponibilite: x.a ?? null, affiliate_url: "",
+      url: x.u, verifie_le: x.d, disponibilite: x.a ?? null, affiliate_url: "", image: x.i && !/no[-_]?image|placeholder/i.test(x.i) ? x.i : null,
     });
   }
   // Répartition : pour chaque style × pièce × gamme, quelques produits, en variant familles et enseignes ; un produit n'est pris qu'une fois.

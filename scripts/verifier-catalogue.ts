@@ -31,7 +31,7 @@ await Promise.all([...parHote.entries()].map(async ([host, list]) => {
     const d = r.status >= 200 && r.status < 400 ? parseProduct(r.body) : null;
     if (d?.price) {
       lignes.push(`${host} | ok ${p.prix} → ${d.price} | ${p.nom}`);
-      garder.push({ ...p, prix: d.price, disponibilite: d.availability ?? p.disponibilite, verifie_le: today, verification: "page ouverte, prix relevé" });
+      garder.push({ ...p, prix: d.price, disponibilite: d.availability ?? p.disponibilite, image: d.image ?? p.image ?? null, verifie_le: today, verification: "page ouverte, prix relevé" });
     } else {
       // Page lisible sans prix, ou enseigne qui refuse la visite : on garde le dernier relevé du robot nocturne, avec sa date.
       lignes.push(`${host} | ${r.status} sans prix lisible (relevé du ${p.verifie_le} conservé) | ${p.nom}`);
