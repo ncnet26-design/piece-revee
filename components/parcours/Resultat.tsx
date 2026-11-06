@@ -20,7 +20,10 @@ type Sel = { kind: "objet"; o: AiObject } | { kind: "surface"; s: Surface } | { 
  * un mur, un sol ou un rideau ouvre sa teinte, ses matières proches et où les trouver ; ailleurs, la couleur du point.
  */
 export function Resultat({ image, before, objects, surfaces, analysing }: { image: string; before?: string; objects: AiObject[]; surfaces: Surface[]; analysing: boolean }) {
-  const [sel, setSel] = useState<Sel | null>(null);
+  const [sel, setSelBrut] = useState<Sel | null>(null);
+  const [photo, setPhoto] = useState<string | undefined>(undefined);
+  // Choisir un meuble découpe aussi sa photo (au moment du geste, pas pendant l'affichage).
+  const setSel = (x: Sel | null) => { setSelBrut(x); setPhoto(x?.kind === "objet" ? decoupe(img.current, x.o.zone) : undefined); };
   const [compare, setCompare] = useState(false);
   const [ratio, setRatio] = useState("4 / 3");
   const img = useRef<HTMLImageElement>(null);
@@ -86,7 +89,7 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
       <Panel open={Boolean(sel)} kicker={kicker} title={title} onClose={() => setSel(null)}>
         {sel?.kind === "objet" && (<>
           {sel.o.description && <p className="mt-2 text-[13px] text-muted">{sel.o.description}</p>}
-          <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={descriptionPrecise(sel.o)} forObject={sel.o.id} />
+          <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={descriptionPrecise(sel.o)} forObject={sel.o.id} photo={photo} />
           <details className="group mt-5 border-t border-line pt-4">
             <summary className="cursor-pointer list-none text-[14px] font-semibold">Aussi dans notre boutique<span className="ml-2 font-normal text-muted">références d'exception, prix revérifiés chaque nuit</span><span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
             <Catalogue type={sel.o.type} label={sel.o.label} query={sel.o.query || sel.o.label} forObject={sel.o.id} />
@@ -166,4 +169,24 @@ function descriptionPrecise(o: AiObject): string {
   const d = o.estimated_dimensions_cm;
   return [o.label, o.materials.join(", "), o.colors.map((c) => c.name).join(", "), o.shape.join(", "), d ? `environ ${Math.round(d.width)} × ${Math.round(d.depth)} × ${Math.round(d.height)} cm` : ""]
     .filter(Boolean).join(" · ").slice(0, 220);
+}
+
+/** Photo du meuble découpée dans l'image transformée (avec une marge), réduite à 512 px : l'IA cherche ce qui lui ressemble. */
+const decoupes = new Map<string, string | undefined>();
+function decoupe(im: HTMLImageElement | null, z: { x: number; y: number; w: number; h: number }): string | undefined {
+  if (!im || !im.naturalWidth) return undefined;
+  const k = `${im.src}|${z.x}|${z.y}|${z.w}|${z.h}`;
+  if (decoupes.has(k)) return decoupes.get(k);
+  let out: string | undefined;
+  try {
+    const W = im.naturalWidth, H = im.naturalHeight, m = 0.12;
+    const x = Math.max(0, (z.x / 100 - m * z.w / 100) * W), y = Math.max(0, (z.y / 100 - m * z.h / 100) * H);
+    const w = Math.min(W - x, (z.w / 100) * W * (1 + 2 * m)), h = Math.min(H - y, (z.h / 100) * H * (1 + 2 * m));
+    const r = Math.min(1, 512 / Math.max(w, h)), c = document.createElement("canvas");
+    c.width = Math.max(1, Math.round(w * r)); c.height = Math.max(1, Math.round(h * r));
+    c.getContext("2d")!.drawImage(im, x, y, w, h, 0, 0, c.width, c.height);
+    out = c.toDataURL("image/jpeg", 0.82);
+  } catch { out = undefined; } // image d'un autre site sans autorisation de lecture : recherche par la description seule
+  decoupes.set(k, out);
+  return out;
 }

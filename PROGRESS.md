@@ -131,6 +131,11 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - Accueil, dans l'ordre : promesse (« Voyez votre pièce refaite avant d'acheter un seul meuble ») + démonstration à toucher ; enseignes ; le problème (se projeter, chercher, budget) ; la solution en 3 étapes illustrées ; avant/après ; comparatif (seul / décorateur / Pièce Rêvée) ; preuves vérifiables (références, enseignes, prix revérifiés, 0 € payé par les marques) ; essai sans photo par pièce, style et budget ; styles ; prix ; 6 objections ; dernier appel. Aucun faux avis, compteur ou urgence.
 - Tarifs : tableau comparatif exact (tiré des quotas réels des offres), questions harmonisées.
 
+## 6 novembre — GUBI et Caravane, recherche IA par photo, nouvelle image d'accueil
+- Robot : GUBI lu sur ses pages françaises (/fr/fr/, prix en euros), Caravane forcé sur le marché France (cookie) ; garde-fou : pas de prix en dollars chez une enseigne française ou européenne. Réintégrés dans la boutique dès le prochain passage du robot.
+- Recherche IA : la photo du meuble, découpée dans l'image transformée (512 px), est envoyée avec la description ; l'IA cherche ce qui lui ressemble vraiment. Coût : quelques centimes de plus au plus par recherche (une petite image).
+- Accueil : image d'en-tête fournie par le propriétaire ; ses 15 pastilles sont cliquables (10 sur mobile, trop proches sinon), chaque meuble montre un vrai produit par budget.
+
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
 5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.

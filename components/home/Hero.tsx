@@ -18,9 +18,9 @@ export function Hero() {
       // Le nom doit désigner le bon meuble dès ses premiers mots (pas un coussin « pour canapé » ni un tableau « Buffet »).
       const nom = norm(p.query.split(" ")[0]!);
       const dans = l.filter((x) => x.g === g && x.i && x.p !== null && norm(x.n).split(" ").slice(0, 3).includes(nom));
-      // Recherche précise, puis plus large (premier mot + matière) si rien n'approche.
-      const mots = p.query.split(" ");
-      const r = chercher(dans, p.query, 1)[0] ?? chercher(dans, `${mots[0]} ${mots[mots.length - 1]}`, 1)[0];
+      // Le plus ressemblant : tous les mots de la recherche, sinon au moins les deux tiers ; jamais un produit à moins de 15 €.
+      const ok = dans.filter((x) => (x.p ?? 0) >= 15 && !/salle de bain|pour chaise|batonnets|piece detachee|robinetterie|plomberie|raccord/.test(norm(x.n)));
+      const r = chercher(ok, p.query, 20).find((x) => x.score >= 100) ?? chercher(ok, p.query, 20).find((x) => x.score >= 67);
       if (r) { const { score, ...x } = r; void score; trouves[p.id]![g] = x; }
     }
   }

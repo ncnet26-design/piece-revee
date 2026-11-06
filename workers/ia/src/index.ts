@@ -126,7 +126,7 @@ export default {
     }
 
     if (request.method === "POST" && path === "/v2/recherche") {
-      const b = await request.json().catch(() => null) as { query?: unknown; label?: unknown; visiteur?: unknown; pays?: unknown } | null;
+      const b = await request.json().catch(() => null) as { query?: unknown; label?: unknown; visiteur?: unknown; pays?: unknown; photo?: unknown } | null;
       const q = typeof b?.query === "string" ? b.query.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 160) : "";
       if (!b || q.length < 3 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Recherche incomplète." }, 400);
       const label = typeof b.label === "string" ? b.label.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 220) : q;
@@ -134,7 +134,9 @@ export default {
       const refusal = overLimit(await usage(env, visitor, ipHash), cost);
       if (refusal) return json({ erreur: refusal }, 429);
       try {
-        const r = await rechercher(env, q, label, b.pays === "EU" ? "EU" : "FR");
+        // Photo du meuble : petite image JPEG/PNG/WebP en base64 (300 Ko au plus), sinon ignorée.
+        const m = typeof b.photo === "string" && b.photo.length < 400_000 ? /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(b.photo) : null;
+        const r = await rechercher(env, q, label, b.pays === "EU" ? "EU" : "FR", m ? { mime: m[1]!, b64: m[2]! } : undefined);
         await settle(env, visitor, ipHash, cost);
         return json(r);
       } catch (e) {

@@ -26,7 +26,12 @@ const END = Date.now() + MINUTES * 60_000;
 const MAX_URLS = 12000;
 
 /** Enseignes suivies : maison, déco, bricolage. Le robot découvre lui-même leurs plans de site. */
-const ENSEIGNES: Array<{ id: string; nom: string; site: string; produit?: RegExp; zone?: "FR" | "EU" | "US" }> = [
+/**
+ * adresse : réécrit une page produit vers sa version française (les plans de site renvoient parfois la boutique d'un autre pays) ;
+ * cookie : marché demandé aux boutiques qui choisissent la devise selon le pays du visiteur (le robot tourne aux États-Unis).
+ */
+type Enseigne = { id: string; nom: string; site: string; produit?: RegExp; zone?: "FR" | "EU" | "US"; adresse?: (u: string) => string; cookie?: string };
+const ENSEIGNES: Enseigne[] = [
   { id: "ikea", nom: "IKEA", site: "https://www.ikea.com", produit: /\/fr\/fr\/p\// },
   { id: "maisonsdumonde", nom: "Maisons du Monde", site: "https://www.maisonsdumonde.com", produit: /\/FR\/fr\/p\// },
   { id: "laredoute", nom: "La Redoute", site: "https://www.laredoute.fr", produit: /\/ppdp\/prod-/ },
@@ -79,7 +84,8 @@ const ENSEIGNES: Array<{ id: string; nom: string; site: string; produit?: RegExp
   { id: "comptoirdefamille", nom: "Comptoir de Famille", site: "https://www.comptoir-de-famille.com" },
   { id: "sarahlavoine", nom: "Maison Sarah Lavoine", site: "https://www.maisonsarahlavoine.com" },
   { id: "fleux", nom: "Fleux", site: "https://www.fleux.com" },
-  { id: "caravane", nom: "Caravane", site: "https://www.caravane.fr" },
+  { id: "caravane", nom: "Caravane", site: "https://caravane.com", produit: /^https:\/\/caravane\.com\/products\//,
+    adresse: (u) => u.replace(/^https:\/\/(www\.)?caravane\.(com|fr)\/[a-z]{2}(-[a-z]{2})?\/products\//, "https://caravane.com/products/"), cookie: "localization=FR; cart_currency=EUR" },
   { id: "tediber", nom: "Tediber", site: "https://www.tediber.com" },
   { id: "lapeyre", nom: "Lapeyre", site: "https://www.lapeyre.fr" },
   { id: "bricodepot", nom: "Brico Dépôt", site: "https://www.bricodepot.fr" },
@@ -87,7 +93,8 @@ const ENSEIGNES: Array<{ id: string; nom: string; site: string; produit?: RegExp
   { id: "pomax", nom: "Pomax", site: "https://www.pomax.com", zone: "EU" },
   { id: "bloomingville", nom: "Bloomingville", site: "https://www.bloomingville.com", zone: "EU" },
   { id: "vitra", nom: "Vitra", site: "https://www.vitra.com", produit: /\/fr-fr\//, zone: "EU" },
-  { id: "gubi", nom: "GUBI", site: "https://gubi.com", zone: "EU" },
+  { id: "gubi", nom: "GUBI", site: "https://gubi.com", zone: "EU", produit: /^https:\/\/gubi\.com\/fr\/fr\/products\//,
+    adresse: (u) => u.replace(/^https:\/\/gubi\.com\/[a-z]{2}\/[a-z]{2}\/products\//, "https://gubi.com/fr/fr/products/") },
   { id: "normann", nom: "Normann Copenhagen", site: "https://www.normann-copenhagen.com", zone: "EU" },
   { id: "audo", nom: "Audo Copenhagen", site: "https://audocph.com", zone: "EU" },
   { id: "andtradition", nom: "&Tradition", site: "https://www.andtradition.com", zone: "EU" },
@@ -115,9 +122,9 @@ for (const f of Object.keys(FAMILLES) as Famille[]) {
 }
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-async function get(url: string, timeout = 20_000): Promise<{ status: number; body: string } | null> {
+async function get(url: string, timeout = 20_000, cookie?: string): Promise<{ status: number; body: string } | null> {
   try {
-    const r = await fetch(url, { headers: { "user-agent": UA, accept: "text/html,application/xml;q=0.9,*/*;q=0.8", "accept-language": "fr-FR,fr;q=0.9" }, redirect: "follow", signal: AbortSignal.timeout(timeout) });
+    const r = await fetch(url, { headers: { "user-agent": UA, accept: "text/html,application/xml;q=0.9,*/*;q=0.8", "accept-language": "fr-FR,fr;q=0.9", ...(cookie ? { cookie } : {}) }, redirect: "follow", signal: AbortSignal.timeout(timeout) });
     const buf = Buffer.from(await r.arrayBuffer());
     const body = url.endsWith(".gz") || buf[0] === 0x1f ? gunzipSync(buf).toString("utf8") : buf.toString("utf8");
     return { status: r.status, body };
@@ -179,6 +186,9 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
   const R = rb.status === 200 ? robots(rb.body) : { allowed: () => true, delay: null, sitemaps: [], everything: false };
   if (R.everything) { st.robots = "interdit"; st.rapport = "robots.txt interdit l'exploration : enseigne ignorée."; return; }
   st.robots = "ok"; st.delai = Math.max(2, Math.min(15, R.delay ?? 2));
+  // Pages déjà connues sous l'adresse d'un autre pays : remplacées par la version française (et l'ancienne fiche retirée).
+  if (e.adresse) for (const u of Object.keys(st.urls)) { const v = e.adresse(u); if (v !== u) { delete st.urls[u]; catalogue.delete(u); st.urls[v] ??= ""; } }
+  if (e.adresse) for (const u of [...catalogue.keys()]) if (catalogue.get(u)!.m === e.nom && e.adresse(u) !== u) catalogue.delete(u);
   for (const u of Object.keys(st.urls)) if (RAYON.test(u) || HORS.test(u) || !(e.produit ? e.produit.test(u) : PAGE_PRODUIT.test(u))) delete st.urls[u];
   const start = R.sitemaps.length ? R.sitemaps : [`${e.site}/sitemap.xml`];
   // Découverte des nouvelles adresses (au plus une fois par semaine par enseigne).
@@ -187,7 +197,8 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
   if (stale) {
     const { urls, maps, diag } = await sitemapUrls(start, R.allowed);
     st.sitemaps = maps; decouverte = `${diag} ; ${urls.length} autorisées`;
-    for (const u of urls) {
+    for (const u0 of urls) {
+      const u = e.adresse ? e.adresse(u0) : u0;
       if (Object.keys(st.urls).length >= MAX_URLS) break;
       if ((e.produit ? e.produit.test(u) : PAGE_PRODUIT.test(u)) && !RAYON.test(u) && MAISON.test(u) && !HORS.test(u) && !(u in st.urls)) st.urls[u] = "";
     }
@@ -199,7 +210,7 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
   for (const u of todo) {
     if (Date.now() > END) break;
     try { if (!R.allowed(new URL(u).pathname)) { delete st.urls[u]; continue; } } catch { continue; }
-    const r = await get(u); vus++;
+    const r = await get(u, 20_000, e.cookie); vus++;
     statuts[r ? String(r.status) : "erreur"] = (statuts[r ? String(r.status) : "erreur"] ?? 0) + 1;
     if (vus >= 10 && (statuts["403"] ?? 0) + (statuts["429"] ?? 0) >= 8) break; // refus répétés : on arrête poliment
     const today = new Date().toISOString().slice(0, 10);
@@ -210,7 +221,10 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
     const f = d ? famille(`${nom} ${u}`) : null;
     if (d && f && nom) {
       const img = (() => { try { const x = d.image ? new URL(d.image, u) : null; return x && x.protocol === "https:" ? x.href : null; } catch { return null; } })();
-      catalogue.set(u, { n: nom, b: d.brand, m: e.nom, u, p: d.price, c: d.price ? d.currency ?? (e.zone === "US" ? "USD" : "EUR") : null, a: d.availability, d: today, f, z: e.zone ?? "FR", i: img });
+      // Garde-fou : une enseigne française ou européenne doit afficher des euros ; sinon le prix n'est pas gardé (page d'un autre pays).
+      const devise = d.price ? d.currency ?? (e.zone === "US" ? "USD" : "EUR") : null;
+      const prixOk = devise !== null && (e.zone === "US" || devise === "EUR");
+      catalogue.set(u, { n: nom, b: d.brand, m: e.nom, u, p: prixOk ? d.price : null, c: prixOk ? devise : null, a: d.availability, d: today, f, z: e.zone ?? "FR", i: img });
       gardes++;
     } else { if (r.status < 400) sansFiche++; if (catalogue.delete(u)) retires++; }
     await sleep(st.delai * 1000);

@@ -64,11 +64,17 @@ async function inspect(url: string): Promise<ReturnType<typeof parseProduct>> {
   } catch { return null; }
 }
 
-export async function rechercher(env: Env, q: string, label: string, pays = "FR"): Promise<Recherche> {
+/** Photo du meuble découpée dans l'image (facultative) : l'IA cherche ce qui lui ressemble vraiment. */
+export interface PhotoMeuble { mime: string; b64: string }
+
+export async function rechercher(env: Env, q: string, label: string, pays = "FR", photo?: PhotoMeuble): Promise<Recherche> {
   if (!env.GEMINI_API_KEY) throw new ProviderError("La recherche sur internet n'est pas configurée (clé manquante).", false);
   const appel = (model: string) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY! },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }] }),
+    body: JSON.stringify({ contents: [{ role: "user", parts: [
+      { text: PROMPT(q, label, pays) + (photo ? "\nThe attached photo shows the exact item: above all, match its look (silhouette, material, colour, details)." : "") },
+      ...(photo ? [{ inline_data: { mime_type: photo.mime, data: photo.b64 } }] : []),
+    ] }], tools: [{ google_search: {} }] }),
   }, 2);
   const r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL);
   if (!r.ok) throw new ProviderError("La recherche sur internet a échoué.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);

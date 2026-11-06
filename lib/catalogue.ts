@@ -23,8 +23,8 @@ export interface ProduitCatalogue {
 /** Sélection de la boutique : références d'exception, à tous les prix (voir scripts/selection-boutique.ts). */
 /** Maisons qui ne publient pas leurs prix en ligne : gardées sans prix, en haut de gamme. */
 export const SANS_PRIX = new Set(["Roche Bobois"]);
-/** Enseignes écartées de la boutique : données mal relevées (prix en dollars ou faux), tant que le robot n'est pas corrigé. */
-export const ENSEIGNES_ECARTEES = new Set(["GUBI", "Caravane"]);
+/** Enseignes écartées de la boutique (données mal relevées). GUBI et Caravane réintégrés le 6 novembre : pages françaises, prix en euros. */
+export const ENSEIGNES_ECARTEES = new Set<string>([]);
 /** La boutique est pour tout le monde : toutes les enseignes relevées, à tous les prix, sauf données fausses. */
 export const enseigneRetenue = (m: string) => !ENSEIGNES_ECARTEES.has(m);
 

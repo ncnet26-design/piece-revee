@@ -584,12 +584,15 @@ async function inspect(url) {
     return null;
   }
 }
-async function rechercher(env, q, label, pays = "FR") {
+async function rechercher(env, q, label, pays = "FR", photo) {
   if (!env.GEMINI_API_KEY) throw new ProviderError("La recherche sur internet n'est pas configur\xE9e (cl\xE9 manquante).", false);
   const appel = (model) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST",
     headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: PROMPT(q, label, pays) }] }], tools: [{ google_search: {} }] })
+    body: JSON.stringify({ contents: [{ role: "user", parts: [
+      { text: PROMPT(q, label, pays) + (photo ? "\nThe attached photo shows the exact item: above all, match its look (silhouette, material, colour, details)." : "") },
+      ...photo ? [{ inline_data: { mime_type: photo.mime, data: photo.b64 } }] : []
+    ] }], tools: [{ google_search: {} }] })
   }, 2);
   const r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL);
   if (!r.ok) throw new ProviderError("La recherche sur internet a \xE9chou\xE9.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
@@ -830,7 +833,8 @@ var index_default = {
       const refusal = overLimit(await usage(env, visitor, ipHash), cost);
       if (refusal) return json({ erreur: refusal }, 429);
       try {
-        const r = await rechercher(env, q, label, b.pays === "EU" ? "EU" : "FR");
+        const m2 = typeof b.photo === "string" && b.photo.length < 4e5 ? /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(b.photo) : null;
+        const r = await rechercher(env, q, label, b.pays === "EU" ? "EU" : "FR", m2 ? { mime: m2[1], b64: m2[2] } : void 0);
         await settle(env, visitor, ipHash, cost);
         return json(r);
       } catch (e) {

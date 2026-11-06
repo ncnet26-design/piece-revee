@@ -24,8 +24,8 @@ test("accueil : promesse, démonstration à toucher, sections éditoriales", asy
   const mobile = (page.viewportSize()?.width ?? 1200) < 1024;
   if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Boutique", "Tarifs"]);
   else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Boutique", "Tarifs"]);
-  await page.getByRole("button", { name: /Table basse en travertin : voir les produits par budget/ }).click();
-  await expect(page.getByText("Table basse en travertin · en vente maintenant")).toBeVisible();
+  await page.getByRole("button", { name: /^Tables basses en marbre : voir les produits par budget/ }).click();
+  await expect(page.getByText("Tables basses en marbre · en vente maintenant")).toBeVisible();
   for (const g of ["Petit budget", "Budget moyen", "Haut de gamme"]) await expect(page.getByRole("link", { name: new RegExp(g) }).first()).toHaveAttribute("target", "_blank");
   await expect(page.getByRole("slider", { name: /Bouclé et noyer/ })).toBeVisible();
   expect(errors).toEqual([]);

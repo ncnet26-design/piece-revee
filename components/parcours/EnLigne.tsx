@@ -20,15 +20,15 @@ function gamme(p: Trouve, all: Trouve[]): string | null {
  * Le prix affiché est celui relevé sur la page du vendeur ; sinon « prix sur le site ».
  * Les suggestions de recherche Google sont affichées telles quelles, comme l'exigent les règles de Google.
  */
-export function EnLigne({ query, label, forObject }: { query: string; label: string; forObject?: string }) {
+export function EnLigne({ query, label, forObject, photo }: { query: string; label: string; forObject?: string; photo?: string }) {
   const project = useProject();
   const inList = (u: string) => project.list.some((x) => x.productId === u);
   const [state, setState] = useState<{ q: string; data: RechercheEnLigne | null; error: string | null } | null>(null);
   useEffect(() => {
     let alive = true;
-    void searchOnline(query, label).then((r) => { if (alive) setState({ q: query, data: r.ok ? r.value : null, error: r.ok ? null : r.message }); });
+    void searchOnline(query, label, photo).then((r) => { if (alive) setState({ q: query, data: r.ok ? r.value : null, error: r.ok ? null : r.message }); });
     return () => { alive = false; };
-  }, [query, label]);
+  }, [query, label, photo]);
   const loading = !state || state.q !== query;
   const list = state?.data?.produits ?? [];
 

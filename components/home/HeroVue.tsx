@@ -27,7 +27,7 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
   const [touche, setTouche] = useState(false);
   useEffect(() => {
     if (touche || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setInterval(() => setI((x) => (x + 1) % PIECES.length), 4200);
+    const t = setInterval(() => setI((x) => { let n = (x + 1) % PIECES.length; while (PIECES[n]!.secondaire) n = (n + 1) % PIECES.length; return n; }), 4200);
     return () => clearInterval(t);
   }, [touche]);
   const sel = PIECES[i]!, l = trouves[sel.id] ?? {};
@@ -55,14 +55,12 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
 
       <div>
         <figure className="relative m-0 overflow-hidden rounded-[2px] bg-soft">
-          <Photo src="/editorial/ia/salon-boucle-noyer.webp" priority sizes="(min-width:1024px) 55vw, 100vw" alt="Exemple de pièce transformée : canapé courbe en bouclé, table basse en travertin, buffet cannelé en noyer" className="block aspect-[16/9] w-full object-cover" />
+          <Photo src="/editorial/ia/salon-exemple.webp" priority sizes="(min-width:1024px) 55vw, 100vw" alt="Exemple de pièce transformée : canapé courbe en bouclette, tables basses en marbre, fauteuil vert, tapis rond rayé, grand tableau coloré" className="block aspect-[1000/651] w-full object-cover" />
+          {/* Les pastilles sont dessinées sur l'image : des zones cliquables transparentes sont posées dessus. */}
           {PIECES.map((p, k) => (
             <button key={p.id} type="button" onClick={() => { setI(k); setTouche(true); }} aria-pressed={i === k} aria-label={`${p.label} : voir les produits par budget`}
-              className="group absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${p.x}%`, top: `${p.y}%` }}>
-              <span className={`relative grid size-9 place-items-center rounded-full bg-white/95 transition ${i === k ? "scale-110" : "group-hover:scale-110"}`}>
-                {i === k && <span aria-hidden className="hero-onde absolute inset-0 rounded-full" />}
-                <span className={`size-2.5 rounded-full ${i === k ? "bg-[var(--bronze)]" : "bg-ink"}`} />
-              </span>
+              className={`absolute size-[6%] min-h-7 min-w-7 -translate-x-1/2 -translate-y-1/2 rounded-full ${p.secondaire ? "hidden lg:block" : ""}`} style={{ left: `${p.x}%`, top: `${p.y}%` }}>
+              {i === k && <span aria-hidden className="hero-onde absolute inset-[18%] rounded-full ring-2 ring-[var(--bronze)]" />}
             </button>
           ))}
           <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11.5px] font-semibold text-ink">Touchez un meuble</span>

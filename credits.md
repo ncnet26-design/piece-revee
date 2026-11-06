@@ -77,3 +77,7 @@
 | contemporain | [Peter Muniz](https://unsplash.com/@petepxl) | [unsplash:Uq1Sa_lHmSA](https://unsplash.com/photos/modern-bathroom-with-concrete-sink-and-black-faucet-Uq1Sa_lHmSA) | 5947×3965 |
 
 Les autres images du site (photos d'inspiration, images générées par IA, modèles 3D) sont créditées sous chaque image et dans `audit-images.md`, `public/models/LICENCES.txt`, `public/textures/LICENCES.txt`.
+
+## Image d'en-tête de l'accueil
+
+`public/editorial/ia/salon-exemple*` : visuel fourni par le propriétaire du site (6 novembre 2026), signalé « IA » sur le site.
