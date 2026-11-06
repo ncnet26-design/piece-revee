@@ -29,8 +29,9 @@ const MAX_URLS = 12000;
 /**
  * adresse : réécrit une page produit vers sa version française (les plans de site renvoient parfois la boutique d'un autre pays) ;
  * cookie : marché demandé aux boutiques qui choisissent la devise selon le pays du visiteur (le robot tourne aux États-Unis).
+ * shopify : si la page n'affiche pas d'euros, le prix est lu dans la fiche publique du produit (<page>.json), dans la devise de la boutique.
  */
-type Enseigne = { id: string; nom: string; site: string; produit?: RegExp; zone?: "FR" | "EU" | "US"; adresse?: (u: string) => string; cookie?: string };
+type Enseigne = { id: string; nom: string; site: string; produit?: RegExp; zone?: "FR" | "EU" | "US"; adresse?: (u: string) => string; cookie?: string; shopify?: boolean };
 const ENSEIGNES: Enseigne[] = [
   { id: "ikea", nom: "IKEA", site: "https://www.ikea.com", produit: /\/fr\/fr\/p\// },
   { id: "maisonsdumonde", nom: "Maisons du Monde", site: "https://www.maisonsdumonde.com", produit: /\/FR\/fr\/p\// },
@@ -85,7 +86,7 @@ const ENSEIGNES: Enseigne[] = [
   { id: "sarahlavoine", nom: "Maison Sarah Lavoine", site: "https://www.maisonsarahlavoine.com" },
   { id: "fleux", nom: "Fleux", site: "https://www.fleux.com" },
   { id: "caravane", nom: "Caravane", site: "https://caravane.com", produit: /^https:\/\/caravane\.com\/products\//,
-    adresse: (u) => u.replace(/^https:\/\/(www\.)?caravane\.(com|fr)\/[a-z]{2}(-[a-z]{2})?\/products\//, "https://caravane.com/products/"), cookie: "localization=FR; cart_currency=EUR" },
+    adresse: (u) => u.replace(/^https:\/\/(www\.)?caravane\.(com|fr)\/[a-z]{2}(-[a-z]{2})?\/products\//, "https://caravane.com/products/"), cookie: "localization=FR; cart_currency=EUR", shopify: true },
   { id: "tediber", nom: "Tediber", site: "https://www.tediber.com" },
   { id: "lapeyre", nom: "Lapeyre", site: "https://www.lapeyre.fr" },
   { id: "bricodepot", nom: "Brico Dépôt", site: "https://www.bricodepot.fr" },
@@ -222,9 +223,17 @@ async function enseigne(e: (typeof ENSEIGNES)[number]) {
     if (d && f && nom) {
       const img = (() => { try { const x = d.image ? new URL(d.image, u) : null; return x && x.protocol === "https:" ? x.href : null; } catch { return null; } })();
       // Garde-fou : une enseigne française ou européenne doit afficher des euros ; sinon le prix n'est pas gardé (page d'un autre pays).
-      const devise = d.price ? d.currency ?? (e.zone === "US" ? "USD" : "EUR") : null;
+      let prix = d.price, devise = d.price ? d.currency ?? (e.zone === "US" ? "USD" : "EUR") : null;
+      if (e.shopify && devise !== "EUR" && R.allowed(`${new URL(u).pathname}.json`)) {
+        const j = await get(`${u.split("?")[0]}.json`, 20_000, e.cookie);
+        try {
+          const v = (JSON.parse(j?.body ?? "") as { product?: { variants?: Array<{ price?: string; price_currency?: string }> } }).product?.variants?.[0];
+          const n = Number(v?.price);
+          if (v && n > 0 && (v.price_currency ?? "EUR") === "EUR") { prix = n; devise = "EUR"; }
+        } catch { /* fiche illisible : pas de prix */ }
+      }
       const prixOk = devise !== null && (e.zone === "US" || devise === "EUR");
-      catalogue.set(u, { n: nom, b: d.brand, m: e.nom, u, p: prixOk ? d.price : null, c: prixOk ? devise : null, a: d.availability, d: today, f, z: e.zone ?? "FR", i: img });
+      catalogue.set(u, { n: nom, b: d.brand, m: e.nom, u, p: prixOk ? prix : null, c: prixOk ? devise : null, a: d.availability, d: today, f, z: e.zone ?? "FR", i: img });
       gardes++;
     } else { if (r.status < 400) sansFiche++; if (catalogue.delete(u)) retires++; }
     await sleep(st.delai * 1000);
