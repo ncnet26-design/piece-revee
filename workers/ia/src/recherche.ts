@@ -72,38 +72,46 @@ export interface Flux { liens?: (r: Recherche) => void; fiche?: (t: Trouve) => v
 
 export async function rechercher(env: Env, q: string, label: string, pays = "FR", photo?: PhotoMeuble, flux?: Flux): Promise<Recherche> {
   if (!env.GEMINI_API_KEY) throw new ProviderError("La recherche sur internet n'est pas configurée (clé manquante).", false);
-  const appel = (model: string) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-    method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY! },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [
-      { text: PROMPT(q, label, pays) + (photo ? "\nThe attached photo shows the exact item: above all, match its look (silhouette, material, colour, details)." : "") },
-      ...(photo ? [{ inline_data: { mime_type: photo.mime, data: photo.b64 } }] : []),
-    ] }], tools: [{ google_search: {} }] }),
-  }, 2);
-  const r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL);
-  if (!r.ok) throw new ProviderError("La recherche sur internet a échoué.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
-  const j = await r.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> }; groundingMetadata?: { groundingChunks?: Array<{ web?: { uri?: string; title?: string } }>; searchEntryPoint?: { renderedContent?: string }; webSearchQueries?: string[] } }> };
-  const c = j.candidates?.[0];
-  const meta = c?.groundingMetadata;
-  const txt = c?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
-  let listed: Array<{ title?: unknown; url?: unknown; merchant?: unknown }> = [];
-  try { listed = (JSON.parse(txt.slice(txt.indexOf('{"products"'), txt.lastIndexOf("}") + 1)) as { products?: typeof listed }).products ?? []; } catch { /* réponse libre */ }
-  // Liens écrits dans le texte (si le bloc JSON manque), avec le texte du lien comme titre.
-  for (const m of txt.matchAll(/\[([^\]]{3,160})\]\((https:\/\/[^\s)]+)\)/g)) listed.push({ title: m[1], url: m[2], merchant: "" });
-  for (const m of txt.matchAll(/https:\/\/[^\s)"'<>\]]+/g)) if (!listed.some((p) => p.url === m[0])) listed.push({ title: "", url: m[0], merchant: "" });
+  // Rapidité : réflexion courte d'abord (même modèle) ; si rien n'est trouvé, la recherche normale est relancée.
+  const essai = async (rapide: boolean) => {
+    const appel = (model: string, rapide: boolean) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY! },
+      body: JSON.stringify({ contents: [{ role: "user", parts: [
+        { text: PROMPT(q, label, pays) + (photo ? "\nThe attached photo shows the exact item: above all, match its look (silhouette, material, colour, details)." : "") },
+        ...(photo ? [{ inline_data: { mime_type: photo.mime, data: photo.b64 } }] : []),
+      ] }], tools: [{ google_search: {} }], ...(rapide ? { generationConfig: { thinkingConfig: { thinkingLevel: "low" } } } : {}) }),
+    }, 2);
+    let r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL, rapide);
+    if (rapide && r.status === 400) r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL, false); // réglage refusé : réflexion normale
+    if (!r.ok) throw new ProviderError("La recherche sur internet a échoué.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
+    const j = await r.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> }; groundingMetadata?: { groundingChunks?: Array<{ web?: { uri?: string; title?: string } }>; searchEntryPoint?: { renderedContent?: string }; webSearchQueries?: string[] } }> };
+    const c = j.candidates?.[0];
+    const meta = c?.groundingMetadata;
+    const txt = c?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
+    let listed: Array<{ title?: unknown; url?: unknown; merchant?: unknown }> = [];
+    try { listed = (JSON.parse(txt.slice(txt.indexOf('{"products"'), txt.lastIndexOf("}") + 1)) as { products?: typeof listed }).products ?? []; } catch { /* réponse libre */ }
+    // Liens écrits dans le texte (si le bloc JSON manque), avec le texte du lien comme titre.
+    for (const m of txt.matchAll(/\[([^\]]{3,160})\]\((https:\/\/[^\s)]+)\)/g)) listed.push({ title: m[1], url: m[2], merchant: "" });
+    for (const m of txt.matchAll(/https:\/\/[^\s)"'<>\]]+/g)) if (!listed.some((p) => p.url === m[0])) listed.push({ title: "", url: m[0], merchant: "" });
 
-  // Seules les pages réellement trouvées par la recherche Google sont gardées (liens de redirection de Google suivis jusqu'à la page).
-  const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w): w is { uri: string; title?: string } => typeof w?.uri === "string");
-  const isRedirect = (u: string) => /grounding-api-redirect/.test(u);
-  const viaModel = listed.map((p) => ({ url: clean(p.url, 1200), title: clean(p.title, 160), merchant: clean(p.merchant, 60) })).filter((p) => /^https?:\/\//.test(p.url));
-  const toResolve = [...viaModel.filter((p) => isRedirect(p.url)), ...chunks.map((w) => ({ url: w.uri, title: "", merchant: "" }))].slice(0, 16);
-  const resolved = await Promise.all(toResolve.map(async (p) => ({ ...p, url: await resolve(p.url) })));
-  const domains = new Set([...resolved.map((w) => host(w.url)), ...chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))].filter(Boolean));
-  const direct = viaModel.filter((p) => !isRedirect(p.url) && domains.has(host(p.url)));
-  const isPage = (u: string) => { try { const x = new URL(u); return x.protocol === "https:" && x.pathname.length > 1 && !/\.(jpe?g|png|webp|gif|avif|svg|pdf)$/i.test(x.pathname) && !/\/(cdn|wp-content\/uploads|media\/catalog)\//i.test(x.pathname); } catch { return false; } };
-  const key = (u: string) => u.split("#")[0]!.split("?")[0]!;
-  const named = new Map([...resolved, ...direct].filter((p) => p.title).map((p) => [key(p.url), p] as const));
-  const candidates = [...resolved, ...direct].filter((p) => !isRedirect(p.url) && isPage(p.url)).map((p) => ({ ...p, title: p.title || named.get(key(p.url))?.title || "", merchant: p.merchant || named.get(key(p.url))?.merchant || "" }));
-  const seen = new Set<string>(), unique = candidates.filter((p) => { const k = p.url.split("#")[0]!.split("?")[0]!; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 12);
+    // Seules les pages réellement trouvées par la recherche Google sont gardées (liens de redirection de Google suivis jusqu'à la page).
+    const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w): w is { uri: string; title?: string } => typeof w?.uri === "string");
+    const isRedirect = (u: string) => /grounding-api-redirect/.test(u);
+    const viaModel = listed.map((p) => ({ url: clean(p.url, 1200), title: clean(p.title, 160), merchant: clean(p.merchant, 60) })).filter((p) => /^https?:\/\//.test(p.url));
+    const toResolve = [...viaModel.filter((p) => isRedirect(p.url)), ...chunks.map((w) => ({ url: w.uri, title: "", merchant: "" }))].slice(0, 16);
+    const resolved = await Promise.all(toResolve.map(async (p) => ({ ...p, url: await resolve(p.url) })));
+    const domains = new Set([...resolved.map((w) => host(w.url)), ...chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))].filter(Boolean));
+    const direct = viaModel.filter((p) => !isRedirect(p.url) && domains.has(host(p.url)));
+    const isPage = (u: string) => { try { const x = new URL(u); return x.protocol === "https:" && x.pathname.length > 1 && !/\.(jpe?g|png|webp|gif|avif|svg|pdf)$/i.test(x.pathname) && !/\/(cdn|wp-content\/uploads|media\/catalog)\//i.test(x.pathname); } catch { return false; } };
+    const key = (u: string) => u.split("#")[0]!.split("?")[0]!;
+    const named = new Map([...resolved, ...direct].filter((p) => p.title).map((p) => [key(p.url), p] as const));
+    const candidates = [...resolved, ...direct].filter((p) => !isRedirect(p.url) && isPage(p.url)).map((p) => ({ ...p, title: p.title || named.get(key(p.url))?.title || "", merchant: p.merchant || named.get(key(p.url))?.merchant || "" }));
+    const seen = new Set<string>(), unique = candidates.filter((p) => { const k = p.url.split("#")[0]!.split("?")[0]!; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 12);
+    return { listed, chunks, resolved, isRedirect, unique, meta };
+  };
+  let e = await essai(true);
+  if (!e.unique.length) e = await essai(false);
+  const { listed, chunks, resolved, isRedirect, unique, meta } = e;
 
   const now = new Date().toISOString();
   const suggestions = meta?.searchEntryPoint?.renderedContent ?? null, requetes = (meta?.webSearchQueries ?? []).slice(0, 5);

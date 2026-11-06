@@ -586,51 +586,58 @@ async function inspect(url) {
 }
 async function rechercher(env, q, label, pays = "FR", photo, flux) {
   if (!env.GEMINI_API_KEY) throw new ProviderError("La recherche sur internet n'est pas configur\xE9e (cl\xE9 manquante).", false);
-  const appel = (model) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-    method: "POST",
-    headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-    body: JSON.stringify({ contents: [{ role: "user", parts: [
-      { text: PROMPT(q, label, pays) + (photo ? "\nThe attached photo shows the exact item: above all, match its look (silhouette, material, colour, details)." : "") },
-      ...photo ? [{ inline_data: { mime_type: photo.mime, data: photo.b64 } }] : []
-    ] }], tools: [{ google_search: {} }] })
-  }, 2);
-  const r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL);
-  if (!r.ok) throw new ProviderError("La recherche sur internet a \xE9chou\xE9.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
-  const j = await r.json();
-  const c = j.candidates?.[0];
-  const meta = c?.groundingMetadata;
-  const txt = c?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
-  let listed = [];
-  try {
-    listed = JSON.parse(txt.slice(txt.indexOf('{"products"'), txt.lastIndexOf("}") + 1)).products ?? [];
-  } catch {
-  }
-  for (const m of txt.matchAll(/\[([^\]]{3,160})\]\((https:\/\/[^\s)]+)\)/g)) listed.push({ title: m[1], url: m[2], merchant: "" });
-  for (const m of txt.matchAll(/https:\/\/[^\s)"'<>\]]+/g)) if (!listed.some((p) => p.url === m[0])) listed.push({ title: "", url: m[0], merchant: "" });
-  const chunks = (meta?.groundingChunks ?? []).map((g) => g.web).filter((w) => typeof w?.uri === "string");
-  const isRedirect = (u) => /grounding-api-redirect/.test(u);
-  const viaModel = listed.map((p) => ({ url: clean2(p.url, 1200), title: clean2(p.title, 160), merchant: clean2(p.merchant, 60) })).filter((p) => /^https?:\/\//.test(p.url));
-  const toResolve = [...viaModel.filter((p) => isRedirect(p.url)), ...chunks.map((w) => ({ url: w.uri, title: "", merchant: "" }))].slice(0, 16);
-  const resolved = await Promise.all(toResolve.map(async (p) => ({ ...p, url: await resolve(p.url) })));
-  const domains = new Set([...resolved.map((w) => host(w.url)), ...chunks.map((w) => (w.title ?? "").replace(/^www\./, ""))].filter(Boolean));
-  const direct = viaModel.filter((p) => !isRedirect(p.url) && domains.has(host(p.url)));
-  const isPage = (u) => {
+  const essai = async (rapide) => {
+    const appel = (model, rapide2) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+      body: JSON.stringify({ contents: [{ role: "user", parts: [
+        { text: PROMPT(q, label, pays) + (photo ? "\nThe attached photo shows the exact item: above all, match its look (silhouette, material, colour, details)." : "") },
+        ...photo ? [{ inline_data: { mime_type: photo.mime, data: photo.b64 } }] : []
+      ] }], tools: [{ google_search: {} }], ...rapide2 ? { generationConfig: { thinkingConfig: { thinkingLevel: "low" } } } : {} })
+    }, 2);
+    let r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL, rapide);
+    if (rapide && r.status === 400) r = await appel(env.GEMINI_SEARCH_MODEL || SEARCH_MODEL, false);
+    if (!r.ok) throw new ProviderError("La recherche sur internet a \xE9chou\xE9.", r.status >= 500 || r.status === 429, `HTTP ${r.status}`);
+    const j = await r.json();
+    const c = j.candidates?.[0];
+    const meta2 = c?.groundingMetadata;
+    const txt = c?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
+    let listed2 = [];
     try {
-      const x = new URL(u);
-      return x.protocol === "https:" && x.pathname.length > 1 && !/\.(jpe?g|png|webp|gif|avif|svg|pdf)$/i.test(x.pathname) && !/\/(cdn|wp-content\/uploads|media\/catalog)\//i.test(x.pathname);
+      listed2 = JSON.parse(txt.slice(txt.indexOf('{"products"'), txt.lastIndexOf("}") + 1)).products ?? [];
     } catch {
-      return false;
     }
+    for (const m of txt.matchAll(/\[([^\]]{3,160})\]\((https:\/\/[^\s)]+)\)/g)) listed2.push({ title: m[1], url: m[2], merchant: "" });
+    for (const m of txt.matchAll(/https:\/\/[^\s)"'<>\]]+/g)) if (!listed2.some((p) => p.url === m[0])) listed2.push({ title: "", url: m[0], merchant: "" });
+    const chunks2 = (meta2?.groundingChunks ?? []).map((g) => g.web).filter((w) => typeof w?.uri === "string");
+    const isRedirect2 = (u) => /grounding-api-redirect/.test(u);
+    const viaModel = listed2.map((p) => ({ url: clean2(p.url, 1200), title: clean2(p.title, 160), merchant: clean2(p.merchant, 60) })).filter((p) => /^https?:\/\//.test(p.url));
+    const toResolve = [...viaModel.filter((p) => isRedirect2(p.url)), ...chunks2.map((w) => ({ url: w.uri, title: "", merchant: "" }))].slice(0, 16);
+    const resolved2 = await Promise.all(toResolve.map(async (p) => ({ ...p, url: await resolve(p.url) })));
+    const domains = new Set([...resolved2.map((w) => host(w.url)), ...chunks2.map((w) => (w.title ?? "").replace(/^www\./, ""))].filter(Boolean));
+    const direct = viaModel.filter((p) => !isRedirect2(p.url) && domains.has(host(p.url)));
+    const isPage = (u) => {
+      try {
+        const x = new URL(u);
+        return x.protocol === "https:" && x.pathname.length > 1 && !/\.(jpe?g|png|webp|gif|avif|svg|pdf)$/i.test(x.pathname) && !/\/(cdn|wp-content\/uploads|media\/catalog)\//i.test(x.pathname);
+      } catch {
+        return false;
+      }
+    };
+    const key = (u) => u.split("#")[0].split("?")[0];
+    const named = new Map([...resolved2, ...direct].filter((p) => p.title).map((p) => [key(p.url), p]));
+    const candidates = [...resolved2, ...direct].filter((p) => !isRedirect2(p.url) && isPage(p.url)).map((p) => ({ ...p, title: p.title || named.get(key(p.url))?.title || "", merchant: p.merchant || named.get(key(p.url))?.merchant || "" }));
+    const seen = /* @__PURE__ */ new Set(), unique2 = candidates.filter((p) => {
+      const k = p.url.split("#")[0].split("?")[0];
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    }).slice(0, 12);
+    return { listed: listed2, chunks: chunks2, resolved: resolved2, isRedirect: isRedirect2, unique: unique2, meta: meta2 };
   };
-  const key = (u) => u.split("#")[0].split("?")[0];
-  const named = new Map([...resolved, ...direct].filter((p) => p.title).map((p) => [key(p.url), p]));
-  const candidates = [...resolved, ...direct].filter((p) => !isRedirect(p.url) && isPage(p.url)).map((p) => ({ ...p, title: p.title || named.get(key(p.url))?.title || "", merchant: p.merchant || named.get(key(p.url))?.merchant || "" }));
-  const seen = /* @__PURE__ */ new Set(), unique = candidates.filter((p) => {
-    const k = p.url.split("#")[0].split("?")[0];
-    if (seen.has(k)) return false;
-    seen.add(k);
-    return true;
-  }).slice(0, 12);
+  let e = await essai(true);
+  if (!e.unique.length) e = await essai(false);
+  const { listed, chunks, resolved, isRedirect, unique, meta } = e;
   const now = (/* @__PURE__ */ new Date()).toISOString();
   const suggestions = meta?.searchEntryPoint?.renderedContent ?? null, requetes = (meta?.webSearchQueries ?? []).slice(0, 5);
   flux?.liens?.({ produits: unique.map((p) => ({ title: p.title || slugTitle(p.url) || `Mod\xE8le chez ${p.merchant || host(p.url)}`, url: p.url, merchant: p.merchant || host(p.url), price: null, currency: null, availability: null, brand: null, checkedAt: null, source: "recherche", image: null })).filter((t) => t.title.length > 2).slice(0, 12), suggestions, requetes });

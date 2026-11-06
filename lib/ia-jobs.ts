@@ -90,6 +90,19 @@ export interface RechercheEnLigne { produits: Trouve[]; suggestions: string | nu
 const found = new Map<string, RechercheEnLigne>();
 /** Recherche de produits en vente sur internet (mémorisée pendant la visite, pour ne pas payer deux fois la même recherche). */
 const pending = new Map<string, Promise<Result<RechercheEnLigne>>>();
+/** Mémoire dans le navigateur du visiteur (24 h) : un meuble déjà cherché s'affiche aussitôt, sans nouvel appel payant. */
+const MEMOIRE = "pr_recherche_v1", DUREE = 24 * 3600_000;
+function lireMemoire(k: string): RechercheEnLigne | null {
+  try { const m = JSON.parse(localStorage.getItem(MEMOIRE) ?? "{}") as Record<string, { t: number; v: RechercheEnLigne }>; const x = m[k]; return x && Date.now() - x.t < DUREE ? x.v : null; } catch { return null; }
+}
+function ecrireMemoire(k: string, v: RechercheEnLigne) {
+  try {
+    const m = JSON.parse(localStorage.getItem(MEMOIRE) ?? "{}") as Record<string, { t: number; v: RechercheEnLigne }>;
+    m[k] = { t: Date.now(), v };
+    const garde = Object.entries(m).filter(([, x]) => Date.now() - x.t < DUREE).sort((a, b) => b[1].t - a[1].t).slice(0, 40);
+    localStorage.setItem(MEMOIRE, JSON.stringify(Object.fromEntries(garde)));
+  } catch { /* stockage indisponible */ }
+}
 const suiveurs = new Map<string, Set<(r: RechercheEnLigne) => void>>();
 /**
  * Recherche de produits en ligne, affichée au fil de l'eau : `progres` reçoit les produits dès que l'IA les trouve,
@@ -97,7 +110,7 @@ const suiveurs = new Map<string, Set<(r: RechercheEnLigne) => void>>();
  */
 export async function searchOnline(query: string, label: string, photo?: string, progres?: (r: RechercheEnLigne) => void): Promise<Result<RechercheEnLigne>> {
   const k = query.toLowerCase();
-  const hit = found.get(k); if (hit) return { ok: true, value: hit };
+  const hit = found.get(k) ?? lireMemoire(k); if (hit) { found.set(k, hit); return { ok: true, value: hit }; }
   if (progres) (suiveurs.get(k) ?? suiveurs.set(k, new Set()).get(k)!).add(progres);
   // Une recherche déjà en cours pour le même élément est partagée (pas de second appel payant).
   const enCours = pending.get(k); if (enCours) return enCours;
@@ -131,7 +144,7 @@ export async function searchOnline(query: string, label: string, photo?: string,
     } catch {
       return { ok: false, message: "Le service de recherche est injoignable. Vérifiez votre connexion et réessayez." };
     }
-  })().then((r) => { if (r.ok) found.set(k, r.value); pending.delete(k); suiveurs.delete(k); return r; });
+  })().then((r) => { if (r.ok && r.value.produits.length) { found.set(k, r.value); ecrireMemoire(k, r.value); } pending.delete(k); suiveurs.delete(k); return r; });
   pending.set(k, p);
   return p;
 }

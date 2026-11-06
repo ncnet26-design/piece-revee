@@ -233,6 +233,23 @@ describe("recherche de produits sur internet", () => {
     expect(sent.tools).toEqual([{ google_search: {} }]);
   });
 
+  it("réflexion courte d'abord ; si rien n'est trouvé, relance la recherche normale", async () => {
+    const corps: Array<{ generationConfig?: unknown }> = [];
+    fetchMock.mockImplementation(async (url: string, init?: RequestInit) => {
+      if (url.includes("generativelanguage")) {
+        const b = JSON.parse(String(init?.body)); corps.push(b);
+        const ok = !b.generationConfig;
+        return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: ok ? '{"products":[{"title":"Vase grès","url":"https://boutique-a.fr/vase-gres","merchant":"A"}]}' : '{"products":[]}' }] }, groundingMetadata: { groundingChunks: ok ? [{ web: { uri: "https://boutique-a.fr/vase-gres", title: "boutique-a.fr" } }] : [] } }] }), { status: 200 });
+      }
+      return new Response("<html></html>", { status: 200, headers: { "content-type": "text/html" } });
+    });
+    const r = await call(env, "/v2/recherche", { method: "POST", body: JSON.stringify({ query: "vase en grès", label: "Vase", visiteur: "visiteur-test-04" }) });
+    const d = await r.json() as { produits: Array<{ url: string }> };
+    expect(corps[0]!.generationConfig).toEqual({ thinkingConfig: { thinkingLevel: "low" } });
+    expect(corps[1]!.generationConfig).toBeUndefined();
+    expect(d.produits[0]!.url).toBe("https://boutique-a.fr/vase-gres");
+  });
+
   it("mode flux : envoie les liens dès qu'ils sont trouvés, puis chaque fiche, puis la fin", async () => {
     fetchMock.mockImplementation(async (url: string) => {
       if (url.includes("generativelanguage")) return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: '{"products":[{"title":"Vase grès","url":"https://boutique-a.fr/vase-gres","merchant":"Boutique A"}]}' }] }, groundingMetadata: { groundingChunks: [{ web: { uri: "https://boutique-a.fr/vase-gres", title: "boutique-a.fr" } }] } }] }), { status: 200 });
