@@ -2,6 +2,12 @@ import Link from "next/link";
 import { NOM_STYLE, STYLES } from "@/lib/catalogue-achetable";
 import { PHOTOS_STYLES, SIGNATURE } from "@/lib/inspirations-photos";
 import { PhotoUnsplash } from "./PhotoUnsplash";
+import { InspirationCliquable } from "./InspirationCliquable";
+import ia from "@/content/data/inspirations-ia.json";
+import { trouverParBudget, type PieceDansImage } from "@/lib/trouves-par-budget";
+
+type ImageIA = { src: string; largeur: number; hauteur: number; piece: string; alt: string; pieces: PieceDansImage[] };
+const IA = ia as Record<string, ImageIA>;
 
 /**
  * Les huit styles en vraies photos d'intérieur (6 par style, choisies une à une pour leurs marqueurs),
@@ -26,6 +32,11 @@ export function PhotosStyles() {
               </div>
               <Link href={`/boutique/?style=${s}#selection`} className="btn btn-primary">Les pièces de ce style, par budget</Link>
             </div>
+            {IA[s] && (
+              <div className="mt-8">
+                <InspirationCliquable src={IA[s].src} alt={IA[s].alt} ratio={`${IA[s].largeur} / ${IA[s].hauteur}`} pieces={IA[s].pieces} trouves={trouverParBudget(IA[s].pieces)} />
+              </div>
+            )}
             <div className="mt-8 grid gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="sm:col-span-2 lg:row-span-2">
                 <PhotoUnsplash p={une!} alt={`Intérieur ${NOM_STYLE[s].toLowerCase()} : ${une!.alt}`} sizes="(min-width:1024px) 66vw, 100vw" className="aspect-[3/2] lg:aspect-auto lg:h-[calc(100%-1.75rem)]" eager={i === 0} />

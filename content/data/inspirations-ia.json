@@ -1,0 +1,189 @@
+{
+  "japandi": {
+    "src": "/inspirations-ia/japandi.webp",
+    "largeur": 1536,
+    "hauteur": 1024,
+    "piece": "Chambre",
+    "alt": "Chambre japandi : lit bas en chêne, linge en lin, suspension en papier, tabouret en chêne, murs à la chaux",
+    "pieces": [
+      {
+        "id": "lit",
+        "label": "Lit bas en chêne",
+        "famille": "lit",
+        "query": "lit bois",
+        "x": 50,
+        "y": 79
+      },
+      {
+        "id": "suspension",
+        "label": "Suspension en papier",
+        "famille": "luminaire",
+        "query": "suspension papier",
+        "x": 51,
+        "y": 13
+      },
+      {
+        "id": "tabouret",
+        "label": "Tabouret en chêne",
+        "famille": "chaise",
+        "query": "tabouret bois",
+        "x": 20,
+        "y": 66
+      },
+      {
+        "id": "plaid",
+        "label": "Plaid en laine",
+        "famille": "deco",
+        "query": "plaid laine",
+        "x": 75,
+        "y": 70
+      },
+      {
+        "id": "coussin",
+        "label": "Coussin anthracite",
+        "famille": "deco",
+        "query": "coussin lin",
+        "x": 50,
+        "y": 52
+      },
+      {
+        "id": "rideau",
+        "label": "Voilage en lin",
+        "famille": "rideau",
+        "query": "rideau lin",
+        "x": 89,
+        "y": 42
+      },
+      {
+        "id": "tapis",
+        "label": "Tapis en laine",
+        "famille": "tapis",
+        "query": "tapis laine beige",
+        "x": 32,
+        "y": 95
+      }
+    ]
+  },
+  "scandinave": {
+    "src": "/inspirations-ia/scandinave.webp",
+    "largeur": 1536,
+    "hauteur": 1024,
+    "piece": "Salle à manger",
+    "alt": "Salle à manger scandinave : table en bois clair, chaises à barreaux, peau de mouton, suspension noire, cuisine blanche",
+    "pieces": [
+      {
+        "id": "table",
+        "label": "Table en bois clair",
+        "famille": "table-manger",
+        "query": "table chêne",
+        "x": 44,
+        "y": 66
+      },
+      {
+        "id": "chaise",
+        "label": "Chaise à barreaux",
+        "famille": "chaise",
+        "query": "chaise bois",
+        "x": 70,
+        "y": 76
+      },
+      {
+        "id": "suspension",
+        "label": "Suspension noire",
+        "famille": "luminaire",
+        "query": "suspension noir",
+        "x": 47,
+        "y": 14
+      },
+      {
+        "id": "peau",
+        "label": "Peau de mouton",
+        "famille": "deco",
+        "query": "peau mouton",
+        "x": 13,
+        "y": 74
+      },
+      {
+        "id": "vase",
+        "label": "Pichet en céramique",
+        "famille": "deco",
+        "query": "vase céramique blanc",
+        "x": 47,
+        "y": 52
+      },
+      {
+        "id": "cadre",
+        "label": "Affiche encadrée",
+        "famille": "deco",
+        "query": "affiche cadre",
+        "x": 36,
+        "y": 27
+      }
+    ]
+  },
+  "industriel": {
+    "src": "/inspirations-ia/industriel.webp",
+    "largeur": 1500,
+    "hauteur": 1000,
+    "piece": "Loft",
+    "alt": "Loft industriel : mur de briques, verrière d'atelier, canapé Chesterfield en cuir, table basse en bois et métal, suspensions d'usine",
+    "pieces": [
+      {
+        "id": "canape",
+        "label": "Canapé Chesterfield en cuir",
+        "famille": "canape",
+        "query": "canapé cuir",
+        "x": 55,
+        "y": 63
+      },
+      {
+        "id": "fauteuil",
+        "label": "Fauteuil en cuir",
+        "famille": "fauteuil",
+        "query": "fauteuil cuir",
+        "x": 12,
+        "y": 76
+      },
+      {
+        "id": "table",
+        "label": "Table basse bois et métal",
+        "famille": "table-basse",
+        "query": "table basse bois métal",
+        "x": 57,
+        "y": 80
+      },
+      {
+        "id": "suspension",
+        "label": "Suspension d'usine",
+        "famille": "luminaire",
+        "query": "suspension métal",
+        "x": 35,
+        "y": 22
+      },
+      {
+        "id": "buffet",
+        "label": "Meuble bas en métal",
+        "famille": "rangement",
+        "query": "meuble métal",
+        "x": 13,
+        "y": 59
+      },
+      {
+        "id": "etagere",
+        "label": "Étagère en métal",
+        "famille": "rangement",
+        "query": "étagère métal",
+        "x": 79,
+        "y": 46
+      },
+      {
+        "id": "tapis",
+        "label": "Tapis gris",
+        "famille": "tapis",
+        "query": "tapis gris",
+        "x": 86,
+        "y": 90
+      }
+    ]
+  }
+}

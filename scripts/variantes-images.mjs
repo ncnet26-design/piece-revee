@@ -7,7 +7,7 @@ import { readdirSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import sharp from "sharp";
 
-const DOSSIERS = ["public/editorial/ia", "public/inspirations"].filter((d) => existsSync(d));
+const DOSSIERS = ["public/editorial/ia", "public/inspirations", "public/inspirations-ia"].filter((d) => existsSync(d));
 const LARGEURS = [640, 1024];
 const out = {};
 for (const d of DOSSIERS) {

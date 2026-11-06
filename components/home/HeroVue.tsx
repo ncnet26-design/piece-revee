@@ -7,8 +7,8 @@ import { Photo } from "@/components/Photo";
 import { ProduitImage } from "@/components/ProduitImage";
 import { MentionIA } from "@/components/MentionIA";
 
-export type Gamme = "petit" | "moyen" | "haut";
-export type Trouves = Record<string, Partial<Record<Gamme, ProduitCatalogue>>>;
+import type { Gamme, Trouves } from "@/lib/trouves-par-budget";
+export type { Gamme, Trouves };
 const NOM: Record<Gamme, string> = { petit: "Petit budget", moyen: "Budget moyen", haut: "Haut de gamme" };
 const prix = (p: ProduitCatalogue) => (p.p === null ? "Prix sur le site" : p.p.toLocaleString("fr-FR", { style: "currency", currency: p.c ?? "EUR", maximumFractionDigits: 0 }));
 

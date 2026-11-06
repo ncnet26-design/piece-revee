@@ -406,12 +406,15 @@ test("inspirations : huit styles en vraies photos, photographe crédité, relié
   await page.goto("/galerie/");
   for (const s of ["japandi", "scandinave", "industriel", "haussmannien", "mid-century", "wabi-sabi", "boheme", "contemporain"]) {
     const sec = page.locator(`#style-${s}`);
-    await expect(sec.locator("img")).toHaveCount(6);
+    await expect(sec.locator("img[src*='unsplash']")).toHaveCount(6);
     await expect(sec.getByRole("link", { name: "Unsplash" })).toHaveCount(6);
     await expect(sec.getByRole("link", { name: "Les pièces de ce style, par budget" })).toHaveAttribute("href", `/boutique/?style=${s}#selection`);
   }
-  const src = await page.locator("#style-japandi img").first().getAttribute("srcset");
+  const src = await page.locator("#style-japandi img[src*='unsplash']").first().getAttribute("srcset");
   expect(src).toMatch(/images\.unsplash\.com.*2560w/);
+  // Images créées par IA : chaque meuble mène à de vrais produits.
+  await page.locator("#style-industriel").getByRole("button", { name: /Canapé Chesterfield en cuir : voir les produits/ }).click();
+  await expect(page.locator("#style-industriel").getByText("Canapé Chesterfield en cuir · en vente")).toBeVisible();
 });
 
 test("showroom : teinte sur mesure (matières sans limite)", async ({ page }) => {

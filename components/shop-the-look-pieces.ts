@@ -1,4 +1,4 @@
-import type { Famille } from "@/lib/catalogue";
+import type { PieceDansImage } from "@/lib/trouves-par-budget";
 
 /**
  * Les meubles du salon d'exemple de l'accueil (public/editorial/ia/salon-exemple.webp), à l'endroit exact des pastilles
@@ -6,7 +6,7 @@ import type { Famille } from "@/lib/catalogue";
  * Le premier mot de la recherche doit nommer le meuble (voir components/home/Hero.tsx).
  * « secondaire » : pastille trop proche d'une autre pour un doigt ; cliquable seulement sur grand écran.
  */
-export const PIECES: Array<{ id: string; label: string; famille: Famille; query: string; x: number; y: number; secondaire?: boolean }> = [
+export const PIECES: PieceDansImage[] = [
   { id: "canape", label: "Canapé courbe en bouclette", famille: "canape", query: "canapé courbe bouclette", x: 38.1, y: 61.2 },
   { id: "table", label: "Tables basses en marbre", famille: "table-basse", query: "table basse marbre ronde", x: 56.9, y: 70.2 },
   { id: "fauteuil", label: "Fauteuil vert à motif", famille: "fauteuil", query: "fauteuil vert", x: 83.9, y: 65.2 },
