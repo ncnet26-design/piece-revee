@@ -13,9 +13,9 @@ const NOM: Record<Gamme, string> = { petit: "Petit budget", moyen: "Budget moyen
 const prix = (p: ProduitCatalogue) => (p.p === null ? "Prix sur le site" : p.p.toLocaleString("fr-FR", { style: "currency", currency: p.c ?? "EUR", maximumFractionDigits: 0 }));
 
 const PROMESSES: Array<[string, string]> = [
-  ["Une photo suffit", "Prise au téléphone, telle que la pièce est aujourd'hui."],
-  ["Votre style, pas le nôtre", "Vos images Pinterest ou Instagram deviennent un moodboard."],
-  ["Tout est à acheter", "Chaque meuble mène à de vrais produits, du petit budget au haut de gamme."],
+  ["Plus d'erreur d'achat", "Vous voyez votre pièce refaite avant de dépenser un euro."],
+  ["Plus d'heures de recherche", "Chaque meuble de l'image est trouvé pour vous, en vente."],
+  ["Votre budget respecté", "Pour chaque meuble : un petit prix, un prix moyen, un haut de gamme."],
 ];
 
 /**
@@ -35,18 +35,18 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
   return (
     <section aria-labelledby="h-hero" className="grid items-center gap-10 pb-16 pt-6 sm:pt-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14 lg:pb-24">
       <div>
-        <p className="eyebrow">Architecte d'intérieur en ligne · tous budgets</p>
-        <h1 id="h-hero" className="mt-5 max-w-[13ch] text-[clamp(48px,6.4vw,96px)] leading-[.95]">Votre pièce refaite, <em>et tout est à acheter.</em></h1>
-        <p className="mt-6 max-w-[46ch] text-[17px] leading-relaxed text-muted">Envoyez une photo de votre pièce et des images qui vous plaisent : vous la voyez transformée, et chaque meuble mène à de vrais produits, du petit budget au haut de gamme.</p>
+        <p className="eyebrow">Décoration d'intérieur par IA · tous budgets</p>
+        <h1 id="h-hero" className="mt-5 max-w-[14ch] text-[clamp(46px,6vw,92px)] leading-[.95]">Voyez votre pièce refaite <em>avant d'acheter un seul meuble.</em></h1>
+        <p className="mt-6 max-w-[48ch] text-[17px] leading-relaxed text-muted">Une photo de votre pièce, quelques images qui vous plaisent : en quelques minutes, Pièce Rêvée vous montre votre pièce transformée et trouve chaque meuble en vente, du petit budget au haut de gamme.</p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <Link href="/transformer/" className="btn btn-primary btn-lg">Essayer gratuitement</Link>
           <Link href="/boutique/" className="btn btn-lg">Voir la boutique</Link>
         </div>
-        <p className="mt-4 text-[13px] text-muted">1 étude offerte · sans carte bancaire · résultat en moins d'une minute</p>
+        <p className="mt-4 text-[13px] text-muted">1 étude offerte · sans carte bancaire · vous achetez directement chez les enseignes</p>
         <ol className="mt-10 grid border-t border-line pt-8 list-none gap-4 p-0">
-          {PROMESSES.map(([t, d], k) => (
+          {PROMESSES.map(([t, d]) => (
             <li key={t} className="flex gap-4">
-              <span className="font-display text-[28px] leading-none text-[var(--bronze)]">{k + 1}</span>
+              <span aria-hidden className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-ink text-[12px] text-surface">✓</span>
               <span><span className="block text-[15px] font-semibold">{t}</span><span className="text-[14px] text-muted">{d}</span></span>
             </li>
           ))}

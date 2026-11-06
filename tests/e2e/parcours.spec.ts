@@ -18,8 +18,8 @@ test.beforeEach(async ({ page }) => {
 test("accueil : promesse, démonstration à toucher, sections éditoriales", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("tout est à acheter");
-  await expect(page.getByRole("link", { name: "Essayer gratuitement" })).toHaveAttribute("href", "/transformer/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("avant d'acheter");
+  await expect(page.getByRole("link", { name: "Essayer gratuitement" }).first()).toHaveAttribute("href", "/transformer/");
   await expect(page.getByRole("link", { name: "Transformer ma pièce" }).first()).toHaveAttribute("href", "/transformer/");
   const mobile = (page.viewportSize()?.width ?? 1200) < 1024;
   if (mobile) await expect(page.getByRole("navigation", { name: "Navigation mobile" }).getByRole("link")).toHaveText(["Transformer", "Inspirations", "Boutique", "Tarifs"]);
