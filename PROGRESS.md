@@ -136,6 +136,10 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - Recherche IA : la photo du meuble, découpée dans l'image transformée (512 px), est envoyée avec la description ; l'IA cherche ce qui lui ressemble vraiment. Coût : quelques centimes de plus au plus par recherche (une petite image).
 - Accueil : image d'en-tête fournie par le propriétaire ; ses 15 pastilles sont cliquables (10 sur mobile, trop proches sinon), chaque meuble montre un vrai produit par budget.
 
+## 6 novembre — Vrai avant / après
+- Deux images créées par l'IA du site (Gemini, 0,06 $ chacune, accord du propriétaire) à partir de l'image d'en-tête : « avant » (même pièce, vieux canapé en cuir, cartons, murs nus) et « après » (la même, sans les pastilles). Alignement vérifié (fenêtres, corniche, parquet continus).
+- Accueil : section « La même pièce, méconnaissable » avec curseur Avant/Après ; « Comment ça marche » raconte la même pièce (étape 1 = avant, étape 3 = après).
+
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
 5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.

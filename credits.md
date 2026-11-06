@@ -81,3 +81,5 @@ Les autres images du site (photos d'inspiration, images générées par IA, mod�
 ## Image d'en-tête de l'accueil
 
 `public/editorial/ia/salon-exemple*` : visuel fourni par le propriétaire du site (6 novembre 2026), signalé « IA » sur le site.
+
+`public/editorial/ia/salon-avant*` et `salon-apres*` : créées par l'IA du site (Gemini) à partir de l'image d'en-tête, le 6 novembre 2026 (2 images, 0,12 $), signalées « IA ».

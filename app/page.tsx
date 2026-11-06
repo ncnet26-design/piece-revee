@@ -98,17 +98,17 @@ export default function Home() {
                 <h3 className="text-[20px] font-semibold leading-tight">{t}</h3>
               </div>
               <div className="relative aspect-[4/3] overflow-hidden bg-soft">
-                {i === 0 && <PhotoUnsplash p={PHOTOS_STYLES.scandinave[0]!} alt="Exemple de photo de pièce, prise telle qu'elle est" sizes="(min-width:768px) 33vw, 100vw" className="aspect-[4/3]" credit={false} />}
+                {i === 0 && <><Photo src="/editorial/ia/salon-avant.webp" alt="Exemple : la pièce telle qu'elle est aujourd'hui" sizes="(min-width:768px) 33vw, 100vw" className="block aspect-[4/3] w-full object-cover" /><MentionIA /></>}
                 {i === 1 && (
                   <div className="grid size-full grid-cols-3 gap-1.5 p-3">
                     {[1, 2, 3].map((k) => <PhotoUnsplash key={k} p={PHOTOS_STYLES.japandi[k]!} alt="" sizes="12vw" className="aspect-[3/4]" credit={false} />)}
                     <div className="col-span-3 flex items-center gap-1.5">{["#E6DCCB", "#C9B79C", "#8A7052", "#5C4636", "#2F2A24"].map((c) => <span key={c} className="h-6 flex-1 rounded-[2px]" style={{ background: c }} />)}</div>
                   </div>
                 )}
-                {i === 2 && <><Photo src="/editorial/ia/salon-boucle-noyer.webp" alt="Exemple de pièce transformée" sizes="(min-width:768px) 33vw, 100vw" className="block aspect-[4/3] w-full object-cover" /><MentionIA /><span className="absolute left-3 top-3 flex gap-1">{["Petit budget", "Moyen", "Haut de gamme"].map((g) => <span key={g} className="rounded-full bg-white/90 px-2 py-0.5 text-[10.5px] font-semibold text-ink">{g}</span>)}</span></>}
+                {i === 2 && <><Photo src="/editorial/ia/salon-apres.webp" alt="Exemple : la même pièce refaite" sizes="(min-width:768px) 33vw, 100vw" className="block aspect-[4/3] w-full object-cover" /><MentionIA /><span className="absolute left-3 top-3 flex gap-1">{["Petit budget", "Moyen", "Haut de gamme"].map((g) => <span key={g} className="rounded-full bg-white/90 px-2 py-0.5 text-[10.5px] font-semibold text-ink">{g}</span>)}</span></>}
               </div>
               <p className="mt-4 text-[15px] text-muted">{d}</p>
-              {i < 2 && <p className="mt-2 text-[11px] text-muted">Photo{i === 1 ? "s" : ""} : {(i === 0 ? [PHOTOS_STYLES.scandinave[0]!] : [1, 2, 3].map((k) => PHOTOS_STYLES.japandi[k]!)).map((p, k) => <span key={p.ref}>{k ? ", " : ""}<a href={lienUnsplash(p.auteur_url)} target="_blank" rel="noopener noreferrer" className="underline">{p.auteur}</a></span>)} sur <a href={lienUnsplash("https://unsplash.com")} target="_blank" rel="noopener noreferrer" className="underline">Unsplash</a></p>}
+              {i === 1 && <p className="mt-2 text-[11px] text-muted">Photos : {([1, 2, 3].map((k) => PHOTOS_STYLES.japandi[k]!)).map((p, k) => <span key={p.ref}>{k ? ", " : ""}<a href={lienUnsplash(p.auteur_url)} target="_blank" rel="noopener noreferrer" className="underline">{p.auteur}</a></span>)} sur <a href={lienUnsplash("https://unsplash.com")} target="_blank" rel="noopener noreferrer" className="underline">Unsplash</a></p>}
             </li>
           ))}
         </ol>
@@ -133,22 +133,22 @@ export default function Home() {
         <p className="mx-auto mt-12 max-w-[52ch] text-center font-display text-[clamp(26px,3vw,38px)] leading-tight">Pièce Rêvée règle les trois, <em>en une seule étude.</em></p>
       </section>
 
-      {/* 5. Démonstration : on change une matière, le reste ne bouge pas */}
-      <section aria-labelledby="h-perso" className="grid items-center gap-10 border-t border-line py-20 sm:py-28 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
+      {/* 5. Démonstration : la même pièce, avant et après */}
+      <section aria-labelledby="h-perso" className="grid items-center gap-10 border-t border-line py-20 sm:py-28 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
         <div>
-          <p className="eyebrow">Ajuster en un geste</p>
-          <h2 id="h-perso" className="mt-4 text-[clamp(36px,4.4vw,60px)]">Même pièce, <em>autre caractère.</em></h2>
-          <p className="mt-6 max-w-[40ch] text-[15px] text-muted">Bouclé et noyer, ou velours vert et chêne fumé : changez une matière, le reste de la pièce ne bouge pas. Faites glisser pour comparer.</p>
-          <Link href="/transformer/" className="btn mt-8">Essayer avec ma pièce</Link>
+          <p className="eyebrow">Avant / après</p>
+          <h2 id="h-perso" className="mt-4 text-[clamp(36px,4.4vw,60px)]">La même pièce, <em>méconnaissable.</em></h2>
+          <p className="mt-6 max-w-[40ch] text-[16px] text-muted">À gauche, la pièce telle qu'elle est. À droite, la même pièce refaite par notre IA : mêmes murs, mêmes fenêtres, même parquet. Et chaque meuble que vous voyez est en vente. Faites glisser pour comparer.</p>
+          <Link href="/transformer/" className="btn btn-primary btn-lg mt-8">Transformer ma pièce →</Link>
         </div>
         <div>
           <div className="relative">
-            <BeforeAfter ratio="16 / 9" labelBefore="Bouclé et noyer" labelAfter="Velours et chêne fumé"
-              before={<Photo src="/editorial/ia/salon-boucle-noyer.webp" sizes="(min-width:1024px) 60vw, 100vw" alt="Salon : canapé bouclé crème, buffet cannelé en noyer" />}
-              after={<Photo src="/editorial/ia/salon-velours-chene.webp" sizes="(min-width:1024px) 60vw, 100vw" alt="Même salon : canapé en velours vert, buffet en chêne fumé" />} />
+            <BeforeAfter ratio="2528 / 1696" labelBefore="Avant" labelAfter="Après"
+              before={<Photo src="/editorial/ia/salon-avant.webp" sizes="(min-width:1024px) 62vw, 100vw" alt="Avant : salon peu meublé, vieux canapé en cuir, table en pin, cartons, murs nus" />}
+              after={<Photo src="/editorial/ia/salon-apres.webp" sizes="(min-width:1024px) 62vw, 100vw" alt="Après : même salon, canapé courbe en bouclette, tables basses en marbre, fauteuil vert, tapis rond rayé, grand tableau" />} />
             <MentionIA className="bottom-2.5 left-2.5" />
           </div>
-          <p className="mt-3 text-[12px] text-muted">Même pièce, seules deux matières changent.</p>
+          <p className="mt-3 text-[12px] text-muted">Les deux images sont créées par notre IA à partir de la même pièce.</p>
         </div>
       </section>
 
