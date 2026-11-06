@@ -584,7 +584,7 @@ async function inspect(url) {
     return null;
   }
 }
-async function rechercher(env, q, label, pays = "FR", photo) {
+async function rechercher(env, q, label, pays = "FR", photo, flux) {
   if (!env.GEMINI_API_KEY) throw new ProviderError("La recherche sur internet n'est pas configur\xE9e (cl\xE9 manquante).", false);
   const appel = (model) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST",
@@ -632,11 +632,13 @@ async function rechercher(env, q, label, pays = "FR", photo) {
     return true;
   }).slice(0, 12);
   const now = (/* @__PURE__ */ new Date()).toISOString();
+  const suggestions = meta?.searchEntryPoint?.renderedContent ?? null, requetes = (meta?.webSearchQueries ?? []).slice(0, 5);
+  flux?.liens?.({ produits: unique.map((p) => ({ title: p.title || slugTitle(p.url) || `Mod\xE8le chez ${p.merchant || host(p.url)}`, url: p.url, merchant: p.merchant || host(p.url), price: null, currency: null, availability: null, brand: null, checkedAt: null, source: "recherche", image: null })).filter((t) => t.title.length > 2).slice(0, 12), suggestions, requetes });
   const limite = new Promise((ok) => setTimeout(() => ok(null), DELAI_PAGES));
   const produits = (await Promise.all(unique.map(async (p) => {
     const d = await Promise.race([inspect(p.url), limite]);
     const title = d?.name || p.title || slugTitle(p.url) || `Mod\xE8le chez ${p.merchant || host(p.url)}`;
-    return {
+    const t = {
       title,
       url: p.url,
       merchant: p.merchant || host(p.url),
@@ -655,10 +657,12 @@ async function rechercher(env, q, label, pays = "FR", photo) {
         }
       })()
     };
+    if (d) flux?.fiche?.(t);
+    return t;
   }))).filter((x) => x !== null && x.title.length > 2);
   produits.sort((a, b) => a.source === b.source ? (a.price ?? 1e9) - (b.price ?? 1e9) : a.source === "page" ? -1 : 1);
   const etapes = { listes: listed.length, sources: chunks.length, redirections: resolved.filter((p) => !isRedirect(p.url)).length, candidats: unique.length, pagesLues: produits.filter((p) => p.source === "page").length, exemples: unique.slice(0, 3).map((p) => host(p.url)) };
-  return { produits: produits.slice(0, 9), suggestions: meta?.searchEntryPoint?.renderedContent ?? null, requetes: (meta?.webSearchQueries ?? []).slice(0, 5), etapes };
+  return { produits: produits.slice(0, 9), suggestions, requetes, etapes };
 }
 
 // workers/ia/src/jobs.ts
@@ -754,7 +758,7 @@ async function finish(env, job, image, mime, costUsd) {
   }
 }
 var index_default = {
-  async fetch(request, env, _ctx) {
+  async fetch(request, env, ctx) {
     const origin = request.headers.get("Origin") || "";
     const allowed = isAllowedOrigin(origin);
     const cors = { "Access-Control-Allow-Origin": allowed ? origin : ALLOWED_ORIGINS[0], "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Max-Age": "86400", Vary: "Origin" };
@@ -834,7 +838,29 @@ var index_default = {
       if (refusal) return json({ erreur: refusal }, 429);
       try {
         const m2 = typeof b.photo === "string" && b.photo.length < 4e5 ? /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(b.photo) : null;
-        const r = await rechercher(env, q, label, b.pays === "EU" ? "EU" : "FR", m2 ? { mime: m2[1], b64: m2[2] } : void 0);
+        const pays = b.pays === "EU" ? "EU" : "FR", photo = m2 ? { mime: m2[1], b64: m2[2] } : void 0;
+        if (b.flux === true) {
+          const { readable, writable } = new TransformStream();
+          const w = writable.getWriter(), enc = new TextEncoder();
+          const ligne = (o) => w.write(enc.encode(`${JSON.stringify(o)}
+`)).catch(() => {
+          });
+          const travail = (async () => {
+            try {
+              const fin = await rechercher(env, q, label, pays, photo, { liens: (x) => void ligne({ type: "liens", ...x }), fiche: (t) => void ligne({ type: "fiche", produit: t }) });
+              await settle(env, visitor, ipHash, cost);
+              await ligne({ type: "fin", ...fin });
+            } catch (e) {
+              await ligne({ type: "erreur", erreur: e instanceof ProviderError ? e.message : "Recherche impossible." });
+            } finally {
+              await w.close().catch(() => {
+              });
+            }
+          })();
+          ctx?.waitUntil?.(travail);
+          return new Response(readable, { headers: { ...cors, "Content-Type": "application/x-ndjson; charset=utf-8", "Cache-Control": "no-store" } });
+        }
+        const r = await rechercher(env, q, label, pays, photo);
         await settle(env, visitor, ipHash, cost);
         return json(r);
       } catch (e) {

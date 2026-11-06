@@ -90,13 +90,48 @@ export interface RechercheEnLigne { produits: Trouve[]; suggestions: string | nu
 const found = new Map<string, RechercheEnLigne>();
 /** Recherche de produits en vente sur internet (mémorisée pendant la visite, pour ne pas payer deux fois la même recherche). */
 const pending = new Map<string, Promise<Result<RechercheEnLigne>>>();
-export async function searchOnline(query: string, label: string, photo?: string): Promise<Result<RechercheEnLigne>> {
+const suiveurs = new Map<string, Set<(r: RechercheEnLigne) => void>>();
+/**
+ * Recherche de produits en ligne, affichée au fil de l'eau : `progres` reçoit les produits dès que l'IA les trouve,
+ * puis à chaque prix relevé. Résultat mémorisé pendant la visite (aucune recherche payée deux fois).
+ */
+export async function searchOnline(query: string, label: string, photo?: string, progres?: (r: RechercheEnLigne) => void): Promise<Result<RechercheEnLigne>> {
   const k = query.toLowerCase();
   const hit = found.get(k); if (hit) return { ok: true, value: hit };
+  if (progres) (suiveurs.get(k) ?? suiveurs.set(k, new Set()).get(k)!).add(progres);
   // Une recherche déjà en cours pour le même élément est partagée (pas de second appel payant).
   const enCours = pending.get(k); if (enCours) return enCours;
-  const p = call<RechercheEnLigne>("/v2/recherche", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query, label, visiteur: visitorId(), ...(photo ? { photo } : {}) }) })
-    .then((r) => { if (r.ok) found.set(k, r.value); pending.delete(k); return r; });
+  const diffuser = (r: RechercheEnLigne) => { for (const f of suiveurs.get(k) ?? []) f(r); };
+  const p = (async (): Promise<Result<RechercheEnLigne>> => {
+    try {
+      const r = await fetch(`${IA_URL}/v2/recherche`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query, label, visiteur: visitorId(), flux: true, ...(photo ? { photo } : {}) }) });
+      if (!r.ok || !r.body || !(r.headers.get("content-type") ?? "").includes("ndjson")) {
+        const d = await r.json().catch(() => null) as (RechercheEnLigne & { erreur?: string }) | null;
+        return r.ok && d ? { ok: true, value: d } : { ok: false, message: d?.erreur ?? "La recherche en ligne n'a pas abouti." };
+      }
+      const lecteur = r.body.pipeThrough(new TextDecoderStream()).getReader();
+      let tampon = "", courant: RechercheEnLigne = { produits: [], suggestions: null, requetes: [] };
+      for (;;) {
+        const { value, done } = await lecteur.read();
+        if (done) break;
+        tampon += value;
+        let i: number;
+        while ((i = tampon.indexOf("\n")) >= 0) {
+          const l = tampon.slice(0, i); tampon = tampon.slice(i + 1);
+          if (!l.trim()) continue;
+          const m = JSON.parse(l) as { type: string; erreur?: string; produit?: Trouve } & Partial<RechercheEnLigne>;
+          if (m.type === "erreur") return { ok: false, message: m.erreur ?? "Recherche impossible." };
+          if (m.type === "liens") courant = { produits: m.produits ?? [], suggestions: m.suggestions ?? null, requetes: m.requetes ?? [] };
+          if (m.type === "fiche" && m.produit) courant = { ...courant, produits: courant.produits.map((x) => (x.url === m.produit!.url ? m.produit! : x)) };
+          if (m.type === "fin") return { ok: true, value: { produits: m.produits ?? [], suggestions: m.suggestions ?? null, requetes: m.requetes ?? [] } };
+          diffuser(courant);
+        }
+      }
+      return courant.produits.length ? { ok: true, value: courant } : { ok: false, message: "La recherche en ligne a été interrompue." };
+    } catch {
+      return { ok: false, message: "Le service de recherche est injoignable. Vérifiez votre connexion et réessayez." };
+    }
+  })().then((r) => { if (r.ok) found.set(k, r.value); pending.delete(k); suiveurs.delete(k); return r; });
   pending.set(k, p);
   return p;
 }

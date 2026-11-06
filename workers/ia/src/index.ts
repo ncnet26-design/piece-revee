@@ -47,7 +47,7 @@ async function finish(env: Env, job: Job, image: Uint8Array, mime: string, costU
 }
 
 export default {
-  async fetch(request: Request, env: Env, _ctx: Ctx): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: Ctx): Promise<Response> {
     const origin = request.headers.get("Origin") || "";
     const allowed = isAllowedOrigin(origin);
     const cors = { "Access-Control-Allow-Origin": allowed ? origin : ALLOWED_ORIGINS[0]!, "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Max-Age": "86400", Vary: "Origin" };
@@ -126,7 +126,7 @@ export default {
     }
 
     if (request.method === "POST" && path === "/v2/recherche") {
-      const b = await request.json().catch(() => null) as { query?: unknown; label?: unknown; visiteur?: unknown; pays?: unknown; photo?: unknown } | null;
+      const b = await request.json().catch(() => null) as { query?: unknown; label?: unknown; visiteur?: unknown; pays?: unknown; photo?: unknown; flux?: unknown } | null;
       const q = typeof b?.query === "string" ? b.query.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 160) : "";
       if (!b || q.length < 3 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Recherche incomplète." }, 400);
       const label = typeof b.label === "string" ? b.label.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 220) : q;
@@ -136,7 +136,25 @@ export default {
       try {
         // Photo du meuble : petite image JPEG/PNG/WebP en base64 (300 Ko au plus), sinon ignorée.
         const m = typeof b.photo === "string" && b.photo.length < 400_000 ? /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(b.photo) : null;
-        const r = await rechercher(env, q, label, b.pays === "EU" ? "EU" : "FR", m ? { mime: m[1]!, b64: m[2]! } : undefined);
+        const pays = b.pays === "EU" ? "EU" : "FR", photo = m ? { mime: m[1]!, b64: m[2]! } : undefined;
+        // Mode « flux » : une ligne JSON par étape (liens trouvés, puis chaque fiche lue, puis le résultat final).
+        if (b.flux === true) {
+          const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
+          const w = writable.getWriter(), enc = new TextEncoder();
+          const ligne = (o: unknown) => w.write(enc.encode(`${JSON.stringify(o)}\n`)).catch(() => {});
+          const travail = (async () => {
+            try {
+              const fin = await rechercher(env, q, label, pays, photo, { liens: (x) => void ligne({ type: "liens", ...x }), fiche: (t) => void ligne({ type: "fiche", produit: t }) });
+              await settle(env, visitor, ipHash, cost);
+              await ligne({ type: "fin", ...fin });
+            } catch (e) {
+              await ligne({ type: "erreur", erreur: e instanceof ProviderError ? e.message : "Recherche impossible." });
+            } finally { await w.close().catch(() => {}); }
+          })();
+          ctx?.waitUntil?.(travail);
+          return new Response(readable, { headers: { ...cors, "Content-Type": "application/x-ndjson; charset=utf-8", "Cache-Control": "no-store" } });
+        }
+        const r = await rechercher(env, q, label, pays, photo);
         await settle(env, visitor, ipHash, cost);
         return json(r);
       } catch (e) {

@@ -24,13 +24,16 @@ export function EnLigne({ query, label, forObject, photo }: { query: string; lab
   const project = useProject();
   const inList = (u: string) => project.list.some((x) => x.productId === u);
   const [state, setState] = useState<{ q: string; data: RechercheEnLigne | null; error: string | null } | null>(null);
+  const [partiel, setPartiel] = useState<{ q: string; data: RechercheEnLigne } | null>(null);
   useEffect(() => {
     let alive = true;
-    void searchOnline(query, label, photo).then((r) => { if (alive) setState({ q: query, data: r.ok ? r.value : null, error: r.ok ? null : r.message }); });
+    void searchOnline(query, label, photo, (r) => { if (alive) setPartiel({ q: query, data: r }); })
+      .then((r) => { if (alive) setState({ q: query, data: r.ok ? r.value : null, error: r.ok ? null : r.message }); });
     return () => { alive = false; };
   }, [query, label, photo]);
   const loading = !state || state.q !== query;
-  const list = state?.data?.produits ?? [];
+  // Pendant la recherche : les produits déjà trouvés s'affichent, les prix arrivent au fil de l'eau.
+  const list = (loading ? (partiel?.q === query ? partiel.data.produits : []) : state?.data?.produits) ?? [];
 
   return (
     <section aria-labelledby="h-en-ligne" className="mt-6 border-t border-line pt-5">
@@ -39,7 +42,12 @@ export function EnLigne({ query, label, forObject, photo }: { query: string; lab
         {!loading && <span className="text-[11.5px] text-muted" aria-live="polite">{list.length} résultat{list.length > 1 ? "s" : ""}</span>}
       </div>
       <p className="mt-1 text-[12px] text-muted">Recherche : « {query} »</p>
-      {loading && <p role="status" className="studio-progress mt-3 rounded-[2px] bg-soft px-3 py-2.5 text-[13px]">L'IA cherche ce modèle chez les vendeurs en ligne et relève les prix sur leurs pages…</p>}
+      {loading && <p role="status" className="studio-progress mt-3 rounded-[2px] bg-soft px-3 py-2.5 text-[13px]">{list.length ? `${list.length} modèles trouvés · relevé des prix en cours…` : "L'IA cherche ce modèle chez les vendeurs en ligne…"}</p>}
+      {loading && !list.length && (
+        <ul aria-hidden className="mt-3 grid list-none gap-2 p-0">
+          {[0, 1, 2].map((k) => <li key={k} className="studio-shimmer h-[76px] rounded-[2px] bg-soft" style={{ animationDelay: `${k * 0.15}s` }} />)}
+        </ul>
+      )}
       {!loading && state?.error && <p role="alert" className="mt-3 rounded-[2px] bg-[#FBEDE6] px-3 py-2 text-[12.5px] text-[#8A3B17]">{state.error}</p>}
       {!loading && !state?.error && list.length === 0 && <p className="mt-3 text-[12.5px] text-muted">Aucune page produit trouvée pour cet élément. Essayez Google Lens ci-dessous.</p>}
       {list.length > 0 && (["Économique", "Intermédiaire", "Premium", null] as const).map((g) => {
@@ -56,7 +64,7 @@ export function EnLigne({ query, label, forObject, photo }: { query: string; lab
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[10.5px] font-semibold uppercase tracking-[.1em] text-muted">{p.merchant}</p>
                     <p className="line-clamp-2 text-[13px] font-medium leading-snug">{p.title}</p>
-                    <p className="mt-0.5 text-[13px] font-semibold tabular-nums">{price ?? <span className="font-normal text-muted">Prix sur le site</span>}{p.availability && AV[p.availability] ? <span className="ml-2 font-normal text-muted">· {AV[p.availability]}</span> : null}</p>
+                    <p className="mt-0.5 text-[13px] font-semibold tabular-nums">{price ?? <span className={`font-normal text-muted ${loading && !p.checkedAt ? "studio-shimmer rounded-[2px] px-1" : ""}`}>{loading && !p.checkedAt ? "Prix en cours…" : "Prix sur le site"}</span>}{p.availability && AV[p.availability] ? <span className="ml-2 font-normal text-muted">· {AV[p.availability]}</span> : null}</p>
                     <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[12px]">
                       <a className="font-semibold underline underline-offset-2" href={p.url} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.merchant}<span className="sr-only"> (nouvel onglet)</span></a>
                       <button type="button" className="text-muted underline underline-offset-2 hover:text-ink" aria-pressed={inList(p.url)} onClick={() => toggleExternal({ title: p.title, url: p.url, merchant: p.merchant, price: p.price, currency: p.currency, checkedAt: p.checkedAt, source: "internet" }, forObject)}>{inList(p.url) ? "✓ Dans ma pièce" : "Ajouter à ma pièce"}</button>

@@ -67,7 +67,10 @@ async function inspect(url: string): Promise<ReturnType<typeof parseProduct>> {
 /** Photo du meuble découpée dans l'image (facultative) : l'IA cherche ce qui lui ressemble vraiment. */
 export interface PhotoMeuble { mime: string; b64: string }
 
-export async function rechercher(env: Env, q: string, label: string, pays = "FR", photo?: PhotoMeuble): Promise<Recherche> {
+/** Suivi en direct : les liens dès que l'IA les trouve, puis chaque fiche dès que sa page est lue. */
+export interface Flux { liens?: (r: Recherche) => void; fiche?: (t: Trouve) => void }
+
+export async function rechercher(env: Env, q: string, label: string, pays = "FR", photo?: PhotoMeuble, flux?: Flux): Promise<Recherche> {
   if (!env.GEMINI_API_KEY) throw new ProviderError("La recherche sur internet n'est pas configurée (clé manquante).", false);
   const appel = (model: string) => fetchRetry(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY! },
@@ -103,21 +106,26 @@ export async function rechercher(env: Env, q: string, label: string, pays = "FR"
   const seen = new Set<string>(), unique = candidates.filter((p) => { const k = p.url.split("#")[0]!.split("?")[0]!; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 12);
 
   const now = new Date().toISOString();
+  const suggestions = meta?.searchEntryPoint?.renderedContent ?? null, requetes = (meta?.webSearchQueries ?? []).slice(0, 5);
+  // Affichage immédiat : les produits trouvés, sans prix, pendant que les pages sont lues.
+  flux?.liens?.({ produits: unique.map((p) => ({ title: p.title || slugTitle(p.url) || `Modèle chez ${p.merchant || host(p.url)}`, url: p.url, merchant: p.merchant || host(p.url), price: null, currency: null, availability: null, brand: null, checkedAt: null, source: "recherche" as const, image: null })).filter((t) => t.title.length > 2).slice(0, 12), suggestions, requetes });
   const limite = new Promise<null>((ok) => setTimeout(() => ok(null), DELAI_PAGES));
   const produits = (await Promise.all(unique.map(async (p): Promise<Trouve | null> => {
     const d = await Promise.race([inspect(p.url), limite]);
     // Page non lue à temps : le lien trouvé par Google reste montré, sans prix.
     const title = d?.name || p.title || slugTitle(p.url) || `Modèle chez ${p.merchant || host(p.url)}`;
-    return {
+    const t: Trouve = {
       title, url: p.url, merchant: p.merchant || host(p.url),
       price: d?.price ?? null, currency: d?.price ? d.currency ?? "EUR" : null, availability: d?.availability ?? null, brand: d?.brand ?? null,
       checkedAt: d ? now : null, source: d ? "page" : "recherche",
       image: (() => { try { const x = d?.image ? new URL(d.image, p.url) : null; return x && x.protocol === "https:" ? x.href : null; } catch { return null; } })(),
     };
+    if (d) flux?.fiche?.(t);
+    return t;
   }))).filter((x): x is Trouve => x !== null && x.title.length > 2);
   // Pages produits vérifiées d'abord, puis du moins cher au plus cher.
   produits.sort((a, b) => (a.source === b.source ? (a.price ?? 1e9) - (b.price ?? 1e9) : a.source === "page" ? -1 : 1));
   // Compteurs (aucune donnée personnelle) : aident à comprendre une recherche vide.
   const etapes = { listes: listed.length, sources: chunks.length, redirections: resolved.filter((p) => !isRedirect(p.url)).length, candidats: unique.length, pagesLues: produits.filter((p) => p.source === "page").length, exemples: unique.slice(0, 3).map((p) => host(p.url)) };
-  return { produits: produits.slice(0, 9), suggestions: meta?.searchEntryPoint?.renderedContent ?? null, requetes: (meta?.webSearchQueries ?? []).slice(0, 5), etapes };
+  return { produits: produits.slice(0, 9), suggestions, requetes, etapes };
 }

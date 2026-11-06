@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { chercher, FAMILLES, norm, selection, type Famille, type IndexCatalogue, type ProduitCatalogue } from "@/lib/catalogue";
 import { toggleExternal, useProject } from "@/lib/studio/project";
 import { ProduitImage } from "@/components/ProduitImage";
@@ -32,6 +32,17 @@ export function Boutique() {
   const [items, setItems] = useState<P[] | null>(null);
   const [n, setN] = useState(PAGE);
   const project = useProject();
+  const pret = index !== null;
+  // Données chargées quand la boutique approche de l'écran (pas au chargement de la page).
+  const racine = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = racine.current;
+    if (!el || typeof IntersectionObserver === "undefined") { setTimeout(() => setVisible(true), 0); return; }
+    const o = new IntersectionObserver((e) => { if (e.some((x) => x.isIntersecting)) { setVisible(true); o.disconnect(); } }, { rootMargin: "800px" });
+    o.observe(el);
+    return () => o.disconnect();
+  }, [pret]);
   const inList = (u: string) => project.list.some((x) => x.productId === u);
 
   useEffect(() => {
@@ -44,11 +55,11 @@ export function Boutique() {
   }, []);
   const familles = useMemo(() => (Object.keys(FAMILLES) as Famille[]).filter((f) => (index?.familles[f] ?? 0) >= 10), [index]);
   useEffect(() => {
-    if (!index) return;
+    if (!index || !visible) return;
     let alive = true;
     void Promise.all((fam === "tout" ? familles : [fam]).map(load)).then((ls) => { if (alive) { setItems(ls.flat()); setN(PAGE); } });
     return () => { alive = false; };
-  }, [fam, familles, index]);
+  }, [fam, familles, index, visible]);
 
   const vendeurs = useMemo(() => [...new Set((items ?? []).map((p) => p.m))].sort((a, b) => a.localeCompare(b, "fr")), [items]);
   const list = useMemo(() => {
@@ -62,11 +73,11 @@ export function Boutique() {
     return l;
   }, [items, gamme, vendeur, q, tri]);
 
-  if (index === null) return <div className="mt-10 min-h-[60vh]" aria-busy="true"><p className="text-center text-muted">Chargement de la boutique…</p></div>;
+  if (index === null) return <div ref={racine} className="mt-10 min-h-[60vh]" aria-busy="true"><p className="text-center text-muted">Chargement de la boutique…</p></div>;
   const reset = () => { setN(PAGE); };
 
   return (
-    <div>
+    <div ref={racine}>
       <nav aria-label="Familles" className="flex flex-wrap justify-center gap-1.5">
         <button type="button" className="chip" aria-pressed={fam === "tout"} onClick={() => { setFam("tout"); reset(); }}>Tout</button>
         {familles.map((f) => <button key={f} type="button" className="chip" aria-pressed={fam === f} onClick={() => { setFam(f); reset(); }}>{FAMILLES[f]}</button>)}

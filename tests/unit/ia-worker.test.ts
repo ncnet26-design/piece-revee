@@ -233,6 +233,21 @@ describe("recherche de produits sur internet", () => {
     expect(sent.tools).toEqual([{ google_search: {} }]);
   });
 
+  it("mode flux : envoie les liens dès qu'ils sont trouvés, puis chaque fiche, puis la fin", async () => {
+    fetchMock.mockImplementation(async (url: string) => {
+      if (url.includes("generativelanguage")) return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: '{"products":[{"title":"Vase grès","url":"https://boutique-a.fr/vase-gres","merchant":"Boutique A"}]}' }] }, groundingMetadata: { groundingChunks: [{ web: { uri: "https://boutique-a.fr/vase-gres", title: "boutique-a.fr" } }] } }] }), { status: 200 });
+      if (url.includes("boutique-a.fr")) return new Response(`<script type="application/ld+json">{"@type":"Product","name":"Vase en grès","offers":{"price":45,"priceCurrency":"EUR"}}</script>`, { status: 200, headers: { "content-type": "text/html" } });
+      return new Response("", { status: 404 });
+    });
+    const r = await call(env, "/v2/recherche", { method: "POST", body: JSON.stringify({ query: "vase en grès", label: "Vase", visiteur: "visiteur-test-03", flux: true }) });
+    expect(r.headers.get("content-type")).toContain("ndjson");
+    const lignes = (await r.text()).trim().split("\n").map((l) => JSON.parse(l) as { type: string; produits?: Array<{ price: number | null }>; produit?: { price: number } });
+    expect(lignes.map((l) => l.type)).toEqual(["liens", "fiche", "fin"]);
+    expect(lignes[0]!.produits![0]!.price).toBeNull();
+    expect(lignes[1]!.produit!.price).toBe(45);
+    expect(lignes[2]!.produits![0]!.price).toBe(45);
+  });
+
   it("montre quand même un lien trouvé par Google si sa page est trop lente à lire", async () => {
     fetchMock.mockImplementation(async (url: string) => {
       if (url.includes("generativelanguage")) return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: '{"products":[{"title":"","url":"https://lente.fr/p/123","merchant":""}]}' }] }, groundingMetadata: { groundingChunks: [{ web: { uri: "https://lente.fr/p/123", title: "lente.fr" } }] } }] }), { status: 200 });
