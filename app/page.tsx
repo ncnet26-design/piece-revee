@@ -1,16 +1,14 @@
 import Link from "next/link";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { Hero } from "@/components/home/Hero";
-import { ChoixPieceStyle, type Apercu } from "@/components/home/ChoixPieceStyle";
 import catalogue from "@/data/catalogue.json";
 import indexCatalogue from "@/public/boutique/index.json";
 import { MarquesDefilantes } from "@/components/home/MarquesDefilantes";
 import { OffreTeaser } from "@/components/OffreTeaser";
 import { MentionIA } from "@/components/MentionIA";
-import { GAMMES, NOM_STYLE, PIECES, STYLES as STYLES_CATALOGUE, type ProduitAchetable } from "@/lib/catalogue-achetable";
+import { NOM_STYLE, STYLES as STYLES_CATALOGUE, type ProduitAchetable } from "@/lib/catalogue-achetable";
 import { meta } from "@/lib/seo";
 import { lienUnsplash, PHOTOS_STYLES } from "@/lib/inspirations-photos";
-import selection from "@/public/boutique/index.json";
 import { PLANS } from "@core/plans.ts";
 import { formatEuros } from "@core/money.ts";
 import { JsonLd } from "@/components/JsonLd";
@@ -22,33 +20,8 @@ export const metadata = meta({ title: "Pièce Rêvée · Voyez votre pièce refa
 /** Enseignes présentes sur le site : celles du catalogue vérifié et celles relevées par le robot. */
 const MARQUES = [...new Set([...(catalogue as { produits: ProduitAchetable[] }).produits.map((p) => p.enseigne), ...Object.keys((indexCatalogue as { vendeurs: Record<string, number> }).vendeurs)])]
   .sort((a, b) => a.localeCompare(b, "fr"));
-/** Aperçu du catalogue vérifié par pièce et style : 3 pièces par gamme (calculé à la publication). */
-const PRIORITE = ["canape", "lit", "table-manger", "fauteuil", "table-basse", "chaise", "rangement", "tapis", "luminaire", "lampadaire", "salle-de-bain", "robinetterie", "rideau", "deco"];
-const APERCU: Apercu = (() => {
-  const l = (catalogue as { produits: ProduitAchetable[] }).produits, out: Apercu = {};
-  for (const p of PIECES) for (const st of STYLES_CATALOGUE) {
-    const k = `${p}|${st}`; out[k] = {};
-    for (const g of GAMMES) {
-      const c = l.filter((x) => x.piece.includes(p) && x.styles.includes(st) && x.gamme === g).sort((a, b) => a.prix - b.prix);
-      // Les grandes pièces d'abord (canapé, lit, table…), une par type de meuble.
-      const rang = (f: string) => { const i = PRIORITE.indexOf(f); return i < 0 ? 99 : i; };
-      const vus = new Set<string>(), ex = [...c].sort((a, b) => rang(a.famille) - rang(b.famille)).filter((x) => !vus.has(x.famille) && vus.add(x.famille)).slice(0, 3);
-      if (c.length) out[k]![g] = { n: c.length, min: c[0]!.prix, exemples: ex.map((x) => ({ nom: x.nom, enseigne: x.enseigne, prix: x.prix, url: x.url })) };
-    }
-  }
-  return out;
-})();
-
 const PASS = PLANS.find((p) => p.id === "pass")!;
-const SEL = selection as { total: number; vendeurs: Record<string, number> };
-const VERIFIES = (catalogue as { produits: ProduitAchetable[] }).produits.length;
 
-/** Ce qui coince quand on refait une pièce : les trois problèmes que le service règle. */
-const PROBLEMES: Array<[string, string]> = [
-  ["On n'arrive pas à se projeter", "On hésite entre dix canapés sans savoir lequel ira avec le sol, les murs, la lumière. Et on se trompe une fois livré."],
-  ["On passe des soirées à chercher", "Pinterest d'un côté, vingt sites de l'autre : retrouver le meuble vu en photo, au bon prix, prend des heures."],
-  ["Le budget dérape", "Un décorateur coûte cher, et sans plan clair les achats s'additionnent sans que l'ensemble tienne."],
-];
 
 const ETAPES: Array<[string, string]> = [
   ["Prenez votre pièce en photo", "Avec votre téléphone, telle qu'elle est aujourd'hui."],
@@ -115,24 +88,6 @@ export default function Home() {
         <div className="mt-14 text-center"><Link href="/transformer/" className="btn btn-primary btn-lg">Transformer ma pièce →</Link></div>
       </section>
 
-      {/* 4. Le problème */}
-      <section aria-labelledby="h-probleme" className="border-t border-line py-20 sm:py-28">
-        <div className="mx-auto max-w-[760px] text-center">
-          <p className="eyebrow">Le problème</p>
-          <h2 id="h-probleme" className="mt-4 text-[clamp(36px,4.6vw,64px)]">Refaire une pièce, <em>c'est trois casse-têtes.</em></h2>
-        </div>
-        <ul className="mt-14 grid list-none gap-px bg-line p-0 md:grid-cols-3">
-          {PROBLEMES.map(([t, d], i) => (
-            <li key={t} className="bg-bg p-7">
-              <span className="font-display text-[40px] leading-none text-[var(--bronze)]">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="mt-5 text-[19px] font-semibold">{t}</h3>
-              <p className="mt-2 text-[15px] text-muted">{d}</p>
-            </li>
-          ))}
-        </ul>
-        <p className="mx-auto mt-12 max-w-[52ch] text-center font-display text-[clamp(26px,3vw,38px)] leading-tight">Pièce Rêvée règle les trois, <em>en une seule étude.</em></p>
-      </section>
-
       {/* 5. Démonstration : la même pièce, avant et après */}
       <section aria-labelledby="h-perso" className="grid items-center gap-10 border-t border-line py-20 sm:py-28 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
         <div>
@@ -180,34 +135,6 @@ export default function Home() {
             </tbody>
           </table>
         </div>
-      </section>
-
-      {/* 7. Preuves vérifiables (aucun faux avis, aucun faux compteur) */}
-      <section aria-labelledby="h-preuves" className="border-t border-line py-20 sm:py-24">
-        <h2 id="h-preuves" className="sr-only">En chiffres</h2>
-        <ul className="grid list-none gap-px bg-line p-0 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            [SEL.total.toLocaleString("fr-FR"), "références en boutique, du petit prix au haut de gamme"],
-            [String(Object.keys(SEL.vendeurs).length), "enseignes, et l'IA cherche aussi partout ailleurs"],
-            ["Chaque nuit", "prix et disponibilités revérifiés sur les pages des enseignes"],
-            ["0 €", "payé par les marques pour être mises en avant"],
-          ].map(([v, d]) => (
-            <li key={d} className="bg-bg p-7 text-center">
-              <p className="font-display text-[clamp(40px,4.4vw,60px)] leading-none">{v}</p>
-              <p className="mx-auto mt-3 max-w-[26ch] text-[14px] text-muted">{d}</p>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-6 text-center text-[12.5px] text-muted">Dont {VERIFIES} pièces vérifiées une à une, classées par pièce, style et budget.</p>
-      </section>
-
-      {/* 8. Essayer sans photo : pièce + style → produits par budget */}
-      <section aria-labelledby="h-choix" className="border-t border-line py-20 sm:py-28">
-        <div className="mx-auto max-w-[760px] text-center">
-          <p className="eyebrow">Essayez tout de suite, sans photo</p>
-          <h2 id="h-choix" className="mt-4 text-[clamp(36px,4.6vw,64px)]">Votre pièce, votre style, <em>votre budget.</em></h2>
-        </div>
-        <div className="mt-12"><ChoixPieceStyle apercu={APERCU} /></div>
       </section>
 
       {/* 9. Styles en vraies photos */}
