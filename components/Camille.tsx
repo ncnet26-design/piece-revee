@@ -28,7 +28,10 @@ export function Camille() {
     let seen: string[] = [];
     try { if (localStorage.getItem("pr_camille_guide") === "off") return; seen = JSON.parse(localStorage.getItem("pr_camille_vu") ?? "[]") as string[]; } catch { return; }
     if (seen.includes(guide.key)) return;
-    const t = setTimeout(() => setBubble(guide.key), 1800);
+    // Sur l'accueil, la bulle ne doit jamais cacher le bouton principal : pas sur mobile, et plus tard sur ordinateur.
+    const accueil = location.pathname === "/";
+    if (accueil && matchMedia("(max-width: 1023px)").matches) return;
+    const t = setTimeout(() => setBubble(guide.key), accueil ? 9000 : 1800);
     return () => clearTimeout(t);
   }, [guide]);
   const dismiss = (key: string) => {

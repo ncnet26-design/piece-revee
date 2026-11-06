@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 test("accueil : promesse, démonstration à toucher, sections éditoriales", async ({ page }) => {
   const errors = noJsErrors(page);
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("avant d'acheter");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("achetez chaque meuble");
   await expect(page.getByRole("link", { name: "Essayer gratuitement" }).first()).toHaveAttribute("href", "/transformer/");
   await expect(page.getByRole("link", { name: "Transformer ma pièce" }).first()).toHaveAttribute("href", "/transformer/");
   const mobile = (page.viewportSize()?.width ?? 1200) < 1024;
@@ -463,7 +463,7 @@ test("catalogue : filtres budget, pièce, style, matière ; liens vers les ensei
 
 test("accueil : bande des enseignes, avec bouton pause", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /\d+ enseignes sur Pièce Rêvée/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /viennent de \d+ enseignes/ })).toBeVisible();
   const b = page.getByRole("button", { name: "Mettre en pause" });
   await b.click();
   await expect(page.getByRole("button", { name: "Relancer le défilement" })).toHaveAttribute("aria-pressed", "true");

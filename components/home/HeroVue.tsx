@@ -12,11 +12,6 @@ export type Trouves = Record<string, Partial<Record<Gamme, ProduitCatalogue>>>;
 const NOM: Record<Gamme, string> = { petit: "Petit budget", moyen: "Budget moyen", haut: "Haut de gamme" };
 const prix = (p: ProduitCatalogue) => (p.p === null ? "Prix sur le site" : p.p.toLocaleString("fr-FR", { style: "currency", currency: p.c ?? "EUR", maximumFractionDigits: 0 }));
 
-const PROMESSES: Array<[string, string]> = [
-  ["Plus d'erreur d'achat", "Vous voyez votre pièce refaite avant de dépenser un euro."],
-  ["Plus d'heures de recherche", "Chaque meuble de l'image est trouvé pour vous, en vente."],
-  ["Votre budget respecté", "Pour chaque meuble : un petit prix, un prix moyen, un haut de gamme."],
-];
 
 /**
  * La promesse à gauche ; à droite, une pièce dont on touche les meubles : trois produits réels par meuble, un par budget.
@@ -35,19 +30,20 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
   return (
     <section aria-labelledby="h-hero" className="grid items-center gap-10 pb-16 pt-6 sm:pt-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14 lg:pb-24">
       <div>
-        <p className="eyebrow">Décoration d'intérieur par IA · tous budgets</p>
-        <h1 id="h-hero" className="mt-5 max-w-[14ch] text-[clamp(46px,6vw,92px)] leading-[.95]">Voyez votre pièce refaite <em>avant d'acheter un seul meuble.</em></h1>
-        <p className="mt-6 max-w-[48ch] text-[17px] leading-relaxed text-muted">Une photo de votre pièce, quelques images qui vous plaisent : en quelques minutes, Pièce Rêvée vous montre votre pièce transformée et trouve chaque meuble en vente, du petit budget au haut de gamme.</p>
-        <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Link href="/transformer/" className="btn btn-primary btn-lg">Essayer gratuitement</Link>
-          <Link href="/boutique/" className="btn btn-lg">Voir la boutique</Link>
-        </div>
-        <p className="mt-4 text-[13px] text-muted">1 étude offerte · sans carte bancaire · vous achetez directement chez les enseignes</p>
-        <ol className="mt-10 grid border-t border-line pt-8 list-none gap-4 p-0">
-          {PROMESSES.map(([t, d]) => (
-            <li key={t} className="flex gap-4">
-              <span aria-hidden className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-ink text-[12px] text-surface">✓</span>
-              <span><span className="block text-[15px] font-semibold">{t}</span><span className="text-[14px] text-muted">{d}</span></span>
+        <h1 id="h-hero" className="max-w-[12ch] text-[clamp(52px,7vw,108px)] leading-[.92]">Transformez votre pièce, <em>achetez chaque meuble.</em></h1>
+        <p className="mt-6 max-w-[42ch] text-[18px] leading-relaxed text-muted">Une photo de votre pièce, des images qui vous plaisent : on la redessine dans votre style et on trouve chaque meuble en vente, à votre budget.</p>
+        <Link href="/transformer/" className="btn btn-primary mt-9 !min-h-0 gap-3 !px-9 !py-5 text-[19px] font-semibold shadow-[0_10px_30px_-12px_rgba(27,26,23,.55)]">
+          <svg aria-hidden viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
+          Transformer ma pièce
+          <span aria-hidden>→</span>
+        </Link>
+        <p className="mt-4 text-[13.5px] text-muted">Gratuit pour essayer · sans carte bancaire · résultat en quelques minutes</p>
+        <ol aria-label="En trois étapes" className="mt-10 flex list-none flex-wrap items-center gap-x-3 gap-y-2 p-0 text-[14px]">
+          {["Votre photo", "Vos inspirations", "Votre pièce à acheter"].map((t, k) => (
+            <li key={t} className="flex items-center gap-2">
+              <span className="grid size-7 place-items-center rounded-full border border-ink font-display text-[15px]">{k + 1}</span>
+              <span className="font-medium">{t}</span>
+              {k < 2 && <span aria-hidden className="ml-1 text-muted">→</span>}
             </li>
           ))}
         </ol>

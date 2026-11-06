@@ -51,9 +51,9 @@ const PROBLEMES: Array<[string, string]> = [
 ];
 
 const ETAPES: Array<[string, string]> = [
-  ["Envoyez une photo de votre pièce", "Prise au téléphone, telle qu'elle est aujourd'hui. Vous choisissez ce qu'on garde : fenêtres, portes, murs."],
-  ["Ajoutez ce qui vous plaît", "Images Pinterest, Instagram, magazine… Pièce Rêvée en tire votre moodboard : style, palette, matières."],
-  ["Voyez-la refaite, achetez", "Votre pièce transformée. Touchez un meuble : de vrais produits en vente, du petit budget au haut de gamme."],
+  ["Prenez votre pièce en photo", "Avec votre téléphone, telle qu'elle est aujourd'hui."],
+  ["Montrez ce qui vous plaît", "Des images Pinterest, Instagram ou de magazine : on en tire votre style."],
+  ["Découvrez-la refaite, achetez", "Touchez un meuble : il est en vente, du petit prix au haut de gamme."],
 ];
 
 const COMPARATIF: Array<[string, string, string, string]> = [
@@ -83,8 +83,40 @@ export default function Home() {
       {/* 2. Preuve immédiate : les enseignes */}
       <MarquesDefilantes marques={MARQUES} />
 
-      {/* 3. Le problème */}
-      <section aria-labelledby="h-probleme" className="py-20 sm:py-28">
+      {/* 3. La solution en trois étapes, illustrée */}
+      <section id="comment" aria-labelledby="h-comment" className="scroll-mt-24 py-20 sm:py-28">
+        <div className="mx-auto max-w-[760px] text-center">
+          <p className="eyebrow">Comment ça marche</p>
+          <h2 id="h-comment" className="mt-4 text-[clamp(36px,4.6vw,64px)]">Trois étapes, <em>c'est tout.</em></h2>
+        </div>
+        <ol className="mt-14 grid list-none gap-12 p-0 md:grid-cols-3 md:gap-10">
+          {ETAPES.map(([t, d], i) => (
+            <li key={t} className="relative">
+              {i < 2 && <span aria-hidden className="absolute -right-8 top-[30%] hidden text-[28px] text-[var(--bronze)] md:block">→</span>}
+              <div className="mb-5 flex items-center gap-3">
+                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-ink font-display text-[22px] text-surface">{i + 1}</span>
+                <h3 className="text-[20px] font-semibold leading-tight">{t}</h3>
+              </div>
+              <div className="relative aspect-[4/3] overflow-hidden bg-soft">
+                {i === 0 && <PhotoUnsplash p={PHOTOS_STYLES.scandinave[0]!} alt="Exemple de photo de pièce, prise telle qu'elle est" sizes="(min-width:768px) 33vw, 100vw" className="aspect-[4/3]" credit={false} />}
+                {i === 1 && (
+                  <div className="grid size-full grid-cols-3 gap-1.5 p-3">
+                    {[1, 2, 3].map((k) => <PhotoUnsplash key={k} p={PHOTOS_STYLES.japandi[k]!} alt="" sizes="12vw" className="aspect-[3/4]" credit={false} />)}
+                    <div className="col-span-3 flex items-center gap-1.5">{["#E6DCCB", "#C9B79C", "#8A7052", "#5C4636", "#2F2A24"].map((c) => <span key={c} className="h-6 flex-1 rounded-[2px]" style={{ background: c }} />)}</div>
+                  </div>
+                )}
+                {i === 2 && <><Photo src="/editorial/ia/salon-boucle-noyer.webp" alt="Exemple de pièce transformée" sizes="(min-width:768px) 33vw, 100vw" className="block aspect-[4/3] w-full object-cover" /><MentionIA /><span className="absolute left-3 top-3 flex gap-1">{["Petit budget", "Moyen", "Haut de gamme"].map((g) => <span key={g} className="rounded-full bg-white/90 px-2 py-0.5 text-[10.5px] font-semibold text-ink">{g}</span>)}</span></>}
+              </div>
+              <p className="mt-4 text-[15px] text-muted">{d}</p>
+              {i < 2 && <p className="mt-2 text-[11px] text-muted">Photo{i === 1 ? "s" : ""} : {(i === 0 ? [PHOTOS_STYLES.scandinave[0]!] : [1, 2, 3].map((k) => PHOTOS_STYLES.japandi[k]!)).map((p, k) => <span key={p.ref}>{k ? ", " : ""}<a href={lienUnsplash(p.auteur_url)} target="_blank" rel="noopener noreferrer" className="underline">{p.auteur}</a></span>)} sur <a href={lienUnsplash("https://unsplash.com")} target="_blank" rel="noopener noreferrer" className="underline">Unsplash</a></p>}
+            </li>
+          ))}
+        </ol>
+        <div className="mt-14 text-center"><Link href="/transformer/" className="btn btn-primary btn-lg">Transformer ma pièce →</Link></div>
+      </section>
+
+      {/* 4. Le problème */}
+      <section aria-labelledby="h-probleme" className="border-t border-line py-20 sm:py-28">
         <div className="mx-auto max-w-[760px] text-center">
           <p className="eyebrow">Le problème</p>
           <h2 id="h-probleme" className="mt-4 text-[clamp(36px,4.6vw,64px)]">Refaire une pièce, <em>c'est trois casse-têtes.</em></h2>
@@ -99,35 +131,6 @@ export default function Home() {
           ))}
         </ul>
         <p className="mx-auto mt-12 max-w-[52ch] text-center font-display text-[clamp(26px,3vw,38px)] leading-tight">Pièce Rêvée règle les trois, <em>en une seule étude.</em></p>
-      </section>
-
-      {/* 4. La solution en trois étapes, illustrée */}
-      <section id="comment" aria-labelledby="h-comment" className="scroll-mt-24 border-t border-line py-20 sm:py-28">
-        <div className="mx-auto max-w-[760px] text-center">
-          <p className="eyebrow">Comment ça marche</p>
-          <h2 id="h-comment" className="mt-4 text-[clamp(36px,4.6vw,64px)]">Trois étapes, <em>quelques minutes.</em></h2>
-        </div>
-        <ol className="mt-14 grid list-none gap-10 p-0 md:grid-cols-3 md:gap-6">
-          {ETAPES.map(([t, d], i) => (
-            <li key={t}>
-              <div className="relative aspect-[4/3] overflow-hidden bg-soft">
-                {i === 0 && <PhotoUnsplash p={PHOTOS_STYLES.scandinave[0]!} alt="Exemple de photo de pièce, prise telle qu'elle est" sizes="(min-width:768px) 33vw, 100vw" className="aspect-[4/3]" credit={false} />}
-                {i === 1 && (
-                  <div className="grid size-full grid-cols-3 gap-1.5 p-3">
-                    {[1, 2, 3].map((k) => <PhotoUnsplash key={k} p={PHOTOS_STYLES.japandi[k]!} alt="" sizes="12vw" className="aspect-[3/4]" credit={false} />)}
-                    <div className="col-span-3 flex items-center gap-1.5">{["#E6DCCB", "#C9B79C", "#8A7052", "#5C4636", "#2F2A24"].map((c) => <span key={c} className="h-6 flex-1 rounded-[2px]" style={{ background: c }} />)}</div>
-                  </div>
-                )}
-                {i === 2 && <><Photo src="/editorial/ia/salon-boucle-noyer.webp" alt="Exemple de pièce transformée" sizes="(min-width:768px) 33vw, 100vw" className="block aspect-[4/3] w-full object-cover" /><MentionIA /><span className="absolute left-3 top-3 flex gap-1">{["Petit budget", "Moyen", "Haut de gamme"].map((g) => <span key={g} className="rounded-full bg-white/90 px-2 py-0.5 text-[10.5px] font-semibold text-ink">{g}</span>)}</span></>}
-              </div>
-              <p className="mt-5 font-display text-[22px] leading-none text-[var(--bronze)]">Étape {i + 1}</p>
-              <h3 className="mt-2 text-[19px] font-semibold">{t}</h3>
-              <p className="mt-2 text-[15px] text-muted">{d}</p>
-              {i < 2 && <p className="mt-2 text-[11px] text-muted">Photo{i === 1 ? "s" : ""} : {(i === 0 ? [PHOTOS_STYLES.scandinave[0]!] : [1, 2, 3].map((k) => PHOTOS_STYLES.japandi[k]!)).map((p, k) => <span key={p.ref}>{k ? ", " : ""}<a href={lienUnsplash(p.auteur_url)} target="_blank" rel="noopener noreferrer" className="underline">{p.auteur}</a></span>)} sur <a href={lienUnsplash("https://unsplash.com")} target="_blank" rel="noopener noreferrer" className="underline">Unsplash</a></p>}
-            </li>
-          ))}
-        </ol>
-        <div className="mt-12 text-center"><Link href="/transformer/" className="btn btn-primary btn-lg">Faire mon étude offerte</Link></div>
       </section>
 
       {/* 5. Démonstration : on change une matière, le reste ne bouge pas */}

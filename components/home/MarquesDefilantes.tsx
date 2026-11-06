@@ -10,17 +10,17 @@ export function MarquesDefilantes({ marques }: { marques: string[] }) {
   const liste = (cle: string, cache: boolean) => (
     <ul aria-hidden={cache || undefined} className="m-0 flex shrink-0 list-none items-center p-0">
       {marques.map((m) => (
-        <li key={`${cle}${m}`} className="flex items-center whitespace-nowrap px-6 text-[13px] font-semibold uppercase tracking-[.2em] text-muted">
-          {m}<span aria-hidden className="ml-12 text-[var(--bronze)]">·</span>
+        <li key={`${cle}${m}`} className="flex items-center whitespace-nowrap px-7 font-display text-[clamp(26px,3vw,40px)] leading-none text-surface">
+          {m}<span aria-hidden className="ml-14 text-[22px] text-[var(--bronze)]">✦</span>
         </li>
       ))}
     </ul>
   );
   return (
-    <section aria-labelledby="h-marques" className="bleed border-y border-line bg-surface py-5">
-      <div className="wrap mb-3 flex items-center justify-between gap-4">
-        <h2 id="h-marques" className="eyebrow m-0">{marques.length} enseignes sur Pièce Rêvée</h2>
-        <button type="button" onClick={() => setPause((p) => !p)} aria-pressed={pause} className="text-[12px] text-muted underline underline-offset-4 hover:text-ink">
+    <section aria-labelledby="h-marques" className="bleed bg-ink py-9 text-surface">
+      <div className="wrap mb-6 flex flex-wrap items-center justify-between gap-4">
+        <h2 id="h-marques" className="m-0 font-ui text-[11px] font-semibold uppercase tracking-[.2em] text-surface/70">Les meubles proposés viennent de {marques.length} enseignes</h2>
+        <button type="button" onClick={() => setPause((p) => !p)} aria-pressed={pause} className="text-[12px] text-surface/70 underline underline-offset-4 hover:text-surface">
           {pause ? "Relancer le défilement" : "Mettre en pause"}
         </button>
       </div>
