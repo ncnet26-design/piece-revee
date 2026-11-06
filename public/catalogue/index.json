@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-06T08:16:57.037Z",
+ "updatedAt": "2026-11-06T08:31:23.621Z",
  "total": 32895,
  "familles": {
   "canape": 6391,
@@ -40,13 +40,13 @@
   "Maison Sarah Lavoine": 474,
   "Ferm Living": 1935,
   "Burrow": 307,
+  "GUBI": 184,
   "HEMA": 751,
   "IKEA": 3436,
   "Pomax": 933,
   "Brico Dépôt": 1040,
   "Sentou": 45,
   "Schoolhouse": 108,
-  "Castorama": 727,
-  "GUBI": 184
+  "Castorama": 727
  }
 }
