@@ -1,0 +1,30 @@
+name: Test Camille (modèles de conversation gratuits)
+
+# Compare des modèles de conversation de l'IA gratuite de Cloudflare sur une vraie question de déco, en français.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CF_ACCOUNT: f8d17f2edfe8ee1b22e66bc4c0bf364b
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Essais
+        env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_AI_TOKEN }}" }
+        run: |
+          API="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/ai/run"
+          SYS="Tu es Camille, designer d'intérieur de Pièce Rêvée. Réponds en français, chaleureusement, en 120 mots maximum, avec des conseils concrets (couleurs avec nom, matières, dimensions). Produits disponibles sur le site (ne cite que ceux-ci) : Canapé Söderhamn 3 places, IKEA, 899 € ; Canapé courbe bouclette, Habitat, 999 € ; Tapis berbère laine 200x300, La Redoute, 349 €."
+          Q="J'ai un salon de 20 m2 avec un parquet en chêne clair et des murs blancs, je veux quelque chose de chaleureux. Quel canapé et quelles couleurs ?"
+          for M in @cf/mistralai/mistral-small-3.1-24b-instruct @cf/meta/llama-3.1-8b-instruct-fast @cf/meta/llama-3.3-70b-instruct-fp8-fast @cf/google/gemma-3-12b-it @cf/qwen/qwen3-30b-a3b-fp8; do
+            echo "== $M"; T=$(date +%s.%N)
+            jq -n --arg s "$SYS" --arg q "$Q" '{messages:[{role:"system",content:$s},{role:"user",content:$q}], max_tokens: 400}' > req.json
+            curl -sS --max-time 90 -X POST "$API/$M" -H "Authorization: Bearer $CF_TOKEN" -H "Content-Type: application/json" --data @req.json \
+              | jq -r '.success, (.errors|tostring), (.result.usage|tostring), (.result.response // (.result.choices[0].message.content) // .result | tostring)' | head -c 2500
+            echo; echo "durée $(echo "$(date +%s.%N) - $T" | bc) s"
+          done
