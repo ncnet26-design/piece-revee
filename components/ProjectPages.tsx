@@ -84,7 +84,7 @@ export function StudyPage() {
     return () => { stop = true; if (ch) void sb?.removeChannel(ch); };
   }, [id, example]);
 
-  if (!id) return <div className="panel"><p>Aucun projet sélectionné.</p><Link className="btn mt-3" href="/projet/">Mes projets</Link></div>;
+  if (!id) return <div className="panel"><h1 className="text-[clamp(40px,5vw,64px)]">Mon étude</h1><p>Aucun projet sélectionné.</p><Link className="btn mt-3" href="/projet/">Mes projets</Link></div>;
   if (!example && !DEMO_MODE && remote === undefined) return <div className="skeleton min-h-[100vh]" aria-label="Chargement" />;
   if (!project) return <div className="panel"><h1 className="text-2xl">Projet introuvable</h1><p className="mt-2 text-muted">Il a peut-être été supprimé, ou il a été créé sur un autre appareil.</p><Link className="btn mt-3" href="/projet/">Mes projets</Link></div>;
 

@@ -1,4 +1,5 @@
 "use client";
+import { plusAncienne } from "@/lib/date-releve";
 import { useState } from "react";
 import type { ProduitCatalogue } from "@/lib/catalogue";
 import type { Gamme } from "@/lib/choisir-produit";
@@ -51,8 +52,8 @@ export function PrixPiece({ lignes, titre = "Le prix de cette pièce refaite" }:
           </li>); })}
       </ul>
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
-        <p className="m-0 text-[11.5px] text-muted">Prix relevés sur les sites des enseignes ; à vérifier avant l'achat.</p>
-        <button type="button" className="btn btn-primary !min-h-0 !px-4 !py-2 text-[13px]" aria-pressed={toutDedans} onClick={toutGarder}>{toutDedans ? "✓ Toute la liste est dans ma pièce" : `Garder toute la liste (${eur(total(choix))})`}</button>
+        <p className="m-0 text-[11.5px] text-muted">Prix relevés sur les sites des enseignes{(() => { const d = plusAncienne(liste.map((l) => l.produits[choix]?.d)); return d ? ` le ${d}` : ""; })()} ; à vérifier avant l'achat.</p>
+        <button type="button" className="btn btn-primary !min-h-0 !px-4 !py-2 text-[13px]" onClick={toutGarder}>{toutDedans ? "✓ Toute la liste est dans ma pièce" : `Garder toute la liste (${eur(total(choix))})`}</button>
       </div>
     </section>
   );

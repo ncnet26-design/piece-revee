@@ -1,4 +1,5 @@
 "use client";
+import { MentionIA } from "@/components/MentionIA";
 import { textureMatiere } from "@/lib/texture-matiere";
 import { Chargement } from "./Chargement";
 import { OffreTeaser } from "@/components/OffreTeaser";
@@ -13,7 +14,9 @@ import { updateProject, uid } from "@/lib/studio/project";
 import { Resultat } from "./Resultat";
 
 /** Styles proposés comme inspiration : vraies photos (Unsplash), une par style. */
-const STYLES = CATALOGUE_STYLES.filter((s) => PHOTOS_STYLES[s]?.[0]).map((s) => ({ id: s, title: NOM_STYLE[s], src: tailleUnsplash(PHOTOS_STYLES[s][0]!.src, 1280, "jpg") }));
+const STYLES = CATALOGUE_STYLES.filter((s) => PHOTOS_STYLES[s]?.[0]).map((s) => ({ id: s, title: NOM_STYLE[s], src: tailleUnsplash(PHOTOS_STYLES[s][0]!.src, 1280, "jpg"), mini: tailleUnsplash(PHOTOS_STYLES[s][0]!.src, 400, "jpg"), auteur: PHOTOS_STYLES[s][0]!.auteur }));
+/** Photo d'exemple pour essayer sans avoir sa propre photo sous la main. */
+const PHOTO_EXEMPLE = "/editorial/ia/salon-avant-1600.webp";
 const CATALOG = MATERIALS.map((m) => ({ id: m.id, name: m.name }));
 const MAX_INSPI = 5;
 const KEEP: Array<[string, string]> = [["fenetres", "Fenêtres"], ["portes", "Portes"], ["murs", "Murs et volumes"], ["plafond", "Plafond"], ["sol", "Sol actuel"], ["cheminee", "Cheminée"], ["mobilier", "Mes meubles actuels"]];
@@ -76,7 +79,20 @@ export function Parcours() {
     if (r.photo.quality.tooDark) setRoomMsg("Photo un peu sombre : le résultat sera meilleur avec plus de lumière.");
     else if (r.photo.quality.blurry) setRoomMsg("Photo un peu floue : le résultat sera meilleur avec une photo nette.");
   };
-  const addStyle = async (src: string) => { try { const d = await urlToData(src); setInspi((cur) => (cur.length < MAX_INSPI ? [...cur, d] : cur)); } catch { /* */ } };
+  // Styles prêts à l'emploi : un toucher ajoute la photo du style, un second la retire.
+  const [styles, setStyles] = useState<Record<string, string>>({});
+  const [chargeStyle, setChargeStyle] = useState<string | null>(null);
+  const choisi = (id: string) => Boolean(styles[id] && inspi.includes(styles[id]!));
+  const toggleStyle = async (id: string, src: string) => {
+    if (chargeStyle) return;
+    if (choisi(id)) { const d = styles[id]!; setInspi((cur) => cur.filter((x) => x !== d)); return; }
+    if (inspi.length >= MAX_INSPI) return;
+    setChargeStyle(id);
+    try { const d = await urlToData(src); setInspi((cur) => (cur.length < MAX_INSPI ? [...cur, d] : cur)); setStyles((r) => ({ ...r, [id]: d })); } catch { /* */ } finally { setChargeStyle(null); }
+  };
+  // La photo d'exemple est une image générée par IA : on la signale tant qu'elle est utilisée.
+  const [exemple, setExemple] = useState<"non" | "charge" | "oui">("non");
+  const essayerExemple = async () => { setExemple("charge"); try { setRoom(await urlToData(PHOTO_EXEMPLE)); setRoomMsg(null); setExemple("oui"); } catch { setRoomMsg("La photo d'exemple n'a pas pu être chargée."); setExemple("non"); } };
 
   /** Étape 2 : moodboard des inspirations (service d'analyse), avec palette calculée localement en secours. */
   const makeMood = async () => {
@@ -141,18 +157,27 @@ export function Parcours() {
 
       {etape === "photos" && (
         <div className="mt-8 grid gap-10 lg:grid-cols-2">
-          <section aria-labelledby="h-piece">
+          <section aria-labelledby="h-piece" className="min-w-0">
             <h2 id="h-piece" className="text-[30px]">Ma pièce</h2>
             <p className="mt-2 text-[14px] text-muted">Une photo de la pièce telle qu'elle est aujourd'hui, prise de face, à hauteur d'yeux, bien éclairée.</p>
-            <label className="mt-4 flex aspect-[4/3] cursor-pointer items-center justify-center overflow-hidden rounded-[2px] border border-dashed border-line bg-surface text-center text-[14px] text-muted transition hover:border-ink">
+            <label className="relative mt-4 flex aspect-[4/3] cursor-pointer items-center justify-center overflow-hidden rounded-[2px] border border-dashed has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ink border-line bg-surface text-center text-[14px] text-muted transition hover:border-ink">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              {room ? <img src={room} alt="Ma pièce" className="size-full object-cover" /> : <span>Prendre ou choisir une photo<br /><span className="text-[12px]">JPG, PNG ou HEIC</span></span>}
-              <input type="file" accept="image/*" capture="environment" className="sr-only" aria-label="Choisir la photo de ma pièce" onChange={(e) => void onRoom(e.target.files?.[0])} />
+              {room ? <img src={room} alt={exemple === "oui" ? "Salon d'exemple, image générée par IA" : "Ma pièce"} className="size-full object-cover" /> : (
+                <span className="flex flex-col items-center gap-3 px-6">
+                  <span aria-hidden className="grid size-16 place-items-center rounded-full bg-ink text-surface"><svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></span>
+                  <span className="text-[17px] font-semibold text-ink">Prendre ou choisir une photo</span>
+                  <span className="text-[12.5px]">Depuis votre téléphone ou votre ordinateur · JPG, PNG ou HEIC</span>
+                </span>
+              )}
+              {room && exemple === "oui" && <MentionIA />}
+              <input type="file" accept="image/*" capture="environment" className="sr-only" aria-label="Choisir la photo de ma pièce" onChange={(e) => { setExemple("non"); void onRoom(e.target.files?.[0]); }} />
             </label>
             {roomMsg && <p className="mt-2 text-[13px] text-[#8A5A0E]">{roomMsg}</p>}
+            {!room && <p className="mt-3 text-[13.5px] text-muted">Pas de photo sous la main ? <button type="button" className="inline-flex min-h-9 items-center font-semibold text-ink underline underline-offset-4" disabled={exemple === "charge"} onClick={() => void essayerExemple()}>{exemple === "charge" ? "Chargement…" : "Essayer avec notre salon d'exemple"}</button></p>}
+            {room && <button type="button" className="mt-2 inline-flex min-h-9 items-center text-[13px] text-muted underline underline-offset-4" onClick={() => { setRoom(null); setExemple("non"); }}>Changer de photo</button>}
           </section>
 
-          <section aria-labelledby="h-inspi"
+          <section aria-labelledby="h-inspi" className="min-w-0"
             onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); void addInspi([...e.dataTransfer.files]); }}>
             <h2 id="h-inspi" className="text-[30px]">Mes inspirations</h2>
             <p className="mt-2 text-[14px] text-muted">Jusqu'à {MAX_INSPI} images : Pinterest, Instagram, Google, un magazine… Choisissez des fichiers, glissez-les ici ou collez une capture (Ctrl + V).</p>
@@ -161,24 +186,38 @@ export function Parcours() {
                 <li key={i} className="relative aspect-square overflow-hidden rounded-[2px] bg-soft">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={s} alt={`Inspiration ${i + 1}`} className="size-full object-cover" />
-                  <button type="button" onClick={() => setInspi((c) => c.filter((_, j) => j !== i))} aria-label={`Retirer l'inspiration ${i + 1}`} className="absolute right-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-white/90 text-[15px]">×</button>
+                  <button type="button" onClick={() => setInspi((c) => c.filter((_, j) => j !== i))} aria-label={`Retirer l'inspiration ${i + 1}`} className="absolute right-1 top-1 grid size-9 place-items-center rounded-full bg-white/90 text-[15px]">×</button>
                 </li>
               ))}
               {inspi.length < MAX_INSPI && (
                 <li>
-                  <label className="flex aspect-square cursor-pointer items-center justify-center rounded-[2px] border border-dashed border-line bg-surface text-center text-[13px] text-muted transition hover:border-ink">
+                  <label className="flex aspect-square cursor-pointer items-center justify-center rounded-[2px] border border-dashed has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink border-line bg-surface text-center text-[13px] text-muted transition hover:border-ink">
                     + Ajouter
                     <input type="file" accept="image/*" multiple className="sr-only" aria-label="Ajouter des inspirations" onChange={(e) => void addInspi([...(e.target.files ?? [])])} />
                   </label>
                 </li>
               )}
             </ul>
-            <details className="mt-4 text-[13px]">
-              <summary className="cursor-pointer text-muted hover:text-ink">Pas d'image sous la main ? Partir d'un de nos styles</summary>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {STYLES.map((s) => <button key={s.id} type="button" className="btn btn-sm" onClick={() => void addStyle(s.src)}>{s.title}</button>)}
-              </div>
-            </details>
+            <p className="mt-6 text-[13px] font-semibold">Ou touchez les styles qui vous plaisent</p>
+            <ul className="-mx-1 mt-2 flex list-none snap-x gap-2 overflow-x-auto p-1 pb-2" aria-label="Styles prêts à l'emploi">
+              {STYLES.map((st) => {
+                const pris = choisi(st.id);
+                return (
+                  <li key={st.id} className="w-[104px] flex-none snap-start">
+                    <button type="button" aria-pressed={pris} aria-busy={chargeStyle === st.id} onClick={() => void toggleStyle(st.id, st.src)} disabled={(!pris && inspi.length >= MAX_INSPI) || (chargeStyle !== null && chargeStyle !== st.id)}
+                      title={`Photo : ${st.auteur} (Unsplash)`} className={`group block w-full text-left transition ${pris ? "" : "opacity-90 hover:opacity-100"}`}>
+                      <span className={`relative block aspect-[4/5] overflow-hidden rounded-[2px] ring-offset-2 ring-offset-[var(--bg)] ${pris ? "ring-2 ring-ink" : ""}`}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={st.mini} alt="" loading="lazy" className="size-full object-cover transition duration-500 group-hover:scale-105" />
+                        {pris && <span aria-hidden className="absolute right-1.5 top-1.5 grid size-6 place-items-center rounded-full bg-ink text-[12px] text-surface">✓</span>}
+                      </span>
+                      <span className="mt-1.5 block text-[12.5px] font-medium">{chargeStyle === st.id ? "Ajout…" : st.title}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="text-[11px] text-muted">Photos de styles : Unsplash, photographes crédités dans les <a href="/galerie/" className="underline">inspirations</a>.</p>
           </section>
 
           <div className="lg:col-span-2 flex flex-wrap items-center gap-3 border-t border-line pt-6">

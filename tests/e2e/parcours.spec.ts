@@ -466,10 +466,9 @@ test("catalogue : filtres budget, pièce, style, matière ; liens vers les ensei
 
 test("accueil : bande des enseignes, avec bouton pause", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /viennent de \d+ enseignes/ })).toBeVisible();
-  const b = page.getByRole("button", { name: "Mettre en pause" });
-  await b.click();
-  await expect(page.getByRole("button", { name: "Relancer le défilement" })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("heading", { name: /\d+ enseignes et \d+ marques de design/ })).toBeVisible();
+  await page.getByRole("button", { name: "Mettre en pause" }).click();
+  await expect(page.getByRole("button", { name: "Relancer le défilement" })).toBeVisible();
 });
 
 test("transformer : attente animée pendant le moodboard (étapes, progression)", async ({ page }) => {

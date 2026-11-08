@@ -32,6 +32,7 @@ export interface Env {
   /** Camille : messages par jour (au total, et par visiteur). */
   CAMILLE_JOUR?: string;
   CAMILLE_VISITEUR_JOUR?: string;
+  NEURONES_JOUR?: string;
   QUOTA?: KVNamespace;
   /** Facultatif : stockage R2 des images (sinon KV, 30 jours). */
   IMAGES?: R2Bucket;
@@ -55,7 +56,7 @@ export const ALLOWED_ORIGINS = [
   "http://localhost:3000",
   "http://localhost:4173",
 ];
-export const isAllowedOrigin = (origin: string) => ALLOWED_ORIGINS.includes(origin) || (/^https:\/\/[a-z0-9-]+\.pages\.dev$/.test(origin) && origin.includes("piece-revee"));
+export const isAllowedOrigin = (origin: string) => ALLOWED_ORIGINS.includes(origin) || /^https:\/\/([a-z0-9-]+\.)?piece-revee\.pages\.dev$/.test(origin);
 
 export const MAX_BODY = 12 * 1024 * 1024;
 export const num = (v: string | undefined, d: number) => (v !== undefined && v !== "" && Number.isFinite(Number(v)) ? Number(v) : d);
@@ -64,7 +65,9 @@ export const limits = (env: Env) => ({
   visitorMonthUsd: num(env.BUDGET_VISITEUR_MOIS_USD, 1.5),
   dayImages: num(env.IMAGES_JOUR, 30),
   visitorDayImages: num(env.IMAGES_VISITEUR_JOUR, 6),
-  freeDayImages: num(env.IMAGES_GRATUITES_JOUR, 50),
+  freeDayImages: num(env.IMAGES_GRATUITES_JOUR, 45),
+  /** Neurones gratuits utilisés au plus par jour (la part offerte est de 10 000 : marge de sécurité). */
+  freeNeurons: num(env.NEURONES_JOUR, 8500),
 });
 
 export type Quality = "brouillon" | "standard" | "premium";

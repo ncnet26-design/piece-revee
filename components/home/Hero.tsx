@@ -1,5 +1,6 @@
 import Link from "next/link";
 import indexCatalogue from "@/public/boutique/index.json";
+import { plusAncienne } from "@/lib/date-releve";
 import { HeroAnime, type Etiquette } from "./HeroAnime";
 import { PIECES } from "@/components/shop-the-look-pieces";
 import { trouverParBudget } from "@/lib/trouves-par-budget";
@@ -25,6 +26,7 @@ const eur = (n: number) => n.toLocaleString("fr-FR", { style: "currency", curren
 export function Hero() {
   const trouves = trouverParBudget(PIECES);
   const etiquettes: Etiquette[] = SUR_APRES.flatMap((e) => { const t = trouves[e.id], p = t?.moyen ?? t?.petit ?? t?.haut; return p?.p ? [{ id: e.id, label: e.court, prix: eur(p.p), x: e.x, y: e.y }] : []; });
+  const releve = plusAncienne(SUR_APRES.map((e) => { const t = trouves[e.id]; return (t?.moyen ?? t?.petit ?? t?.haut)?.d; }));
   return (
     <section aria-labelledby="h-hero" className="grid gap-x-14 gap-y-7 pb-14 pt-4 sm:pt-8 lg:grid-cols-[1fr_1.2fr] lg:grid-rows-[auto_auto] lg:pb-20">
       <div className="lg:self-end">
@@ -34,7 +36,7 @@ export function Hero() {
 
       <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
         <HeroAnime etiquettes={etiquettes} />
-        <p className="mt-3 text-center text-[13px] text-muted">Exemple créé avec Pièce Rêvée : mêmes murs, mêmes fenêtres, une autre pièce, et chaque meuble en vente.</p>
+        <p className="mt-3 text-center text-[13px] text-muted">Exemple créé avec Pièce Rêvée : mêmes murs, mêmes fenêtres, une autre pièce, et chaque meuble en vente{releve ? ` (prix relevés le ${releve})` : ""}.</p>
       </div>
 
       <div className="flex flex-col lg:self-start">

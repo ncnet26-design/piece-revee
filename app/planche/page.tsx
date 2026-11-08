@@ -8,5 +8,10 @@ export const metadata = meta({
 });
 
 export default function Page() {
-  return <Planche />;
+  return (
+    <>
+      <h1 className="sr-only">Planche de matières 3D</h1>
+      <Planche />
+    </>
+  );
 }

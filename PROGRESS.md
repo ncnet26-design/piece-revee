@@ -151,3 +151,11 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - IA gratuite de Cloudflare testée (flux-2-klein-4b : transformation réaliste en 6 s ; Llama vision : repérage correct mais moins précis que Gemini ; bge-m3 OK). Branchée dans le service : essayée en premier pour chaque transformation (60 images gratuites/jour, réglable par IMAGES_GRATUITES_JOUR), Gemini en relais dans les plafonds existants. Service mis en ligne le 2026-11-08 (fournisseurs : gemini + cloudflare).
 - Accueil réorganisé en page de vente : haut de page = promesse + bouton + garanties + avant/après (preuve) ; enseignes ; 3 étapes ; exemple à toucher avec prix total ; comparatif ; styles ; prix ; FAQ ; appel final. Sur mobile l'avant/après passe juste sous le titre.
 - Vidéo avant/après à partager (lib/video-avant-apres.ts, components/parcours/VideoAvantApres.tsx) : 9:16, 10 s, ~5 Mo, fabriquée dans le navigateur (gratuit) ; avant → glissement → après (mention « Image créée par IA ») → meubles et prix → prix total 3 budgets → signature. Boutons Partager (téléphone) et Télécharger.
+- Nuit du 8 au 9 nov. (autonomie) :
+  - Accueil : transformation racontée en animation (avant → balayage de l'IA → après → étiquettes de prix), bouton pause, sans animation si l'appareil le demande.
+  - Audit robot de toutes les pages (330 × PC + mobile) : erreurs JS 0, liens morts 0, images cassées 0, débordements 0 ; h1 ajoutés (planche, étude).
+  - Camille : IA gratuite de Cloudflare (Mistral Small, choisi après comparaison de 5 modèles), fiches et vrais produits de la boutique en cartes, plafonds (40/jour, 25/visiteur) ; compteur commun de neurones gratuits (8 500/jour) partagé avec les images. Service à déployer (attend le « oui »).
+  - Sécurité (relecteur) : contexte hors consigne système, corps lus avec limite, relance gratuite comptée, origines Pages exactes.
+  - Interface (relecteur) : dates de relevé à côté des prix, cibles tactiles ≥ 36 px, focus visible, mention IA plus lisible, photo d'exemple signalée IA.
+  - Transformer : « Essayer avec notre salon d'exemple », tuiles de styles visibles et cliquables.
+  - Marques : 24 enseignes de design ajoutées au robot ; bande défilante enseignes + 29 marques de design (liste reconnue, ≥ 3 produits).

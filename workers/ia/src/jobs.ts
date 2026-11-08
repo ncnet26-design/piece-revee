@@ -76,10 +76,21 @@ export async function reserve(env: Env, visitor: string, ip: string, usd: number
   await Promise.all([add(env, `total:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY), add(env, `usd:${m}`, usd, 62 * DAY), add(env, `usd:${m}:v:${visitor}`, usd, 62 * DAY), add(env, `usd:${m}:ip:${ip}`, usd, 62 * DAY)]);
 }
 /* ——— Images gratuites (IA de Cloudflare) : compteur à part, sans dépense ——— */
-export const freeLeft = async (env: Env) => limits(env).freeDayImages - (await n(env, `gratuit:${today()}`));
+/**
+ * Part gratuite de l'IA de Cloudflare : 10 000 « neurones » par jour pour tout le compte (images ET Camille).
+ * Un seul compteur commun, réservé AVANT chaque appel avec une estimation prudente ; on s'arrête bien avant la limite.
+ */
+export const NEURONES = { image: 160, camille: 130 } as const;
+export const neuronesRestants = async (env: Env) => limits(env).freeNeurons - (await n(env, `neurones:${today()}`));
+export async function reserverNeurones(env: Env, cout: number): Promise<boolean> {
+  if ((await neuronesRestants(env)) < cout) return false;
+  await add(env, `neurones:${today()}`, cout, 2 * DAY);
+  return true;
+}
+export const freeLeft = async (env: Env) => Math.min(limits(env).freeDayImages - (await n(env, `gratuit:${today()}`)), Math.floor((await neuronesRestants(env)) / NEURONES.image));
 export async function reserveFree(env: Env, visitor: string, ip: string) {
   const d = today();
-  await Promise.all([add(env, `gratuit:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY)]);
+  await Promise.all([add(env, `neurones:${d}`, NEURONES.image, 2 * DAY), add(env, `gratuit:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY)]);
 }
 /** Corrige la réservation quand le coût réel est connu. */
 export async function settle(env: Env, visitor: string, ip: string, delta: number) {

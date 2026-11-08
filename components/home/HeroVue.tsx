@@ -1,4 +1,5 @@
 "use client";
+import { dateReleve } from "@/lib/date-releve";
 import { useEffect, useState } from "react";
 import type { ProduitCatalogue } from "@/lib/catalogue";
 import { PIECES } from "@/components/shop-the-look-pieces";
@@ -36,19 +37,19 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
       </div>
       <div className="mt-12 grid items-start gap-6 lg:grid-cols-[1.35fr_1fr] lg:gap-8">
       <div>
-        <figure className="relative m-0 overflow-hidden rounded-[2px] bg-soft">
+        <figure className="relative m-0 overflow-hidden rounded-[2px] bg-soft" onMouseEnter={() => setTouche(true)} onFocus={() => setTouche(true)}>
           <Photo src="/editorial/ia/salon-exemple.webp" sizes="(min-width:1024px) 55vw, 100vw" alt="Exemple de pièce transformée : canapé courbe en bouclette, tables basses en marbre, fauteuil vert, tapis rond rayé, grand tableau coloré" className="block aspect-[1000/651] w-full object-cover" />
           {/* Les pastilles sont dessinées sur l'image : des zones cliquables transparentes sont posées dessus. */}
           {PIECES.map((p, k) => (
             <button key={p.id} type="button" onClick={() => { setI(k); setTouche(true); }} aria-pressed={i === k} aria-label={`${p.label} : voir les produits par budget`}
-              className={`absolute size-[6%] min-h-7 min-w-7 -translate-x-1/2 -translate-y-1/2 rounded-full ${p.secondaire ? "hidden lg:block" : ""}`} style={{ left: `${p.x}%`, top: `${p.y}%` }}>
+              className={`absolute size-[6%] min-h-9 min-w-9 -translate-x-1/2 -translate-y-1/2 rounded-full ${p.secondaire ? "hidden lg:block" : ""}`} style={{ left: `${p.x}%`, top: `${p.y}%` }}>
               {i === k && <span aria-hidden className="hero-onde absolute inset-[18%] rounded-full ring-2 ring-[var(--bronze)]" />}
             </button>
           ))}
           <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11.5px] font-semibold text-ink">Touchez un meuble</span>
           <MentionIA />
         </figure>
-        <div aria-live="polite" className="mt-4 rounded-[2px] bg-surface p-4 sm:p-5">
+        <div aria-live={touche ? "polite" : "off"} className="mt-4 rounded-[2px] bg-surface p-4 sm:p-5">
           <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-muted">{sel.label} · en vente maintenant</p>
           <ul key={sel.id} className="hero-fondu mt-3 grid list-none gap-2 p-0 sm:grid-cols-3">
             {(["petit", "moyen", "haut"] as Gamme[]).map((g) => {
@@ -62,6 +63,7 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
                         <span className="block text-[10.5px] font-semibold uppercase tracking-[.12em] text-[var(--bronze)]">{NOM[g]}</span>
                         <span className="block truncate text-[13px] group-hover:underline">{p.m}</span>
                         <span className="block text-[14px] font-semibold tabular-nums">{prix(p)}</span>
+                        {p.p !== null && <span className="block text-[10.5px] text-muted">relevé le {dateReleve(p.d)}</span>}
                         <span className="sr-only">{p.n} (nouvel onglet)</span>
                       </span>
                     </a>

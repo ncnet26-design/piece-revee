@@ -174,13 +174,27 @@ describe("Camille (IA gratuite)", () => {
     expect(modele).toContain("mistral-small");
     expect(input.messages[0]!.role).toBe("system");
     expect(input.messages[0]!.content).toContain("ne cite QUE ceux de la liste");
-    expect(input.messages[0]!.content).toContain("Canapé X — Habitat — 999 €");
-    expect(input.messages.at(-1)).toEqual({ role: "user", content: "Quel canapé pour un salon chaleureux ?" });
+    // Les informations du site vont avec la question, jamais dans la consigne système.
+    expect(input.messages[0]!.content).not.toContain("Canapé X");
+    expect(input.messages.at(-1)!.role).toBe("user");
+    expect(input.messages.at(-1)!.content).toMatch(/^Quel canapé pour un salon chaleureux \?[\s\S]*Canapé X — Habitat — 999 €/);
   });
   it("refuse un message vide ou un historique qui ne finit pas par une question", async () => {
     const env: Env = { QUOTA: memoryKV(), AI: { run: vi.fn() as never } };
     expect((await call(env, "/v2/camille", { method: "POST", body: msg({ messages: [] }) })).status).toBe(400);
     expect((await call(env, "/v2/camille", { method: "POST", body: msg({ messages: [{ role: "assistant", content: "Bonjour" }] }) })).status).toBe(400);
+  });
+  it("part gratuite commune : quand les neurones du jour sont épuisés, ni Camille ni les images gratuites ne partent", async () => {
+    const run = vi.fn(async () => ({ response: "ok" }));
+    const env: Env = { QUOTA: memoryKV(), AI: { run: run as never }, NEURONES_JOUR: "200" };
+    expect((await call(env, "/v2/camille", { method: "POST", body: msg() })).status).toBe(200);
+    expect((await call(env, "/v2/camille", { method: "POST", body: msg() })).status).toBe(429);
+    expect(run).toHaveBeenCalledTimes(1);
+  });
+  it("corps trop gros (même sans taille annoncée) : refusé", async () => {
+    const env: Env = { QUOTA: memoryKV(), AI: { run: vi.fn() as never } };
+    const r = await call(env, "/v2/camille", { method: "POST", body: msg({ contexte: "x".repeat(70_000) }) });
+    expect(r.status).toBe(400);
   });
   it("plafond par visiteur : au-delà, message clair (le site répond alors avec ses fiches)", async () => {
     const env: Env = { QUOTA: memoryKV(), AI: { run: (async () => ({ response: "ok" })) as never }, CAMILLE_VISITEUR_JOUR: "2" };

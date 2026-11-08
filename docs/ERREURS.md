@@ -76,3 +76,6 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 ## 2026-11-08
 - Test Workers AI en 401 : le jeton CLOUDFLARE_API_TOKEN n'a pas la permission « Workers AI – Edit ». Vérifier les permissions d'un jeton avant d'écrire un robot qui l'utilise.
 - Prix en Instrument Serif affichés « 2155 € » : l'espace fine insécable (U+202F) de toLocaleString n'existe pas dans la police ; la remplacer par U+00A0.
+- Robot d'audit bloqué : « networkidle » n'arrive jamais sur les pages 3D, et plusieurs pages en parallèle se gênent ; utiliser « load », une page à la fois, une limite de temps par page.
+- Rangée défilante (overflow-x-auto) dans une grille : sans « min-w-0 » sur la colonne, toute la page déborde sur mobile.
+- Compteurs de quota séparés pour une même part gratuite (images et Camille) : risque de la dépasser ; un seul compteur commun.

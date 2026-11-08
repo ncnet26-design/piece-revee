@@ -8,6 +8,7 @@ import { IconClose, IconSend } from "./icons";
 import { CamilleAvatar } from "./CamilleAvatar";
 import { ProduitImage } from "./ProduitImage";
 import type { ProduitCatalogue } from "@/lib/catalogue";
+import { dateReleve } from "@/lib/date-releve";
 import { guideByKey } from "@/lib/camille-guide";
 
 const NO_TURNS: ChatTurn[] = [];
@@ -30,9 +31,10 @@ function Produits({ l }: { l: Array<ProduitCatalogue & { g?: string }> }) {
         <li key={p.u} className="w-[132px] flex-none snap-start">
           <a href={p.u} target="_blank" rel="noopener noreferrer nofollow" className="block no-underline">
             <ProduitImage src={p.i} alt="" merchant={p.m} />
-            {p.g && <span className="mt-1.5 block text-[9.5px] font-semibold uppercase tracking-[.12em] text-[var(--bronze)]">{NOM_GAMME[p.g]}</span>}
+            {p.g && <span className="mt-1.5 block text-[11px] font-semibold uppercase tracking-[.12em] text-[var(--bronze)]">{NOM_GAMME[p.g]}</span>}
             <span className="mt-0.5 line-clamp-2 block text-[12px] leading-snug text-ink">{p.n}</span>
-            <span className="mt-0.5 block text-[11.5px] text-muted">{p.m}{p.p !== null ? ` · ${p.p.toLocaleString("fr-FR")} €` : ""}<span className="sr-only"> (nouvel onglet)</span></span>
+            <span className="mt-0.5 block text-[11.5px] text-muted">{p.m}{p.p !== null ? ` · ${p.p.toLocaleString("fr-FR")} €` : ""}</span>
+            {p.p !== null && p.d && <span className="block text-[11px] text-muted">relevé le {dateReleve(p.d)}</span>}<span className="sr-only"> (nouvel onglet)</span>
           </a>
         </li>
       ))}
@@ -96,8 +98,8 @@ export default function CamilleDrawer({ open, onClose, request }: { open: boolea
         <div className="flex items-center gap-3 border-b border-line px-4 py-3.5">
           <CamilleAvatar size={42} />
           <div className="min-w-0 flex-1"><b className="block font-display text-[17px]">Camille</b><small className="text-[12.5px] text-muted">Designer d'intérieur virtuelle · IA</small></div>
-          {turns.length > 0 && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setTurns([])}>Effacer</button>}
-          <button type="button" className="btn btn-sm btn-ghost" onClick={() => setOpen(false)} aria-label="Fermer Camille"><IconClose width={16} height={16} /></button>
+          {turns.length > 0 && <button type="button" className="btn btn-sm btn-ghost min-h-9" onClick={() => setTurns([])}>Effacer</button>}
+          <button type="button" className="btn btn-sm btn-ghost min-h-9 min-w-9" onClick={() => setOpen(false)} aria-label="Fermer Camille"><IconClose width={16} height={16} /></button>
         </div>
         <div ref={msgsRef} className="flex flex-1 flex-col gap-3 overflow-y-auto p-4" aria-live="polite">
           <div className="msg-a">

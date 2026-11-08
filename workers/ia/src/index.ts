@@ -22,6 +22,18 @@ import { rechercher } from "./recherche";
 import { parseCamille, plafondCamille, repondreCamille } from "./camille";
 import { estimate, freeLeft, reserveFree, loadInput, loadJob, overLimit, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
 
+/** Lit le corps JSON en s'arrêtant à `max` octets (même sans en-tête Content-Length). */
+async function lireJson(request: Request, max = MAX_BODY): Promise<unknown> {
+  if (!request.body) return null;
+  const reader = request.body.getReader(), parts: Uint8Array[] = []; let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read(); if (done) break;
+    total += value.byteLength; if (total > max) { await reader.cancel().catch(() => {}); return null; }
+    parts.push(value);
+  }
+  const all = new Uint8Array(total); let o = 0; for (const p of parts) { all.set(p, o); o += p.byteLength; }
+  try { return JSON.parse(new TextDecoder().decode(all)); } catch { return null; }
+}
 const toImg = (s: string): ImgIn => { const m = /^data:(image\/\w+);base64,(.+)$/.exec(s)!; return { mime: m[1]!, b64: m[2]! }; };
 const pub = (j: Job, base: string) => ({ ...j, ref: undefined, visitor: undefined, ipHash: undefined, error: j.error ? { message: j.error.message, retryable: j.error.retryable } : undefined, imageUrl: j.image ? `${base}/v2/images/${j.id}` : null });
 
@@ -88,7 +100,7 @@ export default {
 
     if (request.method === "POST" && path === "/v2/jobs") {
       if (Number(request.headers.get("Content-Length") || 0) > MAX_BODY) return json({ erreur: "Images trop lourdes." }, 413);
-      const b = parseJobBody(await request.json().catch(() => null));
+      const b = parseJobBody(await lireJson(request));
       if (!b) return json({ erreur: "Demande incomplète : décrivez le projet (et ajoutez la photo pour une transformation)." }, 400);
       const visitor = await sha(`v|${b.visiteur}`);
       // D'abord l'IA gratuite de Cloudflare (sans masque, petites images fournies), tant qu'il reste des images gratuites aujourd'hui.
@@ -106,7 +118,7 @@ export default {
     }
 
     if (request.method === "POST" && path === "/v2/analyse") {
-      const b = await request.json().catch(() => null) as { image?: unknown; visiteur?: unknown } | null;
+      const b = await lireJson(request) as { image?: unknown; visiteur?: unknown } | null;
       if (!b || !isDataUrl(b.image) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Image manquante." }, 400);
       const visitor = await sha(`v|${b.visiteur}`), cost = 0.01;
       const refusal = overLimit(await usage(env, visitor, ipHash), cost);
@@ -122,7 +134,7 @@ export default {
 
     if (request.method === "POST" && path === "/v2/moodboard") {
       if (Number(request.headers.get("Content-Length") || 0) > MAX_BODY) return json({ erreur: "Images trop lourdes." }, 413);
-      const b = await request.json().catch(() => null) as { inspirations?: unknown; matieres?: unknown; visiteur?: unknown } | null;
+      const b = await lireJson(request) as { inspirations?: unknown; matieres?: unknown; visiteur?: unknown } | null;
       const imgs = Array.isArray(b?.inspirations) ? b.inspirations.slice(0, 6) : [];
       if (!b || !imgs.length || !imgs.every(isDataUrl) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Ajoutez au moins une image d'inspiration." }, 400);
       const catalog = (Array.isArray(b.matieres) ? b.matieres : []).filter((m): m is { id: string; name: string } => !!m && typeof (m as { id?: unknown }).id === "string" && typeof (m as { name?: unknown }).name === "string")
@@ -141,7 +153,7 @@ export default {
 
     if (request.method === "POST" && path === "/v2/camille") {
       if (Number(request.headers.get("Content-Length") || 0) > 64_000) return json({ erreur: "Message trop long." }, 413);
-      const b = parseCamille(await request.json().catch(() => null));
+      const b = parseCamille(await lireJson(request, 64_000));
       if (!b) return json({ erreur: "Message vide." }, 400);
       if (!env.AI) return json({ erreur: "Camille n'est pas disponible." }, 503);
       const refus = await plafondCamille(env, await sha(`v|${b.visiteur}`), ipHash);
@@ -151,7 +163,7 @@ export default {
     }
 
     if (request.method === "POST" && path === "/v2/recherche") {
-      const b = await request.json().catch(() => null) as { query?: unknown; label?: unknown; visiteur?: unknown; pays?: unknown; photo?: unknown; flux?: unknown } | null;
+      const b = await lireJson(request) as { query?: unknown; label?: unknown; visiteur?: unknown; pays?: unknown; photo?: unknown; flux?: unknown } | null;
       const q = typeof b?.query === "string" ? b.query.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 160) : "";
       if (!b || q.length < 3 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Recherche incomplète." }, 400);
       const label = typeof b.label === "string" ? b.label.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 220) : q;
@@ -207,10 +219,17 @@ export default {
         if (job.attempts >= 3) return json({ erreur: "Trois tentatives déjà faites : modifiez la demande." }, 409);
         const input = await loadInput(env, job.id);
         if (!input) return json({ erreur: "Les données de départ ont expiré : relancez une nouvelle demande." }, 410);
-        const cost = estimate(job.provider, job.quality);
-        const refusal = overLimit(await usage(env, job.visitor, ipHash), cost);
-        if (refusal) return json({ erreur: refusal }, 429);
-        await reserve(env, job.visitor, ipHash, cost); job.costUsd += cost;
+        if (job.provider === "cloudflare") {
+          // Relance gratuite : comptée dans la part gratuite du jour ; sinon, Gemini dans les plafonds habituels.
+          if ((await freeLeft(env)) > 0) await reserveFree(env, job.visitor, ipHash);
+          else { job.provider = "gemini"; job.model = gemini.model(env, job.mode); }
+        }
+        if (job.provider !== "cloudflare") {
+          const cost = estimate(job.provider, job.quality);
+          const refusal = overLimit(await usage(env, job.visitor, ipHash), cost);
+          if (refusal) return json({ erreur: refusal }, 429);
+          await reserve(env, job.visitor, ipHash, cost); job.costUsd += cost;
+        }
         return json(pub(await run(env, job, input), base));
       }
     }
@@ -230,7 +249,7 @@ async function legacy(request: Request, env: Env, path: string, ip: string, json
   const total = Number(await env.QUOTA!.get(totalKey)) || 0, mine = Number(await env.QUOTA!.get(ipKey)) || 0;
   if (total >= LEGACY_DAY) return json({ erreur: "Le nombre d'images du jour est atteint. Revenez demain." }, 429);
   if (mine >= LEGACY_VISITOR) return json({ erreur: `Vous avez utilisé vos ${LEGACY_VISITOR} images du jour. Revenez demain.` }, 429);
-  const body = await request.json().catch(() => null) as Record<string, unknown> | null;
+  const body = await lireJson(request) as Record<string, unknown> | null;
   if (!body) return json({ erreur: "Demande illisible." }, 400);
   const clean = (s: unknown, max: number) => (typeof s === "string" ? s.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, max) : "");
   const image = (s: unknown): ImgIn | null => (isDataUrl(s) ? toImg(s) : null);
