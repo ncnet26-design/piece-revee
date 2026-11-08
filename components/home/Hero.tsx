@@ -1,8 +1,6 @@
 import Link from "next/link";
 import indexCatalogue from "@/public/boutique/index.json";
-import { BeforeAfter } from "@/components/BeforeAfter";
-import { Photo } from "@/components/Photo";
-import { MentionIA } from "@/components/MentionIA";
+import { HeroAnime, type Etiquette } from "./HeroAnime";
 import { PIECES } from "@/components/shop-the-look-pieces";
 import { trouverParBudget } from "@/lib/trouves-par-budget";
 import { HeroVue } from "./HeroVue";
@@ -10,11 +8,23 @@ import { HeroVue } from "./HeroVue";
 const IDX = indexCatalogue as { total: number; vendeurs: Record<string, number> };
 const NB_REFS = (Math.floor(IDX.total / 100) * 100).toLocaleString("fr-FR").replace(/ /g, " ");
 const NB_ENSEIGNES = Object.keys(IDX.vendeurs).length;
+/** Position des meubles sur la pièce refaite (public/editorial/ia/salon-apres.webp), en % ; prix du budget moyen relevés dans la boutique. */
+const SUR_APRES: Array<{ id: string; court: string; x: number; y: number }> = [
+  { id: "suspension", court: "Suspension", x: 50, y: 24 },
+  { id: "tableau", court: "Tableau", x: 70, y: 36 },
+  { id: "canape", court: "Canapé", x: 36, y: 57 },
+  { id: "fauteuil", court: "Fauteuil", x: 85, y: 61 },
+  { id: "table", court: "Tables basses", x: 57, y: 69 },
+  { id: "tapis", court: "Tapis", x: 40, y: 86 },
+];
+const eur = (n: number) => n.toLocaleString("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).replace(/\u202f/g, "\u00a0");
 
 /**
  * Haut de page construit comme une page de vente : une promesse, un bouton, des garanties, et la preuve (l'avant/après) à côté.
  */
 export function Hero() {
+  const trouves = trouverParBudget(PIECES);
+  const etiquettes: Etiquette[] = SUR_APRES.flatMap((e) => { const t = trouves[e.id], p = t?.moyen ?? t?.petit ?? t?.haut; return p?.p ? [{ id: e.id, label: e.court, prix: eur(p.p), x: e.x, y: e.y }] : []; });
   return (
     <section aria-labelledby="h-hero" className="grid gap-x-14 gap-y-7 pb-14 pt-4 sm:pt-8 lg:grid-cols-[1fr_1.2fr] lg:grid-rows-[auto_auto] lg:pb-20">
       <div className="lg:self-end">
@@ -23,13 +33,8 @@ export function Hero() {
       </div>
 
       <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
-        <div className="relative">
-          <BeforeAfter ratio="2528 / 1696" labelBefore="Avant" labelAfter="Après"
-            before={<Photo src="/editorial/ia/salon-avant.webp" priority sizes="(min-width:1024px) 55vw, 100vw" alt="Avant : salon peu meublé, vieux canapé en cuir, table en pin, cartons, murs nus" />}
-            after={<Photo src="/editorial/ia/salon-apres.webp" priority sizes="(min-width:1024px) 55vw, 100vw" alt="Après : même salon, canapé courbe en bouclette, tables basses en marbre, fauteuil vert, tapis rond rayé, grand tableau" />} />
-          <MentionIA className="bottom-2.5 left-2.5" />
-        </div>
-        <p className="mt-3 text-center text-[13px] text-muted"><span aria-hidden>⟷</span> Glissez pour comparer : mêmes murs, mêmes fenêtres, une autre pièce.</p>
+        <HeroAnime etiquettes={etiquettes} />
+        <p className="mt-3 text-center text-[13px] text-muted">Exemple créé avec Pièce Rêvée : mêmes murs, mêmes fenêtres, une autre pièce, et chaque meuble en vente.</p>
       </div>
 
       <div className="flex flex-col lg:self-start">

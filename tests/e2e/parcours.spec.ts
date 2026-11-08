@@ -27,7 +27,7 @@ test("accueil : promesse, démonstration à toucher, sections éditoriales", asy
   await page.getByRole("button", { name: /^Tables basses en marbre : voir les produits par budget/ }).click();
   await expect(page.getByText("Tables basses en marbre · en vente maintenant")).toBeVisible();
   for (const g of ["Petit budget", "Budget moyen", "Haut de gamme"]) await expect(page.getByRole("link", { name: new RegExp(g) }).first()).toHaveAttribute("target", "_blank");
-  await expect(page.getByRole("slider", { name: /Avant/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Mettre l'animation en pause" })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
