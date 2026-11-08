@@ -3,6 +3,7 @@ import { ExemplePiece, Hero } from "@/components/home/Hero";
 import catalogue from "@/data/catalogue.json";
 import indexCatalogue from "@/public/boutique/index.json";
 import { MarquesDefilantes } from "@/components/home/MarquesDefilantes";
+import { marquesDesign } from "@/lib/marques-design";
 import { OffreTeaser } from "@/components/OffreTeaser";
 import { MentionIA } from "@/components/MentionIA";
 import { NOM_STYLE, STYLES as STYLES_CATALOGUE, type ProduitAchetable } from "@/lib/catalogue-achetable";
@@ -19,6 +20,7 @@ export const metadata = meta({ title: "Pièce Rêvée · Voyez votre pièce refa
 /** Enseignes présentes sur le site : celles du catalogue vérifié et celles relevées par le robot. */
 const MARQUES = [...new Set([...(catalogue as { produits: ProduitAchetable[] }).produits.map((p) => p.enseigne), ...Object.keys((indexCatalogue as { vendeurs: Record<string, number> }).vendeurs)])]
   .sort((a, b) => a.localeCompare(b, "fr"));
+const DESIGN = marquesDesign(MARQUES);
 const PASS = PLANS.find((p) => p.id === "pass")!;
 
 
@@ -53,7 +55,7 @@ export default function Home() {
       <Hero />
 
       {/* 2. Preuve immédiate : les enseignes */}
-      <MarquesDefilantes marques={MARQUES} />
+      <MarquesDefilantes marques={MARQUES} design={DESIGN} />
 
       {/* 3. La solution en trois étapes, illustrée */}
       <section id="comment" aria-labelledby="h-comment" className="scroll-mt-24 py-20 sm:py-28">

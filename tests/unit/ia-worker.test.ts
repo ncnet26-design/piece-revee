@@ -166,7 +166,7 @@ describe("IA gratuite de Cloudflare", () => {
 describe("Camille (IA gratuite)", () => {
   const msg = (o: Record<string, unknown> = {}) => JSON.stringify({ messages: [{ role: "user", content: "Quel canapé pour un salon chaleureux ?" }], contexte: "Produits de la boutique :\n• Canapé X — Habitat — 999 €", visiteur: "visiteur-test-01", ...o });
   it("répond avec le modèle Mistral, la consigne fixe et les informations du site", async () => {
-    const run = vi.fn(async (_m: string, _i: { messages: Array<{ role: string; content: string }> }) => ({ response: "Je vous conseille le Canapé X." }));
+    const run = vi.fn(async (...a: [string, { messages: Array<{ role: string; content: string }> }]) => (a.length ? { response: "Je vous conseille le Canapé X." } : {}));
     const env: Env = { QUOTA: memoryKV(), AI: { run: run as never } };
     const r = await call(env, "/v2/camille", { method: "POST", body: msg() });
     expect(await r.json()).toEqual({ reponse: "Je vous conseille le Canapé X." });

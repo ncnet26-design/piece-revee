@@ -190,6 +190,7 @@
 /* ——— Mouvement ——— */
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .marquee-track { animation: marquee 70s linear infinite; }
+.marquee-inverse { animation-direction: reverse; animation-duration: 90s; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 .rv { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
 .rv.rv-in { opacity: 1; transform: none; }
