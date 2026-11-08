@@ -163,6 +163,35 @@ describe("IA gratuite de Cloudflare", () => {
   });
 });
 
+describe("Camille (IA gratuite)", () => {
+  const msg = (o: Record<string, unknown> = {}) => JSON.stringify({ messages: [{ role: "user", content: "Quel canapé pour un salon chaleureux ?" }], contexte: "Produits de la boutique :\n• Canapé X — Habitat — 999 €", visiteur: "visiteur-test-01", ...o });
+  it("répond avec le modèle Mistral, la consigne fixe et les informations du site", async () => {
+    const run = vi.fn(async (_m: string, _i: { messages: Array<{ role: string; content: string }> }) => ({ response: "Je vous conseille le Canapé X." }));
+    const env: Env = { QUOTA: memoryKV(), AI: { run: run as never } };
+    const r = await call(env, "/v2/camille", { method: "POST", body: msg() });
+    expect(await r.json()).toEqual({ reponse: "Je vous conseille le Canapé X." });
+    const [modele, input] = run.mock.calls[0]!;
+    expect(modele).toContain("mistral-small");
+    expect(input.messages[0]!.role).toBe("system");
+    expect(input.messages[0]!.content).toContain("ne cite QUE ceux de la liste");
+    expect(input.messages[0]!.content).toContain("Canapé X — Habitat — 999 €");
+    expect(input.messages.at(-1)).toEqual({ role: "user", content: "Quel canapé pour un salon chaleureux ?" });
+  });
+  it("refuse un message vide ou un historique qui ne finit pas par une question", async () => {
+    const env: Env = { QUOTA: memoryKV(), AI: { run: vi.fn() as never } };
+    expect((await call(env, "/v2/camille", { method: "POST", body: msg({ messages: [] }) })).status).toBe(400);
+    expect((await call(env, "/v2/camille", { method: "POST", body: msg({ messages: [{ role: "assistant", content: "Bonjour" }] }) })).status).toBe(400);
+  });
+  it("plafond par visiteur : au-delà, message clair (le site répond alors avec ses fiches)", async () => {
+    const env: Env = { QUOTA: memoryKV(), AI: { run: (async () => ({ response: "ok" })) as never }, CAMILLE_VISITEUR_JOUR: "2" };
+    expect((await call(env, "/v2/camille", { method: "POST", body: msg() })).status).toBe(200);
+    expect((await call(env, "/v2/camille", { method: "POST", body: msg() })).status).toBe(200);
+    const r = await call(env, "/v2/camille", { method: "POST", body: msg() });
+    expect(r.status).toBe(429);
+    expect((await r.json() as { erreur: string }).erreur).toContain("fiches");
+  });
+});
+
 describe("choix du fournisseur et formats", () => {
   it("choisit le fournisseur demandé s'il est configuré, sinon le réglage, sinon le premier", () => {
     expect(chooseProvider({ GEMINI_API_KEY: "g", FAL_KEY: "f" }, "fal")?.id).toBe("fal");

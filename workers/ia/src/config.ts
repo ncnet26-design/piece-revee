@@ -29,6 +29,9 @@ export interface Env {
   IMAGES_GRATUITES_JOUR?: string;
   /** IA de Cloudflare (liaison « AI ») : gratuite jusqu'au quota quotidien. */
   AI?: { run(model: string, input: unknown): Promise<unknown> };
+  /** Camille : messages par jour (au total, et par visiteur). */
+  CAMILLE_JOUR?: string;
+  CAMILLE_VISITEUR_JOUR?: string;
   QUOTA?: KVNamespace;
   /** Facultatif : stockage R2 des images (sinon KV, 30 jours). */
   IMAGES?: R2Bucket;
@@ -61,7 +64,7 @@ export const limits = (env: Env) => ({
   visitorMonthUsd: num(env.BUDGET_VISITEUR_MOIS_USD, 1.5),
   dayImages: num(env.IMAGES_JOUR, 30),
   visitorDayImages: num(env.IMAGES_VISITEUR_JOUR, 6),
-  freeDayImages: num(env.IMAGES_GRATUITES_JOUR, 60),
+  freeDayImages: num(env.IMAGES_GRATUITES_JOUR, 50),
 });
 
 export type Quality = "brouillon" | "standard" | "premium";

@@ -3,8 +3,10 @@ import { KNOWLEDGE, searchLibrary, libraryById, type KnowledgeChunk, type Librar
 import { detectRiskyTopics, proNotice, isOffTopic } from "@core/guard.ts";
 import { DEMO_MODE, SUPABASE_URL, SUPABASE_ANON_KEY } from "./site";
 import { supabase } from "./supabase";
+import type { ProduitCatalogue } from "./catalogue";
+import { contexte, demanderCamilleIA, produitsPour } from "./camille-ia";
 
-export interface ChatTurn { role: "user" | "assistant"; content: string; sources?: { title: string; url: string }[]; offline?: boolean }
+export interface ChatTurn { role: "user" | "assistant"; content: string; sources?: { title: string; url: string }[]; offline?: boolean; produits?: ProduitCatalogue[] }
 
 const norm = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
 const STOP = new Set(["faire", "avec", "comment", "quelle", "quelles", "pourquoi", "dois", "veux", "voudrais", "le", "la", "les", "un", "une", "des", "de", "du", "et", "ou", "a", "au", "aux", "en", "dans", "pour", "par", "sur", "avec", "est", "sont", "je", "j", "mon", "ma", "mes", "quel", "quelle", "quels", "quelles", "comment", "que", "qui", "quoi", "il", "elle", "on", "ce", "cette", "ces", "faut", "peut", "puis", "plus", "moins", "tres", "bien", "mettre", "faire", "chez", "moi"]);
@@ -36,7 +38,7 @@ export function offlineAnswer(question: string): ChatTurn {
 
 /** Envoie un message à Camille (Edge Function, réponse en flux). Bascule sur la base de connaissances si l'IA n'est pas disponible. */
 export async function askCamille(history: ChatTurn[], message: string, ctx: { projectId?: string; step?: string }, onDelta: (text: string) => void, signal?: AbortSignal): Promise<ChatTurn> {
-  if (DEMO_MODE) return offlineAnswer(message);
+  if (DEMO_MODE) return askCamilleGratuite(history, message, signal);
   const sb = supabase();
   const session = (await sb?.auth.getSession())?.data.session;
   const res = await fetch(`${SUPABASE_URL}/functions/v1/camille`, {
@@ -61,6 +63,21 @@ export async function askCamille(history: ChatTurn[], message: string, ctx: { pr
     }
   }
   return { role: "assistant", content: text, sources };
+}
+
+/** Camille avec l'IA gratuite du service Cloudflare ; si elle est indisponible ou au plafond du jour, réponse par les fiches. */
+async function askCamilleGratuite(history: ChatTurn[], message: string, signal?: AbortSignal): Promise<ChatTurn> {
+  if (isOffTopic(message)) return offlineAnswer(message);
+  const fiches = searchKnowledge(message, 3);
+  const produits = await produitsPour(`${history.filter((t) => t.role === "user").slice(-1).map((t) => t.content).join(" ")} ${message}`).catch(() => []);
+  const r = await demanderCamilleIA([...history.map(({ role, content }) => ({ role, content })), { role: "user", content: message }], contexte(location.pathname, fiches, produits), signal);
+  if (!r.ok) {
+    const off = offlineAnswer(message);
+    return { ...off, content: r.message ? `${r.message}\n\n${off.content}` : off.content, produits: produits.slice(0, 3) };
+  }
+  const risky = proNotice(detectRiskyTopics(message));
+  const sources = fiches.flatMap((c) => c.sources).filter((s, i, a) => a.findIndex((x) => x.title === s.title) === i).map(({ title, url }) => ({ title, url }));
+  return { role: "assistant", content: risky ? `${r.texte}\n\n${risky}` : r.texte, sources, produits };
 }
 
 export function citation(id: string): LibraryEntry | undefined { return libraryById.get(id); }

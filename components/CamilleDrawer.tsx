@@ -3,10 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { askCamille, type ChatTurn } from "@/lib/camille";
 import { KEYS } from "@/lib/storage";
 import { useLocal } from "@/lib/use-local";
-import { DEMO_MODE } from "@/lib/site";
 import { RichText } from "./RichText";
 import { IconClose, IconSend } from "./icons";
 import { CamilleAvatar } from "./CamilleAvatar";
+import { ProduitImage } from "./ProduitImage";
+import type { ProduitCatalogue } from "@/lib/catalogue";
 import { guideByKey } from "@/lib/camille-guide";
 
 const NO_TURNS: ChatTurn[] = [];
@@ -19,6 +20,25 @@ const SUGGESTIONS = [
   "Aménager un petit balcon venté",
   "Quand planter un jardin sec ?",
 ];
+
+const NOM_GAMME: Record<string, string> = { petit: "Petit budget", moyen: "Budget moyen", haut: "Haut de gamme" };
+/** Les vrais produits de la boutique proposés avec la réponse (photo de l'enseigne, prix relevé, lien direct). */
+function Produits({ l }: { l: Array<ProduitCatalogue & { g?: string }> }) {
+  return (
+    <ul className="-mx-1 mt-3 flex list-none snap-x gap-2 overflow-x-auto p-1 pb-2" aria-label="Produits proposés par Camille">
+      {l.map((p) => (
+        <li key={p.u} className="w-[132px] flex-none snap-start">
+          <a href={p.u} target="_blank" rel="noopener noreferrer nofollow" className="block no-underline">
+            <ProduitImage src={p.i} alt="" merchant={p.m} />
+            {p.g && <span className="mt-1.5 block text-[9.5px] font-semibold uppercase tracking-[.12em] text-[var(--bronze)]">{NOM_GAMME[p.g]}</span>}
+            <span className="mt-0.5 line-clamp-2 block text-[12px] leading-snug text-ink">{p.n}</span>
+            <span className="mt-0.5 block text-[11.5px] text-muted">{p.m}{p.p !== null ? ` · ${p.p.toLocaleString("fr-FR")} €` : ""}<span className="sr-only"> (nouvel onglet)</span></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export interface CamilleRequest { id: number; question?: string; context?: { projectId?: string; step?: string } }
 
@@ -84,11 +104,10 @@ export default function CamilleDrawer({ open, onClose, request }: { open: boolea
             <p>Bonjour, je suis <strong>Camille</strong>, votre designer d'intérieur virtuelle. Couleurs, matières, meubles, plantes, éclairage, ordre des travaux : je vous accompagne à chaque étape du site.</p>
             {step && <p>{step.tip}</p>}
             <p className="text-[12.5px] text-muted">Je suis une intelligence artificielle : je cite mes sources et je vous oriente vers un professionnel pour la structure, l'électricité, le gaz ou l'urbanisme.</p>
-            {DEMO_MODE && <p className="text-[12px] text-muted">Mode démonstration : mes réponses viennent de notre base de connaissances sourcée.</p>}
           </div>
           {turns.map((t, i) => t.role === "user"
             ? <div key={i} className="msg-u">{t.content}</div>
-            : <div key={i} className="msg-a"><RichText text={t.content} />{t.sources && t.sources.length > 0 && <p className="msg-src">Sources : {t.sources.map((s, j) => <span key={j}>{j ? " · " : ""}<a href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a></span>)}</p>}</div>)}
+            : <div key={i} className="msg-a"><RichText text={t.content} />{t.sources && t.sources.length > 0 && <p className="msg-src">Sources : {t.sources.map((s, j) => <span key={j}>{j ? " · " : ""}<a href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a></span>)}</p>}{t.produits && t.produits.length > 0 && <Produits l={t.produits} />}</div>)}
           {busy && <div className="msg-a">{streaming ? <RichText text={streaming} /> : <span className="typing" aria-label="Camille écrit"><i /><i /><i /></span>}</div>}
         </div>
         {turns.length === 0 && (

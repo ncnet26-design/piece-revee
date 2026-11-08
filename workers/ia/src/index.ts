@@ -6,6 +6,7 @@
  *   POST /v2/moodboard            { inspirations: dataURL[], matieres: {id,name}[], visiteur } → style, palette, matières, objets, consigne
  *   POST /v2/analyse              { image, visiteur } → objets et surfaces avec leur zone
  *   POST /v2/recherche            { query, label, visiteur } → produits en vente trouvés sur internet (prix relevés sur les pages)
+ *   POST /v2/camille              { messages, contexte, visiteur } → réponse de Camille (IA gratuite de Cloudflare)
  *   GET  /v2/jobs/:id             état de la tâche (interroge le fournisseur si besoin)
  *   POST /v2/jobs/:id/retry       nouvelle tentative avec les mêmes données
  *   GET  /v2/images/:id           l'image produite
@@ -18,6 +19,7 @@ import { isDataUrl, parseJobBody } from "./validate";
 import { chooseProvider, cloudflare, gemini, PROVIDERS, ProviderError, type ImgIn, type ProviderRequest } from "./providers";
 import { analyse, moodboard } from "./analyse";
 import { rechercher } from "./recherche";
+import { parseCamille, plafondCamille, repondreCamille } from "./camille";
 import { estimate, freeLeft, reserveFree, loadInput, loadJob, overLimit, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
 
 const toImg = (s: string): ImgIn => { const m = /^data:(image\/\w+);base64,(.+)$/.exec(s)!; return { mime: m[1]!, b64: m[2]! }; };
@@ -135,6 +137,17 @@ export default {
       } catch (e) {
         return json({ erreur: e instanceof ProviderError ? e.message : "Moodboard impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
+    }
+
+    if (request.method === "POST" && path === "/v2/camille") {
+      if (Number(request.headers.get("Content-Length") || 0) > 64_000) return json({ erreur: "Message trop long." }, 413);
+      const b = parseCamille(await request.json().catch(() => null));
+      if (!b) return json({ erreur: "Message vide." }, 400);
+      if (!env.AI) return json({ erreur: "Camille n'est pas disponible." }, 503);
+      const refus = await plafondCamille(env, await sha(`v|${b.visiteur}`), ipHash);
+      if (refus) return json({ erreur: refus }, 429);
+      try { return json({ reponse: await repondreCamille(env, b) }); }
+      catch { return json({ erreur: "Camille ne répond pas pour le moment." }, 502); }
     }
 
     if (request.method === "POST" && path === "/v2/recherche") {
