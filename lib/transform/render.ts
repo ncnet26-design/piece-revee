@@ -275,15 +275,20 @@ export function drawFrame(c: Ctx, t: number, d: ProjectData, W: number, H: numbe
 function luminance(hex: string) { const n = parseInt(hex.slice(1), 16); return (0.3 * ((n >> 16) & 255) + 0.59 * ((n >> 8) & 255) + 0.11 * (n & 255)) / 255; }
 
 /** Encode le film : MP4 (H.264) avec WebCodecs quand le navigateur le permet, sinon enregistrement direct. */
-export async function encodeFilm(d: ProjectData, W: number, H: number, onProgress: (p: number) => void): Promise<{ blob: Blob; ext: "mp4" | "webm" }> {
-  const fps = 30, frames = FILM_SECONDS * fps;
+export function encodeFilm(d: ProjectData, W: number, H: number, onProgress: (p: number) => void): Promise<{ blob: Blob; ext: "mp4" | "webm" }> {
+  return encodeAnimation((c, t) => drawFrame(c, t, d, W, H), FILM_SECONDS, W, H, onProgress);
+}
+
+/** Encode une animation dessinée sur un canevas : MP4 (H.264) avec WebCodecs si possible, sinon enregistrement direct. */
+export async function encodeAnimation(draw: (c: CanvasRenderingContext2D, t: number) => void, seconds: number, W: number, H: number, onProgress: (p: number) => void, bitrate = 12_000_000): Promise<{ blob: Blob; ext: "mp4" | "webm" }> {
+  const fps = 30, frames = Math.round(seconds * fps);
   const cv = document.createElement("canvas"); cv.width = W; cv.height = H;
   const c = cv.getContext("2d")!;
   const codecs = ["avc1.640033", "avc1.4d0033", "avc1.42003e"];
   let config: VideoEncoderConfig | null = null;
   if (typeof VideoEncoder !== "undefined") {
     for (const codec of codecs) {
-      const cfg: VideoEncoderConfig = { codec, width: W, height: H, bitrate: 12_000_000, framerate: fps, avc: { format: "avc" } };
+      const cfg: VideoEncoderConfig = { codec, width: W, height: H, bitrate, framerate: fps, avc: { format: "avc" } };
       try { if ((await VideoEncoder.isConfigSupported(cfg)).supported) { config = cfg; break; } } catch { /* suivant */ }
     }
   }
@@ -294,7 +299,7 @@ export async function encodeFilm(d: ProjectData, W: number, H: number, onProgres
     const enc = new VideoEncoder({ output: (chunk, meta) => muxer.addVideoChunk(chunk, meta ?? undefined), error: (e) => { failed = e as Error; } });
     enc.configure(config);
     for (let i = 0; i < frames; i++) {
-      drawFrame(c, i / fps, d, W, H);
+      draw(c, i / fps);
       const frame = new VideoFrame(cv, { timestamp: Math.round((i * 1e6) / fps), duration: Math.round(1e6 / fps) });
       enc.encode(frame, { keyFrame: i % (fps * 2) === 0 }); frame.close();
       while (enc.encodeQueueSize > 8) await new Promise((r) => setTimeout(r, 4));
@@ -308,13 +313,13 @@ export async function encodeFilm(d: ProjectData, W: number, H: number, onProgres
   // Repli : enregistrement en temps réel du dessin.
   const mime = ["video/mp4;codecs=avc1", "video/webm;codecs=vp9", "video/webm"].find((m) => typeof MediaRecorder !== "undefined" && MediaRecorder.isTypeSupported(m));
   if (!mime) throw new Error("La création de vidéo n'est pas prise en charge par ce navigateur.");
-  const stream = cv.captureStream(fps), rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 10_000_000 }), parts: Blob[] = [];
+  const stream = cv.captureStream(fps), rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: Math.min(bitrate, 10_000_000) }), parts: Blob[] = [];
   rec.ondataavailable = (e) => { if (e.data.size) parts.push(e.data); };
   const done = new Promise<void>((r) => { rec.onstop = () => r(); });
   rec.start(250);
   const t0 = performance.now();
   await new Promise<void>((resolve) => {
-    const step = () => { const t = (performance.now() - t0) / 1000; drawFrame(c, Math.min(t, FILM_SECONDS), d, W, H); onProgress(Math.min(1, t / FILM_SECONDS)); if (t < FILM_SECONDS) requestAnimationFrame(step); else resolve(); };
+    const step = () => { const t = (performance.now() - t0) / 1000; draw(c, Math.min(t, seconds)); onProgress(Math.min(1, t / seconds)); if (t < seconds) requestAnimationFrame(step); else resolve(); };
     step();
   });
   rec.stop(); await done; stream.getTracks().forEach((tr) => tr.stop());

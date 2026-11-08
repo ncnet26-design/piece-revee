@@ -14,6 +14,7 @@ import { ShopLinks } from "@/components/ShopLinks";
 import { EnLigne } from "./EnLigne";
 import { Catalogue } from "./Catalogue";
 import { BeforeAfter } from "@/components/BeforeAfter";
+import { VideoAvantApres } from "./VideoAvantApres";
 
 type Sel = { kind: "objet"; o: AiObject } | { kind: "surface"; s: Surface } | { kind: "couleur"; hex: string; x: number; y: number };
 
@@ -94,6 +95,7 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
         </div>
       )}
       {lignes?.cle === cle && <div className="mt-5"><PrixPiece lignes={lignes.l} /></div>}
+      {before && <div className="mt-3"><VideoAvantApres avant={before} apres={image} lignes={lignes?.cle === cle ? lignes.l : []} /></div>}
       {project.list.length > 0 && (
         <p className="mt-4 text-[13px]"><a className="underline" href="/ma-piece/">Ma pièce composée : {project.list.length} article{project.list.length > 1 ? "s" : ""}{total ? ` · ${total.toLocaleString("fr-FR")} € de prix relevés` : ""} — voir ma liste d'achats</a></p>
       )}
