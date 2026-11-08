@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { ProduitCatalogue } from "@/lib/catalogue";
 import { PIECES } from "@/components/shop-the-look-pieces";
@@ -29,30 +28,16 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
   const sel = PIECES[i]!, l = trouves[sel.id] ?? {};
 
   return (
-    <section aria-labelledby="h-hero" className="grid items-center gap-10 pb-16 pt-6 sm:pt-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14 lg:pb-24">
-      <div>
-        <h1 id="h-hero" className="max-w-[12ch] text-[clamp(52px,7vw,108px)] leading-[.92]">Transformez votre pièce, <em>achetez chaque meuble.</em></h1>
-        <p className="mt-6 max-w-[42ch] text-[18px] leading-relaxed text-muted">Une photo de votre pièce, des images qui vous plaisent : on la redessine dans votre style et on trouve chaque meuble en vente, à votre budget.</p>
-        <Link href="/transformer/" className="btn btn-primary mt-9 !min-h-0 gap-3 !px-9 !py-5 text-[19px] font-semibold shadow-[0_10px_30px_-12px_rgba(27,26,23,.55)]">
-          <svg aria-hidden viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
-          Transformer ma pièce
-          <span aria-hidden>→</span>
-        </Link>
-        <p className="mt-4 text-[13.5px] text-muted">Gratuit pour essayer · sans carte bancaire · résultat en quelques minutes</p>
-        <ol aria-label="En trois étapes" className="mt-10 flex list-none flex-wrap items-center gap-x-3 gap-y-2 p-0 text-[14px]">
-          {["Votre photo", "Vos inspirations", "Votre pièce à acheter"].map((t, k) => (
-            <li key={t} className="flex items-center gap-2">
-              <span className="grid size-7 place-items-center rounded-full border border-ink font-display text-[15px]">{k + 1}</span>
-              <span className="font-medium">{t}</span>
-              {k < 2 && <span aria-hidden className="ml-1 text-muted">→</span>}
-            </li>
-          ))}
-        </ol>
+    <section id="exemple" aria-labelledby="h-exemple" className="scroll-mt-24 border-t border-line py-20 sm:py-28">
+      <div className="mx-auto max-w-[760px] text-center">
+        <p className="eyebrow">Exemple</p>
+        <h2 id="h-exemple" className="mt-4 text-[clamp(36px,4.6vw,64px)]">Touchez un meuble, <em>achetez-le à votre prix.</em></h2>
+        <p className="mx-auto mt-5 max-w-[52ch] text-[16px] text-muted">Voici ce que vous recevez : chaque meuble de votre pièce refaite, en vente chez de vraies enseignes, en trois budgets.</p>
       </div>
-
+      <div className="mt-12 grid items-start gap-6 lg:grid-cols-[1.35fr_1fr] lg:gap-8">
       <div>
         <figure className="relative m-0 overflow-hidden rounded-[2px] bg-soft">
-          <Photo src="/editorial/ia/salon-exemple.webp" priority sizes="(min-width:1024px) 55vw, 100vw" alt="Exemple de pièce transformée : canapé courbe en bouclette, tables basses en marbre, fauteuil vert, tapis rond rayé, grand tableau coloré" className="block aspect-[1000/651] w-full object-cover" />
+          <Photo src="/editorial/ia/salon-exemple.webp" sizes="(min-width:1024px) 55vw, 100vw" alt="Exemple de pièce transformée : canapé courbe en bouclette, tables basses en marbre, fauteuil vert, tapis rond rayé, grand tableau coloré" className="block aspect-[1000/651] w-full object-cover" />
           {/* Les pastilles sont dessinées sur l'image : des zones cliquables transparentes sont posées dessus. */}
           {PIECES.map((p, k) => (
             <button key={p.id} type="button" onClick={() => { setI(k); setTouche(true); }} aria-pressed={i === k} aria-label={`${p.label} : voir les produits par budget`}
@@ -86,7 +71,8 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
             })}
           </ul>
         </div>
-        <div className="mt-3"><PrixPiece titre="Ce salon complet, à votre budget" lignes={PIECES.filter((p) => !p.secondaire).map((p) => ({ id: p.id, label: p.label, produits: trouves[p.id] ?? {} }))} /></div>
+      </div>
+      <div><PrixPiece titre="Ce salon complet, à votre budget" lignes={PIECES.filter((p) => !p.secondaire).map((p) => ({ id: p.id, label: p.label, produits: trouves[p.id] ?? {} }))} /></div>
       </div>
     </section>
   );

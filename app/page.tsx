@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { BeforeAfter } from "@/components/BeforeAfter";
-import { Hero } from "@/components/home/Hero";
+import { ExemplePiece, Hero } from "@/components/home/Hero";
 import catalogue from "@/data/catalogue.json";
 import indexCatalogue from "@/public/boutique/index.json";
 import { MarquesDefilantes } from "@/components/home/MarquesDefilantes";
@@ -88,24 +87,8 @@ export default function Home() {
         <div className="mt-14 text-center"><Link href="/transformer/" className="btn btn-primary btn-lg">Transformer ma pièce →</Link></div>
       </section>
 
-      {/* 5. Démonstration : la même pièce, avant et après */}
-      <section aria-labelledby="h-perso" className="grid items-center gap-10 border-t border-line py-20 sm:py-28 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
-        <div>
-          <p className="eyebrow">Avant / après</p>
-          <h2 id="h-perso" className="mt-4 text-[clamp(36px,4.4vw,60px)]">La même pièce, <em>méconnaissable.</em></h2>
-          <p className="mt-6 max-w-[40ch] text-[16px] text-muted">À gauche, la pièce telle qu'elle est. À droite, la même pièce refaite par notre IA : mêmes murs, mêmes fenêtres, même parquet. Et chaque meuble que vous voyez est en vente. Faites glisser pour comparer.</p>
-          <Link href="/transformer/" className="btn btn-primary btn-lg mt-8">Transformer ma pièce →</Link>
-        </div>
-        <div>
-          <div className="relative">
-            <BeforeAfter ratio="2528 / 1696" labelBefore="Avant" labelAfter="Après"
-              before={<Photo src="/editorial/ia/salon-avant.webp" sizes="(min-width:1024px) 62vw, 100vw" alt="Avant : salon peu meublé, vieux canapé en cuir, table en pin, cartons, murs nus" />}
-              after={<Photo src="/editorial/ia/salon-apres.webp" sizes="(min-width:1024px) 62vw, 100vw" alt="Après : même salon, canapé courbe en bouclette, tables basses en marbre, fauteuil vert, tapis rond rayé, grand tableau" />} />
-            <MentionIA className="bottom-2.5 left-2.5" />
-          </div>
-          <p className="mt-3 text-[12px] text-muted">Les deux images sont créées par notre IA à partir de la même pièce.</p>
-        </div>
-      </section>
+      {/* 4. Démonstration : on touche les meubles, on voit les prix */}
+      <ExemplePiece />
 
       {/* 6. Comparaison avec les autres façons de faire */}
       <section aria-labelledby="h-comparatif" className="border-t border-line py-20 sm:py-28">
