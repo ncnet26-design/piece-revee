@@ -25,6 +25,10 @@ export interface Env {
   BUDGET_VISITEUR_MOIS_USD?: string;
   IMAGES_JOUR?: string;
   IMAGES_VISITEUR_JOUR?: string;
+  /** Images gratuites par jour avec l'IA de Cloudflare (10 000 « neurones » offerts par jour ≈ 80 images). */
+  IMAGES_GRATUITES_JOUR?: string;
+  /** IA de Cloudflare (liaison « AI ») : gratuite jusqu'au quota quotidien. */
+  AI?: { run(model: string, input: unknown): Promise<unknown> };
   QUOTA?: KVNamespace;
   /** Facultatif : stockage R2 des images (sinon KV, 30 jours). */
   IMAGES?: R2Bucket;
@@ -57,6 +61,7 @@ export const limits = (env: Env) => ({
   visitorMonthUsd: num(env.BUDGET_VISITEUR_MOIS_USD, 1.5),
   dayImages: num(env.IMAGES_JOUR, 30),
   visitorDayImages: num(env.IMAGES_VISITEUR_JOUR, 6),
+  freeDayImages: num(env.IMAGES_GRATUITES_JOUR, 60),
 });
 
 export type Quality = "brouillon" | "standard" | "premium";
@@ -66,6 +71,7 @@ export type Quality = "brouillon" | "standard" | "premium";
  * OpenAI facture au jeton : le coût réel est recalculé après coup avec `usage` quand il est fourni.
  */
 export const PRICE_ESTIMATE: Record<string, Record<Quality, number>> = {
+  cloudflare: { brouillon: 0, standard: 0, premium: 0 },
   openai: { brouillon: 0.02, standard: 0.06, premium: 0.2 },
   gemini: { brouillon: 0.04, standard: 0.04, premium: 0.06 },
   fal: { brouillon: 0.04, standard: 0.04, premium: 0.08 },

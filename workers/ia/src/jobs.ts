@@ -15,7 +15,7 @@ export interface Job {
   error?: { message: string; retryable: boolean; detail?: string };
   costUsd: number; visitor: string; ipHash: string;
 }
-export interface JobInput { prompt: string; photo?: ImgIn; references: ImgIn[]; mask?: ImgIn }
+export interface JobInput { prompt: string; photo?: ImgIn; references: ImgIn[]; mask?: ImgIn; petites?: { photo?: ImgIn; references: ImgIn[] } }
 
 const DAY = 86400;
 export const today = () => new Date().toISOString().slice(0, 10);
@@ -74,6 +74,12 @@ export const estimate = (provider: Provider["id"], quality: Quality) => PRICE_ES
 export async function reserve(env: Env, visitor: string, ip: string, usd: number) {
   const d = today(), m = month();
   await Promise.all([add(env, `total:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY), add(env, `usd:${m}`, usd, 62 * DAY), add(env, `usd:${m}:v:${visitor}`, usd, 62 * DAY), add(env, `usd:${m}:ip:${ip}`, usd, 62 * DAY)]);
+}
+/* ——— Images gratuites (IA de Cloudflare) : compteur à part, sans dépense ——— */
+export const freeLeft = async (env: Env) => limits(env).freeDayImages - (await n(env, `gratuit:${today()}`));
+export async function reserveFree(env: Env, visitor: string, ip: string) {
+  const d = today();
+  await Promise.all([add(env, `gratuit:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY)]);
 }
 /** Corrige la réservation quand le coût réel est connu. */
 export async function settle(env: Env, visitor: string, ip: string, delta: number) {

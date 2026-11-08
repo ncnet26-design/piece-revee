@@ -48,7 +48,9 @@ export async function createJob(req: JobRequest): Promise<Result<IaJob>> {
   const photo = req.photo ? await shrink(req.photo, 2048, 0.9) : undefined;
   if (photo) { const im = new Image(); im.src = photo; await im.decode(); width = im.naturalWidth; height = im.naturalHeight; }
   const references = await Promise.all((req.references ?? []).slice(0, 6).map((r) => shrink(r, 1024, 0.85)));
-  const res = await call<IaJob>("/v2/jobs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...req, photo, references, width, height, visiteur: visitorId() }) });
+  // Petites versions (512 px) pour l'IA gratuite de Cloudflare, essayée en premier par le service.
+  const petites = { photo: req.photo ? await shrink(req.photo, 512, 0.9) : undefined, references: await Promise.all((req.references ?? []).slice(0, 3).map((r) => shrink(r, 512, 0.85))) };
+  const res = await call<IaJob>("/v2/jobs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...req, photo, references, petites, width, height, visiteur: visitorId() }) });
   if (res.ok) remember(res.value);
   return res;
 }

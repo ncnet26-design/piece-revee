@@ -15,10 +15,10 @@
 import { isAllowedOrigin, ALLOWED_ORIGINS, MAX_BODY, type Ctx, type Env } from "./config";
 import { buildPrompt } from "./prompts";
 import { isDataUrl, parseJobBody } from "./validate";
-import { chooseProvider, gemini, PROVIDERS, ProviderError, type ImgIn, type ProviderRequest } from "./providers";
+import { chooseProvider, cloudflare, gemini, PROVIDERS, ProviderError, type ImgIn, type ProviderRequest } from "./providers";
 import { analyse, moodboard } from "./analyse";
 import { rechercher } from "./recherche";
-import { estimate, loadInput, loadJob, overLimit, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
+import { estimate, freeLeft, reserveFree, loadInput, loadJob, overLimit, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
 
 const toImg = (s: string): ImgIn => { const m = /^data:(image\/\w+);base64,(.+)$/.exec(s)!; return { mime: m[1]!, b64: m[2]! }; };
 const pub = (j: Job, base: string) => ({ ...j, ref: undefined, visitor: undefined, ipHash: undefined, error: j.error ? { message: j.error.message, retryable: j.error.retryable } : undefined, imageUrl: j.image ? `${base}/v2/images/${j.id}` : null });
@@ -26,10 +26,19 @@ const pub = (j: Job, base: string) => ({ ...j, ref: undefined, visitor: undefine
 /** Lance (ou relance) l'appel au fournisseur et met la fiche à jour. */
 async function run(env: Env, job: Job, input: JobInput): Promise<Job> {
   const provider = PROVIDERS.find((p) => p.id === job.provider)!;
-  const req: ProviderRequest = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, mask: input.mask, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor };
+  const req: ProviderRequest = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, mask: input.mask, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor, petites: input.petites };
   job.attempts += 1; job.status = "en_cours"; job.error = undefined; job.ref = undefined; job.updatedAt = new Date().toISOString();
   try {
-    const r = await provider.submit(req, env);
+    let r;
+    try { r = await provider.submit(req, env); } catch (e) {
+      // Service gratuit en panne ou quota du jour épuisé : Gemini prend le relais, dans les plafonds de dépense.
+      if (provider.id !== "cloudflare" || !gemini.configured(env)) throw e;
+      const cost = estimate("gemini", job.quality);
+      if (overLimit(await usage(env, job.visitor, job.ipHash), cost)) throw e;
+      await reserve(env, job.visitor, job.ipHash, cost);
+      job.provider = "gemini"; job.model = gemini.model(env, job.mode); job.costUsd = cost;
+      r = await gemini.submit(req, env);
+    }
     if (r.state === "pending") job.ref = r.ref;
     else await finish(env, job, r.image, r.mime, r.costUsd);
   } catch (e) {
@@ -79,15 +88,18 @@ export default {
       if (Number(request.headers.get("Content-Length") || 0) > MAX_BODY) return json({ erreur: "Images trop lourdes." }, 413);
       const b = parseJobBody(await request.json().catch(() => null));
       if (!b) return json({ erreur: "Demande incomplète : décrivez le projet (et ajoutez la photo pour une transformation)." }, 400);
-      const provider = chooseProvider(env, b.fournisseur);
-      if (!provider) return json({ erreur: "Aucun fournisseur d'images n'est configuré (clé manquante)." }, 503);
-      const visitor = await sha(`v|${b.visiteur}`), cost = estimate(provider.id, b.quality);
-      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
+      const visitor = await sha(`v|${b.visiteur}`);
+      // D'abord l'IA gratuite de Cloudflare (sans masque, petites images fournies), tant qu'il reste des images gratuites aujourd'hui.
+      const free = !b.fournisseur && !b.mask && b.petites !== undefined && cloudflare.configured(env) && (await freeLeft(env)) > 0;
+      const provider = free ? cloudflare : chooseProvider(env, b.fournisseur);
+      if (!provider || provider.id === "cloudflare" && !free) return json({ erreur: "Aucun fournisseur d'images n'est configuré (clé manquante)." }, 503);
+      const cost = estimate(provider.id, b.quality), u = await usage(env, visitor, ipHash);
+      const refusal = free ? (u.visitorDay.images >= u.visitorDay.max ? `Vous avez utilisé vos ${u.visitorDay.max} images du jour. Revenez demain.` : null) : overLimit(u, cost);
       if (refusal) return json({ erreur: refusal }, 429);
       const now = new Date().toISOString();
       const job: Job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
-      const input: JobInput = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : undefined, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : undefined };
-      await Promise.all([saveInput(env, job.id, input), reserve(env, visitor, ipHash, cost)]);
+      const input: JobInput = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : undefined, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : undefined, petites: b.petites ? { photo: b.petites.photo ? toImg(b.petites.photo) : undefined, references: b.petites.references.map(toImg) } : undefined };
+      await Promise.all([saveInput(env, job.id, input), free ? reserveFree(env, visitor, ipHash) : reserve(env, visitor, ipHash, cost)]);
       return json(pub(await run(env, job, input), base), 201);
     }
 

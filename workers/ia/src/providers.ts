@@ -8,12 +8,12 @@ import { OPENAI_TOKEN_USD } from "./config";
 import type { Mode } from "./prompts";
 
 export type ImgIn = { mime: string; b64: string };
-export interface ProviderRequest { mode: Mode; prompt: string; photo?: ImgIn; mask?: ImgIn; references: ImgIn[]; width: number; height: number; quality: Quality; visitor: string }
+export interface ProviderRequest { mode: Mode; prompt: string; photo?: ImgIn; mask?: ImgIn; references: ImgIn[]; width: number; height: number; quality: Quality; visitor: string; petites?: { photo?: ImgIn; references: ImgIn[] } }
 export type Done = { state: "done"; image: Uint8Array; mime: string; costUsd?: number };
 export type Submit = Done | { state: "pending"; ref: string };
 export type Poll = Done | { state: "pending" } | { state: "error"; message: string; retryable: boolean };
 export interface Provider {
-  id: "openai" | "gemini" | "fal" | "replicate";
+  id: "cloudflare" | "openai" | "gemini" | "fal" | "replicate";
   configured(env: Env): boolean;
   model(env: Env, mode: Mode): string;
   submit(req: ProviderRequest, env: Env): Promise<Submit>;
@@ -210,7 +210,36 @@ export const replicate: Provider = {
   },
 };
 
-export const PROVIDERS: Provider[] = [openai, gemini, fal, replicate];
+/* ——— IA de Cloudflare (gratuite jusqu'au quota quotidien) ——— */
+const CF_MODEL = "@cf/black-forest-labs/flux-2-klein-4b";
+/** Taille de sortie : bord long 1024 px, multiples de 16 (au-delà, le quota gratuit fond vite). */
+export function cfSize(w: number, h: number) {
+  const r = Math.min(3, Math.max(1 / 3, w / h)), s16 = (v: number) => Math.max(256, Math.round(v / 16) * 16);
+  return r >= 1 ? { w: 1024, h: s16(1024 / r) } : { w: s16(1024 * r), h: 1024 };
+}
+export const cloudflare: Provider = {
+  id: "cloudflare",
+  configured: (env) => Boolean(env.AI),
+  model: () => CF_MODEL,
+  async submit(req, env) {
+    // Le modèle n'accepte que de petites images (512 px) : le navigateur les envoie à part.
+    const photo = req.petites?.photo, refs = req.petites?.references ?? [];
+    if (req.mode === "transform" && !photo) throw new ProviderError("Image trop grande pour le service gratuit.", true);
+    const size = cfSize(req.width, req.height), form = new FormData();
+    form.append("prompt", req.prompt.slice(0, 2000)); form.append("width", String(size.w)); form.append("height", String(size.h));
+    [...(photo ? [photo] : []), ...refs].slice(0, 4).forEach((im, i) => form.append(`input_image_${i}`, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i}.${im.mime.split("/")[1]}`));
+    const body = new Response(form);
+    let out: unknown;
+    try {
+      out = await env.AI!.run(CF_MODEL, { multipart: { body: body.body, contentType: body.headers.get("content-type") } });
+    } catch (e) { throw new ProviderError("Le service d'images gratuit est indisponible.", true, String(e).slice(0, 300)); }
+    const b64 = (out as { image?: string } | null)?.image;
+    if (!b64) throw new ProviderError("Aucune image n'a été produite.", true);
+    return { state: "done", image: b64ToBytes(b64), mime: "image/jpeg", costUsd: 0 };
+  },
+};
+
+export const PROVIDERS: Provider[] = [openai, gemini, fal, replicate, cloudflare];
 /** Fournisseur demandé s'il est configuré, sinon celui du réglage IA_FOURNISSEUR, sinon le premier disponible. */
 export function chooseProvider(env: Env, wanted?: string): Provider | null {
   const ok = PROVIDERS.filter((p) => p.configured(env));

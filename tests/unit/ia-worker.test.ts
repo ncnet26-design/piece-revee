@@ -121,6 +121,48 @@ describe("service d'images v2", () => {
   });
 });
 
+describe("IA gratuite de Cloudflare", () => {
+  const fetchMock = vi.fn();
+  beforeEach(() => { vi.stubGlobal("fetch", fetchMock); fetchMock.mockReset(); _setPause(async () => {}); });
+  afterEach(() => vi.unstubAllGlobals());
+  const petites = { photo: PNG, references: [PNG] };
+
+  it("transforme d'abord gratuitement avec les petites images, sans compter de dépense", async () => {
+    const run = vi.fn(async (_m: string, input: { multipart: { body: ReadableStream; contentType: string } }) => {
+      const form = await new Response(input.multipart.body, { headers: { "content-type": input.multipart.contentType } }).formData();
+      expect(form.get("input_image_0")).toBeTruthy(); expect(form.get("input_image_1")).toBeTruthy();
+      expect(form.get("width")).toBe("1024"); expect(form.get("height")).toBe("640");
+      return { image: JPEG_B64 };
+    });
+    const env: Env & { QUOTA: ReturnType<typeof memoryKV> } = { QUOTA: memoryKV(), GEMINI_API_KEY: "g", AI: { run: run as never } };
+    const r = await call(env, "/v2/jobs", { method: "POST", body: body({ mode: "transform", photo: PNG, references: [PNG], petites, width: 1600, height: 1000 }) });
+    const job = await r.json() as { status: string; provider: string; costUsd: number };
+    expect(job).toMatchObject({ status: "terminee", provider: "cloudflare", costUsd: 0 });
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect([...env.QUOTA.data.keys()].some((k) => k.startsWith("gratuit:"))).toBe(true);
+    expect([...env.QUOTA.data.keys()].some((k) => k.startsWith("usd:"))).toBe(false);
+  });
+
+  it("si le service gratuit échoue ou si le quota du jour est épuisé, Gemini prend le relais", async () => {
+    const gem = () => new Response(JSON.stringify({ steps: [{ type: "model_output", content: [{ type: "image", data: JPEG_B64, mime_type: "image/jpeg" }] }] }), { status: 200 });
+    fetchMock.mockImplementation(async () => gem());
+    const env: Env & { QUOTA: ReturnType<typeof memoryKV> } = { QUOTA: memoryKV(), GEMINI_API_KEY: "g", AI: { run: async () => { throw new Error("4006: daily free allocation used"); } } };
+    let job = await (await call(env, "/v2/jobs", { method: "POST", body: body({ mode: "transform", photo: PNG, petites }) })).json() as { status: string; provider: string };
+    expect(job).toMatchObject({ status: "terminee", provider: "gemini" });
+    env.IMAGES_GRATUITES_JOUR = "0"; env.AI = { run: vi.fn() };
+    job = await (await call(env, "/v2/jobs", { method: "POST", body: body({ mode: "transform", photo: PNG, petites }) })).json() as { status: string; provider: string };
+    expect(job.provider).toBe("gemini");
+    expect(env.AI.run).not.toHaveBeenCalled();
+  });
+
+  it("sans petites images ou avec un masque, passe directement par le fournisseur habituel", async () => {
+    fetchMock.mockImplementation(async () => new Response(JSON.stringify({ steps: [{ type: "model_output", content: [{ type: "image", data: JPEG_B64 }] }] }), { status: 200 }));
+    const env: Env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g", AI: { run: vi.fn() } };
+    const job = await (await call(env, "/v2/jobs", { method: "POST", body: body({ mode: "transform", photo: PNG }) })).json() as { provider: string };
+    expect(job.provider).toBe("gemini");
+  });
+});
+
 describe("choix du fournisseur et formats", () => {
   it("choisit le fournisseur demandé s'il est configuré, sinon le réglage, sinon le premier", () => {
     expect(chooseProvider({ GEMINI_API_KEY: "g", FAL_KEY: "f" }, "fal")?.id).toBe("fal");

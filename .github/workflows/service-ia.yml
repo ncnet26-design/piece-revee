@@ -45,7 +45,7 @@ jobs:
         run: |
           exec > >(tee -a rapport.txt) 2>&1
           COMPAT=$(curl -sS -H "Authorization: Bearer $CF_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/scripts/$WORKER/settings" | jq -r '.result.compatibility_date // "2025-01-01"')
-          jq -n --arg c "$COMPAT" '{main_module: "worker.js", compatibility_date: $c, keep_bindings: ["kv_namespace", "r2_bucket", "secret_text", "plain_text", "secret_key"]}' > metadata.json
+          jq -n --arg c "$COMPAT" '{main_module: "worker.js", compatibility_date: $c, bindings: [{type: "ai", name: "AI"}], keep_bindings: ["kv_namespace", "r2_bucket", "secret_text", "plain_text", "secret_key"]}' > metadata.json
           curl -sS -X PUT -H "Authorization: Bearer $CF_TOKEN" \
             -F "metadata=@metadata.json;type=application/json" \
             -F "worker.js=@workers/ia/worker.js;type=application/javascript+module" \

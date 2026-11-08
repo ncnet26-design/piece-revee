@@ -23,9 +23,11 @@ var limits = (env) => ({
   monthUsd: num(env.BUDGET_MOIS_USD, 15),
   visitorMonthUsd: num(env.BUDGET_VISITEUR_MOIS_USD, 1.5),
   dayImages: num(env.IMAGES_JOUR, 30),
-  visitorDayImages: num(env.IMAGES_VISITEUR_JOUR, 6)
+  visitorDayImages: num(env.IMAGES_VISITEUR_JOUR, 6),
+  freeDayImages: num(env.IMAGES_GRATUITES_JOUR, 60)
 });
 var PRICE_ESTIMATE = {
+  cloudflare: { brouillon: 0, standard: 0, premium: 0 },
   openai: { brouillon: 0.02, standard: 0.06, premium: 0.2 },
   gemini: { brouillon: 0.04, standard: 0.04, premium: 0.06 },
   fal: { brouillon: 0.04, standard: 0.04, premium: 0.08 },
@@ -85,6 +87,7 @@ function buildPrompt(p) {
 // workers/ia/src/validate.ts
 var DATA_URL = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/;
 var isDataUrl = (v) => typeof v === "string" && v.length <= 9e6 && DATA_URL.test(v);
+var isSmall = (v) => isDataUrl(v) && v.length <= 6e5;
 var QUALITIES = ["brouillon", "standard", "premium"];
 var FOURNISSEURS = ["openai", "gemini", "fal", "replicate"];
 function parseJobBody(raw) {
@@ -102,6 +105,9 @@ function parseJobBody(raw) {
   const refs = Array.isArray(b.references) ? b.references : [];
   if (refs.length > 6 || !refs.every(isDataUrl)) return null;
   if (b.mask !== void 0 && !(isDataUrl(b.mask) && b.mask.startsWith("data:image/png"))) return null;
+  const pt = b.petites;
+  const ptRefs = Array.isArray(pt?.references) ? pt.references : [];
+  const petites = pt && typeof pt === "object" && (pt.photo === void 0 || isSmall(pt.photo)) && ptRefs.length <= 3 && ptRefs.every(isSmall) && (b.mode === "generate" || pt.photo !== void 0) ? { photo: pt.photo, references: ptRefs } : void 0;
   const z = b.onlyZone;
   const pct = (v) => typeof v === "number" && v >= 0 && v <= 100;
   const onlyZone = z && typeof z.label === "string" && pct(z.x) && pct(z.y) && pct(z.w) && pct(z.h) ? { label: str(z.label, 80), x: z.x, y: z.y, w: z.w, h: z.h } : void 0;
@@ -121,6 +127,7 @@ function parseJobBody(raw) {
     width: int(b.width, 1536),
     height: int(b.height, 1024),
     visiteur: b.visiteur,
+    petites,
     fournisseur: FOURNISSEURS.includes(b.fournisseur) ? b.fournisseur : void 0
   };
 }
@@ -314,7 +321,36 @@ var replicate = {
     return { state: "error", message: "Replicate n'a pas produit d'image.", retryable: j.status === "failed" };
   }
 };
-var PROVIDERS = [openai, gemini, fal, replicate];
+var CF_MODEL = "@cf/black-forest-labs/flux-2-klein-4b";
+function cfSize(w, h) {
+  const r = Math.min(3, Math.max(1 / 3, w / h)), s16 = (v) => Math.max(256, Math.round(v / 16) * 16);
+  return r >= 1 ? { w: 1024, h: s16(1024 / r) } : { w: s16(1024 * r), h: 1024 };
+}
+var cloudflare = {
+  id: "cloudflare",
+  configured: (env) => Boolean(env.AI),
+  model: () => CF_MODEL,
+  async submit(req, env) {
+    const photo = req.petites?.photo, refs = req.petites?.references ?? [];
+    if (req.mode === "transform" && !photo) throw new ProviderError("Image trop grande pour le service gratuit.", true);
+    const size = cfSize(req.width, req.height), form = new FormData();
+    form.append("prompt", req.prompt.slice(0, 2e3));
+    form.append("width", String(size.w));
+    form.append("height", String(size.h));
+    [...photo ? [photo] : [], ...refs].slice(0, 4).forEach((im, i) => form.append(`input_image_${i}`, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i}.${im.mime.split("/")[1]}`));
+    const body = new Response(form);
+    let out;
+    try {
+      out = await env.AI.run(CF_MODEL, { multipart: { body: body.body, contentType: body.headers.get("content-type") } });
+    } catch (e) {
+      throw new ProviderError("Le service d'images gratuit est indisponible.", true, String(e).slice(0, 300));
+    }
+    const b64 = out?.image;
+    if (!b64) throw new ProviderError("Aucune image n'a \xE9t\xE9 produite.", true);
+    return { state: "done", image: b64ToBytes(b64), mime: "image/jpeg", costUsd: 0 };
+  }
+};
+var PROVIDERS = [openai, gemini, fal, replicate, cloudflare];
 function chooseProvider(env, wanted) {
   const ok = PROVIDERS.filter((p) => p.configured(env));
   return ok.find((p) => p.id === wanted) ?? ok.find((p) => p.id === env.IA_FOURNISSEUR) ?? ok[0] ?? null;
@@ -722,6 +758,11 @@ async function reserve(env, visitor, ip, usd) {
   const d = today(), m = month();
   await Promise.all([add(env, `total:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY), add(env, `usd:${m}`, usd, 62 * DAY), add(env, `usd:${m}:v:${visitor}`, usd, 62 * DAY), add(env, `usd:${m}:ip:${ip}`, usd, 62 * DAY)]);
 }
+var freeLeft = async (env) => limits(env).freeDayImages - await n(env, `gratuit:${today()}`);
+async function reserveFree(env, visitor, ip) {
+  const d = today();
+  await Promise.all([add(env, `gratuit:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY)]);
+}
 async function settle(env, visitor, ip, delta) {
   if (!delta) return;
   const m = month();
@@ -736,14 +777,26 @@ var toImg = (s) => {
 var pub = (j, base) => ({ ...j, ref: void 0, visitor: void 0, ipHash: void 0, error: j.error ? { message: j.error.message, retryable: j.error.retryable } : void 0, imageUrl: j.image ? `${base}/v2/images/${j.id}` : null });
 async function run(env, job, input) {
   const provider = PROVIDERS.find((p) => p.id === job.provider);
-  const req = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, mask: input.mask, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor };
+  const req = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, mask: input.mask, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor, petites: input.petites };
   job.attempts += 1;
   job.status = "en_cours";
   job.error = void 0;
   job.ref = void 0;
   job.updatedAt = (/* @__PURE__ */ new Date()).toISOString();
   try {
-    const r = await provider.submit(req, env);
+    let r;
+    try {
+      r = await provider.submit(req, env);
+    } catch (e) {
+      if (provider.id !== "cloudflare" || !gemini.configured(env)) throw e;
+      const cost = estimate("gemini", job.quality);
+      if (overLimit(await usage(env, job.visitor, job.ipHash), cost)) throw e;
+      await reserve(env, job.visitor, job.ipHash, cost);
+      job.provider = "gemini";
+      job.model = gemini.model(env, job.mode);
+      job.costUsd = cost;
+      r = await gemini.submit(req, env);
+    }
     if (r.state === "pending") job.ref = r.ref;
     else await finish(env, job, r.image, r.mime, r.costUsd);
   } catch (e) {
@@ -793,15 +846,17 @@ var index_default = {
       if (Number(request.headers.get("Content-Length") || 0) > MAX_BODY) return json({ erreur: "Images trop lourdes." }, 413);
       const b = parseJobBody(await request.json().catch(() => null));
       if (!b) return json({ erreur: "Demande incompl\xE8te : d\xE9crivez le projet (et ajoutez la photo pour une transformation)." }, 400);
-      const provider = chooseProvider(env, b.fournisseur);
-      if (!provider) return json({ erreur: "Aucun fournisseur d'images n'est configur\xE9 (cl\xE9 manquante)." }, 503);
-      const visitor = await sha(`v|${b.visiteur}`), cost = estimate(provider.id, b.quality);
-      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
+      const visitor = await sha(`v|${b.visiteur}`);
+      const free = !b.fournisseur && !b.mask && b.petites !== void 0 && cloudflare.configured(env) && await freeLeft(env) > 0;
+      const provider = free ? cloudflare : chooseProvider(env, b.fournisseur);
+      if (!provider || provider.id === "cloudflare" && !free) return json({ erreur: "Aucun fournisseur d'images n'est configur\xE9 (cl\xE9 manquante)." }, 503);
+      const cost = estimate(provider.id, b.quality), u = await usage(env, visitor, ipHash);
+      const refusal = free ? u.visitorDay.images >= u.visitorDay.max ? `Vous avez utilis\xE9 vos ${u.visitorDay.max} images du jour. Revenez demain.` : null : overLimit(u, cost);
       if (refusal) return json({ erreur: refusal }, 429);
       const now = (/* @__PURE__ */ new Date()).toISOString();
       const job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
-      const input = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : void 0, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : void 0 };
-      await Promise.all([saveInput(env, job.id, input), reserve(env, visitor, ipHash, cost)]);
+      const input = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : void 0, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : void 0, petites: b.petites ? { photo: b.petites.photo ? toImg(b.petites.photo) : void 0, references: b.petites.references.map(toImg) } : void 0 };
+      await Promise.all([saveInput(env, job.id, input), free ? reserveFree(env, visitor, ipHash) : reserve(env, visitor, ipHash, cost)]);
       return json(pub(await run(env, job, input), base), 201);
     }
     if (request.method === "POST" && path === "/v2/analyse") {
