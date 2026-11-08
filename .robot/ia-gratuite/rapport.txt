@@ -1,0 +1,25 @@
+== flux-2-klein-4b
+HTTP 200
+durée 6.076220278 s
+{"success":true,"errors":[],"messages":[]}
+-rw-r--r-- 1 runner runner 383032 Nov  8 21:01 flux-2-klein-4b.jpg
+== flux-2-klein-9b
+HTTP 500
+durée .287599668 s
+{"success":false,"errors":[{"message":"AiError: AiError: Internal server error (51e659e9-9368-452c-99d4-1922525f7f73)","code":3043}],"messages":[]}
+-rw-r--r-- 1 runner runner 0 Nov  8 21:01 flux-2-klein-9b.jpg
+== accord licence Llama vision
+{"success":false,"errors":[{"message":"AiError: Model Agreement: Thank you for agreeing to this model's terms. You may now use the model. (53fa67de-4a37-4f64-ae5f-554848e5aeeb)","code":5016}]}
+== repérage des meubles (Llama 3.2 Vision)
+true
+[]
+Here is the list of items in the interior photo:
+
+{"items":[{"label":"Sofa","material":"fabric","color":"white","x":15,"y":30},{"label":"Pillows","material":"fabric","color":"brown, black, white","x":20,"y":35},{"label":"Coffee Table","material":"marble","color":"white","x":40,"y":60},{"label":"Coffee Table","material":"marble","color":"white","x":50,"y":55},{"label":"Coffee Table","material":"marble","color":"white","x":60,"y":65},{"label":"Vase","material":"ceramic","color":"brown","x":55,"y":75},{"label":"Side Table","material":"wood","color":"brown","x":5,"y":70},{"label":"Painting","material":"canvas","color":"multicolored","x":75,"y":25},{"label":"Light Fixture","material":"metal","color":"black","x":45,"y":10},{"label":"Light Fixture","material":"metal","color":"black","x":65,"y":10},{"label":"Rug","material":"wool","color":"black and white","x":45,"y":80},{"label":"Chair","material":"fabric","color":"green","x":85,"y":75},{"label":"Floor","material":"wood","color":"light brown","x":0,"y":90},{"label":"Walls","material":"paint","color":"grey","x":0,"y":10},{"label":"Ceiling","material":"drywall","color":"white","x":0,"y":5}]
+
+Note: The approximate centre position is given as a percentage of the image width and height, with 0 being the left and top edge of the image, and 100 being the right and bottom edge.
+
+durée 19.568610318 s
+== comparaison de textes (bge-m3)
+{"success":true,"errors":[],"dims":1024}
+durée .257955787 s
