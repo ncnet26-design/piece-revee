@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Photo } from "@/components/Photo";
 import { ProduitImage } from "@/components/ProduitImage";
 import { MentionIA } from "@/components/MentionIA";
+import { PrixPiece } from "@/components/PrixPiece";
 import type { Gamme, PieceDansImage, Trouves } from "@/lib/trouves-par-budget";
 
 const NOM: Record<Gamme, string> = { petit: "Petit budget", moyen: "Budget moyen", haut: "Haut de gamme" };
@@ -53,6 +54,7 @@ export function InspirationCliquable({ src, alt, ratio, pieces, trouves }: { src
           </ul>
         </div>
       )}
+      <div className="mt-3"><PrixPiece titre="Cette pièce complète, à votre budget" lignes={avec.map((p) => ({ id: p.id, label: p.label, produits: trouves[p.id] ?? {} }))} /></div>
     </div>
   );
 }

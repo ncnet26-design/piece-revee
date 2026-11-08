@@ -143,3 +143,8 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 ## Reste à faire
 1. Avec votre accord : supprimer les images listées dans `audit-images.md`.
 5. Captures ordinateur + mobile de chaque page modifiée (étape 6), tests de parcours.
+
+## 2026-11-08 — Prix de la pièce en 3 budgets
+- Nouveau bloc « Le prix de cette pièce refaite » (components/PrixPiece.tsx) : total petit / moyen / haut de gamme, liste des produits du budget choisi, « Garder toute la liste ». Affiché dans le héro, les inspirations IA et le résultat de « Transformer ».
+- Choix des produits partagé serveur/navigateur (lib/choisir-produit.ts, lib/boutique-client.ts).
+- Test de l'IA gratuite Cloudflare (test-ia-gratuite.yml) : bloqué, la clé Cloudflare de GitHub n'a pas la permission « Workers AI ».

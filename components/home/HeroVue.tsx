@@ -6,6 +6,7 @@ import { PIECES } from "@/components/shop-the-look-pieces";
 import { Photo } from "@/components/Photo";
 import { ProduitImage } from "@/components/ProduitImage";
 import { MentionIA } from "@/components/MentionIA";
+import { PrixPiece } from "@/components/PrixPiece";
 
 import type { Gamme, Trouves } from "@/lib/trouves-par-budget";
 export type { Gamme, Trouves };
@@ -85,6 +86,7 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
             })}
           </ul>
         </div>
+        <div className="mt-3"><PrixPiece titre="Ce salon complet, à votre budget" lignes={PIECES.filter((p) => !p.secondaire).map((p) => ({ id: p.id, label: p.label, produits: trouves[p.id] ?? {} }))} /></div>
       </div>
     </section>
   );

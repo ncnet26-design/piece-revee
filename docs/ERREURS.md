@@ -72,3 +72,7 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 - Constat (signalé par le propriétaire) : après la mise en ligne, l'IA disait ne rien trouver.
 - Causes probables : modèle léger (Gemini 3.5 Flash Lite à réflexion courte) mis en ligne sans essai réel, liens Google coupés à 2,5 s, et produits jetés quand leur page n'était pas lue à temps.
 - Correction : retour au modèle habituel et aux délais d'origine ; un lien trouvé par Google reste montré même si sa page est lente. Leçon : ne jamais changer le modèle d'un service payant sans un essai réel chiffré et accepté.
+
+## 2026-11-08
+- Test Workers AI en 401 : le jeton CLOUDFLARE_API_TOKEN n'a pas la permission « Workers AI – Edit ». Vérifier les permissions d'un jeton avant d'écrire un robot qui l'utilise.
+- Prix en Instrument Serif affichés « 2155 € » : l'espace fine insécable (U+202F) de toLocaleString n'existe pas dans la police ; la remplacer par U+00A0.

@@ -1,7 +1,9 @@
 "use client";
 import { MentionIA } from "@/components/MentionIA";
 import { textureMatiere } from "@/lib/texture-matiere";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { PrixPiece, type LignePiece } from "@/components/PrixPiece";
+import { produitsParBudget } from "@/lib/boutique-client";
 import { productById } from "@/lib/products/schema";
 import type { Surface } from "@/lib/ia-jobs";
 import type { AiObject } from "@/lib/studio/showcase";
@@ -22,6 +24,15 @@ type Sel = { kind: "objet"; o: AiObject } | { kind: "surface"; s: Surface } | { 
 export function Resultat({ image, before, objects, surfaces, analysing }: { image: string; before?: string; objects: AiObject[]; surfaces: Surface[]; analysing: boolean }) {
   const [sel, setSelBrut] = useState<Sel | null>(null);
   const [photo, setPhoto] = useState<string | undefined>(undefined);
+  // Prix de la pièce refaite à trois budgets, calculé dans notre boutique dès que les meubles sont repérés.
+  const [lignes, setLignes] = useState<{ cle: string; l: LignePiece[] } | null>(null);
+  const cle = objects.map((o) => o.id).join("|");
+  useEffect(() => {
+    if (!objects.length) return;
+    let vivant = true;
+    void produitsParBudget(objects).then((l) => { if (vivant) setLignes({ cle, l }); });
+    return () => { vivant = false; };
+  }, [cle, objects]);
   // Choisir un meuble découpe aussi sa photo (au moment du geste, pas pendant l'affichage).
   const setSel = (x: Sel | null) => { setSelBrut(x); setPhoto(x?.kind === "objet" ? decoupe(img.current, x.o.zone) : undefined); };
   const [compare, setCompare] = useState(false);
@@ -82,6 +93,7 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
           </ul>
         </div>
       )}
+      {lignes?.cle === cle && <div className="mt-5"><PrixPiece lignes={lignes.l} /></div>}
       {project.list.length > 0 && (
         <p className="mt-4 text-[13px]"><a className="underline" href="/ma-piece/">Ma pièce composée : {project.list.length} article{project.list.length > 1 ? "s" : ""}{total ? ` · ${total.toLocaleString("fr-FR")} € de prix relevés` : ""} — voir ma liste d'achats</a></p>
       )}
