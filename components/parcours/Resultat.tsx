@@ -107,8 +107,9 @@ export function Resultat({ image, before, objects, surfaces, analysing, choix = 
       </div>
 
       <div className="min-w-0 lg:sticky lg:top-24">
+      {choix.length > 0 && <MeublesDessines choix={choix} />}
       {(objects.length > 0 || surfaces.length > 0) && (
-        <div className="lg:mt-9">
+        <div className="mt-5">
           <p className="eyebrow">Dans cette image</p>
           <ul className="mt-2 flex list-none flex-wrap gap-1.5 p-0">
             {objects.map((o) => <li key={o.id}><button type="button" className="btn btn-sm" onClick={() => setSel({ kind: "objet", o })}>{o.label}</button></li>)}
@@ -255,6 +256,32 @@ function MeubleExact({ p, forObject }: { p: ProduitCatalogue; forObject: string 
         </div>
       </div>
       <p className="mt-2 text-[11px] text-muted">L'IA a dessiné ce produit d'après son nom : l'aspect peut légèrement différer, vérifiez la photo chez l'enseigne.</p>
+    </section>
+  );
+}
+
+/** Les vrais meubles que l'IA a dessinés dans la pièce, visibles tout de suite (avant même le repérage des points cliquables). */
+function MeublesDessines({ choix }: { choix: Choisi[] }) {
+  const total = choix.reduce((t, c) => t + (c.produit.p ?? 0), 0);
+  return (
+    <section aria-labelledby="h-dessines" className="hero-fondu overflow-hidden rounded-[2px] bg-surface p-4 lg:mt-9">
+      <div className="flex items-baseline justify-between gap-2">
+        <h2 id="h-dessines" className="m-0 font-ui text-[11px] font-semibold uppercase tracking-[.16em] text-muted">Les vrais meubles de cette image</h2>
+        {total > 0 && <span className="text-[13px] font-semibold tabular-nums">{Math.round(total).toLocaleString("fr-FR")} €</span>}
+      </div>
+      <ul className="mt-3 grid list-none gap-1 p-0">
+        {choix.map((c) => (
+          <li key={c.produit.u} className="min-w-0">
+            <a href={c.produit.u} target="_blank" rel="noopener noreferrer nofollow" className="group flex w-full min-w-0 items-center gap-3 py-1.5 no-underline">
+              <ProduitImage src={c.produit.i} alt="" merchant={c.produit.m} className="w-12 shrink-0" />
+              <span className="min-w-0 flex-1"><span className="block truncate text-[13px] group-hover:underline">{c.produit.n}</span><span className="block truncate text-[11.5px] text-muted">{c.produit.m}</span></span>
+              <span className="shrink-0 text-[13px] font-semibold tabular-nums">{c.produit.p !== null ? `${Math.round(c.produit.p).toLocaleString("fr-FR")} €` : ""}</span>
+              <span className="sr-only"> (nouvel onglet)</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-2 text-[11px] text-muted">Choisis dans notre boutique pour votre style et votre budget, prix relevés chez les enseignes. Touchez un meuble sur l'image pour le détail.</p>
     </section>
   );
 }
