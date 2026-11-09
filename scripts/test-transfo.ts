@@ -7,7 +7,7 @@ import { buildPrompt } from "../workers/ia/src/prompts.ts";
 import { avecPlan, planifier } from "../workers/ia/src/plan.ts";
 
 const ACC = process.env.CF_ACCOUNT!, TOKEN = process.env.CF_TOKEN!, OUT = ".robot/test-transfo", UA = "PieceReveeTest/1.0 (test de qualité ; https://odd-bar-c583.ewanesteves26.workers.dev)";
-const PIECES: Array<[string, string]> = (process.env.PIECES ? JSON.parse(process.env.PIECES) : [["salle-de-bain", "bathroom interior sink bathtub"], ["chambre", "messy bedroom"], ["salon", "messy living room"], ["cuisine", "messy kitchen"]]) as Array<[string, string]>;
+const PIECES: Array<[string, string]> = (process.env.PIECES?.trim() ? JSON.parse(process.env.PIECES) : [["salle-de-bain", "bathroom interior sink bathtub"], ["chambre", "messy bedroom"], ["salon", "messy living room"], ["cuisine", "messy kitchen"]]) as Array<[string, string]>;
 const run = async (modele: string, entree: unknown) => {
   const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/ai/run/${modele}`, { method: "POST", headers: { authorization: `Bearer ${process.env.CF_TOKEN}`, "content-type": "application/json" }, body: JSON.stringify(entree) });
   const j = await r.json() as { result?: unknown; errors?: unknown };
@@ -40,15 +40,16 @@ for (const [piece, q] of PIECES) {
   const r = p.i.width / p.i.height, w = 1024, h = Math.round(1024 / r / 16) * 16;
   for (const niveau of ["equilibre"]) {
     const prompt = buildPrompt({ mode: "transform", brief: `${SOUHAIT[piece] ?? ""}\n${BRIEF}`, piece, niveau, keep: ["fenetres", "portes", "murs", "plafond"], references: 0 });
+    const plan = await planifier(run, { mime: "image/jpeg", b64: Buffer.from(img).toString("base64") }, prompt);
+    writeFileSync(`${OUT}/${piece}-plan.txt`, plan ?? "(pas de plan)");
+    console.log(`  plan : ${plan ? `${plan.split("\n").length} lignes` : "aucun"}`);
     for (const m of MODELES) {
       const form = new FormData();
-      const plan = await planifier(run, { mime: "image/jpeg", b64: Buffer.from(img).toString("base64") }, prompt);
-      writeFileSync(`${OUT}/${piece}-plan.txt`, plan ?? "(pas de plan)");
-      console.log(`  plan : ${plan ? `${plan.split("\n").length} lignes` : "aucun"}`);
       form.append("prompt", avecPlan(plan, prompt).slice(0, 4000)); form.append("width", String(w)); form.append("height", String(h));
       form.append("input_image_0", new Blob([img], { type: "image/jpeg" }), "piece.jpg");
       const t = Date.now();
-      const res = await fetch(`https://api.cloudflare.com/client/v4/accounts/${ACC}/ai/run/@cf/black-forest-labs/${m}`, { method: "POST", headers: { authorization: `Bearer ${TOKEN}` }, body: form });
+      let res = await fetch(`https://api.cloudflare.com/client/v4/accounts/${ACC}/ai/run/@cf/black-forest-labs/${m}`, { method: "POST", headers: { authorization: `Bearer ${TOKEN}` }, body: form });
+      for (let k = 0; k < 2 && res.status >= 500; k++) { await new Promise((r) => setTimeout(r, 3000)); res = await fetch(`https://api.cloudflare.com/client/v4/accounts/${ACC}/ai/run/@cf/black-forest-labs/${m}`, { method: "POST", headers: { authorization: `Bearer ${TOKEN}` }, body: form }); }
       const j = await res.json() as { success: boolean; errors: unknown; result?: { image?: string } };
       console.log(`  ${m} ${niveau} : HTTP ${res.status} ${((Date.now() - t) / 1000).toFixed(1)} s ${j.success ? "" : JSON.stringify(j.errors)}`);
       if (j.result?.image) writeFileSync(`${OUT}/${piece}-${m}-${niveau}.jpg`, Buffer.from(j.result.image, "base64"));

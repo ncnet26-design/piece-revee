@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       modeles: { description: "Modèles (séparés par des virgules)", required: false, default: "flux-2-klein-4b,flux-2-klein-9b", type: string }
+      pieces: { description: "Pièces et recherches Wikimedia, en JSON (vide = jeu par défaut)", required: false, default: "", type: string }
 
 permissions:
   contents: write
@@ -17,8 +18,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
+      - name: Modèles d'images disponibles sur le compte
+        env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_AI_TOKEN }}" }
+        run: |
+          curl -sS "https://api.cloudflare.com/client/v4/accounts/f8d17f2edfe8ee1b22e66bc4c0bf364b/ai/models/search?task=Text-to-Image&per_page=50" -H "Authorization: Bearer $CF_TOKEN" | jq -r '.result[] | "\(.name) | \(.description[0:110])"'
       - name: Transformations
-        env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_AI_TOKEN }}", CF_ACCOUNT: f8d17f2edfe8ee1b22e66bc4c0bf364b, MODELES: "${{ inputs.modeles }}" }
+        env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_AI_TOKEN }}", CF_ACCOUNT: f8d17f2edfe8ee1b22e66bc4c0bf364b, MODELES: "${{ inputs.modeles }}", PIECES: "${{ inputs.pieces }}" }
         run: node --experimental-strip-types scripts/test-transfo.ts 2>&1 | tee rapport.txt; mv rapport.txt .robot/test-transfo/ || true
       - name: Publier (branche robot/test-transfo)
         if: ${{ always() }}
