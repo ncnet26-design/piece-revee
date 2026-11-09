@@ -164,4 +164,4 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
 - 9 nov. : Transformer corrigé après le test d'Ewan (salle de bain devenue salon, image géante, inspirations recopiées) :
   type de pièce obligatoire et imposé au modèle (équipements fixes gardés), ampleur (léger / équilibré / complet), « Ce que vous voulez changer » en priorité,
   IA gratuite : seule la photo de la pièce est envoyée (le style passe par le texte), résultat limité à 68 % de l'écran avec le détail à côté.
-  Test réel (Wikimedia, salle de bain / chambre / cuisine) : demandes appliquées, structure gardée. Service à redéployer (attend le « oui »).
+  Test réel (Wikimedia, salle de bain / chambre / cuisine) : demandes appliquées, structure gardée. Service déployé le 9 nov.
