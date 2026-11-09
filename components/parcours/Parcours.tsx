@@ -83,12 +83,12 @@ export function Parcours() {
   const onRoom = async (f?: File) => {
     if (!f) return;
     setRoomMsg(null);
-    const r = await preparePhoto(f);
+    const r = await preparePhoto(f, 2048, 800);
     if (!r.ok) { setRoomMsg(r.message); return; }
     setRoom(r.photo.dataUrl);
     setRoomHD(await new Promise<string | null>((ok) => { const fr = new FileReader(); fr.onload = () => ok(typeof fr.result === "string" ? fr.result : null); fr.onerror = () => ok(null); fr.readAsDataURL(r.photo.blob); }));
-    if (r.photo.quality.tooDark) setRoomMsg("Photo un peu sombre : le résultat sera meilleur avec plus de lumière.");
-    else if (r.photo.quality.blurry) setRoomMsg("Photo un peu floue : le résultat sera meilleur avec une photo nette.");
+    if (r.photo.quality.tooDark) setRoomMsg("Photo sombre : allumez la lumière ou ouvrez les volets, l'IA verra mieux la pièce.");
+    else if (r.photo.quality.blurry) setRoomMsg("Photo un peu floue : tenez le téléphone immobile, à hauteur d'yeux, et reprenez-la.");
   };
   // Styles prêts à l'emploi : un toucher ajoute la photo du style, un second la retire.
   const [styles, setStyles] = useState<Record<string, string>>({});

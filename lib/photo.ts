@@ -18,15 +18,30 @@ async function sniff(file: File): Promise<string | null> {
 }
 
 export interface PreparedPhoto { blob: Blob; dataUrl: string; width: number; height: number; quality: { tooDark: boolean; blurry: boolean; luminance: number; sharpness: number } }
-export type PhotoCheck = { ok: true; photo: PreparedPhoto } | { ok: false; message: string; heicNeedsServer?: boolean };
+export type PhotoCheck = { ok: true; photo: PreparedPhoto } | { ok: false; message: string };
 
-export async function preparePhoto(file: File, maxSide = 2048): Promise<PhotoCheck> {
+/** Photo iPhone (HEIC) : convertie en JPEG dans le navigateur (outil libre chargé seulement si besoin). */
+async function heicEnJpeg(file: Blob): Promise<Blob | null> {
+  try {
+    const { default: heic2any } = await import("heic2any");
+    const r = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.92 });
+    return Array.isArray(r) ? r[0] ?? null : r;
+  } catch { return null; }
+}
+
+export async function preparePhoto(file: File, maxSide = 2048, minSide = 0): Promise<PhotoCheck> {
   if (file.size > MAX_BYTES) return { ok: false, message: "Cette photo dépasse 20 Mo. Choisissez une version plus légère." };
   const type = await sniff(file);
   if (!type || !ACCEPTED.includes(type)) return { ok: false, message: "Ce fichier n'est pas une photo reconnue. Formats acceptés : JPG, PNG, WebP, HEIC." };
   let bitmap: ImageBitmap;
-  try { bitmap = await createImageBitmap(file); }
-  catch { return type === "image/heic" ? { ok: false, heicNeedsServer: true, message: "Votre navigateur ne sait pas afficher les photos HEIC. Elle sera convertie sur nos serveurs, ou exportez-la en JPG depuis votre téléphone." } : { ok: false, message: "Impossible de lire cette photo. Essayez un autre fichier." }; }
+  // Rotation EXIF appliquée (photo de téléphone à l'endroit) ; le ré-encodage plus bas supprime ensuite les métadonnées.
+  try { bitmap = await createImageBitmap(file, { imageOrientation: "from-image" }); }
+  catch {
+    const jpeg = type === "image/heic" ? await heicEnJpeg(file) : null;
+    if (!jpeg) return { ok: false, message: type === "image/heic" ? "Cette photo iPhone (HEIC) n'a pas pu être convertie. Dans Réglages > Appareil photo > Formats, choisissez « Le plus compatible », ou envoyez-la en JPG." : "Impossible de lire cette photo. Essayez un autre fichier." };
+    try { bitmap = await createImageBitmap(jpeg, { imageOrientation: "from-image" }); } catch { return { ok: false, message: "Impossible de lire cette photo. Essayez un autre fichier." }; }
+  }
+  if (minSide && Math.max(bitmap.width, bitmap.height) < minSide) return { ok: false, message: `Photo trop petite (${bitmap.width} × ${bitmap.height} px) : il faut au moins ${minSide} px. Prenez la pièce avec l'appareil photo du téléphone plutôt qu'une capture d'écran.` };
   const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
   const w = Math.round(bitmap.width * scale), h = Math.round(bitmap.height * scale);
   const cv = document.createElement("canvas"); cv.width = w; cv.height = h;

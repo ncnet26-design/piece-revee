@@ -477,6 +477,15 @@ test("accueil : bande des enseignes, avec bouton pause", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Relancer le défilement" })).toBeVisible();
 });
 
+test("transformer : photo iPhone (HEIC) convertie dans le navigateur, photo trop petite refusée", async ({ page }) => {
+  await page.goto("/transformer/");
+  await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("tests/e2e/fixtures-piece.heic");
+  await expect(page.getByRole("img", { name: "Ma pièce" })).toBeVisible({ timeout: 30_000 });
+  await page.getByRole("button", { name: "Changer de photo" }).click();
+  await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/icon-192.png");
+  await expect(page.getByText(/Photo trop petite/)).toBeVisible();
+});
+
 test("transformer : attente animée pendant le moodboard (étapes, progression)", async ({ page }) => {
   await page.route("**/v2/moodboard", async (r) => { await new Promise((x) => setTimeout(x, 4000)); await r.fulfill({ status: 500, headers: { "Access-Control-Allow-Origin": "*" }, body: "{}" }); });
   await page.goto("/transformer/");
