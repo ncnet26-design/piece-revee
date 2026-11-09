@@ -28,3 +28,10 @@ jobs:
               | jq -r '.success, (.errors|tostring), (.result.usage|tostring), (.result.response // (.result.choices[0].message.content) // .result | tostring)' | head -c 2500
             echo; echo "durée $(echo "$(date +%s.%N) - $T" | bc) s"
           done
+      - name: Camille en ligne (service du site)
+        run: |
+          for Q in "J'ai un salon de 20 m2 avec parquet chêne clair et murs blancs, je veux du chaleureux. Quel canapé ?" "Quelle couleur pour une petite chambre sombre ?"; do
+            echo "== $Q"
+            jq -n --arg q "$Q" '{messages:[{role:"user",content:$q}], contexte:"Page en cours : /\n\nProduits de la boutique :\n• Canapé 3 places Söderhamn — IKEA — 899 € (budget moyen)\n• Canapé courbe en bouclette — Habitat — 999 € (budget moyen)", visiteur:"robot-test-camille"}' > q.json
+            curl -sS --max-time 60 -X POST https://piece-revee-ia.ewanesteves26.workers.dev/v2/camille -H "Origin: https://odd-bar-c583.ewanesteves26.workers.dev" -H "Content-Type: application/json" --data @q.json | jq -r '.reponse // .erreur'
+          done
