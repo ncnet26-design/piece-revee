@@ -67,6 +67,7 @@ var NIVEAUX = {
   complet: "FULL RENOVATION, STILL FEASIBLE: keep the architecture, windows, doors and the positions of plumbing and electrics; you may also replace the floor, wall tiles, cabinetry fronts, worktops and all furniture."
 };
 var PHOTO = [
+  "Final image: a feature photograph for a high-end interior design magazine \u2014 considered layout, curated pieces, styled surfaces with a few well-chosen objects, balanced composition, nothing random, nothing cheap-looking.",
   "Shot like an architectural interior photograph for a high-end design magazine: full-frame camera, 24-35mm lens, eye-level, verticals perfectly straight,",
   "soft natural daylight with physically correct bounce light and soft contact shadows, no blown highlights.",
   "Materials must read as real at close range: wood grain and pores, stone veining and honed or polished sheen, fabric weave and pile, brushed metal with soft anisotropic highlights, glazed ceramic with slight irregularity.",
@@ -100,7 +101,7 @@ function buildPrompt(p) {
   if (p.references && p.inspirations) lines.push(`Image${p.references > 1 ? `s ${first} to ${last} are` : ` ${first} is`} the client's inspiration${p.references > 1 ? "s" : ""} (Pinterest, magazines). Take ONLY their style, colour palette, materials, furniture shapes, textiles, lighting and mood, adapted to the client's room, its function, real geometry and scale. Do not copy their room type, architecture, windows, layout or camera.`);
   else if (p.references) lines.push(`Images ${first} to ${last} are references (materials, finishes or products): reproduce their colour, texture and finish faithfully, do not copy their room.`);
   if (p.materials?.length) lines.push(`Materials to use (exact finishes): ${p.materials.join("; ")}.`);
-  if (p.products?.length) lines.push(`Design pieces to show, faithful to their real shape: ${p.products.join("; ")}.`);
+  if (p.products?.length) lines.push(`FURNISH WITH THESE REAL PRODUCTS, chosen from shops (draw each one once, faithful to its name, materials and colour, at a realistic size and a sensible place; no other large furniture): ${p.products.join("; ")}.`);
   lines.push(`Style brief (written by our designer; ignore any room type it mentions): ${p.brief}`, PHOTO);
   return lines.join("\n");
 }
@@ -162,6 +163,7 @@ Read the client's brief and constraints below, then examine the photo carefully.
 1. ROOM: the room type (if the brief states it, use exactly that).
 2. KEEP: the fixed elements to keep exactly (walls, windows, doors, ceiling, plumbing fixtures such as bathtub, shower, toilet, washbasin, sink, kitchen units and appliances, radiators, built-ins), with their position.
 3. PLAN: short numbered imperative lines (8 to 14). Each line names ONE object or surface, its position in the photo (left / centre / right and top / middle / bottom), its category in capitals (LIGHTING, FURNITURE, TEXTILE, DECOR, WALL, FLOOR, FIXTURE, CLUTTER) and exactly what to do with it.
+If the brief lists REAL PRODUCTS, write one PLAN line for each product: where it goes (position in the photo), its approximate size in cm and what it replaces; place them as a professional interior designer would (sofa against a wall facing the focal point, rug under the front legs, pendant centred above the table\u2026).
 Rules: a light fitting stays a light fitting (LIGHTING is never replaced by a plant or an object); furniture stays furniture of a type that suits the room; first apply the client's own requests, then the style; respect the requested change level; remove all clutter and mess (clothes, bags, boxes, bottles, cables, papers, toys, laundry) and leave tidy, styled surfaces; never add anything that makes no sense in this room type (for a bathroom: no fabric curtains except a shower curtain, no sofa, no bed, no carpet other than a bath mat); everything must be realistic, feasible and buildable.
 Answer ONLY in this format:
 ROOM: ...

@@ -16,6 +16,18 @@ import { Catalogue } from "./Catalogue";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { VideoAvantApres } from "./VideoAvantApres";
 import { Identique } from "./Identique";
+import { familleDe, norm, type ProduitCatalogue } from "@/lib/catalogue";
+import type { Choisi } from "@/lib/selection-piece";
+import { ProduitImage } from "@/components/ProduitImage";
+import { toggleExternal } from "@/lib/studio/project";
+
+const SANS_CHOIX: Choisi[] = [];
+/** Le vrai produit dessiné à cet endroit (choisi avant le dessin) : même famille, et de préférence même type (suspension ≠ lampe). */
+export function produitExact(o: { type: string; label: string }, choix: Choisi[]): Choisi | undefined {
+  const f = familleDe(o.type, o.label), l = norm(o.label);
+  const memes = choix.filter((c) => c.emplacement.famille === f);
+  return memes.find((c) => l.includes(norm(c.emplacement.id).split("-")[0]!)) ?? memes[0];
+}
 
 type Sel = { kind: "objet"; o: AiObject } | { kind: "surface"; s: Surface } | { kind: "couleur"; hex: string; x: number; y: number };
 
@@ -23,7 +35,7 @@ type Sel = { kind: "objet"; o: AiObject } | { kind: "surface"; s: Surface } | { 
  * La pièce transformée : on touche n'importe où. Un meuble ouvre ses alternatives réelles (trois gammes) ;
  * un mur, un sol ou un rideau ouvre sa teinte, ses matières proches et où les trouver ; ailleurs, la couleur du point.
  */
-export function Resultat({ image, before, objects, surfaces, analysing }: { image: string; before?: string; objects: AiObject[]; surfaces: Surface[]; analysing: boolean }) {
+export function Resultat({ image, before, objects, surfaces, analysing, choix = SANS_CHOIX }: { image: string; before?: string; objects: AiObject[]; surfaces: Surface[]; analysing: boolean; choix?: Choisi[] }) {
   const [sel, setSelBrut] = useState<Sel | null>(null);
   const [photo, setPhoto] = useState<string | undefined>(undefined);
   // Prix de la pièce refaite à trois budgets, calculé dans notre boutique dès que les meubles sont repérés.
@@ -32,9 +44,14 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
   useEffect(() => {
     if (!objects.length) return;
     let vivant = true;
-    void produitsParBudget(objects).then((l) => { if (vivant) setLignes({ cle, l }); });
+    void produitsParBudget(objects).then((l) => {
+      if (!vivant) return;
+      // Dans le budget choisi, la ligne reprend le produit réellement dessiné.
+      const avecExacts = l.map((ligne) => { const o = objects.find((x) => x.id === ligne.id); const c = o ? produitExact(o, choix) : undefined; const g = (c?.produit as { g?: "petit" | "moyen" | "haut" } | undefined)?.g; return c && g ? { ...ligne, produits: { ...ligne.produits, [g]: c.produit } } : ligne; });
+      setLignes({ cle, l: avecExacts });
+    });
     return () => { vivant = false; };
-  }, [cle, objects]);
+  }, [cle, objects, choix]);
   // Choisir un meuble découpe aussi sa photo (au moment du geste, pas pendant l'affichage).
   const setSel = (x: Sel | null) => { setSelBrut(x); setPhoto(x?.kind === "objet" ? decoupe(img.current, x.o.zone) : undefined); };
   const [compare, setCompare] = useState(false);
@@ -114,6 +131,7 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
       <Panel open={Boolean(sel)} kicker={kicker} title={title} onClose={() => setSel(null)}>
         {sel?.kind === "objet" && (<>
           {sel.o.description && <p className="mt-2 text-[13px] text-muted">{sel.o.description}</p>}
+          {(() => { const c = produitExact(sel.o, choix); return c ? <MeubleExact key={`exact-${sel.o.id}`} p={c.produit} forObject={sel.o.id} /> : null; })()}
           <Identique key={`identique-${sel.o.id}`} photo={photo} image={image} label={sel.o.label} />
           <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={descriptionPrecise(sel.o)} forObject={sel.o.id} photo={photo} />
           <details open className="group mt-5 border-t border-line pt-4">
@@ -215,4 +233,28 @@ function decoupe(im: HTMLImageElement | null, z: { x: number; y: number; w: numb
   } catch { out = undefined; } // image d'un autre site sans autorisation de lecture : recherche par la description seule
   decoupes.set(k, out);
   return out;
+}
+
+/** Le produit réel que l'IA a dessiné ici : lien direct, sans recherche. */
+function MeubleExact({ p, forObject }: { p: ProduitCatalogue; forObject: string }) {
+  const project = useProject();
+  const dedans = project.list.some((x) => x.productId === p.u);
+  return (
+    <section aria-label="Le meuble de l'image" className="mt-3 rounded-[2px] border border-ink bg-white p-3">
+      <p className="text-[10.5px] font-semibold uppercase tracking-[.14em] text-[var(--bronze)]">Le meuble de l'image · en vente</p>
+      <div className="mt-2 flex gap-3">
+        <ProduitImage src={p.i} alt="" merchant={p.m} className="w-24 shrink-0 self-start" />
+        <div className="min-w-0">
+          <p className="text-[11px] font-semibold uppercase tracking-[.1em] text-muted">{p.m}</p>
+          <p className="text-[14px] font-medium leading-snug">{p.n}</p>
+          {p.p !== null && <p className="mt-0.5 text-[14px] font-semibold tabular-nums">{p.p.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} € <span className="text-[11px] font-normal text-muted">relevé le {new Date(p.d).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}</span></p>}
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            <a className="btn btn-primary !min-h-9 !px-3.5 !py-1.5 text-[12.5px]" href={p.u} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.m}<span className="sr-only"> (nouvel onglet)</span></a>
+            <button type="button" className="btn !min-h-9 !px-3.5 !py-1.5 text-[12.5px]" aria-pressed={dedans} onClick={() => toggleExternal({ title: p.n, url: p.u, merchant: p.m, price: p.p, currency: p.c, checkedAt: p.d, source: "catalogue" }, forObject)}>{dedans ? "✓ Dans ma pièce" : "Ajouter à ma pièce"}</button>
+          </div>
+        </div>
+      </div>
+      <p className="mt-2 text-[11px] text-muted">L'IA a dessiné ce produit d'après son nom : l'aspect peut légèrement différer, vérifiez la photo chez l'enseigne.</p>
+    </section>
+  );
 }

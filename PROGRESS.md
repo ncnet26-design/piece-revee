@@ -165,3 +165,9 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
   type de pièce obligatoire et imposé au modèle (équipements fixes gardés), ampleur (léger / équilibré / complet), « Ce que vous voulez changer » en priorité,
   IA gratuite : seule la photo de la pièce est envoyée (le style passe par le texte), résultat limité à 68 % de l'écran avec le détail à côté.
   Test réel (Wikimedia, salle de bain / chambre / cuisine) : demandes appliquées, structure gardée. Service déployé le 9 nov.
+- 9 nov. (soir, autonomie) : transformation revue en profondeur, sans rien de payant :
+  - vrais meubles choisis AVANT le dessin (lib/selection-piece.ts : emplacements par pièce, budget, bon type, prix plancher, style), dessinés par l'IA et liés directement (« Le meuble de l'image ») ;
+  - correspondance stricte matière/couleur/forme dans la boutique (lib/attributs.ts) ; « Trouver l'identique » = Google Lens sur le meuble découpé (route /v2/recadrage) ;
+  - photos : HEIC converti dans le navigateur, rotation EXIF, refus < 800 px ; budget au choix ; consigne « magazine » ; plan qui place chaque produit ;
+  - compteur strict sans écritures KV (limite gratuite 1 000/jour) ; skill transformation-piece ; audit transfo-audit.md ; architecture payante chiffrée (docs/transfo-architecture.md).
+  Service IA à redéployer (attend le « oui »).

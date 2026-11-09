@@ -277,7 +277,10 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   await expect(meuble.getByRole("link", { name: /Voir chez boutique-exemple\.fr/ })).toHaveAttribute("href", "https://boutique-exemple.fr/table-travertin");
   await expect(meuble.getByText("Prix sur le site")).toBeVisible();
   await expect(meuble.getByTitle("Suggestions de recherche Google")).toBeVisible();
-  await meuble.getByRole("button", { name: "Ajouter à ma pièce" }).first().click();
+  // En tête : le vrai meuble de la boutique dessiné à cet endroit, puis la recherche de l'identique (Google Lens).
+  await expect(meuble.getByRole("region", { name: "Le meuble de l'image" })).toBeVisible();
+  await expect(meuble.getByRole("button", { name: /Trouver l'identique/ })).toBeVisible();
+  await meuble.locator("li").filter({ hasText: "Table basse ovale en travertin" }).getByRole("button", { name: "Ajouter à ma pièce" }).click();
   await expect(meuble.getByRole("button", { name: "✓ Dans ma pièce" })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByRole("link", { name: /Ma pièce composée : 1 article · 489 €/ })).toBeVisible();
   expect(recherches).toContain("table basse galet travertin");

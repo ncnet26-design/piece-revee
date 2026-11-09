@@ -38,6 +38,7 @@ export const NIVEAUX: Record<string, string> = {
 };
 
 const PHOTO = [
+  "Final image: a feature photograph for a high-end interior design magazine — considered layout, curated pieces, styled surfaces with a few well-chosen objects, balanced composition, nothing random, nothing cheap-looking.",
   "Shot like an architectural interior photograph for a high-end design magazine: full-frame camera, 24-35mm lens, eye-level, verticals perfectly straight,",
   "soft natural daylight with physically correct bounce light and soft contact shadows, no blown highlights.",
   "Materials must read as real at close range: wood grain and pores, stone veining and honed or polished sheen, fabric weave and pile, brushed metal with soft anisotropic highlights, glazed ceramic with slight irregularity.",
@@ -72,7 +73,7 @@ export function buildPrompt(p: { mode: Mode; brief: string; piece?: string; nive
   if (p.references && p.inspirations) lines.push(`Image${p.references > 1 ? `s ${first} to ${last} are` : ` ${first} is`} the client's inspiration${p.references > 1 ? "s" : ""} (Pinterest, magazines). Take ONLY their style, colour palette, materials, furniture shapes, textiles, lighting and mood, adapted to the client's room, its function, real geometry and scale. Do not copy their room type, architecture, windows, layout or camera.`);
   else if (p.references) lines.push(`Images ${first} to ${last} are references (materials, finishes or products): reproduce their colour, texture and finish faithfully, do not copy their room.`);
   if (p.materials?.length) lines.push(`Materials to use (exact finishes): ${p.materials.join("; ")}.`);
-  if (p.products?.length) lines.push(`Design pieces to show, faithful to their real shape: ${p.products.join("; ")}.`);
+  if (p.products?.length) lines.push(`FURNISH WITH THESE REAL PRODUCTS, chosen from shops (draw each one once, faithful to its name, materials and colour, at a realistic size and a sensible place; no other large furniture): ${p.products.join("; ")}.`);
   lines.push(`Style brief (written by our designer; ignore any room type it mentions): ${p.brief}`, PHOTO);
   return lines.join("\n");
 }

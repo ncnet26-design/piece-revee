@@ -1,5 +1,7 @@
 "use client";
 import { MentionIA } from "@/components/MentionIA";
+import { choisirMeubles, consigneProduit, type Choisi, type Gamme } from "@/lib/selection-piece";
+import { familleBoutique } from "@/lib/boutique-client";
 import { textureMatiere } from "@/lib/texture-matiere";
 import { Chargement } from "./Chargement";
 import { OffreTeaser } from "@/components/OffreTeaser";
@@ -29,7 +31,7 @@ const NIVEAUX: Array<[string, string, string]> = [
 ];
 
 type Etape = "photos" | "moodboard" | "resultat";
-interface Saved { mood: Moodboard | null; result: { imageUrl: string; objects: AiObject[]; surfaces: Surface[] } | null }
+interface Saved { mood: Moodboard | null; result: { imageUrl: string; objects: AiObject[]; surfaces: Surface[]; choix?: Choisi[] } | null }
 
 const readFile = (f: File) => new Promise<string>((ok, ko) => { const r = new FileReader(); r.onload = () => ok(String(r.result)); r.onerror = ko; r.readAsDataURL(f); });
 async function urlToData(src: string) { const b = await (await fetch(src)).blob(); return readFile(new File([b], "inspiration", { type: b.type })); }
@@ -51,6 +53,7 @@ export function Parcours() {
   const [wish, setWish] = useState("");
   const [piece, setPiece] = useState<string>("");
   const [niveau, setNiveau] = useState("equilibre");
+  const [budget, setBudget] = useState<Gamme>("moyen");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [, setJob] = useState<IaJob | null>(null);
@@ -124,12 +127,14 @@ export function Parcours() {
     const mats = (mood?.materials ?? []).map((id) => materialById(id)).filter(Boolean).map((m) => `${m!.name} (${m!.finish})`);
     // Les demandes du client passent en premier ; le style des inspirations s'applique à tout le reste.
     const brief = [wish && `PRIORITY — the client asks precisely for (French, apply each request exactly, change nothing else they did not ask beyond the chosen level): ${wish}`, mood?.brief_en || mood?.brief_fr || ""].filter(Boolean).join("\n") || "Redesign this room in the spirit of the inspiration images.";
-    const r = await createJob({ mode: "transform", brief, photo: roomHD ?? room, references: inspi, inspirations: true, keep, materials: mats, quality: "premium", piece: piece || undefined, niveau });
+    // De vrais meubles de la boutique, choisis avant le dessin selon la pièce, le style et le budget : l'IA dessine ceux-là.
+    const choix = niveau === "leger" ? [] : await choisirMeubles(piece || "salon", [mood?.style, ...mats].filter(Boolean).join(" "), budget, familleBoutique).catch(() => []);
+    const r = await createJob({ mode: "transform", brief, photo: roomHD ?? room, references: inspi, inspirations: true, keep, materials: mats, products: choix.map(consigneProduit), quality: "premium", piece: piece || undefined, niveau });
     if (!r.ok) { setBusy(null); setError(r.message); return; }
     setJob(r.value);
     const done = r.value.status === "terminee" ? r.value : await waitForJob(r.value, setJob);
     if (done.status !== "terminee" || !done.imageUrl) { setBusy(null); setError(done.error?.message ?? "La transformation n'a pas abouti."); return; }
-    const first = { imageUrl: done.imageUrl, objects: [] as AiObject[], surfaces: [] as Surface[] };
+    const first = { imageUrl: done.imageUrl, objects: [] as AiObject[], surfaces: [] as Surface[], choix };
     setResult(first); setBusy(null); go("resultat");
     setAnalysing(true);
     const a = await analyseImage(done.imageUrl);
@@ -137,7 +142,7 @@ export function Parcours() {
     const objects = a.ok ? a.value.objects.flatMap((o) => { const p = AiObjectSchema.safeParse(o); return p.success ? [p.data] : []; }) : [];
     const surfaces = a.ok ? a.value.surfaces ?? [] : [];
     if (!a.ok) setError(`${a.message} Vous pouvez toucher l'image pour relever une couleur.`);
-    const res = { imageUrl: done.imageUrl, objects, surfaces };
+    const res = { imageUrl: done.imageUrl, objects, surfaces, choix };
     setResult(res); persist({ mood, result: res });
     // La transformation devient une version du projet : on la retrouve dans le Studio.
     updateProject((p) => ({ ...p, versions: [{ id: uid(), createdAt: new Date().toISOString(), label: mood?.style ? `Ma pièce · ${mood.style}` : "Ma pièce transformée", kind: "ia", imageUrl: done.imageUrl!, jobId: done.id, provider: `${done.provider} · ${done.model}`, width: done.width, height: done.height, objects }, ...p.versions] }));
@@ -204,6 +209,13 @@ export function Parcours() {
                   </button>
                 ))}
               </div>
+            </fieldset>
+            <fieldset className="mt-5 border-0 p-0">
+              <legend className="text-[13px] font-semibold">Votre budget pour les meubles</legend>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {([["petit", "Petit budget"], ["moyen", "Budget moyen"], ["haut", "Haut de gamme"]] as Array<[Gamme, string]>).map(([id, nom]) => <button key={id} type="button" className="chip min-h-9" aria-pressed={budget === id} onClick={() => setBudget(id)}>{nom}</button>)}
+              </div>
+              <p className="mt-1.5 text-[12px] text-muted">L'IA meuble votre pièce avec de vrais produits de notre boutique dans ce budget : chaque meuble de l'image est en vente.</p>
             </fieldset>
             <label className="mt-5 grid gap-1.5 text-[13px] font-semibold">Ce que vous voulez changer <span className="font-normal text-muted">(facultatif, mais c'est ce qui compte le plus)</span>
               <textarea className="input font-normal" rows={3} value={wish} onChange={(e) => setWish(e.target.value)} maxLength={600}
@@ -319,7 +331,7 @@ export function Parcours() {
 
       {etape === "resultat" && result && (
         <div className="mt-8">
-          <Resultat image={result.imageUrl} before={room ?? undefined} objects={result.objects} surfaces={result.surfaces} analysing={analysing} />
+          <Resultat image={result.imageUrl} before={room ?? undefined} objects={result.objects} surfaces={result.surfaces} analysing={analysing} choix={result.choix ?? []} />
           <div className="mt-8 flex flex-wrap gap-2 border-t border-line pt-6">
             {room && <button type="button" className="btn" disabled={Boolean(busy)} onClick={() => void transform()}>Proposer une autre version</button>}
             <button type="button" className="btn" onClick={() => go("moodboard")} disabled={!mood && !inspi.length}>Revoir mon moodboard</button>
