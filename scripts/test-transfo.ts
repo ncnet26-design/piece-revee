@@ -6,7 +6,12 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { buildPrompt } from "../workers/ia/src/prompts.ts";
 
 const ACC = process.env.CF_ACCOUNT!, TOKEN = process.env.CF_TOKEN!, OUT = ".robot/test-transfo", UA = "PieceReveeTest/1.0 (test de qualité ; https://odd-bar-c583.ewanesteves26.workers.dev)";
-const PIECES: Array<[string, string]> = [["salle-de-bain", "bathroom interior sink bathtub"], ["chambre", "bedroom interior bed"], ["cuisine", "kitchen interior cabinets"]];
+const PIECES: Array<[string, string]> = [["salle-de-bain", "bathroom interior sink bathtub"], ["chambre", "bedroom interior photograph bed hotel"], ["cuisine", "kitchen interior cabinets"]];
+const SOUHAIT: Record<string, string> = {
+  "salle-de-bain": "PRIORITY — the client asks precisely for (French, apply each request exactly): carrelage mural vert sauge, meuble vasque en bois clair avec plan blanc, miroir rond, garder la baignoire et les WC.",
+  chambre: "PRIORITY — the client asks precisely for (French, apply each request exactly): mur de tête de lit couleur terracotta, linge de lit en lin, deux appliques murales.",
+  cuisine: "PRIORITY — the client asks precisely for (French, apply each request exactly): façades vert olive, plan de travail en bois, garder l'électroménager et l'îlot.",
+};
 const BRIEF = "Warm japandi style: light oak wood, natural linen, sand and warm white palette, matte black details, handmade ceramics, soft natural light, a few plants.";
 const MODELES = (process.env.MODELES || "flux-2-klein-4b,flux-2-klein-9b").split(",");
 mkdirSync(OUT, { recursive: true });
@@ -26,7 +31,7 @@ for (const [piece, q] of PIECES) {
   writeFileSync(`${OUT}/${piece}-avant.jpg`, img);
   const r = p.i.width / p.i.height, w = 1024, h = Math.round(1024 / r / 16) * 16;
   for (const niveau of ["equilibre"]) {
-    const prompt = buildPrompt({ mode: "transform", brief: BRIEF, piece, niveau, keep: ["fenetres", "portes", "murs", "plafond"], references: 0 });
+    const prompt = buildPrompt({ mode: "transform", brief: `${SOUHAIT[piece] ?? ""}\n${BRIEF}`, piece, niveau, keep: ["fenetres", "portes", "murs", "plafond"], references: 0 });
     for (const m of MODELES) {
       const form = new FormData();
       form.append("prompt", prompt.slice(0, 3500)); form.append("width", String(w)); form.append("height", String(h));

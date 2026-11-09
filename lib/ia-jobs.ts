@@ -17,6 +17,8 @@ export interface JobRequest {
   inspirations?: boolean;
   keep?: string[]; keepFree?: string; materials?: string[]; products?: string[];
   quality?: Quality; width?: number; height?: number; fournisseur?: string;
+  /** Type de pièce (imposé au modèle) et ampleur des changements : leger | equilibre | complet. */
+  piece?: string; niveau?: string;
   /** Édition localisée : masque PNG (zones transparentes = à modifier) et zone décrite. */
   mask?: string; onlyZone?: { label: string; x: number; y: number; w: number; h: number };
 }

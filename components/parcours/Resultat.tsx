@@ -55,8 +55,12 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
   const title = sel?.kind === "objet" ? sel.o.label : sel?.kind === "surface" ? sel.s.label || sel.s.kind : sel ? `Couleur ${nearestPaint(sel.hex).name.toLowerCase()}` : "";
   const kicker = sel?.kind === "objet" ? "Meuble et objet" : sel?.kind === "surface" ? "Surface" : "Couleur";
 
+  // Image à taille raisonnable : jamais plus haute que 68 % de l'écran, centrée ; le détail est à droite sur ordinateur.
+  const [rw, rh] = ratio.split("/").map((x) => Number(x.trim()) || 1) as [number, number];
   return (
     <div className="relative">
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,1fr)] lg:gap-8">
+      <div className="min-w-0">
       <div className="mb-3 flex flex-wrap items-center gap-2 text-[13px]">
         <span className="text-muted">{analysing ? "Repérage des meubles et des surfaces…" : `${objects.length} élément${objects.length > 1 ? "s" : ""} et ${surfaces.length} surface${surfaces.length > 1 ? "s" : ""} repérés · touchez n'importe où`}</span>
         <span className="flex-1" />
@@ -64,11 +68,12 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
       </div>
       {compare && before ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <BeforeAfter ratio={ratio} labelBefore="Ma pièce" labelAfter="Transformée" before={<img src={before} alt="Ma pièce avant" />} after={<img src={image} alt="Ma pièce transformée" />} />
+        <div className="mx-auto" style={{ maxWidth: `calc(68vh * ${rw} / ${rh})` }}><BeforeAfter ratio={ratio} labelBefore="Ma pièce" labelAfter="Transformée" before={<img src={before} alt="Ma pièce avant" />} after={<img src={image} alt="Ma pièce transformée" />} /></div>
       ) : (
-        <div className="relative cursor-crosshair overflow-hidden rounded-[2px] bg-soft" onClick={onClick} data-testid="piece-transformee">
+        <div className="flex justify-center rounded-[2px] bg-soft">
+        <div className="relative inline-block max-w-full cursor-crosshair overflow-hidden" onClick={onClick} data-testid="piece-transformee">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img ref={img} src={image} alt="Ma pièce transformée avec mes inspirations" crossOrigin="anonymous" className="block w-full" onLoad={(e) => setRatio(`${e.currentTarget.naturalWidth} / ${e.currentTarget.naturalHeight}`)} />
+          <img ref={img} src={image} alt="Ma pièce transformée avec mes inspirations" crossOrigin="anonymous" className="block max-h-[68vh] w-auto max-w-full" onLoad={(e) => setRatio(`${e.currentTarget.naturalWidth} / ${e.currentTarget.naturalHeight}`)} />
           {objects.map((o) => (
             <button key={o.id} type="button" onClick={(e) => { e.stopPropagation(); setSel({ kind: "objet", o }); }} aria-label={`${o.label} : voir les modèles ressemblants`} aria-pressed={sel?.kind === "objet" && sel.o.id === o.id}
               className="studio-hotspot absolute" style={{ left: `${o.zone.x}%`, top: `${o.zone.y}%`, width: `${o.zone.w}%`, height: `${o.zone.h}%` }}>
@@ -79,10 +84,13 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
           {sel?.kind === "couleur" && <span aria-hidden className="pointer-events-none absolute size-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow" style={{ left: `${sel.x}%`, top: `${sel.y}%`, background: sel.hex }} />}
           <MentionIA />
         </div>
+        </div>
       )}
+      </div>
 
+      <div className="min-w-0 lg:sticky lg:top-24">
       {(objects.length > 0 || surfaces.length > 0) && (
-        <div className="mt-4">
+        <div className="lg:mt-9">
           <p className="eyebrow">Dans cette image</p>
           <ul className="mt-2 flex list-none flex-wrap gap-1.5 p-0">
             {objects.map((o) => <li key={o.id}><button type="button" className="btn btn-sm" onClick={() => setSel({ kind: "objet", o })}>{o.label}</button></li>)}
@@ -95,7 +103,9 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
         </div>
       )}
       {lignes?.cle === cle && <div className="mt-5"><PrixPiece lignes={lignes.l} /></div>}
-      {before && <div className="mt-3"><VideoAvantApres avant={before} apres={image} lignes={lignes?.cle === cle ? lignes.l : []} /></div>}
+      </div>
+      </div>
+      {before && <div className="mt-6"><VideoAvantApres avant={before} apres={image} lignes={lignes?.cle === cle ? lignes.l : []} /></div>}
       {project.list.length > 0 && (
         <p className="mt-4 text-[13px]"><a className="underline" href="/ma-piece/">Ma pièce composée : {project.list.length} article{project.list.length > 1 ? "s" : ""}{total ? ` · ${total.toLocaleString("fr-FR")} € de prix relevés` : ""} — voir ma liste d'achats</a></p>
       )}

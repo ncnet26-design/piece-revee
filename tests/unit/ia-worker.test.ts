@@ -131,7 +131,7 @@ describe("IA gratuite de Cloudflare", () => {
   it("transforme d'abord gratuitement avec les petites images, sans compter de dépense", async () => {
     const run = vi.fn(async (_m: string, input: { multipart: { body: ReadableStream; contentType: string } }) => {
       const form = await new Response(input.multipart.body, { headers: { "content-type": input.multipart.contentType } }).formData();
-      expect(form.get("input_image_0")).toBeTruthy(); expect(form.get("input_image_1")).toBeTruthy();
+      expect(form.get("input_image_0")).toBeTruthy(); expect(form.get("input_image_1")).toBeNull(); // la pièce seule : le style des inspirations passe par le texte
       expect(form.get("width")).toBe("1024"); expect(form.get("height")).toBe("640");
       return { image: JPEG_B64 };
     });
@@ -308,7 +308,7 @@ describe("analyse et moodboard (Gemini)", () => {
   it("la consigne de transformation traite les références comme des inspirations", () => {
     const p = buildPrompt({ mode: "transform", brief: "Salon japandi", references: 3, inspirations: true });
     expect(p).toContain("Images 2 to 4 are the client's inspirations");
-    expect(p).toContain("Do not copy their architecture");
+    expect(p).toContain("Do not copy their room type, architecture");
     expect(p).not.toContain("are references (materials");
   });
 });

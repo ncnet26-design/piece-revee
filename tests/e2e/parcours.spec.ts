@@ -89,6 +89,8 @@ test("étude complète en démonstration : création, progression, onglets, guid
 });
 
 test("Camille répond avec ses sources, et renvoie vers un pro pour la structure", async ({ page, isMobile }) => {
+  // IA indisponible (ou plafond du jour) : Camille répond avec ses fiches sourcées. Les tests n'appellent jamais le vrai service.
+  await page.route("**/v2/camille", (r) => r.fulfill({ status: 503, headers: { "Access-Control-Allow-Origin": "*" }, contentType: "application/json", body: JSON.stringify({ erreur: "indisponible" }) }));
   await page.goto("/");
   await page.getByRole("button", { name: isMobile ? "Camille" : "Demander à Camille", exact: true }).click();
   const drawer = page.getByRole("complementary", { name: "Camille, designer d'intérieur virtuelle" });
@@ -224,7 +226,7 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   test.setTimeout(120_000);
   const errors = noJsErrors(page);
   const H = { "Access-Control-Allow-Origin": "*" };
-  let jobBody: { photo?: string; references?: string[]; inspirations?: boolean; mode?: string; brief?: string } = {};
+  let jobBody: { photo?: string; references?: string[]; inspirations?: boolean; mode?: string; brief?: string; piece?: string; niveau?: string } = {};
   // Service d'images simulé : aucun appel payant pendant les tests.
   await page.route("**/v2/moodboard", (r) => r.fulfill({ status: 200, contentType: "application/json", headers: H, body: JSON.stringify({
     style: "Japandi chaleureux", summary: "Bois fumé, lin et lumière douce.", palette: [{ name: "Lin", hex: "#E6DCCB" }, { name: "Chêne fumé", hex: "#5C4636" }],
@@ -253,6 +255,8 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/matieres/noyer/1280.webp");
   await page.getByLabel("Ajouter des inspirations").setInputFiles(["public/matieres/travertin/1280.webp", "public/matieres/lin-lave/1280.webp"]);
   await expect(page.getByRole("img", { name: "Inspiration 2" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Créer mon moodboard" })).toBeDisabled(); // la pièce n'est pas encore indiquée
+  await page.getByRole("button", { name: "Salon", exact: true }).click();
   await page.getByRole("button", { name: "Créer mon moodboard" }).click();
   await expect(page.getByRole("heading", { name: "Japandi chaleureux" })).toBeVisible({ timeout: 20_000 });
   await expect(page.getByText("Chêne fumé").first()).toBeVisible();
@@ -263,6 +267,8 @@ test("transformer : ma pièce et mes inspirations donnent un moodboard, puis une
   expect(jobBody.references).toHaveLength(2);
   expect(jobBody.photo).toMatch(/^data:image\/jpeg;base64,/);
   expect(jobBody.brief).toContain("Calm japandi living room.");
+  expect(jobBody.piece).toBe("salon");
+  expect(jobBody.niveau).toBe("equilibre");
   // Un meuble : des produits réels ressemblants, avec leur lien.
   await page.getByRole("button", { name: /Table basse galet en travertin : voir les modèles ressemblants/ }).click();
   const meuble = page.getByRole("complementary", { name: "Table basse galet en travertin" });
@@ -476,6 +482,7 @@ test("transformer : attente animée pendant le moodboard (étapes, progression)"
   await page.goto("/transformer/");
   await page.getByLabel("Choisir la photo de ma pièce").setInputFiles("public/matieres/noyer/1280.webp");
   await page.getByLabel("Ajouter des inspirations").setInputFiles(["public/matieres/travertin/1280.webp"]);
+  await page.getByRole("button", { name: "Salle de bain", exact: true }).click();
   await page.getByRole("button", { name: "Créer mon moodboard" }).click();
   await expect(page.getByRole("status", { name: /Votre moodboard se compose/ })).toBeVisible();
   await expect(page.getByText(/durée habituelle 10 à 20 s/)).toBeVisible();

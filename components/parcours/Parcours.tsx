@@ -21,6 +21,12 @@ const CATALOG = MATERIALS.map((m) => ({ id: m.id, name: m.name }));
 const MAX_INSPI = 5;
 const KEEP: Array<[string, string]> = [["fenetres", "Fenêtres"], ["portes", "Portes"], ["murs", "Murs et volumes"], ["plafond", "Plafond"], ["sol", "Sol actuel"], ["cheminee", "Cheminée"], ["mobilier", "Mes meubles actuels"]];
 const SAVE = "pr_parcours";
+const TYPES: Array<[string, string]> = [["salon", "Salon"], ["chambre", "Chambre"], ["salle-de-bain", "Salle de bain"], ["cuisine", "Cuisine"], ["salle-a-manger", "Salle à manger"], ["bureau", "Bureau"], ["entree", "Entrée"], ["enfant", "Chambre d'enfant"], ["wc", "WC"]];
+const NIVEAUX: Array<[string, string, string]> = [
+  ["leger", "Léger", "Couleurs, textiles, luminaires et déco. Vos meubles restent."],
+  ["equilibre", "Équilibré", "Nouveaux meubles, couleurs et matières. Murs, fenêtres et équipements restent."],
+  ["complet", "Complet", "Rénovation faisable : sol, carrelage, façades en plus. La plomberie reste en place."],
+];
 
 type Etape = "photos" | "moodboard" | "resultat";
 interface Saved { mood: Moodboard | null; result: { imageUrl: string; objects: AiObject[]; surfaces: Surface[] } | null }
@@ -41,6 +47,8 @@ export function Parcours() {
   const [localPalette, setLocalPalette] = useState<string[]>([]);
   const [keep, setKeep] = useState<string[]>(["fenetres", "portes", "murs", "plafond"]);
   const [wish, setWish] = useState("");
+  const [piece, setPiece] = useState<string>("");
+  const [niveau, setNiveau] = useState("equilibre");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [, setJob] = useState<IaJob | null>(null);
@@ -111,8 +119,9 @@ export function Parcours() {
     if (!room) return;
     setBusy("Transformation de votre pièce… (30 secondes à 1 minute)"); setError(null); setResult(null);
     const mats = (mood?.materials ?? []).map((id) => materialById(id)).filter(Boolean).map((m) => `${m!.name} (${m!.finish})`);
-    const brief = [mood?.brief_en || mood?.brief_fr || "", wish && `Client wishes (French): ${wish}`].filter(Boolean).join("\n") || "Redesign this room in the spirit of the inspiration images.";
-    const r = await createJob({ mode: "transform", brief, photo: room, references: inspi, inspirations: true, keep, materials: mats, quality: "premium" });
+    // Les demandes du client passent en premier ; le style des inspirations s'applique à tout le reste.
+    const brief = [wish && `PRIORITY — the client asks precisely for (French, apply each request exactly, change nothing else they did not ask beyond the chosen level): ${wish}`, mood?.brief_en || mood?.brief_fr || ""].filter(Boolean).join("\n") || "Redesign this room in the spirit of the inspiration images.";
+    const r = await createJob({ mode: "transform", brief, photo: room, references: inspi, inspirations: true, keep, materials: mats, quality: "premium", piece: piece || undefined, niveau });
     if (!r.ok) { setBusy(null); setError(r.message); return; }
     setJob(r.value);
     const done = r.value.status === "terminee" ? r.value : await waitForJob(r.value, setJob);
@@ -175,6 +184,28 @@ export function Parcours() {
             {roomMsg && <p className="mt-2 text-[13px] text-[#8A5A0E]">{roomMsg}</p>}
             {!room && <p className="mt-3 text-[13.5px] text-muted">Pas de photo sous la main ? <button type="button" className="inline-flex min-h-9 items-center font-semibold text-ink underline underline-offset-4" disabled={exemple === "charge"} onClick={() => void essayerExemple()}>{exemple === "charge" ? "Chargement…" : "Essayer avec notre salon d'exemple"}</button></p>}
             {room && <button type="button" className="mt-2 inline-flex min-h-9 items-center text-[13px] text-muted underline underline-offset-4" onClick={() => { setRoom(null); setExemple("non"); }}>Changer de photo</button>}
+            <fieldset className="mt-6 border-0 p-0">
+              <legend className="text-[13px] font-semibold">Quelle pièce ? <span className="font-normal text-muted">(obligatoire)</span></legend>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {TYPES.map(([id, nom]) => <button key={id} type="button" className="chip min-h-9" aria-pressed={piece === id} onClick={() => setPiece(id)}>{nom}</button>)}
+              </div>
+            </fieldset>
+            <fieldset className="mt-5 border-0 p-0">
+              <legend className="text-[13px] font-semibold">Jusqu'où changer ?</legend>
+              <div className="mt-2 grid gap-1.5 sm:grid-cols-3">
+                {NIVEAUX.map(([id, nom, d]) => (
+                  <button key={id} type="button" aria-pressed={niveau === id} onClick={() => setNiveau(id)}
+                    className={`rounded-[2px] border p-3 text-left transition ${niveau === id ? "border-ink bg-surface" : "border-line hover:border-ink"}`}>
+                    <span className="block text-[14px] font-semibold">{nom}</span>
+                    <span className="mt-0.5 block text-[12px] leading-snug text-muted">{d}</span>
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+            <label className="mt-5 grid gap-1.5 text-[13px] font-semibold">Ce que vous voulez changer <span className="font-normal text-muted">(facultatif, mais c'est ce qui compte le plus)</span>
+              <textarea className="input font-normal" rows={3} value={wish} onChange={(e) => setWish(e.target.value)} maxLength={600}
+                placeholder={piece === "salle-de-bain" ? "Ex. remplacer le meuble vasque par du bois clair, carrelage vert sauge, garder la baignoire…" : piece === "cuisine" ? "Ex. façades vert olive, plan de travail en bois, garder l'électroménager…" : "Ex. murs vert sauge, un canapé plus grand, garder mon parquet, plus de rangements…"} />
+            </label>
           </section>
 
           <section aria-labelledby="h-inspi" className="min-w-0"
@@ -221,8 +252,8 @@ export function Parcours() {
           </section>
 
           <div className="lg:col-span-2 flex flex-wrap items-center gap-3 border-t border-line pt-6">
-            <button type="button" className="btn btn-primary btn-lg" disabled={!room || !inspi.length || Boolean(busy)} onClick={() => void makeMood()}>Créer mon moodboard</button>
-            <span className="text-[13px] text-muted">{!room ? "Ajoutez la photo de votre pièce." : !inspi.length ? "Ajoutez au moins une inspiration." : "Vos images sont envoyées au service d'IA uniquement pour ce projet."}</span>
+            <button type="button" className="btn btn-primary btn-lg" disabled={!room || !piece || !inspi.length || Boolean(busy)} onClick={() => void makeMood()}>Créer mon moodboard</button>
+            <span className="text-[13px] text-muted">{!room ? "Ajoutez la photo de votre pièce." : !piece ? "Indiquez de quelle pièce il s'agit." : !inspi.length ? "Ajoutez au moins une inspiration." : "Vos images sont envoyées au service d'IA uniquement pour ce projet."}</span>
           </div>
         </div>
       )}
@@ -270,8 +301,8 @@ export function Parcours() {
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {KEEP.map(([id, l]) => <button key={id} type="button" className="btn btn-sm" aria-pressed={keep.includes(id)} onClick={() => setKeep((k) => (k.includes(id) ? k.filter((x) => x !== id) : [...k, id]))}>{keep.includes(id) ? "✓ " : ""}{l}</button>)}
               </div>
-              <label className="mt-4 grid gap-1.5 text-[13px]">Une précision ? (facultatif)
-                <textarea className="input" rows={3} value={wish} onChange={(e) => setWish(e.target.value)} placeholder="Ex. garder mon canapé gris, ajouter plus de bois, budget serré…" />
+              <label className="mt-4 grid gap-1.5 text-[13px]">Ce que vous voulez changer (vous pouvez compléter)
+                <textarea className="input" rows={3} value={wish} onChange={(e) => setWish(e.target.value)} maxLength={600} placeholder="Ex. garder mon canapé gris, ajouter plus de bois, budget serré…" />
               </label>
             </div>
             <div className="flex flex-wrap gap-2">

@@ -50,6 +50,22 @@ var KEEP = {
   radiateurs: "the radiators and their position",
   mobilier: "the furniture already in the room (same pieces, same places)"
 };
+var PIECES = {
+  salon: { en: "a LIVING ROOM", fixe: "radiators, fireplace if any" },
+  chambre: { en: "a BEDROOM", fixe: "radiators, built-in wardrobes if any" },
+  "salle-de-bain": { en: "a BATHROOM", fixe: "the bathtub and/or shower, the toilet, the washbasin(s) and their exact positions and plumbing; it must remain a fully working bathroom (no sofa, no bed, no living-room furniture)" },
+  cuisine: { en: "a KITCHEN", fixe: "the layout of the kitchen units, the sink, the hob, the oven and appliances at their exact positions; it must remain a fully working kitchen" },
+  "salle-a-manger": { en: "a DINING ROOM", fixe: "radiators, fireplace if any" },
+  bureau: { en: "a HOME OFFICE", fixe: "radiators, sockets positions" },
+  entree: { en: "an ENTRANCE HALL", fixe: "the front door, stairs if any, radiators" },
+  enfant: { en: "a CHILD'S BEDROOM", fixe: "radiators, windows; safe, child-friendly furniture" },
+  wc: { en: "a SEPARATE TOILET ROOM", fixe: "the toilet and the hand basin at their exact positions and plumbing" }
+};
+var NIVEAUX = {
+  leger: "LIGHT REFRESH: keep every existing piece of furniture and every fixture in place; change only wall paint colours, textiles (curtains, cushions, throws, rug, towels or bedding), light fittings, small decor and plants.",
+  equilibre: "BALANCED MAKEOVER: keep the architecture and every fixed fixture; replace freestanding furniture, rugs, curtains, light fittings and decor, and update wall colours or wallpaper and selected finishes.",
+  complet: "FULL RENOVATION, STILL FEASIBLE: keep the architecture, windows, doors and the positions of plumbing and electrics; you may also replace the floor, wall tiles, cabinetry fronts, worktops and all furniture."
+};
 var PHOTO = [
   "Shot like an architectural interior photograph for a high-end design magazine: full-frame camera, 24-35mm lens, eye-level, verticals perfectly straight,",
   "soft natural daylight with physically correct bounce light and soft contact shadows, no blown highlights.",
@@ -61,7 +77,9 @@ function buildPrompt(p) {
   if (p.mode === "transform") {
     lines.push(
       "You are an award-winning interior designer and architectural photographer.",
-      "Image 1 is a photo of the client's real room. Redesign it according to the brief below.",
+      "Image 1 is a photo of the client's real room. Edit THIS photo: the client must instantly recognise their own room, simply refurnished and redecorated. Realistic, buildable, with products that exist in shops; keep the natural light, the season and the view of the photo.",
+      ...p.piece && PIECES[p.piece] ? [`The room is ${PIECES[p.piece].en} and must stay ${PIECES[p.piece].en}, whatever the brief or the inspirations show. Keep: ${PIECES[p.piece].fixe}.`] : ["Keep the room's function exactly as it is in the photo (a bathroom stays a bathroom, a kitchen stays a kitchen, a bedroom stays a bedroom)."],
+      NIVEAUX[p.niveau ?? "equilibre"] ?? NIVEAUX.equilibre,
       "ABSOLUTE CONSTRAINTS \u2014 the result must be the same room seen from the same point:",
       "- identical camera position, height, lens and perspective; identical framing and aspect ratio;",
       "- identical room geometry: wall positions, corners, ceiling height, window and door openings stay exactly where they are;"
@@ -78,11 +96,11 @@ function buildPrompt(p) {
     lines.push(`LOCAL EDIT ONLY: change exclusively the object "${z.label}" located in the region from ${Math.round(z.x)}% to ${Math.round(z.x + z.w)}% horizontally and ${Math.round(z.y)}% to ${Math.round(z.y + z.h)}% vertically. Every other pixel of the image \u2014 other furniture, rug, walls, floor, lighting, camera \u2014 must stay identical.`);
   }
   const first = p.mode === "transform" ? 2 : 1, last = (p.references ?? 0) + first - 1;
-  if (p.references && p.inspirations) lines.push(`Image${p.references > 1 ? `s ${first} to ${last} are` : ` ${first} is`} the client's inspiration${p.references > 1 ? "s" : ""} (Pinterest, magazines). Bring their style, colour palette, materials, furniture shapes, textiles, lighting and mood into the client's room, adapted to its real geometry and scale. Do not copy their architecture, windows, layout or camera.`);
+  if (p.references && p.inspirations) lines.push(`Image${p.references > 1 ? `s ${first} to ${last} are` : ` ${first} is`} the client's inspiration${p.references > 1 ? "s" : ""} (Pinterest, magazines). Take ONLY their style, colour palette, materials, furniture shapes, textiles, lighting and mood, adapted to the client's room, its function, real geometry and scale. Do not copy their room type, architecture, windows, layout or camera.`);
   else if (p.references) lines.push(`Images ${first} to ${last} are references (materials, finishes or products): reproduce their colour, texture and finish faithfully, do not copy their room.`);
   if (p.materials?.length) lines.push(`Materials to use (exact finishes): ${p.materials.join("; ")}.`);
   if (p.products?.length) lines.push(`Design pieces to show, faithful to their real shape: ${p.products.join("; ")}.`);
-  lines.push(`Brief (written in French): ${p.brief}`, PHOTO);
+  lines.push(`Style brief (written by our designer; ignore any room type it mentions): ${p.brief}`, PHOTO);
   return lines.join("\n");
 }
 
@@ -130,6 +148,8 @@ function parseJobBody(raw) {
     height: int(b.height, 1024),
     visiteur: b.visiteur,
     petites,
+    piece: typeof b.piece === "string" && b.piece in PIECES ? b.piece : void 0,
+    niveau: typeof b.niveau === "string" && b.niveau in NIVEAUX ? b.niveau : void 0,
     fournisseur: FOURNISSEURS.includes(b.fournisseur) ? b.fournisseur : void 0
   };
 }
@@ -336,10 +356,10 @@ var cloudflare = {
     const photo = req.petites?.photo, refs = req.petites?.references ?? [];
     if (req.mode === "transform" && !photo) throw new ProviderError("Image trop grande pour le service gratuit.", true);
     const size = cfSize(req.width, req.height), form = new FormData();
-    form.append("prompt", req.prompt.slice(0, 2e3));
+    form.append("prompt", req.prompt.slice(0, 3500));
     form.append("width", String(size.w));
     form.append("height", String(size.h));
-    [...photo ? [photo] : [], ...refs].slice(0, 4).forEach((im, i) => form.append(`input_image_${i}`, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i}.${im.mime.split("/")[1]}`));
+    (photo ? [photo] : refs.slice(0, 4)).forEach((im, i) => form.append(`input_image_${i}`, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i}.${im.mime.split("/")[1]}`));
     const body = new Response(form);
     let out;
     try {
@@ -995,7 +1015,7 @@ var index_default = {
       if (!free && !await reserve(env, visitor, ipHash, cost)) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
       const now = (/* @__PURE__ */ new Date()).toISOString();
       const job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
-      const input = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : void 0, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : void 0, petites: b.petites ? { photo: b.petites.photo ? toImg(b.petites.photo) : void 0, references: b.petites.references.map(toImg) } : void 0 };
+      const input = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, piece: b.piece, niveau: b.niveau, keep: b.keep, keepFree: b.keepFree, references: free ? 0 : b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : void 0, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : void 0, petites: b.petites ? { photo: b.petites.photo ? toImg(b.petites.photo) : void 0, references: b.petites.references.map(toImg) } : void 0 };
       await saveInput(env, job.id, input);
       return json(pub(await run(env, job, input), base), 201);
     }
