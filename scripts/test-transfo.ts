@@ -20,6 +20,13 @@ const SOUHAIT: Record<string, string> = {
   salon: "PRIORITY — the client asks precisely for (French, apply each request exactly): murs vert sauge, un grand canapé beige, une suspension en papier, ranger le désordre.",
   cuisine: "PRIORITY — the client asks precisely for (French, apply each request exactly): façades vert olive, plan de travail en bois, garder l'électroménager et l'îlot.",
 };
+/** Vrais produits de la boutique (choisis par lib/selection-piece.ts le 9 nov., budget moyen, style japandi), comme le site les envoie. */
+const PRODUITS: Record<string, string[]> = {
+  salon: ['sofa: the real product "Canapé 3 places déhoussable en coton et lin - Sable blanc" (Habitat)', 'coffee table: the real product "Table basse carrée en bois massif plaqué chêne et verre trempé" (Habitat)', 'armchair: the real product "SIESTA - fauteuil lounge - bois de manguier - naturel" (Pomax)', 'pendant light: the real product "Suspension Luce Small, frêne naturel" (Hartô)'],
+  "salle-de-bain": ['vanity unit with washbasin: the real product "Meuble sous vasque bois Ladoga L. 80 cm" (Brico Dépôt)', 'washbasin mixer tap: the real product "SALJEN Mitigeur lavabo - noir" (IKEA)', 'wall mirror: the real product "Miroir en bois BORJE" (4MURS)', 'wall light: the real product "ECLIPSE - applique murale - grès - blanc" (Pomax)'],
+  chambre: ['bedside table: the real product "Table de chevet en bois massif" (Selency)', 'bedside lamp: the real product "Lampe à poser en papier washi" (Drawer)', 'armchair: the real product "Brooks - Fauteuil rétro en tissu pieds bois clair" (Drawer)'],
+  cuisine: ['bar stools (two, side by side at the counter): the real product "Tabouret de bar en chêne et lin" (Habitat)', 'pendant light above the worktop or island: the real product "Suspension Luce Small, frêne naturel" (Hartô)'],
+};
 const BRIEF = "Warm japandi style: light oak wood, natural linen, sand and warm white palette, matte black details, handmade ceramics, soft natural light, a few plants.";
 const MODELES = (process.env.MODELES || "flux-2-klein-4b").split(",");
 mkdirSync(OUT, { recursive: true });
@@ -39,7 +46,7 @@ for (const [piece, q] of PIECES) {
   writeFileSync(`${OUT}/${piece}-avant.jpg`, img);
   const r = p.i.width / p.i.height, w = 1024, h = Math.round(1024 / r / 16) * 16;
   for (const niveau of ["equilibre"]) {
-    const prompt = buildPrompt({ mode: "transform", brief: `${SOUHAIT[piece] ?? ""}\n${BRIEF}`, piece, niveau, keep: ["fenetres", "portes", "murs", "plafond"], references: 0 });
+    const prompt = buildPrompt({ mode: "transform", products: PRODUITS[piece], brief: `${SOUHAIT[piece] ?? ""}\n${BRIEF}`, piece, niveau, keep: ["fenetres", "portes", "murs", "plafond"], references: 0 });
     const plan = await planifier(run, { mime: "image/jpeg", b64: Buffer.from(img).toString("base64") }, prompt);
     writeFileSync(`${OUT}/${piece}-plan.txt`, plan ?? "(pas de plan)");
     console.log(`  plan : ${plan ? `${plan.split("\n").length} lignes` : "aucun"}`);
