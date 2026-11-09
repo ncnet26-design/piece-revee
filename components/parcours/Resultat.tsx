@@ -88,7 +88,7 @@ export function Resultat({ image, before, objects, surfaces, analysing, choix = 
         // eslint-disable-next-line @next/next/no-img-element
         <div className="mx-auto" style={{ maxWidth: `calc(68vh * ${rw} / ${rh})` }}><BeforeAfter ratio={ratio} labelBefore="Ma pièce" labelAfter="Transformée" before={<img src={before} alt="Ma pièce avant" />} after={<img src={image} alt="Ma pièce transformée" />} /></div>
       ) : (
-        <div className="flex justify-center rounded-[2px] bg-soft">
+        <div className="resultat-apparition flex justify-center rounded-[2px] bg-soft">
         <div className="relative inline-block max-w-full cursor-crosshair overflow-hidden" onClick={onClick} data-testid="piece-transformee">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img ref={img} src={image} alt="Ma pièce transformée avec mes inspirations" crossOrigin="anonymous" className="block max-h-[68vh] w-auto max-w-full" onLoad={(e) => setRatio(`${e.currentTarget.naturalWidth} / ${e.currentTarget.naturalHeight}`)} />

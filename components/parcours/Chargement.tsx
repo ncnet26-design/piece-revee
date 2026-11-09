@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const ETAPES = {
   moodboard: { duree: 14, titre: "Votre moodboard se compose", etapes: ["Lecture de vos inspirations", "Palette de couleurs", "Matières dominantes", "Style et pièces clés"] },
-  transformation: { duree: 45, titre: "Votre pièce se transforme", etapes: ["Lecture de votre pièce : murs, sol, ouvertures", "Application du style de vos inspirations", "Pose des matières et des couleurs", "Lumière et finitions", "Dernières vérifications"] },
+  transformation: { duree: 35, titre: "Votre pièce se transforme", etapes: ["Choix des vrais meubles dans votre budget", "Analyse de votre pièce : murs, fenêtres, équipements fixes", "Plan de l'architecte d'intérieur, objet par objet", "Création du design, comme pour un magazine", "Dernières vérifications"] },
 } as const;
 
 /**

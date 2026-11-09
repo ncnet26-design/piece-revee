@@ -265,3 +265,7 @@
 .hero-pop { animation: hero-pop .45s cubic-bezier(.2,1.4,.4,1) both; }
 @keyframes hero-pop { from { opacity: 0; transform: translate(-50%, -50%) scale(.6); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 @media (prefers-reduced-motion: reduce) { .hero-pop { animation: none; } }
+/* Apparition du résultat de la transformation : léger fondu et mise au point. */
+.resultat-apparition { animation: resultat-apparition .9s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes resultat-apparition { from { opacity: 0; transform: scale(.985); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+@media (prefers-reduced-motion: reduce) { .resultat-apparition { animation: none; } }
