@@ -170,4 +170,4 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
   - correspondance stricte matière/couleur/forme dans la boutique (lib/attributs.ts) ; « Trouver l'identique » = Google Lens sur le meuble découpé (route /v2/recadrage) ;
   - photos : HEIC converti dans le navigateur, rotation EXIF, refus < 800 px ; budget au choix ; consigne « magazine » ; plan qui place chaque produit ;
   - compteur strict sans écritures KV (limite gratuite 1 000/jour) ; skill transformation-piece ; audit transfo-audit.md ; architecture payante chiffrée (docs/transfo-architecture.md).
-  Service IA à redéployer (attend le « oui »).
+  Service IA déployé le 9 nov. au soir (consigne magazine, placement des vrais meubles, /v2/recadrage pour Google Lens, compteur sans KV).
