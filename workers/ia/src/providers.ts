@@ -6,6 +6,7 @@
 import type { Env, Quality } from "./config";
 import { OPENAI_TOKEN_USD } from "./config";
 import type { Mode } from "./prompts";
+import { avecPlan, planifier } from "./plan";
 
 export type ImgIn = { mime: string; b64: string };
 export interface ProviderRequest { mode: Mode; prompt: string; photo?: ImgIn; mask?: ImgIn; references: ImgIn[]; width: number; height: number; quality: Quality; visitor: string; petites?: { photo?: ImgIn; references: ImgIn[] } }
@@ -225,8 +226,10 @@ export const cloudflare: Provider = {
     // Le modèle n'accepte que de petites images (512 px) : le navigateur les envoie à part.
     const photo = req.petites?.photo, refs = req.petites?.references ?? [];
     if (req.mode === "transform" && !photo) throw new ProviderError("Image trop grande pour le service gratuit.", true);
+    // Avec une photo : analyse de la pièce et plan objet par objet avant de dessiner.
+    const plan = photo ? await planifier((m, e) => env.AI!.run(m, e), photo, req.prompt).catch(() => null) : null;
     const size = cfSize(req.width, req.height), form = new FormData();
-    form.append("prompt", req.prompt.slice(0, 3500)); form.append("width", String(size.w)); form.append("height", String(size.h));
+    form.append("prompt", avecPlan(plan, req.prompt).slice(0, 4000)); form.append("width", String(size.w)); form.append("height", String(size.h));
     // Seule la photo de la pièce est envoyée : avec ce modèle, les images d'inspiration remplacent la pièce au lieu de l'inspirer
     // (leur style passe par le texte de la consigne). En création pure (sans photo), les inspirations servent de références.
     (photo ? [photo] : refs.slice(0, 4)).forEach((im, i) => form.append(`input_image_${i}`, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i}.${im.mime.split("/")[1]}`));

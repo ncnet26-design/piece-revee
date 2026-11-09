@@ -106,7 +106,8 @@ export async function motif(env: Env, visitor: string, ip: string, usd: number) 
  * 10 000 « neurones » par jour pour tout le compte (images ET Camille) : un seul compteur commun,
  * réservé AVANT chaque appel avec une estimation prudente ; on s'arrête bien avant la limite.
  */
-export const NEURONES = { image: 160, camille: 130 } as const;
+/** Image : analyse de la pièce (vision) + dessin. */
+export const NEURONES = { image: 240, camille: 130 } as const;
 export const opNeurones = (env: Env, cout: number): Op => ({ cle: `neurones:${today()}`, ajout: cout, max: limits(env).freeNeurons, ttl: 2 * DAY });
 export const reserverNeurones = (env: Env, cout: number) => reserver(env, [opNeurones(env, cout)]);
 /** Image gratuite : part gratuite du jour (images et neurones) et plafond d'images du visiteur, ensemble. */

@@ -4,16 +4,24 @@
  */
 import { mkdirSync, writeFileSync } from "node:fs";
 import { buildPrompt } from "../workers/ia/src/prompts.ts";
+import { avecPlan, planifier } from "../workers/ia/src/plan.ts";
 
 const ACC = process.env.CF_ACCOUNT!, TOKEN = process.env.CF_TOKEN!, OUT = ".robot/test-transfo", UA = "PieceReveeTest/1.0 (test de qualité ; https://odd-bar-c583.ewanesteves26.workers.dev)";
-const PIECES: Array<[string, string]> = [["salle-de-bain", "bathroom interior sink bathtub"], ["chambre", "bedroom interior photograph bed hotel"], ["cuisine", "kitchen interior cabinets"]];
+const PIECES: Array<[string, string]> = (process.env.PIECES ? JSON.parse(process.env.PIECES) : [["salle-de-bain", "bathroom interior sink bathtub"], ["chambre", "messy bedroom"], ["salon", "messy living room"], ["cuisine", "messy kitchen"]]) as Array<[string, string]>;
+const run = async (modele: string, entree: unknown) => {
+  const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/ai/run/${modele}`, { method: "POST", headers: { authorization: `Bearer ${process.env.CF_TOKEN}`, "content-type": "application/json" }, body: JSON.stringify(entree) });
+  const j = await r.json() as { result?: unknown; errors?: unknown };
+  if (!r.ok) throw new Error(JSON.stringify(j.errors));
+  return j.result;
+};
 const SOUHAIT: Record<string, string> = {
   "salle-de-bain": "PRIORITY — the client asks precisely for (French, apply each request exactly): carrelage mural vert sauge, meuble vasque en bois clair avec plan blanc, miroir rond, garder la baignoire et les WC.",
   chambre: "PRIORITY — the client asks precisely for (French, apply each request exactly): mur de tête de lit couleur terracotta, linge de lit en lin, deux appliques murales.",
+  salon: "PRIORITY — the client asks precisely for (French, apply each request exactly): murs vert sauge, un grand canapé beige, une suspension en papier, ranger le désordre.",
   cuisine: "PRIORITY — the client asks precisely for (French, apply each request exactly): façades vert olive, plan de travail en bois, garder l'électroménager et l'îlot.",
 };
 const BRIEF = "Warm japandi style: light oak wood, natural linen, sand and warm white palette, matte black details, handmade ceramics, soft natural light, a few plants.";
-const MODELES = (process.env.MODELES || "flux-2-klein-4b,flux-2-klein-9b").split(",");
+const MODELES = (process.env.MODELES || "flux-2-klein-4b").split(",");
 mkdirSync(OUT, { recursive: true });
 
 async function photo(q: string) {
@@ -34,7 +42,10 @@ for (const [piece, q] of PIECES) {
     const prompt = buildPrompt({ mode: "transform", brief: `${SOUHAIT[piece] ?? ""}\n${BRIEF}`, piece, niveau, keep: ["fenetres", "portes", "murs", "plafond"], references: 0 });
     for (const m of MODELES) {
       const form = new FormData();
-      form.append("prompt", prompt.slice(0, 3500)); form.append("width", String(w)); form.append("height", String(h));
+      const plan = await planifier(run, { mime: "image/jpeg", b64: Buffer.from(img).toString("base64") }, prompt);
+      writeFileSync(`${OUT}/${piece}-plan.txt`, plan ?? "(pas de plan)");
+      console.log(`  plan : ${plan ? `${plan.split("\n").length} lignes` : "aucun"}`);
+      form.append("prompt", avecPlan(plan, prompt).slice(0, 4000)); form.append("width", String(w)); form.append("height", String(h));
       form.append("input_image_0", new Blob([img], { type: "image/jpeg" }), "piece.jpg");
       const t = Date.now();
       const res = await fetch(`https://api.cloudflare.com/client/v4/accounts/${ACC}/ai/run/@cf/black-forest-labs/${m}`, { method: "POST", headers: { authorization: `Bearer ${TOKEN}` }, body: form });

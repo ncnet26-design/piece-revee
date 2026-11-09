@@ -22,7 +22,7 @@ export const KEEP: Record<string, string> = {
 export const PIECES: Record<string, { en: string; fixe: string }> = {
   salon: { en: "a LIVING ROOM", fixe: "radiators, fireplace if any" },
   chambre: { en: "a BEDROOM", fixe: "radiators, built-in wardrobes if any" },
-  "salle-de-bain": { en: "a BATHROOM", fixe: "the bathtub and/or shower, the toilet, the washbasin(s) and their exact positions and plumbing; it must remain a fully working bathroom (no sofa, no bed, no living-room furniture)" },
+  "salle-de-bain": { en: "a BATHROOM", fixe: "the bathtub and/or shower, the toilet, the washbasin(s) and their exact positions and plumbing; it must remain a fully working bathroom (no sofa, no bed, no living-room furniture, no fabric curtains except a shower curtain, only bath mats on the floor)" },
   cuisine: { en: "a KITCHEN", fixe: "the layout of the kitchen units, the sink, the hob, the oven and appliances at their exact positions; it must remain a fully working kitchen" },
   "salle-a-manger": { en: "a DINING ROOM", fixe: "radiators, fireplace if any" },
   bureau: { en: "a HOME OFFICE", fixe: "radiators, sockets positions" },
@@ -52,6 +52,7 @@ export function buildPrompt(p: { mode: Mode; brief: string; piece?: string; nive
       "Image 1 is a photo of the client's real room. Edit THIS photo: the client must instantly recognise their own room, simply refurnished and redecorated. Realistic, buildable, with products that exist in shops; keep the natural light, the season and the view of the photo.",
       ...(p.piece && PIECES[p.piece] ? [`The room is ${PIECES[p.piece]!.en} and must stay ${PIECES[p.piece]!.en}, whatever the brief or the inspirations show. Keep: ${PIECES[p.piece]!.fixe}.`] : ["Keep the room's function exactly as it is in the photo (a bathroom stays a bathroom, a kitchen stays a kitchen, a bedroom stays a bedroom)."]),
       NIVEAUX[p.niveau ?? "equilibre"] ?? NIVEAUX.equilibre!,
+      "Remove all clutter and mess (clothes, bags, boxes, bottles, cables, papers, toys, laundry): the room must look tidy and styled, yet clearly the same room. Every light fitting stays a light fitting, every piece of furniture stays a piece of furniture.",
       "ABSOLUTE CONSTRAINTS — the result must be the same room seen from the same point:",
       "- identical camera position, height, lens and perspective; identical framing and aspect ratio;",
       "- identical room geometry: wall positions, corners, ceiling height, window and door openings stay exactly where they are;",
