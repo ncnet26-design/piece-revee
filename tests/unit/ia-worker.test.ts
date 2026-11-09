@@ -144,6 +144,31 @@ describe("IA gratuite de Cloudflare", () => {
     expect([...env.QUOTA.data.keys()].some((k) => k.startsWith("usd:"))).toBe(false);
   });
 
+  it("analyse la pièce, puis dessine en 9B tant que la part gratuite le permet ; sinon 4B ; en secours 4B si le 9B échoue", async () => {
+    const modeles: string[] = [];
+    let echec9b = false;
+    const run = vi.fn(async (m: string, e: { messages?: unknown; multipart?: { body: ReadableStream; contentType: string } }) => {
+      modeles.push(m);
+      if (e.messages) return { response: "ROOM: bathroom\nKEEP: bathtub\nPLAN:\n1. Ceiling light fitting at top centre (LIGHTING): replace with a paper pendant lamp.\n2. Washbasin unit at centre (FIXTURE): replace the cabinet with light oak, keep the basin position." };
+      const form = await new Response(e.multipart!.body, { headers: { "content-type": e.multipart!.contentType } }).formData();
+      expect(String(form.get("prompt"))).toMatch(/^PRECISE EDIT PLAN[\s\S]*LIGHTING[\s\S]*a BATHROOM/);
+      if (m.endsWith("9b") && echec9b) throw new Error("3043 Internal server error");
+      return { image: JPEG_B64 };
+    });
+    const env: Env & { QUOTA: ReturnType<typeof memoryKV> } = { QUOTA: memoryKV(), AI: { run: run as never } };
+    const demande = () => call(env, "/v2/jobs", { method: "POST", body: body({ mode: "transform", photo: PNG, petites, piece: "salle-de-bain" }) }).then((r) => r.json() as Promise<{ status: string; model: string }>);
+    let job = await demande();
+    expect(job).toMatchObject({ status: "terminee", model: "@cf/black-forest-labs/flux-2-klein-9b" });
+    expect(modeles[0]).toContain("mistral-small");
+    echec9b = true; modeles.length = 0;
+    job = await demande();
+    expect(job.status).toBe("terminee");
+    expect(modeles.filter((m) => m.includes("klein"))).toEqual(["@cf/black-forest-labs/flux-2-klein-9b", "@cf/black-forest-labs/flux-2-klein-9b", "@cf/black-forest-labs/flux-2-klein-4b"]);
+    env.NEURONES_JOUR = "4000"; modeles.length = 0; // 3 200 déjà utilisés : plus de marge pour le 9B, assez pour le 4B
+    job = await demande();
+    expect(job.model).toBe("@cf/black-forest-labs/flux-2-klein-4b");
+  });
+
   it("si le service gratuit échoue ou si le quota du jour est épuisé, Gemini prend le relais", async () => {
     const gem = () => new Response(JSON.stringify({ steps: [{ type: "model_output", content: [{ type: "image", data: JPEG_B64, mime_type: "image/jpeg" }] }] }), { status: 200 });
     fetchMock.mockImplementation(async () => gem());

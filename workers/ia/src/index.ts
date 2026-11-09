@@ -16,7 +16,7 @@
 import { isAllowedOrigin, ALLOWED_ORIGINS, MAX_BODY, type Ctx, type Env } from "./config";
 import { buildPrompt } from "./prompts";
 import { isDataUrl, parseJobBody } from "./validate";
-import { chooseProvider, cloudflare, gemini, PROVIDERS, ProviderError, type ImgIn, type ProviderRequest } from "./providers";
+import { CF_4B, CF_9B, chooseProvider, cloudflare, gemini, PROVIDERS, ProviderError, type ImgIn, type ProviderRequest } from "./providers";
 import { analyse, moodboard } from "./analyse";
 import { rechercher } from "./recherche";
 import { parseCamille, plafondCamille, repondreCamille } from "./camille";
@@ -41,7 +41,7 @@ const pub = (j: Job, base: string) => ({ ...j, ref: undefined, visitor: undefine
 /** Lance (ou relance) l'appel au fournisseur et met la fiche à jour. */
 async function run(env: Env, job: Job, input: JobInput): Promise<Job> {
   const provider = PROVIDERS.find((p) => p.id === job.provider)!;
-  const req: ProviderRequest = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, mask: input.mask, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor, petites: input.petites };
+  const req: ProviderRequest = { modele: job.model, mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, mask: input.mask, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor, petites: input.petites };
   job.attempts += 1; job.status = "en_cours"; job.error = undefined; job.ref = undefined; job.updatedAt = new Date().toISOString();
   try {
     let r;
@@ -105,13 +105,15 @@ export default {
       if (!b) return json({ erreur: "Demande incomplète : décrivez le projet (et ajoutez la photo pour une transformation)." }, 400);
       const visitor = await sha(`v|${b.visiteur}`);
       // D'abord l'IA gratuite de Cloudflare (sans masque, petites images fournies), tant qu'il reste de la part gratuite aujourd'hui.
-      const free = !b.fournisseur && !b.mask && b.petites !== undefined && cloudflare.configured(env) && (await reserveFree(env, visitor, ipHash));
+      const gratuitPossible = !b.fournisseur && !b.mask && b.petites !== undefined && cloudflare.configured(env);
+      const free9 = gratuitPossible && (await reserveFree(env, visitor, ipHash, true));
+      const free = free9 || (gratuitPossible && (await reserveFree(env, visitor, ipHash)));
       const provider = free ? cloudflare : chooseProvider(env, b.fournisseur);
       if (!provider || (provider.id === "cloudflare" && !free)) return json({ erreur: "Aucun fournisseur d'images n'est configuré (clé manquante)." }, 503);
       const cost = estimate(provider.id, b.quality);
       if (!free && !(await reserve(env, visitor, ipHash, cost))) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
       const now = new Date().toISOString();
-      const job: Job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
+      const job: Job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: free ? (free9 ? CF_9B : CF_4B) : provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
       const input: JobInput = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, piece: b.piece, niveau: b.niveau, keep: b.keep, keepFree: b.keepFree, references: free ? 0 : b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : undefined, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : undefined, petites: b.petites ? { photo: b.petites.photo ? toImg(b.petites.photo) : undefined, references: b.petites.references.map(toImg) } : undefined };
       await saveInput(env, job.id, input);
       return json(pub(await run(env, job, input), base), 201);
@@ -214,7 +216,7 @@ export default {
         const input = await loadInput(env, job.id);
         if (!input) return json({ erreur: "Les données de départ ont expiré : relancez une nouvelle demande." }, 410);
         // Relance gratuite si la part gratuite le permet ; sinon Gemini, dans les plafonds habituels.
-        if (job.provider === "cloudflare" && !(await reserveFree(env, job.visitor, ipHash))) { job.provider = "gemini"; job.model = gemini.model(env, job.mode); }
+        if (job.provider === "cloudflare") { if (await reserveFree(env, job.visitor, ipHash)) job.model = CF_4B; else { job.provider = "gemini"; job.model = gemini.model(env, job.mode); } }
         if (job.provider !== "cloudflare") {
           const cost = estimate(job.provider, job.quality);
           if (!(await reserve(env, job.visitor, ipHash, cost))) return json({ erreur: await motif(env, job.visitor, ipHash, cost) }, 429);

@@ -107,13 +107,15 @@ export async function motif(env: Env, visitor: string, ip: string, usd: number) 
  * réservé AVANT chaque appel avec une estimation prudente ; on s'arrête bien avant la limite.
  */
 /** Image : analyse de la pièce (vision) + dessin. */
-export const NEURONES = { image: 240, camille: 130 } as const;
+export const NEURONES = { image: 200, image9b: 1600, camille: 130, reserve9b: 2500 } as const;
 export const opNeurones = (env: Env, cout: number): Op => ({ cle: `neurones:${today()}`, ajout: cout, max: limits(env).freeNeurons, ttl: 2 * DAY });
 export const reserverNeurones = (env: Env, cout: number) => reserver(env, [opNeurones(env, cout)]);
 /** Image gratuite : part gratuite du jour (images et neurones) et plafond d'images du visiteur, ensemble. */
-export async function reserveFree(env: Env, visitor: string, ip: string): Promise<boolean> {
+export async function reserveFree(env: Env, visitor: string, ip: string, haute = false): Promise<boolean> {
   const L = limits(env), d = today();
-  return reserver(env, [opNeurones(env, NEURONES.image), { cle: `gratuit:${d}`, ajout: 1, max: L.freeDayImages, ttl: 2 * DAY }, { cle: `ip:${d}:${ip}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }, { cle: `v:${d}:${visitor}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }]);
+  // Haute qualité (9B) : seulement s'il reste une marge pour les autres images et pour Camille.
+  const neurones = haute ? { ...opNeurones(env, NEURONES.image9b), max: L.freeNeurons - NEURONES.reserve9b } : opNeurones(env, NEURONES.image);
+  return reserver(env, [neurones, { cle: `gratuit:${d}`, ajout: 1, max: L.freeDayImages, ttl: 2 * DAY }, { cle: `ip:${d}:${ip}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }, { cle: `v:${d}:${visitor}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }]);
 }
 /** Corrige la réservation quand le coût réel est connu. */
 export async function settle(env: Env, visitor: string, ip: string, delta: number) {

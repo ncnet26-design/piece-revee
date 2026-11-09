@@ -9,7 +9,7 @@ import type { Mode } from "./prompts";
 import { avecPlan, planifier } from "./plan";
 
 export type ImgIn = { mime: string; b64: string };
-export interface ProviderRequest { mode: Mode; prompt: string; photo?: ImgIn; mask?: ImgIn; references: ImgIn[]; width: number; height: number; quality: Quality; visitor: string; petites?: { photo?: ImgIn; references: ImgIn[] } }
+export interface ProviderRequest { modele?: string; mode: Mode; prompt: string; photo?: ImgIn; mask?: ImgIn; references: ImgIn[]; width: number; height: number; quality: Quality; visitor: string; petites?: { photo?: ImgIn; references: ImgIn[] } }
 export type Done = { state: "done"; image: Uint8Array; mime: string; costUsd?: number };
 export type Submit = Done | { state: "pending"; ref: string };
 export type Poll = Done | { state: "pending" } | { state: "error"; message: string; retryable: boolean };
@@ -212,7 +212,9 @@ export const replicate: Provider = {
 };
 
 /* ——— IA de Cloudflare (gratuite jusqu'au quota quotidien) ——— */
-const CF_MODEL = "@cf/black-forest-labs/flux-2-klein-4b";
+/** 9B : le plus fidèle à la pièce (tests du 9 nov.), mais ~15 fois plus gourmand en part gratuite ; 4B : le reste du temps. */
+export const CF_9B = "@cf/black-forest-labs/flux-2-klein-9b", CF_4B = "@cf/black-forest-labs/flux-2-klein-4b";
+const CF_MODEL = CF_4B;
 /** Taille de sortie : bord long 1024 px, multiples de 16 (au-delà, le quota gratuit fond vite). */
 export function cfSize(w: number, h: number) {
   const r = Math.min(3, Math.max(1 / 3, w / h)), s16 = (v: number) => Math.max(256, Math.round(v / 16) * 16);
@@ -233,11 +235,14 @@ export const cloudflare: Provider = {
     // Seule la photo de la pièce est envoyée : avec ce modèle, les images d'inspiration remplacent la pièce au lieu de l'inspirer
     // (leur style passe par le texte de la consigne). En création pure (sans photo), les inspirations servent de références.
     (photo ? [photo] : refs.slice(0, 4)).forEach((im, i) => form.append(`input_image_${i}`, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i}.${im.mime.split("/")[1]}`));
-    const body = new Response(form);
-    let out: unknown;
-    try {
-      out = await env.AI!.run(CF_MODEL, { multipart: { body: body.body, contentType: body.headers.get("content-type") } });
-    } catch (e) { throw new ProviderError("Le service d'images gratuit est indisponible.", true, String(e).slice(0, 300)); }
+    // 9B si la part gratuite l'a permis (une nouvelle tentative sur erreur passagère), sinon ou en secours : 4B.
+    const essais = req.modele === CF_9B ? [CF_9B, CF_9B, CF_4B] : [CF_4B, CF_4B];
+    let out: unknown, derniere: unknown;
+    for (const m of essais) {
+      try { const body = new Response(form); out = await env.AI!.run(m, { multipart: { body: body.body, contentType: body.headers.get("content-type") } }); if ((out as { image?: string } | null)?.image) break; }
+      catch (e) { derniere = e; out = null; }
+    }
+    if (!out) throw new ProviderError("Le service d'images gratuit est indisponible.", true, String(derniere).slice(0, 300));
     const b64 = (out as { image?: string } | null)?.image;
     if (!b64) throw new ProviderError("Aucune image n'a été produite.", true);
     return { state: "done", image: b64ToBytes(b64), mime: "image/jpeg", costUsd: 0 };

@@ -4,7 +4,7 @@ name: Test qualité des transformations (IA gratuite)
 on:
   workflow_dispatch:
     inputs:
-      modeles: { description: "Modèles (séparés par des virgules)", required: false, default: "flux-2-klein-4b,flux-2-klein-9b", type: string }
+      modeles: { description: "Modèles (séparés par des virgules)", required: false, default: "flux-2-klein-9b,flux-2-klein-4b", type: string }
       pieces: { description: "Pièces et recherches Wikimedia, en JSON (vide = jeu par défaut)", required: false, default: "", type: string }
 
 permissions:
