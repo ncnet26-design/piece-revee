@@ -159,3 +159,5 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
   - Interface (relecteur) : dates de relevé à côté des prix, cibles tactiles ≥ 36 px, focus visible, mention IA plus lisible, photo d'exemple signalée IA.
   - Transformer : « Essayer avec notre salon d'exemple », tuiles de styles visibles et cliquables.
   - Marques : 24 enseignes de design ajoutées au robot ; bande défilante enseignes + 29 marques de design (liste reconnue, ≥ 3 produits).
+- 9 nov. : service IA déployé (Camille en ligne, testée : réponses en français, produits réels cités, renvoi vers /transformer/).
+  Compteur strict des plafonds (Durable Object « Compteur », SQLite, offre gratuite) prêt et testé ; déploiement en attente d'un « oui » explicite (ajoute une liaison et une migration v1).
