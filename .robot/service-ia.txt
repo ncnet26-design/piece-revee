@@ -1,0 +1,51 @@
+{
+  "success": true,
+  "status": "active",
+  "errors": []
+}
+Workers du compte :
+true
+[]
+odd-bar-c583
+piece-revee-ia
+round-river-bd04
+Réglages de piece-revee-ia :
+{
+  "success": true,
+  "errors": [],
+  "compatibility_date": "2026-10-28",
+  "bindings": [
+    {
+      "name": "AI",
+      "type": "ai"
+    },
+    {
+      "name": "COMPTEUR",
+      "type": "durable_object_namespace"
+    },
+    {
+      "name": "GEMINI_API_KEY",
+      "type": "secret_text"
+    },
+    {
+      "name": "QUOTA",
+      "type": "kv_namespace"
+    }
+  ]
+}
+Sous-domaine workers.dev :
+{
+  "success": true,
+  "subdomain": "ewanesteves26"
+}
+Réponse publique actuelle :
+{"ok":true,"service":"Pièce Rêvée · images IA","fournisseurs":["gemini","cloudflare"],"defaut":"gemini","compteur":true,"stockage":"KV","cle":true}
+Étiquette de migration actuelle : v1
+{"bindings":[{"type":"ai","name":"AI"},{"type":"durable_object_namespace","name":"COMPTEUR","class_name":"Compteur"}],"migrations":null}
+{
+  "success": true,
+  "errors": [],
+  "bindings": []
+}
+Réponse publique après mise en ligne :
+{"ok":true,"service":"Pièce Rêvée · images IA","fournisseurs":["gemini","cloudflare"],"defaut":"gemini","compteur":true,"stockage":"KV","cle":true}
