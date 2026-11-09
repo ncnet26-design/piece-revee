@@ -34,6 +34,8 @@ export interface Env {
   CAMILLE_VISITEUR_JOUR?: string;
   NEURONES_JOUR?: string;
   QUOTA?: KVNamespace;
+  /** Compteur strict des plafonds (Durable Object « Compteur »). Sans lui, repli sur KV (moins strict). */
+  COMPTEUR?: { idFromName(nom: string): unknown; get(id: unknown): { fetch(url: string, init?: RequestInit): Promise<Response> } };
   /** Facultatif : stockage R2 des images (sinon KV, 30 jours). */
   IMAGES?: R2Bucket;
 }

@@ -710,6 +710,49 @@ async function rechercher(env, q, label, pays = "FR", photo, flux) {
   return { produits: produits.slice(0, 9), suggestions, requetes, etapes };
 }
 
+// workers/ia/src/compteur.ts
+var arrondi = (x) => Math.round(x * 1e4) / 1e4;
+function appliquer(actuel, ops) {
+  if (ops.some((o, i) => o.max !== void 0 && o.ajout > 0 && actuel[i] + o.ajout > o.max + 1e-9)) return null;
+  return ops.map((o, i) => arrondi(actuel[i] + o.ajout));
+}
+var Compteur = class {
+  stockage;
+  kv;
+  constructor(state, env) {
+    this.stockage = state.storage;
+    this.kv = env.QUOTA;
+  }
+  async fetch(request) {
+    const ops = await request.json().catch(() => []);
+    if (!Array.isArray(ops) || !ops.length || ops.length > 12) return Response.json({ ok: false });
+    const now = Date.now();
+    const lu = await this.stockage.get(ops.map((o) => o.cle));
+    const actuel = ops.map((o) => {
+      const x = lu.get(o.cle);
+      return x && x.exp > now ? x.v : 0;
+    });
+    const nouveau = appliquer(actuel, ops);
+    if (!nouveau) return Response.json({ ok: false });
+    const entrees = {};
+    ops.forEach((o, i) => {
+      entrees[o.cle] = { v: nouveau[i], exp: now + o.ttl * 1e3 };
+    });
+    await this.stockage.put(entrees);
+    ops.forEach((o, i) => {
+      void this.kv?.put(o.cle, String(nouveau[i]), { expirationTtl: o.ttl }).catch(() => {
+      });
+    });
+    if (Math.random() < 0.02) void this.menage(now);
+    return Response.json({ ok: true });
+  }
+  async menage(now) {
+    const tout = await this.stockage.list({ limit: 1e3 });
+    const vieux = [...tout].filter(([, x]) => x.exp <= now).map(([k]) => k);
+    if (vieux.length) await this.stockage.delete(vieux.slice(0, 128));
+  }
+};
+
 // workers/ia/src/jobs.ts
 var DAY = 86400;
 var today = () => (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
@@ -742,7 +785,6 @@ async function readImage(env, key, mime) {
   return b ? { body: b, mime } : null;
 }
 var n = async (env, k) => Number(await env.QUOTA.get(k)) || 0;
-var add = (env, k, v, ttl) => n(env, k).then((cur) => env.QUOTA.put(k, String(Math.round((cur + v) * 1e4) / 1e4), { expirationTtl: ttl }));
 async function usage(env, visitor, ip) {
   const L = limits(env), d = today(), m = month();
   const [dayImg, ipImg, vImg, mUsd, vUsd, ipUsd] = await Promise.all([n(env, `total:${d}`), n(env, `ip:${d}:${ip}`), n(env, `v:${d}:${visitor}`), n(env, `usd:${m}`), n(env, `usd:${m}:v:${visitor}`), n(env, `usd:${m}:ip:${ip}`)]);
@@ -756,26 +798,43 @@ function overLimit(u, estimate2) {
   return null;
 }
 var estimate = (provider, quality) => PRICE_ESTIMATE[provider]?.[quality] ?? 0.2;
-async function reserve(env, visitor, ip, usd) {
-  const d = today(), m = month();
-  await Promise.all([add(env, `total:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY), add(env, `usd:${m}`, usd, 62 * DAY), add(env, `usd:${m}:v:${visitor}`, usd, 62 * DAY), add(env, `usd:${m}:ip:${ip}`, usd, 62 * DAY)]);
-}
-var NEURONES = { image: 160, camille: 130 };
-var neuronesRestants = async (env) => limits(env).freeNeurons - await n(env, `neurones:${today()}`);
-async function reserverNeurones(env, cout) {
-  if (await neuronesRestants(env) < cout) return false;
-  await add(env, `neurones:${today()}`, cout, 2 * DAY);
+async function reserver(env, ops) {
+  if (env.COMPTEUR) {
+    try {
+      const r = await env.COMPTEUR.get(env.COMPTEUR.idFromName("plafonds")).fetch("https://compteur/reserver", { method: "POST", body: JSON.stringify(ops) });
+      return (await r.json()).ok === true;
+    } catch {
+      return false;
+    }
+  }
+  const actuel = await Promise.all(ops.map((o) => n(env, o.cle)));
+  const nouveau = appliquer(actuel, ops);
+  if (!nouveau) return false;
+  await Promise.all(ops.map((o, i) => env.QUOTA.put(o.cle, String(nouveau[i]), { expirationTtl: o.ttl })));
   return true;
 }
-var freeLeft = async (env) => Math.min(limits(env).freeDayImages - await n(env, `gratuit:${today()}`), Math.floor(await neuronesRestants(env) / NEURONES.image));
+var opsUsd = (L, visitor, ip, usd) => {
+  const m = month();
+  return [{ cle: `usd:${m}`, ajout: usd, max: L.monthUsd, ttl: 62 * DAY }, { cle: `usd:${m}:v:${visitor}`, ajout: usd, max: L.visitorMonthUsd, ttl: 62 * DAY }, { cle: `usd:${m}:ip:${ip}`, ajout: usd, max: L.visitorMonthUsd, ttl: 62 * DAY }];
+};
+async function reserve(env, visitor, ip, usd, compterVisiteur = true) {
+  const L = limits(env), d = today();
+  const visiteur = compterVisiteur ? [{ cle: `ip:${d}:${ip}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }, { cle: `v:${d}:${visitor}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }] : [];
+  return reserver(env, [{ cle: `total:${d}`, ajout: 1, max: L.dayImages, ttl: 2 * DAY }, ...visiteur, ...opsUsd(L, visitor, ip, usd)]);
+}
+var reservePaye = (env, visitor, ip, usd) => reserver(env, opsUsd(limits(env), visitor, ip, usd));
+async function motif(env, visitor, ip, usd) {
+  return overLimit(await usage(env, visitor, ip), usd) ?? "Les plafonds du jour sont atteints. Revenez demain.";
+}
+var NEURONES = { image: 160, camille: 130 };
+var opNeurones = (env, cout) => ({ cle: `neurones:${today()}`, ajout: cout, max: limits(env).freeNeurons, ttl: 2 * DAY });
 async function reserveFree(env, visitor, ip) {
-  const d = today();
-  await Promise.all([add(env, `neurones:${d}`, NEURONES.image, 2 * DAY), add(env, `gratuit:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY)]);
+  const L = limits(env), d = today();
+  return reserver(env, [opNeurones(env, NEURONES.image), { cle: `gratuit:${d}`, ajout: 1, max: L.freeDayImages, ttl: 2 * DAY }, { cle: `ip:${d}:${ip}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }, { cle: `v:${d}:${visitor}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }]);
 }
 async function settle(env, visitor, ip, delta) {
   if (!delta) return;
-  const m = month();
-  await Promise.all([add(env, `usd:${m}`, delta, 62 * DAY), add(env, `usd:${m}:v:${visitor}`, delta, 62 * DAY), add(env, `usd:${m}:ip:${ip}`, delta, 62 * DAY)]);
+  await reserver(env, opsUsd(limits(env), visitor, ip, delta).map((o) => ({ ...o, max: void 0 })));
 }
 
 // workers/ia/src/camille.ts
@@ -787,8 +846,8 @@ Ce que fait le site (oriente vers la bonne page quand c'est utile, avec le lien 
 - Inspirations (/galerie/) : huit styles en photos (japandi, scandinave, industriel, haussmannien, mid-century, wabi-sabi, boh\xE8me, contemporain).
 - Tarifs (/tarifs/) : une \xE9tude offerte, puis le Pass Projet pour une pi\xE8ce, ou l'abonnement pour tout le logement.
 R\xE8gles :
-- R\xE9ponds en fran\xE7ais, en vouvoyant, chaleureusement et simplement, en 150 mots maximum, avec des conseils concrets : noms de couleurs, mati\xE8res, dimensions, distances.
-- Pour les produits, ne cite QUE ceux de la liste \xAB Produits de la boutique \xBB fournie, avec leur enseigne et leur prix exacts ; n'invente jamais de produit, de prix, de couleur de produit ni de lien. Si la liste est vide, donne des conseils sans citer de produit.
+- R\xE9ponds en fran\xE7ais, en vouvoyant, chaleureusement et simplement, en 120 mots maximum (trois courts paragraphes au plus), avec des conseils concrets : noms de couleurs, mati\xE8res, dimensions, distances.
+- Pour les produits, ne cite QUE ceux de la liste \xAB Produits de la boutique \xBB fournie, avec leur enseigne et leur prix exacts ; n'invente jamais de produit, de prix ni de lien, et ne d\xE9cris pas un produit au-del\xE0 de son nom (pas de couleur, tissu, dimension ou option qui n'y figurent pas). Si la liste est vide, donne des conseils sans citer de produit.
 - Appuie-toi sur les \xAB Fiches \xBB fournies quand elles r\xE9pondent \xE0 la question.
 - \xC9lectricit\xE9, gaz, plomberie, structure, urbanisme : donne des rep\xE8res g\xE9n\xE9raux et recommande un professionnel ; ne certifie jamais rien.
 - Hors d\xE9coration, maison et jardin : dis gentiment que ce n'est pas ton domaine.
@@ -803,16 +862,15 @@ function parseCamille(raw) {
   return { messages, contexte: typeof b.contexte === "string" ? propre(b.contexte, 3500) : "", visiteur: b.visiteur };
 }
 async function plafondCamille(env, visiteur, ip) {
-  const kv = env.QUOTA;
-  if (!kv) return null;
-  const d = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
-  const lire = async (k) => Number(await kv.get(k)) || 0;
-  const [tout, v, i] = await Promise.all([lire(`camille:${d}`), lire(`camille:${d}:v:${visiteur}`), lire(`camille:${d}:ip:${ip}`)]);
-  if (tout >= num(env.CAMILLE_JOUR, 40)) return "Camille a beaucoup discut\xE9 aujourd'hui : elle r\xE9pond avec ses fiches jusqu'\xE0 demain.";
-  if (Math.max(v, i) >= num(env.CAMILLE_VISITEUR_JOUR, 25)) return "Vous avez pos\xE9 beaucoup de questions aujourd'hui : Camille r\xE9pond avec ses fiches jusqu'\xE0 demain.";
-  if (!await reserverNeurones(env, NEURONES.camille)) return "Camille a beaucoup discut\xE9 aujourd'hui : elle r\xE9pond avec ses fiches jusqu'\xE0 demain.";
-  await Promise.all([kv.put(`camille:${d}`, String(tout + 1), { expirationTtl: 172800 }), kv.put(`camille:${d}:v:${visiteur}`, String(v + 1), { expirationTtl: 172800 }), kv.put(`camille:${d}:ip:${ip}`, String(i + 1), { expirationTtl: 172800 })]);
-  return null;
+  if (!env.QUOTA && !env.COMPTEUR) return null;
+  const d = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10), parVisiteur = num(env.CAMILLE_VISITEUR_JOUR, 25), J = 172800;
+  const ok = await reserver(env, [
+    opNeurones(env, NEURONES.camille),
+    { cle: `camille:${d}`, ajout: 1, max: num(env.CAMILLE_JOUR, 40), ttl: J },
+    { cle: `camille:${d}:v:${visiteur}`, ajout: 1, max: parVisiteur, ttl: J },
+    { cle: `camille:${d}:ip:${ip}`, ajout: 1, max: parVisiteur, ttl: J }
+  ]);
+  return ok ? null : "Camille a beaucoup discut\xE9 aujourd'hui : elle r\xE9pond avec ses fiches jusqu'\xE0 demain.";
 }
 async function repondreCamille(env, b) {
   const msgs = b.messages.map((m, i) => i === b.messages.length - 1 && b.contexte ? { role: m.role, content: `${m.content}
@@ -874,8 +932,7 @@ async function run(env, job, input) {
     } catch (e) {
       if (provider.id !== "cloudflare" || !gemini.configured(env)) throw e;
       const cost = estimate("gemini", job.quality);
-      if (overLimit(await usage(env, job.visitor, job.ipHash), cost)) throw e;
-      await reserve(env, job.visitor, job.ipHash, cost);
+      if (!await reserve(env, job.visitor, job.ipHash, cost, false)) throw e;
       job.provider = "gemini";
       job.model = gemini.model(env, job.mode);
       job.costUsd = cost;
@@ -931,29 +988,26 @@ var index_default = {
       const b = parseJobBody(await lireJson(request));
       if (!b) return json({ erreur: "Demande incompl\xE8te : d\xE9crivez le projet (et ajoutez la photo pour une transformation)." }, 400);
       const visitor = await sha(`v|${b.visiteur}`);
-      const free = !b.fournisseur && !b.mask && b.petites !== void 0 && cloudflare.configured(env) && await freeLeft(env) > 0;
+      const free = !b.fournisseur && !b.mask && b.petites !== void 0 && cloudflare.configured(env) && await reserveFree(env, visitor, ipHash);
       const provider = free ? cloudflare : chooseProvider(env, b.fournisseur);
       if (!provider || provider.id === "cloudflare" && !free) return json({ erreur: "Aucun fournisseur d'images n'est configur\xE9 (cl\xE9 manquante)." }, 503);
-      const cost = estimate(provider.id, b.quality), u = await usage(env, visitor, ipHash);
-      const refusal = free ? u.visitorDay.images >= u.visitorDay.max ? `Vous avez utilis\xE9 vos ${u.visitorDay.max} images du jour. Revenez demain.` : null : overLimit(u, cost);
-      if (refusal) return json({ erreur: refusal }, 429);
+      const cost = estimate(provider.id, b.quality);
+      if (!free && !await reserve(env, visitor, ipHash, cost)) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
       const now = (/* @__PURE__ */ new Date()).toISOString();
       const job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
       const input = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : void 0, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : void 0, petites: b.petites ? { photo: b.petites.photo ? toImg(b.petites.photo) : void 0, references: b.petites.references.map(toImg) } : void 0 };
-      await Promise.all([saveInput(env, job.id, input), free ? reserveFree(env, visitor, ipHash) : reserve(env, visitor, ipHash, cost)]);
+      await saveInput(env, job.id, input);
       return json(pub(await run(env, job, input), base), 201);
     }
     if (request.method === "POST" && path === "/v2/analyse") {
       const b = await lireJson(request);
       if (!b || !isDataUrl(b.image) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Image manquante." }, 400);
       const visitor = await sha(`v|${b.visiteur}`), cost = 0.01;
-      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
-      if (refusal) return json({ erreur: refusal }, 429);
+      if (!await reservePaye(env, visitor, ipHash, cost)) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
       try {
-        const r = await analyse(env, toImg(b.image));
-        await settle(env, visitor, ipHash, cost);
-        return json(r);
+        return json(await analyse(env, toImg(b.image)));
       } catch (e) {
+        await settle(env, visitor, ipHash, -cost);
         return json({ erreur: e instanceof ProviderError ? e.message : "Analyse impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
     }
@@ -964,13 +1018,11 @@ var index_default = {
       if (!b || !imgs.length || !imgs.every(isDataUrl) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Ajoutez au moins une image d'inspiration." }, 400);
       const catalog = (Array.isArray(b.matieres) ? b.matieres : []).filter((m2) => !!m2 && typeof m2.id === "string" && typeof m2.name === "string").slice(0, 80).map((m2) => ({ id: m2.id.slice(0, 40), name: m2.name.slice(0, 60) }));
       const visitor = await sha(`v|${b.visiteur}`), cost = 0.01;
-      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
-      if (refusal) return json({ erreur: refusal }, 429);
+      if (!await reservePaye(env, visitor, ipHash, cost)) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
       try {
-        const r = await moodboard(env, imgs.map(toImg), catalog);
-        await settle(env, visitor, ipHash, cost);
-        return json(r);
+        return json(await moodboard(env, imgs.map(toImg), catalog));
       } catch (e) {
+        await settle(env, visitor, ipHash, -cost);
         return json({ erreur: e instanceof ProviderError ? e.message : "Moodboard impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
     }
@@ -993,8 +1045,7 @@ var index_default = {
       if (!b || q.length < 3 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Recherche incompl\xE8te." }, 400);
       const label = typeof b.label === "string" ? b.label.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 220) : q;
       const visitor = await sha(`v|${b.visiteur}`), cost = 0.03;
-      const refusal = overLimit(await usage(env, visitor, ipHash), cost);
-      if (refusal) return json({ erreur: refusal }, 429);
+      if (!await reservePaye(env, visitor, ipHash, cost)) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
       try {
         const m2 = typeof b.photo === "string" && b.photo.length < 4e5 ? /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(b.photo) : null;
         const pays = b.pays === "EU" ? "EU" : "FR", photo = m2 ? { mime: m2[1], b64: m2[2] } : void 0;
@@ -1007,9 +1058,9 @@ var index_default = {
           const travail = (async () => {
             try {
               const fin = await rechercher(env, q, label, pays, photo, { liens: (x) => void ligne({ type: "liens", ...x }), fiche: (t) => void ligne({ type: "fiche", produit: t }) });
-              await settle(env, visitor, ipHash, cost);
               await ligne({ type: "fin", ...fin });
             } catch (e) {
+              await settle(env, visitor, ipHash, -cost);
               await ligne({ type: "erreur", erreur: e instanceof ProviderError ? e.message : "Recherche impossible." });
             } finally {
               await w.close().catch(() => {
@@ -1019,10 +1070,9 @@ var index_default = {
           ctx?.waitUntil?.(travail);
           return new Response(readable, { headers: { ...cors, "Content-Type": "application/x-ndjson; charset=utf-8", "Cache-Control": "no-store" } });
         }
-        const r = await rechercher(env, q, label, pays, photo);
-        await settle(env, visitor, ipHash, cost);
-        return json(r);
+        return json(await rechercher(env, q, label, pays, photo));
       } catch (e) {
+        await settle(env, visitor, ipHash, -cost);
         return json({ erreur: e instanceof ProviderError ? e.message : "Recherche impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
     }
@@ -1054,18 +1104,13 @@ var index_default = {
         if (job.attempts >= 3) return json({ erreur: "Trois tentatives d\xE9j\xE0 faites : modifiez la demande." }, 409);
         const input = await loadInput(env, job.id);
         if (!input) return json({ erreur: "Les donn\xE9es de d\xE9part ont expir\xE9 : relancez une nouvelle demande." }, 410);
-        if (job.provider === "cloudflare") {
-          if (await freeLeft(env) > 0) await reserveFree(env, job.visitor, ipHash);
-          else {
-            job.provider = "gemini";
-            job.model = gemini.model(env, job.mode);
-          }
+        if (job.provider === "cloudflare" && !await reserveFree(env, job.visitor, ipHash)) {
+          job.provider = "gemini";
+          job.model = gemini.model(env, job.mode);
         }
         if (job.provider !== "cloudflare") {
           const cost = estimate(job.provider, job.quality);
-          const refusal = overLimit(await usage(env, job.visitor, ipHash), cost);
-          if (refusal) return json({ erreur: refusal }, 429);
-          await reserve(env, job.visitor, ipHash, cost);
+          if (!await reserve(env, job.visitor, ipHash, cost)) return json({ erreur: await motif(env, job.visitor, ipHash, cost) }, 429);
           job.costUsd += cost;
         }
         return json(pub(await run(env, job, input), base));
@@ -1124,5 +1169,6 @@ async function legacy(request, env, path, ip, json) {
   }
 }
 export {
+  Compteur,
   index_default as default
 };

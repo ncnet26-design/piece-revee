@@ -4,6 +4,7 @@ import { _setPause, chooseProvider, pickSize } from "@/workers/ia/src/providers"
 import { buildPrompt } from "@/workers/ia/src/prompts";
 import { parseJobBody } from "@/workers/ia/src/validate";
 import type { Env, KVNamespace } from "@/workers/ia/src/config";
+import { appliquer, Compteur } from "@/workers/ia/src/compteur";
 
 /** KV en mémoire, suffisant pour simuler Cloudflare. */
 function memoryKV(): KVNamespace & { data: Map<string, unknown> } {
@@ -203,6 +204,36 @@ describe("Camille (IA gratuite)", () => {
     const r = await call(env, "/v2/camille", { method: "POST", body: msg() });
     expect(r.status).toBe(429);
     expect((await r.json() as { erreur: string }).erreur).toContain("fiches");
+  });
+});
+
+describe("compteur strict des plafonds", () => {
+  /** Stockage en mémoire, comme celui d'un Durable Object. */
+  const stockage = () => { const m = new Map<string, unknown>(); return { m, get: async <T,>(k: string[]) => new Map(k.filter((x) => m.has(x)).map((x) => [x, m.get(x) as T])), put: async (e: Record<string, unknown>) => { for (const [k, v] of Object.entries(e)) m.set(k, v); }, delete: async (k: string[]) => k.filter((x) => m.delete(x)).length, list: async <T,>() => new Map([...m] as Array<[string, T]>) }; };
+  it("tout ou rien : si une opération dépasse son plafond, aucune n'est appliquée", () => {
+    expect(appliquer([0, 5], [{ cle: "a", ajout: 1, max: 10, ttl: 60 }, { cle: "b", ajout: 1, max: 6, ttl: 60 }])).toEqual([1, 6]);
+    expect(appliquer([0, 6], [{ cle: "a", ajout: 1, max: 10, ttl: 60 }, { cle: "b", ajout: 1, max: 6, ttl: 60 }])).toBeNull();
+    expect(appliquer([6], [{ cle: "b", ajout: -1, max: 6, ttl: 60 }])).toEqual([5]); // un remboursement passe toujours
+  });
+  it("le Durable Object refuse au-delà du plafond et recopie les valeurs pour l'affichage", async () => {
+    const kv = memoryKV(), st = stockage();
+    const c = new Compteur({ storage: st as never }, { QUOTA: kv });
+    const req = () => c.fetch(new Request("https://compteur/reserver", { method: "POST", body: JSON.stringify([{ cle: "neurones:j", ajout: 160, max: 400, ttl: 60 }]) }));
+    expect(await (await req()).json()).toEqual({ ok: true });
+    expect(await (await req()).json()).toEqual({ ok: true });
+    expect(await (await req()).json()).toEqual({ ok: false });
+    await new Promise((r) => setTimeout(r, 0));
+    expect(kv.data.get("neurones:j")).toBe("320");
+  });
+  it("le service passe par le compteur strict quand il est relié", async () => {
+    const reservations: unknown[] = [];
+    const COMPTEUR = { idFromName: () => "id", get: () => ({ fetch: async (_u: string, init?: RequestInit) => { reservations.push(JSON.parse(String(init?.body))); return Response.json({ ok: false }); } }) };
+    const run = vi.fn();
+    const env: Env = { QUOTA: memoryKV(), AI: { run: run as never }, COMPTEUR };
+    const r = await call(env, "/v2/camille", { method: "POST", body: JSON.stringify({ messages: [{ role: "user", content: "Bonjour Camille" }], visiteur: "visiteur-test-01" }) });
+    expect(r.status).toBe(429);
+    expect(run).not.toHaveBeenCalled();
+    expect(JSON.stringify(reservations)).toContain("neurones:");
   });
 });
 

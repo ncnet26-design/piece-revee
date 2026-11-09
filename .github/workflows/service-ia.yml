@@ -45,7 +45,12 @@ jobs:
         run: |
           exec > >(tee -a rapport.txt) 2>&1
           COMPAT=$(curl -sS -H "Authorization: Bearer $CF_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/scripts/$WORKER/settings" | jq -r '.result.compatibility_date // "2025-01-01"')
-          jq -n --arg c "$COMPAT" '{main_module: "worker.js", compatibility_date: $c, bindings: [{type: "ai", name: "AI"}], keep_bindings: ["kv_namespace", "r2_bucket", "secret_text", "plain_text", "secret_key"]}' > metadata.json
+          # Compteur strict des plafonds (Durable Object « Compteur », stockage SQLite de l'offre gratuite) : créé une seule fois (étiquette v1).
+          TAG=$(curl -sS -H "Authorization: Bearer $CF_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/scripts" | jq -r --arg w "$WORKER" '.result[]? | select(.id == $w) | .migration_tag // ""')
+          echo "Étiquette de migration actuelle : ${TAG:-aucune}"
+          if [ "$TAG" = "v1" ]; then MIG='null'; else MIG='{"new_tag":"v1","new_sqlite_classes":["Compteur"]}'; fi
+          jq -n --arg c "$COMPAT" --argjson mig "$MIG" '{main_module: "worker.js", compatibility_date: $c, bindings: [{type: "ai", name: "AI"}, {type: "durable_object_namespace", name: "COMPTEUR", class_name: "Compteur"}], keep_bindings: ["kv_namespace", "r2_bucket", "secret_text", "plain_text", "secret_key"]} + (if $mig == null then {} else {migrations: $mig} end)' > metadata.json
+          jq -c '{bindings, migrations}' metadata.json
           curl -sS -X PUT -H "Authorization: Bearer $CF_TOKEN" \
             -F "metadata=@metadata.json;type=application/json" \
             -F "worker.js=@workers/ia/worker.js;type=application/javascript+module" \

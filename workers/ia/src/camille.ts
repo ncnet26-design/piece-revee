@@ -4,7 +4,7 @@
  * Plafonds quotidiens (au total et par visiteur) pour rester dans la part gratuite.
  */
 import { num, type Env } from "./config";
-import { NEURONES, reserverNeurones } from "./jobs";
+import { NEURONES, opNeurones, reserver } from "./jobs";
 
 export const CAMILLE_MODELE = "@cf/mistralai/mistral-small-3.1-24b-instruct";
 
@@ -15,8 +15,8 @@ Ce que fait le site (oriente vers la bonne page quand c'est utile, avec le lien 
 - Inspirations (/galerie/) : huit styles en photos (japandi, scandinave, industriel, haussmannien, mid-century, wabi-sabi, bohème, contemporain).
 - Tarifs (/tarifs/) : une étude offerte, puis le Pass Projet pour une pièce, ou l'abonnement pour tout le logement.
 Règles :
-- Réponds en français, en vouvoyant, chaleureusement et simplement, en 150 mots maximum, avec des conseils concrets : noms de couleurs, matières, dimensions, distances.
-- Pour les produits, ne cite QUE ceux de la liste « Produits de la boutique » fournie, avec leur enseigne et leur prix exacts ; n'invente jamais de produit, de prix, de couleur de produit ni de lien. Si la liste est vide, donne des conseils sans citer de produit.
+- Réponds en français, en vouvoyant, chaleureusement et simplement, en 120 mots maximum (trois courts paragraphes au plus), avec des conseils concrets : noms de couleurs, matières, dimensions, distances.
+- Pour les produits, ne cite QUE ceux de la liste « Produits de la boutique » fournie, avec leur enseigne et leur prix exacts ; n'invente jamais de produit, de prix ni de lien, et ne décris pas un produit au-delà de son nom (pas de couleur, tissu, dimension ou option qui n'y figurent pas). Si la liste est vide, donne des conseils sans citer de produit.
 - Appuie-toi sur les « Fiches » fournies quand elles répondent à la question.
 - Électricité, gaz, plomberie, structure, urbanisme : donne des repères généraux et recommande un professionnel ; ne certifie jamais rien.
 - Hors décoration, maison et jardin : dis gentiment que ce n'est pas ton domaine.
@@ -36,17 +36,13 @@ export function parseCamille(raw: unknown): CamilleBody | null {
   return { messages, contexte: typeof b.contexte === "string" ? propre(b.contexte, 3500) : "", visiteur: b.visiteur };
 }
 
-/** Plafonds du jour : au total et par visiteur (et par adresse IP). Renvoie un message si dépassé. */
+/** Plafonds du jour (au total, par visiteur, par adresse IP) et part gratuite commune, réservés ensemble. Renvoie un message si dépassé. */
 export async function plafondCamille(env: Env, visiteur: string, ip: string): Promise<string | null> {
-  const kv = env.QUOTA; if (!kv) return null;
-  const d = new Date().toISOString().slice(0, 10);
-  const lire = async (k: string) => Number(await kv.get(k)) || 0;
-  const [tout, v, i] = await Promise.all([lire(`camille:${d}`), lire(`camille:${d}:v:${visiteur}`), lire(`camille:${d}:ip:${ip}`)]);
-  if (tout >= num(env.CAMILLE_JOUR, 40)) return "Camille a beaucoup discuté aujourd'hui : elle répond avec ses fiches jusqu'à demain.";
-  if (Math.max(v, i) >= num(env.CAMILLE_VISITEUR_JOUR, 25)) return "Vous avez posé beaucoup de questions aujourd'hui : Camille répond avec ses fiches jusqu'à demain.";
-  if (!(await reserverNeurones(env, NEURONES.camille))) return "Camille a beaucoup discuté aujourd'hui : elle répond avec ses fiches jusqu'à demain.";
-  await Promise.all([kv.put(`camille:${d}`, String(tout + 1), { expirationTtl: 172800 }), kv.put(`camille:${d}:v:${visiteur}`, String(v + 1), { expirationTtl: 172800 }), kv.put(`camille:${d}:ip:${ip}`, String(i + 1), { expirationTtl: 172800 })]);
-  return null;
+  if (!env.QUOTA && !env.COMPTEUR) return null;
+  const d = new Date().toISOString().slice(0, 10), parVisiteur = num(env.CAMILLE_VISITEUR_JOUR, 25), J = 172800;
+  const ok = await reserver(env, [opNeurones(env, NEURONES.camille), { cle: `camille:${d}`, ajout: 1, max: num(env.CAMILLE_JOUR, 40), ttl: J },
+    { cle: `camille:${d}:v:${visiteur}`, ajout: 1, max: parVisiteur, ttl: J }, { cle: `camille:${d}:ip:${ip}`, ajout: 1, max: parVisiteur, ttl: J }]);
+  return ok ? null : "Camille a beaucoup discuté aujourd'hui : elle répond avec ses fiches jusqu'à demain.";
 }
 
 export async function repondreCamille(env: Env, b: CamilleBody): Promise<string> {

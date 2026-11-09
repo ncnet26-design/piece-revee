@@ -4,6 +4,7 @@
  */
 import { limits, PRICE_ESTIMATE, type Env, type Quality } from "./config";
 import type { ImgIn, Provider } from "./providers";
+import { appliquer, type Op } from "./compteur";
 import type { Mode } from "./prompts";
 
 export type JobStatus = "en_attente" | "en_cours" | "terminee" | "erreur";
@@ -70,31 +71,51 @@ export function overLimit(u: Usage, estimate: number): string | null {
   return null;
 }
 export const estimate = (provider: Provider["id"], quality: Quality) => PRICE_ESTIMATE[provider]?.[quality] ?? 0.2;
-/** Réserve le coût estimé AVANT l'appel (un échec chez le fournisseur reste compté, par prudence). */
-export async function reserve(env: Env, visitor: string, ip: string, usd: number) {
-  const d = today(), m = month();
-  await Promise.all([add(env, `total:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY), add(env, `usd:${m}`, usd, 62 * DAY), add(env, `usd:${m}:v:${visitor}`, usd, 62 * DAY), add(env, `usd:${m}:ip:${ip}`, usd, 62 * DAY)]);
-}
-/* ——— Images gratuites (IA de Cloudflare) : compteur à part, sans dépense ——— */
-/**
- * Part gratuite de l'IA de Cloudflare : 10 000 « neurones » par jour pour tout le compte (images ET Camille).
- * Un seul compteur commun, réservé AVANT chaque appel avec une estimation prudente ; on s'arrête bien avant la limite.
- */
-export const NEURONES = { image: 160, camille: 130 } as const;
-export const neuronesRestants = async (env: Env) => limits(env).freeNeurons - (await n(env, `neurones:${today()}`));
-export async function reserverNeurones(env: Env, cout: number): Promise<boolean> {
-  if ((await neuronesRestants(env)) < cout) return false;
-  await add(env, `neurones:${today()}`, cout, 2 * DAY);
+/** Réserve atomiquement : toutes les opérations passent, ou aucune (compteur strict ; repli KV sans lui). */
+export async function reserver(env: Env, ops: Op[]): Promise<boolean> {
+  if (env.COMPTEUR) {
+    try {
+      const r = await env.COMPTEUR.get(env.COMPTEUR.idFromName("plafonds")).fetch("https://compteur/reserver", { method: "POST", body: JSON.stringify(ops) });
+      return ((await r.json()) as { ok?: boolean }).ok === true;
+    } catch { return false; } // compteur indisponible : on refuse plutôt que de risquer une dépense
+  }
+  const actuel = await Promise.all(ops.map((o) => n(env, o.cle)));
+  const nouveau = appliquer(actuel, ops);
+  if (!nouveau) return false;
+  await Promise.all(ops.map((o, i) => env.QUOTA!.put(o.cle, String(nouveau[i]), { expirationTtl: o.ttl })));
   return true;
 }
-export const freeLeft = async (env: Env) => Math.min(limits(env).freeDayImages - (await n(env, `gratuit:${today()}`)), Math.floor((await neuronesRestants(env)) / NEURONES.image));
-export async function reserveFree(env: Env, visitor: string, ip: string) {
-  const d = today();
-  await Promise.all([add(env, `neurones:${d}`, NEURONES.image, 2 * DAY), add(env, `gratuit:${d}`, 1, 2 * DAY), add(env, `ip:${d}:${ip}`, 1, 2 * DAY), add(env, `v:${d}:${visitor}`, 1, 2 * DAY)]);
+const opsUsd = (L: ReturnType<typeof limits>, visitor: string, ip: string, usd: number): Op[] => {
+  const m = month();
+  return [{ cle: `usd:${m}`, ajout: usd, max: L.monthUsd, ttl: 62 * DAY }, { cle: `usd:${m}:v:${visitor}`, ajout: usd, max: L.visitorMonthUsd, ttl: 62 * DAY }, { cle: `usd:${m}:ip:${ip}`, ajout: usd, max: L.visitorMonthUsd, ttl: 62 * DAY }];
+};
+/** Image payante : nombre d'images du jour (total, visiteur, adresse IP) et budget du mois, réservés AVANT l'appel. */
+export async function reserve(env: Env, visitor: string, ip: string, usd: number, compterVisiteur = true): Promise<boolean> {
+  const L = limits(env), d = today();
+  const visiteur: Op[] = compterVisiteur ? [{ cle: `ip:${d}:${ip}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }, { cle: `v:${d}:${visitor}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }] : [];
+  return reserver(env, [{ cle: `total:${d}`, ajout: 1, max: L.dayImages, ttl: 2 * DAY }, ...visiteur, ...opsUsd(L, visitor, ip, usd)]);
+}
+/** Appel payant sans image (analyse, moodboard, recherche) : seulement le budget du mois. */
+export const reservePaye = (env: Env, visitor: string, ip: string, usd: number) => reserver(env, opsUsd(limits(env), visitor, ip, usd));
+/** Motif du refus, pour le message affiché. */
+export async function motif(env: Env, visitor: string, ip: string, usd: number) {
+  return overLimit(await usage(env, visitor, ip), usd) ?? "Les plafonds du jour sont atteints. Revenez demain.";
+}
+/* ——— Part gratuite de l'IA de Cloudflare ——— */
+/**
+ * 10 000 « neurones » par jour pour tout le compte (images ET Camille) : un seul compteur commun,
+ * réservé AVANT chaque appel avec une estimation prudente ; on s'arrête bien avant la limite.
+ */
+export const NEURONES = { image: 160, camille: 130 } as const;
+export const opNeurones = (env: Env, cout: number): Op => ({ cle: `neurones:${today()}`, ajout: cout, max: limits(env).freeNeurons, ttl: 2 * DAY });
+export const reserverNeurones = (env: Env, cout: number) => reserver(env, [opNeurones(env, cout)]);
+/** Image gratuite : part gratuite du jour (images et neurones) et plafond d'images du visiteur, ensemble. */
+export async function reserveFree(env: Env, visitor: string, ip: string): Promise<boolean> {
+  const L = limits(env), d = today();
+  return reserver(env, [opNeurones(env, NEURONES.image), { cle: `gratuit:${d}`, ajout: 1, max: L.freeDayImages, ttl: 2 * DAY }, { cle: `ip:${d}:${ip}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }, { cle: `v:${d}:${visitor}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }]);
 }
 /** Corrige la réservation quand le coût réel est connu. */
 export async function settle(env: Env, visitor: string, ip: string, delta: number) {
   if (!delta) return;
-  const m = month();
-  await Promise.all([add(env, `usd:${m}`, delta, 62 * DAY), add(env, `usd:${m}:v:${visitor}`, delta, 62 * DAY), add(env, `usd:${m}:ip:${ip}`, delta, 62 * DAY)]);
+  await reserver(env, opsUsd(limits(env), visitor, ip, delta).map((o) => ({ ...o, max: undefined })));
 }
