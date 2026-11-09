@@ -161,3 +161,7 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
   - Marques : 24 enseignes de design ajoutées au robot ; bande défilante enseignes + 29 marques de design (liste reconnue, ≥ 3 produits).
 - 9 nov. : service IA déployé (Camille en ligne, testée : réponses en français, produits réels cités, renvoi vers /transformer/).
   Compteur strict des plafonds (Durable Object « Compteur », SQLite, offre gratuite) déployé le 9 nov. (migration v1) ; Camille vérifiée en ligne à travers lui.
+- 9 nov. : Transformer corrigé après le test d'Ewan (salle de bain devenue salon, image géante, inspirations recopiées) :
+  type de pièce obligatoire et imposé au modèle (équipements fixes gardés), ampleur (léger / équilibré / complet), « Ce que vous voulez changer » en priorité,
+  IA gratuite : seule la photo de la pièce est envoyée (le style passe par le texte), résultat limité à 68 % de l'écran avec le détail à côté.
+  Test réel (Wikimedia, salle de bain / chambre / cuisine) : demandes appliquées, structure gardée. Service à redéployer (attend le « oui »).

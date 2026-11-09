@@ -79,3 +79,5 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 - Robot d'audit bloqué : « networkidle » n'arrive jamais sur les pages 3D, et plusieurs pages en parallèle se gênent ; utiliser « load », une page à la fois, une limite de temps par page.
 - Rangée défilante (overflow-x-auto) dans une grille : sans « min-w-0 » sur la colonne, toute la page déborde sur mobile.
 - Compteurs de quota séparés pour une même part gratuite (images et Camille) : risque de la dépasser ; un seul compteur commun.
+- Transformation : sans type de pièce, le modèle suit les inspirations (souvent des salons) et change la fonction de la pièce. Toujours imposer la pièce et ses équipements fixes.
+- Modèle gratuit (flux-2-klein) : les images d'inspiration envoyées comme entrées remplacent la pièce du client ; n'envoyer que la photo de la pièce, le style en texte.
