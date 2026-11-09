@@ -1,0 +1,30 @@
+name: Vérifier les modèles fal.ai (identifiants et prix)
+
+# Lit les pages publiques de fal.ai (aucune clé, aucun appel payant) et affiche identifiants, paramètres et prix tels qu'écrits.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Pages des modèles
+        run: |
+          pip install -q html2text >/dev/null
+          for P in fal-ai/nano-banana-pro/edit fal-ai/bytedance/seedream/v4.5/edit fal-ai/gpt-image-1.5/edit fal-ai/gpt-image-1/edit-image fal-ai/flux-2-pro/edit fal-ai/flux-pro/kontext; do
+            echo "=================== $P"
+            CODE=$(curl -sS -L -o page.html -w "%{http_code}" -A "Mozilla/5.0" "https://fal.ai/models/$P")
+            echo "HTTP $CODE"
+            [ "$CODE" = "200" ] || continue
+            python3 -c "import html2text,sys;h=html2text.HTML2Text();h.ignore_links=True;h.ignore_images=True;t=h.handle(open('page.html',encoding='utf-8',errors='ignore').read());import re;lines=[l for l in t.splitlines() if re.search(r'\\\$|price|pricing|per image|megapixel|resolution|image_urls|max|endpoint|fal-ai/',l,re.I)];print('\n'.join(lines[:40]))"
+          done
+      - name: Recherche des modèles GPT Image et Seedream
+        run: |
+          for Q in gpt-image seedream nano-banana; do
+            echo "=================== recherche $Q"
+            curl -sS -L -A "Mozilla/5.0" "https://fal.ai/models?keywords=$Q" | grep -oE 'fal-ai/[a-z0-9./_-]+' | sort -u | head -30
+          done

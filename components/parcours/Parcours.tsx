@@ -41,6 +41,8 @@ async function urlToData(src: string) { const b = await (await fetch(src)).blob(
 export function Parcours() {
   const [etape, setEtape] = useState<Etape>("photos");
   const [room, setRoom] = useState<string | null>(null);
+  // Version pleine définition (2048 px) envoyée à l'IA ; `room` n'est que l'aperçu affiché.
+  const [roomHD, setRoomHD] = useState<string | null>(null);
   const [inspi, setInspi] = useState<string[]>([]);
   const [roomMsg, setRoomMsg] = useState<string | null>(null);
   const [mood, setMood] = useState<Moodboard | null>(null);
@@ -84,6 +86,7 @@ export function Parcours() {
     const r = await preparePhoto(f);
     if (!r.ok) { setRoomMsg(r.message); return; }
     setRoom(r.photo.dataUrl);
+    setRoomHD(await new Promise<string | null>((ok) => { const fr = new FileReader(); fr.onload = () => ok(typeof fr.result === "string" ? fr.result : null); fr.onerror = () => ok(null); fr.readAsDataURL(r.photo.blob); }));
     if (r.photo.quality.tooDark) setRoomMsg("Photo un peu sombre : le résultat sera meilleur avec plus de lumière.");
     else if (r.photo.quality.blurry) setRoomMsg("Photo un peu floue : le résultat sera meilleur avec une photo nette.");
   };
@@ -100,7 +103,7 @@ export function Parcours() {
   };
   // La photo d'exemple est une image générée par IA : on la signale tant qu'elle est utilisée.
   const [exemple, setExemple] = useState<"non" | "charge" | "oui">("non");
-  const essayerExemple = async () => { setExemple("charge"); try { setRoom(await urlToData(PHOTO_EXEMPLE)); setRoomMsg(null); setExemple("oui"); } catch { setRoomMsg("La photo d'exemple n'a pas pu être chargée."); setExemple("non"); } };
+  const essayerExemple = async () => { setExemple("charge"); try { setRoom(await urlToData(PHOTO_EXEMPLE)); setRoomHD(null); setRoomMsg(null); setExemple("oui"); } catch { setRoomMsg("La photo d'exemple n'a pas pu être chargée."); setExemple("non"); } };
 
   /** Étape 2 : moodboard des inspirations (service d'analyse), avec palette calculée localement en secours. */
   const makeMood = async () => {
@@ -121,7 +124,7 @@ export function Parcours() {
     const mats = (mood?.materials ?? []).map((id) => materialById(id)).filter(Boolean).map((m) => `${m!.name} (${m!.finish})`);
     // Les demandes du client passent en premier ; le style des inspirations s'applique à tout le reste.
     const brief = [wish && `PRIORITY — the client asks precisely for (French, apply each request exactly, change nothing else they did not ask beyond the chosen level): ${wish}`, mood?.brief_en || mood?.brief_fr || ""].filter(Boolean).join("\n") || "Redesign this room in the spirit of the inspiration images.";
-    const r = await createJob({ mode: "transform", brief, photo: room, references: inspi, inspirations: true, keep, materials: mats, quality: "premium", piece: piece || undefined, niveau });
+    const r = await createJob({ mode: "transform", brief, photo: roomHD ?? room, references: inspi, inspirations: true, keep, materials: mats, quality: "premium", piece: piece || undefined, niveau });
     if (!r.ok) { setBusy(null); setError(r.message); return; }
     setJob(r.value);
     const done = r.value.status === "terminee" ? r.value : await waitForJob(r.value, setJob);
@@ -183,7 +186,7 @@ export function Parcours() {
             </label>
             {roomMsg && <p className="mt-2 text-[13px] text-[#8A5A0E]">{roomMsg}</p>}
             {!room && <p className="mt-3 text-[13.5px] text-muted">Pas de photo sous la main ? <button type="button" className="inline-flex min-h-9 items-center font-semibold text-ink underline underline-offset-4" disabled={exemple === "charge"} onClick={() => void essayerExemple()}>{exemple === "charge" ? "Chargement…" : "Essayer avec notre salon d'exemple"}</button></p>}
-            {room && <button type="button" className="mt-2 inline-flex min-h-9 items-center text-[13px] text-muted underline underline-offset-4" onClick={() => { setRoom(null); setExemple("non"); }}>Changer de photo</button>}
+            {room && <button type="button" className="mt-2 inline-flex min-h-9 items-center text-[13px] text-muted underline underline-offset-4" onClick={() => { setRoom(null); setRoomHD(null); setExemple("non"); }}>Changer de photo</button>}
             <fieldset className="mt-6 border-0 p-0">
               <legend className="text-[13px] font-semibold">Quelle pièce ? <span className="font-normal text-muted">(obligatoire)</span></legend>
               <div className="mt-2 flex flex-wrap gap-1.5">
