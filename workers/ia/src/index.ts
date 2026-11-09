@@ -112,7 +112,7 @@ export default {
       if (!free && !(await reserve(env, visitor, ipHash, cost))) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
       const now = new Date().toISOString();
       const job: Job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
-      const input: JobInput = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, keep: b.keep, keepFree: b.keepFree, references: b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : undefined, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : undefined, petites: b.petites ? { photo: b.petites.photo ? toImg(b.petites.photo) : undefined, references: b.petites.references.map(toImg) } : undefined };
+      const input: JobInput = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, piece: b.piece, niveau: b.niveau, keep: b.keep, keepFree: b.keepFree, references: free ? 0 : b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : undefined, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : undefined, petites: b.petites ? { photo: b.petites.photo ? toImg(b.petites.photo) : undefined, references: b.petites.references.map(toImg) } : undefined };
       await saveInput(env, job.id, input);
       return json(pub(await run(env, job, input), base), 201);
     }

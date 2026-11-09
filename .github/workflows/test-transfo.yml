@@ -1,0 +1,29 @@
+name: Test qualité des transformations (IA gratuite)
+
+# Transforme de vraies photos de pièces (Wikimedia Commons, libres de droits) avec la consigne du service : salle de bain, chambre, cuisine.
+on:
+  workflow_dispatch:
+    inputs:
+      modeles: { description: "Modèles (séparés par des virgules)", required: false, default: "flux-2-klein-4b,flux-2-klein-9b", type: string }
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Transformations
+        env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_AI_TOKEN }}", CF_ACCOUNT: f8d17f2edfe8ee1b22e66bc4c0bf364b, MODELES: "${{ inputs.modeles }}" }
+        run: node --experimental-strip-types scripts/test-transfo.ts 2>&1 | tee rapport.txt; mv rapport.txt .robot/test-transfo/ || true
+      - name: Publier (branche robot/test-transfo)
+        if: ${{ always() }}
+        run: |
+          git config user.name "piece-revee-robot"; git config user.email "robot@users.noreply.github.com"
+          git checkout -B robot/test-transfo; git add -f .robot/test-transfo
+          git commit -m "test transformations $(date +%F)" || exit 0
+          for n in 1 2 3; do git push -f origin robot/test-transfo && break; sleep 10; done

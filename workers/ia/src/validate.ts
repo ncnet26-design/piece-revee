@@ -1,5 +1,5 @@
 /** Validation des demandes reçues par le service (sans dépendance, pour garder le fichier léger). */
-import { KEEP } from "./prompts";
+import { KEEP, NIVEAUX, PIECES } from "./prompts";
 
 const DATA_URL = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/;
 export const isDataUrl = (v: unknown): v is string => typeof v === "string" && v.length <= 9_000_000 && DATA_URL.test(v);
@@ -7,7 +7,7 @@ export const isDataUrl = (v: unknown): v is string => typeof v === "string" && v
 const isSmall = (v: unknown): v is string => isDataUrl(v) && v.length <= 600_000;
 const QUALITIES = ["brouillon", "standard", "premium"] as const;
 const FOURNISSEURS = ["openai", "gemini", "fal", "replicate"] as const;
-export interface JobBody { inspirations: boolean; mask?: string; onlyZone?: { label: string; x: number; y: number; w: number; h: number }; mode: "generate" | "transform"; brief: string; photo?: string; references: string[]; keep: string[]; keepFree?: string; materials: string[]; products: string[]; quality: (typeof QUALITIES)[number]; width: number; height: number; visiteur: string; fournisseur?: (typeof FOURNISSEURS)[number]; petites?: { photo?: string; references: string[] } }
+export interface JobBody { inspirations: boolean; mask?: string; onlyZone?: { label: string; x: number; y: number; w: number; h: number }; mode: "generate" | "transform"; brief: string; photo?: string; references: string[]; keep: string[]; keepFree?: string; materials: string[]; products: string[]; quality: (typeof QUALITIES)[number]; width: number; height: number; visiteur: string; fournisseur?: (typeof FOURNISSEURS)[number]; petites?: { photo?: string; references: string[] }; piece?: string; niveau?: string }
 /** Validation de la demande (sans dépendance, pour garder le service léger). */
 export function parseJobBody(raw: unknown): JobBody | null {
   if (!raw || typeof raw !== "object") return null;
@@ -39,6 +39,8 @@ export function parseJobBody(raw: unknown): JobBody | null {
     quality: QUALITIES.includes(b.quality as never) ? (b.quality as JobBody["quality"]) : "standard",
     width: int(b.width, 1536), height: int(b.height, 1024), visiteur: b.visiteur,
     petites,
+    piece: typeof b.piece === "string" && b.piece in PIECES ? b.piece : undefined,
+    niveau: typeof b.niveau === "string" && b.niveau in NIVEAUX ? b.niveau : undefined,
     fournisseur: FOURNISSEURS.includes(b.fournisseur as never) ? (b.fournisseur as JobBody["fournisseur"]) : undefined,
   };
 }

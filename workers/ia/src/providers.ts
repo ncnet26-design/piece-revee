@@ -226,8 +226,10 @@ export const cloudflare: Provider = {
     const photo = req.petites?.photo, refs = req.petites?.references ?? [];
     if (req.mode === "transform" && !photo) throw new ProviderError("Image trop grande pour le service gratuit.", true);
     const size = cfSize(req.width, req.height), form = new FormData();
-    form.append("prompt", req.prompt.slice(0, 2000)); form.append("width", String(size.w)); form.append("height", String(size.h));
-    [...(photo ? [photo] : []), ...refs].slice(0, 4).forEach((im, i) => form.append(`input_image_${i}`, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i}.${im.mime.split("/")[1]}`));
+    form.append("prompt", req.prompt.slice(0, 3500)); form.append("width", String(size.w)); form.append("height", String(size.h));
+    // Seule la photo de la pièce est envoyée : avec ce modèle, les images d'inspiration remplacent la pièce au lieu de l'inspirer
+    // (leur style passe par le texte de la consigne). En création pure (sans photo), les inspirations servent de références.
+    (photo ? [photo] : refs.slice(0, 4)).forEach((im, i) => form.append(`input_image_${i}`, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i}.${im.mime.split("/")[1]}`));
     const body = new Response(form);
     let out: unknown;
     try {
