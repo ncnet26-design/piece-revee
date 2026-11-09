@@ -7,6 +7,7 @@
  *   POST /v2/analyse              { image, visiteur } → objets et surfaces avec leur zone
  *   POST /v2/recherche            { query, label, visiteur } → produits en vente trouvés sur internet (prix relevés sur les pages)
  *   POST /v2/camille              { messages, contexte, visiteur } → réponse de Camille (IA gratuite de Cloudflare)
+ *   POST /v2/recadrage            { image, visiteur } → adresse publique (24 h) du meuble découpé, pour la recherche par image (Google Lens)
  *   GET  /v2/jobs/:id             état de la tâche (interroge le fournisseur si besoin)
  *   POST /v2/jobs/:id/retry       nouvelle tentative avec les mêmes données
  *   GET  /v2/images/:id           l'image produite
@@ -20,7 +21,7 @@ import { CF_4B, CF_9B, chooseProvider, cloudflare, gemini, PROVIDERS, ProviderEr
 import { analyse, moodboard } from "./analyse";
 import { rechercher } from "./recherche";
 import { parseCamille, plafondCamille, repondreCamille } from "./camille";
-import { estimate, motif, reserveFree, reservePaye, loadInput, loadJob, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
+import { reserver, estimate, motif, reserveFree, reservePaye, loadInput, loadJob, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
 export { Compteur } from "./compteur";
 
 /** Lit le corps JSON en s'arrêtant à `max` octets (même sans en-tête Content-Length). */
@@ -147,6 +148,25 @@ export default {
         await settle(env, visitor, ipHash, -cost);
         return json({ erreur: e instanceof ProviderError ? e.message : "Moodboard impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
+    }
+
+    // Meuble découpé sur l'image, gardé 24 h pour que Google Lens puisse le lire (recherche de l'article identique).
+    if (request.method === "POST" && path === "/v2/recadrage") {
+      const b = await lireJson(request, 400_000) as { image?: unknown; visiteur?: unknown } | null;
+      const m = typeof b?.image === "string" ? /^data:image\/jpeg;base64,([A-Za-z0-9+/=]+)$/.exec(b.image) : null;
+      if (!b || !m || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Image manquante." }, 400);
+      const d = today(), visitor = await sha(`v|${b.visiteur}`);
+      const ok = await reserver(env, [{ cle: `rec:${d}`, ajout: 1, max: 300, ttl: 172800 }, { cle: `rec:${d}:v:${visitor}`, ajout: 1, max: 60, ttl: 172800 }, { cle: `rec:${d}:ip:${ipHash}`, ajout: 1, max: 60, ttl: 172800 }]);
+      if (!ok) return json({ erreur: "Trop de recherches par image aujourd'hui. Réessayez demain." }, 429);
+      const id = crypto.randomUUID();
+      await env.QUOTA!.put(`rec:${id}`, Uint8Array.from(atob(m[1]!), (c) => c.charCodeAt(0)), { expirationTtl: 86400 });
+      return json({ url: `${base}/v2/recadrages/${id}` });
+    }
+    const rec = /^\/v2\/recadrages\/([0-9a-f-]{36})$/.exec(path);
+    if (request.method === "GET" && rec) {
+      const img = await env.QUOTA!.get(`rec:${rec[1]}`, "arrayBuffer");
+      if (!img) return new Response("Introuvable", { status: 404 });
+      return new Response(img, { headers: { "Content-Type": "image/jpeg", "Cache-Control": "public, max-age=86400", "Access-Control-Allow-Origin": "*" } });
     }
 
     if (request.method === "POST" && path === "/v2/camille") {

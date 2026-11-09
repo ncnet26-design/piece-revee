@@ -53,7 +53,7 @@ var KEEP = {
 var PIECES = {
   salon: { en: "a LIVING ROOM", fixe: "radiators, fireplace if any" },
   chambre: { en: "a BEDROOM", fixe: "radiators, built-in wardrobes if any" },
-  "salle-de-bain": { en: "a BATHROOM", fixe: "the bathtub and/or shower, the toilet, the washbasin(s) and their exact positions and plumbing; it must remain a fully working bathroom (no sofa, no bed, no living-room furniture)" },
+  "salle-de-bain": { en: "a BATHROOM", fixe: "the bathtub and/or shower, the toilet, the washbasin(s) and their exact positions and plumbing; it must remain a fully working bathroom (no sofa, no bed, no living-room furniture, no fabric curtains except a shower curtain, only bath mats on the floor)" },
   cuisine: { en: "a KITCHEN", fixe: "the layout of the kitchen units, the sink, the hob, the oven and appliances at their exact positions; it must remain a fully working kitchen" },
   "salle-a-manger": { en: "a DINING ROOM", fixe: "radiators, fireplace if any" },
   bureau: { en: "a HOME OFFICE", fixe: "radiators, sockets positions" },
@@ -80,6 +80,7 @@ function buildPrompt(p) {
       "Image 1 is a photo of the client's real room. Edit THIS photo: the client must instantly recognise their own room, simply refurnished and redecorated. Realistic, buildable, with products that exist in shops; keep the natural light, the season and the view of the photo.",
       ...p.piece && PIECES[p.piece] ? [`The room is ${PIECES[p.piece].en} and must stay ${PIECES[p.piece].en}, whatever the brief or the inspirations show. Keep: ${PIECES[p.piece].fixe}.`] : ["Keep the room's function exactly as it is in the photo (a bathroom stays a bathroom, a kitchen stays a kitchen, a bedroom stays a bedroom)."],
       NIVEAUX[p.niveau ?? "equilibre"] ?? NIVEAUX.equilibre,
+      "Remove all clutter and mess (clothes, bags, boxes, bottles, cables, papers, toys, laundry): the room must look tidy and styled, yet clearly the same room. Every light fitting stays a light fitting, every piece of furniture stays a piece of furniture.",
       "ABSOLUTE CONSTRAINTS \u2014 the result must be the same room seen from the same point:",
       "- identical camera position, height, lens and perspective; identical framing and aspect ratio;",
       "- identical room geometry: wall positions, corners, ceiling height, window and door openings stay exactly where they are;"
@@ -153,6 +154,43 @@ function parseJobBody(raw) {
     fournisseur: FOURNISSEURS.includes(b.fournisseur) ? b.fournisseur : void 0
   };
 }
+
+// workers/ia/src/plan.ts
+var MODELES_VISION = ["@cf/mistralai/mistral-small-3.1-24b-instruct", "@cf/meta/llama-3.2-11b-vision-instruct"];
+var CONSIGNE = `You are a senior interior designer. You are preparing exact instructions for a photo-editing model that will edit THIS photo.
+Read the client's brief and constraints below, then examine the photo carefully.
+1. ROOM: the room type (if the brief states it, use exactly that).
+2. KEEP: the fixed elements to keep exactly (walls, windows, doors, ceiling, plumbing fixtures such as bathtub, shower, toilet, washbasin, sink, kitchen units and appliances, radiators, built-ins), with their position.
+3. PLAN: short numbered imperative lines (8 to 14). Each line names ONE object or surface, its position in the photo (left / centre / right and top / middle / bottom), its category in capitals (LIGHTING, FURNITURE, TEXTILE, DECOR, WALL, FLOOR, FIXTURE, CLUTTER) and exactly what to do with it.
+Rules: a light fitting stays a light fitting (LIGHTING is never replaced by a plant or an object); furniture stays furniture of a type that suits the room; first apply the client's own requests, then the style; respect the requested change level; remove all clutter and mess (clothes, bags, boxes, bottles, cables, papers, toys, laundry) and leave tidy, styled surfaces; never add anything that makes no sense in this room type (for a bathroom: no fabric curtains except a shower curtain, no sofa, no bed, no carpet other than a bath mat); everything must be realistic, feasible and buildable.
+Answer ONLY in this format:
+ROOM: ...
+KEEP: ...
+PLAN:
+1. ...`;
+async function planifier(run2, photo, brief) {
+  const image = `data:${photo.mime};base64,${photo.b64}`;
+  for (const modele of MODELES_VISION) {
+    try {
+      const r = await run2(modele, {
+        messages: [{ role: "user", content: [{ type: "text", text: `${CONSIGNE}
+
+Client brief and constraints:
+${brief.slice(0, 2500)}` }, { type: "image_url", image_url: { url: image } }] }],
+        max_tokens: 700,
+        temperature: 0.2
+      });
+      const t = (r?.response ?? r?.choices?.[0]?.message?.content ?? "").trim();
+      if (/PLAN:\s*\n?\s*1\./i.test(t) && t.length > 120) return t.slice(0, 2200);
+    } catch {
+    }
+  }
+  return null;
+}
+var avecPlan = (plan, consigne) => plan ? `PRECISE EDIT PLAN written after examining THIS exact photo \u2014 follow it line by line; every object keeps its category and position unless the plan says otherwise:
+${plan}
+
+${consigne}` : consigne;
 
 // workers/ia/src/providers.ts
 var ProviderError = class extends Error {
@@ -343,7 +381,9 @@ var replicate = {
     return { state: "error", message: "Replicate n'a pas produit d'image.", retryable: j.status === "failed" };
   }
 };
-var CF_MODEL = "@cf/black-forest-labs/flux-2-klein-4b";
+var CF_9B = "@cf/black-forest-labs/flux-2-klein-9b";
+var CF_4B = "@cf/black-forest-labs/flux-2-klein-4b";
+var CF_MODEL = CF_4B;
 function cfSize(w, h) {
   const r = Math.min(3, Math.max(1 / 3, w / h)), s16 = (v) => Math.max(256, Math.round(v / 16) * 16);
   return r >= 1 ? { w: 1024, h: s16(1024 / r) } : { w: s16(1024 * r), h: 1024 };
@@ -355,18 +395,25 @@ var cloudflare = {
   async submit(req, env) {
     const photo = req.petites?.photo, refs = req.petites?.references ?? [];
     if (req.mode === "transform" && !photo) throw new ProviderError("Image trop grande pour le service gratuit.", true);
+    const plan = photo ? await planifier((m, e) => env.AI.run(m, e), photo, req.prompt).catch(() => null) : null;
     const size = cfSize(req.width, req.height), form = new FormData();
-    form.append("prompt", req.prompt.slice(0, 3500));
+    form.append("prompt", avecPlan(plan, req.prompt).slice(0, 4e3));
     form.append("width", String(size.w));
     form.append("height", String(size.h));
     (photo ? [photo] : refs.slice(0, 4)).forEach((im, i) => form.append(`input_image_${i}`, new Blob([b64ToBytes(im.b64)], { type: im.mime }), `image-${i}.${im.mime.split("/")[1]}`));
-    const body = new Response(form);
-    let out;
-    try {
-      out = await env.AI.run(CF_MODEL, { multipart: { body: body.body, contentType: body.headers.get("content-type") } });
-    } catch (e) {
-      throw new ProviderError("Le service d'images gratuit est indisponible.", true, String(e).slice(0, 300));
+    const essais = req.modele === CF_9B ? [CF_9B, CF_9B, CF_4B] : [CF_4B, CF_4B];
+    let out, derniere;
+    for (const m of essais) {
+      try {
+        const body = new Response(form);
+        out = await env.AI.run(m, { multipart: { body: body.body, contentType: body.headers.get("content-type") } });
+        if (out?.image) break;
+      } catch (e) {
+        derniere = e;
+        out = null;
+      }
     }
+    if (!out) throw new ProviderError("Le service d'images gratuit est indisponible.", true, String(derniere).slice(0, 300));
     const b64 = out?.image;
     if (!b64) throw new ProviderError("Aucune image n'a \xE9t\xE9 produite.", true);
     return { state: "done", image: b64ToBytes(b64), mime: "image/jpeg", costUsd: 0 };
@@ -738,12 +785,19 @@ function appliquer(actuel, ops) {
 }
 var Compteur = class {
   stockage;
-  kv;
-  constructor(state, env) {
+  constructor(state, _env) {
     this.stockage = state.storage;
-    this.kv = env.QUOTA;
   }
   async fetch(request) {
+    if (new URL(request.url).pathname === "/lire") {
+      const cles = await request.json().catch(() => []);
+      if (!Array.isArray(cles) || cles.length > 12) return Response.json({ valeurs: [] });
+      const lu2 = await this.stockage.get(cles), now2 = Date.now();
+      return Response.json({ valeurs: cles.map((k) => {
+        const x = lu2.get(k);
+        return x && x.exp > now2 ? x.v : 0;
+      }) });
+    }
     const ops = await request.json().catch(() => []);
     if (!Array.isArray(ops) || !ops.length || ops.length > 12) return Response.json({ ok: false });
     const now = Date.now();
@@ -759,10 +813,6 @@ var Compteur = class {
       entrees[o.cle] = { v: nouveau[i], exp: now + o.ttl * 1e3 };
     });
     await this.stockage.put(entrees);
-    ops.forEach((o, i) => {
-      void this.kv?.put(o.cle, String(nouveau[i]), { expirationTtl: o.ttl }).catch(() => {
-      });
-    });
     if (Math.random() < 0.02) void this.menage(now);
     return Response.json({ ok: true });
   }
@@ -805,9 +855,20 @@ async function readImage(env, key, mime) {
   return b ? { body: b, mime } : null;
 }
 var n = async (env, k) => Number(await env.QUOTA.get(k)) || 0;
+async function lire(env, cles) {
+  if (env.COMPTEUR) {
+    try {
+      const r = await env.COMPTEUR.get(env.COMPTEUR.idFromName("plafonds")).fetch("https://compteur/lire", { method: "POST", body: JSON.stringify(cles) });
+      const v = (await r.json()).valeurs;
+      if (Array.isArray(v) && v.length === cles.length) return v;
+    } catch {
+    }
+  }
+  return Promise.all(cles.map((k) => n(env, k)));
+}
 async function usage(env, visitor, ip) {
   const L = limits(env), d = today(), m = month();
-  const [dayImg, ipImg, vImg, mUsd, vUsd, ipUsd] = await Promise.all([n(env, `total:${d}`), n(env, `ip:${d}:${ip}`), n(env, `v:${d}:${visitor}`), n(env, `usd:${m}`), n(env, `usd:${m}:v:${visitor}`), n(env, `usd:${m}:ip:${ip}`)]);
+  const [dayImg = 0, ipImg = 0, vImg = 0, mUsd = 0, vUsd = 0, ipUsd = 0] = await lire(env, [`total:${d}`, `ip:${d}:${ip}`, `v:${d}:${visitor}`, `usd:${m}`, `usd:${m}:v:${visitor}`, `usd:${m}:ip:${ip}`]);
   return { day: { images: dayImg, max: L.dayImages }, visitorDay: { images: Math.max(ipImg, vImg), max: L.visitorDayImages }, month: { usd: mUsd, max: L.monthUsd }, visitorMonth: { usd: Math.max(vUsd, ipUsd), max: L.visitorMonthUsd } };
 }
 function overLimit(u, estimate2) {
@@ -846,11 +907,12 @@ var reservePaye = (env, visitor, ip, usd) => reserver(env, opsUsd(limits(env), v
 async function motif(env, visitor, ip, usd) {
   return overLimit(await usage(env, visitor, ip), usd) ?? "Les plafonds du jour sont atteints. Revenez demain.";
 }
-var NEURONES = { image: 160, camille: 130 };
+var NEURONES = { image: 200, image9b: 1600, camille: 130, reserve9b: 2500 };
 var opNeurones = (env, cout) => ({ cle: `neurones:${today()}`, ajout: cout, max: limits(env).freeNeurons, ttl: 2 * DAY });
-async function reserveFree(env, visitor, ip) {
+async function reserveFree(env, visitor, ip, haute = false) {
   const L = limits(env), d = today();
-  return reserver(env, [opNeurones(env, NEURONES.image), { cle: `gratuit:${d}`, ajout: 1, max: L.freeDayImages, ttl: 2 * DAY }, { cle: `ip:${d}:${ip}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }, { cle: `v:${d}:${visitor}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }]);
+  const neurones = haute ? { ...opNeurones(env, NEURONES.image9b), max: L.freeNeurons - NEURONES.reserve9b } : opNeurones(env, NEURONES.image);
+  return reserver(env, [neurones, { cle: `gratuit:${d}`, ajout: 1, max: L.freeDayImages, ttl: 2 * DAY }, { cle: `ip:${d}:${ip}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }, { cle: `v:${d}:${visitor}`, ajout: 1, max: L.visitorDayImages, ttl: 2 * DAY }]);
 }
 async function settle(env, visitor, ip, delta) {
   if (!delta) return;
@@ -939,7 +1001,7 @@ var toImg = (s) => {
 var pub = (j, base) => ({ ...j, ref: void 0, visitor: void 0, ipHash: void 0, error: j.error ? { message: j.error.message, retryable: j.error.retryable } : void 0, imageUrl: j.image ? `${base}/v2/images/${j.id}` : null });
 async function run(env, job, input) {
   const provider = PROVIDERS.find((p) => p.id === job.provider);
-  const req = { mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, mask: input.mask, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor, petites: input.petites };
+  const req = { modele: job.model, mode: job.mode, prompt: input.prompt, photo: input.photo, references: input.references, mask: input.mask, width: job.width, height: job.height, quality: job.quality, visitor: job.visitor, petites: input.petites };
   job.attempts += 1;
   job.status = "en_cours";
   job.error = void 0;
@@ -1008,13 +1070,15 @@ var index_default = {
       const b = parseJobBody(await lireJson(request));
       if (!b) return json({ erreur: "Demande incompl\xE8te : d\xE9crivez le projet (et ajoutez la photo pour une transformation)." }, 400);
       const visitor = await sha(`v|${b.visiteur}`);
-      const free = !b.fournisseur && !b.mask && b.petites !== void 0 && cloudflare.configured(env) && await reserveFree(env, visitor, ipHash);
+      const gratuitPossible = !b.fournisseur && !b.mask && b.petites !== void 0 && cloudflare.configured(env);
+      const free9 = gratuitPossible && await reserveFree(env, visitor, ipHash, true);
+      const free = free9 || gratuitPossible && await reserveFree(env, visitor, ipHash);
       const provider = free ? cloudflare : chooseProvider(env, b.fournisseur);
       if (!provider || provider.id === "cloudflare" && !free) return json({ erreur: "Aucun fournisseur d'images n'est configur\xE9 (cl\xE9 manquante)." }, 503);
       const cost = estimate(provider.id, b.quality);
       if (!free && !await reserve(env, visitor, ipHash, cost)) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
       const now = (/* @__PURE__ */ new Date()).toISOString();
-      const job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
+      const job = { id: crypto.randomUUID(), status: "en_attente", mode: b.mode, provider: provider.id, model: free ? free9 ? CF_9B : CF_4B : provider.model(env, b.mode), quality: b.quality, brief: b.brief, keep: b.keep, width: b.width, height: b.height, createdAt: now, updatedAt: now, attempts: 0, costUsd: cost, visitor, ipHash };
       const input = { prompt: buildPrompt({ mode: b.mode, brief: b.brief, piece: b.piece, niveau: b.niveau, keep: b.keep, keepFree: b.keepFree, references: free ? 0 : b.references.length, inspirations: b.inspirations, materials: b.materials, products: b.products, onlyZone: b.onlyZone }), photo: b.photo ? toImg(b.photo) : void 0, references: b.references.map(toImg), mask: b.mask ? toImg(b.mask) : void 0, petites: b.petites ? { photo: b.petites.photo ? toImg(b.petites.photo) : void 0, references: b.petites.references.map(toImg) } : void 0 };
       await saveInput(env, job.id, input);
       return json(pub(await run(env, job, input), base), 201);
@@ -1045,6 +1109,23 @@ var index_default = {
         await settle(env, visitor, ipHash, -cost);
         return json({ erreur: e instanceof ProviderError ? e.message : "Moodboard impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
+    }
+    if (request.method === "POST" && path === "/v2/recadrage") {
+      const b = await lireJson(request, 4e5);
+      const m2 = typeof b?.image === "string" ? /^data:image\/jpeg;base64,([A-Za-z0-9+/=]+)$/.exec(b.image) : null;
+      if (!b || !m2 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Image manquante." }, 400);
+      const d = today(), visitor = await sha(`v|${b.visiteur}`);
+      const ok = await reserver(env, [{ cle: `rec:${d}`, ajout: 1, max: 300, ttl: 172800 }, { cle: `rec:${d}:v:${visitor}`, ajout: 1, max: 60, ttl: 172800 }, { cle: `rec:${d}:ip:${ipHash}`, ajout: 1, max: 60, ttl: 172800 }]);
+      if (!ok) return json({ erreur: "Trop de recherches par image aujourd'hui. R\xE9essayez demain." }, 429);
+      const id = crypto.randomUUID();
+      await env.QUOTA.put(`rec:${id}`, Uint8Array.from(atob(m2[1]), (c) => c.charCodeAt(0)), { expirationTtl: 86400 });
+      return json({ url: `${base}/v2/recadrages/${id}` });
+    }
+    const rec = /^\/v2\/recadrages\/([0-9a-f-]{36})$/.exec(path);
+    if (request.method === "GET" && rec) {
+      const img2 = await env.QUOTA.get(`rec:${rec[1]}`, "arrayBuffer");
+      if (!img2) return new Response("Introuvable", { status: 404 });
+      return new Response(img2, { headers: { "Content-Type": "image/jpeg", "Cache-Control": "public, max-age=86400", "Access-Control-Allow-Origin": "*" } });
     }
     if (request.method === "POST" && path === "/v2/camille") {
       if (Number(request.headers.get("Content-Length") || 0) > 64e3) return json({ erreur: "Message trop long." }, 413);
@@ -1124,9 +1205,12 @@ var index_default = {
         if (job.attempts >= 3) return json({ erreur: "Trois tentatives d\xE9j\xE0 faites : modifiez la demande." }, 409);
         const input = await loadInput(env, job.id);
         if (!input) return json({ erreur: "Les donn\xE9es de d\xE9part ont expir\xE9 : relancez une nouvelle demande." }, 410);
-        if (job.provider === "cloudflare" && !await reserveFree(env, job.visitor, ipHash)) {
-          job.provider = "gemini";
-          job.model = gemini.model(env, job.mode);
+        if (job.provider === "cloudflare") {
+          if (await reserveFree(env, job.visitor, ipHash)) job.model = CF_4B;
+          else {
+            job.provider = "gemini";
+            job.model = gemini.model(env, job.mode);
+          }
         }
         if (job.provider !== "cloudflare") {
           const cost = estimate(job.provider, job.quality);

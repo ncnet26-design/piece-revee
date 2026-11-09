@@ -57,9 +57,20 @@ const n = async (env: Env, k: string) => Number(await env.QUOTA!.get(k)) || 0;
 const add = (env: Env, k: string, v: number, ttl: number) => n(env, k).then((cur) => env.QUOTA!.put(k, String(Math.round((cur + v) * 10000) / 10000), { expirationTtl: ttl }));
 
 export interface Usage { day: { images: number; max: number }; visitorDay: { images: number; max: number }; month: { usd: number; max: number }; visitorMonth: { usd: number; max: number } }
+/** Valeurs des compteurs : lues dans le compteur strict s'il est relié, sinon dans KV. */
+async function lire(env: Env, cles: string[]): Promise<number[]> {
+  if (env.COMPTEUR) {
+    try {
+      const r = await env.COMPTEUR.get(env.COMPTEUR.idFromName("plafonds")).fetch("https://compteur/lire", { method: "POST", body: JSON.stringify(cles) });
+      const v = ((await r.json()) as { valeurs?: number[] }).valeurs;
+      if (Array.isArray(v) && v.length === cles.length) return v;
+    } catch { /* repli KV */ }
+  }
+  return Promise.all(cles.map((k) => n(env, k)));
+}
 export async function usage(env: Env, visitor: string, ip: string): Promise<Usage> {
   const L = limits(env), d = today(), m = month();
-  const [dayImg, ipImg, vImg, mUsd, vUsd, ipUsd] = await Promise.all([n(env, `total:${d}`), n(env, `ip:${d}:${ip}`), n(env, `v:${d}:${visitor}`), n(env, `usd:${m}`), n(env, `usd:${m}:v:${visitor}`), n(env, `usd:${m}:ip:${ip}`)]);
+  const [dayImg = 0, ipImg = 0, vImg = 0, mUsd = 0, vUsd = 0, ipUsd = 0] = await lire(env, [`total:${d}`, `ip:${d}:${ip}`, `v:${d}:${visitor}`, `usd:${m}`, `usd:${m}:v:${visitor}`, `usd:${m}:ip:${ip}`]);
   return { day: { images: dayImg, max: L.dayImages }, visitorDay: { images: Math.max(ipImg, vImg), max: L.visitorDayImages }, month: { usd: mUsd, max: L.monthUsd }, visitorMonth: { usd: Math.max(vUsd, ipUsd), max: L.visitorMonthUsd } };
 }
 /** Refus motivé si la nouvelle image dépasserait un plafond ; sinon null. */

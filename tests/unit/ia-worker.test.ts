@@ -240,15 +240,15 @@ describe("compteur strict des plafonds", () => {
     expect(appliquer([0, 6], [{ cle: "a", ajout: 1, max: 10, ttl: 60 }, { cle: "b", ajout: 1, max: 6, ttl: 60 }])).toBeNull();
     expect(appliquer([6], [{ cle: "b", ajout: -1, max: 6, ttl: 60 }])).toEqual([5]); // un remboursement passe toujours
   });
-  it("le Durable Object refuse au-delà du plafond et recopie les valeurs pour l'affichage", async () => {
-    const kv = memoryKV(), st = stockage();
-    const c = new Compteur({ storage: st as never }, { QUOTA: kv });
+  it("le Durable Object refuse au-delà du plafond, se lit sans passer par KV", async () => {
+    const st = stockage();
+    const c = new Compteur({ storage: st as never });
     const req = () => c.fetch(new Request("https://compteur/reserver", { method: "POST", body: JSON.stringify([{ cle: "neurones:j", ajout: 160, max: 400, ttl: 60 }]) }));
     expect(await (await req()).json()).toEqual({ ok: true });
     expect(await (await req()).json()).toEqual({ ok: true });
     expect(await (await req()).json()).toEqual({ ok: false });
-    await new Promise((r) => setTimeout(r, 0));
-    expect(kv.data.get("neurones:j")).toBe("320");
+    const lu = await c.fetch(new Request("https://compteur/lire", { method: "POST", body: JSON.stringify(["neurones:j", "autre"]) }));
+    expect(await lu.json()).toEqual({ valeurs: [320, 0] });
   });
   it("le service passe par le compteur strict quand il est relié", async () => {
     const reservations: unknown[] = [];
@@ -259,6 +259,21 @@ describe("compteur strict des plafonds", () => {
     expect(r.status).toBe(429);
     expect(run).not.toHaveBeenCalled();
     expect(JSON.stringify(reservations)).toContain("neurones:");
+  });
+});
+
+describe("recherche de l'identique (Google Lens)", () => {
+  it("garde le meuble découpé 24 h à une adresse publique, avec un plafond par visiteur", async () => {
+    const env: Env & { QUOTA: ReturnType<typeof memoryKV> } = { QUOTA: memoryKV() };
+    const jpeg = `data:image/jpeg;base64,${JPEG_B64}`;
+    const r = await call(env, "/v2/recadrage", { method: "POST", body: JSON.stringify({ image: jpeg, visiteur: "visiteur-test-01" }) });
+    const { url } = await r.json() as { url: string };
+    expect(url).toMatch(/^https:\/\/ia\.test\/v2\/recadrages\/[0-9a-f-]{36}$/);
+    const img = await call(env, new URL(url).pathname);
+    expect(img.headers.get("content-type")).toBe("image/jpeg");
+    expect(img.headers.get("access-control-allow-origin")).toBe("*");
+    expect(new Uint8Array(await img.arrayBuffer())[0]).toBe(0xff);
+    expect((await call(env, "/v2/recadrage", { method: "POST", body: JSON.stringify({ image: PNG, visiteur: "visiteur-test-01" }) })).status).toBe(400);
   });
 });
 

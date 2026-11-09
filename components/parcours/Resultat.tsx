@@ -15,6 +15,7 @@ import { EnLigne } from "./EnLigne";
 import { Catalogue } from "./Catalogue";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { VideoAvantApres } from "./VideoAvantApres";
+import { Identique } from "./Identique";
 
 type Sel = { kind: "objet"; o: AiObject } | { kind: "surface"; s: Surface } | { kind: "couleur"; hex: string; x: number; y: number };
 
@@ -113,10 +114,11 @@ export function Resultat({ image, before, objects, surfaces, analysing }: { imag
       <Panel open={Boolean(sel)} kicker={kicker} title={title} onClose={() => setSel(null)}>
         {sel?.kind === "objet" && (<>
           {sel.o.description && <p className="mt-2 text-[13px] text-muted">{sel.o.description}</p>}
+          <Identique key={`identique-${sel.o.id}`} photo={photo} image={image} label={sel.o.label} />
           <EnLigne key={`en-ligne-${sel.o.id}`} query={sel.o.query || sel.o.label} label={descriptionPrecise(sel.o)} forObject={sel.o.id} photo={photo} />
           <details open className="group mt-5 border-t border-line pt-4">
             <summary className="cursor-pointer list-none text-[14px] font-semibold">Tout de suite dans notre boutique<span className="ml-2 font-normal text-muted">références d'exception, prix revérifiés chaque nuit</span><span aria-hidden className="ml-1 inline-block text-muted transition group-open:rotate-180">⌄</span></summary>
-            <Catalogue type={sel.o.type} label={sel.o.label} query={sel.o.query || sel.o.label} forObject={sel.o.id} />
+            <Catalogue type={sel.o.type} label={sel.o.label} query={sel.o.query || sel.o.label} forObject={sel.o.id} objet={sel.o} />
           </details>
           <PartoutEnLigne q={sel.o.query || sel.o.label} image={image} />
         </>)}

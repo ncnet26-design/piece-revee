@@ -1,9 +1,10 @@
 /**
  * Compteur strict des plafonds (Durable Object Cloudflare, inclus dans l'offre gratuite) :
  * une seule instance traite les demandes une par une, donc « vérifier puis compter » ne peut pas être contourné
- * en envoyant beaucoup de demandes en même temps. Les valeurs sont recopiées dans KV pour l'affichage (/v2/usage).
+ * en envoyant beaucoup de demandes en même temps. Les valeurs se lisent ici aussi (« /lire ») : rien n'est recopié dans KV,
+ * dont l'offre gratuite limite les écritures à 1 000 par jour.
  */
-import type { Env, KVNamespace } from "./config";
+import type { Env } from "./config";
 
 export type Op = { cle: string; ajout: number; max?: number; ttl: number };
 type Valeur = { v: number; exp: number };
@@ -17,9 +18,15 @@ export function appliquer(actuel: Array<number>, ops: Op[]): number[] | null {
 
 interface Stockage { get<T>(cles: string[]): Promise<Map<string, T>>; put<T>(entrees: Record<string, T>): Promise<void>; delete(cles: string[]): Promise<number>; list<T>(o?: { limit?: number }): Promise<Map<string, T>> }
 export class Compteur {
-  private stockage: Stockage; private kv?: KVNamespace;
-  constructor(state: { storage: Stockage }, env: Env) { this.stockage = state.storage; this.kv = env.QUOTA; }
+  private stockage: Stockage;
+  constructor(state: { storage: Stockage }, _env?: Env) { this.stockage = state.storage; }
   async fetch(request: Request): Promise<Response> {
+    if (new URL(request.url).pathname === "/lire") {
+      const cles = (await request.json().catch(() => [])) as string[];
+      if (!Array.isArray(cles) || cles.length > 12) return Response.json({ valeurs: [] });
+      const lu = await this.stockage.get<Valeur>(cles), now = Date.now();
+      return Response.json({ valeurs: cles.map((k) => { const x = lu.get(k); return x && x.exp > now ? x.v : 0; }) });
+    }
     const ops = (await request.json().catch(() => [])) as Op[];
     if (!Array.isArray(ops) || !ops.length || ops.length > 12) return Response.json({ ok: false });
     const now = Date.now();
@@ -31,8 +38,7 @@ export class Compteur {
     const entrees: Record<string, Valeur> = {};
     ops.forEach((o, i) => { entrees[o.cle] = { v: nouveau[i]!, exp: now + o.ttl * 1000 }; });
     await this.stockage.put(entrees);
-    // Copie pour l'affichage, sans attendre ; et ménage de temps en temps des compteurs expirés.
-    ops.forEach((o, i) => { void this.kv?.put(o.cle, String(nouveau[i]), { expirationTtl: o.ttl }).catch(() => {}); });
+    // Ménage de temps en temps des compteurs expirés.
     if (Math.random() < 0.02) void this.menage(now);
     return Response.json({ ok: true });
   }
