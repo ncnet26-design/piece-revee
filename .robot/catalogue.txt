@@ -1,0 +1,89 @@
+Catalogue : 47057 produits.
+ikea [ok] 3998 pages produits connues ; 400 visitées ; 344 produits relevés ; 56 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+maisonsdumonde [ok] [plans de site 1 {"410":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+laredoute [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+conforama [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+but [interdit] 3890 pages produits connues ; 10 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {"403":10} (l'enseigne bloque les robots : on n'insiste pas).
+westwing [ok] 3873 pages produits connues ; 400 visitées ; 323 produits relevés ; 62 pages sans fiche produit lisible ; 13 retirés ; réponses {"200":385,"404":15}.
+kavehome [ok] [plans de site 1 {"429":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+sklum [ok] 3998 pages produits connues ; 114 visitées ; 54 produits relevés ; 52 pages sans fiche produit lisible ; 6 retirés ; réponses {"200":106,"429":8} (l'enseigne bloque les robots : on n'insiste pas).
+habitat [ok] 1496 pages produits connues ; 400 visitées ; 369 produits relevés ; 30 pages sans fiche produit lisible ; 1 retirés ; réponses {"200":399,"410":1}.
+alinea [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+madeindesign [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+leroymerlin [interdit] 3859 pages produits connues ; 10 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {"403":10} (l'enseigne bloque les robots : on n'insiste pas).
+castorama [ok] 2526 pages produits connues ; 400 visitées ; 114 produits relevés ; 285 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":399,"503":1}.
+manomano [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+selency [ok] 1551 pages produits connues ; 400 visitées ; 332 produits relevés ; 68 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+amazon [ok] [plans de site 1 {"404":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+tikamoon [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+drawer [ok] 1563 pages produits connues ; 400 visitées ; 174 produits relevés ; 226 pages sans fiche produit lisible ; 1 retirés ; réponses {"200":400}.
+venteunique [ok] 11884 pages produits connues ; 400 visitées ; 367 produits relevés ; 19 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":386,"404":6,"410":8}.
+miliboo [ok] 1470 pages produits connues ; 400 visitées ; 0 produits relevés ; 400 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+home24 [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+zarahome [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+ampm [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+bobochic [ok] 2645 pages produits connues ; 400 visitées ; 316 produits relevés ; 84 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+socialite [ok] 1749 pages produits connues ; 400 visitées ; 315 produits relevés ; 84 pages sans fiche produit lisible ; 21 retirés ; réponses {"200":399,"404":1}.
+sentou [ok] 51 pages produits connues ; 51 visitées ; 48 produits relevés ; 3 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":51}.
+ligneroset [ok] [plans de site 40 {"200":39,"403":1}, adresses 7684, exemples /us/sitemap-index.xml (6), /en/sitemap-index.xml (6), /es/sitemap-index.xml (6), /at/sitemap-index.xml (6) ; 7601 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+rochebobois [ok] 2248 pages produits connues ; 400 visitées ; 376 produits relevés ; 24 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+fermliving [ok] 3520 pages produits connues ; 400 visitées ; 319 produits relevés ; 81 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+hay [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+muuto [ok] 197 pages produits connues ; 197 visitées ; 0 produits relevés ; 197 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":197}.
+lafoirfouille [ok] 5125 pages produits connues ; 400 visitées ; 0 produits relevés ; 400 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+gifi [ok] 11999 pages produits connues ; 400 visitées ; 235 produits relevés ; 165 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+westelm [interdit] 12000 pages produits connues ; 10 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {"403":10} (l'enseigne bloque les robots : on n'insiste pas).
+cb2 [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+crateandbarrel [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+article [ok] 1068 pages produits connues ; 400 visitées ; 15 produits relevés ; 385 pages sans fiche produit lisible ; 11 retirés ; réponses {"200":63,"202":337}.
+schoolhouse [ok] 118 pages produits connues ; 118 visitées ; 107 produits relevés ; 11 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":118}.
+luluandgeorgia [ok] 6443 pages produits connues ; 400 visitées ; 343 produits relevés ; 57 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+burrow [ok] 356 pages produits connues ; 356 visitées ; 307 produits relevés ; 49 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":356}.
+rejuvenation [interdit] 5883 pages produits connues ; 10 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {"403":10} (l'enseigne bloque les robots : on n'insiste pas).
+dwr [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+jysk [ok] [plans de site 1 {"200":1}, adresses 4438, exemples /sitemap.xml (4438) ; 4438 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+sostrenegrene [ok] [plans de site 6 {"200":6}, adresses 23516, exemples /sitemap.xml (18), /sitemap_index.xml (0), /fr/sitemap.xml (6185), /da/sitemap.xml (6160) ; 23498 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+hema [ok] 1122 pages produits connues ; 400 visitées ; 273 produits relevés ; 127 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+flamant [injoignable] robots.txt injoignable : enseigne ignorée ce soir.
+comptoirdefamille [ok] [plans de site 1 {"200":1}, adresses 1, exemples /sitemap.xml (1) ; 1 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+sarahlavoine [ok] 555 pages produits connues ; 400 visitées ; 343 produits relevés ; 57 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+fleux [ok] 1842 pages produits connues ; 400 visitées ; 359 produits relevés ; 41 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+caravane [ok] 260 pages produits connues ; 260 visitées ; 232 produits relevés ; 28 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":260}.
+tediber [ok] 133 pages produits connues ; 133 visitées ; 133 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":133}.
+lapeyre [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+bricodepot [ok] 4436 pages produits connues ; 400 visitées ; 216 produits relevés ; 177 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":393,"404":7}.
+cdiscount [ok] [plans de site 1 {"404":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+pomax [ok] 1009 pages produits connues ; 400 visitées ; 367 produits relevés ; 33 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+bloomingville [ok] [plans de site 1 {"200":1}, adresses 2, exemples /sitemap.xml (2) ; 2 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+vitra [ok] [plans de site 40 {"403":40}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+gubi [ok] 216 pages produits connues ; 216 visitées ; 182 produits relevés ; 34 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":216}.
+normann [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+audo [ok] 1044 pages produits connues ; 400 visitées ; 318 produits relevés ; 81 pages sans fiche produit lisible ; 1 retirés ; réponses {"200":399,"404":1}.
+andtradition [ok] [plans de site 1 {"200":1}, adresses 636, exemples /sitemap.xml (636) ; 636 autorisées] 24 pages produits connues ; 24 visitées ; 0 produits relevés ; 24 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":24}.
+kartell [ok] 1797 pages produits connues ; 161 visitées ; 0 produits relevés ; 161 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":161}.
+hkliving [ok] [plans de site 1 {"404":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+madam-stoltz [ok] [plans de site 1 {"404":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+maisondada [injoignable] robots.txt injoignable : enseigne ignorée ce soir.
+ateliervime [ok] [plans de site 11 {"200":11}, adresses 814, exemples /wp-sitemap.xml (0), /sitemap.xml (8), /sitemap.html (0), /sitemap-misc.xml (2) ; 806 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+merci [ok] 429 pages produits connues ; 400 visitées ; 307 produits relevés ; 93 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+harto [ok] 134 pages produits connues ; 134 visitées ; 116 produits relevés ; 18 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":134}.
+petitefriture [ok] [plans de site 1 {"404":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+moustache [ok] [plans de site 1 {"404":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+bolia [ok] 261 pages produits connues ; 261 visitées ; 0 produits relevés ; 261 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":261}.
+boconcept [ok] [plans de site 1 {"403":1}, adresses 0, exemples  ; 0 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+kanndesign [ok] 93 pages produits connues ; 93 visitées ; 0 produits relevés ; 93 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":93}.
+silvera [ok] 12000 pages produits connues ; 400 visitées ; 331 produits relevés ; 69 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+lampegras [ok] [plans de site 5 {"200":5}, adresses 64, exemples /sitemap_index.xml (4), /post-sitemap.xml (41), /page-sitemap.xml (11), /category-sitemap.xml (5) ; 60 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+ethnicraft [ok] 1704 pages produits connues ; 400 visitées ; 0 produits relevés ; 400 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+serax [ok] 1974 pages produits connues ; 400 visitées ; 325 produits relevés ; 75 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+housedoctor [injoignable] robots.txt injoignable : enseigne ignorée ce soir.
+broste [ok] [plans de site 16 {"200":16}, adresses 5600, exemples /sitemap.xml (25), /fr/sitemap_products_1.xml?from=15106966389085&to=15191072309597 (998), /fr/sitemap_products_2.xml?from=15191072342365&to=16654271873415 (514), /fr/sitemap_pages_1.xml?from=688576692573&to=763348287879 (36) ; 5575 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+oyoy [ok] 218 pages produits connues ; 218 visitées ; 165 produits relevés ; 53 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":218}.
+zuiver [ok] [plans de site 2 {"200":1,"403":1}, adresses 1518, exemples /media/sitemap/sitemap_zu_nl.xml (1518) ; 1518 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+woood [ok] 2080 pages produits connues ; 400 visitées ; 261 produits relevés ; 138 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":399,"404":1}.
+kare [injoignable] robots.txt injoignable : enseigne ignorée ce soir.
+cotetable [ok] [plans de site 1 {"200":1}, adresses 17, exemples /sitemap.xml (17) ; 17 autorisées] 0 pages produits connues ; 0 visitées ; 0 produits relevés ; 0 pages sans fiche produit lisible ; 0 retirés ; réponses {}.
+bensimon [ok] 499 pages produits connues ; 400 visitées ; 309 produits relevés ; 91 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+4murs [ok] 987 pages produits connues ; 400 visitées ; 320 produits relevés ; 80 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
+tollens [ok] [plans de site 1 {"200":1}, adresses 2401, exemples /sitemap.xml (2401) ; 2392 autorisées] 20 pages produits connues ; 20 visitées ; 2 produits relevés ; 18 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":20}.
+ressource [ok] 4113 pages produits connues ; 400 visitées ; 25 produits relevés ; 375 pages sans fiche produit lisible ; 0 retirés ; réponses {"200":400}.
