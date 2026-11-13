@@ -32,5 +32,5 @@ jobs:
         run: strix -n --target ./
       - name: Conserver le rapport
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with: { name: rapport-strix, path: strix_runs/, if-no-files-found: ignore, retention-days: 30 }
