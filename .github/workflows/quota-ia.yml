@@ -1,0 +1,31 @@
+name: État de la part gratuite IA (Cloudflare)
+
+# Un appel minuscule pour savoir si la part gratuite du jour est disponible, et la consommation des 3 derniers jours par heure et par modèle.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CF_ACCOUNT: f8d17f2edfe8ee1b22e66bc4c0bf364b
+
+jobs:
+  etat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Part gratuite disponible ?
+        env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_AI_TOKEN }}" }
+        run: |
+          curl -sS -X POST "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/ai/run/@cf/baai/bge-m3" -H "Authorization: Bearer $CF_TOKEN" -H "Content-Type: application/json" -d '{"text":["test"]}' | jq -c '{success, errors}'
+      - name: Consommation par heure et par modèle (3 jours)
+        env: { T1: "${{ secrets.CLOUDFLARE_API_TOKEN }}", T2: "${{ secrets.CLOUDFLARE_AI_TOKEN }}" }
+        run: |
+          DEPUIS=$(date -u -d '3 days ago' +%Y-%m-%dT%H:00:00Z); JUSQUA=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          Q=$(jq -n --arg a "$CF_ACCOUNT" --arg d "$DEPUIS" --arg f "$JUSQUA" '{query: "query($a:String!,$d:Time!,$f:Time!){viewer{accounts(filter:{accountTag:$a}){aiInferenceAdaptiveGroups(limit:500,filter:{datetime_geq:$d,datetime_leq:$f},orderBy:[datetimeHour_ASC]){sum{totalNeurons} count dimensions{datetimeHour modelId}}}}}", variables: {a: $a, d: $d, f: $f}}')
+          for T in "$T1" "$T2"; do
+            echo "== jeton"
+            curl -sS https://api.cloudflare.com/client/v4/graphql -H "Authorization: Bearer $T" -H "Content-Type: application/json" -d "$Q" \
+              | jq -r 'if .errors then (.errors|tostring) else (.data.viewer.accounts[0].aiInferenceAdaptiveGroups[] | "\(.dimensions.datetimeHour) \(.dimensions.modelId) appels=\(.count) neurones=\(.sum.totalNeurons|floor)") end' | head -120
+          done
