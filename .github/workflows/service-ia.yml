@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Vérifier la clé Cloudflare
         env: { CF_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}" }
         run: |

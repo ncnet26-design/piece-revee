@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Vérifier les clés
         env: { STRIX_LLM: "${{ secrets.STRIX_LLM }}", LLM_API_KEY: "${{ secrets.LLM_API_KEY }}" }
         run: |
