@@ -4,7 +4,7 @@ import { Elevation } from "@/components/catalogue/Elevation";
 import { filtrer, imageValide, GAMMES, NOM_GAMME, NOM_PIECE, NOM_STYLE, PIECES, STYLES, vignette, type Filtres, type Gamme, type Piece, type ProduitAchetable, type Style } from "@/lib/catalogue-achetable";
 
 const prix = (n: number) => n.toLocaleString("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: n % 1 ? 2 : 0 });
-const date = (d: string) => new Date(d).toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
+const date = (d: string) => new Date(d).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
 const VIDE: Filtres = { style: "", piece: "", gamme: "", matiere: "" };
 
 /** Lit les filtres dans l'adresse (une inspiration ou une matière peut ouvrir le catalogue déjà filtré). */

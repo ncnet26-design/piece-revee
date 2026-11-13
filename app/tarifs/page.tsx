@@ -9,7 +9,7 @@ export const metadata = meta({ title: "Tarifs : une étude offerte, puis Pass ou
 
 const FAQ: [string, string][] = [
   ["Ai-je besoin de savoir dessiner ou décorer ?", "Non. Une photo de votre pièce prise au téléphone et quelques images qui vous plaisent suffisent : le moodboard, la pièce transformée et les produits sont proposés pour vous."],
-  ["Les produits proposés existent-ils vraiment ?", "Oui. Ce sont des produits en vente chez de vraies enseignes, relevés sur leurs pages ; le prix affiché porte sa date de relevé. Aucune marque ne paie pour être classée."],
+  ["Les produits proposés existent-ils vraiment ?", "Oui. Ce sont des produits en vente chez de vraies enseignes, relevés sur leurs pages ; le prix affiché porte sa date de relevé. Aucune marque ne paie pour être classée ; d'éventuels liens affiliés seraient signalés, sans changer votre prix ni nos choix."],
   ["Puis-je essayer sans payer ?", "Oui. À l'inscription, une étude complète est offerte, avec un rendu de votre pièce. La galerie, le quiz et la bibliothèque sont gratuits et illimités."],
   ["Quelle différence entre le Pass Projet et l'abonnement Plus ?", "Le Pass Projet se paie une fois et dure 30 jours : idéal pour une seule pièce. Plus est un abonnement mensuel ou annuel pour plusieurs pièces et tout le logement, résiliable à tout moment."],
   ["Comment résilier ?", "Depuis votre compte, en un clic, via le portail de facturation sécurisé. L'accès continue jusqu'à la fin de la période payée."],

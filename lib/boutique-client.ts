@@ -18,7 +18,7 @@ export async function produitsParBudget(objets: Array<{ id: string; type: string
     const vu = attributsObjet(o);
     const l = f ? (await familleBoutique(f)).filter((p) => accord(vu, `${p.n} ${p.b ?? ""}`).ok) : [];
     const q = o.query || o.label, produits: Partial<Record<Gamme, ProduitCatalogue>> = {};
-    for (const g of ["petit", "moyen", "haut"] as Gamme[]) { const x = choisir(l, q, g) ?? choisir(l, `${f === "deco" ? "" : (o.label.split(" ")[0] ?? "")} ${q}`.trim(), g); if (x) produits[g] = x; }
+    for (const g of ["petit", "moyen", "haut"] as Gamme[]) { const x = choisir(l, q, g, o.label) ?? choisir(l, `${f === "deco" ? "" : (o.label.split(" ")[0] ?? "")} ${q}`.trim(), g, o.label); if (x) produits[g] = x; }
     return { id: o.id, label: o.label, produits };
   }));
 }

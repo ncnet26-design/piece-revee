@@ -9,7 +9,7 @@ import type { PieceDansImage } from "@/lib/trouves-par-budget";
 export const PIECES: PieceDansImage[] = [
   { id: "canape", label: "Canapé courbe en bouclette", famille: "canape", query: "canapé courbe bouclette", x: 38.1, y: 61.2 },
   { id: "table", label: "Tables basses en marbre", famille: "table-basse", query: "table basse marbre ronde", x: 56.9, y: 70.2 },
-  { id: "fauteuil", label: "Fauteuil vert à motif", famille: "fauteuil", query: "fauteuil vert", x: 83.9, y: 65.2 },
+  { id: "fauteuil", label: "Fauteuil en velours vert", famille: "fauteuil", query: "fauteuil velours vert", x: 83.9, y: 65.2 },
   { id: "suspension", label: "Suspension en résille", famille: "luminaire", query: "suspension métal résille", x: 48, y: 8 },
   { id: "tapis", label: "Tapis rond rayé", famille: "tapis", query: "tapis rond noir blanc", x: 58.8, y: 81 },
   { id: "appoint", label: "Bout de canapé en bois", famille: "table-basse", query: "table d'appoint bois", x: 18.3, y: 72.5 },

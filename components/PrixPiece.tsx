@@ -1,7 +1,7 @@
 "use client";
-import { plusAncienne } from "@/lib/date-releve";
+import { plusAncienne, plusRecente } from "@/lib/date-releve";
 import { useState } from "react";
-import type { ProduitCatalogue } from "@/lib/catalogue";
+import { estOccasion, type ProduitCatalogue } from "@/lib/catalogue";
 import type { Gamme } from "@/lib/choisir-produit";
 import { toggleExternal, useProject } from "@/lib/studio/project";
 import { ProduitImage } from "@/components/ProduitImage";
@@ -45,14 +45,14 @@ export function PrixPiece({ lignes, titre = "Le prix de cette pièce refaite" }:
           <li key={l.id}>
             <a href={p.u} target="_blank" rel="noopener noreferrer nofollow" className="group flex items-center gap-3 py-1.5 no-underline">
               <ProduitImage src={p.i} alt="" merchant={p.m} className="w-11 shrink-0" />
-              <span className="min-w-0 flex-1"><span className="block truncate text-[13px] group-hover:underline">{l.label}</span><span className="block truncate text-[11.5px] text-muted">{p.m}</span></span>
+              <span className="min-w-0 flex-1"><span className="block truncate text-[13px] group-hover:underline">{l.label}</span><span className="block truncate text-[11.5px] text-muted">{p.m}{estOccasion(p) ? " · occasion" : ""}</span></span>
               <span className="shrink-0 text-[13.5px] font-semibold tabular-nums">{eur(p.p!)}</span>
               <span className="sr-only"> : {p.n} (nouvel onglet)</span>
             </a>
           </li>); })}
       </ul>
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
-        <p className="m-0 text-[11.5px] text-muted">Prix relevés sur les sites des enseignes{(() => { const d = plusAncienne(liste.map((l) => l.produits[choix]?.d)); return d ? ` le ${d}` : ""; })()} ; à vérifier avant l'achat.</p>
+        <p className="m-0 text-[11.5px] text-muted">Prix relevés sur les sites des enseignes{(() => { const d = plusAncienne(liste.map((l) => l.produits[choix]?.d)), r = plusRecente(liste.map((l) => l.produits[choix]?.d)); return d ? (r && r !== d ? ` entre le ${d} et le ${r}` : ` le ${d}`) : ""; })()} ; à vérifier avant l'achat.</p>
         <button type="button" className="btn btn-primary !min-h-0 !px-4 !py-2 text-[13px]" onClick={toutGarder}>{toutDedans ? "✓ Toute la liste est dans ma pièce" : `Garder toute la liste (${eur(total(choix))})`}</button>
       </div>
     </section>

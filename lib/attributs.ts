@@ -19,9 +19,9 @@ const MATIERES: Groupe[] = [
 
 /** Couleurs : groupes de teintes proches ; deux groupes différents se contredisent. */
 const COULEURS: Groupe[] = [
-  ["blanc", "c", "blanc blanche white ivoire ivory"], ["beige", "c", "beige creme ecru sable naturel taupe greige"], ["gris", "c", "gris grise grey gray anthracite"],
-  ["noir", "c", "noir noire black"], ["marron", "c", "marron brun brune cognac caramel chocolat camel"], ["vert", "c", "vert verte green sauge olive kaki emeraude"],
-  ["bleu", "c", "bleu bleue blue marine navy petrole indigo"], ["rouge", "c", "rouge red bordeaux"], ["terracotta", "c", "terracotta rouille rust brique orange"],
+  ["blanc", "c", "blanc blanche white ivoire ivory"], ["beige", "c", "beige creme ecru sable naturel taupe greige naturelle"], ["gris", "c", "gris grise grey gray anthracite"],
+  ["noir", "c", "noir noire black"], ["marron", "c", "marron brun brune cognac caramel chocolat camel"], ["vert", "c", "vert verte green groen sauge olive kaki emeraude sapin"],
+  ["bleu", "c", "bleu bleue blue marine navy petrole indigo"], ["rouge", "c", "rouge red bordeaux"], ["terracotta", "c", "terracotta terra cotta rouille rust brique orange cognac-orange"],
   ["jaune", "c", "jaune yellow moutarde ocre"], ["rose", "c", "rose pink poudre blush"], ["doré", "c", "dore doree gold"], ["violet", "c", "violet mauve prune"],
 ].map(([nom, famille, mots]) => ({ nom: nom!, famille: famille!, mots: mots!.split(" ") }));
 
@@ -36,7 +36,13 @@ const trouver = (texte: string, groupes: Groupe[]) => {
 
 export interface Attributs { matieres: Groupe[]; couleurs: Groupe[]; formes: Groupe[] }
 export function attributs(texte: string): Attributs {
-  return { matieres: trouver(texte, MATIERES), couleurs: trouver(texte, COULEURS), formes: trouver(texte, FORMES) };
+  const formes = trouver(texte, FORMES);
+  // Les dimensions disent aussi la forme : « 133 × 195 cm » est rectangulaire, « Ø 120 » est rond.
+  const dim = /(\d{2,3})\s*(?:x|×|\*)\s*(\d{2,3})/i.exec(texte);
+  const ajoute = (nom: string) => { const g = FORMES.find((f) => f.nom === nom); if (g && !formes.includes(g)) formes.push(g); };
+  if (dim && Math.abs(Number(dim[1]) - Number(dim[2])) > 5) ajoute("rectangulaire");
+  if (/(?:ø|⌀|diam(?:etre|\.)?\s*\d)/i.test(texte)) ajoute("rond");
+  return { matieres: trouver(texte, MATIERES), couleurs: trouver(texte, COULEURS), formes };
 }
 /** Attributs d'un meuble repéré par l'IA (libellé, matières, couleurs, forme). */
 export function attributsObjet(o: { label: string; materials?: string[]; colors?: Array<{ name: string }>; shape?: string[] }): Attributs {

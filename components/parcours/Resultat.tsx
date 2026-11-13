@@ -16,7 +16,7 @@ import { Catalogue } from "./Catalogue";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { VideoAvantApres } from "./VideoAvantApres";
 import { Identique } from "./Identique";
-import { familleDe, norm, type ProduitCatalogue } from "@/lib/catalogue";
+import { estOccasion, familleDe, norm, type ProduitCatalogue } from "@/lib/catalogue";
 import type { Choisi } from "@/lib/selection-piece";
 import { ProduitImage } from "@/components/ProduitImage";
 import { toggleExternal } from "@/lib/studio/project";
@@ -246,9 +246,9 @@ function MeubleExact({ p, forObject }: { p: ProduitCatalogue; forObject: string 
       <div className="mt-2 flex gap-3">
         <ProduitImage src={p.i} alt="" merchant={p.m} className="w-24 shrink-0 self-start" />
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[.1em] text-muted">{p.m}</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[.1em] text-muted">{p.m}{estOccasion(p) && <span className="ml-1.5 rounded-full bg-[var(--soft)] px-1.5 py-px text-[10px] font-semibold uppercase tracking-[.08em] text-[var(--bronze)]">Occasion</span>}</p>
           <p className="text-[14px] font-medium leading-snug">{p.n}</p>
-          {p.p !== null && <p className="mt-0.5 text-[14px] font-semibold tabular-nums">{p.p.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} € <span className="text-[11px] font-normal text-muted">relevé le {new Date(p.d).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}</span></p>}
+          {p.p !== null && <p className="mt-0.5 text-[14px] font-semibold tabular-nums">{p.p.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} € <span className="text-[11px] font-normal text-muted">relevé le {new Date(p.d).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}</span></p>}
           <div className="mt-2 flex flex-wrap gap-1.5">
             <a className="btn btn-primary !min-h-9 !px-3.5 !py-1.5 text-[12.5px]" href={p.u} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.m}<span className="sr-only"> (nouvel onglet)</span></a>
             <button type="button" className="btn !min-h-9 !px-3.5 !py-1.5 text-[12.5px]" aria-pressed={dedans} onClick={() => toggleExternal({ title: p.n, url: p.u, merchant: p.m, price: p.p, currency: p.c, checkedAt: p.d, source: "catalogue" }, forObject)}>{dedans ? "✓ Dans ma pièce" : "Ajouter à ma pièce"}</button>
@@ -274,7 +274,7 @@ function MeublesDessines({ choix }: { choix: Choisi[] }) {
           <li key={c.produit.u} className="min-w-0">
             <a href={c.produit.u} target="_blank" rel="noopener noreferrer nofollow" className="group flex w-full min-w-0 items-center gap-3 py-1.5 no-underline">
               <ProduitImage src={c.produit.i} alt="" merchant={c.produit.m} className="w-12 shrink-0" />
-              <span className="min-w-0 flex-1"><span className="block truncate text-[13px] group-hover:underline">{c.produit.n}</span><span className="block truncate text-[11.5px] text-muted">{c.produit.m}</span></span>
+              <span className="min-w-0 flex-1"><span className="block truncate text-[13px] group-hover:underline">{c.produit.n}</span><span className="block truncate text-[11.5px] text-muted">{c.produit.m}{estOccasion(c.produit) ? " · occasion" : ""}</span></span>
               <span className="shrink-0 text-[13px] font-semibold tabular-nums">{c.produit.p !== null ? `${Math.round(c.produit.p).toLocaleString("fr-FR")} €` : ""}</span>
               <span className="sr-only"> (nouvel onglet)</span>
             </a>

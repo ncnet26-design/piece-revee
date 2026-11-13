@@ -126,3 +126,7 @@ export function selection<T extends ProduitCatalogue & { f?: string }>(list: T[]
   for (let i = 0; out.length < list.length; i++) for (const g of gs) if (g[i]) out.push(g[i]!);
   return out;
 }
+
+/** Seconde main (enseigne d'occasion, ou nom qui le dit) : toujours signalé au client. */
+const ENSEIGNES_OCCASION = new Set(["Selency"]);
+export const estOccasion = (p: { m: string; n: string }) => ENSEIGNES_OCCASION.has(p.m) || /\b(d occasion|seconde main|vintage|annees [0-9]{2}|ancien(ne)? |epoque )/.test(` ${norm(p.n)} `);

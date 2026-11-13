@@ -5,7 +5,7 @@ const Env = z.object({
   SUPABASE_URL: z.string().url(),
   SUPABASE_ANON_KEY: z.string().min(10),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(10),
-  SITE_URL: z.string().url().default("https://piece-revee.pages.dev"),
+  SITE_URL: z.string().url().default("https://odd-bar-c583.ewanesteves26.workers.dev"),
   ANTHROPIC_API_KEY: z.string().optional(),
   STRIPE_SECRET_KEY: z.string().optional(),
   STRIPE_WEBHOOK_SECRET: z.string().optional(),

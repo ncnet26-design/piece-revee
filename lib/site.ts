@@ -1,7 +1,7 @@
 /** Configuration publique (aucun secret ici : seules les variables NEXT_PUBLIC_* arrivent dans le navigateur). */
 export const SITE = {
   name: "Pièce Rêvée",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://piece-revee.pages.dev",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://odd-bar-c583.ewanesteves26.workers.dev",
   tagline: "Votre intérieur rêvé, réellement faisable.",
   description: "Une photo de votre pièce ou de votre jardin : rendus de votre espace transformé, vrais produits à acheter, tutos et conseils à chaque étape.",
   locale: "fr_FR",

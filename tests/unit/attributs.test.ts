@@ -25,3 +25,21 @@ describe("correspondance stricte meuble ↔ produit", () => {
     expect(accord(tapis, "Tapis rond noir et blanc").ok).toBe(true);
   });
 });
+
+describe("dimensions = forme", () => {
+  it("un tapis 133 × 195 cm n'est pas un tapis rond ; un Ø 120 l'est", () => {
+    const rond = attributsObjet({ label: "Tapis rond rayé" });
+    expect(accord(rond, "Tapis, poils ras - blanc cassé noir/fait main 133x195 cm").ok).toBe(false);
+    expect(accord(rond, "Tapis noir et blanc Ø 120 cm").ok).toBe(true);
+  });
+});
+
+import { estOccasion } from "@/lib/catalogue";
+describe("occasion signalée", () => {
+  it("Selency et les noms « vintage / années 50 » sont de seconde main", () => {
+    expect(estOccasion({ m: "Selency", n: "Fauteuil en rotin" })).toBe(true);
+    expect(estOccasion({ m: "Drawer", n: "Applique vintage en laiton" })).toBe(true);
+    expect(estOccasion({ m: "IKEA", n: "Buffet années 50 en chêne" })).toBe(true);
+    expect(estOccasion({ m: "IKEA", n: "Canapé 3 places" })).toBe(false);
+  });
+});

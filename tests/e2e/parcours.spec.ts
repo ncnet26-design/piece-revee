@@ -26,7 +26,11 @@ test("accueil : promesse, démonstration à toucher, sections éditoriales", asy
   else await expect(page.getByRole("navigation", { name: "Navigation principale" }).getByRole("link")).toHaveText(["Transformer ma pièce", "Inspirations", "Boutique", "Tarifs"]);
   await page.getByRole("button", { name: /^Tables basses en marbre : voir les produits par budget/ }).click();
   await expect(page.getByText("Tables basses en marbre · en vente maintenant")).toBeVisible();
-  for (const g of ["Petit budget", "Budget moyen", "Haut de gamme"]) await expect(page.getByRole("link", { name: new RegExp(g) }).first()).toHaveAttribute("target", "_blank");
+  // Seuls les budgets qui ont un produit fidèle sont montrés (jamais de « bientôt »), chacun en lien vers l'enseigne.
+  const budgets = page.getByRole("link", { name: /Petit budget|Budget moyen|Haut de gamme/ });
+  expect(await budgets.count()).toBeGreaterThanOrEqual(2);
+  await expect(budgets.first()).toHaveAttribute("target", "_blank");
+  await expect(page.getByText(/bientôt/)).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Mettre l'animation en pause" })).toBeVisible();
   expect(errors).toEqual([]);
 });
@@ -125,7 +129,7 @@ test("pages éditoriales et SEO", async ({ page }) => {
   for (const [url, h1] of [["/matieres/travertin/", "Travertin"], ["/mobilier/togo/", "Togo"], ["/lieux/savoye/", "Villa Savoye"], ["/plantes/lavande-vraie/", "Lavande vraie"], ["/styles/japandi/", "Japandi"], ["/guides/creer-un-jardin-sec/", "jardin sec"], ["/legal/cgv/", "Conditions générales de vente"]] as const) {
     await page.goto(url);
     await expect(page.getByRole("heading", { level: 1 })).toContainText(h1);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /piece-revee/);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /odd-bar-c583\.ewanesteves26\.workers\.dev/);
     expect(await page.locator('script[type="application/ld+json"]').count()).toBeGreaterThan(0);
   }
   const res = await page.goto("/sitemap.xml");

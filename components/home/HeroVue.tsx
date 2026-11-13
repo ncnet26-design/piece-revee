@@ -1,7 +1,7 @@
 "use client";
 import { dateReleve } from "@/lib/date-releve";
 import { useEffect, useState } from "react";
-import type { ProduitCatalogue } from "@/lib/catalogue";
+import { estOccasion, type ProduitCatalogue } from "@/lib/catalogue";
 import { PIECES } from "@/components/shop-the-look-pieces";
 import { Photo } from "@/components/Photo";
 import { ProduitImage } from "@/components/ProduitImage";
@@ -52,7 +52,7 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
         <div aria-live={touche ? "polite" : "off"} className="mt-4 rounded-[2px] bg-surface p-4 sm:p-5">
           <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-muted">{sel.label} · en vente maintenant</p>
           <ul key={sel.id} className="hero-fondu mt-3 grid list-none gap-2 p-0 sm:grid-cols-3">
-            {(["petit", "moyen", "haut"] as Gamme[]).map((g) => {
+            {(["petit", "moyen", "haut"] as Gamme[]).filter((g) => l[g]).map((g) => {
               const p = l[g];
               return (
                 <li key={g} className="min-w-0">
@@ -61,13 +61,13 @@ export function HeroVue({ trouves }: { trouves: Trouves }) {
                       <ProduitImage src={p.i} alt="" merchant={p.m} className="w-16 shrink-0 sm:w-full" />
                       <span className="min-w-0">
                         <span className="block text-[10.5px] font-semibold uppercase tracking-[.12em] text-[var(--bronze)]">{NOM[g]}</span>
-                        <span className="block truncate text-[13px] group-hover:underline">{p.m}</span>
+                        <span className="block truncate text-[13px] group-hover:underline">{p.m}{estOccasion(p) ? " · occasion" : ""}</span>
                         <span className="block text-[14px] font-semibold tabular-nums">{prix(p)}</span>
                         {p.p !== null && <span className="block text-[10.5px] text-muted">relevé le {dateReleve(p.d)}</span>}
                         <span className="sr-only">{p.n} (nouvel onglet)</span>
                       </span>
                     </a>
-                  ) : <span className="text-[12px] text-muted">{NOM[g]} : bientôt</span>}
+                  ) : null}
                 </li>
               );
             })}

@@ -24,7 +24,7 @@ export default function Page() {
       <header className="mx-auto max-w-[820px] text-center">
         <p className="eyebrow">La boutique</p>
         <h1 className="mx-auto mt-4 max-w-[16ch] text-[clamp(44px,6.4vw,92px)]">De belles pièces, <em>à chaque budget.</em></h1>
-        <p className="mx-auto mt-6 max-w-[56ch] text-[16px] text-muted">{sel.total.toLocaleString("fr-FR")} références choisies chez {Object.keys(sel.vendeurs).length} enseignes, du petit prix au haut de gamme. Et pour chaque meuble de votre pièce transformée, l'IA cherche aussi partout en ligne : Maisons du Monde, Leroy Merlin, La Redoute… Prix relevés sur leurs pages ; vous achetez directement chez elles.</p>
+        <p className="mx-auto mt-6 max-w-[56ch] text-[16px] text-muted">{sel.total.toLocaleString("fr-FR")} références choisies chez {Object.keys(sel.vendeurs).length} enseignes, du petit prix au haut de gamme. Et pour le meuble exact de votre pièce transformée, « Trouver l'identique » le cherche partout sur le web avec Google Lens. Prix relevés sur les pages des enseignes ; vous achetez directement chez elles.</p>
         <nav aria-label="Sur cette page" className="mt-8 flex justify-center gap-2">
           <a href="#selection" className="btn">Par pièce et par style</a>
           <a href="#toute-la-boutique" className="btn btn-primary">Toute la boutique</a>

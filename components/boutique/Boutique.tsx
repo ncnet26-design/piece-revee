@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { chercher, FAMILLES, norm, selection, type Famille, type IndexCatalogue, type ProduitCatalogue } from "@/lib/catalogue";
+import { chercher, estOccasion, FAMILLES, norm, selection, type Famille, type IndexCatalogue, type ProduitCatalogue } from "@/lib/catalogue";
 import { toggleExternal, useProject } from "@/lib/studio/project";
 import { ProduitImage } from "@/components/ProduitImage";
 
@@ -101,10 +101,10 @@ export function Boutique() {
             <a href={p.u} target="_blank" rel="noopener noreferrer nofollow" className="block no-underline" tabIndex={-1} aria-hidden>
               <ProduitImage src={p.i} alt="" merchant={p.m} />
             </a>
-            <p className="mt-4 text-[10.5px] font-semibold uppercase tracking-[.16em] text-muted">{p.m}{p.b && norm(p.b) !== norm(p.m) ? ` · ${p.b}` : ""}</p>
+            <p className="mt-4 text-[10.5px] font-semibold uppercase tracking-[.16em] text-muted">{p.m}{p.b && norm(p.b) !== norm(p.m) ? ` · ${p.b}` : ""}{estOccasion(p) && <span className="ml-1.5 rounded-full bg-[var(--soft)] px-1.5 py-px text-[10px] font-semibold uppercase tracking-[.08em] text-[var(--bronze)]">Occasion</span>}</p>
             <p className="mx-auto mt-1.5 line-clamp-2 max-w-[30ch] text-[14.5px] leading-snug">{p.n}</p>
             <p className="mt-2 text-[15px] font-semibold tabular-nums">{prix(p) ?? <span className="text-[13px] font-normal text-muted">Prix sur le site</span>}</p>
-            <p className="mt-0.5 text-[11px] text-muted">{NOM_GAMME[p.g]}{p.a && AV[p.a] ? ` · ${AV[p.a]}` : ""}{p.p !== null ? ` · relevé le ${new Date(p.d).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}` : ""}</p>
+            <p className="mt-0.5 text-[11px] text-muted">{NOM_GAMME[p.g]}{p.a && AV[p.a] ? ` · ${AV[p.a]}` : ""}{p.p !== null ? ` · relevé le ${new Date(p.d).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}` : ""}</p>
             <div className="mt-4 flex flex-wrap justify-center gap-1.5">
               <a className="btn btn-primary !min-h-0 !px-3.5 !py-1.5 text-[12px]" href={p.u} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.m}<span className="sr-only"> : {p.n} (nouvel onglet)</span></a>
               <button type="button" className="btn !min-h-0 !px-3.5 !py-1.5 text-[12px]" aria-pressed={inList(p.u)} onClick={() => toggleExternal({ title: p.n, url: p.u, merchant: p.m, price: p.p, currency: p.c, checkedAt: p.d, source: "catalogue" })}>{inList(p.u) ? "✓ Dans ma pièce" : "Ajouter à ma pièce"}</button>
@@ -113,7 +113,7 @@ export function Boutique() {
         ))}
       </ul>
       {list.length > n && <div className="mt-14 text-center"><button type="button" className="btn btn-lg" onClick={() => setN((x) => x + PAGE)}>Voir {Math.min(PAGE, list.length - n)} références de plus</button></div>}
-      <p className="mx-auto mt-14 max-w-[70ch] text-center text-[12px] leading-relaxed text-muted">Sélection faite parmi les produits relevés chaque nuit chez les enseignes : éditeurs et maisons reconnus, à tous les prix, une déclinaison par modèle. Liens directs, sans partenariat ni classement payé. Prix et disponibilité relevés sur leurs pages à la date indiquée : vérifiez-les avant l'achat.</p>
+      <p className="mx-auto mt-14 max-w-[70ch] text-center text-[12px] leading-relaxed text-muted">Sélection faite parmi les produits relevés chaque nuit chez les enseignes : éditeurs et maisons reconnus, à tous les prix, une déclinaison par modèle. Liens directs ; aucune marque ne paie pour être classée. Les produits d'occasion sont marqués « occasion ». Prix et disponibilité relevés sur leurs pages à la date indiquée : vérifiez-les avant l'achat.</p>
     </div>
   );
 }

@@ -75,7 +75,7 @@ export function Header() {
         </Link>
         <ThemeToggle />
         <Link href="/compte/" className="btn btn-sm btn-ghost border-transparent px-2.5" aria-label="Mon compte"><IconUser width={17} height={17} /></Link>
-        <Link href="/transformer/" className="btn btn-primary hidden md:inline-flex">Commencer</Link>
+        {!path.startsWith("/transformer") && <Link href="/transformer/" className="btn btn-primary hidden md:inline-flex">Commencer</Link>}
       </div>
     </header>
   );

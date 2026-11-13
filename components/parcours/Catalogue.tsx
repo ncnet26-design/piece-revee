@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { chercher, familleDe, FAMILLES, type ProduitCatalogue } from "@/lib/catalogue";
+import { chercher, estOccasion, familleDe, FAMILLES, type ProduitCatalogue } from "@/lib/catalogue";
 import { toggleExternal, useProject } from "@/lib/studio/project";
 import { ProduitImage } from "@/components/ProduitImage";
 import { accord, attributsObjet } from "@/lib/attributs";
@@ -52,11 +52,11 @@ export function Catalogue({ type, label, query, forObject, objet }: { type: stri
             <li key={p.u} className="flex gap-3 rounded-[2px] border border-line bg-white p-3">
               <ProduitImage src={p.i} alt="" merchant={p.m} className="w-20 shrink-0 self-start" />
               <div className="min-w-0 flex-1">
-              <p className="text-[10.5px] font-semibold uppercase tracking-[.1em] text-muted">{p.m}{p.b && p.b !== p.m ? ` · ${p.b}` : ""}</p>
+              <p className="text-[10.5px] font-semibold uppercase tracking-[.1em] text-muted">{p.m}{p.b && p.b !== p.m ? ` · ${p.b}` : ""}{estOccasion(p) && <span className="ml-1.5 rounded-full bg-[var(--soft)] px-1.5 py-px text-[10px] font-semibold uppercase tracking-[.08em] text-[var(--bronze)]">Occasion</span>}</p>
               <p className="text-[13.5px] font-medium leading-snug">{p.n}</p>
               <p className="mt-0.5 text-[13px] font-semibold tabular-nums">{p.p !== null ? `${p.p.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} ${p.c === "EUR" || !p.c ? "€" : p.c}` : <span className="font-normal text-muted">Prix sur le site</span>}{p.a && AV[p.a] ? <span className="ml-2 font-normal text-muted">· {AV[p.a]}</span> : null}</p>
               {p.communs.length > 0 && <p className="mt-1 flex flex-wrap gap-1">{p.communs.map((c) => <span key={c} className="rounded-full bg-[var(--soft)] px-2 py-0.5 text-[10.5px] font-medium">{c} ✓</span>)}</p>}
-              <p className="mt-1 text-[10.5px] text-muted">Relevé sur la page de l'enseigne le {new Date(p.d).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</p>
+              <p className="mt-1 text-[10.5px] text-muted">Relevé sur la page de l'enseigne le {new Date(p.d).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</p>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 <a className="btn !min-h-0 !px-3 !py-1.5 text-[12px]" href={p.u} target="_blank" rel="noopener noreferrer nofollow">Voir chez {p.m}<span className="sr-only"> (nouvel onglet)</span></a>
                 <button type="button" className="btn !min-h-0 !px-3 !py-1.5 text-[12px]" aria-pressed={inList(p.u)} onClick={() => toggleExternal({ title: p.n, url: p.u, merchant: p.m, price: p.p, currency: p.c, checkedAt: p.d, source: "catalogue" }, forObject)}>{inList(p.u) ? "✓ Dans ma pièce" : "Ajouter à ma pièce"}</button>

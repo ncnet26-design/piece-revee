@@ -217,7 +217,7 @@ export function Parcours() {
               </div>
               <p className="mt-1.5 text-[12px] text-muted">L'IA meuble votre pièce avec de vrais produits de notre boutique dans ce budget : chaque meuble de l'image est en vente.</p>
             </fieldset>
-            <label className="mt-5 grid gap-1.5 text-[13px] font-semibold">Ce que vous voulez changer <span className="font-normal text-muted">(facultatif, mais c'est ce qui compte le plus)</span>
+            <label className="mt-5 grid gap-1.5 text-[13px] font-semibold">Ce que vous voulez changer <span className="font-normal text-muted">(facultatif : si vous l'écrivez, l'IA l'applique en priorité)</span>
               <textarea className="input font-normal" rows={3} value={wish} onChange={(e) => setWish(e.target.value)} maxLength={600}
                 placeholder={piece === "salle-de-bain" ? "Ex. remplacer le meuble vasque par du bois clair, carrelage vert sauge, garder la baignoire…" : piece === "cuisine" ? "Ex. façades vert olive, plan de travail en bois, garder l'électroménager…" : "Ex. murs vert sauge, un canapé plus grand, garder mon parquet, plus de rangements…"} />
             </label>
@@ -267,6 +267,16 @@ export function Parcours() {
           </section>
 
           <div className="lg:col-span-2 flex flex-wrap items-center gap-3 border-t border-line pt-6">
+            <div className="w-full rounded-[2px] bg-surface p-4 text-[13.5px]">
+              <p className="font-semibold">Ce que vous recevez, en 1 à 2 minutes</p>
+              <ul className="mt-2 grid list-none gap-1 p-0 text-muted sm:grid-cols-2">
+                <li>✓ Votre pièce refaite dans le style choisi, mêmes murs et fenêtres</li>
+                <li>✓ De vrais meubles en vente, dans votre budget</li>
+                <li>✓ Chaque meuble cliquable, avec son prix et son lien</li>
+                <li>✓ Le total de la pièce en 3 budgets, et un avant/après</li>
+              </ul>
+              <p className="mt-2 text-[12.5px]">Gratuit, sans compte ni carte bancaire. Image créée par IA, signalée comme telle.</p>
+            </div>
             <button type="button" className="btn btn-primary btn-lg" disabled={!room || !piece || !inspi.length || Boolean(busy)} onClick={() => void makeMood()}>Créer mon moodboard</button>
             <span className="text-[13px] text-muted">{!room ? "Ajoutez la photo de votre pièce." : !piece ? "Indiquez de quelle pièce il s'agit." : !inspi.length ? "Ajoutez au moins une inspiration." : "Vos images sont envoyées au service d'IA uniquement pour ce projet."}</span>
           </div>

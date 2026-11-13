@@ -17,7 +17,7 @@ export function trouverParBudget(pieces: PieceDansImage[]): Trouves {
     }
     const l = cache.get(p.famille)!;
     trouves[p.id] = {};
-    for (const g of ["petit", "moyen", "haut"] as Gamme[]) { const x = choisir(l, p.query, g); if (x) trouves[p.id]![g] = x; }
+    for (const g of ["petit", "moyen", "haut"] as Gamme[]) { const x = choisir(l, p.query, g, p.label); if (x) trouves[p.id]![g] = x; }
   }
   return trouves;
 }
