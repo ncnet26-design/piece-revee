@@ -81,3 +81,5 @@ Le but du site ne change pas : **photo de sa pièce + inspirations → moodboard
 - Compteurs de quota séparés pour une même part gratuite (images et Camille) : risque de la dépasser ; un seul compteur commun.
 - Transformation : sans type de pièce, le modèle suit les inspirations (souvent des salons) et change la fonction de la pièce. Toujours imposer la pièce et ses équipements fixes.
 - Modèle gratuit (flux-2-klein) : les images d'inspiration envoyées comme entrées remplacent la pièce du client ; n'envoyer que la photo de la pièce, le style en texte.
+- Minutes GitHub Actions épuisées (dépôt privé, 2 000 min/mois) : CI complète à chaque envoi + catalogue de 45 min chaque nuit + tests manuels. Garder la CI hebdomadaire et lancer les tests en local avant chaque envoi.
+- Part gratuite Cloudflare encore épuisée après minuit UTC : le coût réel du modèle 9B est sans doute plus élevé que l'estimation (1 600) ; mesurer avec le robot quota-ia.yml quand les robots sont débloqués.

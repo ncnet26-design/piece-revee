@@ -14,15 +14,18 @@
  *   GET  /v2/usage?visiteur=…     consommation du jour et du mois
  * Routes historiques (inchangées pour le site actuel) : POST /redesign, /concept, /photo.
  */
-import { isAllowedOrigin, ALLOWED_ORIGINS, MAX_BODY, type Ctx, type Env } from "./config";
+import { isAllowedOrigin, ALLOWED_ORIGINS, MAX_BODY, payantAutorise, type Ctx, type Env } from "./config";
 import { buildPrompt } from "./prompts";
 import { isDataUrl, parseJobBody } from "./validate";
 import { CF_4B, CF_9B, chooseProvider, cloudflare, gemini, PROVIDERS, ProviderError, type ImgIn, type ProviderRequest } from "./providers";
 import { analyse, moodboard } from "./analyse";
 import { rechercher } from "./recherche";
 import { parseCamille, plafondCamille, repondreCamille } from "./camille";
-import { reserver, estimate, motif, reserveFree, reservePaye, loadInput, loadJob, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
+import { NEURONES, reserverNeurones, reserver, estimate, motif, reserveFree, reservePaye, loadInput, loadJob, readImage, reserve, saveInput, saveJob, settle, sha, storeImage, today, usage, type Job, type JobInput } from "./jobs";
 export { Compteur } from "./compteur";
+
+/** Message quand la part gratuite du jour est épuisée (et que les services payants sont réservés aux abonnés). */
+const LIMITE_GRATUITE = "Notre IA gratuite a atteint sa limite du jour, victime de son succès. Revenez demain matin : vos photos et vos choix restent gardés sur cet appareil.";
 
 /** Lit le corps JSON en s'arrêtant à `max` octets (même sans en-tête Content-Length). */
 async function lireJson(request: Request, max = MAX_BODY): Promise<unknown> {
@@ -48,7 +51,7 @@ async function run(env: Env, job: Job, input: JobInput): Promise<Job> {
     let r;
     try { r = await provider.submit(req, env); } catch (e) {
       // Service gratuit en panne ou quota du jour épuisé : Gemini prend le relais, dans les plafonds de dépense.
-      if (provider.id !== "cloudflare" || !gemini.configured(env)) throw e;
+      if (provider.id !== "cloudflare" || !gemini.configured(env) || !payantAutorise(env)) throw e;
       const cost = estimate("gemini", job.quality);
       // Relais payant : l'image est déjà comptée pour le visiteur ; on réserve le budget et le total du jour.
       if (!(await reserve(env, job.visitor, job.ipHash, cost, false))) throw e;
@@ -110,6 +113,8 @@ export default {
       const free9 = gratuitPossible && (await reserveFree(env, visitor, ipHash, true));
       const free = free9 || (gratuitPossible && (await reserveFree(env, visitor, ipHash)));
       const provider = free ? cloudflare : chooseProvider(env, b.fournisseur);
+      // Sans part gratuite disponible, les services payants sont réservés aux abonnés payants.
+      if (!free && !payantAutorise(env)) return cloudflare.configured(env) ? json({ erreur: LIMITE_GRATUITE }, 429) : json({ erreur: "Aucun fournisseur d'images n'est configuré." }, 503);
       if (!provider || (provider.id === "cloudflare" && !free)) return json({ erreur: "Aucun fournisseur d'images n'est configuré (clé manquante)." }, 503);
       const cost = estimate(provider.id, b.quality);
       if (!free && !(await reserve(env, visitor, ipHash, cost))) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
@@ -123,12 +128,12 @@ export default {
     if (request.method === "POST" && path === "/v2/analyse") {
       const b = await lireJson(request) as { image?: unknown; visiteur?: unknown } | null;
       if (!b || !isDataUrl(b.image) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Image manquante." }, 400);
-      const visitor = await sha(`v|${b.visiteur}`), cost = 0.01;
-      if (!(await reservePaye(env, visitor, ipHash, cost))) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
+      const visitor = await sha(`v|${b.visiteur}`), payant = payantAutorise(env), cost = payant ? 0.01 : 0;
+      if (payant ? !(await reservePaye(env, visitor, ipHash, cost)) : !(await reserverNeurones(env, NEURONES.vision))) return json({ erreur: payant ? await motif(env, visitor, ipHash, cost) : LIMITE_GRATUITE }, 429);
       try {
-        return json(await analyse(env, toImg(b.image)));
+        return json(await analyse(env, toImg(b.image), payant));
       } catch (e) {
-        await settle(env, visitor, ipHash, -cost);
+        if (cost) await settle(env, visitor, ipHash, -cost);
         return json({ erreur: e instanceof ProviderError ? e.message : "Analyse impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
     }
@@ -140,12 +145,12 @@ export default {
       if (!b || !imgs.length || !imgs.every(isDataUrl) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Ajoutez au moins une image d'inspiration." }, 400);
       const catalog = (Array.isArray(b.matieres) ? b.matieres : []).filter((m): m is { id: string; name: string } => !!m && typeof (m as { id?: unknown }).id === "string" && typeof (m as { name?: unknown }).name === "string")
         .slice(0, 80).map((m) => ({ id: m.id.slice(0, 40), name: m.name.slice(0, 60) }));
-      const visitor = await sha(`v|${b.visiteur}`), cost = 0.01;
-      if (!(await reservePaye(env, visitor, ipHash, cost))) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
+      const visitor = await sha(`v|${b.visiteur}`), payant = payantAutorise(env), cost = payant ? 0.01 : 0;
+      if (payant ? !(await reservePaye(env, visitor, ipHash, cost)) : !(await reserverNeurones(env, NEURONES.vision + 100))) return json({ erreur: payant ? await motif(env, visitor, ipHash, cost) : LIMITE_GRATUITE }, 429);
       try {
-        return json(await moodboard(env, (imgs as string[]).map(toImg), catalog));
+        return json(await moodboard(env, (imgs as string[]).map(toImg), catalog, payant));
       } catch (e) {
-        await settle(env, visitor, ipHash, -cost);
+        if (cost) await settle(env, visitor, ipHash, -cost);
         return json({ erreur: e instanceof ProviderError ? e.message : "Moodboard impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
     }
@@ -185,6 +190,8 @@ export default {
       const q = typeof b?.query === "string" ? b.query.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 160) : "";
       if (!b || q.length < 3 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Recherche incomplète." }, 400);
       const label = typeof b.label === "string" ? b.label.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 220) : q;
+      // Recherche sur tout le web (Gemini + Google) : payante, réservée aux abonnés ; gratuitement, « Trouver l'identique » et la boutique.
+      if (!payantAutorise(env)) return json({ erreur: "La recherche sur tout le web est réservée aux abonnés. Utilisez « Trouver l'identique » (Google Lens) ou notre boutique, gratuits.", reserve: true }, 403);
       const visitor = await sha(`v|${b.visiteur}`), cost = 0.03;
       if (!(await reservePaye(env, visitor, ipHash, cost))) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
       try {
@@ -236,7 +243,7 @@ export default {
         const input = await loadInput(env, job.id);
         if (!input) return json({ erreur: "Les données de départ ont expiré : relancez une nouvelle demande." }, 410);
         // Relance gratuite si la part gratuite le permet ; sinon Gemini, dans les plafonds habituels.
-        if (job.provider === "cloudflare") { if (await reserveFree(env, job.visitor, ipHash)) job.model = CF_4B; else { job.provider = "gemini"; job.model = gemini.model(env, job.mode); } }
+        if (job.provider === "cloudflare") { if (await reserveFree(env, job.visitor, ipHash)) job.model = CF_4B; else if (!payantAutorise(env)) return json({ erreur: LIMITE_GRATUITE }, 429); else { job.provider = "gemini"; job.model = gemini.model(env, job.mode); } }
         if (job.provider !== "cloudflare") {
           const cost = estimate(job.provider, job.quality);
           if (!(await reserve(env, job.visitor, ipHash, cost))) return json({ erreur: await motif(env, job.visitor, ipHash, cost) }, 429);

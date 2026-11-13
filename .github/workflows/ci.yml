@@ -1,9 +1,12 @@
 name: CI
 
+# Les minutes de robots sont limitées (dépôt privé : 2 000 min/mois). Les mêmes tests tournent avant chaque envoi
+# (pnpm typecheck, lint, test, build, playwright) : ici seulement chaque lundi, pour les demandes de fusion, ou à la main.
 on:
   pull_request:
-  push:
-    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "23 5 * * 1"
 
 permissions:
   contents: read

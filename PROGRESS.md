@@ -171,3 +171,9 @@ Concept : choisir une pièce et un style → inspiration réaliste → chaque me
   - photos : HEIC converti dans le navigateur, rotation EXIF, refus < 800 px ; budget au choix ; consigne « magazine » ; plan qui place chaque produit ;
   - compteur strict sans écritures KV (limite gratuite 1 000/jour) ; skill transformation-piece ; audit transfo-audit.md ; architecture payante chiffrée (docs/transfo-architecture.md).
   Service IA déployé le 9 nov. au soir (consigne magazine, placement des vrais meubles, /v2/recadrage pour Google Lens, compteur sans KV).
+- 13 nov. : règle d'Ewan « payant seulement pour les abonnés payants, si aucune alternative gratuite » :
+  dessin : IA gratuite seule (plus de relais Gemini) ; repérage des meubles et moodboard : vision gratuite Mistral Small ;
+  recherche sur tout le web (Gemini + Google, sans alternative gratuite) : réservée aux abonnés, remplacée par « Trouver l'identique » et la boutique.
+  Gemini seulement si PAYANT_POUR_TOUS=1 (en attendant le branchement des abonnements). Message clair quand la part gratuite du jour est épuisée.
+  Robots GitHub bloqués depuis le 13 nov. 3 h (2 000 min/mois du dépôt privé épuisées, limite de dépense à 0 $ : rien payé) :
+  CI hebdomadaire au lieu de chaque envoi, catalogue lundi et jeudi. Service IA à redéployer dès que les robots sont débloqués.

@@ -33,6 +33,8 @@ export interface Env {
   CAMILLE_JOUR?: string;
   CAMILLE_VISITEUR_JOUR?: string;
   NEURONES_JOUR?: string;
+  /** « 1 » : autorise les services payants (Gemini) pour tous. Sinon, réservés aux abonnés payants (pas encore branchés). */
+  PAYANT_POUR_TOUS?: string;
   QUOTA?: KVNamespace;
   /** Compteur strict des plafonds (Durable Object « Compteur »). Sans lui, repli sur KV (moins strict). */
   COMPTEUR?: { idFromName(nom: string): unknown; get(id: unknown): { fetch(url: string, init?: RequestInit): Promise<Response> } };
@@ -87,3 +89,9 @@ export const PRICE_ESTIMATE: Record<string, Record<Quality, number>> = {
 };
 /** Tarifs OpenAI au million de jetons (images) : à vérifier sur la page tarifs d'OpenAI. */
 export const OPENAI_TOKEN_USD = { textIn: 5, imageIn: 8, imageOut: 30 };
+
+/**
+ * Services payants (Gemini : dessin de secours, analyse précise, recherche sur tout le web) : seulement pour les abonnés payants.
+ * Les paiements ne sont pas encore branchés : personne n'est abonné, donc rien de payant, sauf réglage PAYANT_POUR_TOUS=1.
+ */
+export const payantAutorise = (env: Env) => env.PAYANT_POUR_TOUS === "1";

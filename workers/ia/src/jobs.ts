@@ -118,7 +118,7 @@ export async function motif(env: Env, visitor: string, ip: string, usd: number) 
  * réservé AVANT chaque appel avec une estimation prudente ; on s'arrête bien avant la limite.
  */
 /** Image : analyse de la pièce (vision) + dessin. */
-export const NEURONES = { image: 200, image9b: 1600, camille: 130, reserve9b: 2500 } as const;
+export const NEURONES = { image: 200, image9b: 1600, camille: 130, vision: 200, reserve9b: 2500 } as const;
 export const opNeurones = (env: Env, cout: number): Op => ({ cle: `neurones:${today()}`, ajout: cout, max: limits(env).freeNeurons, ttl: 2 * DAY });
 export const reserverNeurones = (env: Env, cout: number) => reserver(env, [opNeurones(env, cout)]);
 /** Image gratuite : part gratuite du jour (images et neurones) et plafond d'images du visiteur, ensemble. */

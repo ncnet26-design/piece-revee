@@ -48,8 +48,11 @@ export function EnLigne({ query, label, forObject, photo }: { query: string; lab
           {[0, 1, 2].map((k) => <li key={k} className="studio-shimmer h-[76px] rounded-[2px] bg-soft" style={{ animationDelay: `${k * 0.15}s` }} />)}
         </ul>
       )}
-      {!loading && state?.error && <p role="alert" className="mt-3 rounded-[2px] bg-[#FBEDE6] px-3 py-2 text-[12.5px] text-[#8A3B17]">{state.error}</p>}
-      {!loading && !state?.error && list.length === 0 && <p className="mt-3 text-[12.5px] text-muted">Aucune page produit trouvée pour cet élément. Essayez Google Lens ci-dessous.</p>}
+      {!loading && state?.error && (/abonn/.test(state.error)
+        // Recherche web payante, réservée aux abonnés : simple information, pas une erreur.
+        ? <p className="mt-3 rounded-[2px] bg-soft px-3 py-2.5 text-[12.5px]">Cette recherche sur tout le web est réservée aux abonnés. Gratuitement : « Trouver l'identique » (plus haut) cherche ce meuble exact avec Google Lens, et notre boutique (plus bas) propose des modèles sélectionnés.</p>
+        : <p role="alert" className="mt-3 rounded-[2px] bg-[#FBEDE6] px-3 py-2 text-[12.5px] text-[#8A3B17]">{state.error}</p>)}
+      {!loading && !state?.error && list.length === 0 && <p className="mt-3 text-[12.5px] text-muted">Aucune page produit trouvée pour cet élément. Essayez « Trouver l'identique » plus haut.</p>}
       {list.length > 0 && (["Économique", "Intermédiaire", "Premium", null] as const).map((g) => {
         const l = list.filter((p) => gamme(p, list) === g);
         if (!l.length) return null;

@@ -36,6 +36,7 @@ var PRICE_ESTIMATE = {
   replicate: { brouillon: 0.04, standard: 0.04, premium: 0.08 }
 };
 var OPENAI_TOKEN_USD = { textIn: 5, imageIn: 8, imageOut: 30 };
+var payantAutorise = (env) => env.PAYANT_POUR_TOUS === "1";
 
 // workers/ia/src/prompts.ts
 var KEEP = {
@@ -473,6 +474,31 @@ async function geminiJson(env, parts) {
     throw new ProviderError("R\xE9ponse d'analyse illisible.", true);
   }
 }
+var VISION_GRATUITE = "@cf/mistralai/mistral-small-3.1-24b-instruct";
+async function visionGratuite(env, consigne, images) {
+  if (!env.AI) throw new ProviderError("L'analyse gratuite n'est pas disponible.", false);
+  let r;
+  try {
+    r = await env.AI.run(VISION_GRATUITE, {
+      messages: [{ role: "user", content: [{ type: "text", text: `${consigne}
+Answer with one JSON object only, no markdown.` }, ...images.slice(0, 4).map((im) => ({ type: "image_url", image_url: { url: `data:${im.mime};base64,${im.b64}` } }))] }],
+      max_tokens: 2500,
+      temperature: 0.2
+    });
+  } catch (e) {
+    throw new ProviderError("L'analyse gratuite est indisponible pour le moment.", true, String(e).slice(0, 200));
+  }
+  const o = r;
+  if (o.response && typeof o.response === "object") return o.response;
+  const txt = String(o.response ?? o.choices?.[0]?.message?.content ?? "");
+  const m = /\{[\s\S]*\}/.exec(txt.replace(/^```(?:json)?\s*|\s*```$/g, ""));
+  try {
+    return JSON.parse(m?.[0] ?? "");
+  } catch {
+    throw new ProviderError("R\xE9ponse d'analyse illisible.", true);
+  }
+}
+var vision = (env, payant, consigne, images) => payant && env.GEMINI_API_KEY ? geminiJson(env, [{ text: consigne }, ...images.map((im) => ({ inline_data: { mime_type: im.mime, data: im.b64 } }))]) : visionGratuite(env, consigne, images);
 var arr = (v) => Array.isArray(v) ? v : [];
 var strs = (v, n2 = 8) => Array.isArray(v) ? v.filter((x) => typeof x === "string").slice(0, n2) : [];
 var colors = (v) => arr(v).filter((c) => typeof c.hex === "string" && /^#[0-9a-f]{6}$/i.test(c.hex)).slice(0, 6).map((c) => ({ name: String(c.name ?? "").slice(0, 40), hex: String(c.hex).toUpperCase() }));
@@ -483,9 +509,9 @@ function boxToZone(b) {
   if (x1 <= x0 || y1 <= y0) return null;
   return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
 }
-async function analyse(env, image) {
-  if (env.GEMINI_API_KEY) {
-    const j = await geminiJson(env, [{ text: PIECE }, { inline_data: { mime_type: image.mime, data: image.b64 } }]);
+async function analyse(env, image, payant = false) {
+  if (env.AI || env.GEMINI_API_KEY) {
+    const j = await vision(env, payant, PIECE, [image]);
     const objects = arr(j.objects).filter((o) => CATS.includes(String(o.type))).flatMap((o, i) => {
       const zone = boxToZone(o.box_2d);
       if (!zone) return [];
@@ -513,10 +539,10 @@ async function analyse(env, image) {
   if (env.OPENAI_API_KEY) return { objects: await analyseOpenAI(env, image), surfaces: [] };
   throw new ProviderError("L'analyse automatique n'est pas configur\xE9e (cl\xE9 manquante).", false);
 }
-async function moodboard(env, images, catalog) {
-  if (!env.GEMINI_API_KEY) throw new ProviderError("Le moodboard automatique n'est pas configur\xE9 (cl\xE9 manquante).", false);
+async function moodboard(env, images, catalog, payant = false) {
+  if (!env.AI && !env.GEMINI_API_KEY) throw new ProviderError("Le moodboard automatique n'est pas configur\xE9.", false);
   const ids = new Set(catalog.map((c) => c.id));
-  const j = await geminiJson(env, [{ text: MOOD(catalog.map((c) => `${c.id}: ${c.name}`).join("; ")) }, ...images.map((im) => ({ inline_data: { mime_type: im.mime, data: im.b64 } }))]);
+  const j = await vision(env, payant, MOOD(catalog.map((c) => `${c.id}: ${c.name}`).join("; ")), images);
   return {
     style: String(j.style ?? "").slice(0, 60),
     summary: String(j.summary ?? "").slice(0, 300),
@@ -909,8 +935,9 @@ var reservePaye = (env, visitor, ip, usd) => reserver(env, opsUsd(limits(env), v
 async function motif(env, visitor, ip, usd) {
   return overLimit(await usage(env, visitor, ip), usd) ?? "Les plafonds du jour sont atteints. Revenez demain.";
 }
-var NEURONES = { image: 200, image9b: 1600, camille: 130, reserve9b: 2500 };
+var NEURONES = { image: 200, image9b: 1600, camille: 130, vision: 200, reserve9b: 2500 };
 var opNeurones = (env, cout) => ({ cle: `neurones:${today()}`, ajout: cout, max: limits(env).freeNeurons, ttl: 2 * DAY });
+var reserverNeurones = (env, cout) => reserver(env, [opNeurones(env, cout)]);
 async function reserveFree(env, visitor, ip, haute = false) {
   const L = limits(env), d = today();
   const neurones = haute ? { ...opNeurones(env, NEURONES.image9b), max: L.freeNeurons - NEURONES.reserve9b } : opNeurones(env, NEURONES.image);
@@ -969,6 +996,7 @@ ${b.contexte}` } : m);
 }
 
 // workers/ia/src/index.ts
+var LIMITE_GRATUITE = "Notre IA gratuite a atteint sa limite du jour, victime de son succ\xE8s. Revenez demain matin : vos photos et vos choix restent gard\xE9s sur cet appareil.";
 async function lireJson(request, max = MAX_BODY) {
   if (!request.body) return null;
   const reader = request.body.getReader(), parts = [];
@@ -1014,7 +1042,7 @@ async function run(env, job, input) {
     try {
       r = await provider.submit(req, env);
     } catch (e) {
-      if (provider.id !== "cloudflare" || !gemini.configured(env)) throw e;
+      if (provider.id !== "cloudflare" || !gemini.configured(env) || !payantAutorise(env)) throw e;
       const cost = estimate("gemini", job.quality);
       if (!await reserve(env, job.visitor, job.ipHash, cost, false)) throw e;
       job.provider = "gemini";
@@ -1076,6 +1104,7 @@ var index_default = {
       const free9 = gratuitPossible && await reserveFree(env, visitor, ipHash, true);
       const free = free9 || gratuitPossible && await reserveFree(env, visitor, ipHash);
       const provider = free ? cloudflare : chooseProvider(env, b.fournisseur);
+      if (!free && !payantAutorise(env)) return cloudflare.configured(env) ? json({ erreur: LIMITE_GRATUITE }, 429) : json({ erreur: "Aucun fournisseur d'images n'est configur\xE9." }, 503);
       if (!provider || provider.id === "cloudflare" && !free) return json({ erreur: "Aucun fournisseur d'images n'est configur\xE9 (cl\xE9 manquante)." }, 503);
       const cost = estimate(provider.id, b.quality);
       if (!free && !await reserve(env, visitor, ipHash, cost)) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
@@ -1088,12 +1117,12 @@ var index_default = {
     if (request.method === "POST" && path === "/v2/analyse") {
       const b = await lireJson(request);
       if (!b || !isDataUrl(b.image) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Image manquante." }, 400);
-      const visitor = await sha(`v|${b.visiteur}`), cost = 0.01;
-      if (!await reservePaye(env, visitor, ipHash, cost)) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
+      const visitor = await sha(`v|${b.visiteur}`), payant = payantAutorise(env), cost = payant ? 0.01 : 0;
+      if (payant ? !await reservePaye(env, visitor, ipHash, cost) : !await reserverNeurones(env, NEURONES.vision)) return json({ erreur: payant ? await motif(env, visitor, ipHash, cost) : LIMITE_GRATUITE }, 429);
       try {
-        return json(await analyse(env, toImg(b.image)));
+        return json(await analyse(env, toImg(b.image), payant));
       } catch (e) {
-        await settle(env, visitor, ipHash, -cost);
+        if (cost) await settle(env, visitor, ipHash, -cost);
         return json({ erreur: e instanceof ProviderError ? e.message : "Analyse impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
     }
@@ -1103,12 +1132,12 @@ var index_default = {
       const imgs = Array.isArray(b?.inspirations) ? b.inspirations.slice(0, 6) : [];
       if (!b || !imgs.length || !imgs.every(isDataUrl) || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Ajoutez au moins une image d'inspiration." }, 400);
       const catalog = (Array.isArray(b.matieres) ? b.matieres : []).filter((m2) => !!m2 && typeof m2.id === "string" && typeof m2.name === "string").slice(0, 80).map((m2) => ({ id: m2.id.slice(0, 40), name: m2.name.slice(0, 60) }));
-      const visitor = await sha(`v|${b.visiteur}`), cost = 0.01;
-      if (!await reservePaye(env, visitor, ipHash, cost)) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
+      const visitor = await sha(`v|${b.visiteur}`), payant = payantAutorise(env), cost = payant ? 0.01 : 0;
+      if (payant ? !await reservePaye(env, visitor, ipHash, cost) : !await reserverNeurones(env, NEURONES.vision + 100)) return json({ erreur: payant ? await motif(env, visitor, ipHash, cost) : LIMITE_GRATUITE }, 429);
       try {
-        return json(await moodboard(env, imgs.map(toImg), catalog));
+        return json(await moodboard(env, imgs.map(toImg), catalog, payant));
       } catch (e) {
-        await settle(env, visitor, ipHash, -cost);
+        if (cost) await settle(env, visitor, ipHash, -cost);
         return json({ erreur: e instanceof ProviderError ? e.message : "Moodboard impossible." }, e instanceof ProviderError && !e.retryable ? 503 : 502);
       }
     }
@@ -1147,6 +1176,7 @@ var index_default = {
       const q = typeof b?.query === "string" ? b.query.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 160) : "";
       if (!b || q.length < 3 || typeof b.visiteur !== "string" || !/^[a-z0-9-]{8,64}$/.test(b.visiteur)) return json({ erreur: "Recherche incompl\xE8te." }, 400);
       const label = typeof b.label === "string" ? b.label.replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 220) : q;
+      if (!payantAutorise(env)) return json({ erreur: "La recherche sur tout le web est r\xE9serv\xE9e aux abonn\xE9s. Utilisez \xAB Trouver l'identique \xBB (Google Lens) ou notre boutique, gratuits.", reserve: true }, 403);
       const visitor = await sha(`v|${b.visiteur}`), cost = 0.03;
       if (!await reservePaye(env, visitor, ipHash, cost)) return json({ erreur: await motif(env, visitor, ipHash, cost) }, 429);
       try {
@@ -1209,6 +1239,7 @@ var index_default = {
         if (!input) return json({ erreur: "Les donn\xE9es de d\xE9part ont expir\xE9 : relancez une nouvelle demande." }, 410);
         if (job.provider === "cloudflare") {
           if (await reserveFree(env, job.visitor, ipHash)) job.model = CF_4B;
+          else if (!payantAutorise(env)) return json({ erreur: LIMITE_GRATUITE }, 429);
           else {
             job.provider = "gemini";
             job.model = gemini.model(env, job.mode);

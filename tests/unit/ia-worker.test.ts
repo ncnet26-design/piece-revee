@@ -26,7 +26,7 @@ const body = (o: Record<string, unknown>) => JSON.stringify({ mode: "generate", 
 describe("service d'images v2", () => {
   let env: Env & { QUOTA: ReturnType<typeof memoryKV> };
   const fetchMock = vi.fn();
-  beforeEach(() => { env = { QUOTA: memoryKV(), OPENAI_API_KEY: "sk-test" }; vi.stubGlobal("fetch", fetchMock); fetchMock.mockReset(); _setPause(async () => {}); });
+  beforeEach(() => { env = { QUOTA: memoryKV(), OPENAI_API_KEY: "sk-test", PAYANT_POUR_TOUS: "1" }; vi.stubGlobal("fetch", fetchMock); fetchMock.mockReset(); _setPause(async () => {}); });
   afterEach(() => vi.unstubAllGlobals());
 
   it("génère une pièce depuis un texte (OpenAI, appel direct), stocke l'image et compte le coût réel", async () => {
@@ -172,7 +172,7 @@ describe("IA gratuite de Cloudflare", () => {
   it("si le service gratuit échoue ou si le quota du jour est épuisé, Gemini prend le relais", async () => {
     const gem = () => new Response(JSON.stringify({ steps: [{ type: "model_output", content: [{ type: "image", data: JPEG_B64, mime_type: "image/jpeg" }] }] }), { status: 200 });
     fetchMock.mockImplementation(async () => gem());
-    const env: Env & { QUOTA: ReturnType<typeof memoryKV> } = { QUOTA: memoryKV(), GEMINI_API_KEY: "g", AI: { run: async () => { throw new Error("4006: daily free allocation used"); } } };
+    const env: Env & { QUOTA: ReturnType<typeof memoryKV> } = { QUOTA: memoryKV(), GEMINI_API_KEY: "g", PAYANT_POUR_TOUS: "1", AI: { run: async () => { throw new Error("4006: daily free allocation used"); } } };
     let job = await (await call(env, "/v2/jobs", { method: "POST", body: body({ mode: "transform", photo: PNG, petites }) })).json() as { status: string; provider: string };
     expect(job).toMatchObject({ status: "terminee", provider: "gemini" });
     env.IMAGES_GRATUITES_JOUR = "0"; env.AI = { run: vi.fn() };
@@ -183,7 +183,7 @@ describe("IA gratuite de Cloudflare", () => {
 
   it("sans petites images ou avec un masque, passe directement par le fournisseur habituel", async () => {
     fetchMock.mockImplementation(async () => new Response(JSON.stringify({ steps: [{ type: "model_output", content: [{ type: "image", data: JPEG_B64 }] }] }), { status: 200 }));
-    const env: Env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g", AI: { run: vi.fn() } };
+    const env: Env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g", PAYANT_POUR_TOUS: "1", AI: { run: vi.fn() } };
     const job = await (await call(env, "/v2/jobs", { method: "POST", body: body({ mode: "transform", photo: PNG }) })).json() as { provider: string };
     expect(job.provider).toBe("gemini");
   });
@@ -229,6 +229,42 @@ describe("Camille (IA gratuite)", () => {
     const r = await call(env, "/v2/camille", { method: "POST", body: msg() });
     expect(r.status).toBe(429);
     expect((await r.json() as { erreur: string }).erreur).toContain("fiches");
+  });
+});
+
+describe("payant réservé aux abonnés : sans abonnement, tout est gratuit ou refusé poliment", () => {
+  const fetchMock = vi.fn();
+  beforeEach(() => { vi.stubGlobal("fetch", fetchMock); fetchMock.mockReset(); _setPause(async () => {}); });
+  afterEach(() => vi.unstubAllGlobals());
+  it("part gratuite épuisée : pas de relais Gemini, message clair", async () => {
+    const env: Env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g", AI: { run: async () => { throw new Error("4006"); } }, NEURONES_JOUR: "100" };
+    const r = await call(env, "/v2/jobs", { method: "POST", body: body({ mode: "transform", photo: PNG, petites: { photo: PNG, references: [] } }) });
+    expect(r.status).toBe(429);
+    expect((await r.json() as { erreur: string }).erreur).toContain("limite du jour");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+  it("le dessin gratuit qui échoue ne bascule pas sur Gemini", async () => {
+    const env: Env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g", AI: { run: async (_m: string, e: { messages?: unknown }) => { if (e?.messages) return { response: "" }; throw new Error("3043"); } } as never };
+    const job = await (await call(env, "/v2/jobs", { method: "POST", body: body({ mode: "transform", photo: PNG, petites: { photo: PNG, references: [] } }) })).json() as { status: string; provider: string };
+    expect(job).toMatchObject({ status: "erreur", provider: "cloudflare" });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+  it("analyse et moodboard passent par la vision gratuite (Mistral), jamais par Gemini", async () => {
+    const run = vi.fn(async (...a: unknown[]) => ({ n: a.length, response: '```json\n{"objects":[{"type":"canape","label":"Canapé lin","box_2d":[400,100,800,600],"materials":["lin"],"colors":[{"name":"Beige","hex":"#D8CBB5"}]}],"surfaces":[],"style":"Japandi","palette":[{"name":"Lin","hex":"#E6DCCB"}],"materials":["chene-fume"],"brief_en":"Calm."}\n```' }));
+    const env: Env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g", AI: { run: run as never } };
+    const a = await (await call(env, "/v2/analyse", { method: "POST", body: JSON.stringify({ image: PNG, visiteur: "visiteur-test-01" }) })).json() as { objects: Array<{ label: string; zone: { x: number } }> };
+    expect(a.objects[0]).toMatchObject({ label: "Canapé lin", zone: { x: 10 } });
+    const m = await (await call(env, "/v2/moodboard", { method: "POST", body: JSON.stringify({ inspirations: [PNG], matieres: [{ id: "chene-fume", name: "Chêne fumé" }], visiteur: "visiteur-test-01" }) })).json() as { style: string; materials: string[] };
+    expect(m).toMatchObject({ style: "Japandi", materials: ["chene-fume"] });
+    expect(String(run.mock.calls[0]![0])).toContain("mistral-small");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+  it("la recherche sur tout le web est réservée aux abonnés", async () => {
+    const env: Env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g" };
+    const r = await call(env, "/v2/recherche", { method: "POST", body: JSON.stringify({ query: "canapé lin", label: "Canapé", visiteur: "visiteur-test-01" }) });
+    expect(r.status).toBe(403);
+    expect((await r.json() as { erreur: string }).erreur).toContain("Trouver l'identique");
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
 
@@ -303,7 +339,7 @@ describe("choix du fournisseur et formats", () => {
 describe("analyse et moodboard (Gemini)", () => {
   let env: Env & { QUOTA: ReturnType<typeof memoryKV> };
   const fetchMock = vi.fn();
-  beforeEach(() => { env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g-test" }; vi.stubGlobal("fetch", fetchMock); fetchMock.mockReset(); _setPause(async () => {}); });
+  beforeEach(() => { env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g-test", PAYANT_POUR_TOUS: "1" }; vi.stubGlobal("fetch", fetchMock); fetchMock.mockReset(); _setPause(async () => {}); });
   afterEach(() => vi.unstubAllGlobals());
   const gem = (o: unknown) => new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: JSON.stringify(o) }] } }] }), { status: 200 });
 
@@ -356,7 +392,7 @@ describe("analyse et moodboard (Gemini)", () => {
 describe("recherche de produits sur internet", () => {
   let env: Env & { QUOTA: ReturnType<typeof memoryKV> };
   const fetchMock = vi.fn();
-  beforeEach(() => { env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g-test" }; vi.stubGlobal("fetch", fetchMock); fetchMock.mockReset(); _setPause(async () => {}); });
+  beforeEach(() => { env = { QUOTA: memoryKV(), GEMINI_API_KEY: "g-test", PAYANT_POUR_TOUS: "1" }; vi.stubGlobal("fetch", fetchMock); fetchMock.mockReset(); _setPause(async () => {}); });
   afterEach(() => vi.unstubAllGlobals());
 
   it("lit les données produit publiées par le vendeur (schema.org)", async () => {

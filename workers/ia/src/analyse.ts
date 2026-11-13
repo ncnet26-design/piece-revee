@@ -3,7 +3,8 @@
  *  - analyse(…) : meubles, objets et surfaces (murs, sol, rideaux…) d'une pièce, avec leur zone en % de l'image,
  *    pour rendre chaque élément cliquable et chercher des produits ressemblants ;
  *  - moodboard(…) : synthèse des inspirations d'un client (style, palette, matières, objets clés, consigne de transformation).
- * Gemini (clé du site) par défaut ; OpenAI si sa clé est configurée et que Gemini ne l'est pas.
+ * Gratuit pour tous : Mistral Small (vision) de l'IA gratuite de Cloudflare.
+ * Payant (Gemini, plus précis sur les zones) : seulement pour les abonnés payants (voir `payantAutorise`).
  */
 import type { Env } from "./config";
 import { fetchRetry, ProviderError, type ImgIn } from "./providers";
@@ -53,6 +54,28 @@ async function geminiJson(env: Env, parts: GeminiPart[]): Promise<Record<string,
   try { return JSON.parse(txt.replace(/^```(?:json)?\s*|\s*```$/g, "")) as Record<string, unknown>; } catch { throw new ProviderError("Réponse d'analyse illisible.", true); }
 }
 
+/** Même consigne JSON, avec l'IA de vision gratuite de Cloudflare (Mistral Small). */
+const VISION_GRATUITE = "@cf/mistralai/mistral-small-3.1-24b-instruct";
+async function visionGratuite(env: Env, consigne: string, images: ImgIn[]): Promise<Record<string, unknown>> {
+  if (!env.AI) throw new ProviderError("L'analyse gratuite n'est pas disponible.", false);
+  let r: unknown;
+  try {
+    r = await env.AI.run(VISION_GRATUITE, {
+      messages: [{ role: "user", content: [{ type: "text", text: `${consigne}\nAnswer with one JSON object only, no markdown.` }, ...images.slice(0, 4).map((im) => ({ type: "image_url", image_url: { url: `data:${im.mime};base64,${im.b64}` } }))] }],
+      max_tokens: 2500, temperature: 0.2,
+    });
+  } catch (e) { throw new ProviderError("L'analyse gratuite est indisponible pour le moment.", true, String(e).slice(0, 200)); }
+  const o = r as { response?: unknown; choices?: Array<{ message?: { content?: string } }> };
+  if (o.response && typeof o.response === "object") return o.response as Record<string, unknown>;
+  const txt = String(o.response ?? o.choices?.[0]?.message?.content ?? "");
+  const m = /\{[\s\S]*\}/.exec(txt.replace(/^```(?:json)?\s*|\s*```$/g, ""));
+  try { return JSON.parse(m?.[0] ?? "") as Record<string, unknown>; } catch { throw new ProviderError("Réponse d'analyse illisible.", true); }
+}
+/** Gemini pour les abonnés payants ; sinon l'IA de vision gratuite. */
+const vision = (env: Env, payant: boolean, consigne: string, images: ImgIn[]) => (payant && env.GEMINI_API_KEY
+  ? geminiJson(env, [{ text: consigne }, ...images.map((im) => ({ inline_data: { mime_type: im.mime, data: im.b64 } }))])
+  : visionGratuite(env, consigne, images));
+
 const arr = (v: unknown) => (Array.isArray(v) ? v : []) as Array<Record<string, unknown>>;
 const strs = (v: unknown, n = 8) => (Array.isArray(v) ? v.filter((x) => typeof x === "string").slice(0, n) as string[] : []);
 const colors = (v: unknown) => arr(v).filter((c) => typeof c.hex === "string" && /^#[0-9a-f]{6}$/i.test(c.hex as string)).slice(0, 6).map((c) => ({ name: String(c.name ?? "").slice(0, 40), hex: String(c.hex).toUpperCase() }));
@@ -67,9 +90,9 @@ export function boxToZone(b: unknown): { x: number; y: number; w: number; h: num
 
 export interface Surface { id: string; kind: string; label: string; colors: Array<{ name: string; hex: string }>; material: string; finish: string; zone: { x: number; y: number; w: number; h: number } }
 
-export async function analyse(env: Env, image: ImgIn): Promise<{ objects: unknown[]; surfaces: Surface[] }> {
-  if (env.GEMINI_API_KEY) {
-    const j = await geminiJson(env, [{ text: PIECE }, { inline_data: { mime_type: image.mime, data: image.b64 } }]);
+export async function analyse(env: Env, image: ImgIn, payant = false): Promise<{ objects: unknown[]; surfaces: Surface[] }> {
+  if (env.AI || env.GEMINI_API_KEY) {
+    const j = await vision(env, payant, PIECE, [image]);
     const objects = arr(j.objects).filter((o) => CATS.includes(String(o.type))).flatMap((o, i) => {
       const zone = boxToZone(o.box_2d); if (!zone) return [];
       return [{
@@ -89,10 +112,10 @@ export async function analyse(env: Env, image: ImgIn): Promise<{ objects: unknow
 }
 
 export interface Moodboard { style: string; summary: string; palette: Array<{ name: string; hex: string }>; materials: string[]; objects: unknown[]; brief_fr: string; brief_en: string }
-export async function moodboard(env: Env, images: ImgIn[], catalog: Array<{ id: string; name: string }>): Promise<Moodboard> {
-  if (!env.GEMINI_API_KEY) throw new ProviderError("Le moodboard automatique n'est pas configuré (clé manquante).", false);
+export async function moodboard(env: Env, images: ImgIn[], catalog: Array<{ id: string; name: string }>, payant = false): Promise<Moodboard> {
+  if (!env.AI && !env.GEMINI_API_KEY) throw new ProviderError("Le moodboard automatique n'est pas configuré.", false);
   const ids = new Set(catalog.map((c) => c.id));
-  const j = await geminiJson(env, [{ text: MOOD(catalog.map((c) => `${c.id}: ${c.name}`).join("; ")) }, ...images.map((im) => ({ inline_data: { mime_type: im.mime, data: im.b64 } }))]);
+  const j = await vision(env, payant, MOOD(catalog.map((c) => `${c.id}: ${c.name}`).join("; ")), images);
   return {
     style: String(j.style ?? "").slice(0, 60), summary: String(j.summary ?? "").slice(0, 300), palette: colors(j.palette),
     materials: strs(j.materials, 8).filter((m) => ids.has(m)),

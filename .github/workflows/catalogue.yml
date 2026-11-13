@@ -4,7 +4,7 @@ name: Catalogue de produits (robot)
 # puis publie le catalogue (public/catalogue) sur le site. Peut aussi se lancer à la main.
 on:
   schedule:
-    - cron: "17 2 * * *"
+    - cron: "17 2 * * 1,4" # lundi et jeudi (minutes de robots limitées)
   workflow_dispatch:
     inputs:
       pages: { description: "Pages visitées par enseigne", required: false, default: "400", type: string }
@@ -29,7 +29,7 @@ jobs:
           ENSEIGNES: ${{ inputs.enseignes || '' }}
         run: |
           mkdir -p .robot
-          ARGS="--pages $PAGES --minutes 42"
+          ARGS="--pages $PAGES --minutes 35"
           [ -n "$ENSEIGNES" ] && ARGS="$ARGS --enseignes $ENSEIGNES"
           node --experimental-strip-types scripts/robot-catalogue.ts $ARGS 2>&1 | tee .robot/catalogue.txt
       - name: Publier le catalogue
